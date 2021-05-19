@@ -4,9 +4,8 @@ This website is built using [Material for MkDocs](https://squidfunk.github.io/mk
 
 ## Installation
 
-```console
-yarn install
-```
+Please refer to this [doc](https://squidfunk.github.io/mkdocs-material/customization/#environment-setup) to set up your local development environment.
+
 
 ## Local Development
 
