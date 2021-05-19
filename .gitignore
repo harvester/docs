@@ -2,6 +2,7 @@
 /resources/_gen
 .idea
 .DS_Store
+/site
 
 # Dependencies
 /node_modules
