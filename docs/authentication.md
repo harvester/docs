@@ -15,11 +15,11 @@ keywords:
 
 With ISO installation mode, user will be prompted to set the password for the default `admin` user on the first-time login.
 
-![auth](/assets/first-log-in.png)
+![auth](./assets/first-log-in.png)
 
 The Harvester login page is shown below:
 
-![auth](/assets/authentication.png)
+![auth](./assets/authentication.png)
 
 ## Developer Mode
 

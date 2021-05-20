@@ -30,7 +30,7 @@ Harvester adopts [flannel](https://github.com/flannel-io/flannel) as the default
 
 Below is a use case of the VLAN in Harvester.
 
-![](/assets/vlan-case.png)
+![](./assets/vlan-case.png)
 
 - Harvester network-controller uses a bridge for a node and a pair of veth for a VM to implement the VLAN. The bridge acts as a switch to forward the network traffic from or to VMs and the veth pair is like the connected ports between vms and switch.
 - VMs within the same VLAN is able to communicate with each other, while the VMs within different VLANs can't.
@@ -45,21 +45,21 @@ The first physical NIC name of each Harvester node always defaults to eth0. It i
 
 Note: Modifying the default VLAN network setting will not change the existing configured host networks.
 
-![](/assets/enable-vlan.png)
+![](./assets/enable-vlan.png)
 
 - (optional) Users can always customize each node's VLAN network configuration via going to the **HOST > Network** tab.
 
-  ![](/assets/node-network-configuration.png)
+  ![](./assets/node-network-configuration.png)
 
 - A new VLAN network is created by going to the **Advanced > Networks** page and clicking the **Create** button.
 
-  ![](/assets/create-network.png)
+  ![](./assets/create-network.png)
 
 - The network is configured when the VM is created.
 
   - Only the first network interface card will be enabled by default. Users can either choose to use a management network or VLAN network. Note: You will need to select the `Install guest agent` option in the `Advanced Options` tab to get the VLAN network IP address from the Harvester UI.
 
-    ![](/assets/vm-network-configuration.png)
+    ![](./assets/vm-network-configuration.png)
 
   - Users can choose to add one or multiple network interface cards. Additional network interface card configurations can be set via cloud-init network data, e.g.:
 

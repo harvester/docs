@@ -13,7 +13,7 @@ keywords:
 
 Harvester is an open source [hyper-converged infrastructure](https://en.wikipedia.org/wiki/Hyper-converged_infrastructure) (HCI) software built on Kubernetes. It is an open source alternative to vSphere and Nutanix.
 
-![harvester-ui](/assets/harvester-ui.png)
+![harvester-ui](./assets/harvester-ui.png)
 
 ## Overview
 
@@ -30,7 +30,7 @@ Harvester implements HCI on bare metal servers. Here are some notable features o
 
 The following diagram gives a high-level architecture of Harvester:
 
-![](/assets/architecture.svg)
+![](./assets/architecture.svg)
 
 - [Longhorn](https://longhorn.io/) is a lightweight, reliable and easy-to-use distributed block storage system for Kubernetes.
 - [KubeVirt](https://kubevirt.io/) is a virtual machine management add-on for Kubernetes.
@@ -60,11 +60,11 @@ During the installation you can either choose to form a new cluster, or join the
 Note: This [video](https://youtu.be/97ADieBX6bE) shows a quick overview of the ISO installation.
 
 1. Mount the Harvester ISO disk and boot the server by selecting the `Harvester Installer`.
-   ![iso-install.png](/assets/iso-install.png)
+   ![iso-install.png](./assets/iso-install.png)
 1. Choose the installation mode by either creating a new Harvester cluster, or by joining an existing one.
 1. Choose the installation device that the Harvester will be formatted to.
 1. Configure the hostname and select the network interface for the management network, the IP address can either be configured via DHCP or static method.
-   ![iso-installed.png](/assets/iso-nic-config.png)
+   ![iso-installed.png](./assets/iso-nic-config.png)
 1. Configure the `cluster token`. This token will be used for adding other nodes to the cluster.
 1. Configure the login password of the host. The default ssh user is `rancher`.
 1. (Optional) you can choose to import SSH keys from a remote URL server. Your GitHub public keys can be used with `https://github.com/<username>.keys`.
@@ -73,6 +73,6 @@ Note: This [video](https://youtu.be/97ADieBX6bE) shows a quick overview of the I
 1. Confirm the installation options and the Harvester will be installed to your host. The installation may take a few minutes to be complete.
 1. Once the installation is complete it will restart the host and a console UI with management URL and status will be displayed. <small>(You can Use F12 to switch between Harvester console and the Shell)</small>
 1. The default URL of the web interface is `https://your-host-ip:30443`.
-   ![iso-installed.png](/assets/iso-installed.png)
+   ![iso-installed.png](./assets/iso-installed.png)
 1. User will be prompted to set the password for the default `admin` user on the first-time login.
-   ![first-login.png](/assets/first-log-in.png)
+   ![first-login.png](./assets/first-log-in.png)
