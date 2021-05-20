@@ -1,10 +1,17 @@
 name: ci
 on:
+  pull_request:
   push:
     branches:
       - main
+      - v*
+env:
+  LATEST_VERSION: v0.2
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
-  deploy:
+  build-test:
+    if: ${{ github.event.pull_request }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -12,4 +19,36 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install mkdocs-material
-      - run: mkdocs gh-deploy --force
+      - run: mkdocs build
+
+  master-build:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - run: pip install mkdocs-material mike
+      - run: |
+          git config --global user.name rancherio-gh-m
+          git config --global user.email docs@harvesterhci.bot
+          git pull
+      - run: |
+          mike deploy ${{ env.LATEST_VERSION }}
+          mike set-default ${{ env.LATEST_VERSION }}
+          mike deploy --rebase --push --update-aliases ${{ env.LATEST_VERSION }} latest
+
+  version-build:
+    if: ${{ github.ref == 'refs/heads/v*' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - run: pip install mkdocs-material mike
+      - run: |
+          git config --global user.name rancherio-gh-m
+          git config --global user.email docs@harvesterhci.bot
+      - run: mike deploy --rebase --push $GITHUB_REF
