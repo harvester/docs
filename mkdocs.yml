@@ -12,6 +12,8 @@ theme:
   icon:
     repo: fontawesome/brands/github
 #google_analytics:
+extra:
+  homepage: https://harvesterhci.io
 extra_css:
   - stylesheets/extra.css
 plugins:
