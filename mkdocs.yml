@@ -1,24 +1,37 @@
+# Project information
 site_name: Harvester - Open Source Hyperconverged Infrastructure
+site_url: https://docs.harvesterhci.io
+
+# Repository
+repo_name: harvester/harvester
 repo_url: https://github.com/harvester/harvester
 edit_uri: https://github.com/harvester/docs/edit/main/docs/
 # Set to false for local docs development
 strict: true
+
 theme:
   name: material
-  palette:
-    primary: green
   logo: 'assets/logo_horizontal_white.png'
   favicon: 'assets/favicon.ico'
+  palette:
+    primary: green
   icon:
     repo: fontawesome/brands/github
-#google_analytics:
+
+# Customization
 extra:
+  version:
+    provider: mike
   homepage: https://harvesterhci.io
+
 extra_css:
   - stylesheets/extra.css
+
+#google_analytics:
 plugins:
   - search
   #- markdownextradata: {}
+
 markdown_extensions:
 - codehilite
 - admonition
@@ -26,6 +39,7 @@ markdown_extensions:
 - pymdownx.superfences
 - toc:
     permalink: true
+
 nav:
   - index.md
   - Installation:
