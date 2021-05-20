@@ -61,7 +61,8 @@ install:
 
 Below is a reference of all configuration keys.
 
-> :warning: **Security Risks**: The configuration file contains credentials which should be kept secretly. Please do not make the configuration file publicly accessible at the moment.
+!!! warning 
+    **Security Risks**: The configuration file contains credentials which should be kept secretly. Please do not make the configuration file publicly accessible at the moment.
 
 ### `server_url`
 

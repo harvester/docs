@@ -57,7 +57,8 @@ Nodes need to have at least **8G** of RAM because the full ISO file is loaded in
 
 ### CREATE mode
 
-> :warning: **Security Risks**: The configuration file below contains credentials which should be kept secretly. Please do not make the configuration file publicly accessible at the moment.
+!!! warning 
+    **Security Risks**: The configuration file below contains credentials which should be kept secretly. Please do not make the configuration file publicly accessible at the moment.
 
 Create a [Harvester configuration file](./harvester-configuration.md) `config-create.yaml` for `CREATE` mode. Modify the values as needed:
 
@@ -90,7 +91,8 @@ Let's assume the iPXE script is stored in `/usr/share/nginx/html/harvester/ipxe-
 
 ### JOIN mode
 
-> :warning: **Security Risks**: The configuration file below contains credentials which should be kept secretly. Please do not make the configuration file publicly accessible at the moment.
+!!! warning 
+    **Security Risks**: The configuration file below contains credentials which should be kept secretly. Please do not make the configuration file publicly accessible at the moment.
 
 Create a [Harvester configuration file](./harvester-configuration.md) `config-join.yaml` for `JOIN` mode. Modify the values as needed:
 
