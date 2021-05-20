@@ -20,4 +20,4 @@ Currently, we support qcow2, raw, and ISO images.
 
 Description and labels are optional.
 
-![](/assets/import-image.png)
+![](./assets/import-image.png)

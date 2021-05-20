@@ -29,4 +29,4 @@ Use the address in a terminal emulation client (such as Putty) or use the follow
  ssh -i ~/.ssh/your-ssh-key user@<ip-address-or-hostname>
 ```
 
-![](/assets/access-to-vm.png)
+![](./assets/access-to-vm.png)
