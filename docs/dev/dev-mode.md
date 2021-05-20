@@ -75,14 +75,14 @@ Tip: You can create a testing Kubernetes environment in Rancher using the Digita
 
 1. Add the Harvester repo `https://github.com/harvester/harvester` to your Rancher catalogs by clicking **Global > Tools > Catalogs.**
 1. Specify the URL and name. Set the branch to `stable` if you need a stable release version. Set the `Helm version` to be `Helm v3`.
-   ![harvester-catalog.png](./assets/harvester-catalog.png)
+   ![harvester-catalog.png](harvester-catalog.png)
 1. Click **Create.**
 1. Navigate to your project-level `Apps.`
 1. Click `Launch` and choose the Harvester app.
 1. (Optional) You can modify the configurations if needed. Otherwise, use the default options.
 1. Click **Launch** and wait for the app's components to be ready.
 1. Click the `/index.html` link to navigate to the Harvester UI:
-   ![harvester-app.png](./assets/harvester-app.png)
+   ![harvester-app.png](harvester-app.png)
 
 ### Digital Ocean Test Environment
 
@@ -94,6 +94,6 @@ We recommend using the `8 core, 16 GB RAM` node, which will have nested virtuali
 
 This screenshot shows how to create a Rancher node template that would allow Rancher to provision such a node in Digital Ocean:
 
-![do.png](./assets/do.png)
+![do.png](do.png)
 
 For more information on how to launch Digital Ocean nodes with Rancher, refer to the [Rancher documentation.](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/digital-ocean/)
