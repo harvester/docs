@@ -666,7 +666,7 @@
 <h3 id="vlan">VLAN<a class="headerlink" href="#vlan" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/harvester/harvester-network-controller">Harvester network-controller</a> leverages the <a href="https://github.com/k8snetworkplumbingwg/multus-cni">multus</a> and <a href="https://www.cni.dev/plugins/current/main/bridge/">bridge</a> CNI plugins to implement the VLAN.</p>
 <p>Below is a use case of the VLAN in Harvester.</p>
-<p><img alt="" src="/assets/vlan-case.png" /></p>
+<p><img alt="" src="../assets/vlan-case.png" /></p>
 <ul>
 <li>Harvester network-controller uses a bridge for a node and a pair of veth for a VM to implement the VLAN. The bridge acts as a switch to forward the network traffic from or to VMs and the veth pair is like the connected ports between vms and switch.</li>
 <li>VMs within the same VLAN is able to communicate with each other, while the VMs within different VLANs can't.</li>
@@ -677,22 +677,22 @@
 <p>Enable VLAN via going to <strong>Setting &gt; vlan</strong> to enable VLAN and input a valid default physical NIC name for the VLAN.</p>
 <p>The first physical NIC name of each Harvester node always defaults to eth0. It is recommended to choose a separate NIC for the VLAN other than the one used for the management network (the one selected during the Harvester installation) for better network performance and isolation.</p>
 <p>Note: Modifying the default VLAN network setting will not change the existing configured host networks.</p>
-<p><img alt="" src="/assets/enable-vlan.png" /></p>
+<p><img alt="" src="../assets/enable-vlan.png" /></p>
 <ul>
 <li>(optional) Users can always customize each node's VLAN network configuration via going to the <strong>HOST &gt; Network</strong> tab.</li>
 </ul>
-<p><img alt="" src="/assets/node-network-configuration.png" /></p>
+<p><img alt="" src="../assets/node-network-configuration.png" /></p>
 <ul>
 <li>A new VLAN network is created by going to the <strong>Advanced &gt; Networks</strong> page and clicking the <strong>Create</strong> button.</li>
 </ul>
-<p><img alt="" src="/assets/create-network.png" /></p>
+<p><img alt="" src="../assets/create-network.png" /></p>
 <ul>
 <li>
 <p>The network is configured when the VM is created.</p>
 </li>
 <li>
 <p>Only the first network interface card will be enabled by default. Users can either choose to use a management network or VLAN network. Note: You will need to select the <code>Install guest agent</code> option in the <code>Advanced Options</code> tab to get the VLAN network IP address from the Harvester UI.</p>
-<p><img alt="" src="/assets/vm-network-configuration.png" /></p>
+<p><img alt="" src="../assets/vm-network-configuration.png" /></p>
 </li>
 <li>
 <p>Users can choose to add one or multiple network interface cards. Additional network interface card configurations can be set via cloud-init network data, e.g.:</p>
