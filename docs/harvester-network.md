@@ -11,8 +11,6 @@ keywords:
 
 # Harvester Network
 
-## Summary
-
 [Harvester](https://github.com/harvester/harvester) is built on Kubernetes, which uses [CNI](https://github.com/containernetworking/cni) as an interface between network providers and Kubernetes pod networking. Naturally, we implement the Harvester network based on CNI. Moreover, the [Harvester UI](https://github.com/harvester/harvester-ui) integrates the Harvester network to provide a user-friendly way to configure networks for VMs.
 
 By version 0.2, Harvester supports two kinds of networks:

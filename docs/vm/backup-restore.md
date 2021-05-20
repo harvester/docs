@@ -15,7 +15,9 @@ keywords:
 
 VM backups are created from the **Virtual Machines** page. The VM backup volumes will be stored in the **Backup Target** (an NFS or S3 server) and they can be used to either restore a new VM or replace an existing VM.
 
-> Prerequisite: A backup target must be set up. For more information, see [Backup Target Setup](#backup-target-setup). If the BackupTarget has not been set, you’ll be presented with a prompt message.
+
+!!! note
+    A backup target must be set up. For more information, see [Backup Target Setup](#backup-target-setup). If the BackupTarget has not been set, you’ll be presented with a prompt message.
 
 ## Backup Target Setup
 

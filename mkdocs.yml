@@ -1,5 +1,6 @@
 site_name: Harvester - Open Source Hyperconverged Infrastructure
-repo_url: https://github.com/rancher/harvester
+repo_url: https://github.com/harvester/harvester
+edit_uri: https://github.com/harvester/docs/edit/main/docs/
 # Set to false for local docs development
 strict: true
 theme:
@@ -8,6 +9,8 @@ theme:
     primary: green
   logo: 'assets/logo_horizontal_white.png'
   favicon: 'assets/favicon.ico'
+  icon:
+    repo: fontawesome/brands/github
 #google_analytics:
 extra_css:
   - stylesheets/extra.css
