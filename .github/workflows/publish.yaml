@@ -40,15 +40,18 @@ jobs:
           mike deploy --rebase --push --update-aliases ${{ env.LATEST_VERSION }} latest
 
   version-build:
-    if: ${{ github.ref == 'refs/heads/v*' }}
+    if: startsWith(github.ref, 'refs/heads/v')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
+      - run: echo "::set-output name=version::$(echo $GITHUB_REF | cut -d / -f 3)"
+        id: info
       - run: pip install mkdocs-material mike
       - run: |
           git config --global user.name rancherio-gh-m
           git config --global user.email docs@harvesterhci.bot
-      - run: mike deploy --rebase --push $GITHUB_REF
+          git pull
+      - run: mike deploy --rebase --push ${{ steps.info.outputs.version }}
