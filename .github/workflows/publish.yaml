@@ -18,7 +18,8 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
-      - run: pip install mkdocs-material
+      - run: pip install mkdocs-material mkdocs-render-swagger-plugin
+      - run: wget https://raw.githubusercontent.com/harvester/harvester/master/api/openapi-spec/swagger.json -O docs/reference/swagger.json
       - run: mkdocs build
 
   master-build:
@@ -29,11 +30,12 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
-      - run: pip install mkdocs-material mike
+      - run: pip install mkdocs-material mike mkdocs-render-swagger-plugin
       - run: |
           git config --global user.name rancherio-gh-m
           git config --global user.email docs@harvesterhci.bot
           git pull
+      - run: wget https://raw.githubusercontent.com/harvester/harvester/master/api/openapi-spec/swagger.json -O docs/reference/swagger.json
       - run: |
           mike deploy ${{ env.LATEST_VERSION }}
           mike set-default ${{ env.LATEST_VERSION }}
@@ -49,9 +51,10 @@ jobs:
           python-version: 3.x
       - run: echo "::set-output name=version::$(echo $GITHUB_REF | cut -d / -f 3)"
         id: info
-      - run: pip install mkdocs-material mike
+      - run: pip install mkdocs-material mike mkdocs-render-swagger-plugin
       - run: |
           git config --global user.name rancherio-gh-m
           git config --global user.email docs@harvesterhci.bot
           git pull
+      - run: wget https://raw.githubusercontent.com/harvester/harvester/master/api/openapi-spec/swagger.json -O docs/reference/swagger.json
       - run: mike deploy --rebase --push ${{ steps.info.outputs.version }}
