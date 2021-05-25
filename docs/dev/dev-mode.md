@@ -72,7 +72,7 @@ cat /proc/cpuinfo | grep vmx
 ### Option 2: Install using Rancher
 
 !!! tip
-You can create a testing Kubernetes environment in Rancher using the Digital Ocean cloud provider. For details, see [this section](#digital-ocean-test-environment).
+      You can create a testing Kubernetes environment in Rancher using the Digital Ocean cloud provider. For details, see [this section](#digital-ocean-test-environment).
 
 1. Add the Harvester repo `https://github.com/harvester/harvester` to your Rancher catalogs by clicking **Global > Tools > Catalogs**.
 1. Specify the URL and name. Set the branch to `stable` if you need a stable release version. Set the `Helm version` to be `Helm v3`.
