@@ -18,7 +18,7 @@ Starting from version `0.2.0`, Harvester can be installed in a mass manner. This
 
 We recommend using [iPXE](https://ipxe.org/) to perform the network boot. It has more features than the traditional PXE Boot program and is likely available in modern NIC cards. If NIC cards don't come with iPXE firmware, iPXE firmware images can be loaded from the TFTP server first.
 
-To see sample iPXE scripts, please visit https://github.com/harvester/ipxe-examples.
+To see sample iPXE scripts, please visit [Harvester iPXE Examples](https://github.com/harvester/ipxe-examples).
 
 ## Preparing HTTP Servers
 
@@ -28,7 +28,7 @@ Let's assume an NGINX HTTP server's IP is `10.100.0.10`, and it serves `/usr/sha
 
 ## Preparing Boot Files
 
-- Download the required files from https://github.com/harvester/harvester/releases. Choose an appropriate version.
+- Download the required files from [Harvester Releases Page](https://github.com/harvester/harvester/releases). Choose an appropriate version.
 
   - The ISO: `harvester-amd64.iso`
   - The kernel: `harvester-vmlinuz-amd64`

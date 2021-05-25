@@ -17,6 +17,10 @@ During the installation you can either choose to form a new cluster, or join the
 
 Note: This [video](https://youtu.be/97ADieBX6bE) shows a quick overview of the ISO installation.
 
+<div class="text-center">
+<iframe width="950" height="475" src="https://www.youtube.com/embed/97ADieBX6bE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 1. Mount the Harvester ISO disk and boot the server by selecting the `Harvester Installer`.
    ![iso-install.png](iso-install.png)
 1. Choose the installation mode by either creating a new Harvester cluster, or by joining an existing one.
