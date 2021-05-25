@@ -5,28 +5,28 @@ keywords:
   - harvester
   - Rancher
   - rancher
-  - Backing up and Restoring Virtual Machines in Harverster
   - VM Backup & Restore
+Description: VM backups are created from the Virtual Machines page. The VM backup volumes will be stored in the Backup Target(an NFS or S3 server) and they can be used to either restore a new VM or replace an existing VM.
 ---
 
 # VM Backup & Restore
 
-> Available as of v0.2.0
+_Available as of v0.2.0_
 
 VM backups are created from the **Virtual Machines** page. The VM backup volumes will be stored in the **Backup Target** (an NFS or S3 server) and they can be used to either restore a new VM or replace an existing VM.
 
+## Prerequisite
 
-!!! note
-    A backup target must be set up. For more information, see [Backup Target Setup](#backup-target-setup). If the BackupTarget has not been set, you’ll be presented with a prompt message.
+A backup target must be set up. For more information, see [Backup Target Setup](#backup-target-setup). If the BackupTarget has not been set, you’ll be presented with a prompt message.
 
-## Backup Target Setup
+## Configure Backup Target
 
 A backup target is an endpoint used to access a backup store in Harvester. A backup store is an NFS server or S3 compatible server that stores the backups of VM volumes. The backup target can be set at `Settings > backup-target`.
 
 | Parameter          | Type   | Description                                                                              |
-| ------------------ | ------ | ---------------------------------------------------------------------------------------- |
+| :----------------- | :----- | :--------------------------------------------------------------------------------------- |
 | Type               | string | Choose S3 or NFS                                                                         |
-| Endpoint           | string | EndPoint is a hostname or an IP address. Can be left empty for AWS S3.                   |
+| Endpoint           | string | Endpoint is a hostname or an IP address. It can be left empty for AWS S3.                |
 | BucketName         | string | Name of the bucket                                                                       |
 | BucketRegion       | string | Region of the bucket                                                                     |
 | AccessKeyID        | string | AccessKeyID is like a user-id that uniquely identifies your account.                     |
@@ -44,7 +44,7 @@ A backup target is an endpoint used to access a backup store in Harvester. A bac
 
 The `ReadyToUse` status will be set to true once the Backup is complete.
 
-Users can either choose to restore a new VM or replace an existing VM using this backup.
+Users can either choose to restore a new VM, or replace an existing VM using this backup.
 
 ## Restore a new VM using a backup
 

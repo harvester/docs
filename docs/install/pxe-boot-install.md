@@ -9,6 +9,7 @@ keywords:
   - Installing Harverster
   - Harverster Installation
   - PXE Boot Install
+Description: Starting from version `0.2.0`, Harvester can be installed in a mass manner. This document provides an example to do the automatic installation with PXE boot.
 ---
 
 # PXE Boot Install
@@ -57,7 +58,7 @@ Nodes need to have at least **8G** of RAM because the full ISO file is loaded in
 
 ### CREATE mode
 
-!!! warning 
+!!! warning
     **Security Risks**: The configuration file below contains credentials which should be kept secretly. Please do not make the configuration file publicly accessible at the moment.
 
 Create a [Harvester configuration file](./harvester-configuration.md) `config-create.yaml` for `CREATE` mode. Modify the values as needed:
