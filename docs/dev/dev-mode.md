@@ -29,7 +29,7 @@ Harvester can be installed on a Kubernetes cluster in the following ways:
 - Install with the [Helm](https://helm.sh/) CLI
 - Install as a Rancher catalog app, in which case the [harvester/harvester](https://github.com/harvester/harvester) repo is added to the Rancher Catalog as a Helm `v3` app
 
-Please refer to the Harvester [Helm chart](../deploy/charts/harvester) for more details on installing and configuring the Helm chart.
+Please refer to the Harvester [Helm chart](https://github.com/harvester/harvester/blob/master/deploy/charts/harvester/README.md) for more details on installing and configuring the Helm chart.
 
 ### Requirements
 
@@ -45,35 +45,34 @@ cat /proc/cpuinfo | grep vmx
 
 1. Clone the GitHub repository:
 
-      ```bash
-      git clone https://github.com/harvester/harvester.git --depth=1
-      ```
+   ```bash
+   git clone https://github.com/harvester/harvester.git --depth=1
+   ```
 
 1. Go to the Helm chart:
 
-      ```bash
-      cd harvester/deploy/charts
-      ```
+   ```bash
+   cd harvester/deploy/charts
+   ```
 
 1. Install the Harvester chart with the following commands:
 
-      ```bash
-      ### To install the chart with the release name `harvester`:
+   ```bash
+   ### To install the chart with the release name `harvester`:
 
-      ## Create the target namespace
-      kubectl create ns harvester-system
+   ## Create the target namespace
+   kubectl create ns harvester-system
 
-      ## Install the chart to the target namespace
-      helm install harvester harvester \
-      --namespace harvester-system \
-      --set longhorn.enabled=true,minio.persistence.storageClass=longhorn
-      ```
+   ## Install the chart to the target namespace
+   helm install harvester harvester \
+   --namespace harvester-system \
+   --set longhorn.enabled=true,minio.persistence.storageClass=longhorn
+   ```
 
 ### Option 2: Install using Rancher
 
 !!! tip
-      You can create a testing Kubernetes environment in Rancher using the Digital Ocean cloud provider. For details, see [this section](#digital-ocean-test-environment).
-
+You can create a testing Kubernetes environment in Rancher using the Digital Ocean cloud provider. For details, see [this section](#digital-ocean-test-environment).
 
 1. Add the Harvester repo `https://github.com/harvester/harvester` to your Rancher catalogs by clicking **Global > Tools > Catalogs**.
 1. Specify the URL and name. Set the branch to `stable` if you need a stable release version. Set the `Helm version` to be `Helm v3`.
