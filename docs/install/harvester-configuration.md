@@ -5,41 +5,41 @@ keywords:
   - harvester
   - Rancher
   - rancher
-  - Install Harverster
-  - Installing Harverster
-  - Harverster Installation
   - Harvester Configuration
+Description: Harvester configuration file can be provided during manual or automatic installation to configure various settings.
 ---
 
 # Harvester Configuration
 
-Harvester configuration file can be provided during manual or automatic installation to configure various settings. The following is an configuration example:
+## Configuration Example
+
+Harvester configuration file can be provided during manual or automatic installation to configure various settings. The following is a configuration example:
 
 ```yaml
 server_url: https://someserver:6443
 token: TOKEN_VALUE
 os:
   ssh_authorized_keys:
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB...
-  - github:username
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB...
+    - github:username
   hostname: myhost
   modules:
-  - kvm
-  - nvme
+    - kvm
+    - nvme
   sysctl:
     kernel.printk: "4 4 1 7"
     kernel.kptr_restrict: "1"
   dns_nameservers:
-  - 8.8.8.8
-  - 1.1.1.1
+    - 8.8.8.8
+    - 1.1.1.1
   ntp_servers:
-  - 0.us.pool.ntp.org
-  - 1.us.pool.ntp.org
+    - 0.us.pool.ntp.org
+    - 1.us.pool.ntp.org
   wifi:
-  - name: home
-    passphrase: mypassword
-  - name: nothome
-    passphrase: somethingelse
+    - name: home
+      passphrase: mypassword
+    - name: nothome
+      passphrase: somethingelse
   password: rancher
   environment:
     http_proxy: http://myserver
@@ -61,16 +61,19 @@ install:
 
 Below is a reference of all configuration keys.
 
-!!! warning 
+!!!warning
     **Security Risks**: The configuration file contains credentials which should be kept secretly. Please do not make the configuration file publicly accessible at the moment.
 
+
 ### `server_url`
+
+#### Definition
 
 The URL of the Harvester server to join as an agent.
 
 This configuration is mandatory when the installation is in `JOIN` mode. It tells the Harvester installer where the main server is.
 
-Example
+#### Example
 
 ```yaml
 server_url: https://someserver:6443
@@ -80,12 +83,14 @@ install:
 
 ### `token`
 
+#### Definition
+
 The cluster secret or node token. If the value matches the format of a node token it will
 automatically be assumed to be a node token. Otherwise it is treated as a cluster secret.
 
 In order for a new node to join the Harvester cluster, the token should match from what server has.
 
-Example
+#### Example
 
 ```yaml
 token: myclustersecret
@@ -99,24 +104,28 @@ token: "K1074ec55daebdf54ef48294b0ddf0ce1c3cb64ee7e3d0b9ec79fbc7baf1f7ddac6::nod
 
 ### `os.ssh_authorized_keys`
 
+#### Definition
+
 A list of SSH authorized keys that should be added to the default user `rancher`. SSH keys can be obtained from GitHub user accounts by using the format
 `github:${USERNAME}`. This is done by downloading the keys from `https://github.com/${USERNAME}.keys`.
 
-Example
+#### Example
 
 ```yaml
 os:
   ssh_authorized_keys:
-  - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2TBZGjE+J8ag11dzkFT58J3XPONrDVmalCNrKxsfADfyy0eqdZrG8hcAxAR/5zuj90Gin2uBR4Sw6Cn4VHsPZcFpXyQCjK1QDADj+WcuhpXOIOY3AB0LZBly9NI0ll+8lo3QtEaoyRLtrMBhQ6Mooy2M3MTG4JNwU9o3yInuqZWf9PvtW6KxMl+ygg1xZkljhemGZ9k0wSrjqif+8usNbzVlCOVQmZwZA+BZxbdcLNwkg7zWJSXzDIXyqM6iWPGXQDEbWLq3+HR1qKucTCSxjbqoe0FD5xcW7NHIME5XKX84yH92n6yn+rxSsyUfhJWYqJd+i0fKf5UbN6qLrtd/D"
-  - "github:ibuildthecloud"
+    - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2TBZGjE+J8ag11dzkFT58J3XPONrDVmalCNrKxsfADfyy0eqdZrG8hcAxAR/5zuj90Gin2uBR4Sw6Cn4VHsPZcFpXyQCjK1QDADj+WcuhpXOIOY3AB0LZBly9NI0ll+8lo3QtEaoyRLtrMBhQ6Mooy2M3MTG4JNwU9o3yInuqZWf9PvtW6KxMl+ygg1xZkljhemGZ9k0wSrjqif+8usNbzVlCOVQmZwZA+BZxbdcLNwkg7zWJSXzDIXyqM6iWPGXQDEbWLq3+HR1qKucTCSxjbqoe0FD5xcW7NHIME5XKX84yH92n6yn+rxSsyUfhJWYqJd+i0fKf5UbN6qLrtd/D"
+    - "github:ibuildthecloud"
 ```
 
 ### `os.hostname`
 
+#### Definition
+
 Set the system hostname. This value will be overwritten by DHCP if DHCP supplies a hostname for
 the system. If DHCP doesn't offer a hostname and this value is empty, a random hostname will be generated.
 
-Example
+#### Example
 
 ```yaml
 os:
@@ -125,21 +134,27 @@ os:
 
 ### `os.modules`
 
+#### Definition
+
 A list of kernel modules to be loaded on start.
 
-Example
+#### Example
 
 ```yaml
 os:
   modules:
-  - kvm
-  - nvme
+    - kvm
+    - nvme
 ```
 
 ### `os.sysctls`
 
+#### Definition
+
 Kernel sysctl to setup on start. These are the same configuration you'd typically find in `/etc/sysctl.conf`.
 Must be specified as string values.
+
+#### Example
 
 ```yaml
 os:
@@ -148,30 +163,34 @@ os:
     kernel.kptr_restrict: "1" # force the YAML parser to read as a string
 ```
 
-### `os.ntp_servers`
-
-**Fallback** ntp servers to use if NTP is not configured elsewhere in the OS.
-
-Example
-
-```yaml
-os:
-  ntp_servers:
-    - 0.us.pool.ntp.org
-    - 1.us.pool.ntp.org
-```
-
 ### `os.dns_nameservers`
+
+#### Definition
 
 **Fallback** DNS name servers to use if DNS is not configured by DHCP or in the OS.
 
-Example
+#### Example
 
 ```yaml
 os:
   dns_nameservers:
     - 8.8.8.8
     - 1.1.1.1
+```
+
+### `os.ntp_servers`
+
+#### Definition
+
+**Fallback** ntp servers to use if NTP is not configured elsewhere in the OS.
+
+#### Example
+
+```yaml
+os:
+  ntp_servers:
+    - 0.us.pool.ntp.org
+    - 1.us.pool.ntp.org
 ```
 
 ### `os.wifi`
@@ -191,13 +210,15 @@ os:
 
 ### `os.password`
 
+#### Definition
+
 The password for the default user `rancher`. By default there is no password for the `rancher` user.
 If you set a password at runtime it will be reset on next boot. The
 value of the password can be clear text or an encrypted form. The easiest way to get this encrypted
 form is to just change your password on a Linux system and copy the value of the second field from
 `/etc/shadow`. You can also encrypt a password using `openssl passwd -1`.
 
-Example
+#### Example
 
 ```yaml
 os:
@@ -213,10 +234,12 @@ os:
 
 ### `os.environment`
 
+#### Definition
+
 Environment variables to be set on k3s and other processes like the boot process.
 Primary use of this field is to set the http proxy.
 
-Example
+#### Example
 
 ```yaml
 os:
@@ -227,12 +250,14 @@ os:
 
 ### `install.mode`
 
+#### Definition
+
 Harvester installer mode:
 
 - `create`: Creating a new Harvester installer
 - `join`: Join an existing Harvester installer. Need to specify `server_url`.
 
-Example
+#### Example
 
 ```yaml
 install:
@@ -241,9 +266,11 @@ install:
 
 ### `install.mgmtInterface`
 
+#### Definition
+
 The interface that used to build VM fabric network.
 
-Example
+#### Example
 
 ```yaml
 install:
@@ -280,9 +307,11 @@ Run installation with more logging and configure debug for installed system.
 
 ### `install.tty`
 
+#### Definition
+
 The tty device used for console.
 
-Example
+#### Example
 
 ```yaml
 install:

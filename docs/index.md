@@ -5,8 +5,8 @@ keywords:
   - harvester
   - Rancher
   - rancher
-  - what is Harverster
-  - Harvester Introduction
+  - Harvester Intro
+Description: Harvester is an open source hyper-converged infrastructure (HCI) software built on Kubernetes. It is an open source alternative to vSphere and Nutanix.
 ---
 
 # Harvester Intro
@@ -17,7 +17,7 @@ Harvester is an open source [hyper-converged infrastructure](https://en.wikipedi
 
 ## Overview
 
-Harvester implements HCI on bare metal servers. Here are some notable features of the Harvester:
+Harvester implements HCI on bare metal servers. Here are some notable features of Harvester:
 
 1. VM lifecycle management including SSH-Key injection, Cloud-init and, graphic and serial port console
 1. VM live migration support
@@ -51,13 +51,21 @@ To get the Harvester server up and running the following minimum hardware is req
 
 ## Quick start
 
+You can install Harvester via ISO installation or PXE Boot Installation. Instructions are provided in sections below.
+
+### ISO Installation
+
 You can use the ISO to install Harvester directly on the bare-metal server to form a Harvester cluster. Users can add one or many compute nodes to join the existing cluster.
 
-To get the Harvester ISO, download it from the [Github releases.](https://github.com/harvester/harvester/releases)
+To get the Harvester ISO, download it from the [Github releases](https://github.com/harvester/harvester/releases).
 
 During the installation you can either choose to form a new cluster, or join the node to an existing cluster.
 
 Note: This [video](https://youtu.be/97ADieBX6bE) shows a quick overview of the ISO installation.
+
+<div class="text-center">
+<iframe width="950" height="475" src="https://www.youtube.com/embed/97ADieBX6bE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 1. Mount the Harvester ISO disk and boot the server by selecting the `Harvester Installer`.
    ![iso-install.png](./install/iso-install.png)
@@ -76,3 +84,7 @@ Note: This [video](https://youtu.be/97ADieBX6bE) shows a quick overview of the I
    ![iso-installed.png](./install/iso-installed.png)
 1. User will be prompted to set the password for the default `admin` user on the first-time login.
    ![first-login.png](./install/first-log-in.png)
+
+### Other Installation Methods
+
+Starting from version `0.2.0`, Harvester can be installed in a mass manner, please refer to [PXE Boot Install](/docs/installation/pxe-boot-install) for detailed instructions.
