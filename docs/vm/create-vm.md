@@ -25,7 +25,7 @@ Create one or more virtual machines from the **Virtual Machines** page.
 1. To configure networks, go to the **Networks** tab. The **Management Network** is added by default. It is also possible to add secondary networks to the VMs using vlan networks (configured on **Advanced > Networks**).
 1. (Optional) Configure advanced options like hostname and cloud-init data in the **Advanced Options** section.
 
-![](/create-vm.png)
+![](create-vm.png)
 
 ## Cloud config examples
 
@@ -65,4 +65,4 @@ By default, a VM can be accessed via the management network.
 
 ### Secondary Network
 
-It is also possible to connect VMs using additional networks with Harvester's built-in [vlan networks](/docs/harvester-network.md).
+It is also possible to connect VMs using additional networks with Harvester's built-in [vlan networks](harvester-network).
