@@ -7,7 +7,7 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
       
-        <meta name="keywords" content="['Harvester', 'harvester', 'Rancher', 'rancher', 'Backing up and Restoring Virtual Machines in Harverster', 'VM Backup & Restore']">
+        <meta name="keywords" content="['Harvester', 'harvester', 'Rancher', 'rancher', 'VM Backup & Restore']">
       
       
       
@@ -370,7 +370,7 @@
   
     <li class="md-nav__item">
       <a href="../create-vm/" class="md-nav__link">
-        How to Create a VM
+        Create a VM
       </a>
     </li>
   
@@ -426,8 +426,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#backup-target-setup" class="md-nav__link">
-    Backup Target Setup
+  <a href="#prerequisite" class="md-nav__link">
+    Prerequisite
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-backup-target" class="md-nav__link">
+    Configure Backup Target
   </a>
   
 </li>
@@ -509,7 +516,7 @@
   
     <li class="md-nav__item">
       <a href="../../rancher/rancher-integration/" class="md-nav__link">
-        Rancher Integration
+        Rancher integration
       </a>
     </li>
   
@@ -521,7 +528,7 @@
   
     <li class="md-nav__item">
       <a href="../../rancher/node-driver/" class="md-nav__link">
-        Node driver
+        Harvester Node Driver
       </a>
     </li>
   
@@ -643,8 +650,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#backup-target-setup" class="md-nav__link">
-    Backup Target Setup
+  <a href="#prerequisite" class="md-nav__link">
+    Prerequisite
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-backup-target" class="md-nav__link">
+    Configure Backup Target
   </a>
   
 </li>
@@ -688,64 +702,60 @@
                 
                 
                 <h1 id="vm-backup-restore">VM Backup &amp; Restore<a class="headerlink" href="#vm-backup-restore" title="Permanent link">&para;</a></h1>
-<blockquote>
-<p>Available as of v0.2.0</p>
-</blockquote>
+<p><em>Available as of v0.2.0</em></p>
 <p>VM backups are created from the <strong>Virtual Machines</strong> page. The VM backup volumes will be stored in the <strong>Backup Target</strong> (an NFS or S3 server) and they can be used to either restore a new VM or replace an existing VM.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<h2 id="prerequisite">Prerequisite<a class="headerlink" href="#prerequisite" title="Permanent link">&para;</a></h2>
 <p>A backup target must be set up. For more information, see <a href="#backup-target-setup">Backup Target Setup</a>. If the BackupTarget has not been set, you’ll be presented with a prompt message.</p>
-</div>
-<h2 id="backup-target-setup">Backup Target Setup<a class="headerlink" href="#backup-target-setup" title="Permanent link">&para;</a></h2>
+<h2 id="configure-backup-target">Configure Backup Target<a class="headerlink" href="#configure-backup-target" title="Permanent link">&para;</a></h2>
 <p>A backup target is an endpoint used to access a backup store in Harvester. A backup store is an NFS server or S3 compatible server that stores the backups of VM volumes. The backup target can be set at <code>Settings &gt; backup-target</code>.</p>
 <table>
 <thead>
 <tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th align="left">Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Type</td>
-<td>string</td>
-<td>Choose S3 or NFS</td>
+<td align="left">Type</td>
+<td align="left">string</td>
+<td align="left">Choose S3 or NFS</td>
 </tr>
 <tr>
-<td>Endpoint</td>
-<td>string</td>
-<td>EndPoint is a hostname or an IP address. Can be left empty for AWS S3.</td>
+<td align="left">Endpoint</td>
+<td align="left">string</td>
+<td align="left">Endpoint is a hostname or an IP address. It can be left empty for AWS S3.</td>
 </tr>
 <tr>
-<td>BucketName</td>
-<td>string</td>
-<td>Name of the bucket</td>
+<td align="left">BucketName</td>
+<td align="left">string</td>
+<td align="left">Name of the bucket</td>
 </tr>
 <tr>
-<td>BucketRegion</td>
-<td>string</td>
-<td>Region of the bucket</td>
+<td align="left">BucketRegion</td>
+<td align="left">string</td>
+<td align="left">Region of the bucket</td>
 </tr>
 <tr>
-<td>AccessKeyID</td>
-<td>string</td>
-<td>AccessKeyID is like a user-id that uniquely identifies your account.</td>
+<td align="left">AccessKeyID</td>
+<td align="left">string</td>
+<td align="left">AccessKeyID is like a user-id that uniquely identifies your account.</td>
 </tr>
 <tr>
-<td>SecretAccessKey</td>
-<td>string</td>
-<td>SecretAccessKey is the password to your account.</td>
+<td align="left">SecretAccessKey</td>
+<td align="left">string</td>
+<td align="left">SecretAccessKey is the password to your account.</td>
 </tr>
 <tr>
-<td>Certificate</td>
-<td>string</td>
-<td>Paste the certificate if you want to use a self-signed SSL certificate of your s3 server</td>
+<td align="left">Certificate</td>
+<td align="left">string</td>
+<td align="left">Paste the certificate if you want to use a self-signed SSL certificate of your s3 server</td>
 </tr>
 <tr>
-<td>VirtualHostedStyle</td>
-<td>bool</td>
-<td>Use virtual-hosted-style access only, e.g., Alibaba Cloud(Aliyun) OSS</td>
+<td align="left">VirtualHostedStyle</td>
+<td align="left">bool</td>
+<td align="left">Use virtual-hosted-style access only, e.g., Alibaba Cloud(Aliyun) OSS</td>
 </tr>
 </tbody>
 </table>
@@ -757,7 +767,7 @@
 </ol>
 <p><strong>Result:</strong> The backup is created. A notification message will be promoted, and users can go to the <code>Advanced &gt; Backups</code> page to view all VM backups.</p>
 <p>The <code>ReadyToUse</code> status will be set to true once the Backup is complete.</p>
-<p>Users can either choose to restore a new VM or replace an existing VM using this backup.</p>
+<p>Users can either choose to restore a new VM, or replace an existing VM using this backup.</p>
 <h2 id="restore-a-new-vm-using-a-backup">Restore a new VM using a backup<a class="headerlink" href="#restore-a-new-vm-using-a-backup" title="Permanent link">&para;</a></h2>
 <p>To restore a new VM from a backup, follow these steps:</p>
 <ol>

@@ -7,7 +7,7 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
       
-        <meta name="keywords" content="['Harvester', 'harvester', 'Rancher', 'rancher', 'Provisioning VMs in the Harvester cluster', 'Harvester Node Driver']">
+        <meta name="keywords" content="['Harvester', 'harvester', 'Rancher', 'rancher', 'Harvester Node Driver']">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Node driver - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>Harvester Node Driver - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#create-cluster" class="md-skip">
+        <a href="#harvester-node-driver" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Node driver
+              Harvester Node Driver
             
           </span>
         </div>
@@ -368,7 +368,7 @@
   
     <li class="md-nav__item">
       <a href="../../vm/create-vm/" class="md-nav__link">
-        How to Create a VM
+        Create a VM
       </a>
     </li>
   
@@ -448,7 +448,7 @@
   
     <li class="md-nav__item">
       <a href="../rancher-integration/" class="md-nav__link">
-        Rancher Integration
+        Rancher integration
       </a>
     </li>
   
@@ -465,14 +465,16 @@
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Node driver
+          Harvester Node Driver
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Node driver
+        Harvester Node Driver
       </a>
       
         
@@ -480,12 +482,41 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#add-harvester-node-driver" class="md-nav__link">
+    Add Harvester Node Driver
+  </a>
+  
+    <nav class="md-nav" aria-label="Add Harvester Node Driver">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iso-mode" class="md-nav__link">
+    ISO Mode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#app-mode" class="md-nav__link">
+    App Mode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#create-cluster" class="md-nav__link">
@@ -497,13 +528,6 @@
         <li class="md-nav__item">
   <a href="#create-node-template" class="md-nav__link">
     Create Node Template
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-add-harvester-node-driver-in-dev-mode" class="md-nav__link">
-    How to add Harvester Node Driver in dev mode
   </a>
   
 </li>
@@ -622,12 +646,41 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#add-harvester-node-driver" class="md-nav__link">
+    Add Harvester Node Driver
+  </a>
+  
+    <nav class="md-nav" aria-label="Add Harvester Node Driver">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iso-mode" class="md-nav__link">
+    ISO Mode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#app-mode" class="md-nav__link">
+    App Mode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#create-cluster" class="md-nav__link">
@@ -639,13 +692,6 @@
         <li class="md-nav__item">
   <a href="#create-node-template" class="md-nav__link">
     Create Node Template
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-add-harvester-node-driver-in-dev-mode" class="md-nav__link">
-    How to add Harvester Node Driver in dev mode
   </a>
   
 </li>
@@ -667,14 +713,25 @@
                   </a>
                 
                 
-                  <h1>Node driver</h1>
-                
-                <h2 id="create-cluster">Create Cluster<a class="headerlink" href="#create-cluster" title="Permanent link">&para;</a></h2>
+                <h1 id="harvester-node-driver">Harvester Node Driver<a class="headerlink" href="#harvester-node-driver" title="Permanent link">&para;</a></h1>
+<p><em>Available as of v0.2.0</em></p>
+<p>The Harvester node driver is used to provision VMs in the Harvester cluster. In this section, you'll learn how to configure Rancher to use the Harvester node driver to launch and manage Kubernetes clusters.</p>
+<p>A node driver is the same as a <a href="https://docs.docker.com/machine/drivers/">Docker Machine driver</a>, and the project repo is available at <a href="https://github.com/harvester/docker-machine-driver-harvester">harvester/docker-machine-driver-harvester</a>.</p>
+<h2 id="add-harvester-node-driver">Add Harvester Node Driver<a class="headerlink" href="#add-harvester-node-driver" title="Permanent link">&para;</a></h2>
+<h3 id="iso-mode">ISO Mode<a class="headerlink" href="#iso-mode" title="Permanent link">&para;</a></h3>
+<p>In the ISO mode, the Harvester node driver is installed by default, and the user does not need to add it manually.</p>
+<h3 id="app-mode">App Mode<a class="headerlink" href="#app-mode" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Navigate to the <strong>Rancher</strong> UI.</li>
+<li>From the <strong>Global</strong> view, choose <strong>Tools &gt; Drivers</strong> in the navigation bar. From the <strong>Drivers</strong> page, select the <strong>Node Drivers</strong> tab. In versions before v2.2.0, you can select <strong>Node Drivers</strong> directly in the navigation bar.</li>
+<li>Click <strong>Add Node Driver</strong>.</li>
+<li>Enter <strong>Download URL</strong>(<a href="https://github.com/harvester/docker-machine-driver-harvester/releases">docker-machine-driver-harvester</a>) and <strong>Custom UI URL</strong>(<a href="https://github.com/harvester/ui-driver-harvester/releases">ui-driver-harvester</a>).</li>
+<li>Add domains to the <strong>Whitelist Domains</strong>.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<h2 id="create-cluster">Create Cluster<a class="headerlink" href="#create-cluster" title="Permanent link">&para;</a></h2>
 <p>Now users can access the Rancher UI from Harvester, spin up Kubernetes clusters on top of the Harvester cluster, and manage them there.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>VLAN network is required for Harvester node driver</p>
-</div>
+<p><strong>Prerequisite:</strong> VLAN network is required for Harvester node driver.</p>
 <ol>
 <li>From the <strong>Global</strong> view, click <strong>Add Cluster</strong>.</li>
 <li>Click <strong>Harvester</strong>.</li>
@@ -695,16 +752,6 @@
 <li>Enter a <strong>RANCHER TEMPLATE</strong> name.</li>
 </ol>
 <p>See <a href="https://rancher.com/docs/rancher/v2.5/en/cluster-provisioning/rke-clusters/node-pools/">nodes hosted by an infrastructure provider</a> for more info.</p>
-<h2 id="how-to-add-harvester-node-driver-in-dev-mode">How to add Harvester Node Driver in dev mode<a class="headerlink" href="#how-to-add-harvester-node-driver-in-dev-mode" title="Permanent link">&para;</a></h2>
-<p>Developer mode doesn't come with Harvester node driver pre-installed. Following the steps below to install it:</p>
-<ol>
-<li>Navigate to the <strong>Rancher</strong> UI.</li>
-<li>From the <strong>Global</strong> view, choose <strong>Tools &gt; Drivers</strong> in the navigation bar. From the <strong>Drivers</strong> page, select the <strong>Node Drivers</strong> tab. In versions before v2.2.0, you can select <strong>Node Drivers</strong> directly in the navigation bar.</li>
-<li>Click <strong>Add Node Driver</strong>.</li>
-<li>Enter <strong>Download URL</strong>(<a href="https://github.com/harvester/docker-machine-driver-harvester/releases">docker-machine-driver-harvester</a>) and <strong>Custom UI URL</strong>(<a href="https://github.com/harvester/ui-driver-harvester/releases">ui-driver-harvester</a>). </li>
-<li>Add domains to the <strong>Whitelist Domains</strong>.</li>
-<li>Click <strong>Create</strong>.</li>
-</ol>
                 
                   
                 
@@ -734,7 +781,7 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Rancher Integration
+              Rancher integration
             </div>
           </div>
         </a>

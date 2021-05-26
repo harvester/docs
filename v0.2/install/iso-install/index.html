@@ -7,7 +7,7 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
       
-        <meta name="keywords" content="['Harvester', 'harvester', 'Rancher', 'rancher', 'Install Harverster', 'Installing Harverster', 'Harverster Installation', 'ISO Installation']">
+        <meta name="keywords" content="['Harvester', 'harvester', 'Rancher', 'rancher', 'ISO Installation']">
       
       
       
@@ -380,7 +380,7 @@
   
     <li class="md-nav__item">
       <a href="../../vm/create-vm/" class="md-nav__link">
-        How to Create a VM
+        Create a VM
       </a>
     </li>
   
@@ -458,7 +458,7 @@
   
     <li class="md-nav__item">
       <a href="../../rancher/rancher-integration/" class="md-nav__link">
-        Rancher Integration
+        Rancher integration
       </a>
     </li>
   
@@ -470,7 +470,7 @@
   
     <li class="md-nav__item">
       <a href="../../rancher/node-driver/" class="md-nav__link">
-        Node driver
+        Harvester Node Driver
       </a>
     </li>
   
@@ -603,10 +603,7 @@
                 <h1 id="iso-installation">ISO Installation<a class="headerlink" href="#iso-installation" title="Permanent link">&para;</a></h1>
 <p>To get the Harvester ISO, download it from the <a href="https://github.com/harvester/harvester/releases">Github releases.</a></p>
 <p>During the installation you can either choose to form a new cluster, or join the node to an existing cluster.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This <a href="https://youtu.be/97ADieBX6bE">video</a> shows a quick overview of the ISO installation.</p>
-</div>
+<p>Note: This <a href="https://youtu.be/97ADieBX6bE">video</a> shows a quick overview of the ISO installation.</p>
 <ol>
 <li>Mount the Harvester ISO disk and boot the server by selecting the <code>Harvester Installer</code>.
    <img alt="iso-install.png" src="../iso-install.png" /></li>
@@ -620,7 +617,7 @@
 <li>(Optional) If you need to use an HTTP proxy to access the outside world, enter the proxy URL address here, otherwise, leave this blank.</li>
 <li>(Optional) If you need to customize the host with cloud-init config, enter the HTTP URL here.</li>
 <li>Confirm the installation options and the Harvester will be installed to your host. The installation may take a few minutes to be complete.</li>
-<li>Once the installation is complete it will restart the host and a console UI with management URL and status will be displayed. <small>(You can Use F12 to switch between Harvester console and the Shell)</small></li>
+<li>Once the installation is complete it will restart the host and a console UI with management URL and status will be displayed. (You can Use F12 to switch between Harvester console and the Shell)</li>
 <li>The default URL of the web interface is <code>https://your-host-ip:30443</code>.
    <img alt="iso-installed.png" src="../iso-installed.png" /></li>
 <li>User will be prompted to set the password for the default <code>admin</code> user on the first-time login.

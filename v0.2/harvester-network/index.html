@@ -7,7 +7,7 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
       
-        <meta name="keywords" content="['Harvester', 'harvester', 'Rancher', 'rancher', 'network', 'Harvester Network']">
+        <meta name="keywords" content="['Harvester', 'harvester', 'Rancher', 'rancher', 'Harvester Upgrade']">
       
       
       
@@ -349,6 +349,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#implementation" class="md-nav__link">
     Implementation
   </a>
@@ -435,7 +442,7 @@
   
     <li class="md-nav__item">
       <a href="../vm/create-vm/" class="md-nav__link">
-        How to Create a VM
+        Create a VM
       </a>
     </li>
   
@@ -513,7 +520,7 @@
   
     <li class="md-nav__item">
       <a href="../rancher/rancher-integration/" class="md-nav__link">
-        Rancher Integration
+        Rancher integration
       </a>
     </li>
   
@@ -525,7 +532,7 @@
   
     <li class="md-nav__item">
       <a href="../rancher/node-driver/" class="md-nav__link">
-        Node driver
+        Harvester Node Driver
       </a>
     </li>
   
@@ -647,6 +654,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#implementation" class="md-nav__link">
     Implementation
   </a>
@@ -698,8 +712,9 @@
                 
                 
                 <h1 id="harvester-network">Harvester Network<a class="headerlink" href="#harvester-network" title="Permanent link">&para;</a></h1>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/harvester/harvester">Harvester</a> is built on Kubernetes, which uses <a href="https://github.com/containernetworking/cni">CNI</a> as an interface between network providers and Kubernetes pod networking. Naturally, we implement the Harvester network based on CNI. Moreover, the <a href="https://github.com/harvester/harvester-ui">Harvester UI</a> integrates the Harvester network to provide a user-friendly way to configure networks for VMs.</p>
-<p>By version 0.2, Harvester supports two kinds of networks:</p>
+<p>As of version 0.2.0, Harvester supports two kinds of networks: </p>
 <ul>
 <li>management network</li>
 <li><a href="https://en.wikipedia.org/wiki/Virtual_LAN">VLAN</a></li>
@@ -708,7 +723,7 @@
 <h3 id="management-network">Management Network<a class="headerlink" href="#management-network" title="Permanent link">&para;</a></h3>
 <p>Harvester adopts <a href="https://github.com/flannel-io/flannel">flannel</a> as the default CNI to implement the management network. It's an internal network, which means the user can only access the VM's management network within its cluster nodes or pods.</p>
 <h3 id="vlan">VLAN<a class="headerlink" href="#vlan" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/harvester/harvester-network-controller">Harvester network-controller</a> leverages the <a href="https://github.com/k8snetworkplumbingwg/multus-cni">multus</a> and <a href="https://www.cni.dev/plugins/current/main/bridge/">bridge</a> CNI plugins to implement the VLAN.</p>
+<p><a href="https://github.com/harvester/harvester-network-controller">Harvester network-controller</a> leverages the <a href="https://github.com/k8snetworkplumbingwg/multus-cni">multus</a> and <a href="https://www.cni.dev/plugins/current/main/bridge/">bridge</a> CNI plugins to implement the VLAN.  </p>
 <p>Below is a use case of the VLAN in Harvester.</p>
 <p><img alt="" src="../assets/vlan-case.png" /></p>
 <ul>
@@ -718,12 +733,15 @@
 <li>Users can use VLAN with <code>PVID</code> (default 1) to communicate with any normal untagged traffic.</li>
 </ul>
 <h2 id="enabling-vlan-in-the-harvester-ui">Enabling VLAN in the Harvester UI<a class="headerlink" href="#enabling-vlan-in-the-harvester-ui" title="Permanent link">&para;</a></h2>
-<p>Enable VLAN via going to <strong>Setting &gt; vlan</strong> to enable VLAN and input a valid default physical NIC name for the VLAN.</p>
-<p>The first physical NIC name of each Harvester node always defaults to eth0. It is recommended to choose a separate NIC for the VLAN other than the one used for the management network (the one selected during the Harvester installation) for better network performance and isolation.</p>
-<p>Note: Modifying the default VLAN network setting will not change the existing configured host networks.</p>
+<p>Enable VLAN via going to <strong>Setting &gt; vlan</strong> to enable VLAN and input a valid default physical NIC name for the VLAN. </p>
+<p>The first physical NIC name of each Harvester node always defaults to eth0. It is recommended to choose a separate NIC for the VLAN other than the one used for the management network (the one selected during the Harvester installation) for better network performance and isolation. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Modifying the default VLAN network setting will not change the existing configured host networks.</p>
+</div>
 <p><img alt="" src="../assets/enable-vlan.png" /></p>
 <ul>
-<li>(optional) Users can always customize each node's VLAN network configuration via going to the <strong>HOST &gt; Network</strong> tab.</li>
+<li>(optional) Users can customize each node's VLAN network configuration via going to the <strong>HOST &gt; Network</strong> tab.</li>
 </ul>
 <p><img alt="" src="../assets/node-network-configuration.png" /></p>
 <ul>
@@ -735,11 +753,17 @@
 <p>The network is configured when the VM is created.</p>
 </li>
 <li>
-<p>Only the first network interface card will be enabled by default. Users can either choose to use a management network or VLAN network. Note: You will need to select the <code>Install guest agent</code> option in the <code>Advanced Options</code> tab to get the VLAN network IP address from the Harvester UI.</p>
-<p><img alt="" src="../assets/vm-network-configuration.png" /></p>
+<p>Only the first network interface card will be enabled by default. Users can either choose to use a management network or VLAN network. </p>
 </li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will need to select the <code>Install guest agent</code> option in the <code>Advanced Options</code> tab to get the VLAN network IP address from the Harvester UI.</p>
+<p><img alt="" src="../assets/vm-network-configuration.png" /></p>
+</div>
+<ul>
 <li>
-<p>Users can choose to add one or multiple network interface cards. Additional network interface card configurations can be set via cloud-init network data, e.g.:</p>
+<p>Users can choose to add one or multiple network interface cards. Additional network interface card configurations can be set via cloud-init network data, for example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="nt">config</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">physical</span>
@@ -747,7 +771,7 @@
     <span class="nt">subnets</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
   <span class="p p-Indicator">-</span> <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">physical</span>
-    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">enp2s0</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">enp2s0</span> 
     <span class="nt">subnets</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">DHCP</span>
 </code></pre></div>

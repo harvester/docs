@@ -7,7 +7,7 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
       
-        <meta name="keywords" content="['Harvester', 'harvester', 'Rancher', 'rancher', 'Creating a virtual machine in Harverster', 'How to Create a VM']">
+        <meta name="keywords" content="['Harvester', 'harvester', 'Rancher', 'rancher', 'Create a VM']">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>How to Create a VM - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>Create a VM - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#how-to-create-a-vm" class="md-skip">
+        <a href="#create-a-vm" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              How to Create a VM
+              Create a VM
             
           </span>
         </div>
@@ -379,12 +379,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          How to Create a VM
+          Create a VM
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        How to Create a VM
+        Create a VM
       </a>
       
         
@@ -402,14 +402,20 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-create-a-vm" class="md-nav__link">
+    How to Create a VM
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cloud-config-examples" class="md-nav__link">
     Cloud config examples
   </a>
   
-    <nav class="md-nav" aria-label="Cloud config examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#networks" class="md-nav__link">
     Networks
   </a>
@@ -428,11 +434,6 @@
   <a href="#secondary-network" class="md-nav__link">
     Secondary Network
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -521,7 +522,7 @@
   
     <li class="md-nav__item">
       <a href="../../rancher/rancher-integration/" class="md-nav__link">
-        Rancher Integration
+        Rancher integration
       </a>
     </li>
   
@@ -533,7 +534,7 @@
   
     <li class="md-nav__item">
       <a href="../../rancher/node-driver/" class="md-nav__link">
-        Node driver
+        Harvester Node Driver
       </a>
     </li>
   
@@ -655,14 +656,20 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-create-a-vm" class="md-nav__link">
+    How to Create a VM
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cloud-config-examples" class="md-nav__link">
     Cloud config examples
   </a>
   
-    <nav class="md-nav" aria-label="Cloud config examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#networks" class="md-nav__link">
     Networks
   </a>
@@ -688,11 +695,6 @@
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
       
     </ul>
   
@@ -711,21 +713,22 @@
                   </a>
                 
                 
-                <h1 id="how-to-create-a-vm">How to Create a VM<a class="headerlink" href="#how-to-create-a-vm" title="Permanent link">&para;</a></h1>
+                <h1 id="create-a-vm">Create a VM<a class="headerlink" href="#create-a-vm" title="Permanent link">&para;</a></h1>
+<h2 id="how-to-create-a-vm">How to Create a VM<a class="headerlink" href="#how-to-create-a-vm" title="Permanent link">&para;</a></h2>
 <p>Create one or more virtual machines from the <strong>Virtual Machines</strong> page.</p>
 <ol>
 <li>Choose the option to create either one or multiple VM instances.</li>
 <li>The VM name is required.</li>
-<li>(Optional) you can select to use the VM template. By default we have added ISO, raw, and Windows image templates.</li>
+<li>(Optional) You can select to use the VM template. By default we have added ISO, raw, and Windows image templates.</li>
 <li>Configure the CPU and Memory of the VM.</li>
 <li>Select a custom VM image.</li>
 <li>Select SSH keys or upload a new one.</li>
 <li>To add more disks to the VM, go to the <strong>Volumes</strong> tab. The default disk will be the root disk.</li>
 <li>To configure networks, go to the <strong>Networks</strong> tab. The <strong>Management Network</strong> is added by default. It is also possible to add secondary networks to the VMs using vlan networks (configured on <strong>Advanced &gt; Networks</strong>).</li>
-<li>Optional: Configure advanced options like hostname and cloud-init data in the <strong>Advanced Options</strong> section.</li>
+<li>(Optional) Configure advanced options like hostname and cloud-init data in the <strong>Advanced Options</strong> section.</li>
 </ol>
-<p><img alt="" src="../create-vm.png" /></p>
-<h3 id="cloud-config-examples">Cloud config examples<a class="headerlink" href="#cloud-config-examples" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="/create-vm.png" /></p>
+<h2 id="cloud-config-examples">Cloud config examples<a class="headerlink" href="#cloud-config-examples" title="Permanent link">&para;</a></h2>
 <p>Config for the password of the default user:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">#cloud-config</span>
 <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">password</span>
@@ -745,12 +748,12 @@
       <span class="p p-Indicator">-</span> <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
 </code></pre></div>
 <p>You can also use the <code>Cloud Config Template</code> feature to include a pre-defined cloud-init config for the VM.</p>
-<h4 id="networks">Networks<a class="headerlink" href="#networks" title="Permanent link">&para;</a></h4>
-<h5 id="management-network">Management Network<a class="headerlink" href="#management-network" title="Permanent link">&para;</a></h5>
+<h2 id="networks">Networks<a class="headerlink" href="#networks" title="Permanent link">&para;</a></h2>
+<h3 id="management-network">Management Network<a class="headerlink" href="#management-network" title="Permanent link">&para;</a></h3>
 <p>A management network represents the default vm eth0 interface configured by the cluster network solution that is present in each VM.</p>
 <p>By default, a VM can be accessed via the management network.</p>
-<h5 id="secondary-network">Secondary Network<a class="headerlink" href="#secondary-network" title="Permanent link">&para;</a></h5>
-<p>It is also possible to connect VMs using additional networks with Harvester's built-in <a href="../../harvester-network/">vlan networks</a>.</p>
+<h3 id="secondary-network">Secondary Network<a class="headerlink" href="#secondary-network" title="Permanent link">&para;</a></h3>
+<p>It is also possible to connect VMs using additional networks with Harvester's built-in <a href="/docs/harvester-network.md">vlan networks</a>.</p>
                 
                   
                 
