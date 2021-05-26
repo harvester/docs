@@ -26,10 +26,15 @@ extra:
 
 extra_css:
   - stylesheets/extra.css
+  - ../../assets/swagger-ui/swagger-ui.css
+
+extra_javascript:
+  - ../../assets/swagger-ui/swagger-ui-bundle.js
 
 #google_analytics:
 plugins:
   - search
+  - render_swagger
   #- markdownextradata: {}
 
 markdown_extensions:
@@ -60,3 +65,5 @@ nav:
     - rancher/node-driver.md
   - Development:
     - dev/dev-mode.md
+  - Reference:
+    - reference/api.md

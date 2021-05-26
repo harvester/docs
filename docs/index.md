@@ -88,3 +88,4 @@ Note: This [video](https://youtu.be/97ADieBX6bE) shows a quick overview of the I
 ### Other Installation Methods
 
 Starting from version `0.2.0`, Harvester can be installed in a mass manner, please refer to [PXE Boot Install](./install/pxe-boot-install.md) for detailed instructions.
+

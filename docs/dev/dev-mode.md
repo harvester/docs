@@ -69,9 +69,11 @@ cat /proc/cpuinfo | grep vmx
    --set longhorn.enabled=true,minio.persistence.storageClass=longhorn
    ```
 
+
 ### Option 2: Install using Rancher
 
 !!! tip
+
 You can create a testing Kubernetes environment in Rancher using the Digital Ocean cloud provider. For details, see [this section](#digital-ocean-test-environment).
 
 1. Add the Harvester repo `https://github.com/harvester/harvester` to your Rancher catalogs by clicking **Global > Tools > Catalogs**.

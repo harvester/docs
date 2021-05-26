@@ -17,6 +17,7 @@ With ISO installation mode, user will be prompted to set the password for the de
 
 ![auth](./install/first-log-in.png)
 
+
 The Harvester login page is shown below:
 
 ![auth](./assets/authentication.png)
