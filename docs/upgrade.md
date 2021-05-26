@@ -33,7 +33,7 @@ To get the Harvester ISO of a newer version, download it from the Github release
 1. Shut down the server, and boot the server from the ISO disk of the newer Harvester version.
 1. Select the `Harvester Installer` in the grub menu.
 1. Select `Upgrade Harvester` and confirm in the prompt.
-   ![iso-mode-upgrade](/assets/iso-mode-upgrade.png)
+   ![iso-mode-upgrade](./assets/iso-mode-upgrade.png)
 1. Wait until the upgrade completes. The node will be rebooted and show `Ready` again in the terminal console.
 1. Go to the **Hosts** page in Harvester UI.
 1. Find the node that just completed the upgrade. Click on the action dropdown. Click on the `Disable Maintenance Mode` action.
