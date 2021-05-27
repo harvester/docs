@@ -826,14 +826,14 @@
                 <h1 id="pxe-boot-install">PXE Boot Install<a class="headerlink" href="#pxe-boot-install" title="Permanent link">&para;</a></h1>
 <p>Starting from version <code>0.2.0</code>, Harvester can be installed in a mass manner. This document provides an example to do the automatic installation with PXE boot.</p>
 <p>We recommend using <a href="https://ipxe.org/">iPXE</a> to perform the network boot. It has more features than the traditional PXE Boot program and is likely available in modern NIC cards. If NIC cards don't come with iPXE firmware, iPXE firmware images can be loaded from the TFTP server first.</p>
-<p>To see sample iPXE scripts, please visit https://github.com/harvester/ipxe-examples.</p>
+<p>To see sample iPXE scripts, please visit <a href="https://github.com/harvester/ipxe-examples">Harvester iPXE Examples</a>.</p>
 <h2 id="preparing-http-servers">Preparing HTTP Servers<a class="headerlink" href="#preparing-http-servers" title="Permanent link">&para;</a></h2>
 <p>An HTTP server is required to serve boot files. Please ensure these servers are set up correctly before continuing.</p>
 <p>Let's assume an NGINX HTTP server's IP is <code>10.100.0.10</code>, and it serves <code>/usr/share/nginx/html/</code> folder at the path <code>http://10.100.0.10/</code>.</p>
 <h2 id="preparing-boot-files">Preparing Boot Files<a class="headerlink" href="#preparing-boot-files" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p>Download the required files from https://github.com/harvester/harvester/releases. Choose an appropriate version.</p>
+<p>Download the required files from <a href="https://github.com/harvester/harvester/releases">Harvester Releases Page</a>. Choose an appropriate version.</p>
 </li>
 <li>
 <p>The ISO: <code>harvester-amd64.iso</code></p>
