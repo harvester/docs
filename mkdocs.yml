@@ -26,10 +26,10 @@ extra:
 
 extra_css:
   - stylesheets/extra.css
-  - stylesheets/swagger-ui.css
+  - ../../assets/swagger-ui/swagger-ui.css
 
 extra_javascript:
-  - javascripts/swagger-ui-bundle.js
+  - ../../assets/swagger-ui/swagger-ui-bundle.js
 
 #google_analytics:
 plugins:
