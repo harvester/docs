@@ -21,6 +21,8 @@ VMs can be accessed from the UI directly using either VNC or the serial console.
 
 If the VGA display is not enabled on the VM (e.g., when using the Ubuntu minimal cloud image), the VM can be accessed with the serial console.
 
+![](assets/access-to-vm.png)
+
 ## Access using SSH
 
 Use the address in a terminal emulation client (such as Putty) or use the following command line to access the VM directly from your computer's SSH client:
@@ -28,5 +30,3 @@ Use the address in a terminal emulation client (such as Putty) or use the follow
 ```bash
  ssh -i ~/.ssh/your-ssh-key user@<ip-address-or-hostname>
 ```
-
-![](access-to-vm.png)
