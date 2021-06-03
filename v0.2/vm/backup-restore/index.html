@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v0.2/vm/backup-restore/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.5">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.6">
     
     
       
@@ -22,10 +22,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.bde7dde4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.875de78c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f1a3b89f.min.css">
         
           
           
@@ -46,7 +46,7 @@
     
       <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-      <link rel="stylesheet" href="../../../../assets/swagger-ui/swagger-ui.css">
+      <link rel="stylesheet" href="../../assets/swagger-ui/swagger-ui.css">
     
     
       
@@ -426,13 +426,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisite" class="md-nav__link">
-    Prerequisite
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#configure-backup-target" class="md-nav__link">
     Configure Backup Target
   </a>
@@ -650,13 +643,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisite" class="md-nav__link">
-    Prerequisite
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#configure-backup-target" class="md-nav__link">
     Configure Backup Target
   </a>
@@ -703,9 +689,12 @@
                 
                 <h1 id="vm-backup-restore">VM Backup &amp; Restore<a class="headerlink" href="#vm-backup-restore" title="Permanent link">&para;</a></h1>
 <p><em>Available as of v0.2.0</em></p>
-<p>VM backups are created from the <strong>Virtual Machines</strong> page. The VM backup volumes will be stored in the <strong>Backup Target</strong> (an NFS or S3 server) and they can be used to either restore a new VM or replace an existing VM.</p>
-<h2 id="prerequisite">Prerequisite<a class="headerlink" href="#prerequisite" title="Permanent link">&para;</a></h2>
+<p>VM backups are created from the <strong>Virtual Machines</strong> page. The VM backup volumes will be stored in the <strong>Backup Target</strong> (an NFS or S3 server) and they can be used to either restore a new VM or replace an existing VM.
+<img alt="vm-backup.png" src="../assets/vm-backup.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>A backup target must be set up. For more information, see <a href="#backup-target-setup">Backup Target Setup</a>. If the BackupTarget has not been set, you’ll be presented with a prompt message.</p>
+</div>
 <h2 id="configure-backup-target">Configure Backup Target<a class="headerlink" href="#configure-backup-target" title="Permanent link">&para;</a></h2>
 <p>A backup target is an endpoint used to access a backup store in Harvester. A backup store is an NFS server or S3 compatible server that stores the backups of VM volumes. The backup target can be set at <code>Settings &gt; backup-target</code>.</p>
 <table>
@@ -763,7 +752,8 @@
 <ol>
 <li>Once the backup target is set, go to the <code>Virtual Machines</code> page.</li>
 <li>Click <code>Take Backup</code> of the VM actions to create a new VM backup.</li>
-<li>Set a custom backup name and click <code>Create</code> to create a new VM backup.</li>
+<li>Set a custom backup name and click <code>Create</code> to create a new VM backup.
+<img alt="create-backup.png" src="../assets/create-backup.png" /></li>
 </ol>
 <p><strong>Result:</strong> The backup is created. A notification message will be promoted, and users can go to the <code>Advanced &gt; Backups</code> page to view all VM backups.</p>
 <p>The <code>ReadyToUse</code> status will be set to true once the Backup is complete.</p>
@@ -773,7 +763,8 @@
 <ol>
 <li>Go to the <code>Backups</code> page.</li>
 <li>Specify the new VM name and click <code>Create</code>.</li>
-<li>A new VM will be restored using the backup volumes and metadata, and users can access it from the <code>Virtual Machines</code> page.</li>
+<li>A new VM will be restored using the backup volumes and metadata, and users can access it from the <code>Virtual Machines</code> page.
+<img alt="restore-vm.png" src="../assets/restore-vm.png" /></li>
 </ol>
 <h2 id="replace-an-existing-vm-using-a-backup">Replace an Existing VM using a backup<a class="headerlink" href="#replace-an-existing-vm-using-a-backup" title="Permanent link">&para;</a></h2>
 <p>You can replace an existing VM using the backup with the same VM backup target .</p>
@@ -857,9 +848,9 @@
     <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.d351de03.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.a1609d9a.min.js"></script>
+      <script src="../../assets/javascripts/bundle.34eae1b6.min.js"></script>
       
-        <script src="../../../../assets/swagger-ui/swagger-ui-bundle.js"></script>
+        <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
     
   </body>
