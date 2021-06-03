@@ -14,10 +14,10 @@ Description: VM backups are created from the Virtual Machines page. The VM backu
 _Available as of v0.2.0_
 
 VM backups are created from the **Virtual Machines** page. The VM backup volumes will be stored in the **Backup Target** (an NFS or S3 server) and they can be used to either restore a new VM or replace an existing VM.
+![vm-backup.png](assets/vm-backup.png)
 
-## Prerequisite
-
-A backup target must be set up. For more information, see [Backup Target Setup](#backup-target-setup). If the BackupTarget has not been set, you’ll be presented with a prompt message.
+!!! Note
+    A backup target must be set up. For more information, see [Backup Target Setup](#backup-target-setup). If the BackupTarget has not been set, you’ll be presented with a prompt message.
 
 ## Configure Backup Target
 
@@ -39,6 +39,7 @@ A backup target is an endpoint used to access a backup store in Harvester. A bac
 1. Once the backup target is set, go to the `Virtual Machines` page.
 1. Click `Take Backup` of the VM actions to create a new VM backup.
 1. Set a custom backup name and click `Create` to create a new VM backup.
+![create-backup.png](assets/create-backup.png)
 
 **Result:** The backup is created. A notification message will be promoted, and users can go to the `Advanced > Backups` page to view all VM backups.
 
@@ -53,6 +54,7 @@ To restore a new VM from a backup, follow these steps:
 1. Go to the `Backups` page.
 1. Specify the new VM name and click `Create`.
 1. A new VM will be restored using the backup volumes and metadata, and users can access it from the `Virtual Machines` page.
+![restore-vm.png](assets/restore-vm.png)
 
 ## Replace an Existing VM using a backup
 
