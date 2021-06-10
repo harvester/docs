@@ -13,7 +13,7 @@ Description: Harvester provides two ways to upgrade. Users can either upgrade us
 
 _Available as of v0.2.0_
 
-Harvester provides two ways to upgrade. Users can either upgrade using the ISO image, or urgarde through UI.
+Harvester provides two ways to upgrade. Users can either upgrade using the ISO image, or upgrade through UI.
 
 !!!note
 
