@@ -33,8 +33,8 @@ Below is a use case of the VLAN in Harvester.
 
   ![](./assets/vlan-case.png)
 
-- Harvester network-controller uses a bridge for a node and a pair of veth for a VM to implement the VLAN. The bridge acts as a switch to forward the network traffic from or to VMs and the veth pair is like the connected ports between vms and switch.
-- VMs within the same VLAN is able to communicate with each other, while the VMs within different VLANs can't.
+- Harvester network-controller uses a bridge for a node and a pair of veth for a VM to implement the VLAN. The bridge acts as a switch to forward the network traffic from or to VMs and the veth pair is like the connected ports between VMs and switch.
+- VMs within the same VLAN can communicate with each other, while the VMs within different VLANs can't.
 - The external switch ports connected with the hosts or other devices(such as DHCP server) should be set as trunk or hybrid type and permit the specified VLANs.
 - Users can use VLAN with `PVID` (default 1) to communicate with any normal untagged traffic.
 
