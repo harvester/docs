@@ -66,7 +66,7 @@ cat /proc/cpuinfo | grep vmx
    ## Install the chart to the target namespace
    helm install harvester harvester \
    --namespace harvester-system \
-   --set longhorn.enabled=true,minio.persistence.storageClass=longhorn
+   --set longhorn.enabled=true
    ```
 
 ### Option 2: Install using Rancher
