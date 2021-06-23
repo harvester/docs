@@ -398,6 +398,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#oswrite_files" class="md-nav__link">
+    os.write_files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#oshostname" class="md-nav__link">
     os.hostname
   </a>
@@ -1140,6 +1147,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#oswrite_files" class="md-nav__link">
+    os.write_files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#oshostname" class="md-nav__link">
     os.hostname
   </a>
@@ -1496,6 +1510,12 @@
   <span class="nt">ssh_authorized_keys</span><span class="p">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB...</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">github:username</span>
+  <span class="nt">write_files</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">encoding</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+    <span class="nt">content</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">test content</span>
+    <span class="nt">owner</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+    <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/test.txt</span>
+    <span class="nt">permissions</span><span class="p">:</span> <span class="s">&#39;0755&#39;</span>
   <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">myhost</span>
   <span class="nt">modules</span><span class="p">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">kvm</span>
@@ -1565,6 +1585,38 @@ automatically be assumed to be a node token. Otherwise it is treated as a cluste
   <span class="nt">ssh_authorized_keys</span><span class="p">:</span>
     <span class="p p-Indicator">-</span> <span class="s">&quot;ssh-rsa</span><span class="nv"> </span><span class="s">AAAAB3NzaC1yc2EAAAADAQABAAABAQC2TBZGjE+J8ag11dzkFT58J3XPONrDVmalCNrKxsfADfyy0eqdZrG8hcAxAR/5zuj90Gin2uBR4Sw6Cn4VHsPZcFpXyQCjK1QDADj+WcuhpXOIOY3AB0LZBly9NI0ll+8lo3QtEaoyRLtrMBhQ6Mooy2M3MTG4JNwU9o3yInuqZWf9PvtW6KxMl+ygg1xZkljhemGZ9k0wSrjqif+8usNbzVlCOVQmZwZA+BZxbdcLNwkg7zWJSXzDIXyqM6iWPGXQDEbWLq3+HR1qKucTCSxjbqoe0FD5xcW7NHIME5XKX84yH92n6yn+rxSsyUfhJWYqJd+i0fKf5UbN6qLrtd/D&quot;</span>
     <span class="p p-Indicator">-</span> <span class="s">&quot;github:ibuildthecloud&quot;</span>
+</code></pre></div>
+<h3 id="oswrite_files"><code>os.write_files</code><a class="headerlink" href="#oswrite_files" title="Permanent link">&para;</a></h3>
+<p>A list of files to write to disk on boot. The <code>encoding</code> field specifies the content's encoding. Valid <code>encoding</code> values are:</p>
+<ul>
+<li><code>""</code>: content data are written in plain text. In this case, the <code>encoding</code> field can be also omitted.</li>
+<li><code>b64</code>, <code>base64</code>: content data are base64-encoded.</li>
+<li><code>gz</code>, <code>gzip</code>: content data are gzip-compressed.</li>
+<li><code>gz+base64</code>, <code>gzip+base64</code>, <code>gz+b64</code>, <code>gzip+b64</code>: content data are gzip-compressed first and then base64-encoded.</li>
+</ul>
+<p>Example</p>
+<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span>
+  <span class="nt">write_files</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">encoding</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">b64</span>
+    <span class="nt">content</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CiMgVGhpcyBmaWxlIGNvbnRyb2xzIHRoZSBzdGF0ZSBvZiBTRUxpbnV4...</span>
+    <span class="nt">owner</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root:root</span>
+    <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/connman/main.conf</span>
+    <span class="nt">permissions</span><span class="p">:</span> <span class="s">&#39;0644&#39;</span>
+  <span class="p p-Indicator">-</span> <span class="nt">content</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+      <span class="no"># My new /etc/sysconfig/samba file</span>
+
+      <span class="no">SMDBOPTIONS=&quot;-D&quot;</span>
+    <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/sysconfig/samba</span>
+  <span class="p p-Indicator">-</span> <span class="nt">content</span><span class="p">:</span> <span class="kt">!!binary</span> <span class="p p-Indicator">|</span>
+      <span class="no">f0VMRgIBAQAAAAAAAAAAAAIAPgABAAAAwARAAAAAAABAAAAAAAAAAJAVAAAAAA</span>
+      <span class="no">AEAAHgAdAAYAAAAFAAAAQAAAAAAAAABAAEAAAAAAAEAAQAAAAAAAwAEAAAAAAA</span>
+      <span class="no">AAAAAAAAAwAAAAQAAAAAAgAAAAAAAAACQAAAAAAAAAJAAAAAAAAcAAAAAAAAAB</span>
+      <span class="no">...</span>
+    <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/bin/arch</span>
+    <span class="nt">permissions</span><span class="p">:</span> <span class="s">&#39;0555&#39;</span>
+  <span class="p p-Indicator">-</span> <span class="nt">content</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+      <span class="no">15 * * * * root ship_logs</span>
+    <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/crontab</span>
 </code></pre></div>
 <h3 id="oshostname"><code>os.hostname</code><a class="headerlink" href="#oshostname" title="Permanent link">&para;</a></h3>
 <h4 id="definition_3">Definition<a class="headerlink" href="#definition_3" title="Permanent link">&para;</a></h4>
