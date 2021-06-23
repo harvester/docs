@@ -773,7 +773,7 @@ kubectl create ns harvester-system
 <span class="c1">## Install the chart to the target namespace</span>
 helm install harvester harvester <span class="se">\</span>
 --namespace harvester-system <span class="se">\</span>
---set longhorn.enabled<span class="o">=</span>true,minio.persistence.storageClass<span class="o">=</span>longhorn
+--set longhorn.enabled<span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
 <h3 id="option-2-install-using-rancher">Option 2: Install using Rancher<a class="headerlink" href="#option-2-install-using-rancher" title="Permanent link">&para;</a></h3>
 <div class="admonition tip">
