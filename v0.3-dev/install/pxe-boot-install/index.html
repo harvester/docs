@@ -920,14 +920,7 @@ boot
 </code></pre></div>
 <p>Let's assume the iPXE script is stored in <code>/usr/share/nginx/html/harvester/ipxe-join</code>.</p>
 <p><strong>TROUBLESHOOTING</strong></p>
-<ul>
-<li>Sometimes the installer might be not able to fetch the Harvester configuration file because the network stack is not ready yet. To work around this, please add a <code>boot_cmd</code> parameter to the iPXE script, e.g.,</li>
-</ul>
-<div class="highlight"><pre><span></span><code>#!ipxe
-kernel vmlinuz k3os.mode=install console=ttyS0 console=tty1 harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-join.yaml boot_cmd=&quot;echo include_ping_test=yes &gt;&gt; /etc/conf.d/net-online&quot;
-initrd initrd
-boot
-</code></pre></div>
+<p>We will add any workaround or troubleshooting tips here.</p>
 <h2 id="dhcp-server-configuration">DHCP server configuration<a class="headerlink" href="#dhcp-server-configuration" title="Permanent link">&para;</a></h2>
 <p>Here is an example to configure the ISC DHCP server to offer iPXE scripts:</p>
 <div class="highlight"><pre><span></span><code>option architecture-type code <span class="nv">93</span> <span class="o">=</span> unsigned integer <span class="m">16</span><span class="p">;</span>
