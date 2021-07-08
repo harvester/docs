@@ -2,82 +2,82 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/authentication/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/harvester-network/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/import-image/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/upgrade/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/dev/dev-mode/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/install/harvester-configuration/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/install/iso-install/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/install/pxe-boot-install/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/rancher/node-driver/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/rancher/rancher-integration/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/reference/api/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/vm/access-to-the-vm/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/vm/backup-restore/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/vm/create-vm/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.harvesterhci.io/v0.3-dev/vm/live-migration/</loc>
-         <lastmod>2021-06-23</lastmod>
+         <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
