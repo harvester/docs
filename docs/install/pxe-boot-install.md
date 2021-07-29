@@ -9,41 +9,46 @@ keywords:
   - Installing Harverster
   - Harverster Installation
   - PXE Boot Install
-Description: Starting from version `0.2.0`, Harvester can be installed in a mass manner. This document provides an example to do the automatic installation with PXE boot.
+Description: Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do the automatic installation with PXE boot.
 ---
 
-# PXE Boot Install
+# PXE Boot Installation
 
-Starting from version `0.2.0`, Harvester can be installed in a mass manner. This document provides an example to do the automatic installation with PXE boot.
+Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do the automatic installation with PXE boot.
 
 We recommend using [iPXE](https://ipxe.org/) to perform the network boot. It has more features than the traditional PXE Boot program and is likely available in modern NIC cards. If NIC cards don't come with iPXE firmware, iPXE firmware images can be loaded from the TFTP server first.
 
 To see sample iPXE scripts, please visit [Harvester iPXE Examples](https://github.com/harvester/ipxe-examples).
 
+## Prerequisite
+
+!!! important
+    Nodes need to have at least **8G** of RAM because the installer loads the full ISO file into tmpfs.
+
 ## Preparing HTTP Servers
 
-An HTTP server is required to serve boot files. Please ensure these servers are set up correctly before continuing.
-
-Let's assume an NGINX HTTP server's IP is `10.100.0.10`, and it serves `/usr/share/nginx/html/` folder at the path `http://10.100.0.10/`.
+An HTTP server is required to serve boot files.
+Let's assume an NGINX HTTP server's IP is `10.100.0.10`, and it serves `/usr/share/nginx/html/` directory with the path `http://10.100.0.10/`.
 
 ## Preparing Boot Files
 
-- Download the required files from [Harvester Releases Page](https://github.com/harvester/harvester/releases). Choose an appropriate version.
-
-  - The ISO: `harvester-amd64.iso`
-  - The kernel: `harvester-vmlinuz-amd64`
-  - The initrd: `harvester-initrd-amd64`
+- Download the required files from [Harvester Releases Page](https://github.com/harvester/harvester/releases).
+    - The ISO: `harvester-<version>-amd64.iso`
+    - The kernel: `harvester-<version>-vmlinuz-amd64`
+    - The initrd: `harvester-<version>-initrd-amd64`
+    - The rootfs squashfs image: `harvester-<version>-rootfs-amd64.squashfs`
 
 - Serve the files.
 
-  Copy or move the downloaded files to an appropriate location so they can be downloaded via the HTTP server. e.g.,
-
-  ```
-  sudo mkdir -p /usr/share/nginx/html/harvester/
-  sudo cp /path/to/harvester-amd64.iso /usr/share/nginx/html/harvester/
-  sudo cp /path/to/harvester-vmlinuz-amd64 /usr/share/nginx/html/harvester/
-  sudo cp /path/to/harvester-initrd-amd64 /usr/share/nginx/html/harvester/
-  ```
+    Copy or move the downloaded files to an appropriate location so they can be downloaded via the HTTP server. e.g.,
+  
+    ```
+    sudo mkdir -p /usr/share/nginx/html/harvester/
+    sudo cp /path/to/harvester-<version>-amd64.iso /usr/share/nginx/html/harvester/
+    sudo cp /path/to/harvester-<version>-vmlinuz-amd64 /usr/share/nginx/html/harvester/
+    sudo cp /path/to/harvester-<version>-initrd-amd64 /usr/share/nginx/html/harvester/
+    sudo cp /path/to/harvester-<version>-rootfs-amd64.squashfs /usr/share/nginx/html/harvester/
+    ```
 
 ## Preparing iPXE boot scripts
 
@@ -52,9 +57,6 @@ When performing automatic installation, there are two modes:
 - `CREATE`: we are installing a node to construct an initial Harvester cluster.
 - `JOIN`: we are installing a node to join an existing Harvester cluster.
 
-### Prerequisite
-
-Nodes need to have at least **8G** of RAM because the full ISO file is loaded into tmpfs during the installation.
 
 ### CREATE mode
 
@@ -75,7 +77,7 @@ install:
   mode: create
   mgmt_interface: eth0
   device: /dev/sda
-  iso_url: http://10.100.0.10/harvester-amd64.iso
+  iso_url: http://10.100.0.10/harvester/harvester-<version>-amd64.iso
 
 ```
 
@@ -83,8 +85,8 @@ For machines that needs to be installed as `CREATE` mode, the following is an iP
 
 ```
 #!ipxe
-kernel vmlinuz k3os.mode=install console=ttyS0 console=tty1 harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
-initrd initrd
+kernel harvester-<version>-vmlinuz ip=dhcp rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
+initrd harvester-<version>-initrd
 boot
 ```
 
@@ -99,7 +101,7 @@ Create a [Harvester configuration file](./harvester-configuration.md) `config-jo
 
 ```YAML
 # cat /usr/share/nginx/html/harvester/config-join.yaml
-server_url: https://10.100.0.130:6443
+server_url: https://10.100.0.130:8443
 token: token
 os:
   hostname: node2
@@ -113,7 +115,7 @@ install:
   mode: join
   mgmt_interface: eth0
   device: /dev/sda
-  iso_url: http://10.100.0.10/harvester/harvester-amd64.iso
+  iso_url: http://10.100.0.10/harvester/harvester-<version>-amd64.iso
 ```
 
 Note that the `mode` is `join` and the `server_url` needs to be provided.
@@ -122,23 +124,13 @@ For machines that needs to be installed in `JOIN` mode, the following is an iPXE
 
 ```
 #!ipxe
-kernel vmlinuz k3os.mode=install console=ttyS0 console=tty1 harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-join.yaml
-initrd initrd
+kernel harvester-<version>-vmlinuz ip=dhcp rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-join.yaml
+initrd harvester-<version>-initrd
 boot
 ```
 
 Let's assume the iPXE script is stored in `/usr/share/nginx/html/harvester/ipxe-join`.
 
-**TROUBLESHOOTING**
-
-- Sometimes the installer might be not able to fetch the Harvester configuration file because the network stack is not ready yet. To work around this, please add a `boot_cmd` parameter to the iPXE script, e.g.,
-
-  ```
-  #!ipxe
-  kernel vmlinuz k3os.mode=install console=ttyS0 console=tty1 harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-join.yaml boot_cmd="echo include_ping_test=yes >> /etc/conf.d/net-online"
-  initrd initrd
-  boot
-  ```
 
 ## DHCP server configuration
 
@@ -215,14 +207,14 @@ UEFI firmware supports loading a boot image from HTTP server. This section demon
 
 ### Serve the iPXE program
 
-Download the iPXE uefi program from http://boot.ipxe.org/ipxe.efi and make `ipxe.efi` can be downloaded from the HTTP server. e.g.:
+Download the iPXE UEFI program from http://boot.ipxe.org/ipxe.efi and make `ipxe.efi` can be downloaded from the HTTP server. e.g.:
 
 ```bash
 cd /usr/share/nginx/html/harvester/
 wget http://boot.ipxe.org/ipxe.efi
 ```
 
-The file now can be downloaded from http://10.100.0.10/harvester/ipxe.efi
+The file now can be downloaded from http://10.100.0.10/harvester/ipxe.efi locally.
 
 ### DHCP server configuration
 
@@ -265,9 +257,9 @@ It's mandatory to specify the initrd image for UEFI boot in the kernel parameter
 
 ```
 #!ipxe
-kernel vmlinuz initrd=initrd k3os.mode=install console=ttyS0 console=tty1 harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
-initrd initrd
+kernel harvester-<version>-vmlinuz initrd=harvester-<version>-initrd ip=dhcp rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
+initrd harvester-<version>-initrd
 boot
 ```
 
-The parameter `initrd=initrd` is required for initrd to be chrooted.
+The parameter `initrd=harvester-<version>-initrd` is required.
