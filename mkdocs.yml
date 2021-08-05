@@ -51,6 +51,7 @@ nav:
     - install/iso-install.md
     - install/pxe-boot-install.md
     - install/harvester-configuration.md
+    - install/terraform.md
   - authentication.md
   - upgrade.md
   - harvester-network.md
