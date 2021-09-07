@@ -41,11 +41,6 @@ os:
   ntp_servers:
     - 0.us.pool.ntp.org
     - 1.us.pool.ntp.org
-  wifi:
-    - name: home
-      passphrase: mypassword
-    - name: nothome
-      passphrase: somethingelse
   password: rancher
   environment:
     http_proxy: http://myserver
@@ -233,21 +228,6 @@ os:
   ntp_servers:
     - 0.us.pool.ntp.org
     - 1.us.pool.ntp.org
-```
-
-### `os.wifi`
-
-Simple wifi configuration. All that is accepted is `name` and `passphrase`.
-
-Example:
-
-```yaml
-os:
-  wifi:
-    - name: home
-      passphrase: mypassword
-    - name: nothome
-      passphrase: somethingelse
 ```
 
 ### `os.password`
