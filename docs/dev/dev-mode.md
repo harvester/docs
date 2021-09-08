@@ -44,19 +44,16 @@ cat /proc/cpuinfo | grep vmx
 ### Option 1: Install using Helm
 
 1. Clone the GitHub repository:
-
    ```bash
    git clone https://github.com/harvester/harvester.git --depth=1
    ```
 
 1. Go to the Helm chart:
-
    ```bash
    cd harvester/deploy/charts
    ```
 
 1. Install the Harvester chart with the following commands:
-
    ```bash
    ### To install the chart with the release name `harvester`:
 
@@ -66,7 +63,7 @@ cat /proc/cpuinfo | grep vmx
    ## Install the chart to the target namespace
    helm install harvester harvester \
    --namespace harvester-system \
-   --set longhorn.enabled=true,minio.persistence.storageClass=longhorn
+   --set longhorn.enabled=true
    ```
 
 ### Option 2: Install using Rancher
