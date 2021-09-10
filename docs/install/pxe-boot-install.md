@@ -75,17 +75,18 @@ os:
   password: rancher
 install:
   mode: create
-  mgmt_interface: eth0
+  mgmt_interface: ens5
   device: /dev/sda
   iso_url: http://10.100.0.10/harvester/harvester-<version>-amd64.iso
-
+  vip: 10.100.0.100       # The VIP to access the Harvester GUI. Make sure the IP is free to use.
+  vip_mode: static        # Or dhcp, check configuration file for more information.
 ```
 
 For machines that needs to be installed as `CREATE` mode, the following is an iPXE script that boots the kernel with the above config:
 
 ```
 #!ipxe
-kernel harvester-<version>-vmlinuz ip=dhcp rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
+kernel harvester-<version>-vmlinuz ip=dhcp net.ifnames=1 rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
 initrd harvester-<version>-initrd
 boot
 ```
@@ -115,7 +116,7 @@ os:
   password: rancher
 install:
   mode: join
-  mgmt_interface: eth0
+  mgmt_interface: ens5
   device: /dev/sda
   iso_url: http://10.100.0.10/harvester/harvester-<version>-amd64.iso
 ```
@@ -126,7 +127,7 @@ For machines that needs to be installed in `JOIN` mode, the following is an iPXE
 
 ```
 #!ipxe
-kernel harvester-<version>-vmlinuz ip=dhcp rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-join.yaml
+kernel harvester-<version>-vmlinuz ip=dhcp net.ifnames=1 rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-join.yaml
 initrd harvester-<version>-initrd
 boot
 ```
@@ -259,7 +260,7 @@ It's mandatory to specify the initrd image for UEFI boot in the kernel parameter
 
 ```
 #!ipxe
-kernel harvester-<version>-vmlinuz initrd=harvester-<version>-initrd ip=dhcp rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
+kernel harvester-<version>-vmlinuz initrd=harvester-<version>-initrd ip=dhcp net.ifnames=1 rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
 initrd harvester-<version>-initrd
 boot
 ```

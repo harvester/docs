@@ -47,7 +47,7 @@ os:
     https_proxy: http://myserver
 install:
   mode: create
-  mgmtInterface: eth0
+  mgmt_interface: ens5
   force_efi: true
   device: /dev/vda
   silent: true
@@ -56,6 +56,9 @@ install:
   no_format: true
   debug: true
   tty: ttyS0
+  vip: 10.10.0.19
+  vip_hw_addr: 52:54:00:ec:0e:0b
+  vip_mode: dhcp
 ```
 
 ## Configuration Reference
@@ -292,11 +295,13 @@ install:
 
 The interface that used to build VM fabric network.
 
+**Note**: Harvester uses [systemd net naming scheme](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html). Please make sure the interface name presents on target machine before installation.
+
 #### Example
 
 ```yaml
 install:
-  mgmtInterface: eth0
+  mgmt_interface: ens5
 ```
 
 ### `install.force_efi`
@@ -338,4 +343,36 @@ The tty device used for console.
 ```yaml
 install:
   tty: ttyS0,115200n8
+```
+
+### `install.vip`
+### `install.vip_mode`
+### `install.vip_hw_addr`
+
+#### Definition
+
+- `install.vip`: The VIP of Harvester management endpoint. After installation, users can access Harvester GUI at URL `https://<VIP>`.
+- `install.vip_mode`
+    - `dhcp`: Harvester will send DHCP requests to get VIP. `install.vip_hw_addr` field needs to be provided.
+    - `static`: Harvester uses a static VIP.
+- `install.vip_hw_addr`: The MAC address of the VIP interface. Users have to configure their on-premise DHCP server to offer the configured VIP. The field is mandatory when `install.vip_mode` is `dhcp`.
+
+
+#### Example
+
+Configure a static VIP.
+
+```yaml
+install:
+  vip: 192.168.0.100
+  vip_mode: static
+```
+
+Configure a DHCP VIP.
+
+```yaml
+install:
+  vip: 10.10.0.19
+  vip_mode: dhcp
+  vip_hw_addr: 52:54:00:ec:0e:0b
 ```
