@@ -42,7 +42,7 @@ Below is a use case of the VLAN in Harvester.
 
 Enable VLAN via going to **Setting > vlan** to enable VLAN and input a valid default physical NIC name for the VLAN. 
 
-The first physical NIC name of each Harvester node always defaults to eth0. It is recommended to choose a separate NIC for the VLAN other than the one used for the management network (the one selected during the Harvester installation) for better network performance and isolation. 
+It is recommended to choose a separate NIC for the VLAN other than the one used for the management network (the one selected during the Harvester installation) for better network performance and isolation. 
 
 !!! note
     Modifying the default VLAN network setting will not change the existing configured host networks.
