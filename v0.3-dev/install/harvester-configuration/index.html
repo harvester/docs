@@ -727,6 +727,47 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#installvip" class="md-nav__link">
+    install.vip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installvip_mode" class="md-nav__link">
+    install.vip_mode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installvip_hw_addr" class="md-nav__link">
+    install.vip_hw_addr
+  </a>
+  
+    <nav class="md-nav" aria-label="install.vip_hw_addr">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition_13" class="md-nav__link">
+    Definition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_13" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1469,6 +1510,47 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#installvip" class="md-nav__link">
+    install.vip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installvip_mode" class="md-nav__link">
+    install.vip_mode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installvip_hw_addr" class="md-nav__link">
+    install.vip_hw_addr
+  </a>
+  
+    <nav class="md-nav" aria-label="install.vip_hw_addr">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition_13" class="md-nav__link">
+    Definition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_13" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1525,7 +1607,7 @@
     <span class="nt">https_proxy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://myserver</span>
 <span class="nt">install</span><span class="p">:</span>
   <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">create</span>
-  <span class="nt">mgmtInterface</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eth0</span>
+  <span class="nt">mgmt_interface</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
   <span class="nt">force_efi</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
   <span class="nt">device</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/dev/vda</span>
   <span class="nt">silent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
@@ -1534,6 +1616,9 @@
   <span class="nt">no_format</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
   <span class="nt">debug</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
   <span class="nt">tty</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ttyS0</span>
+  <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.19</span>
+  <span class="nt">vip_hw_addr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">52:54:00:ec:0e:0b</span>
+  <span class="nt">vip_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
 </code></pre></div>
 <h2 id="configuration-reference">Configuration Reference<a class="headerlink" href="#configuration-reference" title="Permanent link">&para;</a></h2>
 <p>Below is a reference of all configuration keys.</p>
@@ -1687,9 +1772,10 @@ Primary use of this field is to set the http proxy.</p>
 <h3 id="installmgmtinterface"><code>install.mgmtInterface</code><a class="headerlink" href="#installmgmtinterface" title="Permanent link">&para;</a></h3>
 <h4 id="definition_11">Definition<a class="headerlink" href="#definition_11" title="Permanent link">&para;</a></h4>
 <p>The interface that used to build VM fabric network.</p>
+<p><strong>Note</strong>: Harvester uses <a href="https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html">systemd net naming scheme</a>. Please make sure the interface name presents on target machine before installation.</p>
 <h4 id="example_11">Example<a class="headerlink" href="#example_11" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
-  <span class="nt">mgmtInterface</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eth0</span>
+  <span class="nt">mgmt_interface</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
 </code></pre></div>
 <h3 id="installforce_efi"><code>install.force_efi</code><a class="headerlink" href="#installforce_efi" title="Permanent link">&para;</a></h3>
 <p>Force EFI installation even when EFI is not detected. Default: <code>false</code>.</p>
@@ -1711,6 +1797,31 @@ Primary use of this field is to set the http proxy.</p>
 <h4 id="example_12">Example<a class="headerlink" href="#example_12" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
   <span class="nt">tty</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ttyS0,115200n8</span>
+</code></pre></div>
+<h3 id="installvip"><code>install.vip</code><a class="headerlink" href="#installvip" title="Permanent link">&para;</a></h3>
+<h3 id="installvip_mode"><code>install.vip_mode</code><a class="headerlink" href="#installvip_mode" title="Permanent link">&para;</a></h3>
+<h3 id="installvip_hw_addr"><code>install.vip_hw_addr</code><a class="headerlink" href="#installvip_hw_addr" title="Permanent link">&para;</a></h3>
+<h4 id="definition_13">Definition<a class="headerlink" href="#definition_13" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>install.vip</code>: The VIP of Harvester management endpoint. After installation, users can access Harvester GUI at URL <code>https://&lt;VIP&gt;</code>.</li>
+<li><code>install.vip_mode</code><ul>
+<li><code>dhcp</code>: Harvester will send DHCP requests to get VIP. <code>install.vip_hw_addr</code> field needs to be provided.</li>
+<li><code>static</code>: Harvester uses a static VIP.</li>
+</ul>
+</li>
+<li><code>install.vip_hw_addr</code>: The MAC address of the VIP interface. Users have to configure their on-premise DHCP server to offer the configured VIP. The field is mandatory when <code>install.vip_mode</code> is <code>dhcp</code>.</li>
+</ul>
+<h4 id="example_13">Example<a class="headerlink" href="#example_13" title="Permanent link">&para;</a></h4>
+<p>Configure a static VIP.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
+  <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.100</span>
+  <span class="nt">vip_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">static</span>
+</code></pre></div>
+<p>Configure a DHCP VIP.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
+  <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.19</span>
+  <span class="nt">vip_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
+  <span class="nt">vip_hw_addr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">52:54:00:ec:0e:0b</span>
 </code></pre></div>
                 
                   

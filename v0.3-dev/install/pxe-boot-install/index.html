@@ -884,13 +884,15 @@ sudo cp /path/to/harvester-&lt;version&gt;-rootfs-amd64.squashfs /usr/share/ngin
   <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rancher</span>
 <span class="nt">install</span><span class="p">:</span>
   <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">create</span>
-  <span class="nt">mgmt_interface</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eth0</span>
+  <span class="nt">mgmt_interface</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
   <span class="nt">device</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/dev/sda</span>
   <span class="nt">iso_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://10.100.0.10/harvester/harvester-&lt;version&gt;-amd64.iso</span>
+  <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.100.0.100</span>       <span class="c1"># The VIP to access the Harvester GUI. Make sure the IP is free to use.</span>
+  <span class="nt">vip_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">static</span>        <span class="c1"># Or dhcp, check configuration file for more information.</span>
 </code></pre></div>
 <p>For machines that needs to be installed as <code>CREATE</code> mode, the following is an iPXE script that boots the kernel with the above config:</p>
 <div class="highlight"><pre><span></span><code>#!ipxe
-kernel harvester-&lt;version&gt;-vmlinuz ip=dhcp rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
+kernel harvester-&lt;version&gt;-vmlinuz ip=dhcp net.ifnames=1 rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
 initrd harvester-&lt;version&gt;-initrd
 boot
 </code></pre></div>
@@ -915,14 +917,14 @@ boot
   <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rancher</span>
 <span class="nt">install</span><span class="p">:</span>
   <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">join</span>
-  <span class="nt">mgmt_interface</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eth0</span>
+  <span class="nt">mgmt_interface</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
   <span class="nt">device</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/dev/sda</span>
   <span class="nt">iso_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://10.100.0.10/harvester/harvester-&lt;version&gt;-amd64.iso</span>
 </code></pre></div>
 <p>Note that the <code>mode</code> is <code>join</code> and the <code>server_url</code> needs to be provided.</p>
 <p>For machines that needs to be installed in <code>JOIN</code> mode, the following is an iPXE script that boots the kernel with the above config:</p>
 <div class="highlight"><pre><span></span><code>#!ipxe
-kernel harvester-&lt;version&gt;-vmlinuz ip=dhcp rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-join.yaml
+kernel harvester-&lt;version&gt;-vmlinuz ip=dhcp net.ifnames=1 rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-join.yaml
 initrd harvester-&lt;version&gt;-initrd
 boot
 </code></pre></div>
@@ -1029,7 +1031,7 @@ wget http://boot.ipxe.org/ipxe.efi
 <h3 id="the-ipxe-script-for-uefi-boot">The iPXE script for UEFI boot<a class="headerlink" href="#the-ipxe-script-for-uefi-boot" title="Permanent link">&para;</a></h3>
 <p>It's mandatory to specify the initrd image for UEFI boot in the kernel parameters. Here is an updated version of iPXE script for <code>CREATE</code> mode.</p>
 <div class="highlight"><pre><span></span><code>#!ipxe
-kernel harvester-&lt;version&gt;-vmlinuz initrd=harvester-&lt;version&gt;-initrd ip=dhcp rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
+kernel harvester-&lt;version&gt;-vmlinuz initrd=harvester-&lt;version&gt;-initrd ip=dhcp net.ifnames=1 rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
 initrd harvester-&lt;version&gt;-initrd
 boot
 </code></pre></div>
