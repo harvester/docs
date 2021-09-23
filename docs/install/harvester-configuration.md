@@ -355,7 +355,7 @@ install:
 - `install.vip_mode`
     - `dhcp`: Harvester will send DHCP requests to get VIP. `install.vip_hw_addr` field needs to be provided.
     - `static`: Harvester uses a static VIP.
-- `install.vip_hw_addr`: The MAC address of the VIP interface. Users have to configure their on-premise DHCP server to offer the configured VIP. The field is mandatory when `install.vip_mode` is `dhcp`.
+- `install.vip_hw_addr`: The hardware address corresponding to the VIP. Users have to configure their on-premise DHCP server to offer the configured VIP. The field is mandatory when `install.vip_mode` is `dhcp`.
 
 
 #### Example
