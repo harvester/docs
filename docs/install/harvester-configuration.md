@@ -47,7 +47,12 @@ os:
     https_proxy: http://myserver
 install:
   mode: create
-  mgmt_interface: ens5
+  networks:
+    harvester-mgmt:
+      interfaces:
+      - name: ens5
+      default_route: true
+      method: dhcp
   force_efi: true
   device: /dev/vda
   silent: true
@@ -289,19 +294,58 @@ install:
   mode: create
 ```
 
-### `install.mgmtInterface`
+### `install.networks`
 
 #### Definition
 
-The interface that used to build VM fabric network.
+Configure network interfaces for the host machine. Each key-value pair 
+represents as a network interface. The key name becomes the network name, and
+the values are configurations for each network. Valid configuration fields are:
 
-**Note**: Harvester uses [systemd net naming scheme](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html). Please make sure the interface name presents on target machine before installation.
+- `method`: Method to assign IP for this network. Support `static` and `dhcp`.
+- `ip`: Static IP for this network. Required if `static` method is chosen.
+- `subnet_mask`: Subnet mask for this network. Required if `static` method is chosen.
+- `gateway`: Gateway for this network. Required if `static` method is chosen.
+- `interfaces`: An array of interface names. If provided, the installer then combines these NICs into a single logical bonded interface.
+    - `interfaces.name`: The name of slave interface for the bonded network.
+- `default_route`: Set the network as the default route or not.
+- `bond_options`: Options for bonded interfaces. Refer to [here](https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options) fore more info.
+    - `bond_options.mode`: Mode of bonding policies. Support following modes:
+        - `balance-rr`
+        - `active-backup`
+        - `balance-xor`
+        - `broadcast`
+        - `802.3ad`
+        - `balance-tlb` (default value)
+        - `balance-alb`
+
+!!! note
+    A network `harvester-mgmt` is mandatory to establish a valid [management network](../../harvester-network#management-network).
+
+!!! note
+    Harvester uses [systemd net naming scheme](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html).
+    Please make sure the interface name presents on target machine before installation.
 
 #### Example
 
 ```yaml
 install:
-  mgmt_interface: ens5
+  mode: create
+  networks:
+    harvester-mgmt:       # The management bond name. This is mandatory.
+      interfaces:
+      - name: ens5
+      default_route: true
+      method: dhcp
+      bond_options:
+        mode: balance-rr
+    bond0:
+      interfaces:
+      - name: ens8
+      method: static
+      ip: 10.10.18.2
+      subnet_mask: 255.255.255.0
+      gateway: 192.168.11.1 
 ```
 
 ### `install.force_efi`

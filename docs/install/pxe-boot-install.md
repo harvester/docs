@@ -75,7 +75,12 @@ os:
   password: rancher
 install:
   mode: create
-  mgmt_interface: ens5
+  networks:
+    harvester-mgmt:       # The management bond name. This is mandatory.
+      interfaces:
+      - name: ens5
+      default_route: true
+      method: dhcp
   device: /dev/sda
   iso_url: http://10.100.0.10/harvester/harvester-<version>-amd64.iso
   vip: 10.100.0.100       # The VIP to access the Harvester GUI. Make sure the IP is free to use.
@@ -116,7 +121,12 @@ os:
   password: rancher
 install:
   mode: join
-  mgmt_interface: ens5
+  networks:
+    harvester-mgmt:       # The management bond name. This is mandatory.
+      interfaces:
+      - name: ens5
+      default_route: true
+      method: dhcp
   device: /dev/sda
   iso_url: http://10.100.0.10/harvester/harvester-<version>-amd64.iso
 ```
