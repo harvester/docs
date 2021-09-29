@@ -636,6 +636,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rancher/cloud-provider/" class="md-nav__link">
+        Harvester Cloud Provider
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -931,7 +945,12 @@ sudo cp /path/to/harvester-&lt;version&gt;-rootfs-amd64.squashfs /usr/share/ngin
   <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rancher</span>
 <span class="nt">install</span><span class="p">:</span>
   <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">create</span>
-  <span class="nt">mgmt_interface</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
+  <span class="nt">networks</span><span class="p">:</span>
+    <span class="nt">harvester-mgmt</span><span class="p">:</span>       <span class="c1"># The management bond name. This is mandatory.</span>
+      <span class="nt">interfaces</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
+      <span class="nt">default_route</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+      <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
   <span class="nt">device</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/dev/sda</span>
   <span class="nt">iso_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://10.100.0.10/harvester/harvester-&lt;version&gt;-amd64.iso</span>
   <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.100.0.100</span>       <span class="c1"># The VIP to access the Harvester GUI. Make sure the IP is free to use.</span>
@@ -964,7 +983,12 @@ boot
   <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rancher</span>
 <span class="nt">install</span><span class="p">:</span>
   <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">join</span>
-  <span class="nt">mgmt_interface</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
+  <span class="nt">networks</span><span class="p">:</span>
+    <span class="nt">harvester-mgmt</span><span class="p">:</span>       <span class="c1"># The management bond name. This is mandatory.</span>
+      <span class="nt">interfaces</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
+      <span class="nt">default_route</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+      <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
   <span class="nt">device</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/dev/sda</span>
   <span class="nt">iso_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://10.100.0.10/harvester/harvester-&lt;version&gt;-amd64.iso</span>
 </code></pre></div>
