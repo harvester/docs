@@ -309,8 +309,8 @@ the values are configurations for each network. Valid configuration fields are:
 - `interfaces`: An array of interface names. If provided, the installer then combines these NICs into a single logical bonded interface.
     - `interfaces.name`: The name of slave interface for the bonded network.
 - `default_route`: Set the network as the default route or not.
-- `bond_options`: Options for bonded interfaces. Refer to [here](https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options) fore more info.
-    - `bond_options.mode`: Mode of bonding policies. Support following modes:
+- `bond_option`: Options for bonded interfaces. Refer to [here](https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options) fore more info.
+    - `bond_option.mode`: Mode of bonding policies. Support following modes:
         - `balance-rr`
         - `active-backup`
         - `balance-xor`
@@ -337,7 +337,7 @@ install:
       - name: ens5
       default_route: true
       method: dhcp
-      bond_options:
+      bond_option:
         mode: balance-rr
     bond0:
       interfaces:
