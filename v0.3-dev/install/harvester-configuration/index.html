@@ -1850,8 +1850,8 @@ the values are configurations for each network. Valid configuration fields are:<
 </ul>
 </li>
 <li><code>default_route</code>: Set the network as the default route or not.</li>
-<li><code>bond_options</code>: Options for bonded interfaces. Refer to <a href="https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options">here</a> fore more info.<ul>
-<li><code>bond_options.mode</code>: Mode of bonding policies. Support following modes:<ul>
+<li><code>bond_option</code>: Options for bonded interfaces. Refer to <a href="https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options">here</a> fore more info.<ul>
+<li><code>bond_option.mode</code>: Mode of bonding policies. Support following modes:<ul>
 <li><code>balance-rr</code></li>
 <li><code>active-backup</code></li>
 <li><code>balance-xor</code></li>
@@ -1882,7 +1882,7 @@ Please make sure the interface name presents on target machine before installati
       <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
       <span class="nt">default_route</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
       <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
-      <span class="nt">bond_options</span><span class="p">:</span>
+      <span class="nt">bond_option</span><span class="p">:</span>
         <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">balance-rr</span>
     <span class="nt">bond0</span><span class="p">:</span>
       <span class="nt">interfaces</span><span class="p">:</span>
