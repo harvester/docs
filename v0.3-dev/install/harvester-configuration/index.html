@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v0.3-dev/install/harvester-configuration/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.0">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.8b42a75e.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.24c991ad.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
@@ -1837,7 +1837,7 @@ Primary use of this field is to set the http proxy.</p>
 </code></pre></div>
 <h3 id="installnetworks"><code>install.networks</code><a class="headerlink" href="#installnetworks" title="Permanent link">&para;</a></h3>
 <h4 id="definition_11">Definition<a class="headerlink" href="#definition_11" title="Permanent link">&para;</a></h4>
-<p>Configure network interfaces for the host machine. Each key-value pair 
+<p>Configure network interfaces for the host machine. Each key-value pair
 represents as a network interface. The key name becomes the network name, and
 the values are configurations for each network. Valid configuration fields are:</p>
 <ul>
@@ -1850,17 +1850,9 @@ the values are configurations for each network. Valid configuration fields are:<
 </ul>
 </li>
 <li><code>default_route</code>: Set the network as the default route or not.</li>
-<li><code>bond_option</code>: Options for bonded interfaces. Refer to <a href="https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options">here</a> fore more info.<ul>
-<li><code>bond_option.mode</code>: Mode of bonding policies. Support following modes:<ul>
-<li><code>balance-rr</code></li>
-<li><code>active-backup</code></li>
-<li><code>balance-xor</code></li>
-<li><code>broadcast</code></li>
-<li><code>802.3ad</code></li>
-<li><code>balance-tlb</code> (default value)</li>
-<li><code>balance-alb</code></li>
-</ul>
-</li>
+<li><code>bond_options</code>: Options for bonded interfaces. Refer to <a href="https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options">here</a> fore more info. If not provided, the following options would be used:<ul>
+<li><code>mode: balance-tlb</code></li>
+<li><code>miimon: 100</code></li>
 </ul>
 </li>
 </ul>
@@ -1882,15 +1874,16 @@ Please make sure the interface name presents on target machine before installati
       <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
       <span class="nt">default_route</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
       <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
-      <span class="nt">bond_option</span><span class="p">:</span>
-        <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">balance-rr</span>
+      <span class="nt">bond_options</span><span class="p">:</span>
+        <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">balance-tlb</span>
+        <span class="nt">miimon</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
     <span class="nt">bond0</span><span class="p">:</span>
       <span class="nt">interfaces</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens8</span>
       <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">static</span>
       <span class="nt">ip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.18.2</span>
       <span class="nt">subnet_mask</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">255.255.255.0</span>
-      <span class="nt">gateway</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.11.1</span> 
+      <span class="nt">gateway</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.11.1</span>
 </code></pre></div>
 <h3 id="installforce_efi"><code>install.force_efi</code><a class="headerlink" href="#installforce_efi" title="Permanent link">&para;</a></h3>
 <p>Force EFI installation even when EFI is not detected. Default: <code>false</code>.</p>
@@ -2012,10 +2005,10 @@ Please make sure the interface name presents on target machine before installati
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.f8263e09.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.e99e714c.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.4fc53ad4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.bc35569b.min.js"></script>
       
         <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
