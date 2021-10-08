@@ -298,7 +298,7 @@ install:
 
 #### Definition
 
-Configure network interfaces for the host machine. Each key-value pair 
+Configure network interfaces for the host machine. Each key-value pair
 represents as a network interface. The key name becomes the network name, and
 the values are configurations for each network. Valid configuration fields are:
 
@@ -309,15 +309,9 @@ the values are configurations for each network. Valid configuration fields are:
 - `interfaces`: An array of interface names. If provided, the installer then combines these NICs into a single logical bonded interface.
     - `interfaces.name`: The name of slave interface for the bonded network.
 - `default_route`: Set the network as the default route or not.
-- `bond_option`: Options for bonded interfaces. Refer to [here](https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options) fore more info.
-    - `bond_option.mode`: Mode of bonding policies. Support following modes:
-        - `balance-rr`
-        - `active-backup`
-        - `balance-xor`
-        - `broadcast`
-        - `802.3ad`
-        - `balance-tlb` (default value)
-        - `balance-alb`
+- `bond_options`: Options for bonded interfaces. Refer to [here](https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options) fore more info. If not provided, the following options would be used:
+    - `mode: balance-tlb`
+    - `miimon: 100`
 
 !!! note
     A network `harvester-mgmt` is mandatory to establish a valid [management network](../../harvester-network#management-network).
@@ -337,15 +331,16 @@ install:
       - name: ens5
       default_route: true
       method: dhcp
-      bond_option:
-        mode: balance-rr
+      bond_options:
+        mode: balance-tlb
+        miimon: 100
     bond0:
       interfaces:
       - name: ens8
       method: static
       ip: 10.10.18.2
       subnet_mask: 255.255.255.0
-      gateway: 192.168.11.1 
+      gateway: 192.168.11.1
 ```
 
 ### `install.force_efi`
