@@ -309,7 +309,7 @@ the values are configurations for each network. Valid configuration fields are:
 - `interfaces`: An array of interface names. If provided, the installer then combines these NICs into a single logical bonded interface.
     - `interfaces.name`: The name of slave interface for the bonded network.
 - `default_route`: Set the network as the default route or not.
-- `bond_options`: Options for bonded interfaces. Refer to [here](https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options) fore more info. If not provided, the following options would be used:
+- `bond_options`: Options for bonded interfaces. Refer to [here](https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options) for more info. If not provided, the following options would be used:
     - `mode: balance-tlb`
     - `miimon: 100`
 
