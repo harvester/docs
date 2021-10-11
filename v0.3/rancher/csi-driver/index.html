@@ -742,14 +742,14 @@
         
           <li class="md-nav__item">
   <a href="#deploying-with-harvester-rke2-node-driver" class="md-nav__link">
-    Deploying with Harvester RKE2 node driver
+    Deploying with Harvester RKE2 Node Driver
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#deploying-with-harvester-rke1-node-driver" class="md-nav__link">
-    Deploying with Harvester RKE1 node driver
+    Deploying with Harvester RKE1 Node Driver
   </a>
   
 </li>
@@ -879,14 +879,14 @@
         
           <li class="md-nav__item">
   <a href="#deploying-with-harvester-rke2-node-driver" class="md-nav__link">
-    Deploying with Harvester RKE2 node driver
+    Deploying with Harvester RKE2 Node Driver
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#deploying-with-harvester-rke1-node-driver" class="md-nav__link">
-    Deploying with Harvester RKE1 node driver
+    Deploying with Harvester RKE1 Node Driver
   </a>
   
 </li>
@@ -914,26 +914,26 @@
                 
                 
                 <h1 id="harvester-csi-driver">Harvester CSI Driver<a class="headerlink" href="#harvester-csi-driver" title="Permanent link">&para;</a></h1>
-<p>The Harvester Container Storage Interface (CSI) Driver provides a CSI interface used by guest kubernetes clusters in Harvester. It connects to the host cluster and hot-plug host volumes to the VMs to provide native storage performance.</p>
+<p>The Harvester Container Storage Interface (CSI) Driver provides a CSI interface used by guest Kubernetes clusters in Harvester. It connects to the host cluster and hot-plugs host volumes to the virtual machines (VMs) to provide native storage performance.</p>
 <h2 id="deploying">Deploying<a class="headerlink" href="#deploying" title="Permanent link">&para;</a></h2>
 <h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
 <ul>
 <li>The Kubernetes cluster is built on top of Harvester virtual machines.</li>
-<li>The Harvester virtual machines running as guest Kubernetes nodes are in the same namespace.</li>
+<li>The Harvester virtual machines run as guest Kubernetes nodes are in the same namespace.</li>
 </ul>
-<h3 id="deploying-with-harvester-rke2-node-driver">Deploying with Harvester RKE2 node driver<a class="headerlink" href="#deploying-with-harvester-rke2-node-driver" title="Permanent link">&para;</a></h3>
-<p>When spin up a kubernetes cluster using Rancher RKE2 node driver, the Harvester CSI driver will be deployed when harvester cloud provider is selected.</p>
+<h3 id="deploying-with-harvester-rke2-node-driver">Deploying with Harvester RKE2 Node Driver<a class="headerlink" href="#deploying-with-harvester-rke2-node-driver" title="Permanent link">&para;</a></h3>
+<p>When spinning up a Kubernetes cluster using Rancher RKE2 node driver, the Harvester CSI driver will be deployed when Harvester cloud provider is selected.</p>
 <p><img alt="select-harvester-cloud-provider" src="../assets/select-harvester-cloud-provider.png" /></p>
-<h3 id="deploying-with-harvester-rke1-node-driver">Deploying with Harvester RKE1 node driver<a class="headerlink" href="#deploying-with-harvester-rke1-node-driver" title="Permanent link">&para;</a></h3>
-<ol>
+<h3 id="deploying-with-harvester-rke1-node-driver">Deploying with Harvester RKE1 Node Driver<a class="headerlink" href="#deploying-with-harvester-rke1-node-driver" title="Permanent link">&para;</a></h3>
+<ul>
 <li>
 <p>Select the external cloud provider option.</p>
 </li>
 <li>
-<p><a href="https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon.sh">Generate addon configuration</a> and add it in the rke config yaml.</p>
+<p><a href="https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon.sh">Generate addon configuration</a> and add it in the RKE config YAML.</p>
 </li>
-</ol>
-<div class="highlight"><pre><span></span><code># depend on kubectl to operate the Harvester
+</ul>
+<div class="highlight"><pre><span></span><code># depend on kubectl to operate the Harvester cluster
 ./deploy/generate_addon.sh &lt;serviceaccount name&gt; &lt;namespace&gt;
 </code></pre></div>
                 

@@ -891,25 +891,25 @@
                 
                 <h1 id="harvester-node-driver">Harvester Node Driver<a class="headerlink" href="#harvester-node-driver" title="Permanent link">&para;</a></h1>
 <p>The Harvester node driver is used to provision VMs in the Harvester cluster. In this section, you'll learn how to configure Rancher to use the Harvester node driver to launch and manage Kubernetes clusters.</p>
-<p>A node driver is the same as a <a href="https://docs.docker.com/machine/drivers/">Docker Machine driver</a>, and the project repo is available at <a href="https://github.com/harvester/docker-machine-driver-harvester">harvester/docker-machine-driver-harvester</a>.</p>
-<p>Users can now provision RKE1/RKE2 Kubernetes clusters in Rancher <code>v2.6.1</code> using the built-in Harvester Node Driver. 
+<p>A node driver is the same as a <a href="https://docs.docker.com/machine/">Docker Machine driver</a>, and the project repo is available at <a href="https://github.com/harvester/docker-machine-driver-harvester">harvester/docker-machine-driver-harvester</a>.</p>
+<p>Users can now provision RKE1/RKE2 Kubernetes clusters in Rancher <code>v2.6.1</code> using the built-in Harvester node driver. 
 Additionally, Harvester now can provide built-in <a href="../cloud-provider/">Load Balancer support</a> as well as raw cluster <a href="../csi-driver/">persistent storage</a> support to the guest Kubernetes cluster.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Currently Rancher v2.6.1 is the only version that is compatible with Harvester v0.3.0.</p>
 </div>
 <h2 id="enable-harvester-node-driver">Enable Harvester Node Driver<a class="headerlink" href="#enable-harvester-node-driver" title="Permanent link">&para;</a></h2>
-<p>The Harvester node driver is not enabled by default from the Rancher UI, click the <code>Cluster Management</code> tab to enable the Harvester node driver.</p>
+<p>The Harvester node driver is not enabled by default from the Rancher UI. Click the <code>Cluster Management</code> tab to enable the Harvester node driver.</p>
 <ol>
-<li>click the <code>Drivers</code> page and click the <code>Node Drivers</code> tab </li>
-<li>select the Harvester node driver and click <code>Active</code> to enable the Harvester node driver.</li>
+<li>Click the <code>Drivers</code> page, then click the <code>Node Drivers</code> tab </li>
+<li>Select the Harvester node driver, then click <code>Activate</code> to enable the Harvester node driver</li>
 </ol>
 <p><img alt="" src="../assets/enable-node-driver.png" /></p>
-<p>Now users can spin up Kubernetes clusters on top of the Harvester cluster, and manage them there.</p>
+<p>Now users can spin up Kubernetes clusters on top of the Harvester cluster and manage them there.</p>
 <h2 id="rke1-kubernetes-cluster">RKE1 Kubernetes Cluster<a class="headerlink" href="#rke1-kubernetes-cluster" title="Permanent link">&para;</a></h2>
-<p>Click to view <a href="../rke1-cluster/">how to creat RKE1 Kubernetes Cluster</a></p>
+<p>Click to learn <a href="../rke1-cluster/">how to create RKE1 Kubernetes Clusters</a>.</p>
 <h2 id="rke2-kubernetes-cluster">RKE2 Kubernetes Cluster<a class="headerlink" href="#rke2-kubernetes-cluster" title="Permanent link">&para;</a></h2>
-<p>Click to view <a href="../rke2-cluster/">how to creat RKE2 Kubernetes Cluster</a></p>
+<p>Click to learn <a href="../rke2-cluster/">how to create RKE2 Kubernetes Clusters</a>.</p>
                 
                   
                 
