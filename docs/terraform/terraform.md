@@ -39,10 +39,11 @@ registry.terraform.io/harvester/harvester/0.2.6/linux_amd64/terraform-provider-h
 ```
 
 The default location for locally-installed providers is one of the following, depending on which operating system you are running Terraform under:
-* Windows: %APPDATA%\terraform.d\plugins
-* All other systems: ~/.terraform.d/plugins
 
-Place the provider into the plugins directory, for example:
+- Windows: `%APPDATA%\terraform.d\plugins`
+- All other systems: `~/.terraform.d/plugins`
+
+Place the provider into the plugin directory, for example:
 ```bash
 version=0.2.6
 arch=linux_amd64
