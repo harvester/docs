@@ -26,7 +26,7 @@ Note: This [video](https://youtu.be/97ADieBX6bE) shows a quick overview of the I
 1. Choose the installation mode by either creating a new Harvester cluster, or by joining an existing one.
 1. Choose the installation device that the Harvester will be formatted to.
 1. Configure the hostname and select the network interface for the management network, the IP address can either be configured via DHCP or static method.
-   ![iso-installed.png](iso-nic-config.png)
+   ![iso-installed.png](iso-nic-config.gif)
 1. Configure the `cluster token`. This token will be used for adding other nodes to the cluster.
 1. Configure the login password of the host. The default ssh user is `rancher`.
 1. (Optional) you can choose to import SSH keys from a remote URL server. Your GitHub public keys can be used with `https://github.com/<username>.keys`.
@@ -37,4 +37,4 @@ Note: This [video](https://youtu.be/97ADieBX6bE) shows a quick overview of the I
 1. The default URL of the web interface is `https://your-host-ip:30443`.
    ![iso-installed.png](iso-installed.png)
 1. User will be prompted to set the password for the default `admin` user on the first-time login.
-   ![first-login.png](first-log-in.png)
+   ![first-login.png](first-time-login.png)
