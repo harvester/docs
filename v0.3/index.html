@@ -530,22 +530,37 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="monitoring/monitoring/" class="md-nav__link">
+        Monitoring
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_8">
+        <label class="md-nav__link" for="__nav_9">
           Rancher Integration
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Rancher Integration" data-md-level="1">
-        <label class="md-nav__title" for="__nav_8">
+        <label class="md-nav__title" for="__nav_9">
           <span class="md-nav__icon md-icon"></span>
           Rancher Integration
         </label>
@@ -559,6 +574,20 @@
     <li class="md-nav__item">
       <a href="rancher/rancher-integration/" class="md-nav__link">
         Rancher integration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="rancher/virtualization-management/" class="md-nav__link">
+        Virtualization management
       </a>
     </li>
   
@@ -593,8 +622,37 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="rancher/csi-driver/" class="md-nav__link">
+        Csi driver
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="terraform/terraform/" class="md-nav__link">
+        Harvester Terraform Provider
+      </a>
     </li>
   
 
@@ -610,18 +668,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_9">
+        <label class="md-nav__link" for="__nav_11">
           Development
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Development" data-md-level="1">
-        <label class="md-nav__title" for="__nav_9">
+        <label class="md-nav__title" for="__nav_11">
           <span class="md-nav__icon md-icon"></span>
           Development
         </label>
@@ -658,18 +716,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_10">
+        <label class="md-nav__link" for="__nav_12">
           Reference
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_10">
+        <label class="md-nav__title" for="__nav_12">
           <span class="md-nav__icon md-icon"></span>
           Reference
         </label>
@@ -794,7 +852,7 @@
 <li><a href="https://github.com/rancher/rancher">Rancher</a> integration with multi-cluster management and the Harvester node driver</li>
 <li><a href="https://docs.harvesterhci.io/latest/install/pxe-boot-install">PXE/iPXE boot support</a></li>
 <li>Virtual IP and bond NIC support</li>
-<li>Monitoring enhancement</li>
+<li>Monitoring integration</li>
 </ol>
 <p>The following diagram gives a high-level architecture of Harvester:</p>
 <p><img alt="" src="assets/architecture.svg" /></p>
@@ -815,7 +873,7 @@
 <tbody>
 <tr>
 <td align="left">CPU</td>
-<td align="left">x86_64 only. Hardware-assisted virtualization is required. 8 cores minimum, 12 cores or above preferred</td>
+<td align="left">x86_64 only. Hardware-assisted virtualization is required. 8 cores minimum, 16 cores or above preferred</td>
 </tr>
 <tr>
 <td align="left">Memory</td>
@@ -857,7 +915,7 @@
 <li>Choose the installation device that the Harvester will be formatted to.</li>
 <li>Configure the hostname and select the network interface for the management network, by default harvester will create a bond NIC named <code>harvester-mgmt</code>, and the IP address can either be configured via DHCP or static method.
    <img alt="iso-installed.png" src="install/iso-nic-config.gif" /></li>
-<li>(Optional) Config the DNS server and can be separated by the comma.</li>
+<li>(Optional) Configure the DNS servers, use commas as a delimiter.</li>
 <li>Config the Virtual IP which you can use for accessing the cluster or joining the cluster by the other nodes.</li>
 <li>Configure the <code>cluster token</code>. This token will be used for adding other nodes to the cluster.</li>
 <li>Configure the login password of the host. The default ssh user is <code>rancher</code>.</li>
@@ -874,7 +932,7 @@
 </ol>
 <h3 id="other-installation-methods">Other Installation Methods<a class="headerlink" href="#other-installation-methods" title="Permanent link">&para;</a></h3>
 <p>Harvester can be installed automatically, please refer to <a href="install/pxe-boot-install/">PXE Boot Install</a> for detailed instructions.</p>
-<p>More usage examples can be found on the <a href="https://github.com/harvester/ipxe-examples">harvester/ipxe-examples</a>.</p>
+<p>More usage examples is available at <a href="https://github.com/harvester/ipxe-examples">harvester/ipxe-examples</a>.</p>
                 
                   
                 

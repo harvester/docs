@@ -331,46 +331,9 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Upgrading Harvester
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         Upgrading Harvester
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#upgrade-using-the-iso-image" class="md-nav__link">
-    Upgrade using the ISO image
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#upgrade-in-the-ui" class="md-nav__link">
-    Upgrade in the UI
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -503,22 +466,37 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../monitoring/monitoring/" class="md-nav__link">
+        Monitoring
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_8">
+        <label class="md-nav__link" for="__nav_9">
           Rancher Integration
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Rancher Integration" data-md-level="1">
-        <label class="md-nav__title" for="__nav_8">
+        <label class="md-nav__title" for="__nav_9">
           <span class="md-nav__icon md-icon"></span>
           Rancher Integration
         </label>
@@ -532,6 +510,20 @@
     <li class="md-nav__item">
       <a href="../rancher/rancher-integration/" class="md-nav__link">
         Rancher integration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rancher/virtualization-management/" class="md-nav__link">
+        Virtualization management
       </a>
     </li>
   
@@ -566,8 +558,37 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rancher/csi-driver/" class="md-nav__link">
+        Csi driver
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../terraform/terraform/" class="md-nav__link">
+        Harvester Terraform Provider
+      </a>
     </li>
   
 
@@ -583,18 +604,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_9">
+        <label class="md-nav__link" for="__nav_11">
           Development
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Development" data-md-level="1">
-        <label class="md-nav__title" for="__nav_9">
+        <label class="md-nav__title" for="__nav_11">
           <span class="md-nav__icon md-icon"></span>
           Development
         </label>
@@ -631,18 +652,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_10">
+        <label class="md-nav__link" for="__nav_12">
           Reference
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_10">
+        <label class="md-nav__title" for="__nav_12">
           <span class="md-nav__icon md-icon"></span>
           Reference
         </label>
@@ -687,28 +708,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#upgrade-using-the-iso-image" class="md-nav__link">
-    Upgrade using the ISO image
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#upgrade-in-the-ui" class="md-nav__link">
-    Upgrade in the UI
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -725,42 +724,14 @@
                 
                 
                 <h1 id="upgrading-harvester">Upgrading Harvester<a class="headerlink" href="#upgrading-harvester" title="Permanent link">&para;</a></h1>
-<p><em>Available as of v0.2.0</em></p>
-<p>Harvester provides two ways to upgrade. Users can either upgrade using the ISO image, or upgrade through UI.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+<p>Upgrade is not supported from previous version to v0.3.0 version.</p>
 <ul>
-<li>Upgrading from v0.1.0 is not supported.</li>
-<li>Upgrading from/to any RC releases is not supported.</li>
-<li>Due to pending OS changes in the roadmap, the upgradability to the GA release cannot be guaranteed at this moment.</li>
-<li>Zero downtime upgrade is supported when the Harvester cluster includes 3 or more nodes. If the cluster has less than 3 nodes, you can still perform upgrades but there'll be downtime during the upgrade.</li>
-<li>Upgrade nodes one by one.</li>
+<li>We're investigating a manual upgrade process starting with v0.3.0. Will keep the community posted.</li>
+<li>One click upgrade will be supported starting with v1.0.0 release.</li>
 </ul>
 </div>
-<h2 id="upgrade-using-the-iso-image">Upgrade using the ISO image<a class="headerlink" href="#upgrade-using-the-iso-image" title="Permanent link">&para;</a></h2>
-<p>To get the Harvester ISO of a newer version, download it from the Github releases.</p>
-<ol>
-<li>Go to the <strong>Hosts</strong> page in Harvester UI.</li>
-<li>Find the node you are about to upgrade. Click on the action dropdown. Click on the <code>Enable Maintenance Mode</code> action.</li>
-<li>Wait until all the VMs on the node are migrated to other nodes and the node is in <code>Maintenance Mode</code> status.</li>
-<li>Shut down the server, and boot the server from the ISO disk of the newer Harvester version.</li>
-<li>Select the <code>Harvester Installer</code> in the grub menu.</li>
-<li>Select <code>Upgrade Harvester</code> and confirm in the prompt.
-   <img alt="iso-mode-upgrade" src="../assets/iso-mode-upgrade.png" /></li>
-<li>Wait until the upgrade completes. The node will be rebooted and show <code>Ready</code> again in the terminal console.</li>
-<li>Go to the <strong>Hosts</strong> page in Harvester UI.</li>
-<li>Find the node that just completed the upgrade. Click on the action dropdown. Click on the <code>Disable Maintenance Mode</code> action.</li>
-<li>For the rest nodes of the cluster, repeat steps 2 to 9 to upgrade them one by one.</li>
-</ol>
-<h2 id="upgrade-in-the-ui">Upgrade in the UI<a class="headerlink" href="#upgrade-in-the-ui" title="Permanent link">&para;</a></h2>
-<p><em>Prerequisite: Internet access is required to perform a live upgrade in the UI.</em></p>
-<ol>
-<li>Go to the <strong>Dashboard</strong> page in Harvester UI.</li>
-<li>When newer versions are available, an upgrade button will be shown in the top-right corner. Click upgrade.
-   <img alt="upgrade-ui" src="../assets/upgrade-ui.png" /></li>
-<li>Select a version to upgrade. Click upgrade.</li>
-<li>Wait until the upgrade to complete. You can view the upgrade progress by clicking the circle icon in the top navigation bar.</li>
-</ol>
                 
                   
                 

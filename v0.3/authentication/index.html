@@ -316,39 +316,9 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Authentication
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         Authentication
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#developer-mode" class="md-nav__link">
-    Developer Mode
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -496,22 +466,37 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../monitoring/monitoring/" class="md-nav__link">
+        Monitoring
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_8">
+        <label class="md-nav__link" for="__nav_9">
           Rancher Integration
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Rancher Integration" data-md-level="1">
-        <label class="md-nav__title" for="__nav_8">
+        <label class="md-nav__title" for="__nav_9">
           <span class="md-nav__icon md-icon"></span>
           Rancher Integration
         </label>
@@ -525,6 +510,20 @@
     <li class="md-nav__item">
       <a href="../rancher/rancher-integration/" class="md-nav__link">
         Rancher integration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rancher/virtualization-management/" class="md-nav__link">
+        Virtualization management
       </a>
     </li>
   
@@ -559,8 +558,37 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rancher/csi-driver/" class="md-nav__link">
+        Csi driver
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../terraform/terraform/" class="md-nav__link">
+        Harvester Terraform Provider
+      </a>
     </li>
   
 
@@ -576,18 +604,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_9">
+        <label class="md-nav__link" for="__nav_11">
           Development
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Development" data-md-level="1">
-        <label class="md-nav__title" for="__nav_9">
+        <label class="md-nav__title" for="__nav_11">
           <span class="md-nav__icon md-icon"></span>
           Development
         </label>
@@ -624,18 +652,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_10">
+        <label class="md-nav__link" for="__nav_12">
           Reference
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_10">
+        <label class="md-nav__title" for="__nav_12">
           <span class="md-nav__icon md-icon"></span>
           Reference
         </label>
@@ -680,21 +708,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#developer-mode" class="md-nav__link">
-    Developer Mode
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -711,16 +724,12 @@
                 
                 
                 <h1 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h1>
-<p><em>Available as of v0.2.0</em></p>
-<p>With ISO installation mode, user will be prompted to set the password for the default <code>admin</code> user on the first-time login.</p>
+<p>After installation, user will be prompted to set the password for the default <code>admin</code> user on the first-time login.</p>
 <p><img alt="auth" src="../install/first-time-login.png" /></p>
-<p>The Harvester login page is shown below:</p>
-<p><img alt="auth" src="../assets/authentication.png" /></p>
-<h2 id="developer-mode">Developer Mode<a class="headerlink" href="#developer-mode" title="Permanent link">&para;</a></h2>
-<p>In <code>developer mode</code>, which is intended only for development and testing purposes, more authentication modes are configurable using the environment variable <code>HARVESTER_AUTHENTICATION_MODE</code>.</p>
-<p>By default, the Harvester Dashboard uses the <code>local auth</code> mode for authentication. The default username and password is <code>admin/password</code>.</p>
-<p>The currently supported options are <code>localUser</code> (the same as <code>local auth</code> mode) and <code>kubernetesCredentials</code>.</p>
-<p>If the <code>kubernetesCredentials</code> authentication option is used, either a <code>kubeconfig</code> file or bearer token can provide access to Harvester.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the single cluster mode, only one default <code>admin</code> user is provided. Check out the <a href="../rancher/rancher-integration/">Rancher Integration</a> for multi-tenant management.</p>
+</div>
                 
                   
                 

@@ -468,22 +468,37 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../monitoring/monitoring/" class="md-nav__link">
+        Monitoring
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_8">
+        <label class="md-nav__link" for="__nav_9">
           Rancher Integration
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Rancher Integration" data-md-level="1">
-        <label class="md-nav__title" for="__nav_8">
+        <label class="md-nav__title" for="__nav_9">
           <span class="md-nav__icon md-icon"></span>
           Rancher Integration
         </label>
@@ -497,6 +512,20 @@
     <li class="md-nav__item">
       <a href="../../rancher/rancher-integration/" class="md-nav__link">
         Rancher integration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rancher/virtualization-management/" class="md-nav__link">
+        Virtualization management
       </a>
     </li>
   
@@ -531,8 +560,37 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rancher/csi-driver/" class="md-nav__link">
+        Csi driver
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../terraform/terraform/" class="md-nav__link">
+        Harvester Terraform Provider
+      </a>
     </li>
   
 
@@ -548,18 +606,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_9">
+        <label class="md-nav__link" for="__nav_11">
           Development
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Development" data-md-level="1">
-        <label class="md-nav__title" for="__nav_9">
+        <label class="md-nav__title" for="__nav_11">
           <span class="md-nav__icon md-icon"></span>
           Development
         </label>
@@ -596,18 +654,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_10">
+        <label class="md-nav__link" for="__nav_12">
           Reference
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_10">
+        <label class="md-nav__title" for="__nav_12">
           <span class="md-nav__icon md-icon"></span>
           Reference
         </label>
@@ -680,16 +738,19 @@
    <img alt="iso-install.png" src="../iso-install.png" /></li>
 <li>Choose the installation mode by either creating a new Harvester cluster, or by joining an existing one.</li>
 <li>Choose the installation device that the Harvester will be formatted to.</li>
-<li>Configure the hostname and select the network interface for the management network, the IP address can either be configured via DHCP or static method.
+<li>Configure the hostname and select the network interface for the management network, by default harvester will create a bond NIC named <code>harvester-mgmt</code>, and the IP address can either be configured via DHCP or static method.
    <img alt="iso-installed.png" src="../iso-nic-config.gif" /></li>
+<li>(Optional) Configure the DNS servers, use commas as a delimiter.</li>
+<li>Config the Virtual IP which you can use for accessing the cluster or joining the cluster by the other nodes.</li>
 <li>Configure the <code>cluster token</code>. This token will be used for adding other nodes to the cluster.</li>
 <li>Configure the login password of the host. The default ssh user is <code>rancher</code>.</li>
-<li>(Optional) you can choose to import SSH keys from a remote URL server. Your GitHub public keys can be used with <code>https://github.com/&lt;username&gt;.keys</code>.</li>
+<li>(Optional) Config the NTP Servers of the node if needed, default to <code>0.suse.pool.ntp.org</code>.</li>
 <li>(Optional) If you need to use an HTTP proxy to access the outside world, enter the proxy URL address here, otherwise, leave this blank.</li>
+<li>(Optional) You can choose to import SSH keys from a remote URL server. Your GitHub public keys can be used with <code>https://github.com/&lt;username&gt;.keys</code>.</li>
 <li>(Optional) If you need to customize the host with cloud-init config, enter the HTTP URL here.</li>
 <li>Confirm the installation options and the Harvester will be installed to your host. The installation may take a few minutes to be complete.</li>
-<li>Once the installation is complete it will restart the host and a console UI with management URL and status will be displayed. (You can Use F12 to switch between Harvester console and the Shell)</li>
-<li>The default URL of the web interface is <code>https://your-host-ip:30443</code>.
+<li>Once the installation is complete it will restart the host and a console UI with management URL and status will be displayed. <small>(You can Use F12 to switch between Harvester console and the Shell)</small></li>
+<li>The default URL of the web interface is <code>https://your-virtual-ip</code>.
    <img alt="iso-installed.png" src="../iso-installed.png" /></li>
 <li>User will be prompted to set the password for the default <code>admin</code> user on the first-time login.
    <img alt="first-login.png" src="../first-time-login.png" /></li>
