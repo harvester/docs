@@ -60,10 +60,14 @@ nav:
     - vm/access-to-the-vm.md
     - vm/backup-restore.md
     - vm/live-migration.md
+  - monitoring/monitoring.md
   - Rancher Integration:
     - rancher/rancher-integration.md
+    - rancher/virtualization-management.md
     - rancher/node-driver.md
     - rancher/cloud-provider.md
+    - rancher/csi-driver.md
+  - terraform/terraform.md
   - Development:
     - dev/dev-mode.md
   - Reference:
