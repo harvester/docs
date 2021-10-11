@@ -5,7 +5,7 @@ keywords:
   - Rancher Integration
 ---
 
-## Harvester CSI Driver
+# Harvester CSI Driver
 
 The Harvester Container Storage Interface (CSI) Driver provides a CSI interface used by guest kubernetes clusters in Harvester. It connects to the host cluster and hot-plug host volumes to the VMs to provide native storage performance.
 
