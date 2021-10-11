@@ -19,13 +19,14 @@ Create one or more virtual machines from the **Virtual Machines** page.
 1. The VM name is required.
 1. (Optional) You can select to use the VM template. By default we have added ISO, raw, and Windows image templates.
 1. Configure the CPU and Memory of the VM.
-1. Select a custom VM image.
 1. Select SSH keys or upload a new one.
-1. To add more disks to the VM, go to the **Volumes** tab. The default disk will be the root disk.
+1. Go to the **Volumes** tab, Select a custom VM image. Also you can add more disks to the VM, The default disk will be the root disk.
 1. To configure networks, go to the **Networks** tab. The **Management Network** is added by default. It is also possible to add secondary networks to the VMs using vlan networks (configured on **Advanced > Networks**).
 1. (Optional) Configure advanced options like hostname and cloud-init data in the **Advanced Options** section.
 
 ![create-vm](assets/create-vm.png)
+
+![create-vm](assets/choose-vm-image.png)
 
 ## Cloud config examples
 

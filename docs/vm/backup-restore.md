@@ -11,7 +11,7 @@ Description: VM backups are created from the Virtual Machines page. The VM backu
 
 # VM Backup & Restore
 
-_Available as of v0.2.0_
+_Available as of v0.3.0_
 
 VM backups are created from the **Virtual Machines** page. The VM backup volumes will be stored in the **Backup Target** (an NFS or S3 server) and they can be used to either restore a new VM or replace an existing VM.
 ![vm-backup.png](assets/vm-backup.png)
