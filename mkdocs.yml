@@ -75,7 +75,5 @@ nav:
     - rancher/cloud-provider.md
     - rancher/csi-driver.md
   - terraform/terraform.md
-  - Development:
-    - dev/dev-mode.md
   - Reference:
     - reference/api.md
