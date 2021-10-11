@@ -66,4 +66,4 @@ By default, a VM can be accessed via the management network.
 
 ### Secondary Network
 
-It is also possible to connect VMs using additional networks with Harvester's built-in [vlan networks](../harvester-network.md).
+It is also possible to connect VMs using additional networks with Harvester's built-in [vlan networks](../networking/harvester-network.md).

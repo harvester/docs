@@ -53,13 +53,15 @@ nav:
     - install/harvester-configuration.md
   - authentication.md
   - upgrade.md
-  - harvester-network.md
   - import-image.md
   - VM Management:
     - vm/create-vm.md
     - vm/access-to-the-vm.md
     - vm/backup-restore.md
     - vm/live-migration.md
+  - Networking:
+    - networking/harvester-network.md
+    - networking/vip.md
   - monitoring/monitoring.md
   - Rancher Integration:
     - rancher/rancher-integration.md
