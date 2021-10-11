@@ -31,7 +31,7 @@ Here are some notable features of the Harvester:
 1. [Rancher](https://github.com/rancher/rancher) integration with multi-cluster management and the Harvester node driver
 1. [PXE/iPXE boot support](https://docs.harvesterhci.io/latest/install/pxe-boot-install)
 1. Virtual IP and bond NIC support
-1. Monitoring enhancement
+1. Monitoring integration
 
 
 The following diagram gives a high-level architecture of Harvester:
@@ -48,7 +48,7 @@ To get the Harvester server up and running the following minimum hardware is req
 
 | Type | Requirements |
 |:---|:---|
-| CPU | x86_64 only. Hardware-assisted virtualization is required. 8 cores minimum, 12 cores or above preferred |
+| CPU | x86_64 only. Hardware-assisted virtualization is required. 8 cores minimum, 16 cores or above preferred |
 | Memory | 32 GB minimum, 64 GB or above preferred |
 | Disk Capacity |  120 GB minimum, 500 GB or above preferred |
 | Disk Performance |  5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be [fast enough for Etcd](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd). |
@@ -80,7 +80,7 @@ Note: This [video](https://youtu.be/97ADieBX6bE) shows a quick overview of the I
 1. Choose the installation device that the Harvester will be formatted to.
 1. Configure the hostname and select the network interface for the management network, by default harvester will create a bond NIC named `harvester-mgmt`, and the IP address can either be configured via DHCP or static method.
    ![iso-installed.png](./install/iso-nic-config.gif)
-1. (Optional) Config the DNS server and can be separated by the comma.
+1. (Optional) Configure the DNS servers, use commas as a delimiter.
 1. Config the Virtual IP which you can use for accessing the cluster or joining the cluster by the other nodes.
 1. Configure the `cluster token`. This token will be used for adding other nodes to the cluster.
 1. Configure the login password of the host. The default ssh user is `rancher`.
@@ -99,4 +99,4 @@ Note: This [video](https://youtu.be/97ADieBX6bE) shows a quick overview of the I
 
 Harvester can be installed automatically, please refer to [PXE Boot Install](./install/pxe-boot-install.md) for detailed instructions.
 
-More usage examples can be found on the [harvester/ipxe-examples](https://github.com/harvester/ipxe-examples).
+More usage examples is available at [harvester/ipxe-examples](https://github.com/harvester/ipxe-examples).
