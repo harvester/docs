@@ -7,25 +7,23 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
       
-        <meta name="keywords" content="['Harvester', 'harvester', 'Rancher', 'rancher', 'Harvester Upgrade']">
       
       
+        <link rel="canonical" href="https://docs.harvesterhci.io/v0.3/vm/hotplug-volume/">
       
-        <link rel="canonical" href="https://docs.harvesterhci.io/v0.3/upgrade/">
-      
-      <link rel="icon" href="../assets/favicon.ico">
+      <link rel="icon" href="../../assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
     
     
       
-        <title>Upgrading Harvester - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>Hotplug volume - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.24c991ad.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.24c991ad.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
         
           
           
@@ -44,9 +42,9 @@
     
     
     
-      <link rel="stylesheet" href="../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-      <link rel="stylesheet" href="../assets/swagger-ui/swagger-ui.css">
+      <link rel="stylesheet" href="../../assets/swagger-ui/swagger-ui.css">
     
     
       
@@ -65,7 +63,7 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
   
     
-    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -73,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#upgrading-harvester" class="md-skip">
+        <a href="#hot-plug-volumes" class="md-skip">
           Skip to content
         </a>
       
@@ -88,7 +86,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="https://harvesterhci.io" title="Harvester - Open Source Hyperconverged Infrastructure" class="md-header__button md-logo" aria-label="Harvester - Open Source Hyperconverged Infrastructure" data-md-component="logo">
       
-  <img src="../assets/logo_horizontal_white.png" alt="logo">
+  <img src="../../assets/logo_horizontal_white.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -104,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Upgrading Harvester
+              Hotplug volume
             
           </span>
         </div>
@@ -187,7 +185,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="https://harvesterhci.io" title="Harvester - Open Source Hyperconverged Infrastructure" class="md-nav__button md-logo" aria-label="Harvester - Open Source Hyperconverged Infrastructure" data-md-component="logo">
       
-  <img src="../assets/logo_horizontal_white.png" alt="logo">
+  <img src="../../assets/logo_horizontal_white.png" alt="logo">
 
     </a>
     Harvester - Open Source Hyperconverged Infrastructure
@@ -216,7 +214,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         Harvester Intro
       </a>
     </li>
@@ -257,7 +255,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install/iso-install/" class="md-nav__link">
+      <a href="../../install/iso-install/" class="md-nav__link">
         ISO Installation
       </a>
     </li>
@@ -271,7 +269,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install/pxe-boot-install/" class="md-nav__link">
+      <a href="../../install/pxe-boot-install/" class="md-nav__link">
         PXE Boot Installation
       </a>
     </li>
@@ -285,7 +283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install/harvester-configuration/" class="md-nav__link">
+      <a href="../../install/harvester-configuration/" class="md-nav__link">
         Harvester Configuration
       </a>
     </li>
@@ -307,7 +305,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../authentication/" class="md-nav__link">
+      <a href="../../authentication/" class="md-nav__link">
         Authentication
       </a>
     </li>
@@ -320,21 +318,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../upgrade/" class="md-nav__link">
         Upgrading Harvester
       </a>
-      
     </li>
   
 
@@ -347,7 +335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../import-image/" class="md-nav__link">
+      <a href="../../import-image/" class="md-nav__link">
         Import Images
       </a>
     </li>
@@ -360,12 +348,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
       
       
       
@@ -388,7 +378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/create-vm/" class="md-nav__link">
+      <a href="../create-vm/" class="md-nav__link">
         Create a VM
       </a>
     </li>
@@ -402,7 +392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/access-to-the-vm/" class="md-nav__link">
+      <a href="../access-to-the-vm/" class="md-nav__link">
         Access to the VM
       </a>
     </li>
@@ -416,7 +406,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/backup-restore/" class="md-nav__link">
+      <a href="../backup-restore/" class="md-nav__link">
         VM Backup & Restore
       </a>
     </li>
@@ -430,7 +420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/live-migration/" class="md-nav__link">
+      <a href="../live-migration/" class="md-nav__link">
         Live Migration
       </a>
     </li>
@@ -442,11 +432,51 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../vm/hotplug-volume/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Hotplug volume
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Hotplug volume
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#adding-hot-plug-volumes-to-a-running-vm" class="md-nav__link">
+    Adding hot-plug volumes to a running VM
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -492,7 +522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../networking/harvester-network/" class="md-nav__link">
+      <a href="../../networking/harvester-network/" class="md-nav__link">
         Harvester Network
       </a>
     </li>
@@ -506,7 +536,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../networking/vip/" class="md-nav__link">
+      <a href="../../networking/vip/" class="md-nav__link">
         Management Address
       </a>
     </li>
@@ -528,7 +558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../monitoring/monitoring/" class="md-nav__link">
+      <a href="../../monitoring/monitoring/" class="md-nav__link">
         Monitoring
       </a>
     </li>
@@ -569,7 +599,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/rancher-integration/" class="md-nav__link">
+      <a href="../../rancher/rancher-integration/" class="md-nav__link">
         Rancher integration
       </a>
     </li>
@@ -583,7 +613,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/virtualization-management/" class="md-nav__link">
+      <a href="../../rancher/virtualization-management/" class="md-nav__link">
         Virtualization management
       </a>
     </li>
@@ -623,7 +653,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/node-driver/" class="md-nav__link">
+      <a href="../../rancher/node-driver/" class="md-nav__link">
         Harvester Node Driver
       </a>
     </li>
@@ -637,7 +667,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/rke1-cluster/" class="md-nav__link">
+      <a href="../../rancher/rke1-cluster/" class="md-nav__link">
         RKE1 Kubernetes Cluster
       </a>
     </li>
@@ -651,7 +681,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/rke2-cluster/" class="md-nav__link">
+      <a href="../../rancher/rke2-cluster/" class="md-nav__link">
         RKE2 Kubernetes Cluster
       </a>
     </li>
@@ -672,7 +702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/cloud-provider/" class="md-nav__link">
+      <a href="../../rancher/cloud-provider/" class="md-nav__link">
         Harvester Cloud Provider
       </a>
     </li>
@@ -686,7 +716,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/csi-driver/" class="md-nav__link">
+      <a href="../../rancher/csi-driver/" class="md-nav__link">
         Harvester CSI Driver
       </a>
     </li>
@@ -708,7 +738,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../terraform/terraform/" class="md-nav__link">
+      <a href="../../terraform/terraform/" class="md-nav__link">
         Harvester Terraform Provider
       </a>
     </li>
@@ -749,7 +779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dev/dev-mode/" class="md-nav__link">
+      <a href="../../dev/dev-mode/" class="md-nav__link">
         Developer Mode Installation
       </a>
     </li>
@@ -797,7 +827,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/api/" class="md-nav__link">
+      <a href="../../reference/api/" class="md-nav__link">
         API Reference
       </a>
     </li>
@@ -830,6 +860,21 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#adding-hot-plug-volumes-to-a-running-vm" class="md-nav__link">
+    Adding hot-plug volumes to a running VM
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -840,22 +885,29 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/harvester/docs/edit/main/docs/upgrade.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/harvester/docs/edit/main/docs/vm/hotplug-volume.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="upgrading-harvester">Upgrading Harvester<a class="headerlink" href="#upgrading-harvester" title="Permanent link">&para;</a></h1>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Upgrade is not supported from previous version to v0.3.0 version.</p>
-<ul>
-<li>We're investigating a manual upgrade process starting with v0.3.0. Will keep the community posted.</li>
-<li>One click upgrade will be supported starting with v1.0.0 release.</li>
-</ul>
-</div>
-                
-                  
+                <hr />
+<p>sidebar_position: 5
+keywords:
+- Harvester
+- Hot-plug
+- Volume
+  Description: Adding hot-plug volumes to a running VM.</p>
+<hr />
+<h1 id="hot-plug-volumes">Hot-Plug Volumes<a class="headerlink" href="#hot-plug-volumes" title="Permanent link">&para;</a></h1>
+<p>Harvester supports adding hot-plug volumes to a running VM.</p>
+<h2 id="adding-hot-plug-volumes-to-a-running-vm">Adding hot-plug volumes to a running VM<a class="headerlink" href="#adding-hot-plug-volumes-to-a-running-vm" title="Permanent link">&para;</a></h2>
+<p>The following steps assume that you have a running VM and a ready volume.</p>
+<ol>
+<li>Go to the <strong>Virtual Machines</strong> page.</li>
+<li>Find the VM that you want to add a volume to and select <strong>Vertical ⋮ (… ) &gt; Add Volume</strong>.</li>
+<li>Enter the <strong>Name</strong> and select the <strong>Volume</strong>.</li>
+<li>Click <strong>Apply</strong>.</li>
+</ol>
                 
               
               
@@ -875,7 +927,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../authentication/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Authentication" rel="prev">
+        <a href="../live-migration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Live Migration" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -884,20 +936,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Authentication
+              Live Migration
             </div>
           </div>
         </a>
       
       
         
-        <a href="../import-image/" class="md-footer__link md-footer__link--next" aria-label="Next: Import Images" rel="next">
+        <a href="../../networking/harvester-network/" class="md-footer__link md-footer__link--next" aria-label="Next: Harvester Network" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Import Images
+              Harvester Network
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -928,12 +980,12 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.e99e714c.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.e99e714c.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.bc35569b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.bc35569b.min.js"></script>
       
-        <script src="../assets/swagger-ui/swagger-ui-bundle.js"></script>
+        <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
     
   </body>
