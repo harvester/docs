@@ -67,6 +67,8 @@ nav:
     - rancher/node-driver.md
     - rancher/cloud-provider.md
     - rancher/csi-driver.md
+    - rancher/rke-harvester-cluster.md
+    - rancher/rke2-harvester-cluster.md
   - terraform/terraform.md
   - Development:
     - dev/dev-mode.md
