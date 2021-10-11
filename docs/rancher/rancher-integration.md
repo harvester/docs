@@ -33,4 +33,4 @@ Users can enable the Rancher dashboard by going to the Harvester `Settings` page
 
 [Harvester node driver](node-driver.md) is used to provision VMs in the Harvester cluster, which Rancher uses to launch and manage Kubernetes clusters.
 
-In the ISO mode, the Harvester driver has been added by default. Users can reference this [doc](./node-driver.md) for more details.
+In the ISO mode, the Harvester driver has been added by default. Users can reference this [doc](node-driver.md) for more details.
