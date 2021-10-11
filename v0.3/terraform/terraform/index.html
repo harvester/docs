@@ -899,10 +899,12 @@ make
 <p>The expected location for the Harvester provider for that target platform within one of the local search directories would be like the following:
 <div class="highlight"><pre><span></span><code>registry.terraform.io/harvester/harvester/0.2.6/linux_amd64/terraform-provider-harvester_v0.2.6
 </code></pre></div></p>
-<p>The default location for locally-installed providers is one of the following, depending on which operating system you are running Terraform under:
-* Windows: %APPDATA%\terraform.d\plugins
-* All other systems: ~/.terraform.d/plugins</p>
-<p>Place the provider into the plugins directory, for example:
+<p>The default location for locally-installed providers is one of the following, depending on which operating system you are running Terraform under:</p>
+<ul>
+<li>Windows: <code>%APPDATA%\terraform.d\plugins</code></li>
+<li>All other systems: <code>~/.terraform.d/plugins</code></li>
+</ul>
+<p>Place the provider into the plugin directory, for example:
 <div class="highlight"><pre><span></span><code><span class="nv">version</span><span class="o">=</span><span class="m">0</span>.2.6
 <span class="nv">arch</span><span class="o">=</span>linux_amd64
 <span class="nv">terraform_harvester_provider_bin</span><span class="o">=</span>./bin/terraform-provider-harvester

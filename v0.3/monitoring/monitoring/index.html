@@ -70,6 +70,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#monitoring" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -456,10 +461,49 @@
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Monitoring
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         Monitoring
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dashboard-metrics" class="md-nav__link">
+    Dashboard Metrics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vm-detail-metrics" class="md-nav__link">
+    VM Detail Metrics
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -687,6 +731,45 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dashboard-metrics" class="md-nav__link">
+    Dashboard Metrics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vm-detail-metrics" class="md-nav__link">
+    VM Detail Metrics
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -697,9 +780,15 @@
                   </a>
                 
                 
-                  <h1>Monitoring</h1>
-                
-                
+                <h1 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h1>
+<p><em>Available as of v0.3.0</em></p>
+<h2 id="dashboard-metrics">Dashboard Metrics<a class="headerlink" href="#dashboard-metrics" title="Permanent link">&para;</a></h2>
+<p>Harvester <code>v0.3.0</code> has provided a built-in monitoring integration using the <a href="https://prometheus.io/">Prometheus</a>, the monitoring will be installed by default from the ISO mode.</p>
+<p>From the dashboard page, users are able to view the cluster metrics and top 10 most used VM metrics.
+<img alt="" src="../assets/monitoring-dashboard.png" /></p>
+<h2 id="vm-detail-metrics">VM Detail Metrics<a class="headerlink" href="#vm-detail-metrics" title="Permanent link">&para;</a></h2>
+<p>On each VM detail page, users can click the VM metrics tab to view the monitoring metrics of each VM.
+<img alt="" src="../assets/vm-metrics.png" /></p>
                 
               
               

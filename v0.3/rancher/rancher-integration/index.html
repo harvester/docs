@@ -536,8 +536,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#enable-rancher-dashboard" class="md-nav__link">
-    Enable Rancher Dashboard
+  <a href="#deploy-rancher" class="md-nav__link">
+    Deploy Rancher
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy Rancher">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quick-start-guide" class="md-nav__link">
+    Quick Start Guide
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#virtualization-management" class="md-nav__link">
+    Virtualization Management
   </a>
   
 </li>
@@ -762,8 +782,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#enable-rancher-dashboard" class="md-nav__link">
-    Enable Rancher Dashboard
+  <a href="#deploy-rancher" class="md-nav__link">
+    Deploy Rancher
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy Rancher">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quick-start-guide" class="md-nav__link">
+    Quick Start Guide
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#virtualization-management" class="md-nav__link">
+    Virtualization Management
   </a>
   
 </li>
@@ -795,24 +835,47 @@
                   <h1>Rancher integration</h1>
                 
                 <h2 id="rancher-integration">Rancher Integration<a class="headerlink" href="#rancher-integration" title="Permanent link">&para;</a></h2>
-<p><em>Available as of v0.2.0</em></p>
-<p><a href="https://github.com/rancher/rancher">Rancher</a> is an open source multi-cluster management platform. Harvester has integrated Rancher into its HCI mode installation by default.</p>
-<h2 id="enable-rancher-dashboard">Enable Rancher Dashboard<a class="headerlink" href="#enable-rancher-dashboard" title="Permanent link">&para;</a></h2>
-<p>Users can enable the Rancher dashboard by going to the Harvester <code>Settings</code> page.</p>
+<p><em>Available as of v0.3.0</em></p>
+<p><a href="https://github.com/rancher/rancher">Rancher</a> is an open-source multi-cluster management platform. Harvester has made an integration with Rancher(start from v2.6.1) on its HCI mode.</p>
+<p>Users can now import and manage multiple Harvester clusters using Rancher <code>v2.6.1</code> Virtualization Management feature and leverage Rancher <a href="https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/">authentication</a> mechanism and RBAC control for <a href="https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/">multi-tenancy</a> support.</p>
+<p><img alt="virtualization-management" src="../assets/virtualization-management.png" /></p>
+<h2 id="deploy-rancher">Deploy Rancher<a class="headerlink" href="#deploy-rancher" title="Permanent link">&para;</a></h2>
+<p>Previously in Harvester v0.2.0, we've provided the option to enable the embedded Rancher server. This option has been removed from Harvester <code>v0.3.0</code>. </p>
+<p>To use Rancher with Harvester, please install Rancher v2.6.1 separately from Harvester. You can spin up a VM with Rancher v2.6.1 to try out the integration features.</p>
+<h3 id="quick-start-guide">Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Click the actions of the <code>rancher-enabled</code> setting.</li>
-<li>Select the <code>Enable</code> option and click the save button.</li>
-<li>On the top-right corner the Rancher dashboard button will appear.</li>
-<li>Click the Rancher button, and it will open a new tab to navigate to the Rancher dashboard.</li>
+<li>Begin creation of a custom cluster by provisioning a Linux host. Your host can be:<ul>
+<li>A cloud-host virtual machine (VM)</li>
+<li>An on-prem VM</li>
+<li>A bare-metal server</li>
+</ul>
+</li>
+<li>Log in to your Linux host using your preferred shell, such as PuTTy or a remote Terminal connection.</li>
+<li>From your shell, enter the following command:</li>
 </ol>
-<p><img alt="" src="../assets/rancher-setting.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># for a quick evaluation, you can run the Rancher server with the following command</span>
+$ sudo docker run -d --restart<span class="o">=</span>unless-stopped -p <span class="m">80</span>:80 -p <span class="m">443</span>:443 --privileged rancher/rancher:v2.6.1
+</code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For more detail about how to use the Rancher, you may refer to this <a href="https://rancher.com/docs/rancher/v2.5/en/">doc</a>.</p>
+<p>For more detail about how to deploy the Rancher server, please refer to the Rancher <a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/">doc</a></p>
+</div>
+<h2 id="virtualization-management">Virtualization Management<a class="headerlink" href="#virtualization-management" title="Permanent link">&para;</a></h2>
+<p>With Rancher's Virtualization Management, users can now import and manage the Harvester clusters, by click one of the cluster, user was able to view manage the downstream Harvester resources e.g like VMs, images, volumes and so on. 
+Additionally, it has leveraged the Rancher existing features like authentication with various auth providers and multi-tenant support.</p>
+<p>For more details please reference the <a href="../virtualization-management/">virtualization management</a> page.</p>
+<p><img alt="import-cluster" src="../assets/import-harvester-cluster.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Virtualization Management is in Tech Preview.</p>
 </div>
 <h2 id="creating-k8s-clusters-using-the-harvester-node-driver">Creating K8s Clusters using the Harvester Node Driver<a class="headerlink" href="#creating-k8s-clusters-using-the-harvester-node-driver" title="Permanent link">&para;</a></h2>
 <p><a href="../node-driver/">Harvester node driver</a> is used to provision VMs in the Harvester cluster, which Rancher uses to launch and manage Kubernetes clusters.</p>
-<p>In the ISO mode, the Harvester driver has been added by default. Users can reference this <a href="../node-driver/">doc</a> for more details.</p>
+<p>Starting from Rancher <code>v2.6.1</code>, the Harvester node driver has been added by default. Users can reference this <a href="../node-driver/">doc</a> for more details.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Harvester Node Driver is in Tech Preview.</p>
+</div>
                 
                   
                 
