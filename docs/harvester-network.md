@@ -64,7 +64,7 @@ Modifying the default VLAN network setting will not change the existing configur
     !!! note
     You will need to select the `Install guest agent` option in the `Advanced Options` tab to get the VLAN network IP address from the Harvester UI.
 
-        ![](./assets/vm-network-configuration.png)
+  ![](./assets/vm-network-configuration.png)
 
   - Users can choose to add one or multiple network interface cards. Additional network interface card configurations can be set via cloud-init network data, for example:
 
