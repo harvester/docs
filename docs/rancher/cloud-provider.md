@@ -34,7 +34,7 @@ When spinning up an RKE cluster using the Harvester node driver, you can perform
   
 - Generate add-on configuration and add it to the RKE YAML file.
   ```
-  # depend on kubectl to operate the Harvester
+  # depend on kubectl to operate the Harvester cluster
   curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | sh -s <serviceAccount name> <namespace>
   ```
   
