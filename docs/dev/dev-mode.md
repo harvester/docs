@@ -19,27 +19,23 @@ This video shows the dev mode installation.
 
 ## Requirements
 
-- We assume **Multus** is installed across your cluster and a corresponding `NetworkAttachmentDefinition` CRD was created.
-- If you are using an [RKE](https://rancher.com/docs/rke/latest/en/) cluster, please ensure the `ipv4.ip_forward` is enabled for the CNI plugin so that the pod network works as expected, related issue: [#94](https://github.com/harvester/harvester/issues/94).
+- [**Multus**](https://kubernetes.io/docs/concepts/cluster-administration/networking/#multus-a-multi-network-plugin) is installed across your cluster and a corresponding `NetworkAttachmentDefinition` CRD is created.
+- The Kubernetes node must have hardware virtualization support.
+  - To validate the support, use this command:
 
-## Install as an App
+    ```bash
+    cat /proc/cpuinfo | grep vmx
+    ```
+- If you are using an [RKE](https://rancher.com/docs/rke/latest/en/) cluster, `ipv4.ip_forward` must be enabled for the CNI plugin in order for pod network to work as expected.
+
+## Installation
 
 Harvester can be installed on a Kubernetes cluster in the following ways:
 
-- Install with the [Helm](https://helm.sh/) CLI
-- Install as a Rancher catalog app, in which case the [harvester/harvester](https://github.com/harvester/harvester) repo is added to the Rancher Catalog as a Helm `v3` app
+- Using the [Helm](https://helm.sh/) CLI.
+- As a Rancher catalog app, in which case the [harvester/harvester](https://github.com/harvester/harvester) repo is added to the Rancher Catalog as a Helm `v3` app
 
 Please refer to the Harvester [Helm chart](https://github.com/harvester/harvester/blob/master/deploy/charts/harvester/README.md) for more details on installing and configuring the Helm chart.
-
-### Requirements
-
-The Kubernetes node must have hardware virtualization support.
-
-To validate the support, use this command:
-
-```bash
-cat /proc/cpuinfo | grep vmx
-```
 
 ### Option 1: Install using Helm
 
@@ -69,29 +65,27 @@ cat /proc/cpuinfo | grep vmx
 ### Option 2: Install using Rancher
 
 !!! tip
-      You can create a testing Kubernetes environment in Rancher using the Digital Ocean cloud provider. For details, see [this section](#digital-ocean-test-environment).
+      You can create a test Kubernetes environment in Rancher using DigitalOcean as cloud provider. For details, see [this section](#digital-ocean-test-environment).
 
 1. Add the Harvester repo `https://github.com/harvester/harvester` to your Rancher catalogs by clicking **Global > Tools > Catalogs**.
 1. Specify the URL and name. Set the branch to `stable` if you need a stable release version. Set the `Helm version` to be `Helm v3`.
    ![harvester-catalog.png](harvester-catalog.png)
 1. Click **Create**.
-1. Navigate to your project-level `Apps.`
-1. Click `Launch` and choose the Harvester app.
+1. Navigate to your project-level `Apps`.
+1. Click **Launch** and choose the Harvester app.
 1. (Optional) You can modify the configurations if needed. Otherwise, use the default options.
 1. Click **Launch** and wait for the app's components to be ready.
-1. Click the `/index.html` link to navigate to the Harvester UI, as shown in the figure below:
+1. Click the **/index.html** link to navigate to the Harvester UI, as shown in the figure below:
    ![harvester-app.png](harvester-app.png)
 
-### Digital Ocean Test Environment
+### DigitalOcean Test Environment
 
-[Digital Ocean](https://www.digitalocean.com/) supports nested virtualization by default.
+You can create a test Kubernetes environment in Rancher using [DigitalOcean](https://www.digitalocean.com/) as a cloud provider, which supports nested virtualization.
 
-You can create a testing Kubernetes environment in Rancher using the Digital Ocean cloud provider.
+We recommend using a `8 core, 16 GB RAM` droplet, which will have nested virtualization enabled by default.
 
-We recommend using the `8 core, 16 GB RAM` node, which will have nested virtualization enabled by default.
-
-This screenshot shows how to create a Rancher node template that would allow Rancher to provision such a node in Digital Ocean:
+This screenshot shows how to create a Rancher node template that would allow Rancher to provision such a node in DigitalOcean:
 
 ![do.png](do.png)
 
-For more information on how to launch Digital Ocean nodes with Rancher, refer to the [Rancher documentation.](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/digital-ocean/)
+For more information on how to launch DigitalOcean nodes with Rancher, refer to the [Rancher documentation.](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/digital-ocean/)
