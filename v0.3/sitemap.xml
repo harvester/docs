@@ -71,12 +71,12 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.harvesterhci.io/v0.3/rancher/rke-harvester-cluster/</loc>
+         <loc>https://docs.harvesterhci.io/v0.3/rancher/rke1-cluster/</loc>
          <lastmod>2021-10-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.harvesterhci.io/v0.3/rancher/rke2-harvester-cluster/</loc>
+         <loc>https://docs.harvesterhci.io/v0.3/rancher/rke2-cluster/</loc>
          <lastmod>2021-10-11</lastmod>
          <changefreq>daily</changefreq>
     </url>

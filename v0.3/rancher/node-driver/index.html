@@ -529,6 +529,34 @@
     
   
   
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9_3" type="checkbox" id="__nav_9_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9_3">
+          Harvester Node Driver
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Harvester Node Driver" data-md-level="2">
+        <label class="md-nav__title" for="__nav_9_3">
+          <span class="md-nav__icon md-icon"></span>
+          Harvester Node Driver
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
@@ -561,22 +589,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-cluster" class="md-nav__link">
-    Create Cluster
+  <a href="#enable-harvester-node-driver" class="md-nav__link">
+    Enable Harvester Node Driver
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-node-template" class="md-nav__link">
-    Create Node Template
+  <a href="#rke1-kubernetes-cluster" class="md-nav__link">
+    RKE1 Kubernetes Cluster
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-to-add-harvester-node-driver-in-dev-mode" class="md-nav__link">
-    How to add Harvester Node Driver in dev mode
+  <a href="#rke2-kubernetes-cluster" class="md-nav__link">
+    RKE2 Kubernetes Cluster
   </a>
   
 </li>
@@ -585,6 +613,41 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rke1-cluster/" class="md-nav__link">
+        RKE1 Kubernetes Cluster
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rke2-cluster/" class="md-nav__link">
+        RKE2 Kubernetes Cluster
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -611,35 +674,7 @@
   
     <li class="md-nav__item">
       <a href="../csi-driver/" class="md-nav__link">
-        Csi driver
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../rke-harvester-cluster/" class="md-nav__link">
-        Create a harvester cluster
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../rke2-harvester-cluster/" class="md-nav__link">
-        Create a harvester cluster
+        Harvester CSI Driver
       </a>
     </li>
   
@@ -789,22 +824,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-cluster" class="md-nav__link">
-    Create Cluster
+  <a href="#enable-harvester-node-driver" class="md-nav__link">
+    Enable Harvester Node Driver
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-node-template" class="md-nav__link">
-    Create Node Template
+  <a href="#rke1-kubernetes-cluster" class="md-nav__link">
+    RKE1 Kubernetes Cluster
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-to-add-harvester-node-driver-in-dev-mode" class="md-nav__link">
-    How to add Harvester Node Driver in dev mode
+  <a href="#rke2-kubernetes-cluster" class="md-nav__link">
+    RKE2 Kubernetes Cluster
   </a>
   
 </li>
@@ -829,47 +864,24 @@
                 <h1 id="harvester-node-driver">Harvester Node Driver<a class="headerlink" href="#harvester-node-driver" title="Permanent link">&para;</a></h1>
 <p>The Harvester node driver is used to provision VMs in the Harvester cluster. In this section, you'll learn how to configure Rancher to use the Harvester node driver to launch and manage Kubernetes clusters.</p>
 <p>A node driver is the same as a <a href="https://docs.docker.com/machine/drivers/">Docker Machine driver</a>, and the project repo is available at <a href="https://github.com/harvester/docker-machine-driver-harvester">harvester/docker-machine-driver-harvester</a>.</p>
-<p><img alt="" src="../assets/add-cluster.png" /></p>
-<h2 id="create-cluster">Create Cluster<a class="headerlink" href="#create-cluster" title="Permanent link">&para;</a></h2>
-<p>Now users can access the Rancher UI from Harvester, spin up Kubernetes clusters on top of the Harvester cluster, and manage them there.</p>
+<p>Users can now provision RKE1/RKE2 Kubernetes clusters in Rancher <code>v2.6.1</code> using the built-in Harvester Node Driver. 
+Additionally, Harvester now can provide built-in <a href="../cloud-provider/">Load Balancer support</a> as well as raw cluster <a href="../csi-driver/">persistent storage</a> support to the guest Kubernetes cluster.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>VLAN network is required for Harvester node driver.</p>
+<p>Currently Rancher v2.6.1 is the only version that is compatible with Harvester v0.3.0.</p>
 </div>
+<h2 id="enable-harvester-node-driver">Enable Harvester Node Driver<a class="headerlink" href="#enable-harvester-node-driver" title="Permanent link">&para;</a></h2>
+<p>The Harvester node driver is not enabled by default from the Rancher UI, click the <code>Cluster Management</code> tab to enable the Harvester node driver.</p>
 <ol>
-<li>From the <strong>Global</strong> view, click <strong>Add Cluster</strong>.</li>
-<li>Click <strong>Harvester</strong>.</li>
-<li>Select a <a href="#create-node-template">Template</a>.</li>
-<li>Fill out the rest of the form for creating a cluster.</li>
-<li>Click <strong>Create</strong>.</li>
+<li>click the <code>Drivers</code> page and click the <code>Node Drivers</code> tab </li>
+<li>select the Harvester node driver and click <code>Active</code> to enable the Harvester node driver.</li>
 </ol>
-<p>See <a href="https://rancher.com/docs/rancher/v2.5/en/cluster-provisioning/#launching-kubernetes-and-provisioning-nodes-in-an-infrastructure-provider">launching kubernetes and provisioning nodes in an infrastructure provider</a> for more info.</p>
-<h2 id="create-node-template">Create Node Template<a class="headerlink" href="#create-node-template" title="Permanent link">&para;</a></h2>
-<p>You can use the Harvester node driver to create node templates and eventually node pools for your Kubernetes cluster.</p>
-<ol>
-<li>Configure  <strong>Account Access</strong>. For Harvester embedding Rancher, you can choose <strong>Internal Harvester</strong>,  which will use the  <code>harvester.harvester-system</code> as the default <code>Host</code>, <code>8443</code> as the default <code>Port</code>.</li>
-<li>Configure <strong>Instance Options</strong><ul>
-<li>Configure the CPU, memory, disk, and disk bus.</li>
-<li>Select an OS image that is compatible with the <code>cloud-init</code> config.</li>
-<li>Select a network that the node driver is able to connect to, currently only <code>VLAN</code> is supported.</li>
-<li>Enter the SSH User, the username will be used to ssh to nodes. For example, a default user of the Ubuntu cloud image will be <code>ubuntu</code>.</li>
-</ul>
-</li>
-<li>Enter a <strong>RANCHER TEMPLATE</strong> name.</li>
-</ol>
-<p><img alt="" src="../assets/node-template.png" /></p>
-<p>See <a href="https://rancher.com/docs/rancher/v2.5/en/cluster-provisioning/rke-clusters/node-pools/">nodes hosted by an infrastructure provider</a> for more info.</p>
-<h2 id="how-to-add-harvester-node-driver-in-dev-mode">How to add Harvester Node Driver in dev mode<a class="headerlink" href="#how-to-add-harvester-node-driver-in-dev-mode" title="Permanent link">&para;</a></h2>
-<p>Developer mode doesn't come with Harvester node driver pre-installed. Following the steps below to install it:</p>
-<ol>
-<li>Navigate to the <strong>Rancher</strong> UI.</li>
-<li>From the <strong>Global</strong> view, choose <strong>Tools &gt; Drivers</strong> in the navigation bar. From the <strong>Drivers</strong> page, select the <strong>Node Drivers</strong> tab. In versions before v2.2.0, you can select <strong>Node Drivers</strong> directly in the navigation bar.</li>
-<li>Click <strong>Add Node Driver</strong>.</li>
-<li>Enter <strong>Download URL</strong>(<a href="https://harvester-node-driver.s3.amazonaws.com/driver/v0.1.6/docker-machine-driver-harvester-amd64.tar.gz">docker-machine-driver-harvester</a>) and <strong>Custom UI URL</strong>(<a href="https://harvester-node-driver.s3.amazonaws.com/ui/v0.1.4/component.js">ui-driver-harvester</a>). </li>
-<li>Add domains to the <strong>Whitelist Domains</strong> (e.g harvester-node-driver.s3.amazonaws.com).</li>
-<li>Click <strong>Create</strong>.</li>
-</ol>
-<p><img alt="" src="../assets/node-driver.png" /></p>
+<p><img alt="" src="../assets/enable-node-driver.png" /></p>
+<p>Now users can spin up Kubernetes clusters on top of the Harvester cluster, and manage them there.</p>
+<h2 id="rke1-kubernetes-cluster">RKE1 Kubernetes Cluster<a class="headerlink" href="#rke1-kubernetes-cluster" title="Permanent link">&para;</a></h2>
+<p>Click to view <a href="../rke1-cluster/">how to creat RKE1 Kubernetes Cluster</a></p>
+<h2 id="rke2-kubernetes-cluster">RKE2 Kubernetes Cluster<a class="headerlink" href="#rke2-kubernetes-cluster" title="Permanent link">&para;</a></h2>
+<p>Click to view <a href="../rke2-cluster/">how to creat RKE2 Kubernetes Cluster</a></p>
                 
                   
                 
@@ -907,13 +919,13 @@
       
       
         
-        <a href="../cloud-provider/" class="md-footer__link md-footer__link--next" aria-label="Next: Harvester Cloud Provider" rel="next">
+        <a href="../rke1-cluster/" class="md-footer__link md-footer__link--next" aria-label="Next: RKE1 Kubernetes Cluster" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Harvester Cloud Provider
+              RKE1 Kubernetes Cluster
             </div>
           </div>
           <div class="md-footer__button md-icon">
