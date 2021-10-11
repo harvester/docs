@@ -45,10 +45,13 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
   ![](assets/rke2-cloud-provider.png)
 
 ## Load Balancer Request Parameters
-When setting up a Kubernetes service of load balancer type, you can configure the load balancer with the service annotations.
+When setting up a Kubernetes service of load balancer type, you can configure the load balancer with the `service annotations`.
+
+!!!note
+    Both the `cloudprovider.harvesterhci.io/ipam` and `cloudprovider.harvesterhci.io/healthcheck-port` are required to add in the service annotation fields.
 
 ### IPAM
-The Harvester built-in load balancer supports both `pool` and `dhcp` mode to specify the load balancer IP by the annotation key `cloudprovider.harvesterhci.io/ipam`. The value defaults to `pool`.
+The Harvester built-in load balancer supports both `pool` and `dhcp` mode to specify the load balancer IP by the annotation key *`cloudprovider.harvesterhci.io/ipam`. The value defaults to `pool`.
 
 - pool: You should configure an IP address pool in the Harvester in advance. The Harvester LoadBalancer controller will allocate an IP address from the IP address poll for the load balancer. Refer to the [guideline](https://github.com/kube-vip/kube-vip-cloud-provider#global-and-namespace-pools) about how to configure an IP address pool.
                                                                                                                                                                                                   
@@ -57,7 +60,7 @@ The Harvester built-in load balancer supports both `pool` and `dhcp` mode to spe
 ### Health Checks
 The Harvester load balancer supports TCP health checks. The details of the related annotations are as following.<br>
 
-- `cloudprovider.harvesterhci.io/healthcheck-port` specifies the port. The prober will access the address composed of the backend server IP and the port. This option is required.
+- *`cloudprovider.harvesterhci.io/healthcheck-port` specifies the port. The prober will access the address composed of the backend server IP and the port. This option is required.
 
 - `cloudprovider.harvesterhci.io/healthcheck-success-threshold` specifies the health check success threshold. The default value is 1. If the number of times that the prober continuously successfully detects an address reaches the success threshold, the backend server can start to forward traffic.
 

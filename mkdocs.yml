@@ -54,6 +54,7 @@ nav:
   - authentication.md
   - upgrade.md
   - import-image.md
+  - host/host.md
   - VM Management:
     - vm/create-vm.md
     - vm/access-to-the-vm.md
