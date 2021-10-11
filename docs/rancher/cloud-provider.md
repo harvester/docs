@@ -21,11 +21,12 @@ The Harvester cloud provider used by the guest cluster in Harvester provides a C
 - How to configure the load balancer with the annotation of services
 
 ## Deploying
+
 ### Prerequisites
 - The Kubernetes cluster is built on top of Harvester virtual machines.
 - The Harvester virtual machines run as guest Kubernetes nodes are in the same namespace.
 
-### Deploying to the RKE cluster with Harvester node driver
+### Deploying to the RKE1 Cluster with Harvester Node Driver
 When spinning up an RKE cluster using the Harvester node driver, you can perform two steps to deploy the `Harvester` cloud provider:
 
 - Select the `External` cloud provider.
@@ -38,7 +39,7 @@ When spinning up an RKE cluster using the Harvester node driver, you can perform
   curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | sh -s <serviceAccount name> <namespace>
   ```
   
-### Deploying to the RKE2 cluster with Harvester node driver
+### Deploying to the RKE2 Cluster with Harvester Node Driver
 When spinning up an RKE2 cluster using the Harvester node driver, select the `Harvester` cloud provider. The node driver will then help deploy both the CSI driver and CCM automatically.
 
   ![](assets/rke2-cloud-provider.png)
