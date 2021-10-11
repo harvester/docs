@@ -14,7 +14,7 @@ Description: The Harvester cloud provider used by the guest cluster in Harvester
 
 _Available as of v0.3.0_
 
-The Harvester cloud provider used by the guest cluster in Harvester provides a CSI driver and cloud controller manager(CCM) which implements a built-in load balancer. In this section, you will learn about the following:
+The Harvester cloud provider used by the guest cluster in Harvester provides a CSI driver and cloud controller manager (CCM) which implements a built-in load balancer. In this section, you will learn about the following:
 
 - How to deploy the Harvester cloud provider in RKE and RKE2
 
