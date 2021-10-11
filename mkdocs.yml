@@ -59,6 +59,7 @@ nav:
     - vm/access-to-the-vm.md
     - vm/backup-restore.md
     - vm/live-migration.md
+    - vm/hotplug-volume.md
   - Networking:
     - networking/harvester-network.md
     - networking/vip.md
