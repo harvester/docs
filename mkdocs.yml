@@ -63,6 +63,7 @@ nav:
   - Rancher Integration:
     - rancher/rancher-integration.md
     - rancher/node-driver.md
+    - rancher/cloud-provider.md
   - Development:
     - dev/dev-mode.md
   - Reference:

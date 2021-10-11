@@ -6,7 +6,7 @@ on:
       - main
       - v*
 env:
-  LATEST_VERSION: v0.2
+  LATEST_VERSION: v0.3
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:

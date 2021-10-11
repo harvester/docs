@@ -16,12 +16,18 @@ Description: Harvester configuration file can be provided during manual or autom
 Harvester configuration file can be provided during manual or automatic installation to configure various settings. The following is a configuration example:
 
 ```yaml
-server_url: https://someserver:6443
+server_url: https://someserver:8443
 token: TOKEN_VALUE
 os:
   ssh_authorized_keys:
     - ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB...
     - github:username
+  write_files:
+  - encoding: ""
+    content: test content
+    owner: root
+    path: /etc/test.txt
+    permissions: '0755'
   hostname: myhost
   modules:
     - kvm
@@ -35,18 +41,18 @@ os:
   ntp_servers:
     - 0.us.pool.ntp.org
     - 1.us.pool.ntp.org
-  wifi:
-    - name: home
-      passphrase: mypassword
-    - name: nothome
-      passphrase: somethingelse
   password: rancher
   environment:
     http_proxy: http://myserver
     https_proxy: http://myserver
 install:
   mode: create
-  mgmtInterface: eth0
+  networks:
+    harvester-mgmt:
+      interfaces:
+      - name: ens5
+      default_route: true
+      method: dhcp
   force_efi: true
   device: /dev/vda
   silent: true
@@ -55,6 +61,9 @@ install:
   no_format: true
   debug: true
   tty: ttyS0
+  vip: 10.10.0.19
+  vip_hw_addr: 52:54:00:ec:0e:0b
+  vip_mode: dhcp
 ```
 
 ## Configuration Reference
@@ -76,7 +85,7 @@ This configuration is mandatory when the installation is in `JOIN` mode. It tell
 #### Example
 
 ```yaml
-server_url: https://someserver:6443
+server_url: https://someserver:8443
 install:
   mode: join
 ```
@@ -116,6 +125,42 @@ os:
   ssh_authorized_keys:
     - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2TBZGjE+J8ag11dzkFT58J3XPONrDVmalCNrKxsfADfyy0eqdZrG8hcAxAR/5zuj90Gin2uBR4Sw6Cn4VHsPZcFpXyQCjK1QDADj+WcuhpXOIOY3AB0LZBly9NI0ll+8lo3QtEaoyRLtrMBhQ6Mooy2M3MTG4JNwU9o3yInuqZWf9PvtW6KxMl+ygg1xZkljhemGZ9k0wSrjqif+8usNbzVlCOVQmZwZA+BZxbdcLNwkg7zWJSXzDIXyqM6iWPGXQDEbWLq3+HR1qKucTCSxjbqoe0FD5xcW7NHIME5XKX84yH92n6yn+rxSsyUfhJWYqJd+i0fKf5UbN6qLrtd/D"
     - "github:ibuildthecloud"
+```
+
+### `os.write_files`
+
+A list of files to write to disk on boot. The `encoding` field specifies the content's encoding. Valid `encoding` values are:
+
+- `""`: content data are written in plain text. In this case, the `encoding` field can be also omitted.
+- `b64`, `base64`: content data are base64-encoded.
+- `gz`, `gzip`: content data are gzip-compressed.
+- `gz+base64`, `gzip+base64`, `gz+b64`, `gzip+b64`: content data are gzip-compressed first and then base64-encoded.
+
+Example
+
+```yaml
+os:
+  write_files:
+  - encoding: b64
+    content: CiMgVGhpcyBmaWxlIGNvbnRyb2xzIHRoZSBzdGF0ZSBvZiBTRUxpbnV4...
+    owner: root:root
+    path: /etc/connman/main.conf
+    permissions: '0644'
+  - content: |
+      # My new /etc/sysconfig/samba file
+
+      SMDBOPTIONS="-D"
+    path: /etc/sysconfig/samba
+  - content: !!binary |
+      f0VMRgIBAQAAAAAAAAAAAAIAPgABAAAAwARAAAAAAABAAAAAAAAAAJAVAAAAAA
+      AEAAHgAdAAYAAAAFAAAAQAAAAAAAAABAAEAAAAAAAEAAQAAAAAAAwAEAAAAAAA
+      AAAAAAAAAwAAAAQAAAAAAgAAAAAAAAACQAAAAAAAAAJAAAAAAAAcAAAAAAAAAB
+      ...
+    path: /bin/arch
+    permissions: '0555'
+  - content: |
+      15 * * * * root ship_logs
+    path: /etc/crontab
 ```
 
 ### `os.hostname`
@@ -193,21 +238,6 @@ os:
     - 1.us.pool.ntp.org
 ```
 
-### `os.wifi`
-
-Simple wifi configuration. All that is accepted is `name` and `passphrase`.
-
-Example:
-
-```yaml
-os:
-  wifi:
-    - name: home
-      passphrase: mypassword
-    - name: nothome
-      passphrase: somethingelse
-```
-
 ### `os.password`
 
 #### Definition
@@ -264,17 +294,53 @@ install:
   mode: create
 ```
 
-### `install.mgmtInterface`
+### `install.networks`
 
 #### Definition
 
-The interface that used to build VM fabric network.
+Configure network interfaces for the host machine. Each key-value pair
+represents as a network interface. The key name becomes the network name, and
+the values are configurations for each network. Valid configuration fields are:
+
+- `method`: Method to assign IP for this network. Support `static` and `dhcp`.
+- `ip`: Static IP for this network. Required if `static` method is chosen.
+- `subnet_mask`: Subnet mask for this network. Required if `static` method is chosen.
+- `gateway`: Gateway for this network. Required if `static` method is chosen.
+- `interfaces`: An array of interface names. If provided, the installer then combines these NICs into a single logical bonded interface.
+    - `interfaces.name`: The name of slave interface for the bonded network.
+- `default_route`: Set the network as the default route or not.
+- `bond_options`: Options for bonded interfaces. Refer to [here](https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options) for more info. If not provided, the following options would be used:
+    - `mode: balance-tlb`
+    - `miimon: 100`
+
+!!! note
+    A network `harvester-mgmt` is mandatory to establish a valid [management network](../../harvester-network#management-network).
+
+!!! note
+    Harvester uses [systemd net naming scheme](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html).
+    Please make sure the interface name presents on target machine before installation.
 
 #### Example
 
 ```yaml
 install:
-  mgmtInterface: eth0
+  mode: create
+  networks:
+    harvester-mgmt:       # The management bond name. This is mandatory.
+      interfaces:
+      - name: ens5
+      default_route: true
+      method: dhcp
+      bond_options:
+        mode: balance-tlb
+        miimon: 100
+    bond0:
+      interfaces:
+      - name: ens8
+      method: static
+      ip: 10.10.18.2
+      subnet_mask: 255.255.255.0
+      gateway: 192.168.11.1
 ```
 
 ### `install.force_efi`
@@ -316,4 +382,36 @@ The tty device used for console.
 ```yaml
 install:
   tty: ttyS0,115200n8
+```
+
+### `install.vip`
+### `install.vip_mode`
+### `install.vip_hw_addr`
+
+#### Definition
+
+- `install.vip`: The VIP of Harvester management endpoint. After installation, users can access Harvester GUI at URL `https://<VIP>`.
+- `install.vip_mode`
+    - `dhcp`: Harvester will send DHCP requests to get VIP. `install.vip_hw_addr` field needs to be provided.
+    - `static`: Harvester uses a static VIP.
+- `install.vip_hw_addr`: The hardware address corresponding to the VIP. Users have to configure their on-premise DHCP server to offer the configured VIP. The field is mandatory when `install.vip_mode` is `dhcp`.
+
+
+#### Example
+
+Configure a static VIP.
+
+```yaml
+install:
+  vip: 192.168.0.100
+  vip_mode: static
+```
+
+Configure a DHCP VIP.
+
+```yaml
+install:
+  vip: 10.10.0.19
+  vip_mode: dhcp
+  vip_hw_addr: 52:54:00:ec:0e:0b
 ```
