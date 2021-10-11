@@ -272,7 +272,7 @@
   
     <li class="md-nav__item">
       <a href="../install/pxe-boot-install/" class="md-nav__link">
-        PXE Boot Install
+        PXE Boot Installation
       </a>
     </li>
   
@@ -579,6 +579,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rancher/cloud-provider/" class="md-nav__link">
+        Harvester Cloud Provider
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -780,14 +794,14 @@
 <p>Below is a use case of the VLAN in Harvester.</p>
 <p><img alt="" src="../assets/vlan-case.png" /></p>
 <ul>
-<li>Harvester network-controller uses a bridge for a node and a pair of veth for a VM to implement the VLAN. The bridge acts as a switch to forward the network traffic from or to VMs and the veth pair is like the connected ports between vms and switch.</li>
-<li>VMs within the same VLAN is able to communicate with each other, while the VMs within different VLANs can't.</li>
+<li>Harvester network-controller uses a bridge for a node and a pair of veth for a VM to implement the VLAN. The bridge acts as a switch to forward the network traffic from or to VMs and the veth pair is like the connected ports between VMs and switch.</li>
+<li>VMs within the same VLAN can communicate with each other, while the VMs within different VLANs can't.</li>
 <li>The external switch ports connected with the hosts or other devices(such as DHCP server) should be set as trunk or hybrid type and permit the specified VLANs.</li>
 <li>Users can use VLAN with <code>PVID</code> (default 1) to communicate with any normal untagged traffic.</li>
 </ul>
 <h2 id="enabling-vlan-in-the-harvester-ui">Enabling VLAN in the Harvester UI<a class="headerlink" href="#enabling-vlan-in-the-harvester-ui" title="Permanent link">&para;</a></h2>
 <p>Enable VLAN via going to <strong>Setting &gt; vlan</strong> to enable VLAN and input a valid default physical NIC name for the VLAN. </p>
-<p>The first physical NIC name of each Harvester node always defaults to eth0. It is recommended to choose a separate NIC for the VLAN other than the one used for the management network (the one selected during the Harvester installation) for better network performance and isolation. </p>
+<p>It is recommended to choose a separate NIC for the VLAN other than the one used for the management network (the one selected during the Harvester installation) for better network performance and isolation. </p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Modifying the default VLAN network setting will not change the existing configured host networks.</p>

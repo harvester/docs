@@ -272,7 +272,7 @@
   
     <li class="md-nav__item">
       <a href="../../install/pxe-boot-install/" class="md-nav__link">
-        PXE Boot Install
+        PXE Boot Installation
       </a>
     </li>
   
@@ -499,6 +499,20 @@
     <li class="md-nav__item">
       <a href="../../rancher/node-driver/" class="md-nav__link">
         Harvester Node Driver
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rancher/cloud-provider/" class="md-nav__link">
+        Harvester Cloud Provider
       </a>
     </li>
   
@@ -824,7 +838,7 @@ kubectl create ns harvester-system
 <span class="c1">## Install the chart to the target namespace</span>
 helm install harvester harvester <span class="se">\</span>
 --namespace harvester-system <span class="se">\</span>
---set longhorn.enabled<span class="o">=</span><span class="nb">true</span>
+--set longhorn.enabled<span class="o">=</span>true,minio.persistence.storageClass<span class="o">=</span>longhorn
 </code></pre></div></p>
 </li>
 </ol>
@@ -873,7 +887,7 @@ helm install harvester harvester <span class="se">\</span>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../rancher/node-driver/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Harvester Node Driver" rel="prev">
+        <a href="../../rancher/cloud-provider/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Harvester Cloud Provider" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -882,7 +896,7 @@ helm install harvester harvester <span class="se">\</span>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Harvester Node Driver
+              Harvester Cloud Provider
             </div>
           </div>
         </a>
