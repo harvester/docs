@@ -46,7 +46,7 @@ It is recommended to choose a separate NIC for the VLAN other than the one used 
     Modifying the default VLAN network setting will not change the existing configured host networks.
     
 !!! note
-    Harvester support bond interface but only can be created during PEX Boot installation. Here is [an example](/install/harvester-configuration/#example_11).
+    Harvester supports configuring bond interfaces but it can only be created during PEX Boot installation. Here is [an example](/install/harvester-configuration/#example_11).
 
   ![](./assets/enable-vlan.png)
 
