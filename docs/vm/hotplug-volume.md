@@ -1,10 +1,10 @@
 ---
 sidebar_position: 5
 keywords:
-- Harvester
-- Hot-plug
-- Volume
-  Description: Adding hot-plug volumes to a running VM.
+  - Harvester
+  - Hot-plug
+  - Volume
+Description: Adding hot-plug volumes to a running VM.
 ---
 
 # Hot-Plug Volumes
