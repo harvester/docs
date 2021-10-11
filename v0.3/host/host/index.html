@@ -7,25 +7,23 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
       
-        <meta name="keywords" content="['Harvester', 'harvester', 'Rancher', 'rancher', 'Authentication']">
       
       
+        <link rel="canonical" href="https://docs.harvesterhci.io/v0.3/host/host/">
       
-        <link rel="canonical" href="https://docs.harvesterhci.io/v0.3/authentication/">
-      
-      <link rel="icon" href="../assets/favicon.ico">
+      <link rel="icon" href="../../assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.3">
     
     
       
-        <title>Authentication - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>Host Management - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.5143246d.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.5143246d.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
         
           
           
@@ -44,9 +42,9 @@
     
     
     
-      <link rel="stylesheet" href="../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-      <link rel="stylesheet" href="../assets/swagger-ui/swagger-ui.css">
+      <link rel="stylesheet" href="../../assets/swagger-ui/swagger-ui.css">
     
     
       
@@ -65,7 +63,7 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
   
     
-    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -73,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#authentication" class="md-skip">
+        <a href="#host-management" class="md-skip">
           Skip to content
         </a>
       
@@ -88,7 +86,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="https://harvesterhci.io" title="Harvester - Open Source Hyperconverged Infrastructure" class="md-header__button md-logo" aria-label="Harvester - Open Source Hyperconverged Infrastructure" data-md-component="logo">
       
-  <img src="../assets/logo_horizontal_white.png" alt="logo">
+  <img src="../../assets/logo_horizontal_white.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -104,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Authentication
+              Host Management
             
           </span>
         </div>
@@ -187,7 +185,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="https://harvesterhci.io" title="Harvester - Open Source Hyperconverged Infrastructure" class="md-nav__button md-logo" aria-label="Harvester - Open Source Hyperconverged Infrastructure" data-md-component="logo">
       
-  <img src="../assets/logo_horizontal_white.png" alt="logo">
+  <img src="../../assets/logo_horizontal_white.png" alt="logo">
 
     </a>
     Harvester - Open Source Hyperconverged Infrastructure
@@ -216,7 +214,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         Harvester Intro
       </a>
     </li>
@@ -257,7 +255,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install/iso-install/" class="md-nav__link">
+      <a href="../../install/iso-install/" class="md-nav__link">
         ISO Installation
       </a>
     </li>
@@ -271,7 +269,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install/pxe-boot-install/" class="md-nav__link">
+      <a href="../../install/pxe-boot-install/" class="md-nav__link">
         PXE Boot Installation
       </a>
     </li>
@@ -285,7 +283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install/harvester-configuration/" class="md-nav__link">
+      <a href="../../install/harvester-configuration/" class="md-nav__link">
         Harvester Configuration
       </a>
     </li>
@@ -295,6 +293,51 @@
           
         </ul>
       </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication/" class="md-nav__link">
+        Authentication
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../upgrade/" class="md-nav__link">
+        Upgrading Harvester
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../import-image/" class="md-nav__link">
+        Import Images
+      </a>
     </li>
   
 
@@ -316,55 +359,47 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Host Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
-        Authentication
-      </a>
-      
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../upgrade/" class="md-nav__link">
-        Upgrading Harvester
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../import-image/" class="md-nav__link">
-        Import Images
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../host/host/" class="md-nav__link">
         Host Management
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#node-maintenance" class="md-nav__link">
+    Node Maintenance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-disk-management" class="md-nav__link">
+    Multi-disk Management
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -403,7 +438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/create-vm/" class="md-nav__link">
+      <a href="../../vm/create-vm/" class="md-nav__link">
         Create a VM
       </a>
     </li>
@@ -417,7 +452,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/access-to-the-vm/" class="md-nav__link">
+      <a href="../../vm/access-to-the-vm/" class="md-nav__link">
         Access to the VM
       </a>
     </li>
@@ -431,7 +466,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/backup-restore/" class="md-nav__link">
+      <a href="../../vm/backup-restore/" class="md-nav__link">
         VM Backup & Restore
       </a>
     </li>
@@ -445,7 +480,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/live-migration/" class="md-nav__link">
+      <a href="../../vm/live-migration/" class="md-nav__link">
         Live Migration
       </a>
     </li>
@@ -459,7 +494,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/hotplug-volume/" class="md-nav__link">
+      <a href="../../vm/hotplug-volume/" class="md-nav__link">
         Hot-Plug Volumes
       </a>
     </li>
@@ -507,7 +542,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../networking/harvester-network/" class="md-nav__link">
+      <a href="../../networking/harvester-network/" class="md-nav__link">
         Harvester Network
       </a>
     </li>
@@ -521,7 +556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../networking/vip/" class="md-nav__link">
+      <a href="../../networking/vip/" class="md-nav__link">
         Management Address
       </a>
     </li>
@@ -543,7 +578,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../monitoring/monitoring/" class="md-nav__link">
+      <a href="../../monitoring/monitoring/" class="md-nav__link">
         Monitoring
       </a>
     </li>
@@ -584,7 +619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/rancher-integration/" class="md-nav__link">
+      <a href="../../rancher/rancher-integration/" class="md-nav__link">
         Rancher integration
       </a>
     </li>
@@ -598,7 +633,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/virtualization-management/" class="md-nav__link">
+      <a href="../../rancher/virtualization-management/" class="md-nav__link">
         Virtualization management
       </a>
     </li>
@@ -638,7 +673,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/node-driver/" class="md-nav__link">
+      <a href="../../rancher/node-driver/" class="md-nav__link">
         Harvester Node Driver
       </a>
     </li>
@@ -652,7 +687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/rke1-cluster/" class="md-nav__link">
+      <a href="../../rancher/rke1-cluster/" class="md-nav__link">
         RKE1 Kubernetes Cluster
       </a>
     </li>
@@ -666,7 +701,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/rke2-cluster/" class="md-nav__link">
+      <a href="../../rancher/rke2-cluster/" class="md-nav__link">
         RKE2 Kubernetes Cluster
       </a>
     </li>
@@ -687,7 +722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/cloud-provider/" class="md-nav__link">
+      <a href="../../rancher/cloud-provider/" class="md-nav__link">
         Harvester Cloud Provider
       </a>
     </li>
@@ -701,7 +736,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/csi-driver/" class="md-nav__link">
+      <a href="../../rancher/csi-driver/" class="md-nav__link">
         Harvester CSI Driver
       </a>
     </li>
@@ -723,7 +758,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../terraform/terraform/" class="md-nav__link">
+      <a href="../../terraform/terraform/" class="md-nav__link">
         Harvester Terraform Provider
       </a>
     </li>
@@ -764,7 +799,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dev/dev-mode/" class="md-nav__link">
+      <a href="../../dev/dev-mode/" class="md-nav__link">
         Developer Mode Installation
       </a>
     </li>
@@ -812,7 +847,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/api/" class="md-nav__link">
+      <a href="../../reference/api/" class="md-nav__link">
         API Reference
       </a>
     </li>
@@ -845,6 +880,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#node-maintenance" class="md-nav__link">
+    Node Maintenance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-disk-management" class="md-nav__link">
+    Multi-disk Management
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -855,20 +912,37 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/harvester/docs/edit/main/docs/authentication.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/harvester/docs/edit/main/docs/host/host.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h1>
-<p>After installation, user will be prompted to set the password for the default <code>admin</code> user on the first-time login.</p>
-<p><img alt="auth" src="../install/first-time-login.png" /></p>
+                <h1 id="host-management">Host Management<a class="headerlink" href="#host-management" title="Permanent link">&para;</a></h1>
+<p>Users can view and manage the Harvester node from the host page, The first node always defaults to be a management node of the cluster,
+when there is more than 3 node, the Harvester will automatically promote the other two first joined nodes to be the management nodes to form a HA cluster.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In the single cluster mode, only one default <code>admin</code> user is provided. Check out the <a href="../rancher/rancher-integration/">Rancher Integration</a> for multi-tenant management.</p>
+<p>Because Harvester is built on top of the Kubernetes and uses the ETCD as its database, so with 3 management nodes the maximum node fault toleration is one.</p>
 </div>
-                
-                  
+<p><img alt="host.png" src="../assets/host.png" /></p>
+<h2 id="node-maintenance">Node Maintenance<a class="headerlink" href="#node-maintenance" title="Permanent link">&para;</a></h2>
+<p>For the admin user, you can click <code>Enable Maintenance Mode</code> to evict all VMs from the node automatically, it will leverage the <code>VM live migration</code> feature to migrate all VMs to the other nodes automatically(Notes: At least 2 active nodes is required.)</p>
+<p><img alt="node-maintenance.png" src="../assets/node-maintenance.png" /></p>
+<h2 id="multi-disk-management">Multi-disk Management<a class="headerlink" href="#multi-disk-management" title="Permanent link">&para;</a></h2>
+<p>Users can now view and add multiple disks as an additional data volumes from the host detail page.</p>
+<ol>
+<li>Go to the <code>Hosts</code> page and click the <code>Edit Config</code></li>
+<li>Select the <code>Disks</code> tab and click <code>Add Disks</code></li>
+<li>Select to add either the additional raw block device or partitions as an additional data volume.<ul>
+<li>force-formatting is required when adding an entire raw block device to form a single root disk partition with ext4 filesystem format</li>
+<li>it is optional to choose force-formatting a partition disk, force-formatting will be required when the partition's filesystem type does not match <code>ext4</code>, <code>XFS</code> or not found.</li>
+</ul>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Multi-disk management feature is in tech preview.</p>
+</div>
                 
               
               
@@ -888,7 +962,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../install/harvester-configuration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Harvester Configuration" rel="prev">
+        <a href="../../import-image/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Import Images" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -897,20 +971,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Harvester Configuration
+              Import Images
             </div>
           </div>
         </a>
       
       
         
-        <a href="../upgrade/" class="md-footer__link md-footer__link--next" aria-label="Next: Upgrading Harvester" rel="next">
+        <a href="../../vm/create-vm/" class="md-footer__link md-footer__link--next" aria-label="Next: Create a VM" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Upgrading Harvester
+              Create a VM
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -941,12 +1015,12 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.8397ff9e.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.8397ff9e.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.f89c2efe.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f89c2efe.min.js"></script>
       
-        <script src="../assets/swagger-ui/swagger-ui-bundle.js"></script>
+        <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
     
   </body>

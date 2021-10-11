@@ -351,22 +351,37 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../host/host/" class="md-nav__link">
+        Host Management
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_6">
+        <label class="md-nav__link" for="__nav_7">
           VM Management
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="VM Management" data-md-level="1">
-        <label class="md-nav__title" for="__nav_6">
+        <label class="md-nav__title" for="__nav_7">
           <span class="md-nav__icon md-icon"></span>
           VM Management
         </label>
@@ -459,18 +474,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_7">
+        <label class="md-nav__link" for="__nav_8">
           Networking
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Networking" data-md-level="1">
-        <label class="md-nav__title" for="__nav_7">
+        <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
           Networking
         </label>
@@ -538,18 +553,18 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" checked>
       
       
       
       
-        <label class="md-nav__link" for="__nav_9">
+        <label class="md-nav__link" for="__nav_10">
           Rancher Integration
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Rancher Integration" data-md-level="1">
-        <label class="md-nav__title" for="__nav_9">
+        <label class="md-nav__title" for="__nav_10">
           <span class="md-nav__icon md-icon"></span>
           Rancher Integration
         </label>
@@ -592,18 +607,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9_3" type="checkbox" id="__nav_9_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_3" type="checkbox" id="__nav_10_3" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_9_3">
+        <label class="md-nav__link" for="__nav_10_3">
           Harvester Node Driver
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Harvester Node Driver" data-md-level="2">
-        <label class="md-nav__title" for="__nav_9_3">
+        <label class="md-nav__title" for="__nav_10_3">
           <span class="md-nav__icon md-icon"></span>
           Harvester Node Driver
         </label>
@@ -812,18 +827,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_11">
+        <label class="md-nav__link" for="__nav_12">
           Development
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Development" data-md-level="1">
-        <label class="md-nav__title" for="__nav_11">
+        <label class="md-nav__title" for="__nav_12">
           <span class="md-nav__icon md-icon"></span>
           Development
         </label>
@@ -860,18 +875,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_13" type="checkbox" id="__nav_13" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_12">
+        <label class="md-nav__link" for="__nav_13">
           Reference
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_12">
+        <label class="md-nav__title" for="__nav_13">
           <span class="md-nav__icon md-icon"></span>
           Reference
         </label>
@@ -1034,9 +1049,13 @@ curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/m
 <p>When spinning up an RKE2 cluster using the Harvester node driver, select the <code>Harvester</code> cloud provider, then the node driver will help deploy both the CSI driver and CCM automatically.</p>
 <p><img alt="" src="../assets/rke2-cloud-provider.png" /></p>
 <h2 id="load-balancer-request-parameters">Load Balancer Request Parameters<a class="headerlink" href="#load-balancer-request-parameters" title="Permanent link">&para;</a></h2>
-<p>When setting up a Kubernetes service of load balancer type, you can configure the load balancer with the service annotations.</p>
+<p>When setting up a Kubernetes service of load balancer type, you can configure the load balancer with the <code>service annotations</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Both the <code>cloudprovider.harvesterhci.io/ipam</code> and <code>cloudprovider.harvesterhci.io/healthcheck-port</code> are required to add in the service annotation fields.</p>
+</div>
 <h3 id="ipam">IPAM<a class="headerlink" href="#ipam" title="Permanent link">&para;</a></h3>
-<p>The Harvester built-in load balancer supports both <code>pool</code> and <code>dhcp</code> mode to specify the load balancer IP by the annotation key <code>cloudprovider.harvesterhci.io/ipam</code>. The value defaults to <code>pool</code>.</p>
+<p>The Harvester built-in load balancer supports both <code>pool</code> and <code>dhcp</code> mode to specify the load balancer IP by the annotation key *<code>cloudprovider.harvesterhci.io/ipam</code>. The value defaults to <code>pool</code>.</p>
 <ul>
 <li>
 <p>pool: You should configure an IP address pool in the Harvester in advance. The Harvester LoadBalancer controller will allocate an IP address from the IP address poll for the load balancer. Refer to the <a href="https://github.com/kube-vip/kube-vip-cloud-provider#global-and-namespace-pools">guideline</a> about how to configure an IP address pool.</p>
@@ -1049,7 +1068,7 @@ curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/m
 <p>The Harvester load balancer supports TCP health checks. The details of the related annotations are as following.<br></p>
 <ul>
 <li>
-<p><code>cloudprovider.harvesterhci.io/healthcheck-port</code> specifies the port. The prober will access the address composed of the backend server IP and the port. This option is required.</p>
+<p>*<code>cloudprovider.harvesterhci.io/healthcheck-port</code> specifies the port. The prober will access the address composed of the backend server IP and the port. This option is required.</p>
 </li>
 <li>
 <p><code>cloudprovider.harvesterhci.io/healthcheck-success-threshold</code> specifies the health check success threshold. The default value is 1. If the number of times that the prober continuously successfully detects an address reaches the success threshold, the backend server can start to forward traffic.</p>
