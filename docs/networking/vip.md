@@ -22,5 +22,5 @@ The management address has two usages.
 ## Configure VIP 
 Users can specify the VIP during installation. It can either be configured via DHCP or static method.
 
-> Note: In PXE Boot mode, Harvester install has not support DHCP method yet. We will support it in next release.
+> Note: In PXE boot, Harvester does not support setting the VIP via DHCP. It will be addressed in the next release.
 > Issue: https://github.com/harvester/harvester/issues/1410
