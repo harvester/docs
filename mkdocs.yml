@@ -64,11 +64,12 @@ nav:
   - Rancher Integration:
     - rancher/rancher-integration.md
     - rancher/virtualization-management.md
-    - rancher/node-driver.md
+    - Harvester Node Driver:
+      - rancher/node-driver.md
+      - rancher/rke1-cluster.md
+      - rancher/rke2-cluster.md
     - rancher/cloud-provider.md
     - rancher/csi-driver.md
-    - rancher/rke-harvester-cluster.md
-    - rancher/rke2-harvester-cluster.md
   - terraform/terraform.md
   - Development:
     - dev/dev-mode.md
