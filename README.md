@@ -9,8 +9,18 @@ Please refer to this [doc](https://squidfunk.github.io/mkdocs-material/customiza
 
 ## Local Development
 
+Edit [`mkdocs.yml`](./mkdocs.yml) to disable strict mode: 
+```yaml
+# Set to false for local docs development
+strict: false
+```
+
+And run the builtin development server:
 ```console
 mkdocs serve
+
+# or run the server on certain IP and port:
+mkdocs serve -a <IP>:<PORT>
 ```
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
