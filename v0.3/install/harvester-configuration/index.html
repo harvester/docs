@@ -1988,7 +1988,12 @@ Primary use of this field is to set the http proxy.</p>
 represents as a network interface. The key name becomes the network name, and
 the values are configurations for each network. Valid configuration fields are:</p>
 <ul>
-<li><code>method</code>: Method to assign IP for this network. Support <code>static</code> and <code>dhcp</code>.</li>
+<li><code>method</code>: Method to assign IP to this network. Support followings:<ul>
+<li><code>static</code>: Manually assign IP and gateway.</li>
+<li><code>dhcp</code>: Request IP from the DHCP server.</li>
+<li><code>none</code>: Do nothing. Useful when the interface needs no IP, such as creating <a href="../../networking/harvester-network#vlan">VLAN network</a> NIC in Harvester.</li>
+</ul>
+</li>
 <li><code>ip</code>: Static IP for this network. Required if <code>static</code> method is chosen.</li>
 <li><code>subnet_mask</code>: Subnet mask for this network. Required if <code>static</code> method is chosen.</li>
 <li><code>gateway</code>: Gateway for this network. Required if <code>static</code> method is chosen.</li>
@@ -1997,7 +2002,7 @@ the values are configurations for each network. Valid configuration fields are:<
 </ul>
 </li>
 <li><code>default_route</code>: Set the network as the default route or not.</li>
-<li><code>bond_options</code>: Options for bonded interfaces. Refer to <a href="https://wiki.linuxfoundation.org/networking/bonding#bonding_driver_options">here</a> for more info. If not provided, the following options would be used:<ul>
+<li><code>bond_options</code>: Options for bonded interfaces. Refer to <a href="https://www.kernel.org/doc/Documentation/networking/bonding.txt">here</a> for more info. If not provided, the following options would be used:<ul>
 <li><code>mode: balance-tlb</code></li>
 <li><code>miimon: 100</code></li>
 </ul>
@@ -2005,7 +2010,7 @@ the values are configurations for each network. Valid configuration fields are:<
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>A network <code>harvester-mgmt</code> is mandatory to establish a valid <a href="../../harvester-network#management-network">management network</a>.</p>
+<p>A network <code>harvester-mgmt</code> is mandatory to establish a valid <a href="../../networking/harvester-network/#management-network">management network</a>.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2021,6 +2026,13 @@ Please make sure the interface name presents on target machine before installati
       <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
       <span class="nt">default_route</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
       <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
+      <span class="nt">bond_options</span><span class="p">:</span>
+        <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">balance-tlb</span>
+        <span class="nt">miimon</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
+    <span class="nt">harvester-vlan</span><span class="p">:</span>       <span class="c1"># The VLAN network bond name. User can then input `harvester-vlan` in the VLAN NIC setting in the GUI.</span>
+      <span class="nt">interfaces</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens6</span>
+      <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">none</span>
       <span class="nt">bond_options</span><span class="p">:</span>
         <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">balance-tlb</span>
         <span class="nt">miimon</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
