@@ -302,7 +302,10 @@ Configure network interfaces for the host machine. Each key-value pair
 represents as a network interface. The key name becomes the network name, and
 the values are configurations for each network. Valid configuration fields are:
 
-- `method`: Method to assign IP for this network. Support `static` and `dhcp`.
+- `method`: Method to assign IP to this network. Support followings:
+    - `static`: Manually assign IP and gateway.
+    - `dhcp`: Request IP from the DHCP server.
+    - `none`: Do nothing. Useful when the interface needs no IP, such as creating [VLAN network](../../networking/harvester-network#vlan) NIC in Harvester.
 - `ip`: Static IP for this network. Required if `static` method is chosen.
 - `subnet_mask`: Subnet mask for this network. Required if `static` method is chosen.
 - `gateway`: Gateway for this network. Required if `static` method is chosen.
@@ -331,6 +334,13 @@ install:
       - name: ens5
       default_route: true
       method: dhcp
+      bond_options:
+        mode: balance-tlb
+        miimon: 100
+    harvester-vlan:       # The VLAN network bond name. User can then input `harvester-vlan` in the VLAN NIC setting in the GUI.
+      interfaces:
+      - name: ens6
+      method: none
       bond_options:
         mode: balance-tlb
         miimon: 100
