@@ -6,19 +6,19 @@ keywords:
 
 ## Virtualization Management
 
-For Harvester v0.3.0 and above, virtualization management with multi-cluster management feature will be supported using the Rancher 2.6.x version.
+For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6.x.
 
-1. First, you will need to install the Rancher v2.6.1 server or above. For testing purposes, you can spin up a Rancher server using the following docker run command: 
+1. First, you will need to install Rancher v2.6.1 or above. For testing purposes, you can spin up a Rancher server using the following `docker run` command: 
     ```
     $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.1
     ```
 
     !!!note
-        For production environment setup, please refer to the official Rancher [docs](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/).
+        For a production environment setup, please refer to the official Rancher [docs](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/).
 
-1. Once the Rancher server is up and running, log in and click the hamburger menu and choose the **Virtualization Management** tab. Select `Import Existing` to import the downstream Harvester cluster into the Rancher server.
+1. Once the Rancher server is up and running, log in and click the hamburger menu and choose the **Virtualization Management** tab. Select **Import Existing** to import the downstream Harvester cluster into the Rancher server.
 ![](./assets/vm-menu.png)
-1. Specify the `Cluster Name` and click `Create`. You will then see the registration commands; copy the appropriate command and ssh to one of the Harvester management nodes to run this command accordingly.
+1. Specify the `Cluster Name` and click **Create**. You will then see the registration commands; copy the appropriate command and ssh to one of the Harvester management nodes to run this command accordingly.
 ![](./assets/harv-importing.png)
 1. Once the agent node is ready, you should be able to view and access the imported Harvester cluster from the Rancher server and manage your VMs accordingly.
 ![](./assets/harv-cluster-view.png)
