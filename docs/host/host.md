@@ -27,3 +27,6 @@ Users can now view and add multiple disks as an additional data volumes from the
 
 !!!note
     Multi-disk management feature is in tech preview.
+
+![Edit Config](assets/edit-config.png)
+![Add Disks](assets/add-disks.png)
