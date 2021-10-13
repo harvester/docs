@@ -6,14 +6,14 @@ keywords:
   - Rancher
   - rancher
   - Rancher Integration
-Description: Rancher is an open source multi-cluster management platform. Harvester has integrated Rancher into its HCI mode installation by default.
+Description: Rancher is an open source multi-cluster management platform. Harvester has integrated Rancher by default starting with Rancher v2.6.1.
 ---
 
 ## Rancher Integration
 
 _Available as of v0.3.0_
 
-[Rancher](https://github.com/rancher/rancher) is an open-source multi-cluster management platform. Harvester has integrated Rancher on its HCI mode by default starting with Rancher v2.6.1.
+[Rancher](https://github.com/rancher/rancher) is an open-source multi-cluster management platform. Harvester has integrated Rancher by default starting with Rancher v2.6.1.
 
 Users can now import and manage multiple Harvester clusters using the Rancher `v2.6.1` [Virtualization Management](virtualization-management.md) page and leverage the Rancher [authentication](https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/) feature and RBAC control for [multi-tenancy](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/) support.
 
