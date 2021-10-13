@@ -14,7 +14,16 @@ theme:
   logo: 'assets/logo_horizontal_white.png'
   favicon: 'assets/favicon.ico'
   palette:
-    primary: green
+    - scheme: default
+      primary: green
+      toggle:
+        icon: material/eye-outline
+        name: Dark Mode
+    - scheme: slate
+      primary: green
+      toggle:
+        icon: material/eye
+        name: Light Mode
   icon:
     repo: fontawesome/brands/github
 
