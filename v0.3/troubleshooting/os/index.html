@@ -7,18 +7,16 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
       
-        <meta name="keywords" content="['Harvester', 'harvester', 'Rancher', 'rancher', 'Live Migration']">
       
       
-      
-        <link rel="canonical" href="https://docs.harvesterhci.io/v0.3/vm/live-migration/">
+        <link rel="canonical" href="https://docs.harvesterhci.io/v0.3/troubleshooting/os/">
       
       <link rel="icon" href="../../assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.3">
     
     
       
-        <title>Live Migration - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>Operating System - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
@@ -73,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#live-migration" class="md-skip">
+        <a href="#operating-system" class="md-skip">
           Skip to content
         </a>
       
@@ -104,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Live Migration
+              Operating System
             
           </span>
         </div>
@@ -365,14 +363,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
       
       
       
@@ -395,7 +391,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../create-vm/" class="md-nav__link">
+      <a href="../../vm/create-vm/" class="md-nav__link">
         Create a VM
       </a>
     </li>
@@ -409,7 +405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../access-to-the-vm/" class="md-nav__link">
+      <a href="../../vm/access-to-the-vm/" class="md-nav__link">
         Access to the VM
       </a>
     </li>
@@ -423,7 +419,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../backup-restore/" class="md-nav__link">
+      <a href="../../vm/backup-restore/" class="md-nav__link">
         VM Backup & Restore
       </a>
     </li>
@@ -435,85 +431,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Live Migration
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../vm/live-migration/" class="md-nav__link">
         Live Migration
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#starting-a-migration" class="md-nav__link">
-    Starting a migration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#aborting-a-migration" class="md-nav__link">
-    Aborting a migration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#migration-timeouts" class="md-nav__link">
-    Migration timeouts
-  </a>
-  
-    <nav class="md-nav" aria-label="Migration timeouts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#completion-timeout" class="md-nav__link">
-    Completion timeout
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#progress-timeout" class="md-nav__link">
-    Progress timeout
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -525,7 +447,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hotplug-volume/" class="md-nav__link">
+      <a href="../../vm/hotplug-volume/" class="md-nav__link">
         Hot-Plug Volumes
       </a>
     </li>
@@ -802,12 +724,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" checked>
       
       
       
@@ -830,7 +754,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/installation/" class="md-nav__link">
+      <a href="../installation/" class="md-nav__link">
         Installation
       </a>
     </li>
@@ -844,7 +768,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/harvester/" class="md-nav__link">
+      <a href="../harvester/" class="md-nav__link">
         Harvester
       </a>
     </li>
@@ -856,11 +780,78 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../troubleshooting/os/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Operating System
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Operating System
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-can-i-install-packages-why-are-some-paths-read-only" class="md-nav__link">
+    How can I install packages? Why are some paths read-only?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-debug-system-crash-or-hang" class="md-nav__link">
+    How to debug system crash or hang
+  </a>
+  
+    <nav class="md-nav" aria-label="How to debug system crash or hang">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#collect-crash-log" class="md-nav__link">
+    Collect crash log
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collect-crash-dumps" class="md-nav__link">
+    Collect crash dumps
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -946,37 +937,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#starting-a-migration" class="md-nav__link">
-    Starting a migration
+  <a href="#how-can-i-install-packages-why-are-some-paths-read-only" class="md-nav__link">
+    How can I install packages? Why are some paths read-only?
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#aborting-a-migration" class="md-nav__link">
-    Aborting a migration
+  <a href="#how-to-debug-system-crash-or-hang" class="md-nav__link">
+    How to debug system crash or hang
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#migration-timeouts" class="md-nav__link">
-    Migration timeouts
-  </a>
-  
-    <nav class="md-nav" aria-label="Migration timeouts">
+    <nav class="md-nav" aria-label="How to debug system crash or hang">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#completion-timeout" class="md-nav__link">
-    Completion timeout
+  <a href="#collect-crash-log" class="md-nav__link">
+    Collect crash log
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#progress-timeout" class="md-nav__link">
-    Progress timeout
+  <a href="#collect-crash-dumps" class="md-nav__link">
+    Collect crash dumps
   </a>
   
 </li>
@@ -998,39 +982,54 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/harvester/docs/edit/main/docs/vm/live-migration.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/harvester/docs/edit/main/docs/troubleshooting/os.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="live-migration">Live Migration<a class="headerlink" href="#live-migration" title="Permanent link">&para;</a></h1>
-<p>Live migration means moving a virtual machine to a different host without downtime.</p>
+                <h1 id="operating-system">Operating System<a class="headerlink" href="#operating-system" title="Permanent link">&para;</a></h1>
+<p>Harvester runs on a OpenSUSE-based OS. The OS is a derivative of <a href="https://github.com/rancher-sandbox/cOS-toolkit">cOS toolkit</a>.
+We provide information and tips to help users troubleshoot OS-related issues in this guide.</p>
+<h2 id="how-can-i-install-packages-why-are-some-paths-read-only">How can I install packages? Why are some paths read-only?<a class="headerlink" href="#how-can-i-install-packages-why-are-some-paths-read-only" title="Permanent link">&para;</a></h2>
+<p>The OS file system is image-based (just like a container image!) and immutable except for some directories. To temporarily enable the read-write mode, please following these steps:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Enabling read-write mode might break your system if files are modified. Please use it at your own risk.</p>
+</div>
+<ul>
+<li>
+<p>Boot the system to GRUB menu. Press ESC to stay on the menu.
+    <img alt="" src="../assets/os-stop-on-first-menuentry.png" /></p>
+</li>
+<li>
+<p>Press <code>e</code> on first menuentry. Append <code>rd.cos.debugrw</code> to the <code>linux (loop0)$kernel $kernelcmd</code> line. Press <code>Ctrl + x</code> to boot the system.
+    <img alt="" src="../assets/os-edit-first-menuentry-add-debugrw.png" /></p>
+</li>
+</ul>
+<h2 id="how-to-debug-system-crash-or-hang">How to debug system crash or hang<a class="headerlink" href="#how-to-debug-system-crash-or-hang" title="Permanent link">&para;</a></h2>
+<h3 id="collect-crash-log">Collect crash log<a class="headerlink" href="#collect-crash-log" title="Permanent link">&para;</a></h3>
+<p>If kernel panic traces are not recorded in the system log when a system crashes, one reliable way is to use a serial console.</p>
+<p>To enable outputting kernel messages to a serial console, please following these steps:</p>
+<ul>
+<li>Boot the system to GRUB menu. Press ESC to stay on the menu.
+    <img alt="" src="../assets/os-stop-on-first-menuentry.png" /></li>
+<li>
+<p>Press <code>e</code> on first menuentry. Append <code>console=ttyS0,115200n8</code> to the <code>linux (loop0)$kernel $kernelcmd</code> line. Press <code>Ctrl + x</code> to boot the system.</p>
+<p><img alt="" src="../assets/os-edit-first-menuentry-add-console.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<ul>
-<li>Live migration is not allowed when the virtual machine is using a management network of bridge interface type.</li>
-<li>To support live migration, 3 or more hosts in the Harvester cluster are required due to <a href="https://github.com/harvester/harvester/issues/798">a known issue</a>.</li>
-</ul>
+<p>Adjust the <a href="https://www.kernel.org/doc/html/latest/admin-guide/serial-console.html">console options</a> according to your environment. <strong>Make sure</strong> append the <code>console=</code> string at the end of the line.</p>
 </div>
-<h2 id="starting-a-migration">Starting a migration<a class="headerlink" href="#starting-a-migration" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Go to the <strong>Virtual Machines</strong> page.</li>
-<li>Find the virtual machine that you want to migrate and select <strong>Vertical &#8942; (... ) &gt; Migrate</strong>.</li>
-<li>Choose the node that you want to migrate the virtual machine to. Click <strong>Apply</strong>.</li>
-</ol>
-<p><img alt="" src="../assets/migrate.png" /></p>
-<h2 id="aborting-a-migration">Aborting a migration<a class="headerlink" href="#aborting-a-migration" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Go to the <strong>Virtual Machines</strong> page.</li>
-<li>Find the virtual machine that is in migrating status and you want to abort the migration. Select <strong>Vertical &#8942; (... ) &gt; Abort Migration</strong>.</li>
-</ol>
-<h2 id="migration-timeouts">Migration timeouts<a class="headerlink" href="#migration-timeouts" title="Permanent link">&para;</a></h2>
-<h3 id="completion-timeout">Completion timeout<a class="headerlink" href="#completion-timeout" title="Permanent link">&para;</a></h3>
-<p>The live migration process will copy virtual machine memory pages and disk blocks to the destination. In some cases, the virtual machine can write to different memory pages or disk blocks at a higher rate than these can be copied, which will prevent the migration process from being completed in a reasonable amount of time. Live migration will be aborted if it exceeds the completion timeout which is 800s per GiB of data. For example, a virtual machine with 8 GiB of memory will time out after 6400 seconds.</p>
-<h3 id="progress-timeout">Progress timeout<a class="headerlink" href="#progress-timeout" title="Permanent link">&para;</a></h3>
-<p>Live migration will also be aborted when it is noticed that copying memory doesn't make any progress in 150s.</p>
-                
-                  
+<ul>
+<li>Connect to the serial port to capture logs.</li>
+</ul>
+</li>
+</ul>
+<h3 id="collect-crash-dumps">Collect crash dumps<a class="headerlink" href="#collect-crash-dumps" title="Permanent link">&para;</a></h3>
+<p>For kernel panic crashes, we can use kdump to collect crash dumps.</p>
+<p>By default, the OS is booted without kdump feature enabled. Users can enable the feature by selecting the <code>debug</code> menuentry when booting. For example:</p>
+<p><img alt="" src="../assets/os-enable-kdump.png" /></p>
+<p>When a system crashes, a crash dump will be store in <code>/var/crash/&lt;time&gt;</code> directory. Providing the crash dump to developers helps troubleshooting issues.</p>
                 
               
               
@@ -1050,7 +1049,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../backup-restore/" class="md-footer__link md-footer__link--prev" aria-label="Previous: VM Backup &amp; Restore" rel="prev">
+        <a href="../harvester/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Harvester" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1059,20 +1058,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              VM Backup & Restore
+              Harvester
             </div>
           </div>
         </a>
       
       
         
-        <a href="../hotplug-volume/" class="md-footer__link md-footer__link--next" aria-label="Next: Hot-Plug Volumes" rel="next">
+        <a href="../../reference/api/" class="md-footer__link md-footer__link--next" aria-label="Next: API Reference" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Hot-Plug Volumes
+              API Reference
             </div>
           </div>
           <div class="md-footer__button md-icon">
