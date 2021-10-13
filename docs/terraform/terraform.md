@@ -5,55 +5,53 @@
 - [Terraform](https://www.terraform.io/downloads.html) >= 0.13.x
 - [Go](https://golang.org/doc/install) 1.16 to build the provider plugin
 
-## Install The Provider
+## Install the Provider
 
-### Option 1: Download and Install The Provider From [Releases](https://github.com/harvester/terraform-provider-harvester/releases)
-```bash
+### **Option 1:** Download and install the provider from [releases](https://github.com/harvester/terraform-provider-harvester/releases) using the following command:
+```
 tar -zxvf terraform-provider-harvester-amd64.tar.gz
 ./install-terraform-provider-harvester.sh
 ```
 
-### Option 2: Build and Install The Provider Manually
+### **Option 2:** Build and install the provider manually.
 
-#### 1. Build the provider
+#### **Building the provider:**
 
-Clone repository
+  * Clone the repository using the following command:
+    ```
+    git clone git@github.com:harvester/terraform-provider-harvester
+    ```
 
-```bash
-git clone git@github.com:harvester/terraform-provider-harvester
-```
+  * Enter the provider directory and build the provider; this will build the provider and put the provider binary in `./bin`. Use the following command:
+    ```
+    cd terraform-provider-harvester
+    make
+    ```
 
-Enter the provider directory and build the provider
+#### **Installing the provider:**
 
-This will build the provider and put the provider binary in `./bin`.
+  * The expected location for the Harvester provider for the target platform within one of the local search directories is as follows:
+    ```
+    registry.terraform.io/harvester/harvester/0.2.6/linux_amd64/terraform-provider-harvester_v0.2.6
+    ```
 
-```bash
-cd terraform-provider-harvester
-make
-```
+  * The default location for locally-installed providers will be one of the following, depending on the operating system under which you are running Terraform:
 
-#### 2. Install the provider
-The expected location for the Harvester provider for that target platform within one of the local search directories would be like the following:
-```bash
-registry.terraform.io/harvester/harvester/0.2.6/linux_amd64/terraform-provider-harvester_v0.2.6
-```
+    - Windows: `%APPDATA%\terraform.d\plugins`
+    - All other systems: `~/.terraform.d/plugins`
 
-The default location for locally-installed providers is one of the following, depending on which operating system you are running Terraform under:
 
-- Windows: `%APPDATA%\terraform.d\plugins`
-- All other systems: `~/.terraform.d/plugins`
+  * Place the provider into the plugin directory as in the following example:
+    ```
+    version=0.2.6
+    arch=linux_amd64
+    terraform_harvester_provider_bin=./bin/terraform-provider-harvester
 
-Place the provider into the plugin directory, for example:
-```bash
-version=0.2.6
-arch=linux_amd64
-terraform_harvester_provider_bin=./bin/terraform-provider-harvester
-
-terraform_harvester_provider_dir="${HOME}/.terraform.d/plugins/registry.terraform.io/harvester/harvester/${version}/${arch}/"
-mkdir -p "${terraform_harvester_provider_dir}"
-cp ${terraform_harvester_provider_bin} "${terraform_harvester_provider_dir}/terraform-provider-harvester_v${version}"}
-```
+    terraform_harvester_provider_dir="${HOME}/.terraform.d/plugins/registry.terraform.io/harvester/harvester/${version}/${arch}/"
+    mkdir -p "${terraform_harvester_provider_dir}"
+    cp ${terraform_harvester_provider_bin} "${terraform_harvester_provider_dir}/terraform-provider-harvester_v${version}"}
+    ```
 
 ## Using the provider
-After placing it into your plugins directory,  run `terraform init` to initialize it.
-Documentation about the provider specific configuration options can be found on the [docs directory](https://github.com/harvester/terraform-provider-harvester/tree/master/docs).
+After placing the provider into your plugins directory,  run `terraform init` to initialize it.
+More information about provider-specific configuration options can be found on the [docs directory](https://github.com/harvester/terraform-provider-harvester/tree/master/docs).
