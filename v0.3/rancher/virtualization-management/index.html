@@ -649,15 +649,15 @@
       
         <li class="md-nav__item">
   <a href="#multi-tenancy" class="md-nav__link">
-    Multi-tenancy
+    Multi-Tenancy
   </a>
   
-    <nav class="md-nav" aria-label="Multi-tenancy">
+    <nav class="md-nav" aria-label="Multi-Tenancy">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
+  <a href="#multi-tenancy-example" class="md-nav__link">
+    Multi-Tenancy Example
   </a>
   
 </li>
@@ -956,15 +956,15 @@
       
         <li class="md-nav__item">
   <a href="#multi-tenancy" class="md-nav__link">
-    Multi-tenancy
+    Multi-Tenancy
   </a>
   
-    <nav class="md-nav" aria-label="Multi-tenancy">
+    <nav class="md-nav" aria-label="Multi-Tenancy">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
+  <a href="#multi-tenancy-example" class="md-nav__link">
+    Multi-Tenancy Example
   </a>
   
 </li>
@@ -994,73 +994,73 @@
                   <h1>Virtualization management</h1>
                 
                 <h2 id="virtualization-management">Virtualization Management<a class="headerlink" href="#virtualization-management" title="Permanent link">&para;</a></h2>
-<p>From Harvester v0.3.0, virtualization management with multi-cluster feature will be supported using the Rancher 2.6.x version</p>
+<p>For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6.x.</p>
 <ol>
 <li>
-<p>Firstly, you will need to install the Rancher v2.6.1 server or above, for testing purpose you can spin up a rancher server using the docker run command, e.g., 
+<p>First, you will need to install Rancher v2.6.1 or above. For testing purposes, you can spin up a Rancher server using the following <code>docker run</code> command: 
     <div class="highlight"><pre><span></span><code>$ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.1
 </code></pre></div></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For production environment setup please refer to the official rancher <a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/">docs</a></p>
+<p>For a production environment setup, please refer to the official Rancher <a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/">docs</a>.</p>
 </div>
 </li>
 <li>
-<p>Once the Rancher server is up and running, login and click the hamburger menu, choose the <code>Virtualization Management</code> tab, and select <code>Import Existing</code> to import the downstream Harvester cluster into the Rancher server
+<p>Once the Rancher server is up and running, log in and click the hamburger menu and choose the <strong>Virtualization Management</strong> tab. Select <strong>Import Existing</strong> to import the downstream Harvester cluster into the Rancher server.
 <img alt="" src="../assets/vm-menu.png" /></p>
 </li>
-<li>Specify the cluster name and click create, then u will get the registration commands, copy the command and ssh to one of the Harvester management node and run this command accordingly.
+<li>Specify the <code>Cluster Name</code> and click <strong>Create</strong>. You will then see the registration commands; copy the appropriate command and ssh to one of the Harvester management nodes to run this command accordingly.
 <img alt="" src="../assets/harv-importing.png" /></li>
-<li>Once the agent node is ready you should be able to view and access the imported Harvester cluster from the Rancher server and mange your VMs accordingly.
+<li>Once the agent node is ready, you should be able to view and access the imported Harvester cluster from the Rancher server and manage your VMs accordingly.
 <img alt="" src="../assets/harv-cluster-view.png" /></li>
-<li>From the Harvester UI, you can click the hamburger menu to navigate back to the Rancher multi-cluster page.
+<li>From the Harvester UI, you can click the hamburger menu to navigate back to the Rancher multi-cluster management page.
 <img alt="" src="../assets/harv-back.png" /></li>
 </ol>
-<h2 id="multi-tenancy">Multi-tenancy<a class="headerlink" href="#multi-tenancy" title="Permanent link">&para;</a></h2>
-<p>In Harvester, we have leveraged the existing Rancher <a href="https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/">RBAC authorization</a>, users are able to view and manage a set of resources based on their cluster and project role permissions.</p>
-<p>Within Rancher, each person authenticates as a user, which is a login that grants you access to Rancher. As mentioned in <a href="https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/">Authentication</a>, users can either be local or external.</p>
-<p>Once the user logs in to Rancher, their authorization, or their access rights within the system, is determined by global permissions, and cluster and project roles.</p>
+<h2 id="multi-tenancy">Multi-Tenancy<a class="headerlink" href="#multi-tenancy" title="Permanent link">&para;</a></h2>
+<p>In Harvester, we have leveraged the existing Rancher <a href="https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/">RBAC authorization</a> such that users can view and manage a set of resources based on their cluster and project role permissions.</p>
+<p>Within Rancher, each person authenticates as a user, which is a login that grants a user access to Rancher. As mentioned in <a href="https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/">Authentication</a>, users can either be local or external.</p>
+<p>Once the user logs into Rancher, their authorization, also known as access rights, is determined by global permissions and cluster and project roles.</p>
 <ul>
-<li><a href="https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/global-permissions/">Global Permissions</a>:<ul>
+<li><strong>[Global Permissions]</strong>(https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/global-permissions/):<ul>
 <li>Define user authorization outside the scope of any particular cluster.</li>
 </ul>
 </li>
-<li><a href="https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/cluster-project-roles/">Cluster and Project Roles</a>:<ul>
-<li>Define user authorization inside the specific cluster or project where they are assigned the role.</li>
+<li><strong>[Cluster and Project Roles]</strong>(https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/cluster-project-roles/):<ul>
+<li>Define user authorization inside the specific cluster or project where users are assigned the role.</li>
 </ul>
 </li>
 </ul>
 <p>Both global permissions and cluster and project roles are implemented on top of <a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/">Kubernetes RBAC</a>. Therefore, enforcement of permissions and roles is performed by Kubernetes.</p>
 <ul>
-<li>A cluster owner have full control over the cluster and all resources inside it, e.g. like hosts, VMs, volumes, image, networks, backups, and settings</li>
-<li>A project user can be assigned to a specific project with permission to manage the resources inside the project</li>
+<li>A cluster owner has full control over the cluster and all resources inside it, e.g., hosts, VMs, volumes, images, networks, backups, and settings.</li>
+<li>A project user can be assigned to a specific project with permission to manage the resources inside the project.</li>
 </ul>
-<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<h3 id="multi-tenancy-example">Multi-Tenancy Example<a class="headerlink" href="#multi-tenancy-example" title="Permanent link">&para;</a></h3>
 <p>The following example provides a good explanation of how the multi-tenant feature works:</p>
 <ol>
-<li>Firstly, add new users via the Rancher <code>Users &amp; Authentication</code> page, click <code>Create</code> to add two new separated users e.g. the <code>project-owner</code> and <code>project-readonly</code> respectively.<ul>
-<li>A <code>project-owner</code> is a user with permission to manage a list of resources of a particular project e.g, the default project.</li>
-<li>A <code>project-readonly</code> is a user with read-only permission of a particular project e.g, the default project.
+<li>First, add new users via the Rancher <code>Users &amp; Authentication</code> page. Then click <code>Create</code> to add two new separated users, such as <code>project-owner</code> and <code>project-readonly</code> respectively.<ul>
+<li>A <code>project-owner</code> is a user with permission to manage a list of resources of a particular project, e.g., the default project.</li>
+<li>A <code>project-readonly</code> is a user with read-only permission of a particular project, e.g., the default project.
 <img alt="" src="../assets/create-user.png" /></li>
 </ul>
 </li>
-<li>Click one of the imported Harvester cluster and visiting the Harvester UI<ul>
-<li>click the <code>Projects/Namespaces</code> tab</li>
-<li>select a project e.g, <code>default</code> and click the <code>Edit Config</code> menu to assign the users to this project with appropriate permissions,  e.g. the <code>project-owner</code> user will be assigned with project owner role.
+<li>Click one of the imported Harvester clusters after navigating to the Harvester UI.<ul>
+<li>Click the <code>Projects/Namespaces</code> tab.</li>
+<li>Select a project such as <code>default</code> and click the <code>Edit Config</code> menu to assign the users to this project with appropriate permissions. For example, the <code>project-owner</code> user will be assigned the project owner role.
    <img alt="" src="../assets/add-member.png" /></li>
 </ul>
 </li>
-<li>Continue to add the project-readonly user to the same project with read-only permissions and click save.
+<li>Continue to add the <code>project-readonly</code> user to the same project with read-only permissions and click <strong>Save</strong>.
    <img alt="" src="../assets/added-user.png" /></li>
-<li>Open an incognito Browser and login to different accounts e.g, the <code>project-owner</code></li>
-<li>After login with the <code>project-owner</code> user, Click the Virtualization Management menu, you should be able to view the cluster you have been assigned to.</li>
-<li>Click the Images tab, you should be able to view a list of images uploaded to the harvester-public namespace previously, or you can upload your own image if needed.</li>
-<li>Create a VM with one of the images that you have uploaded</li>
-<li>Login with another user e.g, <code>project-readonly</code>, and this user will only have the read permission of this project.</li>
+<li>Open an incognito browser and log in as <code>project-owner</code>.</li>
+<li>After logging in as the <code>project-owner</code> user, click the <strong>Virtualization Management</strong> tab. There you should be able to view the cluster to which you have been assigned.</li>
+<li>Click the <strong>Images</strong> tab to view a list of images previously uploaded to the harvester-public namespace. You can also upload your own image if needed.</li>
+<li>Create a VM with one of the images that you have uploaded.</li>
+<li>Log in with another user, e.g., <code>project-readonly</code>, and this user will only have the read permission of this project.</li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>A know issue of <a href="https://github.com/harvester/harvester/issues/1406">Read-only user was able to manage API actions</a></p>
+<p>A known issue was found that allows the <a href="https://github.com/harvester/harvester/issues/1406">read-only user to be able to manage API actions</a>.</p>
 </div>
                 
                   
