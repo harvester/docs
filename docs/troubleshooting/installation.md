@@ -1,21 +1,20 @@
 # Installation
 
-The page contains tips to troubleshoot failed installations.
+The following sections contain tips to troubleshoot or get assistance with failed installations.
+## Logging into the Harvester Installer (a live OS)
 
-## How to log in to the Harvester Installer (a live OS)
-
-Users can press the key combination `CTRL + ALT + F2` to switch to another TTY and log in with the following credential:
+Users can press the key combination `CTRL + ALT + F2` to switch to another TTY and log in with the following credentials:
 
 - User: `rancher`
 - Password: `rancher`
 
-## Make sure hardware requirements are met
+## Meeting hardware requirements
 
-Please check your hardware meets the [requirements](../index.md#hardware-requirements).
+- Check that your hardware meets the [minimum requirements](../index.md#hardware-requirements).
 
-## The installer is stuck on `"Loading images. This may take a few minutes..."`
+## Receiving the message `"Loading images. This may take a few minutes..."`
 
-Normally it's because the system doesn't have a default route. You can check it by:
+- Because the system doesn't have a default route, your installer may become "stuck" in this state. You can check your route status by executing the following command:
 
 ```console
 $ ip route
@@ -23,12 +22,11 @@ default via 10.10.0.10 dev harvester-mgmt proto dhcp        <-- Does a default r
 10.10.0.0/24 dev harvester-mgmt proto kernel scope link src 10.10.0.15
 ```
 
-Please check your DHCP server offers a default route option.
-Attaching content of `/run/cos/target/rke2.log` is helpful too.
+- Check that your DHCP server offers a default route option. Attaching content from `/run/cos/target/rke2.log` is helpful too.
 
 ## Collecting information
 
-The following information helps troubleshooting a failed installation. Please include them in a bug report.
+Please include the following information in a bug report when reporting a failed installation:
 
 - A failed installation screenshot.
 - Content of these files:
