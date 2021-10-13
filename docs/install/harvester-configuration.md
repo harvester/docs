@@ -71,7 +71,7 @@ install:
 Below is a reference of all configuration keys.
 
 !!!warning
-    **Security Risks**: The configuration file contains credentials which should be kept secretly. Please do not make the configuration file publicly accessible at the moment.
+    **Security Risks**: The configuration file contains credentials which should be kept secret. Please do not make the configuration file publicly accessible.
 
 
 ### `server_url`
@@ -97,7 +97,7 @@ install:
 The cluster secret or node token. If the value matches the format of a node token it will
 automatically be assumed to be a node token. Otherwise it is treated as a cluster secret.
 
-In order for a new node to join the Harvester cluster, the token should match from what server has.
+In order for a new node to join the Harvester cluster, the token should match what the server has.
 
 #### Example
 
@@ -115,7 +115,7 @@ token: "K1074ec55daebdf54ef48294b0ddf0ce1c3cb64ee7e3d0b9ec79fbc7baf1f7ddac6::nod
 
 #### Definition
 
-A list of SSH authorized keys that should be added to the default user `rancher`. SSH keys can be obtained from GitHub user accounts by using the format
+A list of SSH authorized keys that should be added to the default user, `rancher`. SSH keys can be obtained from GitHub user accounts by using the format
 `github:${USERNAME}`. This is done by downloading the keys from `https://github.com/${USERNAME}.keys`.
 
 #### Example
@@ -167,8 +167,7 @@ os:
 
 #### Definition
 
-Set the system hostname. This value will be overwritten by DHCP if DHCP supplies a hostname for
-the system. If DHCP doesn't offer a hostname and this value is empty, a random hostname will be generated.
+Set the system hostname. If the system hostname is supplied via DHCP, then that value will be used here. If this value is not set and one is not supplied via DHCP, then a random hostname will be generated.
 
 #### Example
 
@@ -196,8 +195,8 @@ os:
 
 #### Definition
 
-Kernel sysctl to setup on start. These are the same configuration you'd typically find in `/etc/sysctl.conf`.
-Must be specified as string values.
+Kernel sysctl to set up on start. These are the typical configurations found in `/etc/sysctl.conf`.
+Values must be specified as strings.
 
 #### Example
 
@@ -242,20 +241,21 @@ os:
 
 #### Definition
 
-The password for the default user `rancher`. By default there is no password for the `rancher` user.
-If you set a password at runtime it will be reset on next boot. The
+The password for the default user, `rancher`. By default, there is no password for the `rancher` user.
+If you set a password at runtime it will be reset on the next boot. The
 value of the password can be clear text or an encrypted form. The easiest way to get this encrypted
-form is to just change your password on a Linux system and copy the value of the second field from
+form is to change your password on a Linux system and copy the value of the second field from
 `/etc/shadow`. You can also encrypt a password using `openssl passwd -1`.
 
 #### Example
 
+Encrypted:
 ```yaml
 os:
   password: "$1$tYtghCfK$QHa51MS6MVAcfUKuOzNKt0"
 ```
 
-Or clear text
+Or clear text:
 
 ```yaml
 os:
@@ -266,8 +266,8 @@ os:
 
 #### Definition
 
-Environment variables to be set on k3s and other processes like the boot process.
-Primary use of this field is to set the http proxy.
+Environment variables to be set on K3s and other processes like the boot process.
+Primary use of this field is to set the HTTP proxy.
 
 #### Example
 
@@ -282,10 +282,10 @@ os:
 
 #### Definition
 
-Harvester installer mode:
+Harvester installation mode:
 
-- `create`: Creating a new Harvester installer
-- `join`: Join an existing Harvester installer. Need to specify `server_url`.
+- `create`: Creating a new Harvester installation.
+- `join`: Join an existing Harvester installation. Need to specify `server_url`.
 
 #### Example
 
@@ -299,29 +299,29 @@ install:
 #### Definition
 
 Configure network interfaces for the host machine. Each key-value pair
-represents as a network interface. The key name becomes the network name, and
+represents a network interface. The key name becomes the network name, and
 the values are configurations for each network. Valid configuration fields are:
 
-- `method`: Method to assign IP to this network. Support followings:
-    - `static`: Manually assign IP and gateway.
-    - `dhcp`: Request IP from the DHCP server.
-    - `none`: Do nothing. Useful when the interface needs no IP, such as creating [VLAN network](../networking/harvester-network.md#vlan) NIC in Harvester.
+- `method`: Method to assign an IP to this network. The following are supported:
+    - `static`: Manually assign an IP and gateway.
+    - `dhcp`: Request an IP from the DHCP server.
+    - `none`: Do nothing. Useful when the interface does not need an IP, such as when creating [VLAN network](../networking/harvester-network.md#vlan) NIC in Harvester.
 - `ip`: Static IP for this network. Required if `static` method is chosen.
 - `subnet_mask`: Subnet mask for this network. Required if `static` method is chosen.
 - `gateway`: Gateway for this network. Required if `static` method is chosen.
 - `interfaces`: An array of interface names. If provided, the installer then combines these NICs into a single logical bonded interface.
-    - `interfaces.name`: The name of slave interface for the bonded network.
+    - `interfaces.name`: The name of the slave interface for the bonded network.
 - `default_route`: Set the network as the default route or not.
 - `bond_options`: Options for bonded interfaces. Refer to [here](https://www.kernel.org/doc/Documentation/networking/bonding.txt) for more info. If not provided, the following options would be used:
     - `mode: balance-tlb`
     - `miimon: 100`
 
 !!! note
-    A network `harvester-mgmt` is mandatory to establish a valid [management network](../networking/harvester-network.md#management-network).
+    A network called `harvester-mgmt` is mandatory to establish a valid [management network](../networking/harvester-network.md#management-network).
 
 !!! note
-    Harvester uses [systemd net naming scheme](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html).
-    Please make sure the interface name presents on target machine before installation.
+    Harvester uses the [systemd net naming scheme](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html).
+    Please make sure the interface name is present on the target machine before installation.
 
 #### Example
 
@@ -371,7 +371,7 @@ ISO to download and install from if booting from kernel/vmlinuz and not ISO.
 
 ### `install.poweroff`
 
-Shutdown the machine after install instead of rebooting
+Shutdown the machine after installation instead of rebooting
 
 ### `install.no_format`
 
@@ -379,13 +379,13 @@ Do not partition and format, assume layout exists already.
 
 ### `install.debug`
 
-Run installation with more logging and configure debug for installed system.
+Run the installation with additional logging and debugging enabled for the installed system.
 
 ### `install.tty`
 
 #### Definition
 
-The tty device used for console.
+The tty device used for the console.
 
 #### Example
 
@@ -400,11 +400,11 @@ install:
 
 #### Definition
 
-- `install.vip`: The VIP of Harvester management endpoint. After installation, users can access Harvester GUI at URL `https://<VIP>`.
+- `install.vip`: The VIP of the Harvester management endpoint. After installation, users can access the Harvester GUI at the URL `https://<VIP>`.
 - `install.vip_mode`
-    - `dhcp`: Harvester will send DHCP requests to get VIP. `install.vip_hw_addr` field needs to be provided.
+    - `dhcp`: Harvester will send DHCP requests to get the VIP. The `install.vip_hw_addr` field needs to be provided.
     - `static`: Harvester uses a static VIP.
-- `install.vip_hw_addr`: The hardware address corresponding to the VIP. Users have to configure their on-premise DHCP server to offer the configured VIP. The field is mandatory when `install.vip_mode` is `dhcp`.
+- `install.vip_hw_addr`: The hardware address corresponding to the VIP. Users must configure their on-premise DHCP server to offer the configured VIP. The field is mandatory when `install.vip_mode` is `dhcp`.
 
 
 #### Example
