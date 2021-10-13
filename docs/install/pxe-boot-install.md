@@ -76,11 +76,21 @@ os:
 install:
   mode: create
   networks:
-    harvester-mgmt:       # The management bond name. This is mandatory.
+    harvester-mgmt:       # (Mandatory) The management bond name.
       interfaces:
       - name: ens5
       default_route: true
       method: dhcp
+      bond_options:
+        mode: balance-tlb
+        miimon: 100
+    harvester-vlan:       # (Optional) The VLAN network bond name. If VLAN NIC names vary from
+      interfaces:         # host to host, consider creating a bonding device. Users can then select
+      - name: ens6        # `harvester-vlan` as the VLAN network NIC in the Harvester GUI.
+      method: none
+      bond_options:
+        mode: balance-tlb
+        miimon: 100
   device: /dev/sda
   iso_url: http://10.100.0.10/harvester/harvester-<version>-amd64.iso
   vip: 10.100.0.100       # The VIP to access the Harvester GUI. Make sure the IP is free to use.
@@ -98,7 +108,8 @@ boot
 
 Let's assume the iPXE script is stored in `/usr/share/nginx/html/harvester/ipxe-create`
 
-**NOTE** If there are multiple network interfaces on the installing machine, the user can use `ip=<interface>:dhcp` to specify the booting interface (e.g., `ip=eth1:dhcp`).
+!!! note
+    If there are multiple network interfaces on the installing machine, the user can use `ip=<interface>:dhcp` to specify the booting interface (e.g., `ip=eth1:dhcp`).
 
 ### JOIN mode
 
@@ -122,11 +133,21 @@ os:
 install:
   mode: join
   networks:
-    harvester-mgmt:       # The management bond name. This is mandatory.
+    harvester-mgmt:       # (Mandatory) The management bond name.
       interfaces:
       - name: ens5
       default_route: true
       method: dhcp
+      bond_options:
+        mode: balance-tlb
+        miimon: 10
+    harvester-vlan:       # (Optional) The VLAN network bond name. If VLAN NIC names vary from
+      interfaces:         # host to host, consider creating a bonding device. Users can then select
+      - name: ens6        # `harvester-vlan` as the VLAN network NIC in the Harvester GUI.
+      method: none
+      bond_options:
+        mode: balance-tlb
+        miimon: 100
   device: /dev/sda
   iso_url: http://10.100.0.10/harvester/harvester-<version>-amd64.iso
 ```
