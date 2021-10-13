@@ -9,6 +9,6 @@ Users can generate a support bundle in the Harvester GUI with the following step
 - Click `Generate Support Bundle` button.
     ![](./assets/harvester-sb-support-button.png)
 
-- Enter some useful descriptions for the support bundle and click `Create` to generate and download a support bundle.
+- Enter a useful description for the support bundle and click `Create` to generate and download a support bundle.
     ![](./assets/harvester-sb-support-modal.png)
 
