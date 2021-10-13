@@ -305,7 +305,7 @@ the values are configurations for each network. Valid configuration fields are:
 - `method`: Method to assign IP to this network. Support followings:
     - `static`: Manually assign IP and gateway.
     - `dhcp`: Request IP from the DHCP server.
-    - `none`: Do nothing. Useful when the interface needs no IP, such as creating [VLAN network](../../networking/harvester-network#vlan) NIC in Harvester.
+    - `none`: Do nothing. Useful when the interface needs no IP, such as creating [VLAN network](../networking/harvester-network.md#vlan) NIC in Harvester.
 - `ip`: Static IP for this network. Required if `static` method is chosen.
 - `subnet_mask`: Subnet mask for this network. Required if `static` method is chosen.
 - `gateway`: Gateway for this network. Required if `static` method is chosen.
@@ -317,7 +317,7 @@ the values are configurations for each network. Valid configuration fields are:
     - `miimon: 100`
 
 !!! note
-    A network `harvester-mgmt` is mandatory to establish a valid [management network](../../networking/harvester-network/#management-network).
+    A network `harvester-mgmt` is mandatory to establish a valid [management network](../networking/harvester-network.md#management-network).
 
 !!! note
     Harvester uses [systemd net naming scheme](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html).
