@@ -9,14 +9,14 @@ keywords:
   - Installing Harverster
   - Harverster Installation
   - PXE Boot Install
-Description: Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do the automatic installation with PXE boot.
+Description: Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do an automatic installation with PXE boot.
 ---
 
 # PXE Boot Installation
 
-Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do the automatic installation with PXE boot.
+Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do an automatic installation with PXE boot.
 
-We recommend using [iPXE](https://ipxe.org/) to perform the network boot. It has more features than the traditional PXE Boot program and is likely available in modern NIC cards. If NIC cards don't come with iPXE firmware, iPXE firmware images can be loaded from the TFTP server first.
+We recommend using [iPXE](https://ipxe.org/) to perform the network boot. It has more features than the traditional PXE Boot program and is likely available in modern NIC cards. If the iPXE firmware is not available for your NIC card, the iPXE firmware images can be loaded from the TFTP server first.
 
 To see sample iPXE scripts, please visit [Harvester iPXE Examples](https://github.com/harvester/ipxe-examples).
 
@@ -28,11 +28,11 @@ To see sample iPXE scripts, please visit [Harvester iPXE Examples](https://githu
 ## Preparing HTTP Servers
 
 An HTTP server is required to serve boot files.
-Let's assume an NGINX HTTP server's IP is `10.100.0.10`, and it serves `/usr/share/nginx/html/` directory with the path `http://10.100.0.10/`.
+Let's assume the NGINX HTTP server's IP is `10.100.0.10`, and it serves the `/usr/share/nginx/html/` directory with the path `http://10.100.0.10/`.
 
 ## Preparing Boot Files
 
-- Download the required files from [Harvester Releases Page](https://github.com/harvester/harvester/releases).
+- Download the required files from the [Harvester releases page](https://github.com/harvester/harvester/releases).
     - The ISO: `harvester-<version>-amd64.iso`
     - The kernel: `harvester-<version>-vmlinuz-amd64`
     - The initrd: `harvester-<version>-initrd-amd64`
@@ -40,7 +40,7 @@ Let's assume an NGINX HTTP server's IP is `10.100.0.10`, and it serves `/usr/sha
 
 - Serve the files.
 
-    Copy or move the downloaded files to an appropriate location so they can be downloaded via the HTTP server. e.g.,
+    Copy or move the downloaded files to an appropriate location so they can be downloaded via the HTTP server. For example:
   
     ```
     sudo mkdir -p /usr/share/nginx/html/harvester/
@@ -50,20 +50,20 @@ Let's assume an NGINX HTTP server's IP is `10.100.0.10`, and it serves `/usr/sha
     sudo cp /path/to/harvester-<version>-rootfs-amd64.squashfs /usr/share/nginx/html/harvester/
     ```
 
-## Preparing iPXE boot scripts
+## Preparing iPXE Boot Scripts
 
-When performing automatic installation, there are two modes:
+When performing an automatic installation, there are two modes:
 
 - `CREATE`: we are installing a node to construct an initial Harvester cluster.
 - `JOIN`: we are installing a node to join an existing Harvester cluster.
 
 
-### CREATE mode
+### CREATE Mode
 
 !!! warning
-    **Security Risks**: The configuration file below contains credentials which should be kept secretly. Please do not make the configuration file publicly accessible at the moment.
+    **Security Risks**: The configuration file below contains credentials which should be kept secret. Please do not make the configuration file publicly accessible.
 
-Create a [Harvester configuration file](./harvester-configuration.md) `config-create.yaml` for `CREATE` mode. Modify the values as needed:
+Create a [Harvester configuration file](./harvester-configuration.md) called `config-create.yaml` for `CREATE` mode. Modify the values as needed:
 
 ```YAML
 # cat /usr/share/nginx/html/harvester/config-create.yaml
@@ -97,7 +97,7 @@ install:
   vip_mode: static        # Or dhcp, check configuration file for more information.
 ```
 
-For machines that needs to be installed as `CREATE` mode, the following is an iPXE script that boots the kernel with the above config:
+For machines that needs to be installed using `CREATE` mode, the following is an iPXE script that boots the kernel with the above config:
 
 ```
 #!ipxe
@@ -106,17 +106,17 @@ initrd harvester-<version>-initrd
 boot
 ```
 
-Let's assume the iPXE script is stored in `/usr/share/nginx/html/harvester/ipxe-create`
+This assumes the iPXE script is stored in `/usr/share/nginx/html/harvester/ipxe-create`.
 
 !!! note
     If there are multiple network interfaces on the installing machine, the user can use `ip=<interface>:dhcp` to specify the booting interface (e.g., `ip=eth1:dhcp`).
 
-### JOIN mode
+### JOIN Mode
 
 !!! warning 
-    **Security Risks**: The configuration file below contains credentials which should be kept secretly. Please do not make the configuration file publicly accessible at the moment.
+    **Security Risks**: The configuration file below contains credentials which should be kept secret. Please do not make the configuration file publicly accessible.
 
-Create a [Harvester configuration file](./harvester-configuration.md) `config-join.yaml` for `JOIN` mode. Modify the values as needed:
+Create a [Harvester configuration file](./harvester-configuration.md) called `config-join.yaml` for `JOIN` mode. Modify the values as needed:
 
 ```YAML
 # cat /usr/share/nginx/html/harvester/config-join.yaml
@@ -163,12 +163,12 @@ initrd harvester-<version>-initrd
 boot
 ```
 
-Let's assume the iPXE script is stored in `/usr/share/nginx/html/harvester/ipxe-join`.
+This assumes the iPXE script is stored in `/usr/share/nginx/html/harvester/ipxe-join`.
 
 
-## DHCP server configuration
+## DHCP Server Configuration
 
-Here is an example to configure the ISC DHCP server to offer iPXE scripts:
+The following is an example of how to configure the ISC DHCP server to offer iPXE scripts:
 
 ```sh
 option architecture-type code 93 = unsigned integer 16;
@@ -227,21 +227,21 @@ group {
 }
 ```
 
-The config file declares a subnet and two groups. The first group is for hosts to boot with `CREATE` mode and the other one is for `JOIN` mode. By default, the iPXE path is chosen, but if it sees a PXE client, it also offers the iPXE image according to client architecture. Please prepare those images and a tftp server first.
+The config file declares a subnet and two groups. The first group is for hosts to boot using `CREATE` mode and the other one is for `JOIN` mode. By default, the iPXE path is chosen, but if it sees a PXE client it offers the iPXE image according to the client architecture. Please prepare those images and a TFTP server first.
 
-## Harvester configuration
+## Harvester Configuration
 
-For more information about Harvester configuration, please refer to the [Harvester configuration](./harvester-configuration.md).
+For more information about Harvester configuration, please refer to the [Harvester configuration](./harvester-configuration.md) page.
 
-Users can also provide configuration via kernel parameters. For example, to specify the `CREATE` install mode, the user can pass the `harvester.install.mode=create` kernel parameter when booting. Values passed through kernel parameters have higher priority than values specified in the config file.
+Users can also provide configuration via kernel parameters. For example, to specify the `CREATE` install mode, users can pass the `harvester.install.mode=create` kernel parameter when booting. Values passed through kernel parameters have higher priority than values specified in the config file.
 
 ## UEFI HTTP Boot support
 
-UEFI firmware supports loading a boot image from HTTP server. This section demonstrates how to use UEFI HTTP boot to load the iPXE program and perform the automatic installation.
+UEFI firmware supports loading a boot image from an HTTP server. This section demonstrates how to use UEFI HTTP boot to load the iPXE program and perform an automatic installation.
 
-### Serve the iPXE program
+### Serve the iPXE Program
 
-Download the iPXE UEFI program from http://boot.ipxe.org/ipxe.efi and make `ipxe.efi` can be downloaded from the HTTP server. e.g.:
+Download the iPXE UEFI program from http://boot.ipxe.org/ipxe.efi and make sure `ipxe.efi` can be downloaded from the HTTP server. For example:
 
 ```bash
 cd /usr/share/nginx/html/harvester/
@@ -250,9 +250,9 @@ wget http://boot.ipxe.org/ipxe.efi
 
 The file now can be downloaded from http://10.100.0.10/harvester/ipxe.efi locally.
 
-### DHCP server configuration
+### DHCP Server Configuration
 
-If the user plans to use the UEFI HTTP boot feature by getting a dynamic IP first, the DHCP server needs to provides the iPXE program URL when it sees such a request. Here is an updated ISC DHCP server group example:
+If the user plans to use the UEFI HTTP boot feature by getting a dynamic IP first, the DHCP server needs to provide the iPXE program URL when it sees such a request. The following is an updated ISC DHCP server group example:
 
 ```sh
 group {
@@ -283,11 +283,11 @@ group {
 }
 ```
 
-The `elsif substring` statement is new, and it offers `http://10.100.0.10/harvester/ipxe.efi` when it sees a UEFI HTTP boot DHCP request. After the client fetches the iPXE program and runs it, the iPXE program will send a DHCP request again and load the iPXE script from URL `http://10.100.0.10/harvester/ipxe-create-efi`.
+The `elsif substring` statement is new, and it offers `http://10.100.0.10/harvester/ipxe.efi` when it sees a UEFI HTTP boot DHCP request. After the client fetches the iPXE program and runs it, the iPXE program will send a DHCP request again and load the iPXE script from the URL `http://10.100.0.10/harvester/ipxe-create-efi`.
 
-### The iPXE script for UEFI boot
+### The iPXE Script for UEFI Boot
 
-It's mandatory to specify the initrd image for UEFI boot in the kernel parameters. Here is an updated version of iPXE script for `CREATE` mode.
+It's mandatory to specify the initrd image for UEFI boot in the kernel parameters. The following is an updated version of iPXE script for `CREATE` mode.
 
 ```
 #!ipxe
