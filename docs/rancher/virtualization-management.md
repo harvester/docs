@@ -16,7 +16,7 @@ For Harvester v0.3.0 and above, virtualization management with the multi-cluster
     !!!note
         For a production environment setup, please refer to the official Rancher [docs](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/).
 
-1. Once the Rancher server is up and running, log in and click the hamburger menu and choose the **Virtualization Management** tab. Select `Import Existing` to import the downstream Harvester cluster into the Rancher server.
+1. Once the Rancher server is up and running, log in and click the hamburger menu and choose the **Virtualization Management** tab. Select **Import Existing** to import the downstream Harvester cluster into the Rancher server.
 ![](./assets/vm-menu.png)
 1. Specify the `Cluster Name` and click `Create`. You will then see the registration commands; copy the appropriate command and ssh to one of the Harvester management nodes to run this command accordingly.
 ![](./assets/harv-importing.png)
