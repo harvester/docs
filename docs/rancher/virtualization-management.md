@@ -55,11 +55,11 @@ The following example provides a good explanation of how the multi-tenant featur
     - Click the `Projects/Namespaces` tab.
     - Select a project such as `default` and click the `Edit Config` menu to assign the users to this project with appropriate permissions. For example, the `project-owner` user will be assigned the project owner role.
    ![](./assets/add-member.png)
-1. Click to **Add** the `project-readonly` user to the same project with read-only permissions and click **Save**.
+1. Continue to add the `project-readonly` user to the same project with read-only permissions and click **Save**.
    ![](./assets/added-user.png)
 1. Open an incognito browser and log in as `project-owner`.
 1. After logging in as the `project-owner` user, click the **Virtualization Management** tab. There you should be able to view the cluster to which you have been assigned.
-1. Click the **Images** tab to view a list of images previously uploaded to the Harvester-public namespace. You can also upload your own image if needed.
+1. Click the **Images** tab to view a list of images previously uploaded to the harvester-public namespace. You can also upload your own image if needed.
 1. Create a VM with one of the images that you have uploaded.
 1. Log in with another user, e.g., `project-readonly`, and this user will only have the read permission of this project.
 
