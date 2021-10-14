@@ -2,7 +2,7 @@
 
 The page contains tips to troubleshoot failed installations.
 
-## How to login to the Harvester Installer (a live OS)
+## How to log in to the Harvester Installer (a live OS)
 
 Users can press the key combination `CTRL + ALT + F2` to switch to another TTY and log in with the following credential:
 

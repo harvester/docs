@@ -3,6 +3,21 @@
 Harvester runs on a OpenSUSE-based OS. The OS is a derivative of [cOS toolkit](https://github.com/rancher-sandbox/cOS-toolkit).
 We provide information and tips to help users troubleshoot OS-related issues in this guide.
 
+## How to log in to a Harvester node?
+
+Users can log in to a Harvester node with the username `rancher` and the password or SSH keypair that is provided during installation.
+The user `rancher` can execute privileged commands without entering a password:
+
+```
+# Run a privileged command
+rancher@node1:~> sudo blkid
+
+# Or become root
+rancher@node1:~> sudo -i
+node1:~ # blkid
+```
+
+
 ## How can I install packages? Why are some paths read-only?
 
 The OS file system is image-based (just like a container image!) and immutable except for some directories. To temporarily enable the read-write mode, please following these steps:
