@@ -17,6 +17,54 @@ The OS file system is image-based (just like a container image!) and immutable e
     ![](./assets/os-edit-first-menuentry-add-debugrw.png)
 
 
+## How to permanently edit kernel parameters
+
+!!! note
+    This is just a workaround. We should provide a better way to do this.
+
+- Re-mount state directory in rw mode:
+    ```
+    # blkid -L COS_STATE
+    /dev/vda2
+    # mount -o remount,rw /dev/vda2 /run/initramfs/cos-state
+    ```
+- Edit the grub config file and append parameters to the `linux (loop0)$kernel $kernelcmd` line. The following example adds a `nomodeset` parameter:
+    ```
+    # vim /run/initramfs/cos-state/grub2/grub.cfg
+    menuentry "Harvester ea6e7f5-dirty" --id cos {
+      search.fs_label COS_STATE root
+      set img=/cOS/active.img
+      set label=COS_ACTIVE
+      loopback loop0 /$img
+      set root=($root)
+      source (loop0)/etc/cos/bootargs.cfg
+      linux (loop0)$kernel $kernelcmd nomodeset
+      initrd (loop0)$initramfs
+    }
+    ```
+- Reboot to take effect.
+
+## How to change the default GRUB boot menu entry
+
+To change the default entry, first, check the `--id` attribute of a menu entry. e.g.,
+
+```
+# cat /run/initramfs/cos-state/grub2/grub.cfg
+
+<...>
+menuentry "Harvester ea6e7f5-dirty (debug)" --id cos-debug {
+  search.fs_label COS_STATE root
+  set img=/cOS/active.img
+  set label=COS_ACTIVE
+  loopback loop0 /$img
+```
+
+The id of the above entry is `cos-debug`. We can then set the default entry by:
+
+```
+# grub2-editenv /oem/grubenv set saved_entry=cos-debug
+```
+
 ## How to debug system crash or hang
 
 ### Collect crash log
