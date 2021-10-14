@@ -10,7 +10,7 @@ Users can press the key combination `CTRL + ALT + F2` to switch to another TTY a
 
 ## Meeting hardware requirements
 
-- Check that your hardware meets the [minimum requirements](../index.md#hardware-requirements).
+- Check that your hardware meets the [minimum requirements](../index.md#hardware-requirements) to complete installation.
 
 ## Receiving the message `"Loading images. This may take a few minutes..."`
 
