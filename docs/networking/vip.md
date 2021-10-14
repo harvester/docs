@@ -6,7 +6,7 @@ Description: The Harvester provides a virtual IP as the management address.
 ---
 
 # Management Address
-Harvester provides a fixed virtual IP(VIP) as the management address. Users can see the management address on the console dashboard after installation.
+Harvester provides a fixed virtual IP (VIP) as the management address. Users can see the management address on the console dashboard after installation.
 
 ![](./assets/console-dashboard.png)
 
@@ -20,7 +20,7 @@ The management address has two usages.
     ![](./assets/configure-management-address.png)
 
 ## Configure VIP 
-Users can specify the VIP during installation. It can either be configured via DHCP or static method.
+Users can specify the VIP during installation. It can either be configured via DHCP or assigned a static one.
 
 > Note: In PXE boot, Harvester does not support setting the VIP via DHCP. It will be addressed in the next release.
 > Issue: https://github.com/harvester/harvester/issues/1410
