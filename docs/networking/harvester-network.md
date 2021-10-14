@@ -14,7 +14,8 @@ Description: Harvester is built on Kubernetes, which uses CNI as an interface be
 ## Summary
 [Harvester](https://github.com/harvester/harvester) is built on Kubernetes, which uses [CNI](https://github.com/containernetworking/cni) as an interface between network providers and Kubernetes pod networking. Naturally, we implement the Harvester network based on CNI. Moreover, the [Harvester UI](https://github.com/harvester/harvester-ui) integrates the Harvester network to provide a user-friendly way to configure networks for VMs.
 
-- management network
+Implmentations of the network includes:
+- Management network
 - [VLAN](https://en.wikipedia.org/wiki/Virtual_LAN)
 
 ## Implementation
@@ -25,20 +26,20 @@ Harvester adopts [flannel](https://github.com/flannel-io/flannel) as the default
 
 ### VLAN
 
-[Harvester network-controller](https://github.com/harvester/harvester-network-controller) leverages the [multus](https://github.com/k8snetworkplumbingwg/multus-cni) and [bridge](https://www.cni.dev/plugins/current/main/bridge/) CNI plugins to implement the VLAN.  
+The [Harvester network-controller](https://github.com/harvester/harvester-network-controller) leverages the [multus](https://github.com/k8snetworkplumbingwg/multus-cni) and [bridge](https://www.cni.dev/plugins/current/main/bridge/) CNI plugins to implement the VLAN.  
 
 Below is a use case of the VLAN in Harvester.
 
   ![](./assets/vlan-case.png)
 
-- Harvester network-controller uses a bridge for a node and a pair of veth for a VM to implement the VLAN. The bridge acts as a switch to forward the network traffic from or to VMs and the veth pair is like the connected ports between VMs and switch.
+- The Harvester network-controller uses a bridge for a node and a pair of veth for a VM to implement the VLAN. The bridge acts as a switch to forward the network traffic from or to VMs and the veth pair is like the connected ports between VMs and the switch.
 - VMs within the same VLAN can communicate with each other, while the VMs within different VLANs can't.
-- The external switch ports connected with the hosts or other devices(such as DHCP server) should be set as trunk or hybrid type and permit the specified VLANs.
+- The external switch ports connected to the hosts or other devices (such as the DHCP server) should be set as trunk or hybrid type and permit the specified VLANs.
 - Users can use VLAN with `PVID` (default 1) to communicate with any normal untagged traffic.
 
 ## Enabling VLAN in the Harvester UI
 
-Enable VLAN via going to **Setting > vlan** to enable VLAN and input a valid default physical NIC name for the VLAN. 
+Enable VLAN via going to **Setting > vlan** and inputting a valid default physical NIC name for the VLAN. 
 
 It is recommended to choose a separate NIC for the VLAN other than the one used for the management network (the one selected during the Harvester installation) for better network performance and isolation. 
 
@@ -46,7 +47,7 @@ It is recommended to choose a separate NIC for the VLAN other than the one used 
     Modifying the default VLAN network setting will not change the existing configured host networks.
     
 !!! note
-    Harvester supports configuring bond interfaces but it can only be created during PEX Boot installation. Here is [an example](/install/harvester-configuration/#example_11).
+    Harvester supports configuring bond interfaces but it can only be created during PEX Boot installation. Refer [here](/install/harvester-configuration/#example_11) for an example.
 
   ![](./assets/enable-vlan.png)
 
@@ -63,11 +64,11 @@ It is recommended to choose a separate NIC for the VLAN other than the one used 
   - Only the first network interface card will be enabled by default. Users can either choose to use a management network or VLAN network. 
   
     !!! note
-        You will need to select the `Install guest agent` option in the `Advanced Options` tab to get the VLAN network IP address from the Harvester UI.
+        You will need to select the `Install guest agent` option in the **Advanced Options** tab to get the VLAN network IP address from the Harvester UI.
 
     ![](./assets/vm-network-configuration.png)
 
-  - Users can choose to add one or multiple network interface cards. Additional network interface card configurations can be set via cloud-init network data, for example:
+  - Users can choose to add one or multiple network interface cards. Additional network interface card configurations can be set via cloud-init network data. For example:
 
     ```YAML
     version: 1
