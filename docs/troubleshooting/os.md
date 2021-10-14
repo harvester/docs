@@ -1,11 +1,10 @@
 # Operating System
 
-Harvester runs on a OpenSUSE-based OS. The OS is a derivative of [cOS toolkit](https://github.com/rancher-sandbox/cOS-toolkit).
-We provide information and tips to help users troubleshoot OS-related issues in this guide.
+Harvester runs on an OpenSUSE-based OS. The OS is a derivative of [cOS toolkit](https://github.com/rancher-sandbox/cOS-toolkit). The following sections contain information and tips to help users troubleshoot OS-related issues.
 
-## How to log in to a Harvester node?
+## How to log into a Harvester node
 
-Users can log in to a Harvester node with the username `rancher` and the password or SSH keypair that is provided during installation.
+Users can log into a Harvester node with the username `rancher` and the password or SSH keypair provided during installation.
 The user `rancher` can execute privileged commands without entering a password:
 
 ```
@@ -16,11 +15,9 @@ rancher@node1:~> sudo blkid
 rancher@node1:~> sudo -i
 node1:~ # blkid
 ```
-
-
 ## How can I install packages? Why are some paths read-only?
 
-The OS file system is image-based (just like a container image!) and immutable except for some directories. To temporarily enable the read-write mode, please following these steps:
+The OS file system, like a container image, is image-based and immutable except in some directories. To temporarily enable the read-write mode, please use the following steps:
 
 !!! warning
     Enabling read-write mode might break your system if files are modified. Please use it at your own risk.
@@ -46,11 +43,10 @@ The OS file system is image-based (just like a container image!) and immutable e
 - Press `e` on first menuentry. Append `rd.cos.debugrw` to the `linux (loop0)$kernel $kernelcmd` line. Press `Ctrl + x` to boot the system.
     ![](./assets/os-edit-first-menuentry-add-debugrw.png)
 
-
 ## How to permanently edit kernel parameters
 
 !!! note
-    This is just a workaround. We should provide a better way to do this.
+    The following steps are a workaround. Harvester will inform the community once a permanent resolution is in place.
 
 - Re-mount state directory in rw mode:
     ```
@@ -72,11 +68,11 @@ The OS file system is image-based (just like a container image!) and immutable e
       initrd (loop0)$initramfs
     }
     ```
-- Reboot to take effect.
+- Reboot for changes to take effect.
 
 ## How to change the default GRUB boot menu entry
 
-To change the default entry, first, check the `--id` attribute of a menu entry. e.g.,
+To change the default entry, first check the `--id` attribute of a menu entry, as in the following example:
 
 ```
 # cat /run/initramfs/cos-state/grub2/grub.cfg
@@ -94,14 +90,13 @@ The id of the above entry is `cos-debug`. We can then set the default entry by:
 ```
 # grub2-editenv /oem/grubenv set saved_entry=cos-debug
 ```
-
-## How to debug system crash or hang
+## How to debug a system crash or hang
 
 ### Collect crash log
 
-If kernel panic traces are not recorded in the system log when a system crashes, one reliable way is to use a serial console.
+If kernel panic traces are not recorded in the system log when a system crashes, one reliable way to locate the crash log is to use a serial console.
 
-To enable outputting kernel messages to a serial console, please following these steps:
+To enable outputting of kernel messages to a serial console, please use the following steps:
 
 - Boot the system to GRUB menu. Press ESC to stay on the menu.
     ![](./assets/os-stop-on-first-menuentry.png)
@@ -110,14 +105,14 @@ To enable outputting kernel messages to a serial console, please following these
     ![](./assets/os-edit-first-menuentry-add-console.png)
 
     !!! note
-        Adjust the [console options](https://www.kernel.org/doc/html/latest/admin-guide/serial-console.html) according to your environment. **Make sure** append the `console=` string at the end of the line.
+        Adjust the [console options](https://www.kernel.org/doc/html/latest/admin-guide/serial-console.html) according to your environment. **Make sure** to append the `console=` string at the end of the line.
 - Connect to the serial port to capture logs.
 
 ### Collect crash dumps
-For kernel panic crashes, we can use kdump to collect crash dumps.
+For kernel panic crashes, you can use kdump to collect crash dumps.
 
-By default, the OS is booted without kdump feature enabled. Users can enable the feature by selecting the `debug` menuentry when booting. For example:
+By default, the OS is booted without the kdump feature enabled. Users can enable the feature by selecting the `debug` menuentry when booting, as in the following example:
 
 ![](./assets/os-enable-kdump.png)
 
-When a system crashes, a crash dump will be store in `/var/crash/<time>` directory. Providing the crash dump to developers helps troubleshooting issues.
+When a system crashes, a crash dump will be stored in the `/var/crash/<time>` directory. Providing the crash dump to developers helps them to troubleshoot and resolve issues.
