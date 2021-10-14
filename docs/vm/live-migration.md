@@ -22,7 +22,7 @@ Live migration means moving a virtual machine to a different host without downti
 ## Starting a Migration
 
 1. Go to the **Virtual Machines** page.
-1. Find the virtual machine that you want to migrate and select **Vertical ⋮ (... ) > Migrate**.
+1. Find the virtual machine that you want to migrate and select **⋮ > Migrate**.
 1. Choose the node to which you want to migrate the virtual machine. Click **Apply**.
 
 ![](assets/migrate-action.png)
@@ -32,7 +32,7 @@ Live migration means moving a virtual machine to a different host without downti
 ## Aborting a Migration
 
 1. Go to the **Virtual Machines** page.
-1. Find the virtual machine in migrating status that you want to abort. Select **Vertical ⋮ (... ) > Abort Migration**.
+1. Find the virtual machine in migrating status that you want to abort. Select **⋮ > Abort Migration**.
 
 ## Migration Timeouts
 
