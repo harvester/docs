@@ -457,8 +457,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cloud-config-examples" class="md-nav__link">
-    Cloud config examples
+  <a href="#cloud-configuration-examples" class="md-nav__link">
+    Cloud Configuration Examples
   </a>
   
 </li>
@@ -506,7 +506,7 @@
   
     <li class="md-nav__item">
       <a href="../access-to-the-vm/" class="md-nav__link">
-        Access to the VM
+        Access to the Virtual Machine (VM)
       </a>
     </li>
   
@@ -975,8 +975,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cloud-config-examples" class="md-nav__link">
-    Cloud config examples
+  <a href="#cloud-configuration-examples" class="md-nav__link">
+    Cloud Configuration Examples
   </a>
   
 </li>
@@ -1030,19 +1030,19 @@
 <p>Create one or more virtual machines from the <strong>Virtual Machines</strong> page.</p>
 <ol>
 <li>Choose the option to create either one or multiple VM instances.</li>
-<li>The VM name is required.</li>
-<li>(Optional) You can select to use the VM template. By default we have added ISO, raw, and Windows image templates.</li>
+<li>The VM Name is a required field.</li>
+<li>The VM Template is optional. You can select ISO, raw, and Windows image templates as default options.</li>
 <li>Configure the CPU and Memory of the VM.</li>
-<li>Select SSH keys or upload a new one.</li>
-<li>Go to the <strong>Volumes</strong> tab, Select a custom VM image. Also you can add more disks to the VM, The default disk will be the root disk.</li>
-<li>To configure networks, go to the <strong>Networks</strong> tab. The <strong>Management Network</strong> is added by default. It is also possible to add secondary networks to the VMs using vlan networks (configured on <strong>Advanced &gt; Networks</strong>).</li>
-<li>(Optional) Configure advanced options like hostname and cloud-init data in the <strong>Advanced Options</strong> section.</li>
+<li>Select SSH keys or upload new keys.</li>
+<li>Select a custom VM image on the <strong>Volumes</strong> tab. The default disk will be the root disk. You can add more disks to the VM.</li>
+<li>To configure networks, go to the <strong>Networks</strong> tab. The <strong>Management Network</strong> is added by default. It is also possible to add secondary networks to the VMs using VLAN networks. You may configure these on <strong>Advanced &gt; Networks</strong>.</li>
+<li>Advanced options such as hostname and cloud-init data are optional. You may configure these in the <strong>Advanced Options</strong> section.</li>
 </ol>
 <p><img alt="create-vm" src="../assets/create-vm.png" /></p>
 <p><img alt="create-vm" src="../assets/choose-vm-image.png" /></p>
-<h2 id="cloud-config-examples">Cloud config examples<a class="headerlink" href="#cloud-config-examples" title="Permanent link">&para;</a></h2>
-<p>Config for the password of the default user:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">#cloud-config</span>
+<h2 id="cloud-configuration-examples">Cloud Configuration Examples<a class="headerlink" href="#cloud-configuration-examples" title="Permanent link">&para;</a></h2>
+<p>Password configuration for the default user:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># cloud-config</span>
 <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">password</span>
 <span class="nt">chpasswd</span><span class="p">:</span> <span class="p p-Indicator">{</span><span class="nt"> expire</span><span class="p">:</span> <span class="nv">False</span> <span class="p p-Indicator">}</span>
 <span class="nt">ssh_pwauth</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
@@ -1059,13 +1059,13 @@
     <span class="nt">subnets</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
 </code></pre></div>
-<p>You can also use the <code>Cloud Config Template</code> feature to include a pre-defined cloud-init config for the VM.</p>
+<p>You can also use the <code>Cloud Config Template</code> feature to include a pre-defined cloud-init configuration for the VM.</p>
 <h2 id="networks">Networks<a class="headerlink" href="#networks" title="Permanent link">&para;</a></h2>
 <h3 id="management-network">Management Network<a class="headerlink" href="#management-network" title="Permanent link">&para;</a></h3>
-<p>A management network represents the default vm eth0 interface configured by the cluster network solution that is present in each VM.</p>
+<p>A management network represents the default VM eth0 interface configured by the cluster network solution that is present in each VM.</p>
 <p>By default, a VM can be accessed via the management network.</p>
 <h3 id="secondary-network">Secondary Network<a class="headerlink" href="#secondary-network" title="Permanent link">&para;</a></h3>
-<p>It is also possible to connect VMs using additional networks with Harvester's built-in <a href="../../networking/harvester-network/">vlan networks</a>.</p>
+<p>It is also possible to connect VMs using additional networks with Harvester's built-in <a href="../../networking/harvester-network/">VLAN networks</a>.</p>
                 
                   
                 
@@ -1103,13 +1103,13 @@
       
       
         
-        <a href="../access-to-the-vm/" class="md-footer__link md-footer__link--next" aria-label="Next: Access to the VM" rel="next">
+        <a href="../access-to-the-vm/" class="md-footer__link md-footer__link--next" aria-label="Next: Access to the Virtual Machine (VM)" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Access to the VM
+              Access to the Virtual Machine (VM)
             </div>
           </div>
           <div class="md-footer__button md-icon">

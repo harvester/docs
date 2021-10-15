@@ -432,7 +432,7 @@
   
     <li class="md-nav__item">
       <a href="../access-to-the-vm/" class="md-nav__link">
-        Access to the VM
+        Access to the Virtual Machine (VM)
       </a>
     </li>
   
@@ -1001,11 +1001,11 @@
                 
                 <h1 id="vm-backup-restore">VM Backup &amp; Restore<a class="headerlink" href="#vm-backup-restore" title="Permanent link">&para;</a></h1>
 <p><em>Available as of v0.3.0</em></p>
-<p>VM backups are created from the <strong>Virtual Machines</strong> page. The VM backup volumes will be stored in the <strong>Backup Target</strong> (an NFS or S3 server) and they can be used to either restore a new VM or replace an existing VM.
+<p>VM backups are created from the <strong>Virtual Machines</strong> page. The VM backup volumes will be stored in the <strong>Backup Target</strong> (an NFS or S3 server), and they can be used to either restore a new VM or replace an existing VM.
 <img alt="vm-backup.png" src="../assets/vm-backup.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>A backup target must be set up. For more information, see <a href="#backup-target-setup">Backup Target Setup</a>. If the BackupTarget has not been set, you’ll be presented with a prompt message.</p>
+<p>A backup target must be set up. For more information, see <a href="#configure-backup-target">Configure Backup Target</a>. If the backup target has not been set, you’ll be prompted with a message to do so.</p>
 </div>
 <h2 id="configure-backup-target">Configure Backup Target<a class="headerlink" href="#configure-backup-target" title="Permanent link">&para;</a></h2>
 <p>A backup target is an endpoint used to access a backup store in Harvester. A backup store is an NFS server or S3 compatible server that stores the backups of VM volumes. The backup target can be set at <code>Settings &gt; backup-target</code>.</p>
@@ -1026,7 +1026,7 @@
 <tr>
 <td align="left">Endpoint</td>
 <td align="left">string</td>
-<td align="left">Endpoint is a hostname or an IP address. It can be left empty for AWS S3.</td>
+<td align="left">A hostname or an IP address. It can be left empty for AWS S3.</td>
 </tr>
 <tr>
 <td align="left">BucketName</td>
@@ -1041,22 +1041,22 @@
 <tr>
 <td align="left">AccessKeyID</td>
 <td align="left">string</td>
-<td align="left">AccessKeyID is like a user-id that uniquely identifies your account.</td>
+<td align="left">A user-id that uniquely identifies your account</td>
 </tr>
 <tr>
 <td align="left">SecretAccessKey</td>
 <td align="left">string</td>
-<td align="left">SecretAccessKey is the password to your account.</td>
+<td align="left">The password to your account</td>
 </tr>
 <tr>
 <td align="left">Certificate</td>
 <td align="left">string</td>
-<td align="left">Paste the certificate if you want to use a self-signed SSL certificate of your s3 server</td>
+<td align="left">Paste to use a self-signed SSL certificate of your S3 server</td>
 </tr>
 <tr>
 <td align="left">VirtualHostedStyle</td>
 <td align="left">bool</td>
-<td align="left">Use virtual-hosted-style access only, e.g., Alibaba Cloud(Aliyun) OSS</td>
+<td align="left">Use <code>VirtualHostedStyle</code> access only; e.g., Alibaba Cloud (Aliyun) OSS</td>
 </tr>
 </tbody>
 </table>
@@ -1067,20 +1067,20 @@
 <li>Set a custom backup name and click <code>Create</code> to create a new VM backup.
 <img alt="create-backup.png" src="../assets/create-backup.png" /></li>
 </ol>
-<p><strong>Result:</strong> The backup is created. A notification message will be promoted, and users can go to the <code>Advanced &gt; Backups</code> page to view all VM backups.</p>
-<p>The <code>ReadyToUse</code> status will be set to true once the Backup is complete.</p>
-<p>Users can either choose to restore a new VM, or replace an existing VM using this backup.</p>
+<p><strong>Result:</strong> The backup is created. You will receive a notification message, and you can also go to the <code>Advanced &gt; Backups</code> page to view all VM backups.</p>
+<p>The <code>ReadyToUse</code> status will be set to <code>true</code> once the Backup is complete.</p>
+<p>Users can either choose to restore a new VM or replace an existing VM using this backup.</p>
 <h2 id="restore-a-new-vm-using-a-backup">Restore a new VM using a backup<a class="headerlink" href="#restore-a-new-vm-using-a-backup" title="Permanent link">&para;</a></h2>
 <p>To restore a new VM from a backup, follow these steps:</p>
 <ol>
 <li>Go to the <code>Backups</code> page.</li>
 <li>Specify the new VM name and click <code>Create</code>.</li>
-<li>A new VM will be restored using the backup volumes and metadata, and users can access it from the <code>Virtual Machines</code> page.
+<li>A new VM will be restored using the backup volumes and metadata, and you can access it from the <code>Virtual Machines</code> page.
 <img alt="restore-vm.png" src="../assets/restore-vm.png" /></li>
 </ol>
 <h2 id="replace-an-existing-vm-using-a-backup">Replace an Existing VM using a backup<a class="headerlink" href="#replace-an-existing-vm-using-a-backup" title="Permanent link">&para;</a></h2>
-<p>You can replace an existing VM using the backup with the same VM backup target .</p>
-<p>You can choose to either delete the previous volumes or retain them. By default, all previous volumes are deleted.</p>
+<p>You can replace an existing VM using the backup with the same VM backup target.</p>
+<p>You can choose to either delete or retain the previous volumes. By default, all previous volumes are deleted.</p>
 <p><strong>Requirements:</strong> The VM must exist and is required to be in the powered-off status.</p>
 <ol>
 <li>Go to the <code>Backups</code> page.</li>
@@ -1108,7 +1108,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../access-to-the-vm/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Access to the VM" rel="prev">
+        <a href="../access-to-the-vm/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Access to the Virtual Machine (VM)" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1117,7 +1117,7 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Access to the VM
+              Access to the Virtual Machine (VM)
             </div>
           </div>
         </a>

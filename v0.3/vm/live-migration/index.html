@@ -432,7 +432,7 @@
   
     <li class="md-nav__item">
       <a href="../access-to-the-vm/" class="md-nav__link">
-        Access to the VM
+        Access to the Virtual Machine (VM)
       </a>
     </li>
   
@@ -493,36 +493,36 @@
       
         <li class="md-nav__item">
   <a href="#starting-a-migration" class="md-nav__link">
-    Starting a migration
+    Starting a Migration
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#aborting-a-migration" class="md-nav__link">
-    Aborting a migration
+    Aborting a Migration
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#migration-timeouts" class="md-nav__link">
-    Migration timeouts
+    Migration Timeouts
   </a>
   
-    <nav class="md-nav" aria-label="Migration timeouts">
+    <nav class="md-nav" aria-label="Migration Timeouts">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#completion-timeout" class="md-nav__link">
-    Completion timeout
+    Completion Timeout
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#progress-timeout" class="md-nav__link">
-    Progress timeout
+    Progress Timeout
   </a>
   
 </li>
@@ -969,36 +969,36 @@
       
         <li class="md-nav__item">
   <a href="#starting-a-migration" class="md-nav__link">
-    Starting a migration
+    Starting a Migration
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#aborting-a-migration" class="md-nav__link">
-    Aborting a migration
+    Aborting a Migration
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#migration-timeouts" class="md-nav__link">
-    Migration timeouts
+    Migration Timeouts
   </a>
   
-    <nav class="md-nav" aria-label="Migration timeouts">
+    <nav class="md-nav" aria-label="Migration Timeouts">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#completion-timeout" class="md-nav__link">
-    Completion timeout
+    Completion Timeout
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#progress-timeout" class="md-nav__link">
-    Progress timeout
+    Progress Timeout
   </a>
   
 </li>
@@ -1031,27 +1031,28 @@
 <p class="admonition-title">Note</p>
 <ul>
 <li>Live migration is not allowed when the virtual machine is using a management network of bridge interface type.</li>
-<li>To support live migration, 3 or more hosts in the Harvester cluster are required due to <a href="https://github.com/harvester/harvester/issues/798">a known issue</a>.</li>
+<li>To support live migration, three or more hosts in the Harvester cluster are required due to <a href="https://github.com/harvester/harvester/issues/798">a known issue</a>.</li>
 </ul>
 </div>
-<h2 id="starting-a-migration">Starting a migration<a class="headerlink" href="#starting-a-migration" title="Permanent link">&para;</a></h2>
+<h2 id="starting-a-migration">Starting a Migration<a class="headerlink" href="#starting-a-migration" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Go to the <strong>Virtual Machines</strong> page.</li>
-<li>Find the virtual machine that you want to migrate and select <strong>Vertical &#8942; (... ) &gt; Migrate</strong>.</li>
-<li>Choose the node that you want to migrate the virtual machine to. Click <strong>Apply</strong>.</li>
+<li>Find the virtual machine that you want to migrate and select <strong>⋮ &gt; Migrate</strong>.</li>
+<li>Choose the node to which you want to migrate the virtual machine. Click <strong>Apply</strong>.</li>
 </ol>
 <p><img alt="" src="../assets/migrate-action.png" /></p>
 <p><img alt="" src="../assets/migrate.png" /></p>
-<h2 id="aborting-a-migration">Aborting a migration<a class="headerlink" href="#aborting-a-migration" title="Permanent link">&para;</a></h2>
+<h2 id="aborting-a-migration">Aborting a Migration<a class="headerlink" href="#aborting-a-migration" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Go to the <strong>Virtual Machines</strong> page.</li>
-<li>Find the virtual machine that is in migrating status and you want to abort the migration. Select <strong>Vertical &#8942; (... ) &gt; Abort Migration</strong>.</li>
+<li>Find the virtual machine in migrating status that you want to abort. Select <strong>⋮ &gt; Abort Migration</strong>.</li>
 </ol>
-<h2 id="migration-timeouts">Migration timeouts<a class="headerlink" href="#migration-timeouts" title="Permanent link">&para;</a></h2>
-<h3 id="completion-timeout">Completion timeout<a class="headerlink" href="#completion-timeout" title="Permanent link">&para;</a></h3>
-<p>The live migration process will copy virtual machine memory pages and disk blocks to the destination. In some cases, the virtual machine can write to different memory pages or disk blocks at a higher rate than these can be copied, which will prevent the migration process from being completed in a reasonable amount of time. Live migration will be aborted if it exceeds the completion timeout which is 800s per GiB of data. For example, a virtual machine with 8 GiB of memory will time out after 6400 seconds.</p>
-<h3 id="progress-timeout">Progress timeout<a class="headerlink" href="#progress-timeout" title="Permanent link">&para;</a></h3>
-<p>Live migration will also be aborted when it is noticed that copying memory doesn't make any progress in 150s.</p>
+<h2 id="migration-timeouts">Migration Timeouts<a class="headerlink" href="#migration-timeouts" title="Permanent link">&para;</a></h2>
+<h3 id="completion-timeout">Completion Timeout<a class="headerlink" href="#completion-timeout" title="Permanent link">&para;</a></h3>
+<p>The live migration process will copy virtual machine memory pages and disk blocks to the destination. In some cases, the virtual machine can write to different memory pages or disk blocks at a higher rate than these can be copied. As a result, the migration process is prevented from being completed in a reasonable amount of time. </p>
+<p>Live migration will be aborted if it exceeds the completion timeout of 800s per GiB of data. For example, a virtual machine with 8 GiB of memory will time out after 6400 seconds.</p>
+<h3 id="progress-timeout">Progress Timeout<a class="headerlink" href="#progress-timeout" title="Permanent link">&para;</a></h3>
+<p>Live migration will also be aborted when copying memory doesn't make any progress in 150s.</p>
                 
                   
                 

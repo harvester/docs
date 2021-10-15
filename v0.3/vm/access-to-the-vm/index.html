@@ -18,7 +18,7 @@
     
     
       
-        <title>Access to the VM - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>Access to the Virtual Machine (VM) - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#access-to-the-vm" class="md-skip">
+        <a href="#access-to-the-virtual-machine-vm" class="md-skip">
           Skip to content
         </a>
       
@@ -104,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Access to the VM
+              Access to the Virtual Machine (VM)
             
           </span>
         </div>
@@ -441,12 +441,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Access to the VM
+          Access to the Virtual Machine (VM)
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Access to the VM
+        Access to the Virtual Machine (VM)
       </a>
       
         
@@ -464,15 +464,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#access-with-the-ui" class="md-nav__link">
-    Access with the UI
+  <a href="#access-with-the-harvester-ui" class="md-nav__link">
+    Access with the Harvester UI
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#access-using-ssh" class="md-nav__link">
-    Access using SSH
+  <a href="#access-with-the-ssh-client" class="md-nav__link">
+    Access with the SSH Client
   </a>
   
 </li>
@@ -941,15 +941,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#access-with-the-ui" class="md-nav__link">
-    Access with the UI
+  <a href="#access-with-the-harvester-ui" class="md-nav__link">
+    Access with the Harvester UI
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#access-using-ssh" class="md-nav__link">
-    Access using SSH
+  <a href="#access-with-the-ssh-client" class="md-nav__link">
+    Access with the SSH Client
   </a>
   
 </li>
@@ -971,15 +971,15 @@
                   </a>
                 
                 
-                <h1 id="access-to-the-vm">Access to the VM<a class="headerlink" href="#access-to-the-vm" title="Permanent link">&para;</a></h1>
-<p>Once the VM is up and running, it can be accessed using either VNC or the serial console from the Harvester UI.</p>
-<p>Optionally, connect directly from your computer's SSH client.</p>
-<h2 id="access-with-the-ui">Access with the UI<a class="headerlink" href="#access-with-the-ui" title="Permanent link">&para;</a></h2>
+                <h1 id="access-to-the-virtual-machine-vm">Access to the Virtual Machine (VM)<a class="headerlink" href="#access-to-the-virtual-machine-vm" title="Permanent link">&para;</a></h1>
+<p>Once the VM is up and running, you can access it using either the Virtual Network Computing (VNC) client or the serial console from the Harvester UI.</p>
+<p>Additionally, you can connect directly from your computer's SSH client.</p>
+<h2 id="access-with-the-harvester-ui">Access with the Harvester UI<a class="headerlink" href="#access-with-the-harvester-ui" title="Permanent link">&para;</a></h2>
 <p>VMs can be accessed from the UI directly using either VNC or the serial console.</p>
-<p>If the VGA display is not enabled on the VM (e.g., when using the Ubuntu minimal cloud image), the VM can be accessed with the serial console.</p>
+<p>If the VGA display is not enabled on the VM, as with the Ubuntu minimal cloud image, the VM can be accessed with the serial console.</p>
 <p><img alt="" src="../assets/access-to-vm.png" /></p>
-<h2 id="access-using-ssh">Access using SSH<a class="headerlink" href="#access-using-ssh" title="Permanent link">&para;</a></h2>
-<p>Use the address in a terminal emulation client (such as Putty) or use the following command line to access the VM directly from your computer's SSH client:</p>
+<h2 id="access-with-the-ssh-client">Access with the SSH Client<a class="headerlink" href="#access-with-the-ssh-client" title="Permanent link">&para;</a></h2>
+<p>Enter the IP address of the host in a terminal emulation client, such as PuTTY. You may also run the following command to access the VM directly from your computer's SSH client:</p>
 <div class="highlight"><pre><span></span><code> ssh -i ~/.ssh/your-ssh-key user@&lt;ip-address-or-hostname&gt;
 </code></pre></div>
                 
