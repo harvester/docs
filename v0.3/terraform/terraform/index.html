@@ -774,37 +774,37 @@
       
         <li class="md-nav__item">
   <a href="#install-the-provider" class="md-nav__link">
-    Install The Provider
+    Install the Provider
   </a>
   
-    <nav class="md-nav" aria-label="Install The Provider">
+    <nav class="md-nav" aria-label="Install the Provider">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#option-1-download-and-install-the-provider-from-releases" class="md-nav__link">
-    Option 1: Download and Install The Provider From Releases
+    Option 1: Download and install the provider from releases.
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#option-2-build-and-install-the-provider-manually" class="md-nav__link">
-    Option 2: Build and Install The Provider Manually
+    Option 2: Build and install the provider manually.
   </a>
   
-    <nav class="md-nav" aria-label="Option 2: Build and Install The Provider Manually">
+    <nav class="md-nav" aria-label="Option 2: Build and install the provider manually.">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-build-the-provider" class="md-nav__link">
-    1. Build the provider
+  <a href="#building-the-provider" class="md-nav__link">
+    Building the provider:
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-install-the-provider" class="md-nav__link">
-    2. Install the provider
+  <a href="#installing-the-provider" class="md-nav__link">
+    Installing the provider:
   </a>
   
 </li>
@@ -992,37 +992,37 @@
       
         <li class="md-nav__item">
   <a href="#install-the-provider" class="md-nav__link">
-    Install The Provider
+    Install the Provider
   </a>
   
-    <nav class="md-nav" aria-label="Install The Provider">
+    <nav class="md-nav" aria-label="Install the Provider">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#option-1-download-and-install-the-provider-from-releases" class="md-nav__link">
-    Option 1: Download and Install The Provider From Releases
+    Option 1: Download and install the provider from releases.
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#option-2-build-and-install-the-provider-manually" class="md-nav__link">
-    Option 2: Build and Install The Provider Manually
+    Option 2: Build and install the provider manually.
   </a>
   
-    <nav class="md-nav" aria-label="Option 2: Build and Install The Provider Manually">
+    <nav class="md-nav" aria-label="Option 2: Build and install the provider manually.">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-build-the-provider" class="md-nav__link">
-    1. Build the provider
+  <a href="#building-the-provider" class="md-nav__link">
+    Building the provider:
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-install-the-provider" class="md-nav__link">
-    2. Install the provider
+  <a href="#installing-the-provider" class="md-nav__link">
+    Installing the provider:
   </a>
   
 </li>
@@ -1067,42 +1067,58 @@
 <li><a href="https://www.terraform.io/downloads.html">Terraform</a> &gt;= 0.13.x</li>
 <li><a href="https://golang.org/doc/install">Go</a> 1.16 to build the provider plugin</li>
 </ul>
-<h2 id="install-the-provider">Install The Provider<a class="headerlink" href="#install-the-provider" title="Permanent link">&para;</a></h2>
-<h3 id="option-1-download-and-install-the-provider-from-releases">Option 1: Download and Install The Provider From <a href="https://github.com/harvester/terraform-provider-harvester/releases">Releases</a><a class="headerlink" href="#option-1-download-and-install-the-provider-from-releases" title="Permanent link">&para;</a></h3>
+<h2 id="install-the-provider">Install the Provider<a class="headerlink" href="#install-the-provider" title="Permanent link">&para;</a></h2>
+<h3 id="option-1-download-and-install-the-provider-from-releases"><strong>Option 1:</strong> Download and install the provider from <a href="https://github.com/harvester/terraform-provider-harvester/releases">releases</a>.<a class="headerlink" href="#option-1-download-and-install-the-provider-from-releases" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use the following command to complete the above actions:
 <div class="highlight"><pre><span></span><code>tar -zxvf terraform-provider-harvester-amd64.tar.gz
 ./install-terraform-provider-harvester.sh
-</code></pre></div>
-<h3 id="option-2-build-and-install-the-provider-manually">Option 2: Build and Install The Provider Manually<a class="headerlink" href="#option-2-build-and-install-the-provider-manually" title="Permanent link">&para;</a></h3>
-<h4 id="1-build-the-provider">1. Build the provider<a class="headerlink" href="#1-build-the-provider" title="Permanent link">&para;</a></h4>
-<p>Clone repository</p>
-<div class="highlight"><pre><span></span><code>git clone git@github.com:harvester/terraform-provider-harvester
-</code></pre></div>
-<p>Enter the provider directory and build the provider</p>
-<p>This will build the provider and put the provider binary in <code>./bin</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> terraform-provider-harvester
-make
-</code></pre></div>
-<h4 id="2-install-the-provider">2. Install the provider<a class="headerlink" href="#2-install-the-provider" title="Permanent link">&para;</a></h4>
-<p>The expected location for the Harvester provider for that target platform within one of the local search directories would be like the following:
-<div class="highlight"><pre><span></span><code>registry.terraform.io/harvester/harvester/0.2.6/linux_amd64/terraform-provider-harvester_v0.2.6
+</code></pre></div></li>
+</ul>
+<h3 id="option-2-build-and-install-the-provider-manually"><strong>Option 2:</strong> Build and install the provider manually.<a class="headerlink" href="#option-2-build-and-install-the-provider-manually" title="Permanent link">&para;</a></h3>
+<h4 id="building-the-provider"><strong>Building the provider:</strong><a class="headerlink" href="#building-the-provider" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>Clone the repository using the following command:
+    <div class="highlight"><pre><span></span><code>git clone git@github.com:harvester/terraform-provider-harvester
 </code></pre></div></p>
-<p>The default location for locally-installed providers is one of the following, depending on which operating system you are running Terraform under:</p>
+</li>
+<li>
+<p>Enter the provider directory and build the provider; this will build the provider and put the provider binary in <code>./bin</code>. Use the following command:
+    <div class="highlight"><pre><span></span><code>cd terraform-provider-harvester
+make
+</code></pre></div></p>
+</li>
+</ul>
+<h4 id="installing-the-provider"><strong>Installing the provider:</strong><a class="headerlink" href="#installing-the-provider" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>The expected location for the Harvester provider for the target platform within one of the local search directories is as follows:
+    <div class="highlight"><pre><span></span><code>registry.terraform.io/harvester/harvester/0.2.6/linux_amd64/terraform-provider-harvester_v0.2.6
+</code></pre></div></p>
+</li>
+<li>
+<p>The default location for locally-installed providers will be one of the following, depending on the operating system under which you are running Terraform:</p>
 <ul>
 <li>Windows: <code>%APPDATA%\terraform.d\plugins</code></li>
 <li>All other systems: <code>~/.terraform.d/plugins</code></li>
 </ul>
-<p>Place the provider into the plugin directory, for example:
-<div class="highlight"><pre><span></span><code><span class="nv">version</span><span class="o">=</span><span class="m">0</span>.2.6
-<span class="nv">arch</span><span class="o">=</span>linux_amd64
-<span class="nv">terraform_harvester_provider_bin</span><span class="o">=</span>./bin/terraform-provider-harvester
+</li>
+<li>
+<p>Place the provider into the plugin directory as in the following example:
+    <div class="highlight"><pre><span></span><code>version=0.2.6
+arch=linux_amd64
+terraform_harvester_provider_bin=./bin/terraform-provider-harvester
 
-<span class="nv">terraform_harvester_provider_dir</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/.terraform.d/plugins/registry.terraform.io/harvester/harvester/</span><span class="si">${</span><span class="nv">version</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">arch</span><span class="si">}</span><span class="s2">/&quot;</span>
-mkdir -p <span class="s2">&quot;</span><span class="si">${</span><span class="nv">terraform_harvester_provider_dir</span><span class="si">}</span><span class="s2">&quot;</span>
-cp <span class="si">${</span><span class="nv">terraform_harvester_provider_bin</span><span class="si">}</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">terraform_harvester_provider_dir</span><span class="si">}</span><span class="s2">/terraform-provider-harvester_v</span><span class="si">${</span><span class="nv">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">}</span>
+terraform_harvester_provider_dir=&quot;${HOME}/.terraform.d/plugins/registry.terraform.io/harvester/harvester/${version}/${arch}/&quot;
+mkdir -p &quot;${terraform_harvester_provider_dir}&quot;
+cp ${terraform_harvester_provider_bin} &quot;${terraform_harvester_provider_dir}/terraform-provider-harvester_v${version}&quot;}
 </code></pre></div></p>
+</li>
+</ul>
 <h2 id="using-the-provider">Using the provider<a class="headerlink" href="#using-the-provider" title="Permanent link">&para;</a></h2>
-<p>After placing it into your plugins directory,  run <code>terraform init</code> to initialize it.
-Documentation about the provider specific configuration options can be found on the <a href="https://github.com/harvester/terraform-provider-harvester/tree/master/docs">docs directory</a>.</p>
+<p>After placing the provider into your plugins directory,  run <code>terraform init</code> to initialize it.
+More information about provider-specific configuration options can be found on the <a href="https://github.com/harvester/terraform-provider-harvester/tree/master/docs">docs directory</a>.</p>
                 
               
               
