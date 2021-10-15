@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#harvester-intro" class="md-skip">
+        <a href="#harvester-overview" class="md-skip">
           Skip to content
         </a>
       
@@ -104,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Harvester Intro
+              Harvester Overview
             
           </span>
         </div>
@@ -248,12 +248,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Harvester Intro
+          Harvester Overview
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="." class="md-nav__link md-nav__link--active">
-        Harvester Intro
+        Harvester Overview
       </a>
       
         
@@ -271,8 +271,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#harvester-features" class="md-nav__link">
+    Harvester Features
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#harvester-architecture" class="md-nav__link">
+    Harvester Architecture
   </a>
   
 </li>
@@ -966,8 +973,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#harvester-features" class="md-nav__link">
+    Harvester Features
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#harvester-architecture" class="md-nav__link">
+    Harvester Architecture
   </a>
   
 </li>
@@ -1023,25 +1037,26 @@
                   </a>
                 
                 
-                <h1 id="harvester-intro">Harvester Intro<a class="headerlink" href="#harvester-intro" title="Permanent link">&para;</a></h1>
-<p>Harvester is an open source <a href="https://en.wikipedia.org/wiki/Hyper-converged_infrastructure">hyper-converged infrastructure</a> (HCI) software built on Kubernetes. It is an open alternative to using a proprietary HCI stack that incorporates the design and ethos of <a href="https://en.wikipedia.org/wiki/Cloud_native_computing">Cloud Native</a>.</p>
+                <h1 id="harvester-overview">Harvester Overview<a class="headerlink" href="#harvester-overview" title="Permanent link">&para;</a></h1>
+<p>Harvester is an open-source <a href="https://en.wikipedia.org/wiki/Hyper-converged_infrastructure">hyper-converged infrastructure</a> (HCI) software built on Kubernetes. It is an open alternative to using a proprietary HCI stack that incorporates the design and ethos of <a href="https://en.wikipedia.org/wiki/Cloud_native_computing">Cloud Native</a> computing.</p>
 <p><img alt="harvester-ui" src="assets/dashboard.png" /></p>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<h2 id="harvester-features">Harvester Features<a class="headerlink" href="#harvester-features" title="Permanent link">&para;</a></h2>
 <p>Harvester implements HCI on bare metal servers. Harvester is designed to use local, direct attached storage instead of complex external SANs. It ships as an integrated bootable appliance image that can be deployed directly to servers through an ISO or PXE boot artifact.</p>
-<p>Here are some notable features of the Harvester:</p>
+<p>Some notable features of Harvester include the following:</p>
 <ol>
-<li>VM lifecycle management including SSH-Key injection, Cloud-init and, graphic and serial port console</li>
+<li>VM lifecycle management including SSH-Key injection, cloud-init, and graphic and serial port console</li>
 <li>VM live migration support</li>
-<li>Supporting VM backup and restore</li>
+<li>Supported VM backup and restore</li>
 <li>Distributed block storage</li>
-<li>Multiple NICs in the VM connecting to the management network or VLANs</li>
+<li>Multiple network interface controllers (NICs) in the VM connecting to the management network or VLANs</li>
 <li>Virtual Machine and cloud-init templates</li>
 <li><a href="https://github.com/rancher/rancher">Rancher</a> integration with multi-cluster management and the Harvester node driver</li>
 <li><a href="https://docs.harvesterhci.io/latest/install/pxe-boot-install">PXE/iPXE boot support</a></li>
 <li>Virtual IP and bond NIC support</li>
 <li>Monitoring integration</li>
 </ol>
-<p>The following diagram gives a high-level architecture of Harvester:</p>
+<h2 id="harvester-architecture">Harvester Architecture<a class="headerlink" href="#harvester-architecture" title="Permanent link">&para;</a></h2>
+<p>The following diagram outlines a high-level architecture of Harvester:</p>
 <p><img alt="" src="assets/architecture.svg" /></p>
 <ul>
 <li><a href="https://longhorn.io/">Longhorn</a> is a lightweight, reliable and easy-to-use distributed block storage system for Kubernetes.</li>
@@ -1049,7 +1064,7 @@
 <li><a href="https://github.com/rancher-sandbox/cOS-toolkit">Elemental for openSUSE Leap 15.3</a> is a Linux distribution designed to remove as much OS maintenance as possible in a Kubernetes cluster.</li>
 </ul>
 <h2 id="hardware-requirements">Hardware Requirements<a class="headerlink" href="#hardware-requirements" title="Permanent link">&para;</a></h2>
-<p>To get the Harvester server up and running the following minimum hardware is required:</p>
+<p>To get the Harvester server up and running, the following minimum hardware is required:</p>
 <table>
 <thead>
 <tr>
@@ -1060,23 +1075,23 @@
 <tbody>
 <tr>
 <td align="left">CPU</td>
-<td align="left">x86_64 only. Hardware-assisted virtualization is required. 8 cores minimum, 16 cores or above preferred</td>
+<td align="left">x86_64 only. Hardware-assisted virtualization is required. 8-core processor minimum; 16-core or above preferred</td>
 </tr>
 <tr>
 <td align="left">Memory</td>
-<td align="left">32 GB minimum, 64 GB or above preferred</td>
+<td align="left">32 GB minimum; 64 GB or above preferred</td>
 </tr>
 <tr>
 <td align="left">Disk Capacity</td>
-<td align="left">120 GB minimum, 500 GB or above preferred</td>
+<td align="left">120 GB minimum; 500 GB or above preferred</td>
 </tr>
 <tr>
 <td align="left">Disk Performance</td>
-<td align="left">5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be <a href="https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd">fast enough for Etcd</a>.</td>
+<td align="left">5,000+ random IOPS per disk (SSD/NVMe). Management nodes (first three nodes) must be <a href="https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd">fast enough for etcd</a>.</td>
 </tr>
 <tr>
 <td align="left">Network Card</td>
-<td align="left">1 Gbps Ethernet minimum, 10Gbps Ethernet recommended</td>
+<td align="left">1 Gbps Ethernet minimum; 10Gbps Ethernet recommended</td>
 </tr>
 <tr>
 <td align="left">Network Switch</td>
@@ -1087,10 +1102,10 @@
 <h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
 <p>You can install Harvester via ISO installation or PXE Boot Installation. Instructions are provided in sections below.</p>
 <h3 id="iso-installation">ISO Installation<a class="headerlink" href="#iso-installation" title="Permanent link">&para;</a></h3>
-<p>You can use the ISO to install Harvester directly on the bare-metal server to form a Harvester cluster. Users can add one or many compute nodes to join the existing cluster.</p>
+<p>You can use the ISO to install Harvester directly on the bare metal server to form a Harvester cluster. Users can add one or many compute nodes to join the existing cluster.</p>
 <p>To get the Harvester ISO, download it from the <a href="https://github.com/harvester/harvester/releases">Github releases</a>.</p>
-<p>During the installation you can either choose to form a new cluster, or join the node to an existing cluster.</p>
-<p>Note: This <a href="https://youtu.be/97ADieBX6bE">video</a> shows a quick overview of the ISO installation.</p>
+<p>During the installation, you can either choose to form a new cluster or join the node to an existing cluster.</p>
+<p><strong>Note:</strong> This <a href="https://youtu.be/97ADieBX6bE">video</a> shows a brief overview of the ISO installation process.</p>
 <div class="text-center">
 <iframe width="950" height="475" src="https://www.youtube.com/embed/97ADieBX6bE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
@@ -1098,28 +1113,28 @@
 <ol>
 <li>Mount the Harvester ISO disk and boot the server by selecting the <code>Harvester Installer</code>.
    <img alt="iso-install.png" src="install/iso-install.png" /></li>
-<li>Choose the installation mode by either creating a new Harvester cluster, or by joining an existing one.</li>
-<li>Choose the installation device that the Harvester will be formatted to.</li>
-<li>Configure the hostname and select the network interface for the management network, by default harvester will create a bond NIC named <code>harvester-mgmt</code>, and the IP address can either be configured via DHCP or static method.
+<li>Choose the installation mode by either creating a new Harvester cluster or by joining an existing one.</li>
+<li>Choose the installation device to which the Harvester cluster will be formatted.</li>
+<li>Configure the hostname and select the network interface for the management network. By default, Harvester will create a bond NIC named <code>harvester-mgmt</code>, and the IP address can either be configured via DHCP or by static method.
    <img alt="iso-installed.png" src="install/iso-nic-config.gif" /></li>
-<li>(Optional) Configure the DNS servers, use commas as a delimiter.</li>
-<li>Config the Virtual IP which you can use for accessing the cluster or joining the cluster by the other nodes.</li>
+<li>Optional: Configure the DNS servers; use commas as delimiters.</li>
+<li>Configure the Virtual IP with which you can use to access the cluster or join the cluster by the other nodes.</li>
 <li>Configure the <code>cluster token</code>. This token will be used for adding other nodes to the cluster.</li>
 <li>Configure the login password of the host. The default ssh user is <code>rancher</code>.</li>
-<li>(Optional) Config the NTP Servers of the node if needed, default to <code>0.suse.pool.ntp.org</code>.</li>
-<li>(Optional) If you need to use an HTTP proxy to access the outside world, enter the proxy URL address here, otherwise, leave this blank.</li>
-<li>(Optional) You can choose to import SSH keys from a remote URL server. Your GitHub public keys can be used with <code>https://github.com/&lt;username&gt;.keys</code>.</li>
-<li>(Optional) If you need to customize the host with cloud-init config, enter the HTTP URL here.</li>
-<li>Confirm the installation options and the Harvester will be installed to your host. The installation may take a few minutes to be complete.</li>
-<li>Once the installation is complete it will restart the host and a console UI with management URL and status will be displayed. <small>(You can Use F12 to switch between Harvester console and the Shell)</small></li>
+<li>Optional: Configure the NTP Servers of the node if needed. Default is <code>0.suse.pool.ntp.org</code>.</li>
+<li>Optional: If you need to use an HTTP proxy to access the outside world, enter the proxy URL address; otherwise, leave this blank.</li>
+<li>Optional: You can choose to import SSH keys from a remote URL server. Your GitHub public keys can be used with <code>https://github.com/&lt;username&gt;.keys</code>.</li>
+<li>Optional: If you need to customize the host with cloud-init configuration, enter the HTTP URL.</li>
+<li>Confirm the installation options and Harvester will be installed to your host. The installation may take a few minutes to complete.</li>
+<li>Once the installation is complete, the host will restart, and a console UI with management URL and status will be displayed. <small>(You can Use F12 to switch between the Harvester console and the Shell).</small></li>
 <li>The default URL of the web interface is <code>https://your-virtual-ip</code>.
    <img alt="iso-installed.png" src="install/iso-installed.png" /></li>
-<li>User will be prompted to set the password for the default <code>admin</code> user on the first-time login.
+<li>Users will be prompted to set the password for the default <code>admin</code> user at first login.
     <img alt="first-login.png" src="install/first-time-login.png" /></li>
 </ol>
 <h3 id="other-installation-methods">Other Installation Methods<a class="headerlink" href="#other-installation-methods" title="Permanent link">&para;</a></h3>
-<p>Harvester can be installed automatically, please refer to <a href="install/pxe-boot-install/">PXE Boot Install</a> for detailed instructions.</p>
-<p>More usage examples is available at <a href="https://github.com/harvester/ipxe-examples">harvester/ipxe-examples</a>.</p>
+<p>Harvester can be installed automatically also. Please refer to <a href="install/pxe-boot-install/">PXE Boot Install</a> for detailed instructions for additional guidance.</p>
+<p>More iPXE usage examples are available at <a href="https://github.com/harvester/ipxe-examples">harvester/ipxe-examples</a>.</p>
                 
                   
                 
