@@ -101,7 +101,7 @@ For machines that needs to be installed as `CREATE` mode, the following is an iP
 
 ```
 #!ipxe
-kernel harvester-<version>-vmlinuz ip=dhcp net.ifnames=1 rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
+kernel harvester-<version>-vmlinuz ip=dhcp net.ifnames=1 rd.cos.disable rd.noverifyssl console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
 initrd harvester-<version>-initrd
 boot
 ```
@@ -158,7 +158,7 @@ For machines that needs to be installed in `JOIN` mode, the following is an iPXE
 
 ```
 #!ipxe
-kernel harvester-<version>-vmlinuz ip=dhcp net.ifnames=1 rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-join.yaml
+kernel harvester-<version>-vmlinuz ip=dhcp net.ifnames=1 rd.cos.disable rd.noverifyssl console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-join.yaml
 initrd harvester-<version>-initrd
 boot
 ```
@@ -291,7 +291,7 @@ It's mandatory to specify the initrd image for UEFI boot in the kernel parameter
 
 ```
 #!ipxe
-kernel harvester-<version>-vmlinuz initrd=harvester-<version>-initrd ip=dhcp net.ifnames=1 rd.cos.disable console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
+kernel harvester-<version>-vmlinuz initrd=harvester-<version>-initrd ip=dhcp net.ifnames=1 rd.cos.disable rd.noverifyssl console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
 initrd harvester-<version>-initrd
 boot
 ```
