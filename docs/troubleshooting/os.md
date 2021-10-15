@@ -69,7 +69,6 @@ The OS file system, like a container image, is image-based and immutable except 
     }
     ```
 - Reboot for changes to take effect.
-
 ## How to change the default GRUB boot menu entry
 
 To change the default entry, first check the `--id` attribute of a menu entry, as in the following example:
@@ -94,7 +93,7 @@ The id of the above entry is `cos-debug`. We can then set the default entry by:
 
 ### Collect crash log
 
-If kernel panic traces are not recorded in the system log when a system crashes, one reliable way to locate the crash log is to use a serial console.
+If kernel panic traces are not recorded in the system log when a system crashes,  one reliable way to locate the crash log is to use a serial console.
 
 To enable outputting of kernel messages to a serial console, please use the following steps:
 
@@ -107,7 +106,6 @@ To enable outputting of kernel messages to a serial console, please use the foll
     !!! note
         Adjust the [console options](https://www.kernel.org/doc/html/latest/admin-guide/serial-console.html) according to your environment. **Make sure** to append the `console=` string at the end of the line.
 - Connect to the serial port to capture logs.
-
 ### Collect crash dumps
 For kernel panic crashes, you can use kdump to collect crash dumps.
 
