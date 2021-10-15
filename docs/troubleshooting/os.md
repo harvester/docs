@@ -93,7 +93,7 @@ The id of the above entry is `cos-debug`. We can then set the default entry by:
 
 ### Collect crash log
 
-If kernel panic traces are not recorded in the system log when a system crashes,  one reliable way to locate the crash log is to use a serial console.
+If kernel panic traces are not recorded in the system log when a system crashes, one reliable way to locate the crash log is to use a serial console.
 
 To enable outputting of kernel messages to a serial console, please use the following steps:
 
