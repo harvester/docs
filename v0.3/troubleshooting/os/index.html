@@ -1072,7 +1072,21 @@ node1:~ # blkid
 </div>
 <ul>
 <li>
-<p>Boot the system to GRUB menu. Press ESC to stay on the menu.
+<p>For version <code>0.3.0</code>, we need to apply a workaround first to <a href="https://github.com/harvester/harvester/issues/1388">make some directories non-overlaid</a> after enabling read-write mode. On a running Harvester node, run the following command as root:</p>
+<div class="highlight"><pre><span></span><code>cat &gt; /oem/91_hack.yaml &lt;&lt;&#39;EOF&#39;
+name: &quot;Rootfs Layout Settings for debugrw&quot;
+stages:
+  rootfs:
+    - if: &#39;grep -q root=LABEL=COS_ACTIVE /proc/cmdline &amp;&amp; grep -q rd.cos.debugrw /proc/cmdline&#39;
+      name: &quot;Layout configuration for debugrw&quot;
+      environment_file: /run/cos/cos-layout.env
+      environment:
+        RW_PATHS: &quot; &quot;
+EOF
+</code></pre></div>
+</li>
+<li>
+<p>Reboot the system to GRUB menu. Press ESC to stay on the menu.
     <img alt="" src="../assets/os-stop-on-first-menuentry.png" /></p>
 </li>
 <li>
