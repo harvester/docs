@@ -25,7 +25,22 @@ The OS file system is image-based (just like a container image!) and immutable e
 !!! warning
     Enabling read-write mode might break your system if files are modified. Please use it at your own risk.
 
-- Boot the system to GRUB menu. Press ESC to stay on the menu.
+- For version `0.3.0`, we need to apply a workaround first to [make some directories non-overlaid](https://github.com/harvester/harvester/issues/1388) after enabling read-write mode. On a running Harvester node, run the following command as root:
+
+    ```
+    cat > /oem/91_hack.yaml <<'EOF'
+    name: "Rootfs Layout Settings for debugrw"
+    stages:
+      rootfs:
+        - if: 'grep -q root=LABEL=COS_ACTIVE /proc/cmdline && grep -q rd.cos.debugrw /proc/cmdline'
+          name: "Layout configuration for debugrw"
+          environment_file: /run/cos/cos-layout.env
+          environment:
+            RW_PATHS: " "
+    EOF
+    ```
+
+- Reboot the system to GRUB menu. Press ESC to stay on the menu.
     ![](./assets/os-stop-on-first-menuentry.png)
 
 - Press `e` on first menuentry. Append `rd.cos.debugrw` to the `linux (loop0)$kernel $kernelcmd` line. Press `Ctrl + x` to boot the system.
