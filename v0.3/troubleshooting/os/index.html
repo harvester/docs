@@ -837,8 +837,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-to-log-in-to-a-harvester-node" class="md-nav__link">
-    How to log in to a Harvester node?
+  <a href="#how-to-log-into-a-harvester-node" class="md-nav__link">
+    How to log into a Harvester node
   </a>
   
 </li>
@@ -865,11 +865,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-to-debug-system-crash-or-hang" class="md-nav__link">
-    How to debug system crash or hang
+  <a href="#how-to-debug-a-system-crash-or-hang" class="md-nav__link">
+    How to debug a system crash or hang
   </a>
   
-    <nav class="md-nav" aria-label="How to debug system crash or hang">
+    <nav class="md-nav" aria-label="How to debug a system crash or hang">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -980,8 +980,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-to-log-in-to-a-harvester-node" class="md-nav__link">
-    How to log in to a Harvester node?
+  <a href="#how-to-log-into-a-harvester-node" class="md-nav__link">
+    How to log into a Harvester node
   </a>
   
 </li>
@@ -1008,11 +1008,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-to-debug-system-crash-or-hang" class="md-nav__link">
-    How to debug system crash or hang
+  <a href="#how-to-debug-a-system-crash-or-hang" class="md-nav__link">
+    How to debug a system crash or hang
   </a>
   
-    <nav class="md-nav" aria-label="How to debug system crash or hang">
+    <nav class="md-nav" aria-label="How to debug a system crash or hang">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1052,10 +1052,9 @@
                 
                 
                 <h1 id="operating-system">Operating System<a class="headerlink" href="#operating-system" title="Permanent link">&para;</a></h1>
-<p>Harvester runs on a OpenSUSE-based OS. The OS is a derivative of <a href="https://github.com/rancher-sandbox/cOS-toolkit">cOS toolkit</a>.
-We provide information and tips to help users troubleshoot OS-related issues in this guide.</p>
-<h2 id="how-to-log-in-to-a-harvester-node">How to log in to a Harvester node?<a class="headerlink" href="#how-to-log-in-to-a-harvester-node" title="Permanent link">&para;</a></h2>
-<p>Users can log in to a Harvester node with the username <code>rancher</code> and the password or SSH keypair that is provided during installation.
+<p>Harvester runs on an OpenSUSE-based OS. The OS is a derivative of <a href="https://github.com/rancher-sandbox/cOS-toolkit">cOS toolkit</a>. The following sections contain information and tips to help users troubleshoot OS-related issues.</p>
+<h2 id="how-to-log-into-a-harvester-node">How to log into a Harvester node<a class="headerlink" href="#how-to-log-into-a-harvester-node" title="Permanent link">&para;</a></h2>
+<p>Users can log into a Harvester node with the username <code>rancher</code> and the password or SSH keypair provided during installation.
 The user <code>rancher</code> can execute privileged commands without entering a password:</p>
 <div class="highlight"><pre><span></span><code># Run a privileged command
 rancher@node1:~&gt; sudo blkid
@@ -1065,7 +1064,7 @@ rancher@node1:~&gt; sudo -i
 node1:~ # blkid
 </code></pre></div>
 <h2 id="how-can-i-install-packages-why-are-some-paths-read-only">How can I install packages? Why are some paths read-only?<a class="headerlink" href="#how-can-i-install-packages-why-are-some-paths-read-only" title="Permanent link">&para;</a></h2>
-<p>The OS file system is image-based (just like a container image!) and immutable except for some directories. To temporarily enable the read-write mode, please following these steps:</p>
+<p>The OS file system, like a container image, is image-based and immutable except in some directories. To temporarily enable the read-write mode, please use the following steps:</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Enabling read-write mode might break your system if files are modified. Please use it at your own risk.</p>
@@ -1097,7 +1096,7 @@ EOF
 <h2 id="how-to-permanently-edit-kernel-parameters">How to permanently edit kernel parameters<a class="headerlink" href="#how-to-permanently-edit-kernel-parameters" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This is just a workaround. We should provide a better way to do this.</p>
+<p>The following steps are a workaround. Harvester will inform the community once a permanent resolution is in place.</p>
 </div>
 <ul>
 <li>Re-mount state directory in rw mode:
@@ -1118,10 +1117,10 @@ menuentry &quot;Harvester ea6e7f5-dirty&quot; --id cos {
   initrd (loop0)$initramfs
 }
 </code></pre></div></li>
-<li>Reboot to take effect.</li>
+<li>Reboot for changes to take effect.</li>
 </ul>
 <h2 id="how-to-change-the-default-grub-boot-menu-entry">How to change the default GRUB boot menu entry<a class="headerlink" href="#how-to-change-the-default-grub-boot-menu-entry" title="Permanent link">&para;</a></h2>
-<p>To change the default entry, first, check the <code>--id</code> attribute of a menu entry. e.g.,</p>
+<p>To change the default entry, first check the <code>--id</code> attribute of a menu entry, as in the following example:</p>
 <div class="highlight"><pre><span></span><code># cat /run/initramfs/cos-state/grub2/grub.cfg
 
 &lt;...&gt;
@@ -1134,10 +1133,10 @@ menuentry &quot;Harvester ea6e7f5-dirty (debug)&quot; --id cos-debug {
 <p>The id of the above entry is <code>cos-debug</code>. We can then set the default entry by:</p>
 <div class="highlight"><pre><span></span><code># grub2-editenv /oem/grubenv set saved_entry=cos-debug
 </code></pre></div>
-<h2 id="how-to-debug-system-crash-or-hang">How to debug system crash or hang<a class="headerlink" href="#how-to-debug-system-crash-or-hang" title="Permanent link">&para;</a></h2>
+<h2 id="how-to-debug-a-system-crash-or-hang">How to debug a system crash or hang<a class="headerlink" href="#how-to-debug-a-system-crash-or-hang" title="Permanent link">&para;</a></h2>
 <h3 id="collect-crash-log">Collect crash log<a class="headerlink" href="#collect-crash-log" title="Permanent link">&para;</a></h3>
-<p>If kernel panic traces are not recorded in the system log when a system crashes, one reliable way is to use a serial console.</p>
-<p>To enable outputting kernel messages to a serial console, please following these steps:</p>
+<p>If kernel panic traces are not recorded in the system log when a system crashes, one reliable way to locate the crash log is to use a serial console.</p>
+<p>To enable outputting of kernel messages to a serial console, please use the following steps:</p>
 <ul>
 <li>Boot the system to GRUB menu. Press ESC to stay on the menu.
     <img alt="" src="../assets/os-stop-on-first-menuentry.png" /></li>
@@ -1146,18 +1145,18 @@ menuentry &quot;Harvester ea6e7f5-dirty (debug)&quot; --id cos-debug {
 <p><img alt="" src="../assets/os-edit-first-menuentry-add-console.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Adjust the <a href="https://www.kernel.org/doc/html/latest/admin-guide/serial-console.html">console options</a> according to your environment. <strong>Make sure</strong> append the <code>console=</code> string at the end of the line.</p>
+<p>Adjust the <a href="https://www.kernel.org/doc/html/latest/admin-guide/serial-console.html">console options</a> according to your environment. <strong>Make sure</strong> to append the <code>console=</code> string at the end of the line.</p>
 </div>
 <ul>
 <li>Connect to the serial port to capture logs.</li>
 </ul>
+<h3 id="collect-crash-dumps">Collect crash dumps<a class="headerlink" href="#collect-crash-dumps" title="Permanent link">&para;</a></h3>
+<p>For kernel panic crashes, you can use kdump to collect crash dumps.</p>
 </li>
 </ul>
-<h3 id="collect-crash-dumps">Collect crash dumps<a class="headerlink" href="#collect-crash-dumps" title="Permanent link">&para;</a></h3>
-<p>For kernel panic crashes, we can use kdump to collect crash dumps.</p>
-<p>By default, the OS is booted without kdump feature enabled. Users can enable the feature by selecting the <code>debug</code> menuentry when booting. For example:</p>
+<p>By default, the OS is booted without the kdump feature enabled. Users can enable the feature by selecting the <code>debug</code> menuentry when booting, as in the following example:</p>
 <p><img alt="" src="../assets/os-enable-kdump.png" /></p>
-<p>When a system crashes, a crash dump will be store in <code>/var/crash/&lt;time&gt;</code> directory. Providing the crash dump to developers helps troubleshooting issues.</p>
+<p>When a system crashes, a crash dump will be stored in the <code>/var/crash/&lt;time&gt;</code> directory. Providing the crash dump to developers helps them to troubleshoot and resolve issues.</p>
                 
               
               
