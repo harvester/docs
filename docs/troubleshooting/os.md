@@ -1,6 +1,6 @@
 # Operating System
 
-Harvester runs on an OpenSUSE-based OS. The OS is a derivative of [cOS toolkit](https://github.com/rancher-sandbox/cOS-toolkit). The following sections contain information and tips to help users troubleshoot OS-related issues.
+Harvester runs on an OpenSUSE-based OS. The OS is an artifact produced by the [cOS toolkit](https://github.com/rancher-sandbox/cOS-toolkit). The following sections contain information and tips to help users troubleshoot OS-related issues.
 
 ## How to log into a Harvester node
 
