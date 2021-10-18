@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v0.3/install/pxe-boot-install/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.4">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.5143246d.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.db9e7362.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
@@ -350,22 +350,22 @@
       
         <li class="md-nav__item">
   <a href="#preparing-ipxe-boot-scripts" class="md-nav__link">
-    Preparing iPXE boot scripts
+    Preparing iPXE Boot Scripts
   </a>
   
-    <nav class="md-nav" aria-label="Preparing iPXE boot scripts">
+    <nav class="md-nav" aria-label="Preparing iPXE Boot Scripts">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#create-mode" class="md-nav__link">
-    CREATE mode
+    CREATE Mode
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#join-mode" class="md-nav__link">
-    JOIN mode
+    JOIN Mode
   </a>
   
 </li>
@@ -377,14 +377,14 @@
       
         <li class="md-nav__item">
   <a href="#dhcp-server-configuration" class="md-nav__link">
-    DHCP server configuration
+    DHCP Server Configuration
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#harvester-configuration" class="md-nav__link">
-    Harvester configuration
+    Harvester Configuration
   </a>
   
 </li>
@@ -399,21 +399,21 @@
         
           <li class="md-nav__item">
   <a href="#serve-the-ipxe-program" class="md-nav__link">
-    Serve the iPXE program
+    Serve the iPXE Program
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#dhcp-server-configuration_1" class="md-nav__link">
-    DHCP server configuration
+    DHCP Server Configuration
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#the-ipxe-script-for-uefi-boot" class="md-nav__link">
-    The iPXE script for UEFI boot
+    The iPXE Script for UEFI Boot
   </a>
   
 </li>
@@ -1045,22 +1045,22 @@
       
         <li class="md-nav__item">
   <a href="#preparing-ipxe-boot-scripts" class="md-nav__link">
-    Preparing iPXE boot scripts
+    Preparing iPXE Boot Scripts
   </a>
   
-    <nav class="md-nav" aria-label="Preparing iPXE boot scripts">
+    <nav class="md-nav" aria-label="Preparing iPXE Boot Scripts">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#create-mode" class="md-nav__link">
-    CREATE mode
+    CREATE Mode
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#join-mode" class="md-nav__link">
-    JOIN mode
+    JOIN Mode
   </a>
   
 </li>
@@ -1072,14 +1072,14 @@
       
         <li class="md-nav__item">
   <a href="#dhcp-server-configuration" class="md-nav__link">
-    DHCP server configuration
+    DHCP Server Configuration
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#harvester-configuration" class="md-nav__link">
-    Harvester configuration
+    Harvester Configuration
   </a>
   
 </li>
@@ -1094,21 +1094,21 @@
         
           <li class="md-nav__item">
   <a href="#serve-the-ipxe-program" class="md-nav__link">
-    Serve the iPXE program
+    Serve the iPXE Program
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#dhcp-server-configuration_1" class="md-nav__link">
-    DHCP server configuration
+    DHCP Server Configuration
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#the-ipxe-script-for-uefi-boot" class="md-nav__link">
-    The iPXE script for UEFI boot
+    The iPXE Script for UEFI Boot
   </a>
   
 </li>
@@ -1136,8 +1136,8 @@
                 
                 
                 <h1 id="pxe-boot-installation">PXE Boot Installation<a class="headerlink" href="#pxe-boot-installation" title="Permanent link">&para;</a></h1>
-<p>Starting from version <code>0.2.0</code>, Harvester can be installed automatically. This document provides an example to do the automatic installation with PXE boot.</p>
-<p>We recommend using <a href="https://ipxe.org/">iPXE</a> to perform the network boot. It has more features than the traditional PXE Boot program and is likely available in modern NIC cards. If NIC cards don't come with iPXE firmware, iPXE firmware images can be loaded from the TFTP server first.</p>
+<p>Starting from version <code>0.2.0</code>, Harvester can be installed automatically. This document provides an example to do an automatic installation with PXE boot.</p>
+<p>We recommend using <a href="https://ipxe.org/">iPXE</a> to perform the network boot. It has more features than the traditional PXE Boot program and is likely available in modern NIC cards. If the iPXE firmware is not available for your NIC card, the iPXE firmware images can be loaded from the TFTP server first.</p>
 <p>To see sample iPXE scripts, please visit <a href="https://github.com/harvester/ipxe-examples">Harvester iPXE Examples</a>.</p>
 <h2 id="prerequisite">Prerequisite<a class="headerlink" href="#prerequisite" title="Permanent link">&para;</a></h2>
 <div class="admonition important">
@@ -1146,11 +1146,11 @@
 </div>
 <h2 id="preparing-http-servers">Preparing HTTP Servers<a class="headerlink" href="#preparing-http-servers" title="Permanent link">&para;</a></h2>
 <p>An HTTP server is required to serve boot files.
-Let's assume an NGINX HTTP server's IP is <code>10.100.0.10</code>, and it serves <code>/usr/share/nginx/html/</code> directory with the path <code>http://10.100.0.10/</code>.</p>
+Let's assume the NGINX HTTP server's IP is <code>10.100.0.10</code>, and it serves the <code>/usr/share/nginx/html/</code> directory with the path <code>http://10.100.0.10/</code>.</p>
 <h2 id="preparing-boot-files">Preparing Boot Files<a class="headerlink" href="#preparing-boot-files" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p>Download the required files from <a href="https://github.com/harvester/harvester/releases">Harvester Releases Page</a>.</p>
+<p>Download the required files from the <a href="https://github.com/harvester/harvester/releases">Harvester releases page</a>.</p>
 <ul>
 <li>The ISO: <code>harvester-&lt;version&gt;-amd64.iso</code></li>
 <li>The kernel: <code>harvester-&lt;version&gt;-vmlinuz-amd64</code></li>
@@ -1160,7 +1160,7 @@ Let's assume an NGINX HTTP server's IP is <code>10.100.0.10</code>, and it serve
 </li>
 <li>
 <p>Serve the files.</p>
-<p>Copy or move the downloaded files to an appropriate location so they can be downloaded via the HTTP server. e.g.,</p>
+<p>Copy or move the downloaded files to an appropriate location so they can be downloaded via the HTTP server. For example:</p>
 <div class="highlight"><pre><span></span><code>sudo mkdir -p /usr/share/nginx/html/harvester/
 sudo cp /path/to/harvester-&lt;version&gt;-amd64.iso /usr/share/nginx/html/harvester/
 sudo cp /path/to/harvester-&lt;version&gt;-vmlinuz-amd64 /usr/share/nginx/html/harvester/
@@ -1169,18 +1169,18 @@ sudo cp /path/to/harvester-&lt;version&gt;-rootfs-amd64.squashfs /usr/share/ngin
 </code></pre></div>
 </li>
 </ul>
-<h2 id="preparing-ipxe-boot-scripts">Preparing iPXE boot scripts<a class="headerlink" href="#preparing-ipxe-boot-scripts" title="Permanent link">&para;</a></h2>
-<p>When performing automatic installation, there are two modes:</p>
+<h2 id="preparing-ipxe-boot-scripts">Preparing iPXE Boot Scripts<a class="headerlink" href="#preparing-ipxe-boot-scripts" title="Permanent link">&para;</a></h2>
+<p>When performing an automatic installation, there are two modes:</p>
 <ul>
 <li><code>CREATE</code>: we are installing a node to construct an initial Harvester cluster.</li>
 <li><code>JOIN</code>: we are installing a node to join an existing Harvester cluster.</li>
 </ul>
-<h3 id="create-mode">CREATE mode<a class="headerlink" href="#create-mode" title="Permanent link">&para;</a></h3>
+<h3 id="create-mode">CREATE Mode<a class="headerlink" href="#create-mode" title="Permanent link">&para;</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p><strong>Security Risks</strong>: The configuration file below contains credentials which should be kept secretly. Please do not make the configuration file publicly accessible at the moment.</p>
+<p><strong>Security Risks</strong>: The configuration file below contains credentials which should be kept secret. Please do not make the configuration file publicly accessible.</p>
 </div>
-<p>Create a <a href="../harvester-configuration/">Harvester configuration file</a> <code>config-create.yaml</code> for <code>CREATE</code> mode. Modify the values as needed:</p>
+<p>Create a <a href="../harvester-configuration/">Harvester configuration file</a> called <code>config-create.yaml</code> for <code>CREATE</code> mode. Modify the values as needed:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># cat /usr/share/nginx/html/harvester/config-create.yaml</span>
 <span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">token</span>
 <span class="nt">os</span><span class="p">:</span>
@@ -1211,23 +1211,23 @@ sudo cp /path/to/harvester-&lt;version&gt;-rootfs-amd64.squashfs /usr/share/ngin
   <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.100.0.100</span>       <span class="c1"># The VIP to access the Harvester GUI. Make sure the IP is free to use.</span>
   <span class="nt">vip_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">static</span>        <span class="c1"># Or dhcp, check configuration file for more information.</span>
 </code></pre></div>
-<p>For machines that needs to be installed as <code>CREATE</code> mode, the following is an iPXE script that boots the kernel with the above config:</p>
+<p>For machines that needs to be installed using <code>CREATE</code> mode, the following is an iPXE script that boots the kernel with the above config:</p>
 <div class="highlight"><pre><span></span><code>#!ipxe
 kernel harvester-&lt;version&gt;-vmlinuz ip=dhcp net.ifnames=1 rd.cos.disable rd.noverifyssl console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
 initrd harvester-&lt;version&gt;-initrd
 boot
 </code></pre></div>
-<p>Let's assume the iPXE script is stored in <code>/usr/share/nginx/html/harvester/ipxe-create</code></p>
+<p>This assumes the iPXE script is stored in <code>/usr/share/nginx/html/harvester/ipxe-create</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If there are multiple network interfaces on the installing machine, the user can use <code>ip=&lt;interface&gt;:dhcp</code> to specify the booting interface (e.g., <code>ip=eth1:dhcp</code>).</p>
 </div>
-<h3 id="join-mode">JOIN mode<a class="headerlink" href="#join-mode" title="Permanent link">&para;</a></h3>
+<h3 id="join-mode">JOIN Mode<a class="headerlink" href="#join-mode" title="Permanent link">&para;</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p><strong>Security Risks</strong>: The configuration file below contains credentials which should be kept secretly. Please do not make the configuration file publicly accessible at the moment.</p>
+<p><strong>Security Risks</strong>: The configuration file below contains credentials which should be kept secret. Please do not make the configuration file publicly accessible.</p>
 </div>
-<p>Create a <a href="../harvester-configuration/">Harvester configuration file</a> <code>config-join.yaml</code> for <code>JOIN</code> mode. Modify the values as needed:</p>
+<p>Create a <a href="../harvester-configuration/">Harvester configuration file</a> called <code>config-join.yaml</code> for <code>JOIN</code> mode. Modify the values as needed:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># cat /usr/share/nginx/html/harvester/config-join.yaml</span>
 <span class="nt">server_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://10.100.0.130:8443</span>
 <span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">token</span>
@@ -1267,9 +1267,9 @@ kernel harvester-&lt;version&gt;-vmlinuz ip=dhcp net.ifnames=1 rd.cos.disable rd
 initrd harvester-&lt;version&gt;-initrd
 boot
 </code></pre></div>
-<p>Let's assume the iPXE script is stored in <code>/usr/share/nginx/html/harvester/ipxe-join</code>.</p>
-<h2 id="dhcp-server-configuration">DHCP server configuration<a class="headerlink" href="#dhcp-server-configuration" title="Permanent link">&para;</a></h2>
-<p>Here is an example to configure the ISC DHCP server to offer iPXE scripts:</p>
+<p>This assumes the iPXE script is stored in <code>/usr/share/nginx/html/harvester/ipxe-join</code>.</p>
+<h2 id="dhcp-server-configuration">DHCP Server Configuration<a class="headerlink" href="#dhcp-server-configuration" title="Permanent link">&para;</a></h2>
+<p>The following is an example of how to configure the ISC DHCP server to offer iPXE scripts:</p>
 <div class="highlight"><pre><span></span><code>option architecture-type code <span class="nv">93</span> <span class="o">=</span> unsigned integer <span class="m">16</span><span class="p">;</span>
 
 subnet <span class="m">10</span>.100.0.0 netmask <span class="m">255</span>.255.255.0 <span class="o">{</span>
@@ -1325,20 +1325,20 @@ group <span class="o">{</span>
   host node2 <span class="o">{</span> hardware ethernet <span class="m">52</span>:54:00:69:d5:92<span class="p">;</span> <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
-<p>The config file declares a subnet and two groups. The first group is for hosts to boot with <code>CREATE</code> mode and the other one is for <code>JOIN</code> mode. By default, the iPXE path is chosen, but if it sees a PXE client, it also offers the iPXE image according to client architecture. Please prepare those images and a tftp server first.</p>
-<h2 id="harvester-configuration">Harvester configuration<a class="headerlink" href="#harvester-configuration" title="Permanent link">&para;</a></h2>
-<p>For more information about Harvester configuration, please refer to the <a href="../harvester-configuration/">Harvester configuration</a>.</p>
-<p>Users can also provide configuration via kernel parameters. For example, to specify the <code>CREATE</code> install mode, the user can pass the <code>harvester.install.mode=create</code> kernel parameter when booting. Values passed through kernel parameters have higher priority than values specified in the config file.</p>
+<p>The config file declares a subnet and two groups. The first group is for hosts to boot using <code>CREATE</code> mode and the other one is for <code>JOIN</code> mode. By default, the iPXE path is chosen, but if it sees a PXE client it offers the iPXE image according to the client architecture. Please prepare those images and a TFTP server first.</p>
+<h2 id="harvester-configuration">Harvester Configuration<a class="headerlink" href="#harvester-configuration" title="Permanent link">&para;</a></h2>
+<p>For more information about Harvester configuration, please refer to the <a href="../harvester-configuration/">Harvester configuration</a> page.</p>
+<p>Users can also provide configuration via kernel parameters. For example, to specify the <code>CREATE</code> install mode, users can pass the <code>harvester.install.mode=create</code> kernel parameter when booting. Values passed through kernel parameters have higher priority than values specified in the config file.</p>
 <h2 id="uefi-http-boot-support">UEFI HTTP Boot support<a class="headerlink" href="#uefi-http-boot-support" title="Permanent link">&para;</a></h2>
-<p>UEFI firmware supports loading a boot image from HTTP server. This section demonstrates how to use UEFI HTTP boot to load the iPXE program and perform the automatic installation.</p>
-<h3 id="serve-the-ipxe-program">Serve the iPXE program<a class="headerlink" href="#serve-the-ipxe-program" title="Permanent link">&para;</a></h3>
-<p>Download the iPXE UEFI program from http://boot.ipxe.org/ipxe.efi and make <code>ipxe.efi</code> can be downloaded from the HTTP server. e.g.:</p>
+<p>UEFI firmware supports loading a boot image from an HTTP server. This section demonstrates how to use UEFI HTTP boot to load the iPXE program and perform an automatic installation.</p>
+<h3 id="serve-the-ipxe-program">Serve the iPXE Program<a class="headerlink" href="#serve-the-ipxe-program" title="Permanent link">&para;</a></h3>
+<p>Download the iPXE UEFI program from http://boot.ipxe.org/ipxe.efi and make sure <code>ipxe.efi</code> can be downloaded from the HTTP server. For example:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /usr/share/nginx/html/harvester/
 wget http://boot.ipxe.org/ipxe.efi
 </code></pre></div>
 <p>The file now can be downloaded from http://10.100.0.10/harvester/ipxe.efi locally.</p>
-<h3 id="dhcp-server-configuration_1">DHCP server configuration<a class="headerlink" href="#dhcp-server-configuration_1" title="Permanent link">&para;</a></h3>
-<p>If the user plans to use the UEFI HTTP boot feature by getting a dynamic IP first, the DHCP server needs to provides the iPXE program URL when it sees such a request. Here is an updated ISC DHCP server group example:</p>
+<h3 id="dhcp-server-configuration_1">DHCP Server Configuration<a class="headerlink" href="#dhcp-server-configuration_1" title="Permanent link">&para;</a></h3>
+<p>If the user plans to use the UEFI HTTP boot feature by getting a dynamic IP first, the DHCP server needs to provide the iPXE program URL when it sees such a request. The following is an updated ISC DHCP server group example:</p>
 <div class="highlight"><pre><span></span><code>group <span class="o">{</span>
   <span class="c1"># create group</span>
   <span class="k">if</span> exists user-class and option user-class <span class="o">=</span> <span class="s2">&quot;iPXE&quot;</span> <span class="o">{</span>
@@ -1366,9 +1366,9 @@ wget http://boot.ipxe.org/ipxe.efi
   host node1 <span class="o">{</span> hardware ethernet <span class="m">52</span>:54:00:6b:13:e2<span class="p">;</span> <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
-<p>The <code>elsif substring</code> statement is new, and it offers <code>http://10.100.0.10/harvester/ipxe.efi</code> when it sees a UEFI HTTP boot DHCP request. After the client fetches the iPXE program and runs it, the iPXE program will send a DHCP request again and load the iPXE script from URL <code>http://10.100.0.10/harvester/ipxe-create-efi</code>.</p>
-<h3 id="the-ipxe-script-for-uefi-boot">The iPXE script for UEFI boot<a class="headerlink" href="#the-ipxe-script-for-uefi-boot" title="Permanent link">&para;</a></h3>
-<p>It's mandatory to specify the initrd image for UEFI boot in the kernel parameters. Here is an updated version of iPXE script for <code>CREATE</code> mode.</p>
+<p>The <code>elsif substring</code> statement is new, and it offers <code>http://10.100.0.10/harvester/ipxe.efi</code> when it sees a UEFI HTTP boot DHCP request. After the client fetches the iPXE program and runs it, the iPXE program will send a DHCP request again and load the iPXE script from the URL <code>http://10.100.0.10/harvester/ipxe-create-efi</code>.</p>
+<h3 id="the-ipxe-script-for-uefi-boot">The iPXE Script for UEFI Boot<a class="headerlink" href="#the-ipxe-script-for-uefi-boot" title="Permanent link">&para;</a></h3>
+<p>It's mandatory to specify the initrd image for UEFI boot in the kernel parameters. The following is an updated version of iPXE script for <code>CREATE</code> mode.</p>
 <div class="highlight"><pre><span></span><code>#!ipxe
 kernel harvester-&lt;version&gt;-vmlinuz initrd=harvester-&lt;version&gt;-initrd ip=dhcp net.ifnames=1 rd.cos.disable rd.noverifyssl console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml
 initrd harvester-&lt;version&gt;-initrd
@@ -1452,7 +1452,7 @@ boot
     <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.8397ff9e.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.f89c2efe.min.js"></script>
+      <script src="../../assets/javascripts/bundle.1e84347e.min.js"></script>
       
         <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
