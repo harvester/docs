@@ -11,7 +11,7 @@ Description: Harvester is an open source hyper-converged infrastructure (HCI) so
 
 # Harvester Overview
 
-Harvester is an open-source [hyper-converged infrastructure](https://en.wikipedia.org/wiki/Hyper-converged_infrastructure) (HCI) software built on Kubernetes. It is an open alternative to using a proprietary HCI stack that incorporates the design and ethos of [Cloud Native](https://en.wikipedia.org/wiki/Cloud_native_computing) computing.
+Harvester is an open-source [hyper-converged infrastructure](https://en.wikipedia.org/wiki/Hyper-converged_infrastructure) (HCI) software built on Kubernetes. It is an open alternative to using a proprietary HCI stack that incorporates the design and ethos of [Cloud Native Computing](https://en.wikipedia.org/wiki/Cloud_native_computing).
 
 
 ![harvester-ui](./assets/dashboard.png)
@@ -81,7 +81,7 @@ During the installation, you can either choose to form a new cluster or join the
 1. Configure the hostname and select the network interface for the management network. By default, Harvester will create a bond NIC named `harvester-mgmt`, and the IP address can either be configured via DHCP or by static method.
    ![iso-installed.png](./install/iso-nic-config.gif)
 1. Optional: Configure the DNS servers; use commas as delimiters.
-1. Configure the Virtual IP with which you can use to access the cluster or join the cluster by the other nodes.
+1. Configure the Virtual IP with which you can use to access the cluster or join other nodes to the cluster.
 1. Configure the `cluster token`. This token will be used for adding other nodes to the cluster.
 1. Configure the login password of the host. The default ssh user is `rancher`.
 1. Optional: Configure the NTP Servers of the node if needed. Default is `0.suse.pool.ntp.org`.
