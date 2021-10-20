@@ -947,6 +947,21 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1038,7 +1053,7 @@
                 
                 
                 <h1 id="harvester-overview">Harvester Overview<a class="headerlink" href="#harvester-overview" title="Permanent link">&para;</a></h1>
-<p>Harvester is an open-source <a href="https://en.wikipedia.org/wiki/Hyper-converged_infrastructure">hyper-converged infrastructure</a> (HCI) software built on Kubernetes. It is an open alternative to using a proprietary HCI stack that incorporates the design and ethos of <a href="https://en.wikipedia.org/wiki/Cloud_native_computing">Cloud Native</a> computing.</p>
+<p>Harvester is an open-source <a href="https://en.wikipedia.org/wiki/Hyper-converged_infrastructure">hyper-converged infrastructure</a> (HCI) software built on Kubernetes. It is an open alternative to using a proprietary HCI stack that incorporates the design and ethos of <a href="https://en.wikipedia.org/wiki/Cloud_native_computing">Cloud Native Computing</a>.</p>
 <p><img alt="harvester-ui" src="assets/dashboard.png" /></p>
 <h2 id="harvester-features">Harvester Features<a class="headerlink" href="#harvester-features" title="Permanent link">&para;</a></h2>
 <p>Harvester implements HCI on bare metal servers. Harvester is designed to use local, direct attached storage instead of complex external SANs. It ships as an integrated bootable appliance image that can be deployed directly to servers through an ISO or PXE boot artifact.</p>
@@ -1118,7 +1133,7 @@
 <li>Configure the hostname and select the network interface for the management network. By default, Harvester will create a bond NIC named <code>harvester-mgmt</code>, and the IP address can either be configured via DHCP or by static method.
    <img alt="iso-installed.png" src="install/iso-nic-config.gif" /></li>
 <li>Optional: Configure the DNS servers; use commas as delimiters.</li>
-<li>Configure the Virtual IP with which you can use to access the cluster or join the cluster by the other nodes.</li>
+<li>Configure the Virtual IP with which you can use to access the cluster or join other nodes to the cluster.</li>
 <li>Configure the <code>cluster token</code>. This token will be used for adding other nodes to the cluster.</li>
 <li>Configure the login password of the host. The default ssh user is <code>rancher</code>.</li>
 <li>Optional: Configure the NTP Servers of the node if needed. Default is <code>0.suse.pool.ntp.org</code>.</li>

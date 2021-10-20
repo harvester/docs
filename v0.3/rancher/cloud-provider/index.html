@@ -768,11 +768,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#load-balancer-request-parameters" class="md-nav__link">
-    Load Balancer Request Parameters
+  <a href="#load-balancer-support" class="md-nav__link">
+    Load Balancer Support
   </a>
   
-    <nav class="md-nav" aria-label="Load Balancer Request Parameters">
+    <nav class="md-nav" aria-label="Load Balancer Support">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -962,6 +962,21 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1022,11 +1037,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#load-balancer-request-parameters" class="md-nav__link">
-    Load Balancer Request Parameters
+  <a href="#load-balancer-support" class="md-nav__link">
+    Load Balancer Support
   </a>
   
-    <nav class="md-nav" aria-label="Load Balancer Request Parameters">
+    <nav class="md-nav" aria-label="Load Balancer Support">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1067,14 +1082,11 @@
                 
                 <h1 id="harvester-cloud-provider">Harvester Cloud Provider<a class="headerlink" href="#harvester-cloud-provider" title="Permanent link">&para;</a></h1>
 <p><em>Available as of v0.3.0</em></p>
-<p>The Harvester cloud provider used by the guest cluster in Harvester provides a CSI driver and cloud controller manager (CCM) which implements a built-in load balancer. In this section, you will learn about the following:</p>
+<p>Users can now provision both <a href="../rke1-cluster/">RKE1</a> and <a href="../rke2-cluster/">RKE2</a> clusters in Rancher 2.6.1, using the built-in Harvester Node Driver. Harvester can now provide <a href="./#load-balancer-support">load balancer</a> support as well as <a href="../csi-driver/">cluster Persistent Storage</a> support to the guest Kubernetes cluster.</p>
+<p>In this page we will learn:</p>
 <ul>
-<li>
-<p>How to deploy the Harvester cloud provider in RKE and RKE2</p>
-</li>
-<li>
-<p>How to configure the load balancer with the annotation of services</p>
-</li>
+<li>How to deploy the Harvester cloud provider in both RKE1 and RKE2.</li>
+<li>How to configure a <a href="./#load-balancer-support">LoadBalancer service</a>.</li>
 </ul>
 <h2 id="deploying">Deploying<a class="headerlink" href="#deploying" title="Permanent link">&para;</a></h2>
 <h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
@@ -1097,41 +1109,84 @@ curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/m
 <h3 id="deploying-to-the-rke2-cluster-with-harvester-node-driver">Deploying to the RKE2 Cluster with Harvester Node Driver<a class="headerlink" href="#deploying-to-the-rke2-cluster-with-harvester-node-driver" title="Permanent link">&para;</a></h3>
 <p>When spinning up an RKE2 cluster using the Harvester node driver, select the <code>Harvester</code> cloud provider. The node driver will then help deploy both the CSI driver and CCM automatically.</p>
 <p><img alt="" src="../assets/rke2-cloud-provider.png" /></p>
-<h2 id="load-balancer-request-parameters">Load Balancer Request Parameters<a class="headerlink" href="#load-balancer-request-parameters" title="Permanent link">&para;</a></h2>
-<p>When setting up a Kubernetes service of <code>load balancer</code> type, you can configure the load balancer with the <code>service annotations</code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Both the <code>cloudprovider.harvesterhci.io/ipam</code> and <code>cloudprovider.harvesterhci.io/healthcheck-port</code> are required to add in the service annotation fields.</p>
+<h2 id="load-balancer-support">Load Balancer Support<a class="headerlink" href="#load-balancer-support" title="Permanent link">&para;</a></h2>
+<p>After deploying the Harvester cloud provider, users can now configure a Kubernetes service of the type <code>LoadBalancer</code>. Currently, users can only set the load balancer configuration using <code>service annotations</code>.</p>
+<p><img alt="" src="../assets/lb-svc.png" /></p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>You can specify the Harvester LoadBalancer service config through annotations. The <code>cloudprovider.harvesterhci.io/healthcheck-port</code> annotation is required. For example:</p>
+<ul>
+<li><code>cloudprovider.harvesterhci.io/ipam: dhcp</code> - if the network of your Kubernetes nodes supports DHCP.</li>
+<li><code>cloudprovider.harvesterhci.io/healthcheck-port: 80</code> - specify the port of your service.</li>
+</ul>
 </div>
 <h3 id="ipam">IPAM<a class="headerlink" href="#ipam" title="Permanent link">&para;</a></h3>
-<p>The Harvester built-in load balancer supports both <code>pool</code> and <code>dhcp</code> modes to specify the load balancer IP by the annotation key <strong><code>cloudprovider.harvesterhci.io/ipam</code>.</strong> The value defaults to <code>pool</code>.</p>
+<p>Harvester's built-in load balancer supports both <code>pool</code> and <code>dhcp</code> modes. Users can specify the IPAM mode using the annotation key <code>cloudprovider.harvesterhci.io/ipam</code>. This value defaults to <code>pool</code>.</p>
 <ul>
-<li>
-<p>pool: You should configure an IP address pool in Harvester in advance. The Harvester LoadBalancer controller will allocate an IP address from the IP address pool for the load balancer. Refer to the <a href="https://github.com/kube-vip/kube-vip-cloud-provider#global-and-namespace-pools">guideline</a> to configure an IP address pool.</p>
+<li>pool: You should configure an IP address pool in Harvester in advance. The Harvester LoadBalancer controller will allocate an IP address from the IP address pool for the load balancer.<ul>
+<li>Refer to the <a href="https://github.com/kube-vip/kube-vip-cloud-provider#global-and-namespace-pools">guideline</a> to configure an IP address pool. E.g, for a <code>Namespace</code> pool,
+  a service will take an address based upon its namespace pool cidr/range-namespace. These would look like the following:
+    <div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">$ kubectl get configmap -n kube-system kubevip -o yaml</span>
+
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kubevip</span>
+<span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+<span class="nt">data</span><span class="p">:</span>
+<span class="nt">cidr-default</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.200/29</span>
+<span class="nt">cidr-development</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.210/29</span>
+<span class="nt">cidr-finance</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.220/29</span>
+<span class="nt">cidr-testing</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.230/29</span>
+</code></pre></div></li>
+</ul>
 </li>
-<li>
-<p>dhcp:  A DHCP server is required. The Harvester LoadBalancer controller will request an IP address from the DHCP server.</p>
-</li>
+<li>dhcp:  A DHCP server is required. The Harvester LoadBalancer controller will request an IP address from the DHCP server of the Kubernetes nodes.</li>
 </ul>
 <h3 id="health-checks">Health Checks<a class="headerlink" href="#health-checks" title="Permanent link">&para;</a></h3>
-<p>The Harvester load balancer supports TCP health checks. Example annotation is as follows:</p>
-<ul>
-<li>
-<p><code>cloudprovider.harvesterhci.io/healthcheck-port</code> specifies the port. The prober will access the address composed of the backend server IP and the port. This option is required.</p>
-</li>
-<li>
-<p><code>cloudprovider.harvesterhci.io/healthcheck-success-threshold</code> specifies the health check success threshold. The default value is 1. If the number of times that the prober continuously successfully detects an address reaches the success threshold, the backend server can start to forward traffic.</p>
-</li>
-<li>
-<p><code>cloudprovider.harvesterhci.io/healthcheck-failure-threshold</code> specifies the success and failure threshold. The default value is 3. The backend server will stop forwarding traffic if the number of health check failures reaches the failure threshold. </p>
-</li>
-<li>
-<p><code>cloudprovider.harvesterhci.io/healthcheck-periodseconds</code> specifies the health check period. The default value is 5 seconds.</p>
-</li>
-<li>
-<p><code>cloudprovider.harvesterhci.io/healthcheck-timeoutseconds</code> specifies the timeout of every health check. The default value is 3 seconds.</p>
-</li>
-</ul>
+<p>The Harvester load balancer supports TCP health checks. Supported annotations are shown below:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Key</th>
+<th align="left">Value</th>
+<th align="left">Required</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>cloudprovider.harvesterhci.io/healthcheck-port</code></td>
+<td align="left">string</td>
+<td align="left">true</td>
+<td align="left">Specifies the port. The prober will access the address composed of the backend server IP and the port.</td>
+</tr>
+<tr>
+<td align="left"><code>cloudprovider.harvesterhci.io/healthcheck-success-threshold</code></td>
+<td align="left">string</td>
+<td align="left">false</td>
+<td align="left">Specifies the health check success threshold. The default value is 1. If the number of times the prober continuously detects an address successfully reaches the success threshold, then the backend server can start to forward traffic.</td>
+</tr>
+<tr>
+<td align="left"><code>cloudprovider.harvesterhci.io/healthcheck-failure-threshold</code></td>
+<td align="left">string</td>
+<td align="left">false</td>
+<td align="left">Specifies the success and failure threshold. The default value is 3. The backend server will stop forwarding traffic if the number of health check failures reaches the failure threshold.</td>
+</tr>
+<tr>
+<td align="left"><code>cloudprovider.harvesterhci.io/healthcheck-periodseconds</code></td>
+<td align="left">string</td>
+<td align="left">false</td>
+<td align="left">Specifies the health check period. The default value is 5 seconds.</td>
+</tr>
+<tr>
+<td align="left"><code>cloudprovider.harvesterhci.io/healthcheck-timeoutseconds</code></td>
+<td align="left">string</td>
+<td align="left">false</td>
+<td align="left">Specifies the timeout of every health check. The default value is 3 seconds.</td>
+</tr>
+</tbody>
+</table>
                 
                   
                 
