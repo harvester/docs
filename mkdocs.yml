@@ -58,6 +58,7 @@ nav:
   - index.md
   - Installation:
     - install/iso-install.md
+    - install/usb-install.md
     - install/pxe-boot-install.md
     - install/harvester-configuration.md
   - authentication.md
