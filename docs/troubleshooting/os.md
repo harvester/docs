@@ -22,7 +22,7 @@ The OS file system, like a container image, is image-based and immutable except 
 !!! warning
     Enabling read-write mode might break your system if files are modified. Please use it at your own risk.
 
-- For version `0.3.0`, we need to apply a workaround first to [make some directories non-overlaid](https://github.com/harvester/harvester/issues/1388) after enabling read-write mode. On a running Harvester node, run the following command as root:
+- For version `v0.3.0`, we need to apply a workaround first to [make some directories non-overlaid](https://github.com/harvester/harvester/issues/1388) after enabling read-write mode. On a running Harvester node, run the following command as root:
 
     ```
     cat > /oem/91_hack.yaml <<'EOF'
