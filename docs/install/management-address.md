@@ -17,7 +17,7 @@ The management address has two usages.
 
 - Used by the other nodes to join the cluster. 
 
-    ![](./assets/configure-management-address.png)
+  ![](./assets/configure-management-address.png)
 
 ## Configure VIP 
 Users can specify the VIP during installation. It can either be configured via DHCP or assigned a static one.

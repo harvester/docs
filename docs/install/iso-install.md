@@ -22,11 +22,11 @@ Note: This [video](https://youtu.be/97ADieBX6bE) shows a quick overview of the I
 </div>
 
 1. Mount the Harvester ISO disk and boot the server by selecting the `Harvester Installer` option.
-   ![iso-install.png](./iso-install.png)
+   ![iso-install.png](./assets/iso-install.png)
 1. Choose the installation mode by either creating a new Harvester cluster, or by joining an existing one.
 1. Choose the installation device that Harvester will be formatted to.
 1. Configure the hostname and select the network interface for the management network. By default, Harvester will create a bonded NIC named `harvester-mgmt`, and the IP address can either be configured via DHCP or a static assigned a static one.
-   ![iso-installed.png](./iso-nic-config.gif)
+   ![iso-installed.png](./assets/iso-nic-config.gif)
 1. (Optional) Configure the DNS servers. Use commas as a delimiter.
 1. Configure the `Virtual IP` which you can use to access the cluster or join the cluster to other nodes.
 1. Configure the `cluster token`. This token will be used for adding other nodes to the cluster.
@@ -38,6 +38,6 @@ Note: This [video](https://youtu.be/97ADieBX6bE) shows a quick overview of the I
 1. After confirming the installation options, Harvester will be installed to your host. The installation may take a few minutes to be complete.
 1. Once the installation is complete, it will restart the host. After the restart, the Harvester console containing the management URL and status will be displayed. You can Use `F12` to switch between the Harvester console and the Shell.
 1. The default URL of the web interface is `https://your-virtual-ip`.
-   ![iso-installed.png](./iso-installed.png)
+   ![iso-installed.png](./assets/iso-installed.png)
 1. You will be prompted to set the password for the default `admin` user when logging in for the first time.
-   ![first-login.png](./first-time-login.png)
+   ![first-login.png](./assets/first-time-login.png)
