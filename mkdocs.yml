@@ -61,6 +61,7 @@ nav:
     - install/usb-install.md
     - install/pxe-boot-install.md
     - install/harvester-configuration.md
+    - install/management-address.md
   - authentication.md
   - upgrade.md
   - upload-image.md
@@ -73,7 +74,6 @@ nav:
     - vm/hotplug-volume.md
   - Networking:
     - networking/harvester-network.md
-    - networking/vip.md
   - monitoring/monitoring.md
   - Rancher Integration:
     - rancher/rancher-integration.md
