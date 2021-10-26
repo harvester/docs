@@ -9,7 +9,7 @@ keywords:
 Description: To import virtual machine images in the **Images** page, enter a URL that can be accessed from the cluster. The image name will be auto-filled using the URL address's filename. You can always customize it when required.
 ---
 
-# Import Images
+# Upload Images
 
 Currently, there are three ways that are supported to create an image: uploading images via URL, uploading images via local files, and creating images via volumes.
 
@@ -27,7 +27,7 @@ Currently, qcow2, raw, and ISO images are supported.
 !!!note
 
     - Please do not refresh the page until the file upload is finished.
-    - This feature is temporarily unusable on the UI, a known issue will be fixed via [#1415](https://github.com/harvester/harvester/issues/1415).
+    - This feature is temporarily unusable on the single cluster UI and will be fixed via [#1415](https://github.com/harvester/harvester/issues/1415).
 ![](./assets/upload-image-local.png)
 
 

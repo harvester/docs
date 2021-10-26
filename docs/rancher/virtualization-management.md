@@ -65,3 +65,12 @@ The following example provides a good explanation of how the multi-tenant featur
 
 !!!note
     A known issue was found that allows the [read-only user to be able to manage API actions](https://github.com/harvester/harvester/issues/1406).
+
+## Delete Imported Harvester Cluster
+
+Users can delete the imported Harvester cluster from the Rancher UI via the `Virtualization Management > Harvester Clusters`, select the cluster you want to remove and click the `delete` button to delete the imported Harvester cluster.
+
+![delete-cluster](assets/delete-harvester-cluster.png)
+
+!!! warning
+    Please do not run the `kubectl delete -f ...` command to delete the imported Harvester cluster as it will remove the entire `cattle-system` namespace which is required of the Harvester cluster.

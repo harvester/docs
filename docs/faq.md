@@ -20,3 +20,14 @@ password: # you will be promoted to set the default password when logging in for
 $ cat /etc/rancher/rke2/rke2.yaml
 ```
 ![harvester-kubeconfig.png](./assets/harvester-kubeconfig.png)
+
+1. How to access the embedded Rancher?
+
+    Please refer to the [troubleshooting#access-embedded-rancher](/troubleshooting/harvester#access-embedded-rancher)
+
+1. Can't install guest agent of a running VM.
+```shell
+# cloud-init will only be executed once, try
+$ cloud-init clean --logs --reboot
+```
+[https://cloudinit.readthedocs.io/en/latest/topics/cli.html#clean](https://cloudinit.readthedocs.io/en/latest/topics/cli.html#clean)

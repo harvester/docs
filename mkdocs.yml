@@ -63,7 +63,7 @@ nav:
     - install/harvester-configuration.md
   - authentication.md
   - upgrade.md
-  - import-image.md
+  - upload-image.md
   - host/host.md
   - VM Management:
     - vm/create-vm.md

@@ -14,7 +14,13 @@ For admin users, you can click **Enable Maintenance Mode** to evict all VMs from
 
 ![node-maintenance.png](./assets/node-maintenance.png)
 
-## Multi-disk Management - Tech Preview
+## Cordoning a Node
+
+Cordoning a node marks it as unschedulable. This feature is useful for performing short tasks on the node during small maintenance windows, like reboots, upgrades, or decommissions. When you’re done, power back on and make the node schedulable again by uncordoning it.
+
+![cordon-node.png](./assets/cordon-nodes.png)
+
+## Multi-disk Management - `Tech Preview`
 
 Users can view and add multiple disks as additional data volumes from the host detail page.
 
