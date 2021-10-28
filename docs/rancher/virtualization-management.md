@@ -68,7 +68,7 @@ The following example provides a good explanation of how the multi-tenant featur
 
 ## Delete Imported Harvester Cluster
 
-Users can delete the imported Harvester cluster from the Rancher UI via the `Virtualization Management > Harvester Clusters`, select the cluster you want to remove and click the `delete` button to delete the imported Harvester cluster.
+Users can delete the imported Harvester cluster from the Rancher UI via **Virtualization Management > Harvester Clusters**. Select the cluster you want to remove and click the **Delete** button to delete the imported Harvester cluster.
 
 ![delete-cluster](assets/delete-harvester-cluster.png)
 
