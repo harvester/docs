@@ -9,14 +9,14 @@
       
       
       
-        <link rel="canonical" href="https://docs.harvesterhci.io/v0.3/rancher/rke1-cluster/">
+        <link rel="canonical" href="https://docs.harvesterhci.io/v0.3/install/usb-install/">
       
       <link rel="icon" href="../../assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.5">
     
     
       
-        <title>Creating an RKE1 Kubernetes Cluster - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>USB Installation - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#creating-an-rke1-kubernetes-cluster" class="md-skip">
+        <a href="#usb-installation" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Creating an RKE1 Kubernetes Cluster
+              USB Installation
             
           </span>
         </div>
@@ -249,12 +249,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
       
       
@@ -277,7 +279,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/iso-install/" class="md-nav__link">
+      <a href="../iso-install/" class="md-nav__link">
         ISO Installation
       </a>
     </li>
@@ -289,11 +291,107 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../install/usb-install/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          USB Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         USB Installation
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-bootable-usb-flash-drive" class="md-nav__link">
+    Create a bootable USB flash drive
+  </a>
+  
+    <nav class="md-nav" aria-label="Create a bootable USB flash drive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#balenaetcher" class="md-nav__link">
+    balenaEtcher
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dd-command" class="md-nav__link">
+    dd command
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    Common issues
+  </a>
+  
+    <nav class="md-nav" aria-label="Common issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-booting-from-a-usb-installation-flash-drive-a-grub-_-text-is-displayed-but-nothing-happens" class="md-nav__link">
+    When booting from a USB installation flash drive, a GRUB _ text is displayed, but nothing happens
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#graphics-issue" class="md-nav__link">
+    Graphics issue
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-issues" class="md-nav__link">
+    Other issues
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -305,7 +403,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/pxe-boot-install/" class="md-nav__link">
+      <a href="../pxe-boot-install/" class="md-nav__link">
         PXE Boot Installation
       </a>
     </li>
@@ -319,7 +417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/harvester-configuration/" class="md-nav__link">
+      <a href="../harvester-configuration/" class="md-nav__link">
         Harvester Configuration
       </a>
     </li>
@@ -580,14 +678,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
       
       
       
@@ -610,7 +706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher-integration/" class="md-nav__link">
+      <a href="../../rancher/rancher-integration/" class="md-nav__link">
         Rancher integration
       </a>
     </li>
@@ -624,7 +720,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../virtualization-management/" class="md-nav__link">
+      <a href="../../rancher/virtualization-management/" class="md-nav__link">
         Virtualization management
       </a>
     </li>
@@ -636,14 +732,12 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_3" type="checkbox" id="__nav_10_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_3" type="checkbox" id="__nav_10_3" >
       
       
       
@@ -666,7 +760,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../node-driver/" class="md-nav__link">
+      <a href="../../rancher/node-driver/" class="md-nav__link">
         Harvester Node Driver
       </a>
     </li>
@@ -678,67 +772,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Creating an RKE1 Kubernetes Cluster
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../rancher/rke1-cluster/" class="md-nav__link">
         Creating an RKE1 Kubernetes Cluster
       </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#create-your-cloud-credentials" class="md-nav__link">
-    Create Your Cloud Credentials
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#create-node-template" class="md-nav__link">
-    Create Node Template
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#create-rke1-kubernetes-cluster" class="md-nav__link">
-    Create RKE1 Kubernetes Cluster
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -750,7 +788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rke2-cluster/" class="md-nav__link">
+      <a href="../../rancher/rke2-cluster/" class="md-nav__link">
         Creating an RKE2 Kubernetes Cluster
       </a>
     </li>
@@ -771,7 +809,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cloud-provider/" class="md-nav__link">
+      <a href="../../rancher/cloud-provider/" class="md-nav__link">
         Harvester Cloud Provider
       </a>
     </li>
@@ -785,7 +823,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../csi-driver/" class="md-nav__link">
+      <a href="../../rancher/csi-driver/" class="md-nav__link">
         Harvester CSI Driver
       </a>
     </li>
@@ -981,23 +1019,63 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-your-cloud-credentials" class="md-nav__link">
-    Create Your Cloud Credentials
+  <a href="#create-a-bootable-usb-flash-drive" class="md-nav__link">
+    Create a bootable USB flash drive
   </a>
+  
+    <nav class="md-nav" aria-label="Create a bootable USB flash drive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#balenaetcher" class="md-nav__link">
+    balenaEtcher
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dd-command" class="md-nav__link">
+    dd command
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-node-template" class="md-nav__link">
-    Create Node Template
+  <a href="#common-issues" class="md-nav__link">
+    Common issues
+  </a>
+  
+    <nav class="md-nav" aria-label="Common issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-booting-from-a-usb-installation-flash-drive-a-grub-_-text-is-displayed-but-nothing-happens" class="md-nav__link">
+    When booting from a USB installation flash drive, a GRUB _ text is displayed, but nothing happens
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#create-rke1-kubernetes-cluster" class="md-nav__link">
-    Create RKE1 Kubernetes Cluster
+        
+          <li class="md-nav__item">
+  <a href="#graphics-issue" class="md-nav__link">
+    Graphics issue
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-issues" class="md-nav__link">
+    Other issues
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1013,61 +1091,45 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/harvester/docs/edit/main/docs/rancher/rke1-cluster.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/harvester/docs/edit/main/docs/install/usb-install.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="creating-an-rke1-kubernetes-cluster">Creating an RKE1 Kubernetes Cluster<a class="headerlink" href="#creating-an-rke1-kubernetes-cluster" title="Permanent link">&para;</a></h1>
-<p>Users can now provision RKE1 Kubernetes clusters on top of the Harvester cluster in Rancher <code>v2.6.1</code> using the built-in Harvester node driver.</p>
-<p><img alt="rke1-cluster" src="../assets/rke1-node-driver.png" /></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul>
-<li>Harvester RKE1 node driver is in tech preview.</li>
-<li>VLAN network is required for Harvester node driver.</li>
-</ul>
+                <h1 id="usb-installation">USB Installation<a class="headerlink" href="#usb-installation" title="Permanent link">&para;</a></h1>
+<h2 id="create-a-bootable-usb-flash-drive">Create a bootable USB flash drive<a class="headerlink" href="#create-a-bootable-usb-flash-drive" title="Permanent link">&para;</a></h2>
+<p>There are a couple of ways to create a USB installation flash drive.</p>
+<h3 id="balenaetcher">balenaEtcher<a class="headerlink" href="#balenaetcher" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.balena.io/etcher/">balenaEtcher</a> supports writing images to USB flash drives. It has a GUI and is easy to use. Select the Harvester installation ISO and the target USB device to create a USB installation flash drive.</p>
+<h3 id="dd-command"><code>dd</code> command<a class="headerlink" href="#dd-command" title="Permanent link">&para;</a></h3>
+<p>On Linux or other platforms that have the <code>dd</code> command, users can use <code>dd</code> to create a USB installation flash drive.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure you choose the correct device. The process erases data on the selected device.</p>
 </div>
-<h3 id="create-your-cloud-credentials">Create Your Cloud Credentials<a class="headerlink" href="#create-your-cloud-credentials" title="Permanent link">&para;</a></h3>
-<ol>
-<li>Click <strong>☰ &gt; Cluster Management</strong>.</li>
-<li>Click <strong>Cloud Credentials</strong>.</li>
-<li>Click <strong>Create</strong>.</li>
-<li>Click <strong>Harvester</strong>.</li>
-<li>Enter your cloud credential name.</li>
-<li>Select "Imported Harvester" or "External Harvester".</li>
-<li>Click <strong>Create</strong>.</li>
-</ol>
-<p><img alt="create-harvester-cloud-credentials" src="../assets/harvester-create-cloud-credentials.png" /></p>
-<h3 id="create-node-template">Create Node Template<a class="headerlink" href="#create-node-template" title="Permanent link">&para;</a></h3>
-<p>You can use the Harvester node driver to create node templates and eventually node pools for your Kubernetes cluster.</p>
-<ol>
-<li>Configure the  <strong>Cloud Credentials</strong>.</li>
-<li>Configure <strong>Instance Options</strong>:<ul>
-<li>Configure the CPU, memory, and disk</li>
-<li>Select an OS image that is compatible with the <code>cloud-init</code> config.</li>
-<li>Select a network that the node driver is able to connect to; currently, only <code>VLAN</code> is supported.</li>
-<li>Enter the SSH User; the username will be used to ssh to nodes. For example, a default user of the Ubuntu cloud image will be <code>ubuntu</code>.</li>
+<div class="highlight"><pre><span></span><code># sudo dd if=&lt;path_to_iso&gt; of=&lt;path_to_usb_device&gt; bs=64k
+</code></pre></div>
+<h2 id="common-issues">Common issues<a class="headerlink" href="#common-issues" title="Permanent link">&para;</a></h2>
+<h3 id="when-booting-from-a-usb-installation-flash-drive-a-grub-_-text-is-displayed-but-nothing-happens">When booting from a USB installation flash drive, a <code>GRUB _</code> text is displayed, but nothing happens<a class="headerlink" href="#when-booting-from-a-usb-installation-flash-drive-a-grub-_-text-is-displayed-but-nothing-happens" title="Permanent link">&para;</a></h3>
+<p>If you are using the UEFI mode, try to boot from the UEFI boot partition on the USB device rather than the USB device itself.</p>
+<p>e.g.,</p>
+<p><img alt="" src="../assets/usb-install-select-correct-partition.png" /></p>
+<p>Select the <code>UEFI: USB disk 3.0 PMAP, Partition 1</code> to boot. Note the representation varies from system to system.</p>
+<h3 id="graphics-issue">Graphics issue<a class="headerlink" href="#graphics-issue" title="Permanent link">&para;</a></h3>
+<p>Firmwares of some graphic cards are not shipped in <code>v0.3.0</code>.
+You can press <code>e</code> to edit the GRUB menu entry and append <code>nomodeset</code> to the boot parameters. Press <code>Ctrl + x</code> to boot.</p>
+<p><img alt="" src="../assets/usb-install-nomodeset.png" /></p>
+<h3 id="other-issues">Other issues<a class="headerlink" href="#other-issues" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>Harvester installer is not displayed</p>
+<p>If a USB flash driver boots, but you can't see the harvester installer. You may try out the following workarounds:</p>
+<ul>
+<li>Plug the USB flash drive into a USB 2.0 slot.</li>
+<li>For version <code>v0.3.0</code>, try to remove the <code>console=ttyS0</code> parameter when booting. You can press <code>e</code> to edit the GRUB menu entry and remove the <code>console=ttyS0</code> parameter.</li>
 </ul>
 </li>
-<li>Enter a <strong>RANCHER TEMPLATE</strong> name.</li>
-</ol>
-<p><img alt="" src="../assets/node-template.png" /></p>
-<p>See <a href="https://rancher.com/docs/rancher/v2.5/en/cluster-provisioning/rke-clusters/node-pools/">nodes hosted by an infrastructure provider</a> for more information.</p>
-<h3 id="create-rke1-kubernetes-cluster">Create RKE1 Kubernetes Cluster<a class="headerlink" href="#create-rke1-kubernetes-cluster" title="Permanent link">&para;</a></h3>
-<p>Users can create an RKE1 Kubernetes cluster from the <strong>Cluster Management</strong> page via the Harvester RKE1 node driver.</p>
-<ol>
-<li>Select <strong>Clusters</strong> menu.</li>
-<li>Click <strong>Create</strong> button.</li>
-<li>Toggle Switch to <strong>RKE1</strong>.</li>
-<li>Select Harvester node driver.</li>
-<li>Enter <strong>Cluster Name</strong> (required).</li>
-<li>Enter <strong>Name Prefix</strong> (required).</li>
-<li>Enter <strong>Template</strong> (required).</li>
-<li>Select <strong>etcd</strong> and <strong>Control Plane</strong> (required).</li>
-<li>Click <strong>Create</strong>.</li>
-</ol>
-<p><img alt="create-rke-harvester-cluster" src="../assets/create-rke-harvester-cluster.png" /></p>
+</ul>
                 
               
               
@@ -1087,7 +1149,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../node-driver/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Harvester Node Driver" rel="prev">
+        <a href="../iso-install/" class="md-footer__link md-footer__link--prev" aria-label="Previous: ISO Installation" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1096,20 +1158,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Harvester Node Driver
+              ISO Installation
             </div>
           </div>
         </a>
       
       
         
-        <a href="../rke2-cluster/" class="md-footer__link md-footer__link--next" aria-label="Next: Creating an RKE2 Kubernetes Cluster" rel="next">
+        <a href="../pxe-boot-install/" class="md-footer__link md-footer__link--next" aria-label="Next: PXE Boot Installation" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Creating an RKE2 Kubernetes Cluster
+              PXE Boot Installation
             </div>
           </div>
           <div class="md-footer__button md-icon">
