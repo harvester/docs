@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v0.3/install/iso-install/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.5">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.cdeb8541.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a57b2b03.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
@@ -341,6 +341,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../management-address/" class="md-nav__link">
+        Management Address
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -385,8 +399,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../import-image/" class="md-nav__link">
-        Import Images
+      <a href="../../upload-image/" class="md-nav__link">
+        Upload Images
       </a>
     </li>
   
@@ -547,20 +561,6 @@
     <li class="md-nav__item">
       <a href="../../networking/harvester-network/" class="md-nav__link">
         Harvester Network
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../networking/vip/" class="md-nav__link">
-        Management Address
       </a>
     </li>
   
@@ -953,11 +953,11 @@
 
 <ol>
 <li>Mount the Harvester ISO disk and boot the server by selecting the <code>Harvester Installer</code> option.
-   <img alt="iso-install.png" src="../iso-install.png" /></li>
+   <img alt="iso-install.png" src="../assets/iso-install.png" /></li>
 <li>Choose the installation mode by either creating a new Harvester cluster, or by joining an existing one.</li>
 <li>Choose the installation device that Harvester will be formatted to.</li>
 <li>Configure the hostname and select the network interface for the management network. By default, Harvester will create a bonded NIC named <code>harvester-mgmt</code>, and the IP address can either be configured via DHCP or a static assigned a static one.
-   <img alt="iso-installed.png" src="../iso-nic-config.gif" /></li>
+   <img alt="iso-installed.png" src="../assets/iso-nic-config.gif" /></li>
 <li>(Optional) Configure the DNS servers. Use commas as a delimiter.</li>
 <li>Configure the <code>Virtual IP</code> which you can use to access the cluster or join the cluster to other nodes.</li>
 <li>Configure the <code>cluster token</code>. This token will be used for adding other nodes to the cluster.</li>
@@ -969,9 +969,9 @@
 <li>After confirming the installation options, Harvester will be installed to your host. The installation may take a few minutes to be complete.</li>
 <li>Once the installation is complete, it will restart the host. After the restart, the Harvester console containing the management URL and status will be displayed. You can Use <code>F12</code> to switch between the Harvester console and the Shell.</li>
 <li>The default URL of the web interface is <code>https://your-virtual-ip</code>.
-   <img alt="iso-installed.png" src="../iso-installed.png" /></li>
+   <img alt="iso-installed.png" src="../assets/iso-installed.png" /></li>
 <li>You will be prompted to set the password for the default <code>admin</code> user when logging in for the first time.
-   <img alt="first-login.png" src="../first-time-login.png" /></li>
+   <img alt="first-login.png" src="../assets/first-time-login.png" /></li>
 </ol>
                 
                   
@@ -1047,10 +1047,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.8397ff9e.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.1e84347e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.b1047164.min.js"></script>
       
         <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
