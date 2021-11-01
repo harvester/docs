@@ -17,11 +17,12 @@ Users can generate a support bundle in the Harvester GUI with the following step
 You can access the embedded Rancher dashboard via `https://{{HARVESTER_IP}}/dashboard/c/local/explorer`.
 
 !!! note
-    We only support to use the Rancher dashboard for debugging purpose.
+    We only support to use the embedded Rancher dashboard for debugging and validation purpose.
+    For Rancher's multi-cluster and multi-tenant integration, please refer to the docs [here](../rancher/rancher-integration.md).
 
 ## Access Embedded Longhorn
 
 You can access the embedded Longhorn UI via `https://{{HARVESTER_IP}}/dashboard/c/local/longhorn`.
 
 !!! note
-    We only support to use the Longhorn UI for debugging purpose .
+    We only support to use the embedded Longhorn UI for debugging and validation purpose .
