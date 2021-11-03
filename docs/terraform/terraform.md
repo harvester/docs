@@ -7,13 +7,27 @@
 
 ## Install the Provider
 
-### **Option 1:** Download and install the provider from [releases](https://github.com/harvester/terraform-provider-harvester/releases). 
+### **Option 1:** Download and install the provider from the Terraform [registry](https://registry.terraform.io/providers/harvester/harvester/latest). 
 
-- Use the following command to complete the above actions:
+To install this provider, copy and paste this code into your Terraform configuration. Then, run terraform init.
+
+Terraform 0.13+
+```text
+terraform {
+  required_providers {
+    harvester = {
+      source = "harvester/harvester"
+      version = "0.2.7"
+    }
+  }
+}
+
+provider "harvester" {
+  # Configuration options
+}
 ```
-tar -zxvf terraform-provider-harvester-amd64.tar.gz
-./install-terraform-provider-harvester.sh
-```
+
+For more details, please refer to the Harvester provider [documentation](https://registry.terraform.io/providers/harvester/harvester/latest/docs).
 
 ### **Option 2:** Build and install the provider manually.
 
@@ -34,7 +48,7 @@ tar -zxvf terraform-provider-harvester-amd64.tar.gz
 
   * The expected location for the Harvester provider for the target platform within one of the local search directories is as follows:
     ```
-    registry.terraform.io/harvester/harvester/0.2.6/linux_amd64/terraform-provider-harvester_v0.2.6
+    registry.terraform.io/harvester/harvester/0.2.7/linux_amd64/terraform-provider-harvester_v0.2.7
     ```
 
   * The default location for locally-installed providers will be one of the following, depending on the operating system under which you are running Terraform:
@@ -45,7 +59,7 @@ tar -zxvf terraform-provider-harvester-amd64.tar.gz
 
   * Place the provider into the plugin directory as in the following example:
     ```
-    version=0.2.6
+    version=0.2.7
     arch=linux_amd64
     terraform_harvester_provider_bin=./bin/terraform-provider-harvester
 
@@ -56,4 +70,4 @@ tar -zxvf terraform-provider-harvester-amd64.tar.gz
 
 ## Using the provider
 After placing the provider into your plugins directory,  run `terraform init` to initialize it.
-More information about provider-specific configuration options can be found on the [docs directory](https://github.com/harvester/terraform-provider-harvester/tree/master/docs).
+More information about provider-specific configuration options can be found on the [docs directory](https://registry.terraform.io/providers/harvester/harvester/latest/docs)
