@@ -15,11 +15,11 @@ The Harvester node driver is used to provision VMs in the Harvester cluster. In 
 
 A node driver is the same as a [Docker Machine driver](https://docs.docker.com/machine/), and the project repo is available at [harvester/docker-machine-driver-harvester](https://github.com/harvester/docker-machine-driver-harvester).
 
-Users can now provision RKE1/RKE2 Kubernetes clusters in Rancher `v2.6.1` using the built-in Harvester node driver. 
+Users can now provision RKE1/RKE2 Kubernetes clusters in Rancher `v2.6.1` or above using the built-in Harvester node driver. 
 Additionally, Harvester now can provide built-in [Load Balancer support](./cloud-provider.md) as well as raw cluster [persistent storage](./csi-driver.md) support to the guest Kubernetes cluster.
 
 !!!note
-    Currently Rancher v2.6.1 is the only version that is compatible with Harvester v0.3.0.
+    Currently only Rancher v2.6.1 or above is compatible with Harvester v0.3.0.
 
 ## Enable Harvester Node Driver
 

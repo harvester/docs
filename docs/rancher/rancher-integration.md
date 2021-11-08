@@ -15,7 +15,7 @@ _Available as of v0.3.0_
 
 [Rancher](https://github.com/rancher/rancher) is an open-source multi-cluster management platform. Harvester has integrated Rancher by default starting with Rancher v2.6.1.
 
-Users can now import and manage multiple Harvester clusters using the Rancher `v2.6.1` [Virtualization Management](virtualization-management.md) page and leverage the Rancher [authentication](https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/) feature and RBAC control for [multi-tenancy](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/) support.
+Users can now import and manage multiple Harvester clusters using the Rancher [Virtualization Management](virtualization-management.md) page and leverage the Rancher [authentication](https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/) feature and RBAC control for [multi-tenancy](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/) support.
 
 ![virtualization-management](assets/virtualization-management.png)
 
@@ -23,7 +23,7 @@ Users can now import and manage multiple Harvester clusters using the Rancher `v
 
 Previously in Harvester v0.2.0, users had the option to enable the embedded Rancher server. This option has been removed from Harvester `v0.3.0`. 
 
-To use Rancher with Harvester, please install Rancher v2.6.1 separately from Harvester. You can spin up a VM with Rancher v2.6.1 to try out the integration features.
+To use Rancher with Harvester, please install the Rancher server separately from the Harvester. As an option, You can spin up a VM in the Harvester and install the Rancher v2.6.1 or above to try out the integration features.
 
 ### Quick Start Guide
 1. Begin creation of a custom cluster by provisioning a Linux host. Your host can be any of the following:
@@ -35,7 +35,7 @@ To use Rancher with Harvester, please install Rancher v2.6.1 separately from Har
 
 ```shell
 # for a quick evaluation, you can run the Rancher server with the following command
-$ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.1
+$ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.2
 ```
 
 !!! Note
