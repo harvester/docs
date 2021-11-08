@@ -10,7 +10,7 @@ For Harvester v0.3.0 and above, virtualization management with the multi-cluster
 
 1. First, you will need to install Rancher v2.6.1 or above. For testing purposes, you can spin up a Rancher server using the following `docker run` command: 
     ```
-    $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.1
+    $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.2
     ```
 
     !!!note
