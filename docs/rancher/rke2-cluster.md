@@ -1,6 +1,6 @@
 # Creating an RKE2 Kubernetes Cluster
 
-Users can now provision RKE2 Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.1` using the built-in Harvester node driver.
+Users can now provision RKE2 Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.1+` using the built-in Harvester node driver.
 
 ![rke2-cluster](assets/rke2-node-driver.png)
 
