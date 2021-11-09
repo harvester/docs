@@ -1023,11 +1023,11 @@
                 <h1 id="harvester-node-driver">Harvester Node Driver<a class="headerlink" href="#harvester-node-driver" title="Permanent link">&para;</a></h1>
 <p>The Harvester node driver is used to provision VMs in the Harvester cluster. In this section, you'll learn how to configure Rancher to use the Harvester node driver to launch and manage Kubernetes clusters.</p>
 <p>A node driver is the same as a <a href="https://docs.docker.com/machine/">Docker Machine driver</a>, and the project repo is available at <a href="https://github.com/harvester/docker-machine-driver-harvester">harvester/docker-machine-driver-harvester</a>.</p>
-<p>Users can now provision RKE1/RKE2 Kubernetes clusters in Rancher <code>v2.6.1</code> using the built-in Harvester node driver. 
+<p>Users can now provision RKE1/RKE2 Kubernetes clusters in Rancher <code>v2.6.1</code> or above using the built-in Harvester node driver. 
 Additionally, Harvester now can provide built-in <a href="../cloud-provider/">Load Balancer support</a> as well as raw cluster <a href="../csi-driver/">persistent storage</a> support to the guest Kubernetes cluster.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Currently Rancher v2.6.1 is the only version that is compatible with Harvester v0.3.0.</p>
+<p>Currently only Rancher v2.6.1 or above is compatible with Harvester v0.3.0.</p>
 </div>
 <h2 id="enable-harvester-node-driver">Enable Harvester Node Driver<a class="headerlink" href="#enable-harvester-node-driver" title="Permanent link">&para;</a></h2>
 <p>The Harvester node driver is not enabled by default from the Rancher UI. Click the <code>Cluster Management</code> tab to enable the Harvester node driver.</p>

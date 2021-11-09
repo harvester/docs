@@ -1057,11 +1057,11 @@
                 <h2 id="rancher-integration">Rancher Integration<a class="headerlink" href="#rancher-integration" title="Permanent link">&para;</a></h2>
 <p><em>Available as of v0.3.0</em></p>
 <p><a href="https://github.com/rancher/rancher">Rancher</a> is an open-source multi-cluster management platform. Harvester has integrated Rancher by default starting with Rancher v2.6.1.</p>
-<p>Users can now import and manage multiple Harvester clusters using the Rancher <code>v2.6.1</code> <a href="../virtualization-management/">Virtualization Management</a> page and leverage the Rancher <a href="https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/">authentication</a> feature and RBAC control for <a href="https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/">multi-tenancy</a> support.</p>
+<p>Users can now import and manage multiple Harvester clusters using the Rancher <a href="../virtualization-management/">Virtualization Management</a> page and leverage the Rancher <a href="https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/">authentication</a> feature and RBAC control for <a href="https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/">multi-tenancy</a> support.</p>
 <p><img alt="virtualization-management" src="../assets/virtualization-management.png" /></p>
 <h2 id="deploying-rancher">Deploying Rancher<a class="headerlink" href="#deploying-rancher" title="Permanent link">&para;</a></h2>
 <p>Previously in Harvester v0.2.0, users had the option to enable the embedded Rancher server. This option has been removed from Harvester <code>v0.3.0</code>. </p>
-<p>To use Rancher with Harvester, please install Rancher v2.6.1 separately from Harvester. You can spin up a VM with Rancher v2.6.1 to try out the integration features.</p>
+<p>To use Rancher with Harvester, please install the Rancher server separately from the Harvester. As an option, You can spin up a VM in the Harvester and install the Rancher v2.6.1 or above to try out the integration features.</p>
 <h3 id="quick-start-guide">Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Begin creation of a custom cluster by provisioning a Linux host. Your host can be any of the following:<ul>
@@ -1074,7 +1074,7 @@
 <li>From your shell, enter the following command:</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="c1"># for a quick evaluation, you can run the Rancher server with the following command</span>
-$ sudo docker run -d --restart<span class="o">=</span>unless-stopped -p <span class="m">80</span>:80 -p <span class="m">443</span>:443 --privileged rancher/rancher:v2.6.1
+$ sudo docker run -d --restart<span class="o">=</span>unless-stopped -p <span class="m">80</span>:80 -p <span class="m">443</span>:443 --privileged rancher/rancher:v2.6.2
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
