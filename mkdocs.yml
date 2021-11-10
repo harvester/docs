@@ -85,6 +85,7 @@ nav:
     - rancher/cloud-provider.md
     - rancher/csi-driver.md
   - terraform/terraform.md
+  - settings/settings.md
   - Troubleshooting: 
     - troubleshooting/installation.md
     - troubleshooting/harvester.md
