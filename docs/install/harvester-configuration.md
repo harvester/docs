@@ -66,6 +66,8 @@ install:
   vip: 10.10.0.19
   vip_hw_addr: 52:54:00:ec:0e:0b
   vip_mode: dhcp
+system_settings:
+  auto-disk-provision-paths: ""
 ```
 
 ## Configuration Reference
@@ -440,4 +442,28 @@ install:
   vip: 10.10.0.19
   vip_mode: dhcp
   vip_hw_addr: 52:54:00:ec:0e:0b
+```
+
+### `system_settings`
+
+#### Definition
+
+You can overwrite the default Harvester system settings by configuring `system_settings`.
+
+!!! note
+    Overwriting system settings only works when Harvester is installed in "create" mode.
+    If you install Harvester in "join" mode, this setting is ignored.
+    Installing in "join" mode will adopt the system settings from the existing Harvester system.
+
+#### Example
+
+The configuration below will automatically scan and add storage devices which will match the glob
+pattern `/dev/sd*` on every Node.
+
+!!! warning
+    All the data in these storage devices will be destroyed. Use at your own risk.
+
+```yaml
+system_settings:
+  auto-disk-provision-paths: "/dev/sd*"
 ```
