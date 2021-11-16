@@ -45,6 +45,9 @@ os:
   environment:
     http_proxy: http://myserver
     https_proxy: http://myserver
+  labels:
+    foo: bar
+    mylabel: myvalue
 install:
   mode: create
   networks:
@@ -276,6 +279,22 @@ os:
   environment:
     http_proxy: http://myserver
     https_proxy: http://myserver
+```
+
+### `os.labels`
+
+#### Definition
+
+Labels to be added to this Node.
+
+#### Example
+
+```yaml
+os:
+  labels:
+    foo: bar
+    my-label: my-value
+    yes-or-no: true  # Will be converted to string
 ```
 
 ### `install.mode`
