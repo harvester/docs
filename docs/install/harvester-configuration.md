@@ -48,6 +48,7 @@ os:
   labels:
     foo: bar
     mylabel: myvalue
+  force_mbr: false
 install:
   mode: create
   networks:
@@ -288,6 +289,18 @@ os:
 
 Labels to be added to this Node.
 
+### `os.force_mbr`
+
+#### Definition
+
+By default, Harvester uses GPT partitioning scheme on both UEFI and BIOS systems.
+However, you could force using MBR on BIOS systems if you encountered compatibility issues.
+
+!!! note
+    Harvester creates an additional partition for storing VM data when GPT is used.
+    When force using MBR, no additional parititon will be created and VM data will
+    be stored in a partition shared with the OS data.
+
 #### Example
 
 ```yaml
@@ -296,6 +309,7 @@ os:
     foo: bar
     my-label: my-value
     yes-or-no: true  # Will be converted to string
+  force_mbr: true
 ```
 
 ### `install.mode`
