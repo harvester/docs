@@ -480,4 +480,23 @@ pattern `/dev/sd*` on every Node.
 ```yaml
 system_settings:
   auto-disk-provision-paths: "/dev/sd*"
+
+### `install.force_mbr`
+
+#### Definition
+
+By default, Harvester uses GPT partitioning scheme on both UEFI and BIOS systems.
+However, if you face compatibility issues, the MBR partitioning scheme can be forced on BIOS systems.
+
+If the MBR partitioning is forced, the partition containing OS data will be used to also store VM data.
+
+!!! warning
+    The space of an MBR partition is limited, and by creating too much VMs, there is a high chance
+    of causing the OS to malfunction due to the lack of disk space.
+
+#### Example
+
+```yaml
+install:
+  force_mbr: true
 ```
