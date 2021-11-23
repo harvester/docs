@@ -32,7 +32,7 @@ os:
   modules:
     - kvm
     - nvme
-  sysctl:
+  sysctls:
     kernel.printk: "4 4 1 7"
     kernel.kptr_restrict: "1"
   dns_nameservers:
@@ -202,7 +202,7 @@ Values must be specified as strings.
 
 ```yaml
 os:
-  sysctl:
+  sysctls:
     kernel.printk: 4 4 1 7 # the YAML parser will read as a string
     kernel.kptr_restrict: "1" # force the YAML parser to read as a string
 ```
