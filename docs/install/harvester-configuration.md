@@ -54,7 +54,6 @@ install:
     harvester-mgmt:
       interfaces:
       - name: ens5
-      default_route: true
       method: dhcp
   force_efi: true
   device: /dev/vda
@@ -330,7 +329,6 @@ the values are configurations for each network. Valid configuration fields are:
 - `gateway`: Gateway for this network. Required if `static` method is chosen.
 - `interfaces`: An array of interface names. If provided, the installer then combines these NICs into a single logical bonded interface.
     - `interfaces.name`: The name of the slave interface for the bonded network.
-- `default_route`: Set the network as the default route or not.
 - `bond_options`: Options for bonded interfaces. Refer to [here](https://www.kernel.org/doc/Documentation/networking/bonding.txt) for more info. If not provided, the following options would be used:
     - `mode: balance-tlb`
     - `miimon: 100`
@@ -351,7 +349,6 @@ install:
     harvester-mgmt:       # The management bond name. This is mandatory.
       interfaces:
       - name: ens5
-      default_route: true
       method: dhcp
       bond_options:
         mode: balance-tlb
