@@ -79,7 +79,6 @@ install:
     harvester-mgmt:       # (Mandatory) The management bond name.
       interfaces:
       - name: ens5
-      default_route: true
       method: dhcp
       bond_options:
         mode: balance-tlb
@@ -136,7 +135,6 @@ install:
     harvester-mgmt:       # (Mandatory) The management bond name.
       interfaces:
       - name: ens5
-      default_route: true
       method: dhcp
       bond_options:
         mode: balance-tlb
