@@ -1985,7 +1985,7 @@
   <span class="nt">modules</span><span class="p">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">kvm</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">nvme</span>
-  <span class="nt">sysctl</span><span class="p">:</span>
+  <span class="nt">sysctls</span><span class="p">:</span>
     <span class="nt">kernel.printk</span><span class="p">:</span> <span class="s">&quot;4</span><span class="nv"> </span><span class="s">4</span><span class="nv"> </span><span class="s">1</span><span class="nv"> </span><span class="s">7&quot;</span>
     <span class="nt">kernel.kptr_restrict</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>
   <span class="nt">dns_nameservers</span><span class="p">:</span>
@@ -2111,7 +2111,7 @@ automatically be assumed to be a node token. Otherwise it is treated as a cluste
 Values must be specified as strings.</p>
 <h4 id="example_5">Example<a class="headerlink" href="#example_5" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span>
-  <span class="nt">sysctl</span><span class="p">:</span>
+  <span class="nt">sysctls</span><span class="p">:</span>
     <span class="nt">kernel.printk</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4 4 1 7</span> <span class="c1"># the YAML parser will read as a string</span>
     <span class="nt">kernel.kptr_restrict</span><span class="p">:</span> <span class="s">&quot;1&quot;</span> <span class="c1"># force the YAML parser to read as a string</span>
 </code></pre></div>
