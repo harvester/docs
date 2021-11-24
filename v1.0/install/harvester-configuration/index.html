@@ -2007,7 +2007,6 @@
     <span class="nt">harvester-mgmt</span><span class="p">:</span>
       <span class="nt">interfaces</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
-      <span class="nt">default_route</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
       <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
   <span class="nt">force_efi</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
   <span class="nt">device</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/dev/vda</span>
@@ -2199,7 +2198,6 @@ the values are configurations for each network. Valid configuration fields are:<
 <li><code>interfaces.name</code>: The name of the slave interface for the bonded network.</li>
 </ul>
 </li>
-<li><code>default_route</code>: Set the network as the default route or not.</li>
 <li><code>bond_options</code>: Options for bonded interfaces. Refer to <a href="https://www.kernel.org/doc/Documentation/networking/bonding.txt">here</a> for more info. If not provided, the following options would be used:<ul>
 <li><code>mode: balance-tlb</code></li>
 <li><code>miimon: 100</code></li>
@@ -2222,7 +2220,6 @@ Please make sure the interface name is present on the target machine before inst
     <span class="nt">harvester-mgmt</span><span class="p">:</span>       <span class="c1"># The management bond name. This is mandatory.</span>
       <span class="nt">interfaces</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
-      <span class="nt">default_route</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
       <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
       <span class="nt">bond_options</span><span class="p">:</span>
         <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">balance-tlb</span>
