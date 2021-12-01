@@ -48,7 +48,6 @@ os:
   labels:
     foo: bar
     mylabel: myvalue
-  force_mbr: false
 install:
   mode: create
   networks:
@@ -67,6 +66,8 @@ install:
   vip: 10.10.0.19
   vip_hw_addr: 52:54:00:ec:0e:0b
   vip_mode: dhcp
+  force_mbr: false
+  no_data_partition: false
 system_settings:
   auto-disk-provision-paths: ""
 ```
@@ -289,29 +290,6 @@ os:
 
 Labels to be added to this Node.
 
-### `os.force_mbr`
-
-#### Definition
-
-By default, Harvester uses GPT partitioning scheme on both UEFI and BIOS systems.
-However, you could force using MBR on BIOS systems if you encountered compatibility issues.
-
-!!! note
-    Harvester creates an additional partition for storing VM data when GPT is used.
-    When force using MBR, no additional parititon will be created and VM data will
-    be stored in a partition shared with the OS data.
-
-#### Example
-
-```yaml
-os:
-  labels:
-    foo: bar
-    my-label: my-value
-    yes-or-no: true  # Will be converted to string
-  force_mbr: true
-```
-
 ### `install.mode`
 
 #### Definition
@@ -458,6 +436,48 @@ install:
   vip_hw_addr: 52:54:00:ec:0e:0b
 ```
 
+### `install.force_mbr`
+
+#### Definition
+
+By default, Harvester uses GPT partitioning scheme on both UEFI and BIOS systems.
+However, if you face compatibility issues, the MBR partitioning scheme can be forced on BIOS systems.
+
+!!! note
+    Harvester creates an additional partition for storing VM data by default.
+    When force using MBR, [`install.no_data_partition`](./#installno_data_partition) will be forced to `true`.
+    In other words, no additional partition will be created and VM data will
+    be stored in a partition shared with the OS data.
+
+#### Example
+
+```yaml
+install:
+  force_mbr: true
+```
+
+### `install.no_data_partition`
+
+#### Definition
+
+Do not create an additional disk partition for storing VM data.
+An OS partition will then be used to store VM data.
+This is useful when you want to use additional disks to store VM data with the
+[auto-disk-provision-paths](../../settings/settings/#auto-disk-provision-paths) setting.
+
+Default: `false`.
+
+!!! warning
+    If VM data is stored in the OS partition and you have created too many VMs,
+    there is a high chance of causing OS to malfunction due to the lack of disk space.
+
+#### Example
+
+```yaml
+install:
+  no_data_partition: true
+```
+
 ### `system_settings`
 
 #### Definition
@@ -480,23 +500,4 @@ pattern `/dev/sd*` on every Node.
 ```yaml
 system_settings:
   auto-disk-provision-paths: "/dev/sd*"
-
-### `install.force_mbr`
-
-#### Definition
-
-By default, Harvester uses GPT partitioning scheme on both UEFI and BIOS systems.
-However, if you face compatibility issues, the MBR partitioning scheme can be forced on BIOS systems.
-
-If the MBR partitioning is forced, the partition containing OS data will be used to also store VM data.
-
-!!! warning
-    The space of an MBR partition is limited, and by creating too much VMs, there is a high chance
-    of causing the OS to malfunction due to the lack of disk space.
-
-#### Example
-
-```yaml
-install:
-  force_mbr: true
 ```
