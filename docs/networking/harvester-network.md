@@ -64,14 +64,14 @@ Optional: Users can customize each node's VLAN network via the **HOST > Network*
 
 A new VLAN network can be created via the **Advanced > Networks** page and clicking the **Create** button.
 
- - Specify the name and VLAN ID that you want to create for the VLAN network.
+ 1. Specify the name and VLAN ID that you want to create for the VLAN network.
    ![create-vlan-network.png](assets/create-network.png)
   
- - Configure a route in order to allow the hosts to connect to the VLAN network using IPv4 addresses. The CIDR and gateway of the VLAN network are mandatory parameters for the route configuration.  You can configure the route by choosing one of the following options:
-   - auto(DHCP) mode: the Harvester network controller will get the CIDR and gateway values from the DHCP server using the DHCP protocol. Optionally, you can specify the DHCP server address.
-   ![](assets/create-network-auto.png)
-   - manual mode: You need to specify the CIDR and gateway values manually.
-   ![](assets/create-network-manual.png)
+ 2. Configure a route in order to allow the hosts to connect to the VLAN network using IPv4 addresses. The CIDR and gateway of the VLAN network are mandatory parameters for the route configuration.  You can configure the route by choosing one of the following options:
+    - auto(DHCP) mode: the Harvester network controller will get the CIDR and gateway values from the DHCP server using the DHCP protocol. Optionally, you can specify the DHCP server address.
+      ![](assets/create-network-auto.png)
+    - manual mode: You need to specify the CIDR and gateway values manually.
+      ![](assets/create-network-manual.png)
 
 ### Create a VM with VLAN Network
 Users can now create a new VM using the above configured VLAN network,
