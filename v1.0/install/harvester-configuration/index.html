@@ -845,6 +845,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#system_settings" class="md-nav__link">
+    system_settings
+  </a>
+  
+    <nav class="md-nav" aria-label="system_settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition_15" class="md-nav__link">
+    Definition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_15" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1956,6 +1983,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#system_settings" class="md-nav__link">
+    system_settings
+  </a>
+  
+    <nav class="md-nav" aria-label="system_settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition_15" class="md-nav__link">
+    Definition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_15" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2031,6 +2085,8 @@
   <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.19</span>
   <span class="nt">vip_hw_addr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">52:54:00:ec:0e:0b</span>
   <span class="nt">vip_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
+<span class="nt">system_settings</span><span class="p">:</span>
+  <span class="nt">auto-disk-provision-paths</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
 </code></pre></div>
 <h2 id="configuration-reference">Configuration Reference<a class="headerlink" href="#configuration-reference" title="Permanent link">&para;</a></h2>
 <p>Below is a reference of all configuration keys.</p>
@@ -2296,6 +2352,25 @@ Please make sure the interface name is present on the target machine before inst
   <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.19</span>
   <span class="nt">vip_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
   <span class="nt">vip_hw_addr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">52:54:00:ec:0e:0b</span>
+</code></pre></div>
+<h3 id="system_settings"><code>system_settings</code><a class="headerlink" href="#system_settings" title="Permanent link">&para;</a></h3>
+<h4 id="definition_15">Definition<a class="headerlink" href="#definition_15" title="Permanent link">&para;</a></h4>
+<p>You can overwrite the default Harvester system settings by configuring <code>system_settings</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Overwriting system settings only works when Harvester is installed in "create" mode.
+If you install Harvester in "join" mode, this setting is ignored.
+Installing in "join" mode will adopt the system settings from the existing Harvester system.</p>
+</div>
+<h4 id="example_15">Example<a class="headerlink" href="#example_15" title="Permanent link">&para;</a></h4>
+<p>The configuration below will automatically scan and add storage devices which will match the glob
+pattern <code>/dev/sd*</code> on every Node.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>All the data in these storage devices will be destroyed. Use at your own risk.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">system_settings</span><span class="p">:</span>
+  <span class="nt">auto-disk-provision-paths</span><span class="p">:</span> <span class="s">&quot;/dev/sd*&quot;</span>
 </code></pre></div>
 
               
