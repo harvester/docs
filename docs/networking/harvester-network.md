@@ -45,16 +45,15 @@ The below diagram illustrates how the VLAN network works in Harvester.
 
 ### Enabling Default VLAN Network
 
-You can enable VLAN network via **Setting > VLAN**. Once enabled, you will be able to select a network interface for the nodes as the default VLAN config.
+Users can enable the VLAN network via **Setting > VLAN** and selecting a common physical NIC for the nodes as the default VLAN config .
 
-For better network performances and isolation, we recommend to choose a separate network interface for the VLAN other than the one used for the management network (i.e., `harvester-mgmt`).
+It is recommended to choose a separate NIC for the VLAN other than the one used for the management network (i.e., `harvester-mgmt`) for better network performance and isolation.
 
 !!! note
-    - When selecting the network interface, the value in parentheses represents the distribution percentage of the network interface on all hosts. If a network interface with a value less than 100% is selected, the network interface needs to be manually specified on the host where the VLAN network configuration fails.
     - Modifying the default VLAN network setting will not update the existing configured host network.
     - Harvester VLAN network supports bond interfaces, currently it can only be created automatically via [PEX Boot Configuration](/install/harvester-configuration/#example_11). Users may also login to the node and create it manually.
 
-  ![](assets/enable-vlan.png)
+  ![](./assets/enable-vlan.png)
 
 Optional: Users can customize each node's VLAN network via the **HOST > Network** tab.
 
@@ -65,13 +64,8 @@ Optional: Users can customize each node's VLAN network via the **HOST > Network*
 A new VLAN network can be created via the **Advanced > Networks** page and clicking the **Create** button.
 
  - Specify the name and VLAN ID that you want to create for the VLAN network.
-   ![create-vlan-network.png](assets/create-network.png)
-  
- - Configure a route in order to allow the hosts to connect to the VLAN network using IPv4 addresses. The CIDR and gateway of the VLAN network are mandatory parameters for the route configuration.  You can configure the route by choosing one of the following options:
-   - auto(DHCP) mode: the Harvester network controller will get the CIDR and gateway values from the DHCP server using the DHCP protocol. Optionally, you can specify the DHCP server address.
-   ![](assets/create-network-auto.png)
-   - manual mode: You need to specify the CIDR and gateway values manually.
-   ![](assets/create-network-manual.png)
+
+  ![create-vlan-network.png](./assets/create-network.png)
 
 ### Create a VM with VLAN Network
 Users can now create a new VM using the above configured VLAN network,
