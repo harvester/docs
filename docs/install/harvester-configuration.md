@@ -483,6 +483,7 @@ install:
 #### Definition
 
 You can overwrite the default Harvester system settings by configuring `system_settings`.
+See [Settings](../../settings/settings) for available settings.
 
 !!! note
     Overwriting system settings only works when Harvester is installed in "create" mode.
@@ -491,13 +492,10 @@ You can overwrite the default Harvester system settings by configuring `system_s
 
 #### Example
 
-The configuration below will automatically scan and add storage devices which will match the glob
-pattern `/dev/sd*` on every Node.
-
-!!! warning
-    All the data in these storage devices will be destroyed. Use at your own risk.
+The example below overwrites `http-proxy` and `ui-source` settings. Notice that the values must be a string.
 
 ```yaml
 system_settings:
-  auto-disk-provision-paths: "/dev/sd*"
+  http-proxy: '{"httpProxy": "http://my.proxy", "httpsProxy": "https://my.proxy", "noProxy": "some.internal.svc"}'
+  ui-source: auto
 ```

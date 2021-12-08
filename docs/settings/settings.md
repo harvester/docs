@@ -5,8 +5,8 @@ You can modify the custom resource `settings.harvesterhci.io` from the Dashboard
 
 ## `backup-target`
 
-This setting allows you to set a custom backup target to store VM backups. It supports NFS and S3. 
-For further information, please refer to the [Longhorn documentation][longhorn-backup-target]. 
+This setting allows you to set a custom backup target to store VM backups. It supports NFS and S3.
+For further information, please refer to the [Longhorn documentation][longhorn-backup-target].
 
 Default: none
 
@@ -34,7 +34,7 @@ Default: `{}`
 
 The following options and values can be set:
 
-- Proxy URL for HTTP requests: `"httpProxy": "http://<username>:<pswd>@<ip>:<port>"` 
+- Proxy URL for HTTP requests: `"httpProxy": "http://<username>:<pswd>@<ip>:<port>"`
 - Proxy URL for HTTPS requests: `"httpsProxy": "https://<username>:<pswd>@<ip>:<port>"`
 - Comma-separated list of hostnames and/or CIDRs: `"noProxy": "<hostname | CIDR>"`
 
@@ -50,7 +50,7 @@ The following options and values can be set:
 
 ## `log-level`
 
-This setting allows you to configure the log level for the Harvester server. 
+This setting allows you to configure the log level for the Harvester server.
 
 Default: `info`
 
@@ -126,7 +126,7 @@ https://your.static.dashboard-ui/index.html
 
 ## `ui-source`
 
-This setting allows you to configure how to load the UI source. 
+This setting allows you to configure how to load the UI source.
 
 The following values can be set:
 
@@ -142,7 +142,7 @@ external
 
 ## `upgrade-checker-enabled`
 
-This setting allows you to automatically check if there's an upgrade available for Harvester. 
+This setting allows you to automatically check if there's an upgrade available for Harvester.
 
 Default: `true`
 
@@ -174,4 +174,50 @@ Default: none
 
 ```
 ens3
+```
+
+## `auto-disk-provision-paths`
+
+This setting allows Harvester to automatically add disks that match the given glob pattern as VM storages.
+It's possible to provide multiple patterns by separating them with comma.
+
+!!! warning
+    - This setting is applied to **every Node** in the cluster.
+    - All the data in these storage devices **will be destroyed**. Use at your own risk.
+
+Default: none
+
+#### Example
+
+Add disks matches glob pattern `/dev/sd*` or `/dev/hd*`:
+
+```
+/dev/sd*,/dev/hd*
+```
+
+## `ssl-parameters`
+
+This setting allows you to change the enabled SSL/TLS protocols and ciphers of Harvester GUI and API.
+
+The following options and values can be set:
+
+- `protocols`: Enabled protocols. See NGINX Ingress Controller's configs [`ssl-protocols`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-protocols) for supported input.
+
+- `ciphers`: Enabled ciphers. See NGINX Ingress Controller's configs [`ssl-ciphers`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-ciphers) for supported input.
+
+If no value is provided, default protocols are set to `TLSv1.2` only and ciphers are
+`ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305`.
+
+Default: none
+
+#### Example
+
+Set SSL/TLS enabled protocols to `TLSv1.2` and `TLSv1.3` and enabled ciphers to
+`ECDHE-ECDSA-AES128-GCM-SHA256` and `ECDHE-ECDSA-CHACHA20-POLY1305`.
+
+```
+{
+  "protocols": "TLSv1.2 TLSv1.3",
+  "ciphers": "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
+}
 ```
