@@ -20,6 +20,27 @@ Cordoning a node marks it as unschedulable. This feature is useful for performin
 
 ![cordon-node.png](./assets/cordon-nodes.png)
 
+## Deleting a Node
+
+Deleting a node is done in two phases:
+
+1. Delete the node from Harvester
+    - Go to the **Hosts** page
+    - On the node you want to modify, click **⋮ > Delete**
+
+2. Uninstall RKE2 from the node
+    - Login to the node as root
+    - Run `rke2-uninstall.sh` to delete the whole RKE2 service.
+
+!!! warning
+    You will lose all data of the control plane node after deleing the RKE2 service.
+
+!!! note
+    There's a [known issue](https://github.com/harvester/harvester/issues/1497) about node hard delete.
+    Once resolved, the last step can be skipped.
+
+![delete.png](./assets/delete.png)
+
 ## Multi-disk Management - `Tech Preview`
 
 Users can view and add multiple disks as additional data volumes from the host detail page.
