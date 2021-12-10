@@ -3,6 +3,20 @@
 This page contains a list of advanced settings which can be used in Harvester.
 You can modify the custom resource `settings.harvesterhci.io` from the Dashboard UI or with the `kubectl` command.
 
+## `additional-ca`
+
+This setting allows you to configure additional trusted CA certificates for Harvester to access external services.
+
+Default: none
+
+#### Example
+
+```
+-----BEGIN CERTIFICATE-----
+SOME-CA-CERTIFICATES
+-----END CERTIFICATE-----
+```
+
 ## `backup-target`
 
 This setting allows you to set a custom backup target to store VM backups. It supports NFS and S3. 
@@ -27,9 +41,22 @@ Default: none
 }
 ```
 
+## `cluster-registration-url`
+
+This setting allows you to import the Harvester cluster to Rancher for multi-cluster management.
+
+Default: none
+
+#### Example
+
+```
+https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhrc7c_c-m-zxbbbck9.yaml
+```
+
 ## `http-proxy`
 
 This setting allows you to configure an HTTP proxy to access external services, including the download of images and backup to s3 services.
+
 Default: `{}`
 
 The following options and values can be set:
@@ -110,6 +137,37 @@ This setting displays the version of Harvester server.
 
 ```
 v1.0.0-abcdef-head
+```
+
+## `ssl-certificates`
+
+This setting allows you to configure serving certificates for Harvester UI/API.
+
+Default: `{}`
+
+#### Example
+
+```json
+{
+  "ca": "-----BEGIN CERTIFICATE-----\nSOME-CERTIFICATE-ENCODED-IN-PEM-FORMAT\n-----END CERTIFICATE-----",
+  "publicCertificate": "-----BEGIN CERTIFICATE-----\nSOME-CERTIFICATE-ENCODED-IN-PEM-FORMAT\n-----END CERTIFICATE-----",
+  "privateKey": "-----BEGIN RSA PRIVATE KEY-----\nSOME-PRIVATE-KEY-ENCODED-IN-PEM-FORMAT\n-----END RSA PRIVATE KEY-----"
+}
+```
+
+## `ssl-parameters`
+
+This setting allows you to configure SSL parameters. Protocols are separated by spaces and ciphers are separated by colons.
+
+Default: `{}`
+
+#### Example
+
+```json
+{
+  "protocols": "TLSv1.2 TLSv1.3",
+  "ciphers": "ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384"
+}
 ```
 
 ## `ui-index`
