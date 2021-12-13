@@ -210,6 +210,9 @@ If no value is provided, `protocols` is set to `TLSv1.2` only and the `ciphers` 
 
 Default: none
 
+!!! note
+    See [Troubleshooting](../../troubleshooting/harvester/#i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers) if you have misconfigured this setting and no longer have access to Harvester GUI and API.
+
 #### Example
 
 The following example sets the enabled SSL/TLS protocols to `TLSv1.2` and `TLSv1.3` and the ciphers list to
