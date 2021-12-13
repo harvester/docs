@@ -189,7 +189,7 @@ Default: none
 
 #### Example
 
-Add disks matches glob pattern `/dev/sd*` or `/dev/hd*`:
+The following example, will add disks matching the glob pattern `/dev/sd*` or `/dev/hd*`:
 
 ```
 /dev/sd*,/dev/hd*
@@ -205,14 +205,14 @@ The following options and values can be set:
 
 - `ciphers`: Enabled ciphers. See NGINX Ingress Controller's configs [`ssl-ciphers`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-ciphers) for supported input.
 
-If no value is provided, default protocols are set to `TLSv1.2` only and ciphers are
+If no value is provided, `protocols` is set to `TLSv1.2` only and the `ciphers` list is
 `ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305`.
 
 Default: none
 
 #### Example
 
-Set SSL/TLS enabled protocols to `TLSv1.2` and `TLSv1.3` and enabled ciphers to
+The following example sets the enabled SSL/TLS protocols to `TLSv1.2` and `TLSv1.3` and the ciphers list to
 `ECDHE-ECDSA-AES128-GCM-SHA256` and `ECDHE-ECDSA-CHACHA20-POLY1305`.
 
 ```
