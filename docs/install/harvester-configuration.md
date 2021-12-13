@@ -483,7 +483,7 @@ install:
 #### Definition
 
 You can overwrite the default Harvester system settings by configuring `system_settings`.
-See [Settings](../../settings/settings) for available settings.
+See the [Settings](../../settings/settings) page for additional information and the list of all the options.
 
 !!! note
     Overwriting system settings only works when Harvester is installed in "create" mode.
@@ -492,7 +492,7 @@ See [Settings](../../settings/settings) for available settings.
 
 #### Example
 
-The example below overwrites `http-proxy` and `ui-source` settings. Notice that the values must be a string.
+The example below overwrites `http-proxy` and `ui-source` settings. The values must be a `string`.
 
 ```yaml
 system_settings:
