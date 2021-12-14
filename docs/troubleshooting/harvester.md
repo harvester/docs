@@ -54,7 +54,7 @@ metadata:
 ...
 value: '{"protocols":"TLS99","ciphers":"WRONG_CIPHER"}' # <- Delete this line
 ```
-4. Save the change and you should see the following response after exited from the editor:
+4. Save the change and you should see the following response after exit from the editor:
 ```
 setting.harvesterhci.io/ssl-parameters edited
 ```

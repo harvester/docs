@@ -178,8 +178,8 @@ ens3
 
 ## `auto-disk-provision-paths`
 
-This setting allows Harvester to automatically add disks that match the given glob pattern as VM storages.
-It's possible to provide multiple patterns by separating them with comma.
+This setting allows Harvester to automatically add disks that match the given glob pattern as VM storage.
+It's possible to provide multiple patterns by separating them with a comma.
 
 !!! warning
     - This setting is applied to **every Node** in the cluster.
@@ -189,7 +189,7 @@ Default: none
 
 #### Example
 
-The following example, will add disks matching the glob pattern `/dev/sd*` or `/dev/hd*`:
+The following example will add disks matching the glob pattern `/dev/sd*` or `/dev/hd*`:
 
 ```
 /dev/sd*,/dev/hd*
