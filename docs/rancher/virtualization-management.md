@@ -33,9 +33,9 @@ Within Rancher, each person authenticates as a user, which is a login that grant
 
 Once the user logs into Rancher, their authorization, also known as access rights, is determined by global permissions and cluster and project roles.
 
-- **[Global Permissions]**(https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/global-permissions/):
+- [**Global Permissions**](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/global-permissions/):
     - Define user authorization outside the scope of any particular cluster.
-- **[Cluster and Project Roles]**(https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/cluster-project-roles/):
+- [**Cluster and Project Roles**](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/cluster-project-roles/):
     - Define user authorization inside the specific cluster or project where users are assigned the role.
 
 Both global permissions and cluster and project roles are implemented on top of [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/). Therefore, enforcement of permissions and roles is performed by Kubernetes.
