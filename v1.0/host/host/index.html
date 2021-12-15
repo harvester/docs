@@ -449,6 +449,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#deleting-a-node" class="md-nav__link">
+    Deleting a Node
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#multi-disk-management-tech-preview" class="md-nav__link">
     Multi-disk Management - Tech Preview
   </a>
@@ -1005,6 +1012,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#deleting-a-node" class="md-nav__link">
+    Deleting a Node
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#multi-disk-management-tech-preview" class="md-nav__link">
     Multi-disk Management - Tech Preview
   </a>
@@ -1041,6 +1055,34 @@
 <h2 id="cordoning-a-node">Cordoning a Node<a class="headerlink" href="#cordoning-a-node" title="Permanent link">&para;</a></h2>
 <p>Cordoning a node marks it as unschedulable. This feature is useful for performing short tasks on the node during small maintenance windows, like reboots, upgrades, or decommissions. When you’re done, power back on and make the node schedulable again by uncordoning it.</p>
 <p><img alt="cordon-node.png" src="../assets/cordon-nodes.png" /></p>
+<h2 id="deleting-a-node">Deleting a Node<a class="headerlink" href="#deleting-a-node" title="Permanent link">&para;</a></h2>
+<p>Deleting a node is done in two phases:</p>
+<ol>
+<li>
+<p>Delete the node from Harvester</p>
+<ul>
+<li>Go to the <strong>Hosts</strong> page</li>
+<li>On the node you want to modify, click <strong>⋮ &gt; Delete</strong></li>
+</ul>
+</li>
+<li>
+<p>Uninstall RKE2 from the node</p>
+<ul>
+<li>Login to the node as root</li>
+<li>Run <code>rke2-uninstall.sh</code> to delete the whole RKE2 service.</li>
+</ul>
+</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You will lose all data of the control plane node after deleing the RKE2 service.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There's a <a href="https://github.com/harvester/harvester/issues/1497">known issue</a> about node hard delete.
+Once resolved, the last step can be skipped.</p>
+</div>
+<p><img alt="delete.png" src="../assets/delete.png" /></p>
 <h2 id="multi-disk-management-tech-preview">Multi-disk Management - <code>Tech Preview</code><a class="headerlink" href="#multi-disk-management-tech-preview" title="Permanent link">&para;</a></h2>
 <p>Users can view and add multiple disks as additional data volumes from the host detail page.</p>
 <ol>
