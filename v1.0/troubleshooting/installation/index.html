@@ -861,6 +861,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#modifying-cluster-token-on-agent-nodes" class="md-nav__link">
+    Modifying cluster token on agent nodes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#collecting-information" class="md-nav__link">
     Collecting information
   </a>
@@ -1021,6 +1028,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#modifying-cluster-token-on-agent-nodes" class="md-nav__link">
+    Modifying cluster token on agent nodes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#collecting-information" class="md-nav__link">
     Collecting information
   </a>
@@ -1067,6 +1081,52 @@
 <ul>
 <li>Check that your DHCP server offers a default route option. Attaching content from <code>/run/cos/target/rke2.log</code> is helpful too.</li>
 </ul>
+<h2 id="modifying-cluster-token-on-agent-nodes">Modifying cluster token on agent nodes<a class="headerlink" href="#modifying-cluster-token-on-agent-nodes" title="Permanent link">&para;</a></h2>
+<p>When an agent node fails to join the cluster, it can be related to the cluster token not being identical to the server node token.
+In order to confirm the issue, connect to your agent node (i.e. with <a href="../os#how-to-log-into-a-harvester-node">SSH</a>) and check the <code>rancherd</code> service log with the following command:</p>
+<div class="highlight"><pre><span></span><code>$ sudo journalctl -b -u rancherd
+</code></pre></div>
+<p>If the cluster token setup in the agent node is not matching the server node token, you will find several entries of the following message:</p>
+<div class="highlight"><pre><span></span><code>...
+msg=&quot;Bootstrapping Rancher (master-head/v1.21.5+rke2r1)&quot;
+msg=&quot;failed to bootstrap system, will retry: generating plan: insecure cacerts download from https://192.168.122.115:8443/cacerts: Get \&quot;https://192.168.122.115:8443/cacerts\&quot;: EOF&quot;
+...
+</code></pre></div>
+<p>To fix the issue, you need to update the token value in the <code>rancherd</code> configuration file <code>/etc/rancher/rancherd/config.yaml</code>.</p>
+<p>For example, if the cluster token setup in the server node is <code>ThisIsTheCorrectOne</code>, you will update the token value as follow:</p>
+<div class="highlight"><pre><span></span><code><span class="nn">...</span>
+<span class="nt">token</span><span class="p">:</span> <span class="s">&#39;ThisIsTheCorrectOne&#39;</span>
+<span class="nn">...</span>
+</code></pre></div>
+<p>To ensure the change is persistent across reboots, update the <code>token</code> value of the OS configuration file <code>/oem/99_custom.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Harvester Configuration</span>
+<span class="nt">stages</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">...</span>
+  <span class="l l-Scalar l-Scalar-Plain">initramfs</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">commands</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">rm -f /etc/sysconfig/network/ifroute-harvester-mgmt</span>
+    <span class="nt">files</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/rancher/rancherd/config.yaml</span>
+      <span class="nt">permissions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">384</span>
+      <span class="nt">owner</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+      <span class="nt">group</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+      <span class="nt">content</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+        <span class="no">role: cluster-init</span>
+        <span class="no">token: &#39;ThisIsTheCorrectOne&#39; # &lt;- Update this value</span>
+        <span class="no">kubernetesVersion: v1.21.5+rke2r1</span>
+        <span class="no">labels:</span>
+         <span class="no">- harvesterhci.io/managed=true</span>
+      <span class="nt">encoding</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+      <span class="nt">ownerstring</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To see what is the current cluster token value, log in your server node (i.e. with SSH)
+and look in the file <code>/etc/rancher/rancherd/config.yaml</code>. For example,
+you can run the following command to only display the token's value:
+<div class="highlight"><pre><span></span><code>$ sudo yq <span class="nb">eval</span> .token /etc/rancher/rancherd/config.yaml
+</code></pre></div></p>
+</div>
 <h2 id="collecting-information">Collecting information<a class="headerlink" href="#collecting-information" title="Permanent link">&para;</a></h2>
 <p>Please include the following information in a bug report when reporting a failed installation:</p>
 <ul>
