@@ -2475,7 +2475,8 @@ there is a high chance of causing OS to malfunction due to the lack of disk spac
 </code></pre></div>
 <h3 id="system_settings"><code>system_settings</code><a class="headerlink" href="#system_settings" title="Permanent link">&para;</a></h3>
 <h4 id="definition_17">Definition<a class="headerlink" href="#definition_17" title="Permanent link">&para;</a></h4>
-<p>You can overwrite the default Harvester system settings by configuring <code>system_settings</code>.</p>
+<p>You can overwrite the default Harvester system settings by configuring <code>system_settings</code>.
+See the <a href="../../settings/settings">Settings</a> page for additional information and the list of all the options.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Overwriting system settings only works when Harvester is installed in "create" mode.
@@ -2483,14 +2484,10 @@ If you install Harvester in "join" mode, this setting is ignored.
 Installing in "join" mode will adopt the system settings from the existing Harvester system.</p>
 </div>
 <h4 id="example_16">Example<a class="headerlink" href="#example_16" title="Permanent link">&para;</a></h4>
-<p>The configuration below will automatically scan and add storage devices which will match the glob
-pattern <code>/dev/sd*</code> on every Node.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>All the data in these storage devices will be destroyed. Use at your own risk.</p>
-</div>
+<p>The example below overwrites <code>http-proxy</code> and <code>ui-source</code> settings. The values must be a <code>string</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">system_settings</span><span class="p">:</span>
-  <span class="nt">auto-disk-provision-paths</span><span class="p">:</span> <span class="s">&quot;/dev/sd*&quot;</span>
+  <span class="nt">http-proxy</span><span class="p">:</span> <span class="s">&#39;{&quot;httpProxy&quot;:</span><span class="nv"> </span><span class="s">&quot;http://my.proxy&quot;,</span><span class="nv"> </span><span class="s">&quot;httpsProxy&quot;:</span><span class="nv"> </span><span class="s">&quot;https://my.proxy&quot;,</span><span class="nv"> </span><span class="s">&quot;noProxy&quot;:</span><span class="nv"> </span><span class="s">&quot;some.internal.svc&quot;}&#39;</span>
+  <span class="nt">ui-source</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">auto</span>
 </code></pre></div>
 
               

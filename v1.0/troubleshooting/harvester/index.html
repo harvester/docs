@@ -870,6 +870,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers" class="md-nav__link">
+    I can't access Harvester after I changed SSL/TLS enabled protocols and ciphers
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1007,6 +1014,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers" class="md-nav__link">
+    I can't access Harvester after I changed SSL/TLS enabled protocols and ciphers
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1055,6 +1069,34 @@ For Rancher's multi-cluster and multi-tenant integration, please refer to the do
 <p class="admonition-title">Note</p>
 <p>We only support to use the embedded Longhorn UI for debugging and validation purpose .</p>
 </div>
+<h2 id="i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers">I can't access Harvester after I changed SSL/TLS enabled protocols and ciphers<a class="headerlink" href="#i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers" title="Permanent link">&para;</a></h2>
+<p>If you changed
+<a href="../../settings/settings/#ssl-parameters">SSL/TLS enabled protocols and ciphers settings</a>
+and you no longer have access to Harvester GUI and API,
+it's highly possible that NGINX Ingress Controller has stopped working due to the misconfigured SSL/TLS protocols and ciphers.
+Follow these steps to reset the setting:</p>
+<ol>
+<li>Following <a href="../../faq/">FAQ</a> to SSH into Harvester node and switch to <code>root</code> user.
+<div class="highlight"><pre><span></span><code>$ sudo -s
+</code></pre></div></li>
+<li>Editing setting <code>ssl-parameters</code> manually using <code>kubectl</code>:
+<div class="highlight"><pre><span></span><code># kubectl edit settings ssl-parameters
+</code></pre></div></li>
+<li>Deleting the line <code>value: ...</code> so that NGINX Ingress Controller
+will use the default protocols and ciphers.
+<div class="highlight"><pre><span></span><code>apiVersion: harvesterhci.io/v1beta1
+default: &#39;{}&#39;
+kind: Setting
+metadata:
+  name: ssl-parameters
+...
+value: &#39;{&quot;protocols&quot;:&quot;TLS99&quot;,&quot;ciphers&quot;:&quot;WRONG_CIPHER&quot;}&#39; # &lt;- Delete this line
+</code></pre></div></li>
+<li>Save the change and you should see the following response after exit from the editor:
+<div class="highlight"><pre><span></span><code>setting.harvesterhci.io/ssl-parameters edited
+</code></pre></div></li>
+</ol>
+<p>You can further check the logs of Pod <code>rke2-ingress-nginx-controller</code> to see if NGINX Ingress Controller is working correctly.</p>
 
               
             </article>

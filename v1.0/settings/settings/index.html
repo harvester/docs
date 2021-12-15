@@ -1016,6 +1016,46 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#auto-disk-provision-paths" class="md-nav__link">
+    auto-disk-provision-paths
+  </a>
+  
+    <nav class="md-nav" aria-label="auto-disk-provision-paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example_11" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ssl-parameters" class="md-nav__link">
+    ssl-parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="ssl-parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example_12" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1409,6 +1449,46 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#auto-disk-provision-paths" class="md-nav__link">
+    auto-disk-provision-paths
+  </a>
+  
+    <nav class="md-nav" aria-label="auto-disk-provision-paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example_11" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ssl-parameters" class="md-nav__link">
+    ssl-parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="ssl-parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example_12" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1430,8 +1510,8 @@
 <p>This page contains a list of advanced settings which can be used in Harvester.
 You can modify the custom resource <code>settings.harvesterhci.io</code> from the Dashboard UI or with the <code>kubectl</code> command.</p>
 <h2 id="backup-target"><code>backup-target</code><a class="headerlink" href="#backup-target" title="Permanent link">&para;</a></h2>
-<p>This setting allows you to set a custom backup target to store VM backups. It supports NFS and S3. 
-For further information, please refer to the <a href="https://longhorn.io/docs/1.2.2/snapshots-and-backups/backup-and-restore/set-backup-target/#set-up-aws-s3-backupstore">Longhorn documentation</a>. </p>
+<p>This setting allows you to set a custom backup target to store VM backups. It supports NFS and S3.
+For further information, please refer to the <a href="https://longhorn.io/docs/1.2.2/snapshots-and-backups/backup-and-restore/set-backup-target/#set-up-aws-s3-backupstore">Longhorn documentation</a>.</p>
 <p>Default: none</p>
 <h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
@@ -1450,7 +1530,7 @@ For further information, please refer to the <a href="https://longhorn.io/docs/1
 Default: <code>{}</code></p>
 <p>The following options and values can be set:</p>
 <ul>
-<li>Proxy URL for HTTP requests: <code>"httpProxy": "http://&lt;username&gt;:&lt;pswd&gt;@&lt;ip&gt;:&lt;port&gt;"</code> </li>
+<li>Proxy URL for HTTP requests: <code>"httpProxy": "http://&lt;username&gt;:&lt;pswd&gt;@&lt;ip&gt;:&lt;port&gt;"</code></li>
 <li>Proxy URL for HTTPS requests: <code>"httpsProxy": "https://&lt;username&gt;:&lt;pswd&gt;@&lt;ip&gt;:&lt;port&gt;"</code></li>
 <li>Comma-separated list of hostnames and/or CIDRs: <code>"noProxy": "&lt;hostname | CIDR&gt;"</code></li>
 </ul>
@@ -1462,7 +1542,7 @@ Default: <code>{}</code></p>
 <span class="p">}</span>
 </code></pre></div>
 <h2 id="log-level"><code>log-level</code><a class="headerlink" href="#log-level" title="Permanent link">&para;</a></h2>
-<p>This setting allows you to configure the log level for the Harvester server. </p>
+<p>This setting allows you to configure the log level for the Harvester server.</p>
 <p>Default: <code>info</code></p>
 <p>The following values can be set. The list goes from the least to most verbose log level:</p>
 <ul>
@@ -1507,7 +1587,7 @@ CPU for it from Kubernetes scheduler.</p>
 <div class="highlight"><pre><span></span><code>https://your.static.dashboard-ui/index.html
 </code></pre></div>
 <h2 id="ui-source"><code>ui-source</code><a class="headerlink" href="#ui-source" title="Permanent link">&para;</a></h2>
-<p>This setting allows you to configure how to load the UI source. </p>
+<p>This setting allows you to configure how to load the UI source.</p>
 <p>The following values can be set:</p>
 <ul>
 <li><code>auto</code>: The default. Auto-detect whether to use bundled UI or not.</li>
@@ -1518,7 +1598,7 @@ CPU for it from Kubernetes scheduler.</p>
 <div class="highlight"><pre><span></span><code>external
 </code></pre></div>
 <h2 id="upgrade-checker-enabled"><code>upgrade-checker-enabled</code><a class="headerlink" href="#upgrade-checker-enabled" title="Permanent link">&para;</a></h2>
-<p>This setting allows you to automatically check if there's an upgrade available for Harvester. </p>
+<p>This setting allows you to automatically check if there's an upgrade available for Harvester.</p>
 <p>Default: <code>true</code></p>
 <h4 id="example_8">Example<a class="headerlink" href="#example_8" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>false
@@ -1534,6 +1614,47 @@ CPU for it from Kubernetes scheduler.</p>
 <p>Default: none</p>
 <h4 id="example_10">Example<a class="headerlink" href="#example_10" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>ens3
+</code></pre></div>
+<h2 id="auto-disk-provision-paths"><code>auto-disk-provision-paths</code><a class="headerlink" href="#auto-disk-provision-paths" title="Permanent link">&para;</a></h2>
+<p>This setting allows Harvester to automatically add disks that match the given glob pattern as VM storage.
+It's possible to provide multiple patterns by separating them with a comma.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul>
+<li>This setting is applied to <strong>every Node</strong> in the cluster.</li>
+<li>All the data in these storage devices <strong>will be destroyed</strong>. Use at your own risk.</li>
+</ul>
+</div>
+<p>Default: none</p>
+<h4 id="example_11">Example<a class="headerlink" href="#example_11" title="Permanent link">&para;</a></h4>
+<p>The following example will add disks matching the glob pattern <code>/dev/sd*</code> or <code>/dev/hd*</code>:</p>
+<div class="highlight"><pre><span></span><code>/dev/sd*,/dev/hd*
+</code></pre></div>
+<h2 id="ssl-parameters"><code>ssl-parameters</code><a class="headerlink" href="#ssl-parameters" title="Permanent link">&para;</a></h2>
+<p>This setting allows you to change the enabled SSL/TLS protocols and ciphers of Harvester GUI and API.</p>
+<p>The following options and values can be set:</p>
+<ul>
+<li>
+<p><code>protocols</code>: Enabled protocols. See NGINX Ingress Controller's configs <a href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-protocols"><code>ssl-protocols</code></a> for supported input.</p>
+</li>
+<li>
+<p><code>ciphers</code>: Enabled ciphers. See NGINX Ingress Controller's configs <a href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-ciphers"><code>ssl-ciphers</code></a> for supported input.</p>
+</li>
+</ul>
+<p>If no value is provided, <code>protocols</code> is set to <code>TLSv1.2</code> only and the <code>ciphers</code> list is
+<code>ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305</code>.</p>
+<p>Default: none</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>See <a href="../../troubleshooting/harvester/#i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers">Troubleshooting</a> if you have misconfigured this setting and no longer have access to Harvester GUI and API.</p>
+</div>
+<h4 id="example_12">Example<a class="headerlink" href="#example_12" title="Permanent link">&para;</a></h4>
+<p>The following example sets the enabled SSL/TLS protocols to <code>TLSv1.2</code> and <code>TLSv1.3</code> and the ciphers list to
+<code>ECDHE-ECDSA-AES128-GCM-SHA256</code> and <code>ECDHE-ECDSA-CHACHA20-POLY1305</code>.</p>
+<div class="highlight"><pre><span></span><code>{
+  &quot;protocols&quot;: &quot;TLSv1.2 TLSv1.3&quot;,
+  &quot;ciphers&quot;: &quot;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305&quot;
+}
 </code></pre></div>
 
               
