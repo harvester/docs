@@ -6885,10 +6885,11 @@
     },
     "harvesterhci.io.v1beta1.UpgradeSpec": {
       "type": "object",
-      "required": [
-        "version"
-      ],
       "properties": {
+        "image": {
+          "type": "string",
+          "default": ""
+        },
         "version": {
           "type": "string",
           "default": ""
@@ -6905,6 +6906,9 @@
             "$ref": "#/definitions/harvesterhci.io.v1beta1.Condition"
           }
         },
+        "imageID": {
+          "type": "string"
+        },
         "nodeStatuses": {
           "type": "object",
           "additionalProperties": {
@@ -6913,6 +6917,12 @@
           }
         },
         "previousVersion": {
+          "type": "string"
+        },
+        "repoInfo": {
+          "type": "string"
+        },
+        "singleNode": {
           "type": "string"
         }
       }
@@ -7103,6 +7113,10 @@
         "sourceType"
       ],
       "properties": {
+        "checksum": {
+          "type": "string",
+          "default": ""
+        },
         "description": {
           "type": "string"
         },

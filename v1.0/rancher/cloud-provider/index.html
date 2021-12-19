@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/rancher/cloud-provider/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.1">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.23b6d78a.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.edf004c2.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -1111,12 +1111,11 @@
 
 
 <h1 id="harvester-cloud-provider">Harvester Cloud Provider<a class="headerlink" href="#harvester-cloud-provider" title="Permanent link">&para;</a></h1>
-<p><em>Available as of v0.3.0</em></p>
-<p>Users can now provision both <a href="../rke1-cluster/">RKE1</a> and <a href="../rke2-cluster/">RKE2</a> clusters in Rancher 2.6.1, using the built-in Harvester Node Driver. Harvester can now provide <a href="./#load-balancer-support">load balancer</a> support as well as <a href="../csi-driver/">cluster Persistent Storage</a> support to the guest Kubernetes cluster.</p>
+<p><a href="../rke1-cluster/">RKE1</a> and <a href="../rke2-cluster/">RKE2</a> clusters can be provisioned in Rancher using the built-in Harvester Node Driver. Harvester provides <a href="./#load-balancer-support">load balancer</a> and <a href="../csi-driver/">cluster Persistent Storage</a> support to the guest Kubernetes cluster.</p>
 <p>In this page we will learn:</p>
 <ul>
 <li>How to deploy the Harvester cloud provider in both RKE1 and RKE2.</li>
-<li>How to configure a <a href="./#load-balancer-support">LoadBalancer service</a>.</li>
+<li>How to use the <a href="./#load-balancer-support">Harvester load balancer</a>.</li>
 </ul>
 <h2 id="deploying">Deploying<a class="headerlink" href="#deploying" title="Permanent link">&para;</a></h2>
 <h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
@@ -1127,59 +1126,53 @@
 <h3 id="deploying-to-the-rke1-cluster-with-harvester-node-driver">Deploying to the RKE1 Cluster with Harvester Node Driver<a class="headerlink" href="#deploying-to-the-rke1-cluster-with-harvester-node-driver" title="Permanent link">&para;</a></h3>
 <p>When spinning up an RKE cluster using the Harvester node driver, you can perform two steps to deploy the <code>Harvester</code> cloud provider:</p>
 <ul>
-<li>Select the <code>External</code> cloud provider.</li>
-</ul>
+<li>
+<p>Select <code>Harvester(Out-of-tree)</code> option.</p>
 <p><img alt="" src="../assets/rke-cloud-provider.png" /></p>
+</li>
+<li>
+<p>Install <code>Harvester Cloud Provider</code> from the Rancher marketplace.</p>
+<p><img alt="" src="../assets/install-harvester-cloud-provider.png" /></p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You should specify the <code>Cluster name</code>. The default value <code>kubernetes</code> will be set if no <code>Cluster name</code> is entered. The <code>Cluster name</code> is used to distinguish the ownership of the Harvester load balancers. </p>
+</div>
 <ul>
-<li>Generate add-on configuration and add it to the RKE YAML file.
-  <div class="highlight"><pre><span></span><code># depend on kubectl to operate the Harvester cluster
-curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | sh -s &lt;serviceAccount name&gt; &lt;namespace&gt;
-</code></pre></div></li>
+<li>
+<p>Install Harvester csi driver from the Rancher marketplace if needed.</p>
+<p><img alt="" src="../assets/install-harvester-csi-driver.png" /></p>
+</li>
 </ul>
 <h3 id="deploying-to-the-rke2-cluster-with-harvester-node-driver">Deploying to the RKE2 Cluster with Harvester Node Driver<a class="headerlink" href="#deploying-to-the-rke2-cluster-with-harvester-node-driver" title="Permanent link">&para;</a></h3>
 <p>When spinning up an RKE2 cluster using the Harvester node driver, select the <code>Harvester</code> cloud provider. The node driver will then help deploy both the CSI driver and CCM automatically.</p>
 <p><img alt="" src="../assets/rke2-cloud-provider.png" /></p>
 <h2 id="load-balancer-support">Load Balancer Support<a class="headerlink" href="#load-balancer-support" title="Permanent link">&para;</a></h2>
-<p>After deploying the Harvester cloud provider, users can now configure a Kubernetes service of the type <code>LoadBalancer</code>. Currently, users can only set the load balancer configuration using <code>service annotations</code>.</p>
+<p>After deploying the <code>Harvester Cloud provider</code>, you can use the Kubernetes <code>LoadBalancer</code> service to expose a microservice inside the guest cluster to the external world. When you create a Kubernetes <code>LoadBalancer</code> service, a Harvester load balancer is assigned to the service and you can edit it through the <code>Add-on Config</code> in the Rancher UI.</p>
 <p><img alt="" src="../assets/lb-svc.png" /></p>
-<div class="admonition example">
-<p class="admonition-title">Example</p>
-<p>You can specify the Harvester LoadBalancer service config through annotations. The <code>cloudprovider.harvesterhci.io/healthcheck-port</code> annotation is required. For example:</p>
-<ul>
-<li><code>cloudprovider.harvesterhci.io/ipam: dhcp</code> - if the network of your Kubernetes nodes supports DHCP.</li>
-<li><code>cloudprovider.harvesterhci.io/healthcheck-port: 80</code> - specify the port of your service.</li>
-</ul>
-</div>
 <h3 id="ipam">IPAM<a class="headerlink" href="#ipam" title="Permanent link">&para;</a></h3>
-<p>Harvester's built-in load balancer supports both <code>pool</code> and <code>dhcp</code> modes. Users can specify the IPAM mode using the annotation key <code>cloudprovider.harvesterhci.io/ipam</code>. This value defaults to <code>pool</code>.</p>
+<p>Harvester's built-in load balancer supports both <code>pool</code> and <code>dhcp</code> modes. You can select the mode in the Rancher UI. Harvester adds the annotation <code>cloudprovider.harvesterhci.io/healthcheck-port</code> to the service behind.</p>
 <ul>
-<li>pool: You should configure an IP address pool in Harvester in advance. The Harvester LoadBalancer controller will allocate an IP address from the IP address pool for the load balancer.<ul>
-<li>Refer to the <a href="https://github.com/kube-vip/kube-vip-cloud-provider#global-and-namespace-pools">guideline</a> to configure an IP address pool. E.g, for a <code>Namespace</code> pool,
-  a service will take an address based upon its namespace pool cidr/range-namespace. These would look like the following:
-    <div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">$ kubectl get configmap -n kube-system kubevip -o yaml</span>
-
-<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kubevip</span>
-<span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kube-system</span>
-<span class="nt">data</span><span class="p">:</span>
-<span class="nt">cidr-default</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.200/29</span>
-<span class="nt">cidr-development</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.210/29</span>
-<span class="nt">cidr-finance</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.220/29</span>
-<span class="nt">cidr-testing</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.230/29</span>
-</code></pre></div></li>
+<li>pool: You should configure an IP address pool in Harvester in advance. The Harvester LoadBalancer controller will allocate an IP address from the IP address pool for the load balancer.</li>
 </ul>
-</li>
-<li>dhcp:  A DHCP server is required. The Harvester LoadBalancer controller will request an IP address from the DHCP server of the Kubernetes nodes.</li>
+<p><img alt="" src="../assets/vip-pool.png" /> </p>
+<ul>
+<li>dhcp:  A DHCP server is required. The Harvester LoadBalancer controller will request an IP address from the DHCP server.</li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is not allowed to modify the IPAM mode. You need to create a new service if you want to modify the IPAM mode.</p>
+</div>
 <h3 id="health-checks">Health Checks<a class="headerlink" href="#health-checks" title="Permanent link">&para;</a></h3>
-<p>The Harvester load balancer supports TCP health checks. Supported annotations are shown below:</p>
+<p>The Harvester load balancer supports TCP health checks. You can specify the parameters in the Rancher UI if you enable the <code>Health Check</code> option.</p>
+<p><img alt="" src="../assets/health-check.png" /></p>
+<p>Alternatively, you can speficy the parameters by adding annotations to the service manually. The following annotations are supported:</p>
 <table>
 <thead>
 <tr>
-<th align="left">Key</th>
-<th align="left">Value</th>
+<th align="left">Annotation Key</th>
+<th align="left">Value Type</th>
 <th align="left">Required</th>
 <th align="left">Description</th>
 </tr>
@@ -1195,13 +1188,13 @@ curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/m
 <td align="left"><code>cloudprovider.harvesterhci.io/healthcheck-success-threshold</code></td>
 <td align="left">string</td>
 <td align="left">false</td>
-<td align="left">Specifies the health check success threshold. The default value is 1. If the number of times the prober continuously detects an address successfully reaches the success threshold, then the backend server can start to forward traffic.</td>
+<td align="left">Specifies the health check success threshold. The default value is 1. The backend server will start forwarding traffic if the number of times the prober continuously detects an address successfully reaches the threshold.</td>
 </tr>
 <tr>
 <td align="left"><code>cloudprovider.harvesterhci.io/healthcheck-failure-threshold</code></td>
 <td align="left">string</td>
 <td align="left">false</td>
-<td align="left">Specifies the success and failure threshold. The default value is 3. The backend server will stop forwarding traffic if the number of health check failures reaches the failure threshold.</td>
+<td align="left">Specifies the health check failure threshold. The default value is 3. The backend server will stop forwarding traffic if the number of health check failures reaches the threshold.</td>
 </tr>
 <tr>
 <td align="left"><code>cloudprovider.harvesterhci.io/healthcheck-periodseconds</code></td>
@@ -1217,6 +1210,10 @@ curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/m
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, the health check port needs to be a <code>nodeport</code>. There's <a href="https://github.com/harvester/harvester/issues/1697">a feature request</a> to change it to a service port and which will be implemented in a future release.</p>
+</div>
 
               
             </article>
@@ -1282,10 +1279,10 @@ curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/m
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.c7dec7e7.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.0bbba5b5.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.da79ceb7.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1a181d9.min.js"></script>
       
         <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
