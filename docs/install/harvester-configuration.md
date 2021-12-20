@@ -90,7 +90,7 @@ This configuration is mandatory when the installation is in `JOIN` mode. It tell
 
 !!! note
     To ensure a high availability (HA) Harvester cluster,
-    either use [VIP](./#installvip) of the Harvester main server or a domain name in `server_url`.
+    either use the Harvester main server [VIP](./#installvip) or a domain name in `server_url`.
 
 #### Example
 
