@@ -1136,6 +1136,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#vm-force-reset-policy" class="md-nav__link">
+    vm-force-reset-policy
+  </a>
+  
+    <nav class="md-nav" aria-label="vm-force-reset-policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example_17" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1649,6 +1669,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#vm-force-reset-policy" class="md-nav__link">
+    vm-force-reset-policy
+  </a>
+  
+    <nav class="md-nav" aria-label="vm-force-reset-policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example_17" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1848,6 +1888,15 @@ It's possible to provide multiple patterns by separating them with a comma.</p>
   &quot;protocols&quot;: &quot;TLSv1.2 TLSv1.3&quot;,
   &quot;ciphers&quot;: &quot;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305&quot;
 }
+</code></pre></div>
+<h2 id="vm-force-reset-policy"><code>vm-force-reset-policy</code><a class="headerlink" href="#vm-force-reset-policy" title="Permanent link">&para;</a></h2>
+<p>This setting allows you to force reschedule VMs when a node is unavailable. When a node turns to be <code>Not Ready</code>, it will force delete the VM on that node and reschedule it to another available node after a period of seconds.</p>
+<p>Default: <code>{"enable":true, "period":300}</code></p>
+<h4 id="example_17">Example<a class="headerlink" href="#example_17" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;enable&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;period&quot;</span><span class="p">:</span> <span class="mi">300</span>
+<span class="p">}</span>
 </code></pre></div>
 
               
