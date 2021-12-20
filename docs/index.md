@@ -57,7 +57,7 @@ To get the Harvester server up and running, the following minimum hardware is re
 
 ## Quick start
 
-You can install Harvester via ISO installation or PXE Boot Installation. Instructions are provided in sections below.
+You can install Harvester via [ISO](./install/iso-install.md) installation or [PXE](./install/pxe-boot-install.md) Boot Installation. Instructions are provided in sections below.
 
 ### ISO Installation
 
@@ -77,17 +77,19 @@ During the installation, you can either choose to form a new cluster or join the
 1. Mount the Harvester ISO disk and boot the server by selecting the `Harvester Installer`.
    ![iso-install.png](./install/assets/iso-install.png)
 1. Choose the installation mode by either creating a new Harvester cluster or by joining an existing one.
-1. Choose the installation device to which the Harvester cluster will be formatted.
+1. Choose the installation device to which the Harvester cluster will be formatted
+     - Note: you will be promoted to select the [MBR](https://en.wikipedia.org/wiki/Master_boot_record) disk partition when install via the BIOS method, otherwise [GPT](https://en.wikipedia.org/wiki/GUID_Partition_Table) will be used by default.
+   ![iso-install-disk.png](./install/assets/iso-install-disk.png)
 1. Configure the hostname and select the network interface for the management network. By default, Harvester will create a bond NIC named `harvester-mgmt`, and the IP address can either be configured via DHCP or by static method.
    ![iso-installed.png](./install/assets/iso-nic-config.gif)
 1. Optional: Configure the DNS servers; use commas as delimiters.
-1. Configure the Virtual IP with which you can use to access the cluster or join other nodes to the cluster.
+1. Configure the `Virtual IP` which you can use to access the cluster or join other nodes to the cluster <small>(Note: You will need to configure static MAC-to-IP address mapping on your DHCP server to persist the Virtual IP accordingly)</small>.
 1. Configure the `cluster token`. This token will be used for adding other nodes to the cluster.
-1. Configure the login password of the host. The default ssh user is `rancher`.
-1. Optional: Configure the NTP Servers of the node if needed. Default is `0.suse.pool.ntp.org`.
-1. Optional: If you need to use an HTTP proxy to access the outside world, enter the proxy URL address; otherwise, leave this blank.
-1. Optional: You can choose to import SSH keys from a remote URL server. Your GitHub public keys can be used with `https://github.com/<username>.keys`.
-1. Optional: If you need to customize the host with cloud-init configuration, enter the HTTP URL.
+1. Configure the login password of the host. The default SSH user is `rancher`.
+1. (Optional) Configure the NTP Servers of the node. This defaults to `0.suse.pool.ntp.org`.
+1. (Optional) If you need to use an HTTP proxy to access the outside world, enter the proxy URL address here. Otherwise, leave this blank.
+1. (Optional) You can choose to import SSH keys from a remote URL server. Your GitHub public keys can be used with `https://github.com/<username>.keys`.
+1. (Optional) If you need to customize the host with a [Harvester configuration](./install/harvester-configuration.md) file, enter the HTTP URL here.
 1. Confirm the installation options and Harvester will be installed to your host. The installation may take a few minutes to complete.
 1. Once the installation is complete, the host will restart, and a console UI with management URL and status will be displayed. <small>(You can Use F12 to switch between the Harvester console and the Shell).</small>
 1. The default URL of the web interface is `https://your-virtual-ip`.
@@ -95,8 +97,9 @@ During the installation, you can either choose to form a new cluster or join the
 1. Users will be prompted to set the password for the default `admin` user at first login.
     ![first-login.png](./install/assets/first-time-login.png)
 
-### Other Installation Methods
+### PXE/iPXE Installation
 
-Harvester can be installed automatically also. Please refer to [PXE Boot Install](./install/pxe-boot-install.md) for detailed instructions for additional guidance.
+Harvester can also be installed automatically. Please refer to [PXE Boot Install](./install/pxe-boot-install.md) for detailed instructions and additional guidance.
 
-More iPXE usage examples are available at [harvester/ipxe-examples](https://github.com/harvester/ipxe-examples).
+!!! note
+    More iPXE usage examples are available at [harvester/ipxe-examples](https://github.com/harvester/ipxe-examples).
