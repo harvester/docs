@@ -288,6 +288,11 @@ os:
     https_proxy: http://myserver
 ```
 
+!!! note
+    This example sets the HTTP proxy for **foundational OS components**.
+    To set up an HTTP proxy for Harvester components such as fetching external images and backup to S3 services,
+    see [Settings/http-proxy](../../settings/settings/#http-proxy).
+
 ### `os.labels`
 
 #### Definition
