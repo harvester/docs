@@ -41,7 +41,7 @@ Let's assume the NGINX HTTP server's IP is `10.100.0.10`, and it serves the `/us
 - Serve the files.
 
     Copy or move the downloaded files to an appropriate location so they can be downloaded via the HTTP server. For example:
-  
+
     ```
     sudo mkdir -p /usr/share/nginx/html/harvester/
     sudo cp /path/to/harvester-<version>-amd64.iso /usr/share/nginx/html/harvester/
@@ -108,11 +108,16 @@ boot
 This assumes the iPXE script is stored in `/usr/share/nginx/html/harvester/ipxe-create`.
 
 !!! note
-    If there are multiple network interfaces on the installing machine, the user can use `ip=<interface>:dhcp` to specify the booting interface (e.g., `ip=eth1:dhcp`).
+    If you have multiple network interfaces,
+    you can leverage dracut's `ip=` parameter to specify the booting interface
+    and any other network configurations that dracut supports (e.g., `ip=eth1:dhcp`)
+    See [`man dracut.cmdline`](https://man7.org/linux/man-pages/man7/dracut.cmdline.7.html) for more information.
+
+    Use `ip=` parameter to designate the booting interface only, as we only support **one single `ip=` parameter**.
 
 ### JOIN Mode
 
-!!! warning 
+!!! warning
     **Security Risks**: The configuration file below contains credentials which should be kept secret. Please do not make the configuration file publicly accessible.
 
 Create a [Harvester configuration file](./harvester-configuration.md) called `config-join.yaml` for `JOIN` mode. Modify the values as needed:
