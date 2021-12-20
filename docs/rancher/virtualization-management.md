@@ -8,13 +8,13 @@ keywords:
 
 For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6.x.
 
-1. First, you will need to install Rancher v2.6.1 or above. For testing purposes, you can spin up a Rancher server using the following `docker run` command: 
+1. Firstly, you will need to spin up a Rancher with v2.6.3 or above of Harvester v1.0.0 management. For testing purposes, you can spin up a Rancher server using the following `docker run` command: 
     ```
-    $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.2
+    $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.3
     ```
 
     !!!note
-        For a production environment setup, please refer to the official Rancher [docs](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/).
+        For a production Rancher server setup, please refer to the official Rancher [docs](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/).
 
 1. Once the Rancher server is up and running, log in and click the hamburger menu and choose the **Virtualization Management** tab. Select **Import Existing** to import the downstream Harvester cluster into the Rancher server.
 ![](./assets/vm-menu.png)
@@ -63,11 +63,7 @@ The following example provides a good explanation of how the multi-tenant featur
 1. Create a VM with one of the images that you have uploaded.
 1. Log in with another user, e.g., `project-readonly`, and this user will only have the read permission of this project.
 
-!!!note
-    A known issue was found that allows the [read-only user to be able to manage API actions](https://github.com/harvester/harvester/issues/1406).
-
 ## Delete Imported Harvester Cluster
-
 Users can delete the imported Harvester cluster from the Rancher UI via **Virtualization Management > Harvester Clusters**. Select the cluster you want to remove and click the **Delete** button to delete the imported Harvester cluster.
 
 ![delete-cluster](assets/delete-harvester-cluster.png)
