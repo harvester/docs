@@ -425,6 +425,7 @@ install:
     - `static`: Harvester uses a static VIP.
 - `install.vip_hw_addr`: The hardware address corresponding to the VIP. Users must configure their on-premise DHCP server to offer the configured VIP. The field is mandatory when `install.vip_mode` is `dhcp`.
 
+See [Management Address](../management-address) for more information.
 
 #### Example
 
