@@ -24,7 +24,7 @@ Users can now import and manage multiple Harvester clusters using the Rancher [V
 
 ## Deploying Rancher
 
-To use Rancher with Harvester, please install the Rancher server separately from the Harvester. As an option, You can spin up a VM in the Harvester and install the Rancher v2.6.3 or above to try out the integration features.
+To use Rancher with Harvester, please install the Rancher and Harvester in two separated servers. If you want to try out the integration features, you can create a VM in Harvester and install Rancher v2.6.3 or above.
 
 ### Quick Start Guide
 1. Begin creation of a custom cluster by provisioning a Linux host. Your host can be any of the following:
@@ -40,12 +40,12 @@ $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged r
 ```
 
 !!! Note
-    For more information about how to deploy the Rancher server, please refer to the Rancher [documentation](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/).
+    For more information on how to deploy the Rancher server, please refer to the Rancher [documentation](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/).
 
 ## Virtualization Management
 
-With Rancher's Virtualization Management feature, users can now import and manage Harvester clusters. 
-By clicking on one of the clusters, users are able to view and manage the imported Harvester cluster resources like Hosts, VMs, images, volumes, etc. Additionally, the `Virtualization Management` has leveraged existing Rancher features such as authentication with various auth providers and multi-tenant support.
+With Rancher's Virtualization Management feature, you can now import and manage Harvester clusters.
+By clicking on one of the clusters, you are able to view and manage the imported Harvester cluster resources like Hosts, VMs, images, volumes, etc. Additionally, the `Virtualization Management` leverages existing Rancher features such as authentication with various auth providers and multi-tenant support.
 
 For more details, please check the [virtualization management](virtualization-management.md) page.
 

@@ -6,16 +6,16 @@ Description: The Harvester provides a virtual IP as the management address.
 ---
 
 # Management Address
-Harvester provides a fixed virtual IP (VIP) as the management address. Users can check the management address on the console dashboard after installation.
+Harvester provides a fixed virtual IP (VIP) as the management address. You can find the management address on the console dashboard after the installation.
 
 !!! note
-    You will need to config static MAC-to-IP address mapping on your DHCP server to persist the Virtual IP accordingly.
+    If you selected the IP address to be configured via DHCP, you will need to configure static MAC-to-IP address mapping on your DHCP server in order to have a persistent Virtual IP
 
 ![](./assets/iso-installed.png)
 
 ## How to get the VIP MAC address
 
-You can get the VIP MAC address via run the following command on the management node:
+To get the VIP MAC address, you can run the following command on the management node:
 ```shell
 $ kubectl get svc -n kube-system ingress-expose -ojsonpath='{.metadata.annotations}'
 ```
@@ -28,6 +28,6 @@ Example of output:
 ## Usages
 The management address has two usages.
 
-- Allow users to access the Harvester API/UI via `HTTPS` protocol.
-- Used by the other nodes to join the cluster. 
+- Allows the access to the Harvester API/UI via `HTTPS` protocol.
+- Is the address the other nodes use to join the cluster.
   ![](./assets/configure-management-address.png)
