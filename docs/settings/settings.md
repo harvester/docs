@@ -282,3 +282,18 @@ The following example sets the enabled SSL/TLS protocols to `TLSv1.2` and `TLSv1
   "ciphers": "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
 }
 ```
+
+## `vm-force-reset-policy`
+
+This setting allows you to force reschedule VMs when a node is unavailable. When a node turns to be `Not Ready`, it will force delete the VM on that node and reschedule it to another available node after a period of seconds.
+
+Default: `{"enable":true, "period":300}`
+
+#### Example
+
+```json
+{
+  "enable": "true",
+  "period": 300
+}
+```
