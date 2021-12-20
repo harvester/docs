@@ -2194,6 +2194,11 @@
 <h4 id="definition">Definition<a class="headerlink" href="#definition" title="Permanent link">&para;</a></h4>
 <p>The URL of the Harvester server to join as an agent.</p>
 <p>This configuration is mandatory when the installation is in <code>JOIN</code> mode. It tells the Harvester installer where the main server is.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To ensure a high availability (HA) Harvester cluster,
+either use the Harvester main server <a href="./#installvip">VIP</a> or a domain name in <code>server_url</code>.</p>
+</div>
 <h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nt">server_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://someserver:8443</span>
 <span class="nt">install</span><span class="p">:</span>

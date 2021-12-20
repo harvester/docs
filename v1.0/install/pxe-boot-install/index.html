@@ -1252,7 +1252,7 @@ sudo cp /path/to/harvester-&lt;version&gt;-rootfs-amd64.squashfs /usr/share/ngin
         <span class="nt">miimon</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
   <span class="nt">device</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/dev/sda</span>
   <span class="nt">iso_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://10.100.0.10/harvester/harvester-&lt;version&gt;-amd64.iso</span>
-  <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.100.0.100</span>       <span class="c1"># The VIP to access the Harvester GUI. Make sure the IP is free to use.</span>
+  <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.100.0.99</span>        <span class="c1"># The VIP to access the Harvester GUI. Make sure the IP is free to use.</span>
   <span class="nt">vip_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">static</span>        <span class="c1"># Or dhcp, check configuration file for more information.</span>
 </code></pre></div>
 <p>For machines that needs to be installed using <code>CREATE</code> mode, the following is an iPXE script that boots the kernel with the above config:</p>
@@ -1273,7 +1273,7 @@ boot
 </div>
 <p>Create a <a href="../harvester-configuration/">Harvester configuration file</a> called <code>config-join.yaml</code> for <code>JOIN</code> mode. Modify the values as needed:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># cat /usr/share/nginx/html/harvester/config-join.yaml</span>
-<span class="nt">server_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://10.100.0.130:8443</span>
+<span class="nt">server_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://10.100.0.99:8443</span>  <span class="c1"># Should be the VIP set up in &quot;CREATE&quot; config</span>
 <span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">token</span>
 <span class="nt">os</span><span class="p">:</span>
   <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">node2</span>
