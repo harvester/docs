@@ -911,9 +911,68 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          FAQ
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         FAQ
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-can-i-ssh-login-to-the-harvester-node" class="md-nav__link">
+    How can I ssh login to the Harvester node?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-default-login-username-and-password-of-the-harvester-dashboard" class="md-nav__link">
+    What is the default login username and password of the Harvester dashboard?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-can-i-access-the-kubeconfig-file-of-the-harvester-cluster" class="md-nav__link">
+    How can I access the kubeconfig file of the Harvester cluster?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-install-the-qemu-guest-agent-of-a-running-vm" class="md-nav__link">
+    How to install the qemu-guest-agent of a running VM?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-can-i-reset-the-administrator-password" class="md-nav__link">
+    How can I reset the administrator password?
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -939,6 +998,49 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-can-i-ssh-login-to-the-harvester-node" class="md-nav__link">
+    How can I ssh login to the Harvester node?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-default-login-username-and-password-of-the-harvester-dashboard" class="md-nav__link">
+    What is the default login username and password of the Harvester dashboard?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-can-i-access-the-kubeconfig-file-of-the-harvester-cluster" class="md-nav__link">
+    How can I access the kubeconfig file of the Harvester cluster?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-install-the-qemu-guest-agent-of-a-running-vm" class="md-nav__link">
+    How to install the qemu-guest-agent of a running VM?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-can-i-reset-the-administrator-password" class="md-nav__link">
+    How can I reset the administrator password?
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -956,38 +1058,31 @@
 
 <h1 id="faq">FAQ<a class="headerlink" href="#faq" title="Permanent link">&para;</a></h1>
 <p>This FAQ is a work in progress designed to answer the questions our users most frequently ask about Harvester.</p>
-<ol>
-<li>
-<p>How can I ssh login to the Harvester node?
+<h3 id="how-can-i-ssh-login-to-the-harvester-node">How can I ssh login to the Harvester node?<a class="headerlink" href="#how-can-i-ssh-login-to-the-harvester-node" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>$ ssh rancher@node-ip
-</code></pre></div></p>
-</li>
-<li>
-<p>What is the default login username and password of the Harvester dashboard?
+</code></pre></div>
+<h3 id="what-is-the-default-login-username-and-password-of-the-harvester-dashboard">What is the default login username and password of the Harvester dashboard?<a class="headerlink" href="#what-is-the-default-login-username-and-password-of-the-harvester-dashboard" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>username: admin
 password: <span class="c1"># you will be promoted to set the default password when logging in for the first time</span>
-</code></pre></div></p>
-</li>
-<li>
-<p>How can I access the kubeconfig file of the Harvester cluster?
-<div class="highlight"><pre><span></span><code><span class="c1"># You can either download the kubeconfig file from the Harvester </span>
-<span class="c1"># dashboard or access it via one of the Harvester management nodes. E.g.,</span>
-$ cat /etc/rancher/rke2/rke2.yaml
 </code></pre></div>
+<h3 id="how-can-i-access-the-kubeconfig-file-of-the-harvester-cluster">How can I access the kubeconfig file of the Harvester cluster?<a class="headerlink" href="#how-can-i-access-the-kubeconfig-file-of-the-harvester-cluster" title="Permanent link">&para;</a></h3>
+<p>Option 1. You can download the kubeconfig file from the support page of the Harvester dashboard.
 <img alt="harvester-kubeconfig.png" src="../assets/harvester-kubeconfig.png" /></p>
-</li>
-<li>
-<p>How do I access the embedded Rancher dashboard?</p>
-<p>Please refer to the <a href="/troubleshooting/harvester#access-embedded-rancher">troubleshooting section</a>.</p>
-</li>
-<li>
-<p>How to install the qemu-guest-agent of a running VM.
-<div class="highlight"><pre><span></span><code><span class="c1"># cloud-init will only be executed once, reboot it after add the cloud-init config with the following command.</span>
+<p>Option 2. You can get the kubeconfig file from one of the Harvester management nodes. E.g.,
+<div class="highlight"><pre><span></span><code>$ cat /etc/rancher/rke2/rke2.yaml
+</code></pre></div></p>
+<h3 id="how-to-install-the-qemu-guest-agent-of-a-running-vm">How to install the qemu-guest-agent of a running VM?<a class="headerlink" href="#how-to-install-the-qemu-guest-agent-of-a-running-vm" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># cloud-init will only be executed once, reboot it after add the cloud-init config with the following command.</span>
 $ cloud-init clean --logs --reboot
 </code></pre></div>
 <a href="https://cloudinit.readthedocs.io/en/latest/topics/cli.html#clean">https://cloudinit.readthedocs.io/en/latest/topics/cli.html#clean</a></p>
-</li>
-</ol>
+<h3 id="how-can-i-reset-the-administrator-password">How can I reset the administrator password?<a class="headerlink" href="#how-can-i-reset-the-administrator-password" title="Permanent link">&para;</a></h3>
+<p>In case you forget the administrator password, you can reset it via the command line. SSH to one of the management node and run the following command:
+<div class="highlight"><pre><span></span><code><span class="c1"># switch to root and run</span>
+$ kubectl  -n cattle-system <span class="nb">exec</span> <span class="k">$(</span>kubectl --kubeconfig <span class="nv">$KUBECONFIG</span> -n cattle-system get pods -l <span class="nv">app</span><span class="o">=</span>rancher --no-headers <span class="p">|</span> head -1 <span class="p">|</span> awk <span class="s1">&#39;{ print $1 }&#39;</span><span class="k">)</span> -c rancher -- reset-password
+New password <span class="k">for</span> default administrator <span class="o">(</span>user-xxxxx<span class="o">)</span>:
+&lt;new_password&gt;
+</code></pre></div></p>
 
               
             </article>
