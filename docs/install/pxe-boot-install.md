@@ -92,7 +92,7 @@ install:
         miimon: 100
   device: /dev/sda
   iso_url: http://10.100.0.10/harvester/harvester-<version>-amd64.iso
-  vip: 10.100.0.100       # The VIP to access the Harvester GUI. Make sure the IP is free to use.
+  vip: 10.100.0.99        # The VIP to access the Harvester GUI. Make sure the IP is free to use.
   vip_mode: static        # Or dhcp, check configuration file for more information.
 ```
 
@@ -119,7 +119,7 @@ Create a [Harvester configuration file](./harvester-configuration.md) called `co
 
 ```YAML
 # cat /usr/share/nginx/html/harvester/config-join.yaml
-server_url: https://10.100.0.130:8443
+server_url: https://10.100.0.99:8443  # Should be the VIP set up in "CREATE" config
 token: token
 os:
   hostname: node2

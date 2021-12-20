@@ -88,6 +88,10 @@ The URL of the Harvester server to join as an agent.
 
 This configuration is mandatory when the installation is in `JOIN` mode. It tells the Harvester installer where the main server is.
 
+!!! note
+    To ensure a high availability (HA) Harvester cluster,
+    either use [VIP](./#installvip) of the Harvester main server or a domain name in `server_url`.
+
 #### Example
 
 ```yaml
