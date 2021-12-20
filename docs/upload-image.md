@@ -25,9 +25,8 @@ To import virtual machine images in the **Images** page, enter a URL that can be
 Currently, qcow2, raw, and ISO images are supported.
 
 !!!note
-
     - Please do not refresh the page until the file upload is finished.
-    - This feature is temporarily unusable on the single cluster UI and will be fixed via [#1415](https://github.com/harvester/harvester/issues/1415).
+
 ![](./assets/upload-image-local.png)
 
 
