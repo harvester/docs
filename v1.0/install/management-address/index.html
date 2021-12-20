@@ -370,15 +370,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#usages" class="md-nav__link">
-    Usages
+  <a href="#how-to-get-the-vip-mac-address" class="md-nav__link">
+    How to get the VIP MAC address
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configure-vip" class="md-nav__link">
-    Configure VIP
+  <a href="#usages" class="md-nav__link">
+    Usages
   </a>
   
 </li>
@@ -986,15 +986,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#usages" class="md-nav__link">
-    Usages
+  <a href="#how-to-get-the-vip-mac-address" class="md-nav__link">
+    How to get the VIP MAC address
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configure-vip" class="md-nav__link">
-    Configure VIP
+  <a href="#usages" class="md-nav__link">
+    Usages
   </a>
   
 </li>
@@ -1017,25 +1017,26 @@
 
 
 <h1 id="management-address">Management Address<a class="headerlink" href="#management-address" title="Permanent link">&para;</a></h1>
-<p>Harvester provides a fixed virtual IP (VIP) as the management address. Users can see the management address on the console dashboard after installation.</p>
-<p><img alt="" src="../assets/console-dashboard.png" /></p>
+<p>Harvester provides a fixed virtual IP (VIP) as the management address. You can find the management address on the console dashboard after the installation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you selected the IP address to be configured via DHCP, you will need to configure static MAC-to-IP address mapping on your DHCP server in order to have a persistent Virtual IP</p>
+</div>
+<p><img alt="" src="../assets/iso-installed.png" /></p>
+<h2 id="how-to-get-the-vip-mac-address">How to get the VIP MAC address<a class="headerlink" href="#how-to-get-the-vip-mac-address" title="Permanent link">&para;</a></h2>
+<p>To get the VIP MAC address, you can run the following command on the management node:
+<div class="highlight"><pre><span></span><code>$ kubectl get svc -n kube-system ingress-expose -ojsonpath<span class="o">=</span><span class="s1">&#39;{.metadata.annotations}&#39;</span>
+</code></pre></div></p>
+<p>Example of output:
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;kube-vip.io/hwaddr&quot;</span><span class="p">:</span><span class="s2">&quot;02:00:00:09:7f:3f&quot;</span><span class="p">,</span><span class="nt">&quot;kube-vip.io/requestedIP&quot;</span><span class="p">:</span><span class="s2">&quot;10.84.102.31&quot;</span><span class="p">}</span>
+</code></pre></div></p>
 <h2 id="usages">Usages<a class="headerlink" href="#usages" title="Permanent link">&para;</a></h2>
 <p>The management address has two usages.</p>
 <ul>
-<li>
-<p>Allow users to access the Harvester UI via <code>https</code> protocol.</p>
-</li>
-<li>
-<p>Used by the other nodes to join the cluster. </p>
-</li>
+<li>Allows the access to the Harvester API/UI via <code>HTTPS</code> protocol.</li>
+<li>Is the address the other nodes use to join the cluster.
+  <img alt="" src="../assets/configure-management-address.png" /></li>
 </ul>
-<p><img alt="" src="../assets/configure-management-address.png" /></p>
-<h2 id="configure-vip">Configure VIP<a class="headerlink" href="#configure-vip" title="Permanent link">&para;</a></h2>
-<p>Users can specify the VIP during installation. It can either be configured via DHCP or assigned a static one.</p>
-<blockquote>
-<p>Note: In PXE boot, Harvester does not support setting the VIP via DHCP. It will be addressed in the next release.
-Issue: https://github.com/harvester/harvester/issues/1410</p>
-</blockquote>
 
               
             </article>

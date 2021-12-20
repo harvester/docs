@@ -957,7 +957,7 @@
 
 
 <h1 id="iso-installation">ISO Installation<a class="headerlink" href="#iso-installation" title="Permanent link">&para;</a></h1>
-<p>To get the Harvester ISO, download it from the <a href="https://github.com/harvester/harvester/releases">Github releases.</a></p>
+<p>To get the Harvester ISO image, download it from the <a href="https://github.com/harvester/harvester/releases">Github releases</a> page.</p>
 <p>During the installation you can either choose to form a new cluster, or join the node to an existing cluster.</p>
 <p>Note: This <a href="https://youtu.be/97ADieBX6bE">video</a> shows a quick overview of the ISO installation.</p>
 <div class="text-center">
@@ -968,17 +968,21 @@
 <li>Mount the Harvester ISO disk and boot the server by selecting the <code>Harvester Installer</code> option.
    <img alt="iso-install.png" src="../assets/iso-install.png" /></li>
 <li>Choose the installation mode by either creating a new Harvester cluster, or by joining an existing one.</li>
-<li>Choose the installation device that Harvester will be formatted to.</li>
+<li>Choose the installation device on which the Harvester cluster will be installed<ul>
+<li>Note: By default, Harvester uses <a href="https://en.wikipedia.org/wiki/GUID_Partition_Table">GPT</a> partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select <a href="https://en.wikipedia.org/wiki/Master_boot_record">MBR</a>.
+   <img alt="iso-install-disk.png" src="../assets/iso-install-disk.png" /></li>
+</ul>
+</li>
 <li>Configure the hostname and select the network interface for the management network. By default, Harvester will create a bonded NIC named <code>harvester-mgmt</code>, and the IP address can either be configured via DHCP or a static assigned a static one.
    <img alt="iso-installed.png" src="../assets/iso-nic-config.gif" /></li>
 <li>(Optional) Configure the DNS servers. Use commas as a delimiter.</li>
-<li>Configure the <code>Virtual IP</code> which you can use to access the cluster or join the cluster to other nodes.</li>
+<li>Configure the <code>Virtual IP</code> which you can use to access the cluster or join other nodes to the cluster <small>(Note: If your IP address is configured via DHCP, you will need to configure static MAC-to-IP address mapping on your DHCP server in order to have a persistent Virtual IP)</small>.</li>
 <li>Configure the <code>cluster token</code>. This token will be used for adding other nodes to the cluster.</li>
 <li>Configure the login password of the host. The default SSH user is <code>rancher</code>.</li>
 <li>(Optional) Configure the NTP Servers of the node. This defaults to <code>0.suse.pool.ntp.org</code>.</li>
 <li>(Optional) If you need to use an HTTP proxy to access the outside world, enter the proxy URL address here. Otherwise, leave this blank.</li>
-<li>(Optional) You can choose to import SSH keys from a remote URL server. Your GitHub public keys can be used with <code>https://github.com/&lt;username&gt;.keys</code>.</li>
-<li>(Optional) If you need to customize the host with a cloud-init config, enter the HTTP URL here.</li>
+<li>(Optional) You can choose to import SSH keys from a remote server URL. Your GitHub public keys can be used with <code>https://github.com/&lt;username&gt;.keys</code>.</li>
+<li>(Optional) If you need to customize the host with a <a href="../harvester-configuration/">Harvester configuration</a> file, enter the HTTP URL here.</li>
 <li>After confirming the installation options, Harvester will be installed to your host. The installation may take a few minutes to be complete.</li>
 <li>Once the installation is complete, it will restart the host. After the restart, the Harvester console containing the management URL and status will be displayed. You can Use <code>F12</code> to switch between the Harvester console and the Shell.</li>
 <li>The default URL of the web interface is <code>https://your-virtual-ip</code>.

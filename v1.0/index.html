@@ -307,8 +307,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#other-installation-methods" class="md-nav__link">
-    Other Installation Methods
+  <a href="#pxeipxe-installation" class="md-nav__link">
+    PXE/iPXE Installation
   </a>
   
 </li>
@@ -1054,8 +1054,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#other-installation-methods" class="md-nav__link">
-    Other Installation Methods
+  <a href="#pxeipxe-installation" class="md-nav__link">
+    PXE/iPXE Installation
   </a>
   
 </li>
@@ -1145,7 +1145,7 @@
 </tbody>
 </table>
 <h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
-<p>You can install Harvester via ISO installation or PXE Boot Installation. Instructions are provided in sections below.</p>
+<p>You can install Harvester via the <a href="install/iso-install/">ISO</a> installation or the <a href="install/pxe-boot-install/">PXE</a> boot installation. Instructions are provided in the sections below.</p>
 <h3 id="iso-installation">ISO Installation<a class="headerlink" href="#iso-installation" title="Permanent link">&para;</a></h3>
 <p>You can use the ISO to install Harvester directly on the bare metal server to form a Harvester cluster. Users can add one or many compute nodes to join the existing cluster.</p>
 <p>To get the Harvester ISO, download it from the <a href="https://github.com/harvester/harvester/releases">Github releases</a>.</p>
@@ -1159,17 +1159,21 @@
 <li>Mount the Harvester ISO disk and boot the server by selecting the <code>Harvester Installer</code>.
    <img alt="iso-install.png" src="install/assets/iso-install.png" /></li>
 <li>Choose the installation mode by either creating a new Harvester cluster or by joining an existing one.</li>
-<li>Choose the installation device to which the Harvester cluster will be formatted.</li>
+<li>Choose the installation device on which the Harvester cluster will be installed<ul>
+<li>Note: By default, Harvester uses <a href="https://en.wikipedia.org/wiki/GUID_Partition_Table">GPT</a> partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select <a href="https://en.wikipedia.org/wiki/Master_boot_record">MBR</a>.
+   <img alt="iso-install-disk.png" src="install/assets/iso-install-disk.png" /></li>
+</ul>
+</li>
 <li>Configure the hostname and select the network interface for the management network. By default, Harvester will create a bond NIC named <code>harvester-mgmt</code>, and the IP address can either be configured via DHCP or by static method.
    <img alt="iso-installed.png" src="install/assets/iso-nic-config.gif" /></li>
 <li>Optional: Configure the DNS servers; use commas as delimiters.</li>
-<li>Configure the Virtual IP with which you can use to access the cluster or join other nodes to the cluster.</li>
+<li>Configure the <code>Virtual IP</code> which you can use to access the cluster or join other nodes to the cluster <small>(Note: If your IP address is configured via DHCP, you will need to configure static MAC-to-IP address mapping on your DHCP server in order to have a persistent Virtual IP)</small>.</li>
 <li>Configure the <code>cluster token</code>. This token will be used for adding other nodes to the cluster.</li>
-<li>Configure the login password of the host. The default ssh user is <code>rancher</code>.</li>
-<li>Optional: Configure the NTP Servers of the node if needed. Default is <code>0.suse.pool.ntp.org</code>.</li>
-<li>Optional: If you need to use an HTTP proxy to access the outside world, enter the proxy URL address; otherwise, leave this blank.</li>
-<li>Optional: You can choose to import SSH keys from a remote URL server. Your GitHub public keys can be used with <code>https://github.com/&lt;username&gt;.keys</code>.</li>
-<li>Optional: If you need to customize the host with cloud-init configuration, enter the HTTP URL.</li>
+<li>Configure the login password of the host. The default SSH user is <code>rancher</code>.</li>
+<li>(Optional) Configure the NTP Servers of the node. This defaults to <code>0.suse.pool.ntp.org</code>.</li>
+<li>(Optional) If you need to use an HTTP proxy to access the outside world, enter the proxy URL address here. Otherwise, leave this blank.</li>
+<li>(Optional) You can choose to import SSH keys from a remote server URL. Your GitHub public keys can be used with <code>https://github.com/&lt;username&gt;.keys</code>.</li>
+<li>(Optional) If you need to customize the host with a <a href="install/harvester-configuration/">Harvester configuration</a> file, enter the HTTP URL here.</li>
 <li>Confirm the installation options and Harvester will be installed to your host. The installation may take a few minutes to complete.</li>
 <li>Once the installation is complete, the host will restart, and a console UI with management URL and status will be displayed. <small>(You can Use F12 to switch between the Harvester console and the Shell).</small></li>
 <li>The default URL of the web interface is <code>https://your-virtual-ip</code>.
@@ -1177,9 +1181,12 @@
 <li>Users will be prompted to set the password for the default <code>admin</code> user at first login.
     <img alt="first-login.png" src="install/assets/first-time-login.png" /></li>
 </ol>
-<h3 id="other-installation-methods">Other Installation Methods<a class="headerlink" href="#other-installation-methods" title="Permanent link">&para;</a></h3>
-<p>Harvester can be installed automatically also. Please refer to <a href="install/pxe-boot-install/">PXE Boot Install</a> for detailed instructions for additional guidance.</p>
+<h3 id="pxeipxe-installation">PXE/iPXE Installation<a class="headerlink" href="#pxeipxe-installation" title="Permanent link">&para;</a></h3>
+<p>Harvester can also be installed automatically. Please refer to <a href="install/pxe-boot-install/">PXE Boot Install</a> for detailed instructions and additional guidance.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>More iPXE usage examples are available at <a href="https://github.com/harvester/ipxe-examples">harvester/ipxe-examples</a>.</p>
+</div>
 
               
             </article>

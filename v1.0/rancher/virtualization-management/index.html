@@ -1056,12 +1056,12 @@
 <p>For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6.x.</p>
 <ol>
 <li>
-<p>First, you will need to install Rancher v2.6.1 or above. For testing purposes, you can spin up a Rancher server using the following <code>docker run</code> command: 
-    <div class="highlight"><pre><span></span><code>$ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.2
+<p>As a prerequisite, you will need to create a Rancher server with <code>v2.6.3</code> or above for Harvester <code>v1.0.0</code> integration. For testing purposes, you can spin up a Rancher server using the following <code>docker run</code> command:
+    <div class="highlight"><pre><span></span><code>$ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.3
 </code></pre></div></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For a production environment setup, please refer to the official Rancher <a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/">docs</a>.</p>
+<p>For a production Rancher server setup, please refer to the official Rancher <a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/">docs</a>.</p>
 </div>
 </li>
 <li>
@@ -1117,10 +1117,6 @@
 <li>Create a VM with one of the images that you have uploaded.</li>
 <li>Log in with another user, e.g., <code>project-readonly</code>, and this user will only have the read permission of this project.</li>
 </ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>A known issue was found that allows the <a href="https://github.com/harvester/harvester/issues/1406">read-only user to be able to manage API actions</a>.</p>
-</div>
 <h2 id="delete-imported-harvester-cluster">Delete Imported Harvester Cluster<a class="headerlink" href="#delete-imported-harvester-cluster" title="Permanent link">&para;</a></h2>
 <p>Users can delete the imported Harvester cluster from the Rancher UI via <strong>Virtualization Management &gt; Harvester Clusters</strong>. Select the cluster you want to remove and click the <strong>Delete</strong> button to delete the imported Harvester cluster.</p>
 <p><img alt="delete-cluster" src="../assets/delete-harvester-cluster.png" /></p>

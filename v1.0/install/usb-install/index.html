@@ -1125,9 +1125,8 @@
 </code></pre></div>
 <h2 id="common-issues">Common issues<a class="headerlink" href="#common-issues" title="Permanent link">&para;</a></h2>
 <h3 id="when-booting-from-a-usb-installation-flash-drive-a-grub-_-text-is-displayed-but-nothing-happens">When booting from a USB installation flash drive, a <code>GRUB _</code> text is displayed, but nothing happens<a class="headerlink" href="#when-booting-from-a-usb-installation-flash-drive-a-grub-_-text-is-displayed-but-nothing-happens" title="Permanent link">&para;</a></h3>
-<p>If you are using the UEFI mode, try to boot from the UEFI boot partition on the USB device rather than the USB device itself.</p>
-<p>e.g.,</p>
-<p><img alt="" src="../assets/usb-install-select-correct-partition.png" /></p>
+<p>If you are using the UEFI mode, try to boot from the UEFI boot partition on the USB device rather than the USB device itself. e.g.,</p>
+<p><img alt="" src="../assets/usb-install-select-correct-partition.jpg" /></p>
 <p>Select the <code>UEFI: USB disk 3.0 PMAP, Partition 1</code> to boot. Note the representation varies from system to system.</p>
 <h3 id="graphics-issue">Graphics issue<a class="headerlink" href="#graphics-issue" title="Permanent link">&para;</a></h3>
 <p>Firmwares of some graphic cards are not shipped in <code>v0.3.0</code>.
@@ -1140,7 +1139,7 @@ You can press <code>e</code> to edit the GRUB menu entry and append <code>nomode
 <p>If a USB flash driver boots, but you can't see the harvester installer. You may try out the following workarounds:</p>
 <ul>
 <li>Plug the USB flash drive into a USB 2.0 slot.</li>
-<li>For version <code>v0.3.0</code>, try to remove the <code>console=ttyS0</code> parameter when booting. You can press <code>e</code> to edit the GRUB menu entry and remove the <code>console=ttyS0</code> parameter.</li>
+<li>For version <code>v0.3.0</code> or above, try to remove the <code>console=ttyS0</code> parameter when booting. You can press <code>e</code> to edit the GRUB menu entry and remove the <code>console=ttyS0</code> parameter.</li>
 </ul>
 </li>
 </ul>
