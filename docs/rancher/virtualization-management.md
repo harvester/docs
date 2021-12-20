@@ -8,7 +8,7 @@ keywords:
 
 For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6.x.
 
-1. Firstly, you will need to spin up a Rancher with v2.6.3 or above of Harvester v1.0.0 management. For testing purposes, you can spin up a Rancher server using the following `docker run` command: 
+1. As a prerequisite, you will need to create a Rancher server with `v2.6.3` or above for Harvester `v1.0.0` integration. For testing purposes, you can spin up a Rancher server using the following `docker run` command:
     ```
     $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.3
     ```
