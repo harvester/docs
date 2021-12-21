@@ -51,3 +51,27 @@ Users can create an RKE1 Kubernetes cluster from the **Cluster Management** page
 1. Click **Create**.
 
 ![create-rke-harvester-cluster](assets/create-rke-harvester-cluster.png)
+
+### Using Harvester RKE1 Node Driver in Air Gapped Environment
+
+RKE1 provisioning relies on the `qemu-guest-agent` to get the IP of the virtual machine, and `docker` to set up the RKE cluster. However, It may not be feasible to install `qemu-guest-agent` and `docker` in an air gapped environment.
+
+You can address the installation constraints with the following options:
+
+Option 1. Use a VM image with `qemu-guest-agent` and `docker` installed.
+
+Option 2. Configure the `cloud init` user data to enable the VMs to install `qemu-guest-agent` and `docker` via an HTTP(S) proxy.
+
+Example user data in Harvester node template:
+```
+#cloud-config
+apt:
+  http_proxy: http://192.168.0.1:3128
+  https_proxy: http://192.168.0.1:3128
+write_files:
+- path: /etc/environment
+  content: |
+    HTTP_PROXY="http://192.168.0.1:3128"
+    HTTPS_PROXY="http://192.168.0.1:3128"
+  append: true
+```

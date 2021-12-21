@@ -62,6 +62,7 @@ nav:
     - install/pxe-boot-install.md
     - install/harvester-configuration.md
     - install/management-address.md
+  - airgap.md
   - authentication.md
   - upgrade.md
   - upload-image.md
@@ -86,7 +87,7 @@ nav:
     - rancher/csi-driver.md
   - terraform/terraform.md
   - settings/settings.md
-  - Troubleshooting: 
+  - Troubleshooting:
     - troubleshooting/installation.md
     - troubleshooting/harvester.md
     - troubleshooting/os.md
