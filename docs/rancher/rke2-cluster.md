@@ -18,7 +18,7 @@ Users can now provision RKE2 Kubernetes clusters on top of the Harvester cluster
 6. Select "Imported Harvester" or "External Harvester".
 7. Click **Create**.
 
-![create-harvester-cloud-credentials](assets/harvester-create-cloud-credentials.png)
+![create-harvester-cloud-credentials](assets/create-cloud-credentials.png)
 
 ###  Create RKE2 Kubernetes Cluster
 
@@ -39,6 +39,5 @@ Users can create a RKE2 Kubernetes cluster from the **Cluster Management** page 
 ![create-rke2-harvester-cluster](assets/create-rke2-harvester-cluster.png)
 
 !!! note
-    RKE2 v1.21.5+rke2r2 or above provides a built-in Harvester Cloud Provider and Guest CSI driver integration.
-
+    - RKE2 v1.21.5+rke2r2 or above provides a built-in Harvester Cloud Provider and Guest CSI driver integration.
     - Currently only imported Harvester clusters are supported automatically.

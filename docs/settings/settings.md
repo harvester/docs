@@ -234,7 +234,7 @@ Default: none
 ens3
 ```
 
-## `auto-disk-provision-paths`
+## `auto-disk-provision-paths` [Experimental]
 
 This setting allows Harvester to automatically add disks that match the given glob pattern as VM storage.
 It's possible to provide multiple patterns by separating them with a comma.
