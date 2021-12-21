@@ -6,6 +6,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.harvesterhci.io/v1.0/airgap/</loc>
+         <lastmod>2021-12-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.harvesterhci.io/v1.0/authentication/</loc>
          <lastmod>2021-12-21</lastmod>
          <changefreq>daily</changefreq>
