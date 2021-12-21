@@ -15,22 +15,21 @@ The Harvester node driver is used to provision VMs in the Harvester cluster. In 
 
 A node driver is the same as a [Docker Machine driver](https://docs.docker.com/machine/), and the project repo is available at [harvester/docker-machine-driver-harvester](https://github.com/harvester/docker-machine-driver-harvester).
 
-Users can now provision RKE1/RKE2 Kubernetes clusters in Rancher `v2.6.1` or above using the built-in Harvester node driver. 
+Users can now provision RKE1/RKE2 Kubernetes clusters in Rancher `v2.6.3` or above using the built-in Harvester node driver. 
 Additionally, Harvester now can provide built-in [Load Balancer support](./cloud-provider.md) as well as raw cluster [persistent storage](./csi-driver.md) support to the guest Kubernetes cluster.
 
 !!!note
-    Currently only Rancher v2.6.1 or above is compatible with Harvester v0.3.0.
+    Harvester v1.0.0 is compatible with Rancher v2.6.3 or above only.
 
-## Enable Harvester Node Driver
+## Harvester Node Driver
 
-The Harvester node driver is not enabled by default from the Rancher UI. Click the `Cluster Management` tab to enable the Harvester node driver.
+The Harvester node driver is enabled by default from Rancher v2.6.3. You can go to `Cluster Management > Drivers > Node Drivers` page to manage the Harvester node driver manually.
 
-1. Click the `Drivers` page, then click the `Node Drivers` tab 
-2. Select the Harvester node driver, then click `Activate` to enable the Harvester node driver
+![](assets/harvester-node-driver.png)
 
-![](assets/enable-node-driver.png)
+When the Harvester node driver is enabled, you can spin up Kubernetes clusters on top of the Harvester cluster and manage them from the Rancher.
 
-Now users can spin up Kubernetes clusters on top of the Harvester cluster and manage them there.
+![rke1-cluster](assets/rke1-node-driver.png)
 
 ## RKE1 Kubernetes Cluster
 Click to learn [how to create RKE1 Kubernetes Clusters](./rke1-cluster.md).

@@ -1,12 +1,22 @@
 # Creating an RKE1 Kubernetes Cluster
 
-Users can now provision RKE1 Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.1+` using the built-in Harvester node driver.
+Users can now provision RKE1 Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.3+` using the built-in Harvester node driver.
 
 ![rke1-cluster](assets/rke1-node-driver.png)
 
 !!! note
-      - Harvester RKE1 node driver is in tech preview.
       - VLAN network is required for Harvester node driver.
+
+When you create a Kubernetes cluster hosted by the Harvester infrastructure, [node templates](https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/#node-templates) are used to provision the cluster nodes. These templates use Docker Machine configuration options to define an operating system image and settings/parameters for the node.
+
+Node templates can use cloud credentials to access the credential information required to provision nodes in the infrastructure providers. The same cloud credential can be used by multiple node templates. By using a cloud credential, you do not have to re-enter access keys for the same cloud provider. Cloud credentials are stored as Kubernetes secrets.
+
+You can create cloud credentials in two contexts:
+
+- [During creation of a node template](https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/#node-templates) for a cluster.
+- In the User Settings
+
+All cloud credentials are bound to the user profile of who created it. They cannot be shared across users.
 
 ### Create Your Cloud Credentials
 
@@ -18,7 +28,7 @@ Users can now provision RKE1 Kubernetes clusters on top of the Harvester cluster
 1. Select "Imported Harvester" or "External Harvester".
 1. Click **Create**.
 
-![create-harvester-cloud-credentials](assets/harvester-create-cloud-credentials.png)
+![create-harvester-cloud-credentials](assets/create-cloud-credentials.png)
 
 ### Create Node Template 
 
@@ -30,11 +40,12 @@ You can use the Harvester node driver to create node templates and eventually no
     * Select an OS image that is compatible with the `cloud-init` config.
     * Select a network that the node driver is able to connect to; currently, only `VLAN` is supported.
     * Enter the SSH User; the username will be used to ssh to nodes. For example, a default user of the Ubuntu cloud image will be `ubuntu`.
+1. (Optional) Configure **Advanced Options** if you want to customise the cloud-init config of the VMs:
 1. Enter a **RANCHER TEMPLATE** name.
 
 ![](assets/node-template.png)
 
-See [nodes hosted by an infrastructure provider](https://rancher.com/docs/rancher/v2.5/en/cluster-provisioning/rke-clusters/node-pools/) for more information.
+See [nodes hosted by an infrastructure provider](https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/) for more information.
 
 ### Create RKE1 Kubernetes Cluster
 
@@ -48,6 +59,8 @@ Users can create an RKE1 Kubernetes cluster from the **Cluster Management** page
 1. Enter **Name Prefix** (required).
 1. Enter **Template** (required).
 1. Select **etcd** and **Control Plane** (required).
+1. On the **Cluster Options** configure `Cloud Provider` to `Harvester` if you want to use the Harvester [Cloud Provider](/rancher/cloud-provider) and [CSI Diver](/rancher/csi-driver).
+   ![](assets/enable-harvester-cloud-provider.png)
 1. Click **Create**.
 
 ![create-rke-harvester-cluster](assets/create-rke-harvester-cluster.png)
