@@ -1,6 +1,6 @@
 # Creating an RKE1 Kubernetes Cluster
 
-Users can now provision RKE1 Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.3+` using the built-in Harvester node driver.
+You can now provision RKE1 Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.3+` with the built-in Harvester node driver.
 
 ![rke1-cluster](assets/rke1-node-driver.png)
 
@@ -9,14 +9,14 @@ Users can now provision RKE1 Kubernetes clusters on top of the Harvester cluster
 
 When you create a Kubernetes cluster hosted by the Harvester infrastructure, [node templates](https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/#node-templates) are used to provision the cluster nodes. These templates use Docker Machine configuration options to define an operating system image and settings/parameters for the node.
 
-Node templates can use cloud credentials to access the credential information required to provision nodes in the infrastructure providers. The same cloud credential can be used by multiple node templates. By using a cloud credential, you do not have to re-enter access keys for the same cloud provider. Cloud credentials are stored as Kubernetes secrets.
+Node templates can use `cloud credentials` to access the credentials information required to provision nodes in the infrastructure providers. The same `cloud credentials` can be used by multiple node templates. By using `cloud credentials`, you do not have to re-enter access keys for the same cloud provider. `Cloud credentials` are stored as Kubernetes secrets.
 
-You can create cloud credentials in two contexts:
+You can create `cloud credentials` in two contexts:
 
-- [During creation of a node template](https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/#node-templates) for a cluster.
-- In the User Settings
+- [During the creation of a node template](https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/#node-templates) for a cluster.
+- In the User Settings page
 
-All cloud credentials are bound to the user profile of who created it. They cannot be shared across users.
+All `cloud credentials` are bound to your user profile and cannot be shared with other users.
 
 ### Create Your Cloud Credentials
 
