@@ -548,6 +548,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#restore-a-new-vm-on-another-harvester-cluster" class="md-nav__link">
+    Restore a new VM on another Harvester cluster
+  </a>
+  
+    <nav class="md-nav" aria-label="Restore a new VM on another Harvester cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload-the-same-vm-images-to-a-new-cluster" class="md-nav__link">
+    Upload the same VM images to a new cluster
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restore-a-new-vm-in-a-new-cluster" class="md-nav__link">
+    Restore a new VM in a new cluster
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1042,6 +1069,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#restore-a-new-vm-on-another-harvester-cluster" class="md-nav__link">
+    Restore a new VM on another Harvester cluster
+  </a>
+  
+    <nav class="md-nav" aria-label="Restore a new VM on another Harvester cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload-the-same-vm-images-to-a-new-cluster" class="md-nav__link">
+    Upload the same VM images to a new cluster
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restore-a-new-vm-in-a-new-cluster" class="md-nav__link">
+    Restore a new VM in a new cluster
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1147,6 +1201,45 @@
 <li>Click <code>Create</code>.</li>
 </ol>
 <p>The restore process can be viewed from the <code>Virtual Machines</code> page.</p>
+<h2 id="restore-a-new-vm-on-another-harvester-cluster">Restore a new VM on another Harvester cluster<a class="headerlink" href="#restore-a-new-vm-on-another-harvester-cluster" title="Permanent link">&para;</a></h2>
+<p><em>Available as of v1.0.0</em></p>
+<p>Users can now restore a new VM on another cluster by leveraging the VM metadata &amp; content backup feature.</p>
+<div class="admonition prerequisites">
+<p class="admonition-title">Prerequisites</p>
+<p>You must manually configure the virtual machine images with the same name on the new cluster first, otherwise the virtual machines will be failed to recover.</p>
+</div>
+<h3 id="upload-the-same-vm-images-to-a-new-cluster">Upload the same VM images to a new cluster<a class="headerlink" href="#upload-the-same-vm-images-to-a-new-cluster" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Check the existing image name (normally starts with <code>image-</code>) and create the same one on the new cluster.
+<div class="highlight"><pre><span></span><code>$ kubectl get vmimages -A
+NAMESPACE   NAME                               DISPLAY-NAME                              SIZE         AGE
+default     image-79hdq                        focal-server-cloudimg-amd64.img           566886400    5h36m
+default     image-l7924                        harvester-v1.0.0-rc2-amd64.iso            3964551168   137m
+default     image-lvqxn                        opensuse-leap-15.3.x86_64-nocloud.qcow2   568524800    5h35m
+</code></pre></div></li>
+<li>Apply a VM image YAML with the same name and content in the new cluster.
+<div class="highlight"><pre><span></span><code>$ cat &lt;&lt;EOF | kubectl apply -f -
+apiVersion: harvesterhci.io/v1beta1
+kind: VirtualMachineImage
+metadata:
+  name: image-lvqxn
+  namespace: default
+spec:
+  displayName: opensuse-leap-15.3.x86_64-nocloud.qcow2
+  pvcName: &quot;&quot;
+  pvcNamespace: &quot;&quot;
+  sourceType: download
+  url: http://download.opensuse.org/repositories/Cloud:/Images:/Leap_15.3/images/openSUSE-Leap-15.3.x86_64-NoCloud.qcow2
+EOF
+</code></pre></div></li>
+</ol>
+<h3 id="restore-a-new-vm-in-a-new-cluster">Restore a new VM in a new cluster<a class="headerlink" href="#restore-a-new-vm-in-a-new-cluster" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Setup the same backup target in a new cluster. And the backup controller will automatically sync the backup metadata to the new cluster.</li>
+<li>Go to the <code>Backups</code> page.</li>
+<li>Select the synced VM backup metadata and choose to restore a new VM with a specified VM name.</li>
+<li>A new VM will be restored using the backup volumes and metadata. You can access it from the <code>Virtual Machines</code> page.</li>
+</ol>
 
               
             </article>
