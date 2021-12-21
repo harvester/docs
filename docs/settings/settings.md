@@ -117,18 +117,6 @@ CPU for it from Kubernetes scheduler.
 }
 ```
 
-## `server-url`
-
-This setting displays the Harvester server URL, used for the Harvester management endpoint and GUI URL. If a [virtual IP (VIP)][harvester-vip] has been set, then the value displayed will be the VIP address instead of the host IP.
-
-[harvester-vip]: ../install/harvester-configuration.md#installvip
-
-#### Example
-
-```
-https://192.168.122.11
-```
-
 ## `server-version`
 
 This setting displays the version of Harvester server.
