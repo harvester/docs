@@ -1105,12 +1105,13 @@
 <p>Moreover, the Harvester UI integrates the <a href="https://github.com/harvester/network-controller-harvester">harvester-network-controller</a> to provide user-friendly VLAN network configurations, e.g., to create and manage VLAN networks or to add a VLAN network to the VM. </p>
 <p>Currently, Harvester supports two types of networks:</p>
 <ul>
-<li><a href="#management-network">Management network</a></li>
-<li><a href="#vlan-network">VLAN</a></li>
+<li><a href="#management-network">Management Network</a></li>
+<li><a href="#vlan-network">VLAN Network</a></li>
 </ul>
 <h2 id="management-network">Management Network<a class="headerlink" href="#management-network" title="Permanent link">&para;</a></h2>
-<p>Harvester uses <a href="https://github.com/flannel-io/flannel">flannel</a> CNI as its default management network. It is a built-in network that can be used directly from the cluster. However, the management network IP is not persisted and will be changed after a VM reboot.</p>
-<p>Additionally, users can leverage the Kubernetes <a href="https://kubevirt.io/user-guide/virtual_machines/service_objects/">service object</a> to create a stable IP for your VMs with the management network.</p>
+<p>Harvester uses <a href="https://projectcalico.docs.tigera.io/getting-started/kubernetes/flannel/flannel">canal</a> as its default management network. It is a built-in network that can be used directly from the cluster. 
+By default, the management network IP of a VM can only be accessed within the cluster nodes, and the management network IP will not remain unchanged after the VM reboot.</p>
+<p>However, users can leverage the Kubernetes <a href="https://kubevirt.io/user-guide/virtual_machines/service_objects/">service object</a> to create a stable IP for your VMs with the management network.</p>
 <h2 id="vlan-network">VLAN Network<a class="headerlink" href="#vlan-network" title="Permanent link">&para;</a></h2>
 <p>The <a href="https://github.com/harvester/harvester-network-controller">Harvester network-controller</a> leverages the <a href="https://github.com/k8snetworkplumbingwg/multus-cni">multus</a> and <a href="https://www.cni.dev/plugins/current/main/bridge/">bridge</a> CNI plugins to implement its customized L2 bridge VLAN network. It helps to connect your VMs to the host network interface and can be accessed from internal and external networks using the physical switch.</p>
 <p>The below diagram illustrates how the VLAN network works in Harvester.</p>
@@ -1122,24 +1123,24 @@
 <li>Users can use VLAN with <code>PVID</code> (default 1) to communicate with any normal untagged traffic.</li>
 </ul>
 <h3 id="enabling-default-vlan-network">Enabling Default VLAN Network<a class="headerlink" href="#enabling-default-vlan-network" title="Permanent link">&para;</a></h3>
-<p>You can enable VLAN network via <strong>Setting &gt; VLAN</strong>. Once enabled, you will be able to select a network interface for the nodes as the default VLAN config.</p>
-<p>For better network performances and isolation, we recommend to choose a separate network interface for the VLAN other than the one used for the management network (i.e., <code>harvester-mgmt</code>).</p>
+<p>You can enable VLAN network via <strong>Settings &gt; vlan</strong>. Select <code>enabled</code> and you will be able to select one network interface from the nodes as the default VLAN NIC config.</p>
+<p>For better network performances and isolation, we recommend to choose different network interfaces for the VLAN and the one used for the management network (i.e., <code>harvester-mgmt</code>).</p>
+<p><img alt="" src="../assets/enable-vlan.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
 <li>When selecting the network interface, the value in parentheses represents the distribution percentage of the network interface on all hosts. If a network interface with a value less than 100% is selected, the network interface needs to be manually specified on the host where the VLAN network configuration fails.</li>
 <li>Modifying the default VLAN network setting will not update the existing configured host network.</li>
-<li>Harvester VLAN network supports bond interfaces, currently it can only be created automatically via <a href="/install/harvester-configuration/#example_11">PEX Boot Configuration</a>. Users may also login to the node and create it manually.</li>
+<li>Harvester VLAN network supports bond interfaces. Currently it can only be created automatically via <a href="/install/harvester-configuration/#example_11">PEX Boot Configuration</a>. You may also login to the node and create it manually.</li>
 </ul>
 </div>
-<p><img alt="" src="../assets/enable-vlan.png" /></p>
-<p>Optional: Users can customize each node's VLAN network via the <strong>HOST &gt; Network</strong> tab.</p>
+<p>You can also customize each node's VLAN network via the <strong>Hosts &gt; Network</strong> tab.</p>
 <p><img alt="" src="../assets/node-network-configuration.png" /></p>
 <h3 id="create-a-vlan-network">Create a VLAN Network<a class="headerlink" href="#create-a-vlan-network" title="Permanent link">&para;</a></h3>
 <p>A new VLAN network can be created via the <strong>Advanced &gt; Networks</strong> page and clicking the <strong>Create</strong> button.</p>
 <ol>
 <li>
-<p>Specify the name and VLAN ID that you want to create for the VLAN network.
+<p>Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same vlan ID on different namespaces of <a href="/rancher/virtualization-management/#multi-tenancy">Rancher multi-tenancy</a> support)</small>.
    <img alt="create-vlan-network.png" src="../assets/create-network.png" /></p>
 </li>
 <li>
@@ -1168,7 +1169,7 @@
 </ul>
 </div>
 <ul>
-<li>Users can choose to add one or multiple network interface cards. Additional network interface card can be enabled by default via setting the cloud-init network data. E.g.,
+<li>You can choose to add one or multiple network interface cards. The additional network interface cards can be enabled by default via the cloud-init network data setting. e.g.,
 <div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="nt">config</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">physical</span>
@@ -1180,11 +1181,11 @@
     <span class="nt">subnets</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">DHCP</span>
 </code></pre></div>
-For more detailed configs you may refer to the <a href="https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html">cloud-init network configs</a>.</li>
+Harvester is fully compatible with the <code>cloud-init network configs</code>. You can refer to the <a href="https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html">documentation</a> for more details.</li>
 </ul>
 <h3 id="configure-dhcp-servers-on-networks">Configure DHCP servers on Networks<a class="headerlink" href="#configure-dhcp-servers-on-networks" title="Permanent link">&para;</a></h3>
 <p>By default, the Harvester VLAN network would expect your router to provide a DHCP server that VMs can request and assign IP addresses automatically.</p>
-<p>If you are running Harvester in a virtual environment that does not contain a DHCP server, you may consider deploying a DHCP server manually in a node or using a containerized method. Refer to <a href="https://github.com/harvester/harvester/issues/947">this issue</a> as an example.</p>
+<p>If you are running Harvester in a virtual environment that does not contain a DHCP server, you may consider deploying a DHCP server manually on a node or using a containerized method, e.g, like <a href="https://github.com/harvester/harvester/issues/947">#947</a>. </p>
 
               
             </article>
