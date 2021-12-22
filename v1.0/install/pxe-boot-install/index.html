@@ -1279,7 +1279,11 @@ boot
 <p>This assumes the iPXE script is stored in <code>/usr/share/nginx/html/harvester/ipxe-create</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If there are multiple network interfaces on the installing machine, the user can use <code>ip=&lt;interface&gt;:dhcp</code> to specify the booting interface (e.g., <code>ip=eth1:dhcp</code>).</p>
+<p>If you have multiple network interfaces,
+you can leverage dracut's <code>ip=</code> parameter to specify the booting interface
+and any other network configurations that dracut supports (e.g., <code>ip=eth1:dhcp</code>)
+See <a href="https://man7.org/linux/man-pages/man7/dracut.cmdline.7.html"><code>man dracut.cmdline</code></a> for more information.</p>
+<p>Use <code>ip=</code> parameter to designate the booting interface only, as we only support <strong>one single <code>ip=</code> parameter</strong>.</p>
 </div>
 <h3 id="join-mode">JOIN Mode<a class="headerlink" href="#join-mode" title="Permanent link">&para;</a></h3>
 <div class="admonition warning">
