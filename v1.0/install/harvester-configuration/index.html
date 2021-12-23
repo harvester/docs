@@ -2342,6 +2342,12 @@ Primary use of this field is to set the HTTP proxy.</p>
     <span class="nt">http_proxy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://myserver</span>
     <span class="nt">https_proxy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://myserver</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This example sets the HTTP(S) proxy for <strong>foundational OS components</strong>.
+To set up an HTTP(S) proxy for Harvester components such as fetching external images and backup to S3 services,
+see <a href="../../settings/settings/#http-proxy">Settings/http-proxy</a>.</p>
+</div>
 <h3 id="oslabels"><code>os.labels</code><a class="headerlink" href="#oslabels" title="Permanent link">&para;</a></h3>
 <h4 id="definition_10">Definition<a class="headerlink" href="#definition_10" title="Permanent link">&para;</a></h4>
 <p>Labels to be added to this Node.</p>
@@ -2450,6 +2456,7 @@ Please make sure the interface name is present on the target machine before inst
 </li>
 <li><code>install.vip_hw_addr</code>: The hardware address corresponding to the VIP. Users must configure their on-premise DHCP server to offer the configured VIP. The field is mandatory when <code>install.vip_mode</code> is <code>dhcp</code>.</li>
 </ul>
+<p>See <a href="../management-address">Management Address</a> for more information.</p>
 <h4 id="example_13">Example<a class="headerlink" href="#example_13" title="Permanent link">&para;</a></h4>
 <p>Configure a static VIP.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
