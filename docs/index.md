@@ -13,7 +13,6 @@ Description: Harvester is an open source hyper-converged infrastructure (HCI) so
 
 Harvester is an open-source [hyper-converged infrastructure](https://en.wikipedia.org/wiki/Hyper-converged_infrastructure) (HCI) software built on Kubernetes. It is an open alternative to using a proprietary HCI stack that incorporates the design and ethos of [Cloud Native Computing](https://en.wikipedia.org/wiki/Cloud_native_computing).
 
-
 ![harvester-ui](./assets/dashboard.png)
 
 ## Harvester Features
@@ -67,13 +66,6 @@ To get the Harvester ISO, download it from the [Github releases](https://github.
 
 During the installation, you can either choose to form a new cluster or join the node to an existing cluster.
 
-**Note:** This [video](https://youtu.be/97ADieBX6bE) shows a brief overview of the ISO installation process.
-
-<div class="text-center">
-<iframe width="950" height="475" src="https://www.youtube.com/embed/97ADieBX6bE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
-
-
 1. Mount the Harvester ISO disk and boot the server by selecting the `Harvester Installer`.
    ![iso-install.png](./install/assets/iso-install.png)
 1. Choose the installation mode by either creating a new Harvester cluster or by joining an existing one.
@@ -97,6 +89,9 @@ During the installation, you can either choose to form a new cluster or join the
 1. Users will be prompted to set the password for the default `admin` user at first login.
     ![first-login.png](./install/assets/first-time-login.png)
 
+<div class="text-center">
+<iframe width="950" height="475" src="https://www.youtube.com/embed/Ngsk7m6NYf4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 ### PXE/iPXE Installation
 
 Harvester can also be installed automatically. Please refer to [PXE Boot Install](./install/pxe-boot-install.md) for detailed instructions and additional guidance.

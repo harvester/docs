@@ -20,6 +20,10 @@ _Available as of v0.3.0_
 
 Users can now import and manage multiple Harvester clusters using the Rancher [Virtualization Management](virtualization-management.md) page and leverage the Rancher [authentication](https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/) feature and RBAC control for [multi-tenancy](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/) support.
 
+<div class="text-center">
+<iframe width="950" height="475" src="https://www.youtube.com/embed/fyxDm3HVwWI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 ![virtualization-management](assets/virtualization-management.png)
 
 ## Deploying Rancher
