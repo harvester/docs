@@ -17,7 +17,7 @@ terraform {
   required_providers {
     harvester = {
       source = "harvester/harvester"
-      version = "0.2.8"
+      version = "0.2.9"
     }
   }
 }
@@ -48,7 +48,7 @@ For more details, please refer to the Harvester provider [documentation](https:/
 
   * The expected location for the Harvester provider for the target platform within one of the local search directories is as follows:
     ```
-    registry.terraform.io/harvester/harvester/0.2.8/linux_amd64/terraform-provider-harvester_v0.2.8
+    registry.terraform.io/harvester/harvester/0.2.9/linux_amd64/terraform-provider-harvester_v0.2.9
     ```
 
   * The default location for locally-installed providers will be one of the following, depending on the operating system under which you are running Terraform:
@@ -59,7 +59,7 @@ For more details, please refer to the Harvester provider [documentation](https:/
 
   * Place the provider into the plugin directory as in the following example:
     ```
-    version=0.2.8
+    version=0.2.9
     arch=linux_amd64
     terraform_harvester_provider_bin=./bin/terraform-provider-harvester
 
