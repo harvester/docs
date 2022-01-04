@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/install/harvester-configuration/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.edf004c2.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bb3983ee.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -2144,60 +2144,60 @@
 <h1 id="harvester-configuration">Harvester Configuration<a class="headerlink" href="#harvester-configuration" title="Permanent link">&para;</a></h1>
 <h2 id="configuration-example">Configuration Example<a class="headerlink" href="#configuration-example" title="Permanent link">&para;</a></h2>
 <p>Harvester configuration file can be provided during manual or automatic installation to configure various settings. The following is a configuration example:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">server_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://someserver:8443</span>
-<span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TOKEN_VALUE</span>
-<span class="nt">os</span><span class="p">:</span>
-  <span class="nt">ssh_authorized_keys</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB...</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">github:username</span>
-  <span class="nt">write_files</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">encoding</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
-    <span class="nt">content</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">test content</span>
-    <span class="nt">owner</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
-    <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/test.txt</span>
-    <span class="nt">permissions</span><span class="p">:</span> <span class="s">&#39;0755&#39;</span>
-  <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">myhost</span>
-  <span class="nt">modules</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">kvm</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">nvme</span>
-  <span class="nt">sysctls</span><span class="p">:</span>
-    <span class="nt">kernel.printk</span><span class="p">:</span> <span class="s">&quot;4</span><span class="nv"> </span><span class="s">4</span><span class="nv"> </span><span class="s">1</span><span class="nv"> </span><span class="s">7&quot;</span>
-    <span class="nt">kernel.kptr_restrict</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>
-  <span class="nt">dns_nameservers</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">8.8.8.8</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">1.1.1.1</span>
-  <span class="nt">ntp_servers</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0.us.pool.ntp.org</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">1.us.pool.ntp.org</span>
-  <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rancher</span>
-  <span class="nt">environment</span><span class="p">:</span>
-    <span class="nt">http_proxy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://myserver</span>
-    <span class="nt">https_proxy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://myserver</span>
-  <span class="nt">labels</span><span class="p">:</span>
-    <span class="nt">foo</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bar</span>
-    <span class="nt">mylabel</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">myvalue</span>
-<span class="nt">install</span><span class="p">:</span>
-  <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">create</span>
-  <span class="nt">networks</span><span class="p">:</span>
-    <span class="nt">harvester-mgmt</span><span class="p">:</span>
-      <span class="nt">interfaces</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
-      <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
-  <span class="nt">force_efi</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-  <span class="nt">device</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/dev/vda</span>
-  <span class="nt">silent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-  <span class="nt">iso_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://myserver/test.iso</span>
-  <span class="nt">poweroff</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-  <span class="nt">no_format</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-  <span class="nt">debug</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-  <span class="nt">tty</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ttyS0</span>
-  <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.19</span>
-  <span class="nt">vip_hw_addr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">52:54:00:ec:0e:0b</span>
-  <span class="nt">vip_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
-  <span class="nt">force_mbr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
-  <span class="nt">no_data_partition</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="nt">system_settings</span><span class="p">:</span>
-  <span class="nt">auto-disk-provision-paths</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">server_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://someserver:8443</span><span class="w"></span>
+<span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TOKEN_VALUE</span><span class="w"></span>
+<span class="nt">os</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ssh_authorized_keys</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB...</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github:username</span><span class="w"></span>
+<span class="w">  </span><span class="nt">write_files</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">encoding</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test content</span><span class="w"></span>
+<span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span><span class="w"></span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/test.txt</span><span class="w"></span>
+<span class="w">    </span><span class="nt">permissions</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0755&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myhost</span><span class="w"></span>
+<span class="w">  </span><span class="nt">modules</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kvm</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvme</span><span class="w"></span>
+<span class="w">  </span><span class="nt">sysctls</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">kernel.printk</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;4</span><span class="nv"> </span><span class="s">4</span><span class="nv"> </span><span class="s">1</span><span class="nv"> </span><span class="s">7&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">kernel.kptr_restrict</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">dns_nameservers</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8.8.8.8</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.1.1.1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ntp_servers</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.us.pool.ntp.org</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.us.pool.ntp.org</span><span class="w"></span>
+<span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rancher</span><span class="w"></span>
+<span class="w">  </span><span class="nt">environment</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">http_proxy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://myserver</span><span class="w"></span>
+<span class="w">    </span><span class="nt">https_proxy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://myserver</span><span class="w"></span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">foo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar</span><span class="w"></span>
+<span class="w">    </span><span class="nt">mylabel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myvalue</span><span class="w"></span>
+<span class="nt">install</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">create</span><span class="w"></span>
+<span class="w">  </span><span class="nt">networks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">harvester-mgmt</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens5</span><span class="w"></span>
+<span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dhcp</span><span class="w"></span>
+<span class="w">  </span><span class="nt">force_efi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">  </span><span class="nt">device</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/vda</span><span class="w"></span>
+<span class="w">  </span><span class="nt">silent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">  </span><span class="nt">iso_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://myserver/test.iso</span><span class="w"></span>
+<span class="w">  </span><span class="nt">poweroff</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">  </span><span class="nt">no_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">  </span><span class="nt">debug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tty</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ttyS0</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.10.0.19</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vip_hw_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">52:54:00:ec:0e:0b</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vip_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dhcp</span><span class="w"></span>
+<span class="w">  </span><span class="nt">force_mbr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">  </span><span class="nt">no_data_partition</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="nt">system_settings</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">auto-disk-provision-paths</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
 </code></pre></div>
 <h2 id="configuration-reference">Configuration Reference<a class="headerlink" href="#configuration-reference" title="Permanent link">&para;</a></h2>
 <p>Below is a reference of all configuration keys.</p>
@@ -2215,9 +2215,9 @@
 either use the Harvester main server <a href="./#installvip">VIP</a> or a domain name in <code>server_url</code>.</p>
 </div>
 <h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">server_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://someserver:8443</span>
-<span class="nt">install</span><span class="p">:</span>
-  <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">join</span>
+<div class="highlight"><pre><span></span><code><span class="nt">server_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://someserver:8443</span><span class="w"></span>
+<span class="nt">install</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">join</span><span class="w"></span>
 </code></pre></div>
 <h3 id="token"><code>token</code><a class="headerlink" href="#token" title="Permanent link">&para;</a></h3>
 <h4 id="definition_1">Definition<a class="headerlink" href="#definition_1" title="Permanent link">&para;</a></h4>
@@ -2225,20 +2225,20 @@ either use the Harvester main server <a href="./#installvip">VIP</a> or a domain
 automatically be assumed to be a node token. Otherwise it is treated as a cluster secret.</p>
 <p>In order for a new node to join the Harvester cluster, the token should match what the server has.</p>
 <h4 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">myclustersecret</span>
+<div class="highlight"><pre><span></span><code><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myclustersecret</span><span class="w"></span>
 </code></pre></div>
 <p>Or a node token</p>
-<div class="highlight"><pre><span></span><code><span class="nt">token</span><span class="p">:</span> <span class="s">&quot;K1074ec55daebdf54ef48294b0ddf0ce1c3cb64ee7e3d0b9ec79fbc7baf1f7ddac6::node:77689533d0140c7019416603a05275d4&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;K1074ec55daebdf54ef48294b0ddf0ce1c3cb64ee7e3d0b9ec79fbc7baf1f7ddac6::node:77689533d0140c7019416603a05275d4&quot;</span><span class="w"></span>
 </code></pre></div>
 <h3 id="osssh_authorized_keys"><code>os.ssh_authorized_keys</code><a class="headerlink" href="#osssh_authorized_keys" title="Permanent link">&para;</a></h3>
 <h4 id="definition_2">Definition<a class="headerlink" href="#definition_2" title="Permanent link">&para;</a></h4>
 <p>A list of SSH authorized keys that should be added to the default user, <code>rancher</code>. SSH keys can be obtained from GitHub user accounts by using the format
 <code>github:${USERNAME}</code>. This is done by downloading the keys from <code>https://github.com/${USERNAME}.keys</code>.</p>
 <h4 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span>
-  <span class="nt">ssh_authorized_keys</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="s">&quot;ssh-rsa</span><span class="nv"> </span><span class="s">AAAAB3NzaC1yc2EAAAADAQABAAABAQC2TBZGjE+J8ag11dzkFT58J3XPONrDVmalCNrKxsfADfyy0eqdZrG8hcAxAR/5zuj90Gin2uBR4Sw6Cn4VHsPZcFpXyQCjK1QDADj+WcuhpXOIOY3AB0LZBly9NI0ll+8lo3QtEaoyRLtrMBhQ6Mooy2M3MTG4JNwU9o3yInuqZWf9PvtW6KxMl+ygg1xZkljhemGZ9k0wSrjqif+8usNbzVlCOVQmZwZA+BZxbdcLNwkg7zWJSXzDIXyqM6iWPGXQDEbWLq3+HR1qKucTCSxjbqoe0FD5xcW7NHIME5XKX84yH92n6yn+rxSsyUfhJWYqJd+i0fKf5UbN6qLrtd/D&quot;</span>
-    <span class="p p-Indicator">-</span> <span class="s">&quot;github:ibuildthecloud&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ssh_authorized_keys</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;ssh-rsa</span><span class="nv"> </span><span class="s">AAAAB3NzaC1yc2EAAAADAQABAAABAQC2TBZGjE+J8ag11dzkFT58J3XPONrDVmalCNrKxsfADfyy0eqdZrG8hcAxAR/5zuj90Gin2uBR4Sw6Cn4VHsPZcFpXyQCjK1QDADj+WcuhpXOIOY3AB0LZBly9NI0ll+8lo3QtEaoyRLtrMBhQ6Mooy2M3MTG4JNwU9o3yInuqZWf9PvtW6KxMl+ygg1xZkljhemGZ9k0wSrjqif+8usNbzVlCOVQmZwZA+BZxbdcLNwkg7zWJSXzDIXyqM6iWPGXQDEbWLq3+HR1qKucTCSxjbqoe0FD5xcW7NHIME5XKX84yH92n6yn+rxSsyUfhJWYqJd+i0fKf5UbN6qLrtd/D&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;github:ibuildthecloud&quot;</span><span class="w"></span>
 </code></pre></div>
 <h3 id="oswrite_files"><code>os.write_files</code><a class="headerlink" href="#oswrite_files" title="Permanent link">&para;</a></h3>
 <p>A list of files to write to disk on boot. The <code>encoding</code> field specifies the content's encoding. Valid <code>encoding</code> values are:</p>
@@ -2249,72 +2249,72 @@ automatically be assumed to be a node token. Otherwise it is treated as a cluste
 <li><code>gz+base64</code>, <code>gzip+base64</code>, <code>gz+b64</code>, <code>gzip+b64</code>: content data are gzip-compressed first and then base64-encoded.</li>
 </ul>
 <p>Example</p>
-<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span>
-  <span class="nt">write_files</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">encoding</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">b64</span>
-    <span class="nt">content</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CiMgVGhpcyBmaWxlIGNvbnRyb2xzIHRoZSBzdGF0ZSBvZiBTRUxpbnV4...</span>
-    <span class="nt">owner</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root:root</span>
-    <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/connman/main.conf</span>
-    <span class="nt">permissions</span><span class="p">:</span> <span class="s">&#39;0644&#39;</span>
-  <span class="p p-Indicator">-</span> <span class="nt">content</span><span class="p">:</span> <span class="p p-Indicator">|</span>
-      <span class="no"># My new /etc/sysconfig/samba file</span>
+<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">write_files</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">encoding</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">b64</span><span class="w"></span>
+<span class="w">    </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CiMgVGhpcyBmaWxlIGNvbnRyb2xzIHRoZSBzdGF0ZSBvZiBTRUxpbnV4...</span><span class="w"></span>
+<span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root:root</span><span class="w"></span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/connman/main.conf</span><span class="w"></span>
+<span class="w">    </span><span class="nt">permissions</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0644&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no"># My new /etc/sysconfig/samba file</span><span class="w"></span>
 
-      <span class="no">SMDBOPTIONS=&quot;-D&quot;</span>
-    <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/sysconfig/samba</span>
-  <span class="p p-Indicator">-</span> <span class="nt">content</span><span class="p">:</span> <span class="kt">!!binary</span> <span class="p p-Indicator">|</span>
-      <span class="no">f0VMRgIBAQAAAAAAAAAAAAIAPgABAAAAwARAAAAAAABAAAAAAAAAAJAVAAAAAA</span>
-      <span class="no">AEAAHgAdAAYAAAAFAAAAQAAAAAAAAABAAEAAAAAAAEAAQAAAAAAAwAEAAAAAAA</span>
-      <span class="no">AAAAAAAAAwAAAAQAAAAAAgAAAAAAAAACQAAAAAAAAAJAAAAAAAAcAAAAAAAAAB</span>
-      <span class="no">...</span>
-    <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/bin/arch</span>
-    <span class="nt">permissions</span><span class="p">:</span> <span class="s">&#39;0555&#39;</span>
-  <span class="p p-Indicator">-</span> <span class="nt">content</span><span class="p">:</span> <span class="p p-Indicator">|</span>
-      <span class="no">15 * * * * root ship_logs</span>
-    <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/crontab</span>
+<span class="w">      </span><span class="no">SMDBOPTIONS=&quot;-D&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/sysconfig/samba</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="kt">!!binary</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">f0VMRgIBAQAAAAAAAAAAAAIAPgABAAAAwARAAAAAAABAAAAAAAAAAJAVAAAAAA</span><span class="w"></span>
+<span class="w">      </span><span class="no">AEAAHgAdAAYAAAAFAAAAQAAAAAAAAABAAEAAAAAAAEAAQAAAAAAAwAEAAAAAAA</span><span class="w"></span>
+<span class="w">      </span><span class="no">AAAAAAAAAwAAAAQAAAAAAgAAAAAAAAACQAAAAAAAAAJAAAAAAAAcAAAAAAAAAB</span><span class="w"></span>
+<span class="w">      </span><span class="no">...</span><span class="w"></span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/bin/arch</span><span class="w"></span>
+<span class="w">    </span><span class="nt">permissions</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0555&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">15 * * * * root ship_logs</span><span class="w"></span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/crontab</span><span class="w"></span>
 </code></pre></div>
 <h3 id="oshostname"><code>os.hostname</code><a class="headerlink" href="#oshostname" title="Permanent link">&para;</a></h3>
 <h4 id="definition_3">Definition<a class="headerlink" href="#definition_3" title="Permanent link">&para;</a></h4>
 <p>Set the system hostname. If the system hostname is supplied via DHCP, then that value will be used here. If this value is not set and one is not supplied via DHCP, then a random hostname will be generated.</p>
 <h4 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span>
-  <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">myhostname</span>
+<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myhostname</span><span class="w"></span>
 </code></pre></div>
 <h3 id="osmodules"><code>os.modules</code><a class="headerlink" href="#osmodules" title="Permanent link">&para;</a></h3>
 <h4 id="definition_4">Definition<a class="headerlink" href="#definition_4" title="Permanent link">&para;</a></h4>
 <p>A list of kernel modules to be loaded on start.</p>
 <h4 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span>
-  <span class="nt">modules</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">kvm</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">nvme</span>
+<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">modules</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kvm</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvme</span><span class="w"></span>
 </code></pre></div>
 <h3 id="ossysctls"><code>os.sysctls</code><a class="headerlink" href="#ossysctls" title="Permanent link">&para;</a></h3>
 <h4 id="definition_5">Definition<a class="headerlink" href="#definition_5" title="Permanent link">&para;</a></h4>
 <p>Kernel sysctl to set up on start. These are the typical configurations found in <code>/etc/sysctl.conf</code>.
 Values must be specified as strings.</p>
 <h4 id="example_5">Example<a class="headerlink" href="#example_5" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span>
-  <span class="nt">sysctls</span><span class="p">:</span>
-    <span class="nt">kernel.printk</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4 4 1 7</span> <span class="c1"># the YAML parser will read as a string</span>
-    <span class="nt">kernel.kptr_restrict</span><span class="p">:</span> <span class="s">&quot;1&quot;</span> <span class="c1"># force the YAML parser to read as a string</span>
+<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">sysctls</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">kernel.printk</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4 4 1 7</span><span class="w"> </span><span class="c1"># the YAML parser will read as a string</span><span class="w"></span>
+<span class="w">    </span><span class="nt">kernel.kptr_restrict</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="c1"># force the YAML parser to read as a string</span><span class="w"></span>
 </code></pre></div>
 <h3 id="osdns_nameservers"><code>os.dns_nameservers</code><a class="headerlink" href="#osdns_nameservers" title="Permanent link">&para;</a></h3>
 <h4 id="definition_6">Definition<a class="headerlink" href="#definition_6" title="Permanent link">&para;</a></h4>
 <p><strong>Fallback</strong> DNS name servers to use if DNS is not configured by DHCP or in the OS.</p>
 <h4 id="example_6">Example<a class="headerlink" href="#example_6" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span>
-  <span class="nt">dns_nameservers</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">8.8.8.8</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">1.1.1.1</span>
+<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">dns_nameservers</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8.8.8.8</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.1.1.1</span><span class="w"></span>
 </code></pre></div>
 <h3 id="osntp_servers"><code>os.ntp_servers</code><a class="headerlink" href="#osntp_servers" title="Permanent link">&para;</a></h3>
 <h4 id="definition_7">Definition<a class="headerlink" href="#definition_7" title="Permanent link">&para;</a></h4>
 <p><strong>Fallback</strong> ntp servers to use if NTP is not configured elsewhere in the OS.</p>
 <h4 id="example_7">Example<a class="headerlink" href="#example_7" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span>
-  <span class="nt">ntp_servers</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0.us.pool.ntp.org</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">1.us.pool.ntp.org</span>
+<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ntp_servers</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.us.pool.ntp.org</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.us.pool.ntp.org</span><span class="w"></span>
 </code></pre></div>
 <h3 id="ospassword"><code>os.password</code><a class="headerlink" href="#ospassword" title="Permanent link">&para;</a></h3>
 <h4 id="definition_8">Definition<a class="headerlink" href="#definition_8" title="Permanent link">&para;</a></h4>
@@ -2325,22 +2325,22 @@ form is to change your password on a Linux system and copy the value of the seco
 <code>/etc/shadow</code>. You can also encrypt a password using <code>openssl passwd -1</code>.</p>
 <h4 id="example_8">Example<a class="headerlink" href="#example_8" title="Permanent link">&para;</a></h4>
 <p>Encrypted:
-<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span>
-  <span class="nt">password</span><span class="p">:</span> <span class="s">&quot;$1$tYtghCfK$QHa51MS6MVAcfUKuOzNKt0&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$1$tYtghCfK$QHa51MS6MVAcfUKuOzNKt0&quot;</span><span class="w"></span>
 </code></pre></div></p>
 <p>Or clear text:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span>
-  <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">supersecure</span>
+<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">supersecure</span><span class="w"></span>
 </code></pre></div>
 <h3 id="osenvironment"><code>os.environment</code><a class="headerlink" href="#osenvironment" title="Permanent link">&para;</a></h3>
 <h4 id="definition_9">Definition<a class="headerlink" href="#definition_9" title="Permanent link">&para;</a></h4>
 <p>Environment variables to be set on K3s and other processes like the boot process.
 Primary use of this field is to set the HTTP proxy.</p>
 <h4 id="example_9">Example<a class="headerlink" href="#example_9" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span>
-  <span class="nt">environment</span><span class="p">:</span>
-    <span class="nt">http_proxy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://myserver</span>
-    <span class="nt">https_proxy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://myserver</span>
+<div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">environment</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">http_proxy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://myserver</span><span class="w"></span>
+<span class="w">    </span><span class="nt">https_proxy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://myserver</span><span class="w"></span>
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2359,8 +2359,8 @@ see <a href="../../settings/settings/#http-proxy">Settings/http-proxy</a>.</p>
 <li><code>join</code>: Join an existing Harvester installation. Need to specify <code>server_url</code>.</li>
 </ul>
 <h4 id="example_10">Example<a class="headerlink" href="#example_10" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
-  <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">create</span>
+<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">create</span><span class="w"></span>
 </code></pre></div>
 <h3 id="installnetworks"><code>install.networks</code><a class="headerlink" href="#installnetworks" title="Permanent link">&para;</a></h3>
 <h4 id="definition_12">Definition<a class="headerlink" href="#definition_12" title="Permanent link">&para;</a></h4>
@@ -2397,30 +2397,30 @@ the values are configurations for each network. Valid configuration fields are:<
 Please make sure the interface name is present on the target machine before installation.</p>
 </div>
 <h4 id="example_11">Example<a class="headerlink" href="#example_11" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
-  <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">create</span>
-  <span class="nt">networks</span><span class="p">:</span>
-    <span class="nt">harvester-mgmt</span><span class="p">:</span>       <span class="c1"># The management bond name. This is mandatory.</span>
-      <span class="nt">interfaces</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
-      <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
-      <span class="nt">bond_options</span><span class="p">:</span>
-        <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">balance-tlb</span>
-        <span class="nt">miimon</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
-    <span class="nt">harvester-vlan</span><span class="p">:</span>       <span class="c1"># The VLAN network bond name. User can then input `harvester-vlan` in the VLAN NIC setting in the GUI.</span>
-      <span class="nt">interfaces</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens6</span>
-      <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">none</span>
-      <span class="nt">bond_options</span><span class="p">:</span>
-        <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">balance-tlb</span>
-        <span class="nt">miimon</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
-    <span class="nt">bond0</span><span class="p">:</span>
-      <span class="nt">interfaces</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens8</span>
-      <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">static</span>
-      <span class="nt">ip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.18.2</span>
-      <span class="nt">subnet_mask</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">255.255.255.0</span>
-      <span class="nt">gateway</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.11.1</span>
+<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">create</span><span class="w"></span>
+<span class="w">  </span><span class="nt">networks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">harvester-mgmt</span><span class="p">:</span><span class="w">       </span><span class="c1"># The management bond name. This is mandatory.</span><span class="w"></span>
+<span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens5</span><span class="w"></span>
+<span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dhcp</span><span class="w"></span>
+<span class="w">      </span><span class="nt">bond_options</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">balance-tlb</span><span class="w"></span>
+<span class="w">        </span><span class="nt">miimon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
+<span class="w">    </span><span class="nt">harvester-vlan</span><span class="p">:</span><span class="w">       </span><span class="c1"># The VLAN network bond name. User can then input `harvester-vlan` in the VLAN NIC setting in the GUI.</span><span class="w"></span>
+<span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens6</span><span class="w"></span>
+<span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span><span class="w"></span>
+<span class="w">      </span><span class="nt">bond_options</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">balance-tlb</span><span class="w"></span>
+<span class="w">        </span><span class="nt">miimon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
+<span class="w">    </span><span class="nt">bond0</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens8</span><span class="w"></span>
+<span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">static</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.10.18.2</span><span class="w"></span>
+<span class="w">      </span><span class="nt">subnet_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255.255.255.0</span><span class="w"></span>
+<span class="w">      </span><span class="nt">gateway</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.11.1</span><span class="w"></span>
 </code></pre></div>
 <h3 id="installforce_efi"><code>install.force_efi</code><a class="headerlink" href="#installforce_efi" title="Permanent link">&para;</a></h3>
 <p>Force EFI installation even when EFI is not detected. Default: <code>false</code>.</p>
@@ -2440,8 +2440,8 @@ Please make sure the interface name is present on the target machine before inst
 <h4 id="definition_13">Definition<a class="headerlink" href="#definition_13" title="Permanent link">&para;</a></h4>
 <p>The tty device used for the console.</p>
 <h4 id="example_12">Example<a class="headerlink" href="#example_12" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
-  <span class="nt">tty</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ttyS0,115200n8</span>
+<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tty</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ttyS0,115200n8</span><span class="w"></span>
 </code></pre></div>
 <h3 id="installvip"><code>install.vip</code><a class="headerlink" href="#installvip" title="Permanent link">&para;</a></h3>
 <h3 id="installvip_mode"><code>install.vip_mode</code><a class="headerlink" href="#installvip_mode" title="Permanent link">&para;</a></h3>
@@ -2459,15 +2459,15 @@ Please make sure the interface name is present on the target machine before inst
 <p>See <a href="../management-address">Management Address</a> for more information.</p>
 <h4 id="example_13">Example<a class="headerlink" href="#example_13" title="Permanent link">&para;</a></h4>
 <p>Configure a static VIP.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
-  <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.100</span>
-  <span class="nt">vip_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">static</span>
+<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.0.100</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vip_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">static</span><span class="w"></span>
 </code></pre></div>
 <p>Configure a DHCP VIP.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
-  <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.19</span>
-  <span class="nt">vip_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
-  <span class="nt">vip_hw_addr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">52:54:00:ec:0e:0b</span>
+<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.10.0.19</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vip_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dhcp</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vip_hw_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">52:54:00:ec:0e:0b</span><span class="w"></span>
 </code></pre></div>
 <h3 id="installforce_mbr"><code>install.force_mbr</code><a class="headerlink" href="#installforce_mbr" title="Permanent link">&para;</a></h3>
 <h4 id="definition_15">Definition<a class="headerlink" href="#definition_15" title="Permanent link">&para;</a></h4>
@@ -2481,8 +2481,8 @@ In other words, no additional partition will be created and VM data will
 be stored in a partition shared with the OS data.</p>
 </div>
 <h4 id="example_14">Example<a class="headerlink" href="#example_14" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
-  <span class="nt">force_mbr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">force_mbr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 </code></pre></div>
 <h3 id="installno_data_partition"><code>install.no_data_partition</code><a class="headerlink" href="#installno_data_partition" title="Permanent link">&para;</a></h3>
 <h4 id="definition_16">Definition<a class="headerlink" href="#definition_16" title="Permanent link">&para;</a></h4>
@@ -2497,8 +2497,8 @@ This is useful when you want to use additional disks to store VM data with the
 there is a high chance of causing OS to malfunction due to the lack of disk space.</p>
 </div>
 <h4 id="example_15">Example<a class="headerlink" href="#example_15" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
-  <span class="nt">no_data_partition</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">no_data_partition</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 </code></pre></div>
 <h3 id="system_settings"><code>system_settings</code><a class="headerlink" href="#system_settings" title="Permanent link">&para;</a></h3>
 <h4 id="definition_17">Definition<a class="headerlink" href="#definition_17" title="Permanent link">&para;</a></h4>
@@ -2512,9 +2512,9 @@ Installing in "join" mode will adopt the system settings from the existing Harve
 </div>
 <h4 id="example_16">Example<a class="headerlink" href="#example_16" title="Permanent link">&para;</a></h4>
 <p>The example below overwrites <code>http-proxy</code> and <code>ui-source</code> settings. The values must be a <code>string</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">system_settings</span><span class="p">:</span>
-  <span class="nt">http-proxy</span><span class="p">:</span> <span class="s">&#39;{&quot;httpProxy&quot;:</span><span class="nv"> </span><span class="s">&quot;http://my.proxy&quot;,</span><span class="nv"> </span><span class="s">&quot;httpsProxy&quot;:</span><span class="nv"> </span><span class="s">&quot;https://my.proxy&quot;,</span><span class="nv"> </span><span class="s">&quot;noProxy&quot;:</span><span class="nv"> </span><span class="s">&quot;some.internal.svc&quot;}&#39;</span>
-  <span class="nt">ui-source</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">auto</span>
+<div class="highlight"><pre><span></span><code><span class="nt">system_settings</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">http-proxy</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{&quot;httpProxy&quot;:</span><span class="nv"> </span><span class="s">&quot;http://my.proxy&quot;,</span><span class="nv"> </span><span class="s">&quot;httpsProxy&quot;:</span><span class="nv"> </span><span class="s">&quot;https://my.proxy&quot;,</span><span class="nv"> </span><span class="s">&quot;noProxy&quot;:</span><span class="nv"> </span><span class="s">&quot;some.internal.svc&quot;}&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ui-source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auto</span><span class="w"></span>
 </code></pre></div>
 
               
@@ -2581,10 +2581,10 @@ Installing in "join" mode will adopt the system settings from the existing Harve
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.0bbba5b5.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.361d90f1.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e1a181d9.min.js"></script>
+      <script src="../../assets/javascripts/bundle.289a2a4b.min.js"></script>
       
         <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       

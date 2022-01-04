@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/settings/settings/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.edf004c2.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bb3983ee.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -1697,16 +1697,16 @@ SOME-CA-CERTIFICATES
 For further information, please refer to the <a href="https://longhorn.io/docs/1.2.2/snapshots-and-backups/backup-and-restore/set-backup-target/#set-up-aws-s3-backupstore">Longhorn documentation</a>.</p>
 <p>Default: none</p>
 <h4 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;s3&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;endpoint&quot;</span><span class="p">:</span> <span class="s2">&quot;https://s3.endpoint.svc&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;accessKeyId&quot;</span><span class="p">:</span> <span class="s2">&quot;test-access-key-id&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;secretAccessKey&quot;</span><span class="p">:</span> <span class="s2">&quot;test-access-key&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;bucketName&quot;</span><span class="p">:</span> <span class="s2">&quot;test-bup&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;bucketRegion&quot;</span><span class="p">:</span> <span class="s2">&quot;us‑east‑2&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;cert&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;virtualHostedStyle&quot;</span><span class="p">:</span> <span class="kc">false</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s3&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;endpoint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://s3.endpoint.svc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;accessKeyId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;test-access-key-id&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;secretAccessKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;test-access-key&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;bucketName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;test-bup&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;bucketRegion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;us‑east‑2&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;cert&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;virtualHostedStyle&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <h2 id="cluster-registration-url"><code>cluster-registration-url</code><a class="headerlink" href="#cluster-registration-url" title="Permanent link">&para;</a></h2>
 <p>This setting allows you to import the Harvester cluster to Rancher for multi-cluster management.</p>
@@ -1724,11 +1724,11 @@ For further information, please refer to the <a href="https://longhorn.io/docs/1
 <li>Comma-separated list of hostnames and/or CIDRs: <code>"noProxy": "&lt;hostname | CIDR&gt;"</code></li>
 </ul>
 <h4 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;httpProxy&quot;</span><span class="p">:</span> <span class="s2">&quot;http://my.proxy&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;httpsProxy&quot;</span><span class="p">:</span> <span class="s2">&quot;https://my.proxy&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;noProxy&quot;</span><span class="p">:</span> <span class="s2">&quot;some.internal.svc,172.16.0.0/16&quot;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;httpProxy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://my.proxy&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;httpsProxy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://my.proxy&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;noProxy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;some.internal.svc,172.16.0.0/16&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1758,11 +1758,11 @@ i.e., <code>localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,cattle-system.svc,.svc,.clust
 limit of a virtual machine is <code>1600m</code> core, Harvester would only request <code>100m</code>
 CPU for it from Kubernetes scheduler.</p>
 <h4 id="example_5">Example<a class="headerlink" href="#example_5" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;cpu&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
-  <span class="nt">&quot;memory&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-  <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="mi">300</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;cpu&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;memory&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;storage&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <h2 id="server-version"><code>server-version</code><a class="headerlink" href="#server-version" title="Permanent link">&para;</a></h2>
 <p>This setting displays the version of Harvester server.</p>
@@ -1773,20 +1773,20 @@ CPU for it from Kubernetes scheduler.</p>
 <p>This setting allows you to configure serving certificates for Harvester UI/API.</p>
 <p>Default: <code>{}</code></p>
 <h4 id="example_7">Example<a class="headerlink" href="#example_7" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;ca&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN CERTIFICATE-----\nSOME-CERTIFICATE-ENCODED-IN-PEM-FORMAT\n-----END CERTIFICATE-----&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;publicCertificate&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN CERTIFICATE-----\nSOME-CERTIFICATE-ENCODED-IN-PEM-FORMAT\n-----END CERTIFICATE-----&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;privateKey&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----\nSOME-PRIVATE-KEY-ENCODED-IN-PEM-FORMAT\n-----END RSA PRIVATE KEY-----&quot;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;ca&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-----BEGIN CERTIFICATE-----\nSOME-CERTIFICATE-ENCODED-IN-PEM-FORMAT\n-----END CERTIFICATE-----&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;publicCertificate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-----BEGIN CERTIFICATE-----\nSOME-CERTIFICATE-ENCODED-IN-PEM-FORMAT\n-----END CERTIFICATE-----&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;privateKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----\nSOME-PRIVATE-KEY-ENCODED-IN-PEM-FORMAT\n-----END RSA PRIVATE KEY-----&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <h2 id="ssl-parameters"><code>ssl-parameters</code><a class="headerlink" href="#ssl-parameters" title="Permanent link">&para;</a></h2>
 <p>This setting allows you to configure SSL parameters. Protocols are separated by spaces and ciphers are separated by colons.</p>
 <p>Default: <code>{}</code></p>
 <h4 id="example_8">Example<a class="headerlink" href="#example_8" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;protocols&quot;</span><span class="p">:</span> <span class="s2">&quot;TLSv1.2 TLSv1.3&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;ciphers&quot;</span><span class="p">:</span> <span class="s2">&quot;ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384&quot;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;protocols&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TLSv1.2 TLSv1.3&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;ciphers&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <h2 id="ui-index"><code>ui-index</code><a class="headerlink" href="#ui-index" title="Permanent link">&para;</a></h2>
 <p>This setting allows you to configure HTML index location for the UI.</p>
@@ -1868,10 +1868,10 @@ It's possible to provide multiple patterns by separating them with a comma.</p>
 <p>This setting allows you to force reschedule VMs when a node is unavailable. When a node turns to be <code>Not Ready</code>, it will force delete the VM on that node and reschedule it to another available node after a period of seconds.</p>
 <p>Default: <code>{"enable":true, "period":300}</code></p>
 <h4 id="example_16">Example<a class="headerlink" href="#example_16" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;enable&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;period&quot;</span><span class="p">:</span> <span class="mi">300</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;enable&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;period&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 
               
@@ -1938,10 +1938,10 @@ It's possible to provide multiple patterns by separating them with a comma.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.0bbba5b5.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.361d90f1.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e1a181d9.min.js"></script>
+      <script src="../../assets/javascripts/bundle.289a2a4b.min.js"></script>
       
         <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       

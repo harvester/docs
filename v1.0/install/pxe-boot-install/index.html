@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/install/pxe-boot-install/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.edf004c2.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bb3983ee.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -1241,34 +1241,34 @@ sudo cp /path/to/harvester-&lt;version&gt;-rootfs-amd64.squashfs /usr/share/ngin
 <p><strong>Security Risks</strong>: The configuration file below contains credentials which should be kept secret. Please do not make the configuration file publicly accessible.</p>
 </div>
 <p>Create a <a href="../harvester-configuration/">Harvester configuration file</a> called <code>config-create.yaml</code> for <code>CREATE</code> mode. Modify the values as needed:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># cat /usr/share/nginx/html/harvester/config-create.yaml</span>
-<span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">token</span>
-<span class="nt">os</span><span class="p">:</span>
-  <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">node1</span>
-  <span class="nt">ssh_authorized_keys</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDbeUa9A7Kee+hcCleIXYxuaPksn2m4PZTd4T7wPcse8KbsQfttGRax6vxQXoPO6ehddqOb2nV7tkW2mEhR50OE7W7ngDHbzK2OneAyONYF44bmMsapNAGvnsBKe9rNrev1iVBwOjtmyVLhnLrJIX+2+3T3yauxdu+pmBsnD5OIKUrBrN1sdwW0rA2rHDiSnzXHNQM3m02aY6mlagdQ/Ovh96h05QFCHYxBc6oE/mIeFRaNifa4GU/oELn3a6HfbETeBQz+XOEN+IrLpnZO9riGyzsZroB/Y3Ju+cJxH06U0B7xwJCRmWZjuvfFQUP7RIJD1gRGZzmf3h8+F+oidkO2i5rbT57NaYSqkdVvR6RidVLWEzURZIGbtHjSPCi4kqD05ua8r/7CC0PvxQb1O5ILEdyJr2ZmzhF6VjjgmyrmSmt/yRq8MQtGQxyKXZhJqlPYho4d5SrHi5iGT2PvgDQaWch0I3ndEicaaPDZJHWBxVsCVAe44Wtj9g3LzXkyu3k= root@admin</span>
-  <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rancher</span>
-<span class="nt">install</span><span class="p">:</span>
-  <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">create</span>
-  <span class="nt">networks</span><span class="p">:</span>
-    <span class="nt">harvester-mgmt</span><span class="p">:</span>       <span class="c1"># (Mandatory) The management bond name.</span>
-      <span class="nt">interfaces</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
-      <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
-      <span class="nt">bond_options</span><span class="p">:</span>
-        <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">balance-tlb</span>
-        <span class="nt">miimon</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
-    <span class="nt">harvester-vlan</span><span class="p">:</span>       <span class="c1"># (Optional) The VLAN network bond name. If VLAN NIC names vary from</span>
-      <span class="nt">interfaces</span><span class="p">:</span>         <span class="c1"># host to host, consider creating a bonding device. Users can then select</span>
-      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens6</span>        <span class="c1"># `harvester-vlan` as the VLAN network NIC in the Harvester GUI.</span>
-      <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">none</span>
-      <span class="nt">bond_options</span><span class="p">:</span>
-        <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">balance-tlb</span>
-        <span class="nt">miimon</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
-  <span class="nt">device</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/dev/sda</span>
-  <span class="nt">iso_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://10.100.0.10/harvester/harvester-&lt;version&gt;-amd64.iso</span>
-  <span class="nt">vip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.100.0.99</span>        <span class="c1"># The VIP to access the Harvester GUI. Make sure the IP is free to use.</span>
-  <span class="nt">vip_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">static</span>        <span class="c1"># Or dhcp, check configuration file for more information.</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># cat /usr/share/nginx/html/harvester/config-create.yaml</span><span class="w"></span>
+<span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">token</span><span class="w"></span>
+<span class="nt">os</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">node1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ssh_authorized_keys</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDbeUa9A7Kee+hcCleIXYxuaPksn2m4PZTd4T7wPcse8KbsQfttGRax6vxQXoPO6ehddqOb2nV7tkW2mEhR50OE7W7ngDHbzK2OneAyONYF44bmMsapNAGvnsBKe9rNrev1iVBwOjtmyVLhnLrJIX+2+3T3yauxdu+pmBsnD5OIKUrBrN1sdwW0rA2rHDiSnzXHNQM3m02aY6mlagdQ/Ovh96h05QFCHYxBc6oE/mIeFRaNifa4GU/oELn3a6HfbETeBQz+XOEN+IrLpnZO9riGyzsZroB/Y3Ju+cJxH06U0B7xwJCRmWZjuvfFQUP7RIJD1gRGZzmf3h8+F+oidkO2i5rbT57NaYSqkdVvR6RidVLWEzURZIGbtHjSPCi4kqD05ua8r/7CC0PvxQb1O5ILEdyJr2ZmzhF6VjjgmyrmSmt/yRq8MQtGQxyKXZhJqlPYho4d5SrHi5iGT2PvgDQaWch0I3ndEicaaPDZJHWBxVsCVAe44Wtj9g3LzXkyu3k= root@admin</span><span class="w"></span>
+<span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rancher</span><span class="w"></span>
+<span class="nt">install</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">create</span><span class="w"></span>
+<span class="w">  </span><span class="nt">networks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">harvester-mgmt</span><span class="p">:</span><span class="w">       </span><span class="c1"># (Mandatory) The management bond name.</span><span class="w"></span>
+<span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens5</span><span class="w"></span>
+<span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dhcp</span><span class="w"></span>
+<span class="w">      </span><span class="nt">bond_options</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">balance-tlb</span><span class="w"></span>
+<span class="w">        </span><span class="nt">miimon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
+<span class="w">    </span><span class="nt">harvester-vlan</span><span class="p">:</span><span class="w">       </span><span class="c1"># (Optional) The VLAN network bond name. If VLAN NIC names vary from</span><span class="w"></span>
+<span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span><span class="w">         </span><span class="c1"># host to host, consider creating a bonding device. Users can then select</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens6</span><span class="w">        </span><span class="c1"># `harvester-vlan` as the VLAN network NIC in the Harvester GUI.</span><span class="w"></span>
+<span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span><span class="w"></span>
+<span class="w">      </span><span class="nt">bond_options</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">balance-tlb</span><span class="w"></span>
+<span class="w">        </span><span class="nt">miimon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
+<span class="w">  </span><span class="nt">device</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/sda</span><span class="w"></span>
+<span class="w">  </span><span class="nt">iso_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://10.100.0.10/harvester/harvester-&lt;version&gt;-amd64.iso</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.100.0.99</span><span class="w">        </span><span class="c1"># The VIP to access the Harvester GUI. Make sure the IP is free to use.</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vip_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">static</span><span class="w">        </span><span class="c1"># Or dhcp, check configuration file for more information.</span><span class="w"></span>
 </code></pre></div>
 <p>For machines that needs to be installed using <code>CREATE</code> mode, the following is an iPXE script that boots the kernel with the above config:</p>
 <div class="highlight"><pre><span></span><code>#!ipxe
@@ -1291,36 +1291,36 @@ See <a href="https://man7.org/linux/man-pages/man7/dracut.cmdline.7.html"><code>
 <p><strong>Security Risks</strong>: The configuration file below contains credentials which should be kept secret. Please do not make the configuration file publicly accessible.</p>
 </div>
 <p>Create a <a href="../harvester-configuration/">Harvester configuration file</a> called <code>config-join.yaml</code> for <code>JOIN</code> mode. Modify the values as needed:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># cat /usr/share/nginx/html/harvester/config-join.yaml</span>
-<span class="nt">server_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://10.100.0.99:8443</span>  <span class="c1"># Should be the VIP set up in &quot;CREATE&quot; config</span>
-<span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">token</span>
-<span class="nt">os</span><span class="p">:</span>
-  <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">node2</span>
-  <span class="nt">ssh_authorized_keys</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDbeUa9A7Kee+hcCleIXYxuaPksn2m4PZTd4T7wPcse8KbsQfttGRax6vxQXoPO6ehddqOb2nV7tkW2mEhR50OE7W7ngDHbzK2OneAyONYF44bmMsapNAGvnsBKe9rNrev1iVBwOjtmyVLhnLrJIX+2+3T3yauxdu+pmBsnD5OIKUrBrN1sdwW0rA2rHDiSnzXHNQM3m02aY6mlagdQ/Ovh96h05QFCHYxBc6oE/mIeFRaNifa4GU/oELn3a6HfbETeBQz+XOEN+IrLpnZO9riGyzsZroB/Y3Ju+cJxH06U0B7xwJCRmWZjuvfFQUP7RIJD1gRGZzmf3h8+F+oidkO2i5rbT57NaYSqkdVvR6RidVLWEzURZIGbtHjSPCi4kqD05ua8r/7CC0PvxQb1O5ILEdyJr2ZmzhF6VjjgmyrmSmt/yRq8MQtGQxyKXZhJqlPYho4d5SrHi5iGT2PvgDQaWch0I3ndEicaaPDZJHWBxVsCVAe44Wtj9g3LzXkyu3k= root@admin</span>
-  <span class="nt">dns_nameservers</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">1.1.1.1</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">8.8.8.8</span>
-  <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rancher</span>
-<span class="nt">install</span><span class="p">:</span>
-  <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">join</span>
-  <span class="nt">networks</span><span class="p">:</span>
-    <span class="nt">harvester-mgmt</span><span class="p">:</span>       <span class="c1"># (Mandatory) The management bond name.</span>
-      <span class="nt">interfaces</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens5</span>
-      <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dhcp</span>
-      <span class="nt">bond_options</span><span class="p">:</span>
-        <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">balance-tlb</span>
-        <span class="nt">miimon</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
-    <span class="nt">harvester-vlan</span><span class="p">:</span>       <span class="c1"># (Optional) The VLAN network bond name. If VLAN NIC names vary from</span>
-      <span class="nt">interfaces</span><span class="p">:</span>         <span class="c1"># host to host, consider creating a bonding device. Users can then select</span>
-      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ens6</span>        <span class="c1"># `harvester-vlan` as the VLAN network NIC in the Harvester GUI.</span>
-      <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">none</span>
-      <span class="nt">bond_options</span><span class="p">:</span>
-        <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">balance-tlb</span>
-        <span class="nt">miimon</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
-  <span class="nt">device</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/dev/sda</span>
-  <span class="nt">iso_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://10.100.0.10/harvester/harvester-&lt;version&gt;-amd64.iso</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># cat /usr/share/nginx/html/harvester/config-join.yaml</span><span class="w"></span>
+<span class="nt">server_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://10.100.0.99:8443</span><span class="w">  </span><span class="c1"># Should be the VIP set up in &quot;CREATE&quot; config</span><span class="w"></span>
+<span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">token</span><span class="w"></span>
+<span class="nt">os</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">node2</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ssh_authorized_keys</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDbeUa9A7Kee+hcCleIXYxuaPksn2m4PZTd4T7wPcse8KbsQfttGRax6vxQXoPO6ehddqOb2nV7tkW2mEhR50OE7W7ngDHbzK2OneAyONYF44bmMsapNAGvnsBKe9rNrev1iVBwOjtmyVLhnLrJIX+2+3T3yauxdu+pmBsnD5OIKUrBrN1sdwW0rA2rHDiSnzXHNQM3m02aY6mlagdQ/Ovh96h05QFCHYxBc6oE/mIeFRaNifa4GU/oELn3a6HfbETeBQz+XOEN+IrLpnZO9riGyzsZroB/Y3Ju+cJxH06U0B7xwJCRmWZjuvfFQUP7RIJD1gRGZzmf3h8+F+oidkO2i5rbT57NaYSqkdVvR6RidVLWEzURZIGbtHjSPCi4kqD05ua8r/7CC0PvxQb1O5ILEdyJr2ZmzhF6VjjgmyrmSmt/yRq8MQtGQxyKXZhJqlPYho4d5SrHi5iGT2PvgDQaWch0I3ndEicaaPDZJHWBxVsCVAe44Wtj9g3LzXkyu3k= root@admin</span><span class="w"></span>
+<span class="w">  </span><span class="nt">dns_nameservers</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.1.1.1</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8.8.8.8</span><span class="w"></span>
+<span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rancher</span><span class="w"></span>
+<span class="nt">install</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">join</span><span class="w"></span>
+<span class="w">  </span><span class="nt">networks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">harvester-mgmt</span><span class="p">:</span><span class="w">       </span><span class="c1"># (Mandatory) The management bond name.</span><span class="w"></span>
+<span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens5</span><span class="w"></span>
+<span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dhcp</span><span class="w"></span>
+<span class="w">      </span><span class="nt">bond_options</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">balance-tlb</span><span class="w"></span>
+<span class="w">        </span><span class="nt">miimon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">    </span><span class="nt">harvester-vlan</span><span class="p">:</span><span class="w">       </span><span class="c1"># (Optional) The VLAN network bond name. If VLAN NIC names vary from</span><span class="w"></span>
+<span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span><span class="w">         </span><span class="c1"># host to host, consider creating a bonding device. Users can then select</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens6</span><span class="w">        </span><span class="c1"># `harvester-vlan` as the VLAN network NIC in the Harvester GUI.</span><span class="w"></span>
+<span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span><span class="w"></span>
+<span class="w">      </span><span class="nt">bond_options</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">balance-tlb</span><span class="w"></span>
+<span class="w">        </span><span class="nt">miimon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
+<span class="w">  </span><span class="nt">device</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/sda</span><span class="w"></span>
+<span class="w">  </span><span class="nt">iso_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://10.100.0.10/harvester/harvester-&lt;version&gt;-amd64.iso</span><span class="w"></span>
 </code></pre></div>
 <p>Note that the <code>mode</code> is <code>join</code> and the <code>server_url</code> needs to be provided.</p>
 <p>For machines that needs to be installed in <code>JOIN</code> mode, the following is an iPXE script that boots the kernel with the above config:</p>
@@ -1502,10 +1502,10 @@ boot
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.0bbba5b5.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.361d90f1.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e1a181d9.min.js"></script>
+      <script src="../../assets/javascripts/bundle.289a2a4b.min.js"></script>
       
         <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
