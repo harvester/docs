@@ -85,7 +85,7 @@ Please refer to the Harvester [Helm chart](https://github.com/harvester/harveste
 
 1. Install the Harvester chart
    ```bash
-   ## in order to use the service type LoadBalancer and create a vip in control-plane nodes, we need to enable kubevip
+   ## In order to use the service type LoadBalancer and create a vip in control-plane nodes, we need to enable kubevip.
    VIP_IP="replace with your vip ip, such as 192.168.5.10"
    VIP_NIC="replace with your vip interface name, such as eth0"
    helm install harvester ./harvester --namespace harvester-system \
@@ -100,16 +100,16 @@ Please refer to the Harvester [Helm chart](https://github.com/harvester/harveste
    ```
 
    ```bash
-   ## In some kubernetes distributions (such as kubeadm), we need to modify the kube-vip nodeSelector to match the control-plane nodes
+   ## In some Kubernetes distributions (such as kubeadm), we need to modify the kube-vip nodeSelector to match the control-plane nodes.
    --set kube-vip.nodeSelector."node-role\.kubernetes\.io/master"=""
    ```
 
 1. Expose Harvester UI
    ```bash
-   ## refer to https://kube-vip.chipzoller.dev/docs/usage/cloud-provider/, Add `cidr-cattle-system: ${VIP_IP}/32` to kubevip configMap
+   ## Refer to https://kube-vip.chipzoller.dev/docs/usage/cloud-provider/. Add `cidr-cattle-system: ${VIP_IP}/32` to kubevip configMap.
    kubectl -n kube-system edit cm kubevip
 
-   ## Change the rancher service type from ClusterIP to LoadBalancer, and then you can access Harvester UI via https://${VIP_IP}
+   ## Change the rancher service type from ClusterIP to LoadBalancer, and then you can access Harvester UI via https://${VIP_IP}.
    kubectl -n cattle-system edit svc rancher
    ```
 
