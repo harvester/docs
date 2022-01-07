@@ -17,14 +17,11 @@ Description: Developer mode (dev mode) is intended to be used for testing and de
 ## Requirements
 
 - The Kubernetes node must pass the [host-check](https://raw.githubusercontent.com/harvester/harvester/master/hack/host-check.sh)
-- If the Kubelet's RootDir is not `/var/lib/kubelet`, it must be mounted bind to `/var/lib/kubelet`
+- If the Kubelet's RootDir is not `/var/lib/kubelet`, you must create a `bind mount` to `/var/lib/kubelet` as follows:
    ```bash
-   KUBELET_ROOT_DIR="replace with your kubelet root dir"
+   KUBELET_ROOT_DIR="path to your kubelet root dir"
    echo "${KUBELET_ROOT_DIR} /var/lib/kubelet none bind 0 0" >> /etc/fstab
    mkdir -p /var/lib/kubelet && mount -a
-   ```
-- The Kubernetes controller-manager args requires `--use-service-account-credentials=true`
-- To display the CPU, memory, and disk usage of the host properly, the [metrics-server](https://github.com/kubernetes-sigs/metrics-server) must be installed in the cluster.
 - [**Multus**](https://kubernetes.io/docs/concepts/cluster-administration/networking/#multus-a-multi-network-plugin) is installed across your cluster and a corresponding `NetworkAttachmentDefinition` CRD is created.
 - The Harvester Chart already contains the Kubevirt and Longhorn
 
