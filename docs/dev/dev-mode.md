@@ -35,7 +35,7 @@ For development purpose, Harvester can be installed on a Kubernetes cluster by u
 Please refer to the Harvester [Helm chart](https://github.com/harvester/harvester/blob/master/deploy/charts/harvester/README.md) for more details on installing and configuring the Helm chart.
 
 1. Create the cattle-system namespace
-   ```bash0
+   ```bash
    kubectl create ns cattle-system
    ```
 
