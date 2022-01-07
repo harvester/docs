@@ -46,9 +46,12 @@ Download the Harvester ISO image of a newer release from the [Harvester GithHub 
 Some operations need to be run from a `controller` node which contains the cluster credentials. You can use the first node of the cluster or any node with the `control-plane` role:
 
 ```
-$ ssh rancher@<ip_of_the_first_node>
+ssh rancher@<ip_of_the_first_node>
+sudo -i kubectl get nodes
+```
 
-rancher@node1:~> sudo -i kubectl get nodes
+Example output:
+```
 NAME    STATUS   ROLES                       AGE    VERSION
 node1   Ready    control-plane,etcd,master   116m   v1.21.5+rke2r1
 node2   Ready    control-plane,etcd,master   112m   v1.21.5+rke2r1
