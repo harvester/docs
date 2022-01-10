@@ -5,6 +5,8 @@ keywords:
   - harvester
   - Rancher
   - rancher
+  - Virtual Machine
+  - virtual machine
   - Create a VM
 Description: Create one or more virtual machines from the Virtual Machines page.
 ---
