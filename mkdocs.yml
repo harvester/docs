@@ -7,7 +7,7 @@ repo_name: harvester/harvester
 repo_url: https://github.com/harvester/harvester
 edit_uri: https://github.com/harvester/docs/edit/main/docs/
 # Set to false for local docs development
-strict: true
+strict: false
 
 theme:
   name: material

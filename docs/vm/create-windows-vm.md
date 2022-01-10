@@ -7,6 +7,8 @@ keywords:
   - rancher
   - Windows
   - windows
+  - Virtual Machine
+  - virtual machine
   - Create a Windows VM
 Description: Create one or more Windows virtual machines from the Virtual Machines page.
 
@@ -28,9 +30,9 @@ Create one or more virtual machines from the **Virtual Machines** page.
     1. [Optional] Provide a description for the VM.
     1. [Optional] Select the VM template `windows-iso-image-base-template`. This template will add a volume with the `virtio` drivers for Windows.
 
-## Tab: Basics
+## Basics tab
 
-    1. Configure the number of `CPU` assigned to the VM.
+    1. Configure the number of `CPU` cores assigned to the VM.
     1. Configure the amount of `Memory` assigned to the VM.
     1. [Optional] Select existing `SSH keys` or upload new ones.
 
@@ -74,7 +76,7 @@ Create one or more virtual machines from the **Virtual Machines** page.
     ![create-windows-vm-networks](assets/create-windows-vm-networks.png)
 
 !!! warning
-	Changing the `Node Scheduling` settings can impact Harvester features, such as the `Live migration`.
+	Changing the `Node Scheduling` settings can impact Harvester features, such as disabling `Live migration`.
 	
 
 ## Node Scheduling Tab
