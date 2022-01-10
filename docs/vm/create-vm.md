@@ -16,7 +16,7 @@ Description: Create one or more virtual machines from the Virtual Machines page.
 Create one or more virtual machines from the **Virtual Machines** page.
 
 !!! note
-	For creating Windows virtual machines, please refer to [this page](./create-windows-vm.md)
+	For creating Windows virtual machines, please refer to [this page](./create-windows-vm.md).
 
 
 1. Choose the option to create either one or multiple VM instances.
