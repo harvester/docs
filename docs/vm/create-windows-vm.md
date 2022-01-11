@@ -30,7 +30,7 @@ Create one or more virtual machines from the **Virtual Machines** page.
     1. [Optional] Provide a description for the VM.
     1. [Optional] Select the VM template `windows-iso-image-base-template`. This template will add a volume with the `virtio` drivers for Windows.
 
-## Basics tab
+## Basics Tab
 
     1. Configure the number of `CPU` cores assigned to the VM.
     1. Configure the amount of `Memory` assigned to the VM.
