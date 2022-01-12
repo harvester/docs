@@ -24,7 +24,6 @@ Create one or more virtual machines from the **Virtual Machines** page.
 
 ## Header Section
 
-
 1. Create a single VM instance or multiple VM instances.
 1. Set the VM name.
 1. [Optional] Provide a description for the VM.
