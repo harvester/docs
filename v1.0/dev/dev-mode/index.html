@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/dev/dev-mode/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.6">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.7">
     
     
       
@@ -805,23 +805,99 @@
 
   
   
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Developer Mode Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Developer Mode Installation
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digitalocean-test-environment" class="md-nav__link">
+    DigitalOcean Test Environment
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
   
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14" type="checkbox" id="__nav_14" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_14">
+        <label class="md-nav__link" for="__nav_15">
           Troubleshooting
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Troubleshooting" data-md-level="1">
-        <label class="md-nav__title" for="__nav_14">
+        <label class="md-nav__title" for="__nav_15">
           <span class="md-nav__icon md-icon"></span>
           Troubleshooting
         </label>
@@ -886,18 +962,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_16" type="checkbox" id="__nav_16" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_15">
+        <label class="md-nav__link" for="__nav_16">
           Reference
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_15">
+        <label class="md-nav__title" for="__nav_16">
           <span class="md-nav__icon md-icon"></span>
           Reference
         </label>
@@ -980,20 +1056,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#option-1-install-using-helm" class="md-nav__link">
-    Option 1: Install using Helm
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#option-2-install-using-rancher" class="md-nav__link">
-    Option 2: Install using Rancher
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#digitalocean-test-environment" class="md-nav__link">
     DigitalOcean Test Environment
   </a>
@@ -1023,70 +1085,102 @@
 
 
 <h1 id="developer-mode-installation">Developer Mode Installation<a class="headerlink" href="#developer-mode-installation" title="Permanent link">&para;</a></h1>
-<p>Developer mode (dev mode) is intended to be used for testing and development purposes.</p>
-<p>This video shows the dev mode installation.</p>
-<iframe width="950" height="475" src="https://www.youtube.com/embed/TG0GaAD_6J4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Developer mode (dev mode) is intended to be used for local testing and development purposes.</p>
+</div>
 <h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
 <ul>
+<li>The Kubernetes node must pass the <a href="https://raw.githubusercontent.com/harvester/harvester/master/hack/host-check.sh">host-check</a></li>
+<li>If the Kubelet's RootDir is not <code>/var/lib/kubelet</code>, you must create a <code>bind mount</code> to <code>/var/lib/kubelet</code> as follows:
+   ```bash
+   KUBELET_ROOT_DIR="path to your kubelet root dir"
+   echo "${KUBELET_ROOT_DIR} /var/lib/kubelet none bind 0 0" &gt;&gt; /etc/fstab
+   mkdir -p /var/lib/kubelet &amp;&amp; mount -a</li>
 <li><a href="https://kubernetes.io/docs/concepts/cluster-administration/networking/#multus-a-multi-network-plugin"><strong>Multus</strong></a> is installed across your cluster and a corresponding <code>NetworkAttachmentDefinition</code> CRD is created.</li>
-<li>The Kubernetes node must have hardware virtualization support.</li>
-<li>
-<p>To validate the support, use this command:</p>
-<p><div class="highlight"><pre><span></span><code>cat /proc/cpuinfo <span class="p">|</span> grep vmx
-</code></pre></div>
-- If you are using an <a href="https://rancher.com/docs/rke/latest/en/">RKE</a> cluster, <code>ipv4.ip_forward</code> must be enabled for the CNI plugin in order for pod network to work as expected.</p>
-</li>
+<li>The Harvester Chart already contains the Kubevirt and Longhorn</li>
 </ul>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<p>Harvester can be installed on a Kubernetes cluster in the following ways:</p>
-<ul>
-<li>Using the <a href="https://helm.sh/">Helm</a> CLI.</li>
-<li>As a Rancher catalog app, in which case the <a href="https://github.com/harvester/harvester">harvester/harvester</a> repo is added to the Rancher Catalog as a Helm <code>v3</code> app</li>
-</ul>
+<p>For development purpose, Harvester can be installed on a Kubernetes cluster by using the <a href="https://helm.sh/">Helm</a> CLI.</p>
 <p>Please refer to the Harvester <a href="https://github.com/harvester/harvester/blob/master/deploy/charts/harvester/README.md">Helm chart</a> for more details on installing and configuring the Helm chart.</p>
-<h3 id="option-1-install-using-helm">Option 1: Install using Helm<a class="headerlink" href="#option-1-install-using-helm" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
-<p>Clone the GitHub repository:
+<p>Create the cattle-system namespace
+   <div class="highlight"><pre><span></span><code>kubectl create ns cattle-system
+</code></pre></div></p>
+</li>
+<li>
+<p>Add the rancher-latest helm repo
+   <div class="highlight"><pre><span></span><code>helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+</code></pre></div></p>
+</li>
+<li>
+<p>Install Rancher chart
+   <div class="highlight"><pre><span></span><code>helm install rancher rancher-latest/rancher <span class="se">\</span>
+--namespace cattle-system <span class="se">\</span>
+--set <span class="nv">tls</span><span class="o">=</span>external <span class="se">\</span>
+--set <span class="nv">rancherImagePullPolicy</span><span class="o">=</span>IfNotPresent <span class="se">\</span>
+--set <span class="nv">rancherImage</span><span class="o">=</span>rancher/rancher <span class="se">\</span>
+--set <span class="nv">rancherImageTag</span><span class="o">=</span>v2.6.3-harvester1 <span class="se">\</span>
+--set <span class="nv">noDefaultAdmin</span><span class="o">=</span><span class="nb">false</span> <span class="se">\</span>
+--set <span class="nv">features</span><span class="o">=</span><span class="s2">&quot;multi-cluster-management=false\,multi-cluster-management-agent=false&quot;</span> <span class="se">\</span>
+--set <span class="nv">useBundledSystemChart</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+--set <span class="nv">bootstrapPassword</span><span class="o">=</span>admin
+</code></pre></div></p>
+</li>
+<li>
+<p>Change the 'status.provider' of the local cluster object to "harvester"
+   <div class="highlight"><pre><span></span><code>kubectl edit clusters.management.cattle.io <span class="nb">local</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Clone the GitHub repository
    <div class="highlight"><pre><span></span><code>git clone https://github.com/harvester/harvester.git --depth<span class="o">=</span><span class="m">1</span>
 </code></pre></div></p>
 </li>
 <li>
-<p>Go to the Helm chart:
+<p>Go to the Helm chart
    <div class="highlight"><pre><span></span><code><span class="nb">cd</span> harvester/deploy/charts
 </code></pre></div></p>
 </li>
 <li>
-<p>Install the Harvester chart with the following commands:
-   <div class="highlight"><pre><span></span><code><span class="c1">### To install the chart with the release name `harvester`:</span>
-
-<span class="c1">## Create the target namespace</span>
-kubectl create ns harvester-system
-
-<span class="c1">## Install the chart to the target namespace</span>
-helm install harvester harvester <span class="se">\</span>
---namespace harvester-system <span class="se">\</span>
---set longhorn.enabled<span class="o">=</span>true,minio.persistence.storageClass<span class="o">=</span>longhorn
+<p>Create the harvester-system namespace
+   <div class="highlight"><pre><span></span><code>kubectl create ns harvester-system
+</code></pre></div></p>
+</li>
+<li>
+<p>Install the Harvester crd chart
+   <div class="highlight"><pre><span></span><code>helm install harvester-crd ./harvester-crd --namespace harvester-system
+</code></pre></div></p>
+</li>
+<li>
+<p>Install the Harvester chart
+   <div class="highlight"><pre><span></span><code><span class="c1">## In order to use the service type LoadBalancer and create a vip in control-plane nodes, we need to enable kubevip.</span>
+<span class="nv">VIP_IP</span><span class="o">=</span><span class="s2">&quot;replace with your vip ip, such as 192.168.5.10&quot;</span>
+<span class="nv">VIP_NIC</span><span class="o">=</span><span class="s2">&quot;replace with your vip interface name, such as eth0&quot;</span>
+helm install harvester ./harvester --namespace harvester-system <span class="se">\</span>
+--set harvester-node-disk-manager.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+--set harvester-network-controller.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+--set harvester-load-balancer.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+--set kube-vip.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+--set kube-vip.config.vip_interface<span class="o">=</span><span class="si">${</span><span class="nv">VIP_NIC</span><span class="si">}</span> <span class="se">\</span>
+--set kube-vip.config.vip_address<span class="o">=</span><span class="si">${</span><span class="nv">VIP_IP</span><span class="si">}</span> <span class="se">\</span>
+--set service.vip.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+--set service.vip.ip<span class="o">=</span><span class="si">${</span><span class="nv">VIP_IP</span><span class="si">}</span>
 </code></pre></div></p>
 </li>
 </ol>
-<h3 id="option-2-install-using-rancher">Option 2: Install using Rancher<a class="headerlink" href="#option-2-install-using-rancher" title="Permanent link">&para;</a></h3>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>You can create a test Kubernetes environment in Rancher using DigitalOcean as cloud provider. For details, see <a href="#digital-ocean-test-environment">this section</a>.</p>
-</div>
+<div class="highlight"><pre><span></span><code><span class="c1">## In some Kubernetes distributions (such as kubeadm), we need to modify the kube-vip nodeSelector to match the control-plane nodes.</span>
+--set kube-vip.nodeSelector.<span class="s2">&quot;node-role\.kubernetes\.io/master&quot;</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</code></pre></div>
 <ol>
-<li>Add the Harvester repo <code>https://github.com/harvester/harvester</code> to your Rancher catalogs by clicking <strong>Global &gt; Tools &gt; Catalogs</strong>.</li>
-<li>Specify the URL and name. Set the branch to <code>stable</code> if you need a stable release version. Set the <code>Helm version</code> to be <code>Helm v3</code>.
-   <img alt="harvester-catalog.png" src="../harvester-catalog.png" /></li>
-<li>Click <strong>Create</strong>.</li>
-<li>Navigate to your project-level <code>Apps</code>.</li>
-<li>Click <strong>Launch</strong> and choose the Harvester app.</li>
-<li>(Optional) You can modify the configurations if needed. Otherwise, use the default options.</li>
-<li>Click <strong>Launch</strong> and wait for the app's components to be ready.</li>
-<li>Click the <strong>/index.html</strong> link to navigate to the Harvester UI, as shown in the figure below:
-   <img alt="harvester-app.png" src="../harvester-app.png" /></li>
+<li>Expose Harvester UI
+   <div class="highlight"><pre><span></span><code><span class="c1">## Refer to https://kube-vip.chipzoller.dev/docs/usage/cloud-provider/. Add `cidr-cattle-system: ${VIP_IP}/32` to kubevip configMap.</span>
+kubectl -n kube-system edit cm kubevip
+
+<span class="c1">## Change the rancher service type from ClusterIP to LoadBalancer, and then you can access Harvester UI via https://${VIP_IP}.</span>
+kubectl -n cattle-system edit svc rancher
+</code></pre></div></li>
 </ol>
 <h3 id="digitalocean-test-environment">DigitalOcean Test Environment<a class="headerlink" href="#digitalocean-test-environment" title="Permanent link">&para;</a></h3>
 <p>You can create a test Kubernetes environment in Rancher using <a href="https://www.digitalocean.com/">DigitalOcean</a> as a cloud provider, which supports nested virtualization.</p>
@@ -1103,6 +1197,41 @@ helm install harvester harvester <span class="se">\</span>
       </main>
       
         <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../settings/settings/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Settings" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Settings
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../troubleshooting/installation/" class="md-footer__link md-footer__link--next" aria-label="Next: Installation" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Installation
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1127,7 +1256,7 @@ helm install harvester harvester <span class="se">\</span>
     <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.22074ed6.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.1514a9a0.min.js"></script>
+      <script src="../../assets/javascripts/bundle.01de222e.min.js"></script>
       
         <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
