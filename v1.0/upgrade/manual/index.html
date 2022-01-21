@@ -8,21 +8,21 @@
       
       
       
-        <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/upgrade/">
+        <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/upgrade/manual/">
       
-      <link rel="icon" href="../assets/favicon.ico">
+      <link rel="icon" href="../../assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.7">
     
     
       
-        <title>Upgrading Harvester - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>Upgrading Harvester manually - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.cd566b2a.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.cd566b2a.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
         
       
     
@@ -36,11 +36,11 @@
       
     
     
-      <link rel="stylesheet" href="../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-      <link rel="stylesheet" href="../assets/swagger-ui/swagger-ui.css">
+      <link rel="stylesheet" href="../../assets/swagger-ui/swagger-ui.css">
     
-    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#upgrading-harvester" class="md-skip">
+        <a href="#upgrading-harvester-manually" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +90,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="https://harvesterhci.io" title="Harvester - Open Source Hyperconverged Infrastructure" class="md-header__button md-logo" aria-label="Harvester - Open Source Hyperconverged Infrastructure" data-md-component="logo">
       
-  <img src="../assets/logo_horizontal_white.png" alt="logo">
+  <img src="../../assets/logo_horizontal_white.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Upgrading Harvester
+              Upgrading Harvester manually
             
           </span>
         </div>
@@ -209,7 +209,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="https://harvesterhci.io" title="Harvester - Open Source Hyperconverged Infrastructure" class="md-nav__button md-logo" aria-label="Harvester - Open Source Hyperconverged Infrastructure" data-md-component="logo">
       
-  <img src="../assets/logo_horizontal_white.png" alt="logo">
+  <img src="../../assets/logo_horizontal_white.png" alt="logo">
 
     </a>
     Harvester - Open Source Hyperconverged Infrastructure
@@ -237,7 +237,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         Harvester Overview
       </a>
     </li>
@@ -278,7 +278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install/iso-install/" class="md-nav__link">
+      <a href="../../install/iso-install/" class="md-nav__link">
         ISO Installation
       </a>
     </li>
@@ -292,7 +292,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install/usb-install/" class="md-nav__link">
+      <a href="../../install/usb-install/" class="md-nav__link">
         USB Installation
       </a>
     </li>
@@ -306,7 +306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install/pxe-boot-install/" class="md-nav__link">
+      <a href="../../install/pxe-boot-install/" class="md-nav__link">
         PXE Boot Installation
       </a>
     </li>
@@ -320,7 +320,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install/harvester-configuration/" class="md-nav__link">
+      <a href="../../install/harvester-configuration/" class="md-nav__link">
         Harvester Configuration
       </a>
     </li>
@@ -334,7 +334,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install/management-address/" class="md-nav__link">
+      <a href="../../install/management-address/" class="md-nav__link">
         Management Address
       </a>
     </li>
@@ -356,7 +356,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../airgap/" class="md-nav__link">
+      <a href="../../airgap/" class="md-nav__link">
         Air Gapped Environment
       </a>
     </li>
@@ -371,7 +371,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../authentication/" class="md-nav__link">
+      <a href="../../authentication/" class="md-nav__link">
         Authentication
       </a>
     </li>
@@ -384,21 +384,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../automatic/" class="md-nav__link">
         Upgrading Harvester
       </a>
-      
     </li>
   
 
@@ -411,7 +401,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../upload-image/" class="md-nav__link">
+      <a href="../../upload-image/" class="md-nav__link">
         Upload Images
       </a>
     </li>
@@ -426,7 +416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../host/host/" class="md-nav__link">
+      <a href="../../host/host/" class="md-nav__link">
         Host Management
       </a>
     </li>
@@ -467,7 +457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/create-vm/" class="md-nav__link">
+      <a href="../../vm/create-vm/" class="md-nav__link">
         Create a VM
       </a>
     </li>
@@ -481,7 +471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/create-windows-vm/" class="md-nav__link">
+      <a href="../../vm/create-windows-vm/" class="md-nav__link">
         Create a Windows VM
       </a>
     </li>
@@ -495,7 +485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/access-to-the-vm/" class="md-nav__link">
+      <a href="../../vm/access-to-the-vm/" class="md-nav__link">
         Access to the Virtual Machine (VM)
       </a>
     </li>
@@ -509,7 +499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/backup-restore/" class="md-nav__link">
+      <a href="../../vm/backup-restore/" class="md-nav__link">
         VM Backup & Restore
       </a>
     </li>
@@ -523,7 +513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/live-migration/" class="md-nav__link">
+      <a href="../../vm/live-migration/" class="md-nav__link">
         Live Migration
       </a>
     </li>
@@ -537,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vm/hotplug-volume/" class="md-nav__link">
+      <a href="../../vm/hotplug-volume/" class="md-nav__link">
         Hot-Plug Volumes
       </a>
     </li>
@@ -585,7 +575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../networking/harvester-network/" class="md-nav__link">
+      <a href="../../networking/harvester-network/" class="md-nav__link">
         Harvester Network
       </a>
     </li>
@@ -607,7 +597,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../monitoring/monitoring/" class="md-nav__link">
+      <a href="../../monitoring/monitoring/" class="md-nav__link">
         Monitoring
       </a>
     </li>
@@ -648,7 +638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/rancher-integration/" class="md-nav__link">
+      <a href="../../rancher/rancher-integration/" class="md-nav__link">
         Rancher integration
       </a>
     </li>
@@ -662,7 +652,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/virtualization-management/" class="md-nav__link">
+      <a href="../../rancher/virtualization-management/" class="md-nav__link">
         Virtualization management
       </a>
     </li>
@@ -702,7 +692,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/node-driver/" class="md-nav__link">
+      <a href="../../rancher/node-driver/" class="md-nav__link">
         Harvester Node Driver
       </a>
     </li>
@@ -716,7 +706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/rke1-cluster/" class="md-nav__link">
+      <a href="../../rancher/rke1-cluster/" class="md-nav__link">
         Creating an RKE1 Kubernetes Cluster
       </a>
     </li>
@@ -730,7 +720,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/rke2-cluster/" class="md-nav__link">
+      <a href="../../rancher/rke2-cluster/" class="md-nav__link">
         Creating an RKE2 Kubernetes Cluster
       </a>
     </li>
@@ -751,7 +741,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/cloud-provider/" class="md-nav__link">
+      <a href="../../rancher/cloud-provider/" class="md-nav__link">
         Harvester Cloud Provider
       </a>
     </li>
@@ -765,7 +755,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rancher/csi-driver/" class="md-nav__link">
+      <a href="../../rancher/csi-driver/" class="md-nav__link">
         Harvester CSI Driver
       </a>
     </li>
@@ -787,7 +777,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../terraform/terraform/" class="md-nav__link">
+      <a href="../../terraform/terraform/" class="md-nav__link">
         Harvester Terraform Provider
       </a>
     </li>
@@ -802,7 +792,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../settings/settings/" class="md-nav__link">
+      <a href="../../settings/settings/" class="md-nav__link">
         Settings
       </a>
     </li>
@@ -817,7 +807,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dev/dev-mode/" class="md-nav__link">
+      <a href="../../dev/dev-mode/" class="md-nav__link">
         Developer Mode Installation
       </a>
     </li>
@@ -858,7 +848,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/installation/" class="md-nav__link">
+      <a href="../../troubleshooting/installation/" class="md-nav__link">
         Installation
       </a>
     </li>
@@ -872,7 +862,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/harvester/" class="md-nav__link">
+      <a href="../../troubleshooting/harvester/" class="md-nav__link">
         Harvester
       </a>
     </li>
@@ -886,7 +876,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/os/" class="md-nav__link">
+      <a href="../../troubleshooting/os/" class="md-nav__link">
         Operating System
       </a>
     </li>
@@ -934,7 +924,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/api/" class="md-nav__link">
+      <a href="../../reference/api/" class="md-nav__link">
         API Reference
       </a>
     </li>
@@ -956,7 +946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../faq/" class="md-nav__link">
+      <a href="../../faq/" class="md-nav__link">
         FAQ
       </a>
     </li>
@@ -983,6 +973,96 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#manual-upgrade-from-v030-to-v100" class="md-nav__link">
+    Manual Upgrade from v0.3.0 to v1.0.0
+  </a>
+  
+    <nav class="md-nav" aria-label="Manual Upgrade from v0.3.0 to v1.0.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    Preparation
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-the-new-release" class="md-nav__link">
+    Get the new release
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#select-a-controller-node" class="md-nav__link">
+    Select a controller node
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrade-node-os" class="md-nav__link">
+    Upgrade node OS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-harvester-cluster-repo" class="md-nav__link">
+    Create Harvester cluster repo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrade-rancher" class="md-nav__link">
+    Upgrade Rancher
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrade-rke2" class="md-nav__link">
+    Upgrade RKE2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrade-harvester-and-monitoring-services" class="md-nav__link">
+    Upgrade Harvester and Monitoring services
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -993,20 +1073,164 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/harvester/docs/edit/main/docs/upgrade.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/harvester/docs/edit/main/docs/upgrade/manual.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-<h1 id="upgrading-harvester">Upgrading Harvester<a class="headerlink" href="#upgrading-harvester" title="Permanent link">&para;</a></h1>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Upgrade is not supported from previous versions to v0.3.0 version.</p>
-<ul>
-<li>A manual upgrade process starting with v0.3.0 is being investigated. Harvester will inform the community once this process is in place.</li>
-<li>One-click upgrade will be supported starting with the v1.0.0 release.</li>
-</ul>
+<h1 id="upgrading-harvester-manually">Upgrading Harvester manually<a class="headerlink" href="#upgrading-harvester-manually" title="Permanent link">&para;</a></h1>
+<h2 id="manual-upgrade-from-v030-to-v100">Manual Upgrade from v0.3.0 to v1.0.0<a class="headerlink" href="#manual-upgrade-from-v030-to-v100" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Upgrading Harvester from v0.3.0 to v1.0.0 is <strong>not supported</strong>. Please use at your own risk.</p>
 </div>
+<h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h3>
+<p>The manual upgrade process consists of the following steps:</p>
+<ul>
+<li>Upgrade OS on each nodes.</li>
+<li>Create Harvester cluster repo.</li>
+<li>Upgrade the embedded Rancher service.</li>
+<li>Upgrade the RKE2 runtime.</li>
+<li>Upgrade the Harvester service.</li>
+</ul>
+<h3 id="preparation">Preparation<a class="headerlink" href="#preparation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Backup your VMs.</li>
+</ul>
+<h4 id="get-the-new-release">Get the new release<a class="headerlink" href="#get-the-new-release" title="Permanent link">&para;</a></h4>
+<p>Download the Harvester ISO image of a newer release from the <a href="https://github.com/harvester/harvester/releases">Harvester GithHub release page</a> and verify the checksum of the ISO.</p>
+<h4 id="select-a-controller-node">Select a controller node<a class="headerlink" href="#select-a-controller-node" title="Permanent link">&para;</a></h4>
+<p>Some operations need to be run from a <code>controller</code> node which contains the cluster credentials. You can use the first node of the cluster or any node with the <code>control-plane</code> role:</p>
+<div class="highlight"><pre><span></span><code>ssh rancher@&lt;ip_of_the_first_node&gt;
+sudo -i kubectl get nodes
+</code></pre></div>
+<p>Example output:
+<div class="highlight"><pre><span></span><code>NAME    STATUS   ROLES                       AGE    VERSION
+node1   Ready    control-plane,etcd,master   116m   v1.21.5+rke2r1
+node2   Ready    control-plane,etcd,master   112m   v1.21.5+rke2r1
+node3   Ready    control-plane,etcd,master   112m   v1.21.5+rke2r1
+node4   Ready    &lt;none&gt;                      112m   v1.21.5+rke2r1
+</code></pre></div></p>
+<p>Download the <code>upgrade-helpers</code> scripts to the controller node:</p>
+<div class="highlight"><pre><span></span><code>sudo mkdir -p /usr/local/harvester-upgrade
+sudo chown rancher:rancher /usr/local/harvester-upgrade
+<span class="nb">cd</span> /usr/local/harvester-upgrade
+curl --proto <span class="s1">&#39;=https&#39;</span> --tlsv1.2 -sSfL https://github.com/harvester/upgrade-helpers/releases/latest/download/upgrade-helpers.tar.gz <span class="p">|</span> tar xzvf -
+</code></pre></div>
+<p>Shutdown all VMs:</p>
+<div class="highlight"><pre><span></span><code>sudo -i /usr/local/harvester-upgrade/upgrade-helpers/bin/harv-stop-vms.sh
+</code></pre></div>
+<h3 id="upgrade-node-os">Upgrade node OS<a class="headerlink" href="#upgrade-node-os" title="Permanent link">&para;</a></h3>
+<p>You need to upgrade nodes one by one. Only proceed to the next node once the current node is done.</p>
+<ul>
+<li>
+<p>For <strong>each node</strong> in the cluster:</p>
+<ul>
+<li>
+<p>Download the <code>upgrade-helpers</code> scripts:</p>
+<div class="highlight"><pre><span></span><code>sudo mkdir -p /usr/local/harvester-upgrade
+sudo chown rancher:rancher /usr/local/harvester-upgrade
+<span class="nb">cd</span> /usr/local/harvester-upgrade
+curl --proto <span class="s1">&#39;=https&#39;</span> --tlsv1.2 -sSfL https://github.com/harvester/upgrade-helpers/releases/latest/download/upgrade-helpers.tar.gz <span class="p">|</span> tar xzvf -
+</code></pre></div>
+</li>
+<li>
+<p>Upload the ISO to the node:
+    <div class="highlight"><pre><span></span><code>$ scp &lt;new-harvester-release-iso&gt; rancher@&lt;ip_of_node&gt;:/usr/local/harvester-upgrade/harvester.iso
+</code></pre></div></p>
+</li>
+<li>
+<p>Upgrade the node:
+    <div class="highlight"><pre><span></span><code>sudo -i /usr/local/harvester-upgrade/upgrade-helpers/bin/harv-upgrade-node.sh /usr/local/harvester-upgrade/harvester.iso
+</code></pre></div></p>
+</li>
+<li>
+<p>Reboot:
+    <div class="highlight"><pre><span></span><code>sudo reboot
+</code></pre></div></p>
+</li>
+<li>
+<p>Once the upgrade is complete, the node will reboot. Verify if the node is successfully upgraded:</p>
+<div class="highlight"><pre><span></span><code>sudo -i /usr/local/harvester-upgrade/upgrade-helpers/bin/harv-node-post-check.sh
+</code></pre></div>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="create-harvester-cluster-repo">Create Harvester cluster repo<a class="headerlink" href="#create-harvester-cluster-repo" title="Permanent link">&para;</a></h3>
+<p><span style="color:#DE3163"><strong>On the controller node:</strong></span></p>
+<p>Check if all nodes are ready:</p>
+<div class="highlight"><pre><span></span><code>sudo -i kubectl get nodes
+</code></pre></div>
+<p>Create the Harvester cluster repo:</p>
+<div class="highlight"><pre><span></span><code>sudo -i /usr/local/harvester-upgrade/upgrade-helpers/bin/harv-create-harvester-cluster-repo.sh
+</code></pre></div>
+<p>Check if the Harvester cluster repo is ready:
+<div class="highlight"><pre><span></span><code>sudo -i kubectl get deployment harvester-cluster-repo -n cattle-system
+</code></pre></div></p>
+<p>Example output:</p>
+<div class="highlight"><pre><span></span><code>NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+harvester-cluster-repo   1/1     1            1           59s
+</code></pre></div>
+<h3 id="upgrade-rancher">Upgrade Rancher<a class="headerlink" href="#upgrade-rancher" title="Permanent link">&para;</a></h3>
+<p><span style="color:#DE3163"><strong>On the controller node</strong>:</span></p>
+<ul>
+<li>
+<p>Check the new Rancher version:</p>
+<div class="highlight"><pre><span></span><code>yq -e e <span class="s1">&#39;.rancher&#39;</span> /etc/harvester-release.yaml
+</code></pre></div>
+<p>Example output:
+<div class="highlight"><pre><span></span><code>v2.6.3-harvester1
+</code></pre></div></p>
+</li>
+<li>
+<p>Upgrade Rancher:</p>
+<div class="highlight"><pre><span></span><code>sudo -i /usr/local/harvester-upgrade/upgrade-helpers/bin/harv-upgrade-rancher.sh
+</code></pre></div>
+</li>
+<li>
+<p>Verify if Rancher is successfully upgraded:</p>
+<div class="highlight"><pre><span></span><code>sudo -i kubectl get settings.management.cattle.io server-version
+</code></pre></div>
+<p>An example output:
+<div class="highlight"><pre><span></span><code>NAME             VALUE
+server-version   v2.6.3-harvester1
+</code></pre></div></p>
+</li>
+</ul>
+<h3 id="upgrade-rke2">Upgrade RKE2<a class="headerlink" href="#upgrade-rke2" title="Permanent link">&para;</a></h3>
+<p><span style="color:#DE3163"><strong>On the controller node</strong>:</span></p>
+<ul>
+<li>
+<p>Check the new RKE2 version:</p>
+<div class="highlight"><pre><span></span><code>yq -e e <span class="s1">&#39;.kubernetes&#39;</span> /etc/harvester-release.yaml
+</code></pre></div>
+<p>Example output:
+<div class="highlight"><pre><span></span><code>v1.21.7+rke2r1
+</code></pre></div></p>
+</li>
+<li>
+<p>Upgrade RKE2:</p>
+<div class="highlight"><pre><span></span><code>sudo -i /usr/local/harvester-upgrade/upgrade-helpers/bin/harv-upgrade-rke2.sh
+</code></pre></div>
+</li>
+<li>
+<p>Wait for RKE2 to be upgraded in all nodes and make sure all nodes are ready (this will take some time to complete):</p>
+<div class="highlight"><pre><span></span><code>sudo -i watch kubectl get nodes
+</code></pre></div>
+<p>Example output:
+<div class="highlight"><pre><span></span><code>NAME    STATUS   ROLES                       AGE    VERSION
+node1   Ready    control-plane,etcd,master   3h6m   v1.21.7+rke2r2
+node2   Ready    control-plane,etcd,master   3h3m   v1.21.7+rke2r2
+node3   Ready    control-plane,etcd,master   3h3m   v1.21.5+rke2r1 &lt;--- not upgrade yet
+node4   Ready    &lt;none&gt;                      3h3m   v1.21.5+rke2r1 &lt;--- not upgrade yet
+</code></pre></div></p>
+</li>
+</ul>
+<h3 id="upgrade-harvester-and-monitoring-services">Upgrade Harvester and Monitoring services<a class="headerlink" href="#upgrade-harvester-and-monitoring-services" title="Permanent link">&para;</a></h3>
+<p><span style="color:#DE3163"><strong>On the controller node</strong>:</span></p>
+<div class="highlight"><pre><span></span><code>sudo -i /usr/local/harvester-upgrade/upgrade-helpers/bin/harv-upgrade-harvester.sh
+</code></pre></div>
 
               
             </article>
@@ -1016,41 +1240,6 @@
       </main>
       
         <footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        
-        <a href="../authentication/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Authentication" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Authentication
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../upload-image/" class="md-footer__link md-footer__link--next" aria-label="Next: Upload Images" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Upload Images
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1072,12 +1261,12 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.22074ed6.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.22074ed6.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.01de222e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.01de222e.min.js"></script>
       
-        <script src="../assets/swagger-ui/swagger-ui-bundle.js"></script>
+        <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
     
   </body>

@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/vm/live-migration/">
+        <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/upgrade/automatic/">
       
       <link rel="icon" href="../../assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.7">
     
     
       
-        <title>Live Migration - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>Upgrading Harvester - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#live-migration" class="md-skip">
+        <a href="#upgrading-harvester" class="md-skip">
           Skip to content
         </a>
       
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Live Migration
+              Upgrading Harvester
             
           </span>
         </div>
@@ -384,11 +384,21 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../upgrade/automatic/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Upgrading Harvester
       </a>
+      
     </li>
   
 
@@ -429,14 +439,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
       
       
       
@@ -459,7 +467,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../create-vm/" class="md-nav__link">
+      <a href="../../vm/create-vm/" class="md-nav__link">
         Create a VM
       </a>
     </li>
@@ -473,7 +481,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../create-windows-vm/" class="md-nav__link">
+      <a href="../../vm/create-windows-vm/" class="md-nav__link">
         Create a Windows VM
       </a>
     </li>
@@ -487,7 +495,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../access-to-the-vm/" class="md-nav__link">
+      <a href="../../vm/access-to-the-vm/" class="md-nav__link">
         Access to the Virtual Machine (VM)
       </a>
     </li>
@@ -501,7 +509,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../backup-restore/" class="md-nav__link">
+      <a href="../../vm/backup-restore/" class="md-nav__link">
         VM Backup & Restore
       </a>
     </li>
@@ -513,86 +521,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Live Migration
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../vm/live-migration/" class="md-nav__link">
         Live Migration
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#starting-a-migration" class="md-nav__link">
-    Starting a Migration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#aborting-a-migration" class="md-nav__link">
-    Aborting a Migration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#migration-timeouts" class="md-nav__link">
-    Migration Timeouts
-  </a>
-  
-    <nav class="md-nav" aria-label="Migration Timeouts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#completion-timeout" class="md-nav__link">
-    Completion Timeout
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#progress-timeout" class="md-nav__link">
-    Progress Timeout
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -604,7 +537,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hotplug-volume/" class="md-nav__link">
+      <a href="../../vm/hotplug-volume/" class="md-nav__link">
         Hot-Plug Volumes
       </a>
     </li>
@@ -1050,55 +983,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#starting-a-migration" class="md-nav__link">
-    Starting a Migration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#aborting-a-migration" class="md-nav__link">
-    Aborting a Migration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#migration-timeouts" class="md-nav__link">
-    Migration Timeouts
-  </a>
-  
-    <nav class="md-nav" aria-label="Migration Timeouts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#completion-timeout" class="md-nav__link">
-    Completion Timeout
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#progress-timeout" class="md-nav__link">
-    Progress Timeout
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1109,39 +993,18 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/harvester/docs/edit/main/docs/vm/live-migration.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/harvester/docs/edit/main/docs/upgrade/automatic.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-<h1 id="live-migration">Live Migration<a class="headerlink" href="#live-migration" title="Permanent link">&para;</a></h1>
-<p>Live migration means moving a virtual machine to a different host without downtime.</p>
+<h1 id="upgrading-harvester">Upgrading Harvester<a class="headerlink" href="#upgrading-harvester" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
-<li>Live migration is not allowed when the virtual machine is using a management network of bridge interface type.</li>
-<li>To support live migration, three or more hosts in the Harvester cluster are required due to <a href="https://github.com/harvester/harvester/issues/798">a known issue</a>.</li>
+<li>One-click upgrade will be supported starting with the v1.0.0 release.</li>
 </ul>
 </div>
-<h2 id="starting-a-migration">Starting a Migration<a class="headerlink" href="#starting-a-migration" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Go to the <strong>Virtual Machines</strong> page.</li>
-<li>Find the virtual machine that you want to migrate and select <strong>⋮ &gt; Migrate</strong>.</li>
-<li>Choose the node to which you want to migrate the virtual machine. Click <strong>Apply</strong>.</li>
-</ol>
-<p><img alt="" src="../assets/migrate-action.png" /></p>
-<p><img alt="" src="../assets/migrate.png" /></p>
-<h2 id="aborting-a-migration">Aborting a Migration<a class="headerlink" href="#aborting-a-migration" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Go to the <strong>Virtual Machines</strong> page.</li>
-<li>Find the virtual machine in migrating status that you want to abort. Select <strong>⋮ &gt; Abort Migration</strong>.</li>
-</ol>
-<h2 id="migration-timeouts">Migration Timeouts<a class="headerlink" href="#migration-timeouts" title="Permanent link">&para;</a></h2>
-<h3 id="completion-timeout">Completion Timeout<a class="headerlink" href="#completion-timeout" title="Permanent link">&para;</a></h3>
-<p>The live migration process will copy virtual machine memory pages and disk blocks to the destination. In some cases, the virtual machine can write to different memory pages or disk blocks at a higher rate than these can be copied. As a result, the migration process is prevented from being completed in a reasonable amount of time. </p>
-<p>Live migration will be aborted if it exceeds the completion timeout of 800s per GiB of data. For example, a virtual machine with 8 GiB of memory will time out after 6400 seconds.</p>
-<h3 id="progress-timeout">Progress Timeout<a class="headerlink" href="#progress-timeout" title="Permanent link">&para;</a></h3>
-<p>Live migration will also be aborted when copying memory doesn't make any progress in 150s.</p>
 
               
             </article>
@@ -1155,7 +1018,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../backup-restore/" class="md-footer__link md-footer__link--prev" aria-label="Previous: VM Backup &amp; Restore" rel="prev">
+        <a href="../../authentication/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Authentication" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1164,20 +1027,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              VM Backup & Restore
+              Authentication
             </div>
           </div>
         </a>
       
       
         
-        <a href="../hotplug-volume/" class="md-footer__link md-footer__link--next" aria-label="Next: Hot-Plug Volumes" rel="next">
+        <a href="../../upload-image/" class="md-footer__link md-footer__link--next" aria-label="Next: Upload Images" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Hot-Plug Volumes
+              Upload Images
             </div>
           </div>
           <div class="md-footer__button md-icon">
