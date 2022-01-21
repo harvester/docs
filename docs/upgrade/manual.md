@@ -1,26 +1,9 @@
----
-sidebar_position: 30
-keywords:
-  - Harvester
-  - harvester
-  - Rancher
-  - rancher
-  - Harvester Upgrade
-Description: Harvester provides two ways to upgrade. Users can either upgrade using the ISO image or upgrade through the UI.
----
+# Upgrading Harvester manually
 
-# Upgrading Harvester
-
-!!!note
-    Upgrade is not supported from previous versions to v0.3.0 version.
-
-    - One-click upgrade will be supported starting with the v1.0.0 release.
-
-
-## Manual Upgrade
+## Manual Upgrade from v0.3.0 to v1.0.0
 
 !!!warning
-    The steps to perform a manual upgrade are only recommended for experienced users. Use it at your own risk.
+    Upgrading Harvester from v0.3.0 to v1.0.0 is **not supported**. Please use at your own risk.
 
 ### Overview
 
