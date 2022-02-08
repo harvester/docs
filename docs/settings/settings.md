@@ -149,16 +149,31 @@ Default: `{}`
 
 ## `ssl-parameters`
 
-This setting allows you to configure SSL parameters. Protocols are separated by spaces and ciphers are separated by colons.
+This setting allows you to change the enabled SSL/TLS protocols and ciphers of Harvester GUI and API.
 
-Default: `{}`
+The following options and values can be set:
+
+- `protocols`: Enabled protocols. See NGINX Ingress Controller's configs [`ssl-protocols`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-protocols) for supported input.
+
+- `ciphers`: Enabled ciphers. See NGINX Ingress Controller's configs [`ssl-ciphers`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-ciphers) for supported input.
+
+If no value is provided, `protocols` is set to `TLSv1.2` only and the `ciphers` list is
+`ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305`.
+
+Default: none
+
+!!! note
+    See [Troubleshooting](../../troubleshooting/harvester/#i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers) if you have misconfigured this setting and no longer have access to Harvester GUI and API.
 
 #### Example
 
-```json
+The following example sets the enabled SSL/TLS protocols to `TLSv1.2` and `TLSv1.3` and the ciphers list to
+`ECDHE-ECDSA-AES128-GCM-SHA256` and `ECDHE-ECDSA-CHACHA20-POLY1305`.
+
+```
 {
   "protocols": "TLSv1.2 TLSv1.3",
-  "ciphers": "ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384"
+  "ciphers": "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
 }
 ```
 
@@ -243,36 +258,6 @@ The following example will add disks matching the glob pattern `/dev/sd*` or `/d
 
 ```
 /dev/sd*,/dev/hd*
-```
-
-## `ssl-parameters`
-
-This setting allows you to change the enabled SSL/TLS protocols and ciphers of Harvester GUI and API.
-
-The following options and values can be set:
-
-- `protocols`: Enabled protocols. See NGINX Ingress Controller's configs [`ssl-protocols`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-protocols) for supported input.
-
-- `ciphers`: Enabled ciphers. See NGINX Ingress Controller's configs [`ssl-ciphers`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-ciphers) for supported input.
-
-If no value is provided, `protocols` is set to `TLSv1.2` only and the `ciphers` list is
-`ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305`.
-
-Default: none
-
-!!! note
-    See [Troubleshooting](../../troubleshooting/harvester/#i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers) if you have misconfigured this setting and no longer have access to Harvester GUI and API.
-
-#### Example
-
-The following example sets the enabled SSL/TLS protocols to `TLSv1.2` and `TLSv1.3` and the ciphers list to
-`ECDHE-ECDSA-AES128-GCM-SHA256` and `ECDHE-ECDSA-CHACHA20-POLY1305`.
-
-```
-{
-  "protocols": "TLSv1.2 TLSv1.3",
-  "ciphers": "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
-}
 ```
 
 ## `vm-force-reset-policy`
