@@ -229,18 +229,6 @@ Default: `https://harvester-upgrade-responder.rancher.io/v1/checkupgrade`
 https://your.upgrade.checker-url/v99/checkupgrade
 ```
 
-## `vlan`
-
-This setting allows you to configure the default physical NIC name of the VLAN network.
-
-Default: none
-
-#### Example
-
-```
-ens3
-```
-
 ## `auto-disk-provision-paths` [Experimental]
 
 This setting allows Harvester to automatically add disks that match the given glob pattern as VM storage.
