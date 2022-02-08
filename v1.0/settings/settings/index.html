@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/settings/settings/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.7">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.10">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.cd566b2a.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.d6be258b.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -1126,26 +1126,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ssl-parameters_1" class="md-nav__link">
-    ssl-parameters
-  </a>
-  
-    <nav class="md-nav" aria-label="ssl-parameters">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example_15" class="md-nav__link">
-    Example
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#vm-force-reset-policy" class="md-nav__link">
     vm-force-reset-policy
   </a>
@@ -1154,7 +1134,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example_16" class="md-nav__link">
+  <a href="#example_15" class="md-nav__link">
     Example
   </a>
   
@@ -1654,26 +1634,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ssl-parameters_1" class="md-nav__link">
-    ssl-parameters
-  </a>
-  
-    <nav class="md-nav" aria-label="ssl-parameters">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example_15" class="md-nav__link">
-    Example
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#vm-force-reset-policy" class="md-nav__link">
     vm-force-reset-policy
   </a>
@@ -1682,7 +1642,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example_16" class="md-nav__link">
+  <a href="#example_15" class="md-nav__link">
     Example
   </a>
   
@@ -1809,13 +1769,30 @@ CPU for it from Kubernetes scheduler.</p>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <h2 id="ssl-parameters"><code>ssl-parameters</code><a class="headerlink" href="#ssl-parameters" title="Permanent link">&para;</a></h2>
-<p>This setting allows you to configure SSL parameters. Protocols are separated by spaces and ciphers are separated by colons.</p>
-<p>Default: <code>{}</code></p>
+<p>This setting allows you to change the enabled SSL/TLS protocols and ciphers of Harvester GUI and API.</p>
+<p>The following options and values can be set:</p>
+<ul>
+<li>
+<p><code>protocols</code>: Enabled protocols. See NGINX Ingress Controller's configs <a href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-protocols"><code>ssl-protocols</code></a> for supported input.</p>
+</li>
+<li>
+<p><code>ciphers</code>: Enabled ciphers. See NGINX Ingress Controller's configs <a href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-ciphers"><code>ssl-ciphers</code></a> for supported input.</p>
+</li>
+</ul>
+<p>If no value is provided, <code>protocols</code> is set to <code>TLSv1.2</code> only and the <code>ciphers</code> list is
+<code>ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305</code>.</p>
+<p>Default: none</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>See <a href="../../troubleshooting/harvester/#i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers">Troubleshooting</a> if you have misconfigured this setting and no longer have access to Harvester GUI and API.</p>
+</div>
 <h4 id="example_8">Example<a class="headerlink" href="#example_8" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;protocols&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TLSv1.2 TLSv1.3&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;ciphers&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384&quot;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<p>The following example sets the enabled SSL/TLS protocols to <code>TLSv1.2</code> and <code>TLSv1.3</code> and the ciphers list to
+<code>ECDHE-ECDSA-AES128-GCM-SHA256</code> and <code>ECDHE-ECDSA-CHACHA20-POLY1305</code>.</p>
+<div class="highlight"><pre><span></span><code>{
+  &quot;protocols&quot;: &quot;TLSv1.2 TLSv1.3&quot;,
+  &quot;ciphers&quot;: &quot;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305&quot;
+}
 </code></pre></div>
 <h2 id="ui-index"><code>ui-index</code><a class="headerlink" href="#ui-index" title="Permanent link">&para;</a></h2>
 <p>This setting allows you to configure HTML index location for the UI.</p>
@@ -1867,36 +1844,10 @@ It's possible to provide multiple patterns by separating them with a comma.</p>
 <p>The following example will add disks matching the glob pattern <code>/dev/sd*</code> or <code>/dev/hd*</code>:</p>
 <div class="highlight"><pre><span></span><code>/dev/sd*,/dev/hd*
 </code></pre></div>
-<h2 id="ssl-parameters_1"><code>ssl-parameters</code><a class="headerlink" href="#ssl-parameters_1" title="Permanent link">&para;</a></h2>
-<p>This setting allows you to change the enabled SSL/TLS protocols and ciphers of Harvester GUI and API.</p>
-<p>The following options and values can be set:</p>
-<ul>
-<li>
-<p><code>protocols</code>: Enabled protocols. See NGINX Ingress Controller's configs <a href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-protocols"><code>ssl-protocols</code></a> for supported input.</p>
-</li>
-<li>
-<p><code>ciphers</code>: Enabled ciphers. See NGINX Ingress Controller's configs <a href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-ciphers"><code>ssl-ciphers</code></a> for supported input.</p>
-</li>
-</ul>
-<p>If no value is provided, <code>protocols</code> is set to <code>TLSv1.2</code> only and the <code>ciphers</code> list is
-<code>ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305</code>.</p>
-<p>Default: none</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>See <a href="../../troubleshooting/harvester/#i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers">Troubleshooting</a> if you have misconfigured this setting and no longer have access to Harvester GUI and API.</p>
-</div>
-<h4 id="example_15">Example<a class="headerlink" href="#example_15" title="Permanent link">&para;</a></h4>
-<p>The following example sets the enabled SSL/TLS protocols to <code>TLSv1.2</code> and <code>TLSv1.3</code> and the ciphers list to
-<code>ECDHE-ECDSA-AES128-GCM-SHA256</code> and <code>ECDHE-ECDSA-CHACHA20-POLY1305</code>.</p>
-<div class="highlight"><pre><span></span><code>{
-  &quot;protocols&quot;: &quot;TLSv1.2 TLSv1.3&quot;,
-  &quot;ciphers&quot;: &quot;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305&quot;
-}
-</code></pre></div>
 <h2 id="vm-force-reset-policy"><code>vm-force-reset-policy</code><a class="headerlink" href="#vm-force-reset-policy" title="Permanent link">&para;</a></h2>
 <p>This setting allows you to force reschedule VMs when a node is unavailable. When a node turns to be <code>Not Ready</code>, it will force delete the VM on that node and reschedule it to another available node after a period of seconds.</p>
 <p>Default: <code>{"enable":true, "period":300}</code></p>
-<h4 id="example_16">Example<a class="headerlink" href="#example_16" title="Permanent link">&para;</a></h4>
+<h4 id="example_15">Example<a class="headerlink" href="#example_15" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="nt">&quot;enable&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">  </span><span class="nt">&quot;period&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="w"></span>
@@ -1967,10 +1918,10 @@ It's possible to provide multiple patterns by separating them with a comma.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.22074ed6.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.092fa1f6.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.01de222e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e3b2bf44.min.js"></script>
       
         <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
