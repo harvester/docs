@@ -147,21 +147,6 @@ Default: `{}`
 }
 ```
 
-## `ssl-parameters`
-
-This setting allows you to configure SSL parameters. Protocols are separated by spaces and ciphers are separated by colons.
-
-Default: `{}`
-
-#### Example
-
-```json
-{
-  "protocols": "TLSv1.2 TLSv1.3",
-  "ciphers": "ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384"
-}
-```
-
 ## `ui-index`
 
 This setting allows you to configure HTML index location for the UI.
