@@ -488,6 +488,26 @@ install:
   no_data_partition: true
 ```
 
+### `install.data_disk`
+
+#### Definition
+
+The default storage device for storing VM data.
+
+Default: Use the same device as [`install.device`](./#installdevice)
+
+#### Example
+
+```yaml
+install:
+  data_disk: /dev/sdb
+```
+
+!!! note
+    If a different storage device compared to [`install.device`](./#installdevice) is provided, the
+    [`no_data_partition`](./#installno_data_partition) config will be ignored, and the additional
+    partition for storing VM data will not be created.
+
 ### `system_settings`
 
 #### Definition
