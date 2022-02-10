@@ -492,9 +492,9 @@ install:
 
 #### Definition
 
-The default storage device for storing VM data.
+Sets the default storage device to store the VM data.
 
-Default: Use the same device as [`install.device`](./#installdevice)
+Default: Same storage device as the one set for [`install.device`](./#installdevice)
 
 #### Example
 
@@ -504,9 +504,9 @@ install:
 ```
 
 !!! note
-    If a different storage device compared to [`install.device`](./#installdevice) is provided, the
-    [`no_data_partition`](./#installno_data_partition) config will be ignored, and the additional
-    partition for storing VM data will not be created.
+    If you configure a different storage device from the one set for [`install.device`](./#installdevice), the option
+    [`no_data_partition`](./#installno_data_partition) will be ignored and the additional
+    partition for storing VM data will not be created in the `install.device` storage device.
 
 ### `system_settings`
 
