@@ -5,49 +5,53 @@ keywords:
   - harvester
   - Rancher
   - rancher
-Description: Harvester is built on Kubernetes, which uses CNI as an interface between network providers and Kubernetes pod networking. Naturally, we implement the Harvester network based on CNI. Moreover, the Harvester UI integrates the Harvester network to provide a user-friendly way to configure networks for VMs.
+  - Network
+  - network
+  - VLAN
+  - vlan
+Description: Harvester is built on top of Kubernetes, and uses the [CNI](https://github.com/containernetworking/cni) as the interface between network providers and Kubernetes pod networking. Naturally, we implement the Harvester network based on CNI. Moreover, the Harvester UI integrates the network configuration in order to provide a user-friendly way to configure networks for VMs.
 ---
 
 # Best Practice for Non VLAN-aware Switch
 
-In this best practice guide for non VLAN-aware switch, dummy switch, we will introduce Harvester VLAN network and external switch configuration for common scenario.
+In this best practice guide for "non VLAN-aware" switch, also known as "dummy" switch, we will introduce Harvester VLAN network and external switch configuration for common scenario.
 
 ## Architecture
 
 Hardware:
-- 3 Harvester servers with only single port network card
-- non VLAN-aware switch, dummy switch
+- Three Harvester servers with only one single port network card.
+- One or more "non VLAN-aware" switch(es).
 
 Network Specification:
 - Management Network is same subnet as VM Network
 
 Cabling:
-- Harvester servers connect to switch port from port 1 to 3
+- The Harvester servers are connected to the switch in a port from `1` to `3`.
 
-The below diagram illustrates cabling in this guide.
+The following diagram illustrates the cabling used for this guide:
 
    ![non-vlan-aware-case.png](assets/non-vlan-aware-case.png)
 
 ## External Switch Configuration
 
-Mostly, non VLAN-aware switch cannot be configured.
+Typically, a "non VLAN-aware" switch cannot be configured.
 
 ## Create a VLAN Network in Harvester
 
-A new VLAN network can be created via the **Advanced > Networks** page and clicking the **Create** button.
+You can create a new VLAN network in the **Advanced > Networks** page, and click the **Create** button.
 
-Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same vlan ID on different namespaces of [Rancher multi-tenancy](/rancher/virtualization-management/#multi-tenancy) support)</small>.
+Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same VLAN ID in different namespaces if you have [Rancher multi-tenancy](/rancher/virtualization-management/#multi-tenancy) configured)</small>.
    ![create-vlan-network.png](assets/create-network.png)
 
-### Connect VM to the same network of Harvester management network
+### Connect a VM to the Harvester management network
 
-Non VLAN-aware switch will only send out untagged network traffic for manangement network. Inside Harvester, the default VLAN tag to receive untagged taffic is VLAN 1.
+The "non VLAN-aware" switch will only send out untagged network traffic to the management network. In Harvester, the untagged traffic is received in VLAN 1.
 
-If users need VM connects to management network, users can create a VLAN Network in Harvester with VLAN ID 1 configuration.
+If you need a VM to connect to the management network, you have to create a VLAN Network in Harvester with VLAN ID 1.
 
    ![non-vlan-aware-vlan1.png](assets/non-vlan-aware-vlan1.png)
 
-Refer to [Harvester Network](/networking/harvester-network/)
+Please refer to [this page](/networking/harvester-network/) for additional information on Harvester Networking.
 
 !!! note
     In this case, creating VLAN Network with other VLAN ID will not take effect to node-to-node connectivity.
