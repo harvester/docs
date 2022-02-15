@@ -61,7 +61,7 @@ Specify the name and VLAN ID that you want to create for the VLAN network <small
 
 Once you finished the configuration in the previous section, the external switch will send out untagged network traffic to the management network. In Harvester, the untagged traffic is received in VLAN 1.
 
-If users need VM connects to VLAN 100, management network, users can create a VLAN Network in Harvester with VLAN ID 1 configuration instead of VLAN ID 100.
+Therefore, if you need VMs to connect to the VLAN ID 100, you need to create a VLAN ID 1 Network in Harvester.
 
 The external switch will remove the VLAN 100 tag from the packet for egress and `harvester-br0` will add the VLAN 1 tag to the packet and treat it as VLAN 1 as shown in the following diagram:
 
