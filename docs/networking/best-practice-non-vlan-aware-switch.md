@@ -23,7 +23,7 @@ Hardware:
 - One or more "non VLAN-aware" switch(es).
 
 Network Specification:
-- Management Network is same subnet as VM Network
+- The host and the VM networks are in the same subnet.
 
 Cabling:
 - The Harvester servers are connected to the switch in a port from `1` to `3`.
@@ -54,4 +54,4 @@ If you need a VM to connect to the management network, you have to create a VLAN
 Please refer to [this page](/networking/harvester-network/) for additional information on Harvester Networking.
 
 !!! note
-    In this case, creating VLAN Network with other VLAN ID will not take effect to node-to-node connectivity.
+    If you create a VLAN Network different from `1`, the connection between VMs in different nodes will fail.
