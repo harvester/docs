@@ -57,7 +57,7 @@ Specify the name and VLAN ID that you want to create for the VLAN network <small
 
    ![create-vlan-network.png](assets/create-network.png)
 
-### Connect a VM to the Harvester management network
+### Connect a VM to the subnet of the Harvester hosts
 
 Once you finished the configuration in the previous section, the external switch will send out untagged network traffic to the management network. In Harvester, the untagged traffic is received in VLAN 1.
 

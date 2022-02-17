@@ -43,7 +43,7 @@ You can create a new VLAN network in the **Advanced > Networks** page, and click
 Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same VLAN ID in different namespaces if you have [Rancher multi-tenancy](/rancher/virtualization-management/#multi-tenancy) configured)</small>.
    ![create-vlan-network.png](assets/create-network.png)
 
-### Connect a VM to the Harvester management network
+### Connect a VM to the subnet of the Harvester hosts
 
 The "non VLAN-aware" switch will only send out untagged network traffic to the management network. In Harvester, the untagged traffic is received in VLAN 1.
 
