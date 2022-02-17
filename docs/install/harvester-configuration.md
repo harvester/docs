@@ -512,6 +512,8 @@ system_settings:
 
 ### `cluster_networks`
 
+_Available as of v1.0.1_
+
 #### Definition
 
 You can setup the default network in Harvester by configuring `cluster_networks`. Network configuration reference:
