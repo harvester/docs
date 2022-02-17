@@ -36,3 +36,6 @@ Click to learn [how to create RKE1 Kubernetes Clusters](./rke1-cluster.md).
 
 ## RKE2 Kubernetes Cluster
 Click to learn [how to create RKE2 Kubernetes Clusters](./rke2-cluster.md).
+
+## K3s Kubernetes Cluster
+Click to learn [how to create k3s Kubernetes Clusters](./k3s-cluster.md).

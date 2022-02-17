@@ -43,10 +43,33 @@ When spinning up an RKE cluster using the Harvester node driver, you can perform
 
     ![](assets/install-harvester-csi-driver.png)
   
-### Deploying to the RKE2 Cluster with Harvester Node Driver
+### Deploying to the RKE2 Cluster with Harvester Node Driver [Experimental]
 When spinning up an RKE2 cluster using the Harvester node driver, select the `Harvester` cloud provider. The node driver will then help deploy both the CSI driver and CCM automatically.
 
   ![](assets/rke2-cloud-provider.png)
+
+### Deploying to the K3s Cluster with Harvester Node Driver [Experimental]
+
+- Choose the Kubernetes version to be k3s and click the `Edit as YAML` button to config the K3s cluster YAML (For existing cluster, you can also click the `Edit YAML` button to update it):
+
+  ![](assets/edit-k3s-cluster-yaml.png)
+
+- Edit K3s cluster YAML.
+    - Set `disable-cloud-provider: true` to disable default k3s cloud provider.
+    - Add `cloud-provider=external` to use harvester cloud provider.
+
+  ![](assets/k3s-cluster-yaml-content-for-harvester-cloud-provider.png)
+
+- [Generate addon configuration](https://github.com/harvester/cloud-provider-harvester/blob/master/deploy/generate_addon.sh) and put it in K3s VMs `/etc/kubernetes/cloud-config`.
+
+```
+# depend on kubectl to operate the Harvester cluster
+./deploy/generate_addon.sh <serviceaccount name> <namespace>
+```
+
+- Install `Harvester Cloud Provider` from the Rancher marketplace.
+
+  ![](assets/install-harvester-cloud-provider-in-k3s.png)
 
 ## Load Balancer Support
 After deploying the `Harvester Cloud provider`, you can use the Kubernetes `LoadBalancer` service to expose a microservice inside the guest cluster to the external world. When you create a Kubernetes `LoadBalancer` service, a Harvester load balancer is assigned to the service and you can edit it through the `Add-on Config` in the Rancher UI.
