@@ -1,12 +1,12 @@
-# Creating an RKE2 Kubernetes Cluster
+# Creating an K3s Kubernetes Cluster
 
-Users can now provision RKE2 Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.1+` using the built-in Harvester node driver.
+You can now provision K3s Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.3+` using the built-in Harvester node driver.
 
-![rke2-cluster](assets/rke2-k3s-node-driver.png)
+![k3s-cluster](assets/rke2-k3s-node-driver.png)
 
 !!! note
-    - Harvester RKE2 node driver is in tech preview.
-    - VLAN network is required for Harvester node driver.
+    - Harvester K3s node driver is in tech preview.
+    - [VLAN network](https://docs.harvesterhci.io/v1.0/networking/harvester-network/#create-a-vlan-network) is required for Harvester node driver.
 
 ### Create Your Cloud Credentials
 
@@ -20,9 +20,9 @@ Users can now provision RKE2 Kubernetes clusters on top of the Harvester cluster
 
 ![create-harvester-cloud-credentials](assets/create-cloud-credentials.png)
 
-###  Create RKE2 Kubernetes Cluster
+###  Create K3s Kubernetes Cluster
 
-Users can create a RKE2 Kubernetes cluster from the **Cluster Management** page via the RKE2 node driver.
+You can create a K3s Kubernetes cluster from the **Cluster Management** page via the K3s node driver.
 
 1. Select **Clusters** menu.
 2. Click **Create** button.
@@ -36,16 +36,11 @@ Users can create a RKE2 Kubernetes cluster from the **Cluster Management** page 
 10. Enter **SSH User** (required).
 11. Click **Create**.
 
-![create-rke2-harvester-cluster](assets/create-rke2-harvester-cluster.png)
+![create-k3s-harvester-cluster](assets/create-k3s-harvester-cluster.png)
 
-!!! note
-    - RKE2 v1.21.5+rke2r2 or above provides a built-in Harvester Cloud Provider and Guest CSI driver integration.
-    - Currently only imported Harvester clusters are supported automatically.
+### Using Harvester K3s Node Driver in Air Gapped Environment
 
-
-### Using Harvester RKE2 Node Driver in Air Gapped Environment
-
-RKE2 provisioning relies on the `qemu-guest-agent` to get the IP of the virtual machine. However, it may not be feasible to install `qemu-guest-agent` in an air gapped environment.
+K3s provisioning relies on the `qemu-guest-agent` to get the IP of the virtual machine. However, it may not be feasible to install `qemu-guest-agent` in an air gapped environment.
 
 You can address the installation constraints with the following options:
 
@@ -53,7 +48,7 @@ Option 1. Use a VM image with `qemu-guest-agent` installed.
 
 Option 2. Configure the `cloud init` user data to enable the VMs to install `qemu-guest-agent` via an HTTP(S) proxy.
 
-Example user data in Harvester node template:
+Example of `user data` in Harvester node template:
 ```
 #cloud-config
 apt:

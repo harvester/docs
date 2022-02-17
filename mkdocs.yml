@@ -86,6 +86,7 @@ nav:
       - rancher/node-driver.md
       - rancher/rke1-cluster.md
       - rancher/rke2-cluster.md
+      - rancher/k3s-cluster.md
     - rancher/cloud-provider.md
     - rancher/csi-driver.md
   - terraform/terraform.md
