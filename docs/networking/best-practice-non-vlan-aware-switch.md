@@ -45,9 +45,9 @@ Specify the name and VLAN ID that you want to create for the VLAN network <small
 
 ### Connect a VM to the subnet of the Harvester hosts
 
-The "non VLAN-aware" switch will only send out untagged network traffic to the management network. In Harvester, the untagged traffic is received in VLAN 1.
+The "non VLAN-aware" switch will only send out untagged network traffic to the subnet of the Harvester hosts. In Harvester, the untagged traffic is received in VLAN 1.
 
-If you need a VM to connect to the management network, you have to create a VLAN Network in Harvester with VLAN ID 1.
+If you need a VM to connect to the subnet of the Harvester hosts, you have to create a VLAN Network in Harvester with VLAN ID 1.
 
    ![non-vlan-aware-vlan1.png](assets/non-vlan-aware-vlan1.png)
 

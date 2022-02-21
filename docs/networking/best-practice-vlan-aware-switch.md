@@ -23,8 +23,8 @@ Hardware:
 - One or more VLAN-aware switch(es). We will use "Cisco like" configuration as example.
 
 Network Specification:
-- The Management Network to control Harvester servers needs to be set as VLAN 100.
-- The VM Network needs to be in the VLAN 101-200 range.
+- Assume that the subnet of the Harvester hosts is in VLAN 100.
+- Assume that the VMs are in the VLAN 101-200.
 
 Cabling:
 - The Harvester servers are connected to the switch in a port from `1` to `3`.
@@ -59,7 +59,7 @@ Specify the name and VLAN ID that you want to create for the VLAN network <small
 
 ### Connect a VM to the subnet of the Harvester hosts
 
-Once you finished the configuration in the previous section, the external switch will send out untagged network traffic to the management network. In Harvester, the untagged traffic is received in VLAN 1.
+Once you finished the configuration in the previous section, the external switch will send out untagged network traffic to the subnet of the Harvester hosts. In Harvester, the untagged traffic is received in VLAN 1.
 
 Therefore, if you need VMs to connect to the VLAN ID 100, you need to create a VLAN ID 1 Network in Harvester.
 
