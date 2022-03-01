@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/rancher/csi-driver/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.1">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.3">
     
     
       
@@ -31,7 +31,7 @@
       
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
@@ -758,6 +758,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../k3s-cluster/" class="md-nav__link">
+        Creating an K3s Kubernetes Cluster
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -834,6 +848,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#deploying-with-harvester-rke1-node-driver" class="md-nav__link">
+    Deploying with Harvester RKE1 Node Driver
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#deploying-with-harvester-rke2-node-driver" class="md-nav__link">
     Deploying with Harvester RKE2 Node Driver
   </a>
@@ -841,8 +862,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#deploying-with-harvester-rke1-node-driver" class="md-nav__link">
-    Deploying with Harvester RKE1 Node Driver
+  <a href="#deploying-with-harvester-k3s-node-driver" class="md-nav__link">
+    Deploying with Harvester K3s Node Driver
   </a>
   
 </li>
@@ -1093,6 +1114,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#deploying-with-harvester-rke1-node-driver" class="md-nav__link">
+    Deploying with Harvester RKE1 Node Driver
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#deploying-with-harvester-rke2-node-driver" class="md-nav__link">
     Deploying with Harvester RKE2 Node Driver
   </a>
@@ -1100,8 +1128,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#deploying-with-harvester-rke1-node-driver" class="md-nav__link">
-    Deploying with Harvester RKE1 Node Driver
+  <a href="#deploying-with-harvester-k3s-node-driver" class="md-nav__link">
+    Deploying with Harvester K3s Node Driver
   </a>
   
 </li>
@@ -1137,9 +1165,6 @@
 <li>The Kubernetes cluster is built on top of Harvester virtual machines.</li>
 <li>The Harvester virtual machines run as guest Kubernetes nodes are in the same namespace.</li>
 </ul>
-<h3 id="deploying-with-harvester-rke2-node-driver">Deploying with Harvester RKE2 Node Driver<a class="headerlink" href="#deploying-with-harvester-rke2-node-driver" title="Permanent link">&para;</a></h3>
-<p>When spinning up a Kubernetes cluster using Rancher RKE2 node driver, the Harvester CSI driver will be deployed when Harvester cloud provider is selected.</p>
-<p><img alt="select-harvester-cloud-provider" src="../assets/select-harvester-cloud-provider.png" /></p>
 <h3 id="deploying-with-harvester-rke1-node-driver">Deploying with Harvester RKE1 Node Driver<a class="headerlink" href="#deploying-with-harvester-rke1-node-driver" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
@@ -1152,6 +1177,20 @@
 <div class="highlight"><pre><span></span><code># depend on kubectl to operate the Harvester cluster
 ./deploy/generate_addon.sh &lt;serviceaccount name&gt; &lt;namespace&gt;
 </code></pre></div>
+<h3 id="deploying-with-harvester-rke2-node-driver">Deploying with Harvester RKE2 Node Driver<a class="headerlink" href="#deploying-with-harvester-rke2-node-driver" title="Permanent link">&para;</a></h3>
+<p>When spinning up a Kubernetes cluster using Rancher RKE2 node driver, the Harvester CSI driver will be deployed when Harvester cloud provider is selected.</p>
+<p><img alt="select-harvester-cloud-provider" src="../assets/select-harvester-cloud-provider.png" /></p>
+<h3 id="deploying-with-harvester-k3s-node-driver">Deploying with Harvester K3s Node Driver<a class="headerlink" href="#deploying-with-harvester-k3s-node-driver" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon.sh">Generate addon configuration</a> and put it in K3s VMs <code>/etc/kubernetes/cloud-config</code>.</li>
+</ul>
+<div class="highlight"><pre><span></span><code># depend on kubectl to operate the Harvester cluster
+./deploy/generate_addon.sh &lt;serviceaccount name&gt; &lt;namespace&gt;
+</code></pre></div>
+<ul>
+<li>Install <code>Harvester CSI Driver</code> from the Rancher marketplace.</li>
+</ul>
+<p><img alt="" src="../assets/install-harvester-csi-driver-in-k3s.png" /></p>
 
               
             </article>
@@ -1220,7 +1259,7 @@
     <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.bd0b6b67.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.8aa65030.min.js"></script>
+      <script src="../../assets/javascripts/bundle.b88e97c5.min.js"></script>
       
         <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
