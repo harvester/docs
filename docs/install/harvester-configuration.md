@@ -334,6 +334,7 @@ the values are configurations for each network. Valid configuration fields are:
 - `bond_options`: Options for bonded interfaces. Refer to [here](https://www.kernel.org/doc/Documentation/networking/bonding.txt) for more info. If not provided, the following options would be used:
     - `mode: balance-tlb`
     - `miimon: 100`
+- `mtu`: The MTU for the interface.
 
 !!! note
     A network called `harvester-mgmt` is mandatory to establish a valid [management network](../networking/harvester-network.md#management-network).
@@ -355,6 +356,7 @@ install:
       bond_options:
         mode: balance-tlb
         miimon: 100
+      mtu: 1492
     harvester-vlan:       # The VLAN network bond name. User can then input `harvester-vlan` in the VLAN NIC setting in the GUI.
       interfaces:
       - name: ens6
@@ -369,6 +371,7 @@ install:
       ip: 10.10.18.2
       subnet_mask: 255.255.255.0
       gateway: 192.168.11.1
+      mtu: 9000
 ```
 
 ### `install.force_efi`
