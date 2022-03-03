@@ -177,7 +177,7 @@ os:
 
 #### Definition
 
-Set the system hostname. If the system hostname is supplied via DHCP, then that value will be used here. If this value is not set and one is not supplied via DHCP, then a random hostname will be generated.
+Set the system hostname. The installer will generate a random hostname if the user doesn't provide a value.
 
 #### Example
 
