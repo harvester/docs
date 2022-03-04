@@ -75,9 +75,10 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 After deploying the `Harvester Cloud provider`, you can use the Kubernetes `LoadBalancer` service to expose a microservice inside the guest cluster to the external world. When you create a Kubernetes `LoadBalancer` service, a Harvester load balancer is assigned to the service and you can edit it through the `Add-on Config` in the Rancher UI.
 
   ![](assets/lb-svc.png)
+  
 
 ### IPAM
-Harvester's built-in load balancer supports both `pool` and `dhcp` modes. You can select the mode in the Rancher UI. Harvester adds the annotation `cloudprovider.harvesterhci.io/healthcheck-port` to the service behind.
+Harvester's built-in load balancer supports both `pool` and `dhcp` modes. You can select the mode in the Rancher UI. Harvester adds the annotation `cloudprovider.harvesterhci.io/ipam` to the service behind.
 
 - pool: You should configure an IP address pool in Harvester in advance. The Harvester LoadBalancer controller will allocate an IP address from the IP address pool for the load balancer.
   
@@ -93,7 +94,7 @@ The Harvester load balancer supports TCP health checks. You can specify the para
 
   ![](assets/health-check.png)
 
-Alternatively, you can speficy the parameters by adding annotations to the service manually. The following annotations are supported:
+Alternatively, you can specify the parameters by adding annotations to the service manually. The following annotations are supported:
 
 | Annotation Key | Value Type | Required | Description |
 |:---|:---|:---|:---|
@@ -102,7 +103,4 @@ Alternatively, you can speficy the parameters by adding annotations to the servi
 | `cloudprovider.harvesterhci.io/healthcheck-failure-threshold` | string | false | Specifies the health check failure threshold. The default value is 3. The backend server will stop forwarding traffic if the number of health check failures reaches the threshold.
 | `cloudprovider.harvesterhci.io/healthcheck-periodseconds` | string | false |  Specifies the health check period. The default value is 5 seconds.
 | `cloudprovider.harvesterhci.io/healthcheck-timeoutseconds` | string | false | Specifies the timeout of every health check. The default value is 3 seconds.
-
-!!!note
-    Currently, the health check port needs to be a `nodeport`. There's [a feature request](https://github.com/harvester/harvester/issues/1697) to change it to a service port and which will be implemented in a future release.
     
