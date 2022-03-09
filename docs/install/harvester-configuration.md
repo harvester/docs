@@ -67,7 +67,6 @@ install:
   vip_hw_addr: 52:54:00:ec:0e:0b
   vip_mode: dhcp
   force_mbr: false
-  no_data_partition: false
 system_settings:
   auto-disk-provision-paths: ""
 ```
@@ -454,9 +453,10 @@ By default, Harvester uses GPT partitioning scheme on both UEFI and BIOS systems
 However, if you face compatibility issues, the MBR partitioning scheme can be forced on BIOS systems.
 
 !!! note
-    Harvester creates an additional partition for storing VM data by default.
-    When force using MBR, [`install.no_data_partition`](./#installno_data_partition) will be forced to `true`.
-    In other words, no additional partition will be created and VM data will
+    Harvester creates an additional partition for storing VM data if
+    [`install.data_disk`](./#installdata_disk) is configured to use the same
+    storage device as the one set for [`install.device`](./#installdevice).
+    When force using MBR, no additional partition will be created and VM data will
     be stored in a partition shared with the OS data.
 
 #### Example
@@ -466,29 +466,9 @@ install:
   force_mbr: true
 ```
 
-### `install.no_data_partition`
-
-#### Definition
-
-Do not create an additional disk partition for storing VM data.
-An OS partition will then be used to store VM data.
-This is useful when you want to use additional disks to store VM data with the
-[auto-disk-provision-paths](../../settings/settings/#auto-disk-provision-paths) setting.
-
-Default: `false`.
-
-!!! warning
-    If VM data is stored in the OS partition and you have created too many VMs,
-    there is a high chance of causing OS to malfunction due to the lack of disk space.
-
-#### Example
-
-```yaml
-install:
-  no_data_partition: true
-```
-
 ### `install.data_disk`
+
+_Available as of v1.0.1_
 
 #### Definition
 
@@ -502,11 +482,6 @@ Default: Same storage device as the one set for [`install.device`](./#installdev
 install:
   data_disk: /dev/sdb
 ```
-
-!!! note
-    If you configure a different storage device from the one set for [`install.device`](./#installdevice), the option
-    [`no_data_partition`](./#installno_data_partition) will be ignored and the additional
-    partition for storing VM data will not be created in the `install.device` storage device.
 
 ### `system_settings`
 
