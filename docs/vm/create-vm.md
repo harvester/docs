@@ -62,6 +62,16 @@ config:
 
 You can also use the `Cloud Config Template` feature to include a pre-defined cloud-init configuration for the VM.
 
+### Installing the QEMU guest agent
+The QEMU guest agent is a daemon that runs on the virtual machine and passes information to the host about the virtual machine, users, file systems, and secondary networks.
+
+Qemu guest agent is installed by default when a VM is created.
+
+![](assets/qga.png)
+
+!!! note
+	If your OS is openSUSE and the version is less than 15.3, please replace `qemu-guest-agent.service` with `qemu-ga.service`.
+
 ## Networks
 
 ### Management Network
