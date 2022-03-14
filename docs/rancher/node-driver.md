@@ -18,6 +18,8 @@ A node driver is the same as a [Docker Machine driver](https://docs.docker.com/m
 You can now provision RKE1/RKE2 Kubernetes clusters in Rancher `v2.6.3+` with the built-in Harvester node driver. 
 Additionally, Harvester now can provide built-in [Load Balancer support](./cloud-provider.md) as well as raw cluster [persistent storage](./csi-driver.md) support to the guest Kubernetes cluster.
 
+Harvester now also allows `.ISO` images to be uploaded and displayed through the Harvester UI. Note that when using Harvester node driver in Rancher, `.ISO` images are not displayed, by design, in the Rancher UI. For more information, refer to the [Rancher docs](https://rancher.com/docs/rancher/v2.6/en/virtualization-admin/#harvester-node-driver).
+
 !!!note
     Harvester v1.0.0 is compatible with Rancher `v2.6.3+` only.
 
