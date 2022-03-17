@@ -1,5 +1,5 @@
 ---
-sidebar_position: 51
+sidebar_position: 61
 keywords:
   - Harvester
   - harvester
@@ -12,20 +12,23 @@ keywords:
 Description: Harvester is built on top of Kubernetes, and uses the [CNI](https://github.com/containernetworking/cni) as the interface between network providers and Kubernetes pod networking. Naturally, we implement the Harvester network based on CNI. Moreover, the Harvester UI integrates the network configuration in order to provide a user-friendly way to configure networks for VMs.
 ---
 
-# Best Practice for Non VLAN-aware Switch
+# Single NIC with Non VLAN-aware Switch
 
 In this best practice guide for "non VLAN-aware" switch, also known as "dummy" switch, we will introduce Harvester VLAN network and external switch configuration for common scenario.
 
 ## Architecture
 
 Hardware:
+
 - Three Harvester servers with only one single port network card.
 - One or more "non VLAN-aware" switch(es).
 
 Network Specification:
+
 - The host and the VM networks are in the same subnet.
 
 Cabling:
+
 - The Harvester servers are connected to the switch in a port from `1` to `3`.
 
 The following diagram illustrates the cabling used for this guide:

@@ -76,8 +76,12 @@ nav:
     - vm/hotplug-volume.md
   - Networking:
     - networking/harvester-network.md
-    - networking/best-practice-vlan-aware-switch.md
-    - networking/best-practice-non-vlan-aware-switch.md
+    - Best Practice:
+      - networking/best-practice/overview.md
+      - networking/best-practice/multiple-nics-vlan-aware-switch.md
+      - networking/best-practice/multiple-nics-non-vlan-aware-switch.md
+      - networking/best-practice/single-nic-vlan-aware-switch.md
+      - networking/best-practice/single-nic-non-vlan-aware-switch.md
   - monitoring/monitoring.md
   - Rancher Integration:
     - rancher/rancher-integration.md
