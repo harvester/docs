@@ -505,6 +505,19 @@
     Cloud Configuration Examples
   </a>
   
+    <nav class="md-nav" aria-label="Cloud Configuration Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-the-qemu-guest-agent" class="md-nav__link">
+    Installing the QEMU guest agent
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1111,6 +1124,19 @@
     Cloud Configuration Examples
   </a>
   
+    <nav class="md-nav" aria-label="Cloud Configuration Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-the-qemu-guest-agent" class="md-nav__link">
+    Installing the QEMU guest agent
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1197,6 +1223,14 @@
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dhcp</span><span class="w"></span>
 </code></pre></div>
 <p>You can also use the <code>Cloud Config Template</code> feature to include a pre-defined cloud-init configuration for the VM.</p>
+<h3 id="installing-the-qemu-guest-agent">Installing the QEMU guest agent<a class="headerlink" href="#installing-the-qemu-guest-agent" title="Permanent link">&para;</a></h3>
+<p>The QEMU guest agent is a daemon that runs on the virtual machine and passes information to the host about the virtual machine, users, file systems, and secondary networks.</p>
+<p>Qemu guest agent is installed by default when a VM is created.</p>
+<p><img alt="" src="../assets/qga.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If your OS is openSUSE and the version is less than 15.3, please replace <code>qemu-guest-agent.service</code> with <code>qemu-ga.service</code>.</p>
+</div>
 <h2 id="networks">Networks<a class="headerlink" href="#networks" title="Permanent link">&para;</a></h2>
 <h3 id="management-network">Management Network<a class="headerlink" href="#management-network" title="Permanent link">&para;</a></h3>
 <p>A management network represents the default VM eth0 interface configured by the cluster network solution that is present in each VM.</p>
