@@ -56,7 +56,7 @@ For better network performances and isolation, we recommend to choose different 
 !!! note
     - When selecting the network interface, the value in parentheses represents the distribution percentage of the network interface on all hosts. If a network interface with a value less than 100% is selected, the network interface needs to be manually specified on the host where the VLAN network configuration fails.
     - Modifying the default VLAN network setting will not update the existing configured host network.
-    - Harvester VLAN network supports bond interfaces. Currently it can only be created automatically via [PEX Boot Configuration](/install/harvester-configuration/#example_11). You may also login to the node and create it manually.
+    - Harvester VLAN network supports bond interfaces. Currently it can only be created automatically via [PXE Boot Configuration](/install/harvester-configuration/#installnetworks). You may also login to the node and create it manually.
 
 
 You can also customize each node's VLAN network via the **Hosts > Network** tab.
