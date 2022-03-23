@@ -48,9 +48,15 @@ Users can view and add multiple disks as additional data volumes from the host d
 1. Go to the **Hosts** page.
 2. On the node you want to modify, click **⋮ > Edit Config**.
 2. Select the **Disks** tab and click **Add Disks**.
-3. Select either an additional raw block device or partition to add as an additional data volume.
-    - The `Force Formatted` option is required when adding an entire raw block device to form a single root disk partition using the ext4 filesystem.
-    - The `Force Formatted` option is optional when adding partitions where the filesystem type is `ext4`, `XFS` or cannot be found. It is required when adding partitions of any other filesystem type.
+3. Select an additional raw block device to add as an additional data volume.
+    - The `Force Formatted` option is required when the block device has once been force-formatted.
+
+!!! note
+    For Harvester to identify disks uniquely, it is required to have an unique WWN for each disk. Otherwise Harvester would refuse to add the disk.
+    If your disk does not have a WWN, you can also format it in EXT4 format to help Harvester identify it.
+
+!!! note
+    If you are testing out Harvester within a QEMU environment, be aware of the version of QEMU itself. QEMU prior to v6.0 always generates the same WWN for NVMe disk emulations. Please use QEMU v6.0 or later to avoid such limitation.
 
 ![Edit Config](assets/edit-config.png)
 ![Add Disks](assets/add-disks.png)
