@@ -87,6 +87,7 @@ Users can now create a new VM using the above configured VLAN network,
 
 !!! note
     - Only the first NIC will be enabled by default. Users can either choose to use a management network or a VLAN network. 
+    - You will need to be careful to configure multiple NICs VM to avoid connectivity issue. You can refer to the [knowledge base](https://harvesterhci.io/kb/multiple-nics-vm-connectivity) for more details.
     - You will need to select the `Install guest agent` option in the **Advanced Options** tab to get the VLAN network IP address from the Harvester UI.
 
 
@@ -101,9 +102,13 @@ config:
   - type: physical
     name: enp2s0
     subnets:
-      - type: DHCP
+      - type: static
+        address: 10.0.0.100/24 # IP address is varies upon your environment
 ```
 Harvester is fully compatible with the `cloud-init network configs`. You can refer to the [documentation](https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html) for more details.
+
+!!! note
+    If adding additional NICs after VM started, you will need to configure IP for additional NICs manually.
 
 ### Configure DHCP servers on Networks
 
