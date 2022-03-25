@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/networking/harvester-network/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.6">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.7">
     
     
       
@@ -673,9 +673,35 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9_2" type="checkbox" id="__nav_9_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9_2">
+          Best Practice
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Best Practice" data-md-level="2">
+        <label class="md-nav__title" for="__nav_9_2">
+          <span class="md-nav__icon md-icon"></span>
+          Best Practice
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../best-practice-vlan-aware-switch/" class="md-nav__link">
-        Best Practice for VLAN-aware Switch
+      <a href="../best-practice/overview/" class="md-nav__link">
+        Overview
       </a>
     </li>
   
@@ -688,9 +714,58 @@
   
   
     <li class="md-nav__item">
-      <a href="../best-practice-non-vlan-aware-switch/" class="md-nav__link">
-        Best Practice for Non VLAN-aware Switch
+      <a href="../best-practice/multiple-nics-vlan-aware-switch/" class="md-nav__link">
+        Mulitple NICs with VLAN-aware Switch
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../best-practice/multiple-nics-non-vlan-aware-switch/" class="md-nav__link">
+        Mulitple NICs with Non VLAN-aware Switch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../best-practice/single-nic-vlan-aware-switch/" class="md-nav__link">
+        Single NIC with VLAN-aware Switch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../best-practice/single-nic-non-vlan-aware-switch/" class="md-nav__link">
+        Single NIC with Non VLAN-aware Switch
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -1238,6 +1313,7 @@ By default, the management network IP of a VM can only be accessed within the cl
 <p class="admonition-title">Note</p>
 <ul>
 <li>Only the first NIC will be enabled by default. Users can either choose to use a management network or a VLAN network. </li>
+<li>You need to be careful to configure virtual machines with multiple NICs to avoid connectivity issues. You can refer to the <a href="https://harvesterhci.io/kb/multiple-nics-vm-connectivity">knowledge base</a> for more details.</li>
 <li>You will need to select the <code>Install guest agent</code> option in the <strong>Advanced Options</strong> tab to get the VLAN network IP address from the Harvester UI.</li>
 </ul>
 </div>
@@ -1252,10 +1328,15 @@ By default, the management network IP of a VM can only be accessed within the cl
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">physical</span><span class="w"></span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enp2s0</span><span class="w"></span>
 <span class="w">    </span><span class="nt">subnets</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DHCP</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">static</span><span class="w"></span>
+<span class="w">        </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.100/24</span><span class="w"> </span><span class="c1"># IP address is varies upon your environment</span><span class="w"></span>
 </code></pre></div>
 Harvester is fully compatible with the <code>cloud-init network configs</code>. You can refer to the <a href="https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html">documentation</a> for more details.</li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you add additional NICs after the VM has started, you will need to manually configure IPs for the additional NICs.</p>
+</div>
 <h3 id="configure-dhcp-servers-on-networks">Configure DHCP servers on Networks<a class="headerlink" href="#configure-dhcp-servers-on-networks" title="Permanent link">&para;</a></h3>
 <p>By default, the Harvester VLAN network would expect your router to provide a DHCP server that VMs can request and assign IP addresses automatically.</p>
 <p>If you are running Harvester in a virtual environment that does not contain a DHCP server, you may consider deploying a DHCP server manually on a node or using a containerized method, e.g, like <a href="https://github.com/harvester/harvester/issues/947">#947</a>. </p>
@@ -1288,13 +1369,13 @@ Harvester is fully compatible with the <code>cloud-init network configs</code>. 
       
       
         
-        <a href="../best-practice-vlan-aware-switch/" class="md-footer__link md-footer__link--next" aria-label="Next: Best Practice for VLAN-aware Switch" rel="next">
+        <a href="../best-practice/overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Best Practice for VLAN-aware Switch
+              Overview
             </div>
           </div>
           <div class="md-footer__button md-icon">

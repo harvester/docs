@@ -8,21 +8,21 @@
       
       
       
-        <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/networking/best-practice-vlan-aware-switch/">
+        <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/networking/best-practice/multiple-nics-vlan-aware-switch/">
       
-      <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.6">
+      <link rel="icon" href="../../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.7">
     
     
       
-        <title>Best Practice for VLAN-aware Switch - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>Mulitple NICs with VLAN-aware Switch - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.9d5733d3.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.9d5733d3.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.e6a45f82.min.css">
         
       
     
@@ -37,11 +37,11 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
-      <link rel="stylesheet" href="../../assets/swagger-ui/swagger-ui.css">
+      <link rel="stylesheet" href="../../../assets/swagger-ui/swagger-ui.css">
     
-    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#best-practice-for-vlan-aware-switch" class="md-skip">
+        <a href="#mulitple-nics-with-vlan-aware-switch" class="md-skip">
           Skip to content
         </a>
       
@@ -91,7 +91,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="https://harvesterhci.io" title="Harvester - Open Source Hyperconverged Infrastructure" class="md-header__button md-logo" aria-label="Harvester - Open Source Hyperconverged Infrastructure" data-md-component="logo">
       
-  <img src="../../assets/logo_horizontal_white.png" alt="logo">
+  <img src="../../../assets/logo_horizontal_white.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -107,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Best Practice for VLAN-aware Switch
+              Mulitple NICs with VLAN-aware Switch
             
           </span>
         </div>
@@ -210,7 +210,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="https://harvesterhci.io" title="Harvester - Open Source Hyperconverged Infrastructure" class="md-nav__button md-logo" aria-label="Harvester - Open Source Hyperconverged Infrastructure" data-md-component="logo">
       
-  <img src="../../assets/logo_horizontal_white.png" alt="logo">
+  <img src="../../../assets/logo_horizontal_white.png" alt="logo">
 
     </a>
     Harvester - Open Source Hyperconverged Infrastructure
@@ -238,7 +238,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         Harvester Overview
       </a>
     </li>
@@ -279,7 +279,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/iso-install/" class="md-nav__link">
+      <a href="../../../install/iso-install/" class="md-nav__link">
         ISO Installation
       </a>
     </li>
@@ -293,7 +293,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/usb-install/" class="md-nav__link">
+      <a href="../../../install/usb-install/" class="md-nav__link">
         USB Installation
       </a>
     </li>
@@ -307,7 +307,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/pxe-boot-install/" class="md-nav__link">
+      <a href="../../../install/pxe-boot-install/" class="md-nav__link">
         PXE Boot Installation
       </a>
     </li>
@@ -321,7 +321,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/harvester-configuration/" class="md-nav__link">
+      <a href="../../../install/harvester-configuration/" class="md-nav__link">
         Harvester Configuration
       </a>
     </li>
@@ -335,7 +335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/management-address/" class="md-nav__link">
+      <a href="../../../install/management-address/" class="md-nav__link">
         Management Address
       </a>
     </li>
@@ -357,7 +357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../airgap/" class="md-nav__link">
+      <a href="../../../airgap/" class="md-nav__link">
         Air Gapped Environment
       </a>
     </li>
@@ -372,7 +372,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../authentication/" class="md-nav__link">
+      <a href="../../../authentication/" class="md-nav__link">
         Authentication
       </a>
     </li>
@@ -387,7 +387,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../upgrade/automatic/" class="md-nav__link">
+      <a href="../../../upgrade/automatic/" class="md-nav__link">
         Upgrading Harvester
       </a>
     </li>
@@ -402,7 +402,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../upload-image/" class="md-nav__link">
+      <a href="../../../upload-image/" class="md-nav__link">
         Upload Images
       </a>
     </li>
@@ -417,7 +417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../host/host/" class="md-nav__link">
+      <a href="../../../host/host/" class="md-nav__link">
         Host Management
       </a>
     </li>
@@ -458,7 +458,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vm/create-vm/" class="md-nav__link">
+      <a href="../../../vm/create-vm/" class="md-nav__link">
         Create a VM
       </a>
     </li>
@@ -472,7 +472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vm/create-windows-vm/" class="md-nav__link">
+      <a href="../../../vm/create-windows-vm/" class="md-nav__link">
         Create a Windows VM
       </a>
     </li>
@@ -486,7 +486,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vm/access-to-the-vm/" class="md-nav__link">
+      <a href="../../../vm/access-to-the-vm/" class="md-nav__link">
         Access to the Virtual Machine (VM)
       </a>
     </li>
@@ -500,7 +500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vm/backup-restore/" class="md-nav__link">
+      <a href="../../../vm/backup-restore/" class="md-nav__link">
         VM Backup & Restore
       </a>
     </li>
@@ -514,7 +514,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vm/live-migration/" class="md-nav__link">
+      <a href="../../../vm/live-migration/" class="md-nav__link">
         Live Migration
       </a>
     </li>
@@ -528,7 +528,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vm/hotplug-volume/" class="md-nav__link">
+      <a href="../../../vm/hotplug-volume/" class="md-nav__link">
         Hot-Plug Volumes
       </a>
     </li>
@@ -578,8 +578,50 @@
   
   
     <li class="md-nav__item">
-      <a href="../harvester-network/" class="md-nav__link">
+      <a href="../../harvester-network/" class="md-nav__link">
         Harvester Network
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9_2" type="checkbox" id="__nav_9_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9_2">
+          Best Practice
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Best Practice" data-md-level="2">
+        <label class="md-nav__title" for="__nav_9_2">
+          <span class="md-nav__icon md-icon"></span>
+          Best Practice
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        Overview
       </a>
     </li>
   
@@ -602,12 +644,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Best Practice for VLAN-aware Switch
+          Mulitple NICs with VLAN-aware Switch
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Best Practice for VLAN-aware Switch
+        Mulitple NICs with VLAN-aware Switch
       </a>
       
         
@@ -681,9 +723,44 @@
   
   
     <li class="md-nav__item">
-      <a href="../best-practice-non-vlan-aware-switch/" class="md-nav__link">
-        Best Practice for Non VLAN-aware Switch
+      <a href="../multiple-nics-non-vlan-aware-switch/" class="md-nav__link">
+        Mulitple NICs with Non VLAN-aware Switch
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../single-nic-vlan-aware-switch/" class="md-nav__link">
+        Single NIC with VLAN-aware Switch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../single-nic-non-vlan-aware-switch/" class="md-nav__link">
+        Single NIC with Non VLAN-aware Switch
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -703,7 +780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../monitoring/monitoring/" class="md-nav__link">
+      <a href="../../../monitoring/monitoring/" class="md-nav__link">
         Monitoring
       </a>
     </li>
@@ -744,7 +821,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rancher/rancher-integration/" class="md-nav__link">
+      <a href="../../../rancher/rancher-integration/" class="md-nav__link">
         Rancher integration
       </a>
     </li>
@@ -758,7 +835,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rancher/virtualization-management/" class="md-nav__link">
+      <a href="../../../rancher/virtualization-management/" class="md-nav__link">
         Virtualization management
       </a>
     </li>
@@ -798,7 +875,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rancher/node-driver/" class="md-nav__link">
+      <a href="../../../rancher/node-driver/" class="md-nav__link">
         Harvester Node Driver
       </a>
     </li>
@@ -812,7 +889,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rancher/rke1-cluster/" class="md-nav__link">
+      <a href="../../../rancher/rke1-cluster/" class="md-nav__link">
         Creating an RKE1 Kubernetes Cluster
       </a>
     </li>
@@ -826,7 +903,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rancher/rke2-cluster/" class="md-nav__link">
+      <a href="../../../rancher/rke2-cluster/" class="md-nav__link">
         Creating an RKE2 Kubernetes Cluster
       </a>
     </li>
@@ -840,7 +917,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rancher/k3s-cluster/" class="md-nav__link">
+      <a href="../../../rancher/k3s-cluster/" class="md-nav__link">
         Creating an K3s Kubernetes Cluster
       </a>
     </li>
@@ -861,7 +938,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rancher/cloud-provider/" class="md-nav__link">
+      <a href="../../../rancher/cloud-provider/" class="md-nav__link">
         Harvester Cloud Provider
       </a>
     </li>
@@ -875,7 +952,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rancher/csi-driver/" class="md-nav__link">
+      <a href="../../../rancher/csi-driver/" class="md-nav__link">
         Harvester CSI Driver
       </a>
     </li>
@@ -897,7 +974,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../terraform/terraform/" class="md-nav__link">
+      <a href="../../../terraform/terraform/" class="md-nav__link">
         Harvester Terraform Provider
       </a>
     </li>
@@ -912,7 +989,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../settings/settings/" class="md-nav__link">
+      <a href="../../../settings/settings/" class="md-nav__link">
         Settings
       </a>
     </li>
@@ -927,7 +1004,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dev/dev-mode/" class="md-nav__link">
+      <a href="../../../dev/dev-mode/" class="md-nav__link">
         Developer Mode Installation
       </a>
     </li>
@@ -968,7 +1045,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/installation/" class="md-nav__link">
+      <a href="../../../troubleshooting/installation/" class="md-nav__link">
         Installation
       </a>
     </li>
@@ -982,7 +1059,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/harvester/" class="md-nav__link">
+      <a href="../../../troubleshooting/harvester/" class="md-nav__link">
         Harvester
       </a>
     </li>
@@ -996,7 +1073,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/os/" class="md-nav__link">
+      <a href="../../../troubleshooting/os/" class="md-nav__link">
         Operating System
       </a>
     </li>
@@ -1044,7 +1121,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/api/" class="md-nav__link">
+      <a href="../../../reference/api/" class="md-nav__link">
         API Reference
       </a>
     </li>
@@ -1066,7 +1143,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../faq/" class="md-nav__link">
+      <a href="../../../faq/" class="md-nav__link">
         FAQ
       </a>
     </li>
@@ -1152,52 +1229,75 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/harvester/docs/edit/main/docs/networking/best-practice-vlan-aware-switch.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/harvester/docs/edit/main/docs/networking/best-practice/multiple-nics-vlan-aware-switch.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
 
-<h1 id="best-practice-for-vlan-aware-switch">Best Practice for VLAN-aware Switch<a class="headerlink" href="#best-practice-for-vlan-aware-switch" title="Permanent link">&para;</a></h1>
+<h1 id="mulitple-nics-with-vlan-aware-switch">Mulitple NICs with VLAN-aware Switch<a class="headerlink" href="#mulitple-nics-with-vlan-aware-switch" title="Permanent link">&para;</a></h1>
 <p>In this best practice guide on how to configure "VLAN-aware", we will introduce Harvester VLAN network and external switch configuration for common scenario.</p>
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
-<p>Hardware:
-- Three Harvester servers with only one single port network card.
-- One or more VLAN-aware switch(es). We will use "Cisco like" configuration as example.</p>
-<p>Network Specification:
-- Assume that the subnet of the Harvester hosts is in VLAN 100.
-- Assume that the VMs are in the VLAN 101-200.</p>
-<p>Cabling:
-- The Harvester servers are connected to the switch in a port from <code>1</code> to <code>3</code>.</p>
+<p>Hardware:</p>
+<ul>
+<li>Three Harvester servers with daul ports network card.</li>
+<li>One or more VLAN-aware switch(es). We will use "Cisco like" configuration as example.</li>
+</ul>
+<p>Network Specification:</p>
+<ul>
+<li>Assume that the subnet of the Harvester hosts is in VLAN 100.</li>
+<li>Assume that the VMs are in the VLAN 101-200.</li>
+</ul>
+<p>Cabling:</p>
+<ul>
+<li>The Harvester servers are connected to the switch in a port from <code>1</code> to <code>6</code>.</li>
+</ul>
 <p>The following diagram illustrates the cabling used for this guide:</p>
-<p><img alt="vlan-aware-case.png" src="../assets/vlan-aware-case.png" /></p>
+<p><img alt="mulitple-nics-vlan-aware.png" src="../assets/mulitple-nics-vlan-aware.png" /></p>
 <h2 id="external-switch-configuration">External Switch Configuration<a class="headerlink" href="#external-switch-configuration" title="Permanent link">&para;</a></h2>
-<p>For the external switch configuration, we'll use a "Cisco like" configuration as example. You can apply the following configurations to your switch:</p>
+<p>For the external switch configuration, we'll use a "Cisco-like" configuration as an example. You can apply the following configurations to your switch:</p>
+<p>For <code>harvester-mgmt</code> ports:
+<div class="highlight"><pre><span></span><code>switch# config terminal
+switch(config)# interface ethernet1/&lt;Port Number&gt;
+switch(config-if)# switchport
+switch(config-if)# switchport mode access
+switch(config-if)# switchport access 100
+switch(config-if)# no shutdown
+switch(config-if)# end
+switch# copy running-config startup-config
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this case, you need to avoid using <code>harvester-mgmt</code> as the VLAN Network interface. This setting will only allow the traffic in the same subnet of <code>harvester-mgmt</code> and disallow other VLAN traffic.</p>
+</div>
+<p>For VLAN network ports:
 <div class="highlight"><pre><span></span><code>switch# config terminal
 switch(config)# interface ethernet1/&lt;Port Number&gt;
 switch(config-if)# switchport
 switch(config-if)# switchport mode trunk
 switch(config-if)# switchport trunk allowed vlan 100-200
-switch(config-if)# switchport trunk native vlan 100
+switch(config-if)# switchport trunk native vlan 1
 switch(config-if)# no shutdown
 switch(config-if)# end
 switch# copy running-config startup-config
-</code></pre></div>
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We use the VLAN Trunk setup to set up the network ports for the VLAN Network. In this case, you can simply set VLAN 100 for the VMs in the Harvester VLAN network to connect to the same subnet of <code>harvester-mgmt</code>.</p>
+</div>
 <h2 id="create-a-vlan-network-in-harvester">Create a VLAN Network in Harvester<a class="headerlink" href="#create-a-vlan-network-in-harvester" title="Permanent link">&para;</a></h2>
 <p>You can create a new VLAN network in the <strong>Advanced &gt; Networks</strong> page, and click the <strong>Create</strong> button.</p>
-<p>Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same VLAN ID in different namespaces if you have <a href="/rancher/virtualization-management/#multi-tenancy">Rancher multi-tenancy</a> configured)</small>.</p>
+<p>Specify the name and a VLAN ID that you want to create for the VLAN network <small>(You can specify the same VLAN ID in different namespaces if you have <a href="/rancher/virtualization-management/#multi-tenancy">Rancher multi-tenancy</a> configured)</small>.</p>
 <p><img alt="create-vlan-network.png" src="../assets/create-network.png" /></p>
 <h3 id="connect-a-vm-to-the-subnet-of-the-harvester-hosts">Connect a VM to the subnet of the Harvester hosts<a class="headerlink" href="#connect-a-vm-to-the-subnet-of-the-harvester-hosts" title="Permanent link">&para;</a></h3>
 <p>Once you finished the configuration in the previous section, the external switch will send out untagged network traffic to the subnet of the Harvester hosts. In Harvester, the untagged traffic is received in VLAN 1.</p>
-<p>Therefore, if you need VMs to connect to the VLAN ID 100, you need to create a VLAN ID 1 Network in Harvester.</p>
-<p>The external switch will remove the VLAN 100 tag from the packet for egress and <code>harvester-br0</code> will add the VLAN 1 tag to the packet and treat it as VLAN 1 as shown in the following diagram:</p>
-<p><img alt="vlan-aware-native-vlan.png" src="../assets/vlan-aware-native-vlan.png" /></p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Do not create a VLAN Network with VLAN 100 and associate any VM to it. The connectivity will not always be ensured and depends on the external switch behavior to add/remove VLAN tag from packets.</p>
+<p>Therefore, if you need VMs to connect to the VLAN ID 1, you need to create a VLAN ID 1 Network in Harvester also.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We strongly recommend against using VLAN 1 in this scenario.</p>
 </div>
 <h3 id="connect-a-vm-to-specific-vlan-network">Connect a VM to specific VLAN network<a class="headerlink" href="#connect-a-vm-to-specific-vlan-network" title="Permanent link">&para;</a></h3>
-<p>You need to create a VLAN Network with specific VLAN ID and associate the VM to that VLAN network. </p>
+<p>You need to create a VLAN network with a specific VLAN ID and associate the VM with that VLAN network.</p>
 <p>Please refer to <a href="/networking/harvester-network/">this page</a> for additional information on Harvester Networking.</p>
 
               
@@ -1212,7 +1312,7 @@ switch# copy running-config startup-config
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../harvester-network/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Harvester Network" rel="prev">
+        <a href="../overview/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1221,20 +1321,20 @@ switch# copy running-config startup-config
               <span class="md-footer__direction">
                 Previous
               </span>
-              Harvester Network
+              Overview
             </div>
           </div>
         </a>
       
       
         
-        <a href="../best-practice-non-vlan-aware-switch/" class="md-footer__link md-footer__link--next" aria-label="Next: Best Practice for Non VLAN-aware Switch" rel="next">
+        <a href="../multiple-nics-non-vlan-aware-switch/" class="md-footer__link md-footer__link--next" aria-label="Next: Mulitple NICs with Non VLAN-aware Switch" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Best Practice for Non VLAN-aware Switch
+              Mulitple NICs with Non VLAN-aware Switch
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -1264,12 +1364,12 @@ switch# copy running-config startup-config
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.5e67fbfe.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.5e67fbfe.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e87a5f81.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.e87a5f81.min.js"></script>
       
-        <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
+        <script src="../../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
     
   </body>
