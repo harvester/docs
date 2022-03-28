@@ -51,6 +51,7 @@ markdown_extensions:
 - admonition
 - pymdownx.tabbed
 - pymdownx.superfences
+- attr_list
 - toc:
     permalink: true
 
@@ -63,8 +64,8 @@ nav:
     - install/harvester-configuration.md
     - install/management-address.md
   - airgap.md
-  - authentication.md
   - upgrade/automatic.md
+  - authentication.md
   - upload-image.md
   - host/host.md
   - VM Management:
