@@ -8,14 +8,33 @@ keywords:
 
 For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6.x.
 
-1. As a prerequisite, you will need to create a Rancher server with `v2.6.3` or above for Harvester `v1.0.0` integration. For testing purposes, you can spin up a Rancher server using the following `docker run` command:
-    ```
-    $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.3
-    ```
+1. As a prerequisite, Harvester `v1.0.0` integration requires Rancher server `v2.6.3` or above. In production, use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:
+    - [AWS](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/amazon-aws-qs/) (uses Terraform)
+    - [AWS Marketplace](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/amazon-aws-marketplace-qs/) (uses Amazon EKS)
+    - [Azure](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/microsoft-azure-qs/) (uses Terraform)
+    - [DigitalOcean](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/digital-ocean-qs/) (uses Terraform)
+    - [GCP](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/google-gcp-qs/) (uses Terraform)
+    - [Hetzner Cloud](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/hetzner-cloud-qs/) (uses Terraform)
+    - [Vagrant](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/quickstart-vagrant/)
+    - [Equinix Metal](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/equinix-metal-qs/)
 
-    !!!note
-        For a production Rancher server setup, please refer to the official Rancher [docs](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/).
+    !!! Warning
+        **Do not install Rancher with Docker in production**. Otherwise, your environment may be damaged and your cluster may not be recovered. Installing Rancher in Docker should only be used for quick evaluation and testing purposes.
 
+        To install Rancher with Docker:
+        
+        1. Begin creation of a custom cluster by provisioning a Linux host. Your host can be any of the following:
+            - A cloud-hosted virtual machine (VM)
+            - An on-premises VM
+            - A bare-metal server
+        1. Log into your Linux host using your preferred shell, such as PuTTy or a remote terminal connection.
+        1. From your shell, enter the following command:
+        ```shell
+        # for a quick evaluation, you can run the Rancher server with the following command
+        $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.3
+        ```
+
+    
 1. Once the Rancher server is up and running, log in and click the hamburger menu and choose the **Virtualization Management** tab. Select **Import Existing** to import the downstream Harvester cluster into the Rancher server.
 ![](./assets/vm-menu.png)
 1. Specify the `Cluster Name` and click **Create**. You will then see the registration guide; please open the dashboard of the target Harvester cluster and follow the guide accordingly.
