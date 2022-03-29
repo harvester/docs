@@ -25,4 +25,4 @@ provider "harvester" {
 
 ## Using the provider
 
-Documentation about the provider specific configuration options can be found on the [docs](https://registry.terraform.io/providers/harvester/harvester/latest/docs).
+More details about the provider-specific configurations can be found on the [docs](https://registry.terraform.io/providers/harvester/harvester/latest/docs).
