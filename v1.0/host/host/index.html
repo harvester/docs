@@ -1252,12 +1252,20 @@ Once resolved, the last step can be skipped.</p>
 <li>Go to the <strong>Hosts</strong> page.</li>
 <li>On the node you want to modify, click <strong>⋮ &gt; Edit Config</strong>.</li>
 <li>Select the <strong>Disks</strong> tab and click <strong>Add Disks</strong>.</li>
-<li>Select either an additional raw block device or partition to add as an additional data volume.<ul>
-<li>The <code>Force Formatted</code> option is required when adding an entire raw block device to form a single root disk partition using the ext4 filesystem.</li>
-<li>The <code>Force Formatted</code> option is optional when adding partitions where the filesystem type is <code>ext4</code>, <code>XFS</code> or cannot be found. It is required when adding partitions of any other filesystem type.</li>
+<li>Select an additional raw block device to add as an additional data volume.<ul>
+<li>The <code>Force Formatted</code> option is required if the block device has never been force-formatted.</li>
 </ul>
 </li>
 </ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In order for Harvester to identify the disks, each disk needs to have a unique <a href="https://en.wikipedia.org/wiki/World_Wide_Name">WWN</a>. Otherwise, Harvester will refuse to add the disk.
+If your disk does not have a WWN, you can format it with the <code>EXT4</code> filesystem to help Harvester recognize the disk.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are testing Harvester in a QEMU environment, you'll need to use QEMU v6.0 or later. Previous versions of QEMU will always generate the same WWN for NVMe disks emulation. This will cause Harvester to not add the additional disks, as explained above.</p>
+</div>
 <p><img alt="Edit Config" src="../assets/edit-config.png" />
 <img alt="Add Disks" src="../assets/add-disks.png" /></p>
 
