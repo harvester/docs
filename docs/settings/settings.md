@@ -121,6 +121,27 @@ CPU for it from Kubernetes scheduler.
 }
 ```
 
+## `release-download-url`
+
+_Available as of v1.0.1_
+
+This setting allows you to configure the `upgrade release download` URL address. Harvester will get the ISO URL and checksum value from the `${URL}/${VERSION}/version.yaml` file hosted by the configured URL.
+
+Default: `https://releases.rancher.com/harvester`
+
+#### Example of the version.yaml
+
+```
+apiVersion: harvesterhci.io/v1beta1
+kind: Version
+metadata:
+  name: ${VERSION}
+  namespace: harvester-system
+spec:
+  isoChecksum: ${ISO_CHECKSUM}
+  isoURL: ${ISO_URL}
+```
+
 ## `server-version`
 
 This setting displays the version of Harvester server.
