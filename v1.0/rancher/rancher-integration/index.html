@@ -781,22 +781,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deploying-rancher" class="md-nav__link">
-    Deploying Rancher
+  <a href="#deploying-rancher-server" class="md-nav__link">
+    Deploying Rancher Server
   </a>
-  
-    <nav class="md-nav" aria-label="Deploying Rancher">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#quick-start-guide" class="md-nav__link">
-    Quick Start Guide
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1176,22 +1163,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deploying-rancher" class="md-nav__link">
-    Deploying Rancher
+  <a href="#deploying-rancher-server" class="md-nav__link">
+    Deploying Rancher Server
   </a>
-  
-    <nav class="md-nav" aria-label="Deploying Rancher">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#quick-start-guide" class="md-nav__link">
-    Quick Start Guide
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1242,9 +1216,23 @@
 </div>
 
 <p><img alt="virtualization-management" src="../assets/virtualization-management.png" /></p>
-<h2 id="deploying-rancher">Deploying Rancher<a class="headerlink" href="#deploying-rancher" title="Permanent link">&para;</a></h2>
+<h2 id="deploying-rancher-server">Deploying Rancher Server<a class="headerlink" href="#deploying-rancher-server" title="Permanent link">&para;</a></h2>
 <p>To use Rancher with Harvester, please install the Rancher and Harvester in two separated servers. If you want to try out the integration features, you can create a VM in Harvester and install Rancher v2.6.3 or above.</p>
-<h3 id="quick-start-guide">Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Permanent link">&para;</a></h3>
+<p>Use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:</p>
+<ul>
+<li><a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/amazon-aws-qs/">AWS</a> (uses Terraform)</li>
+<li><a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/amazon-aws-marketplace-qs/">AWS Marketplace</a> (uses Amazon EKS)</li>
+<li><a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/microsoft-azure-qs/">Azure</a> (uses Terraform)</li>
+<li><a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/digital-ocean-qs/">DigitalOcean</a> (uses Terraform)</li>
+<li><a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/google-gcp-qs/">GCP</a> (uses Terraform)</li>
+<li><a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/hetzner-cloud-qs/">Hetzner Cloud</a> (uses Terraform)</li>
+<li><a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/quickstart-vagrant/">Vagrant</a></li>
+<li><a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/equinix-metal-qs/">Equinix Metal</a></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Do not install Rancher with Docker in production</strong>. Otherwise, your environment may be damaged and your cluster may not be recovered. Installing Rancher in Docker should only be used for quick evaluation and testing purposes.</p>
+<p>To install Rancher with Docker:</p>
 <ol>
 <li>Begin creation of a custom cluster by provisioning a Linux host. Your host can be any of the following:<ul>
 <li>A cloud-hosted virtual machine (VM)</li>
@@ -1253,14 +1241,11 @@
 </ul>
 </li>
 <li>Log into your Linux host using your preferred shell, such as PuTTy or a remote terminal connection.</li>
-<li>From your shell, enter the following command:</li>
-</ol>
+<li>From your shell, enter the following command:
 <div class="highlight"><pre><span></span><code><span class="c1"># for a quick evaluation, you can run the Rancher server with the following command</span>
 $ sudo docker run -d --restart<span class="o">=</span>unless-stopped -p <span class="m">80</span>:80 -p <span class="m">443</span>:443 --privileged rancher/rancher:v2.6.3
-</code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For more information on how to deploy the Rancher server, please refer to the Rancher <a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/">documentation</a>.</p>
+</code></pre></div></li>
+</ol>
 </div>
 <h2 id="virtualization-management">Virtualization Management<a class="headerlink" href="#virtualization-management" title="Permanent link">&para;</a></h2>
 <p>With Rancher's Virtualization Management feature, you can now import and manage Harvester clusters.
