@@ -125,3 +125,16 @@ Note we are still working towards zero-downtime upgrade, due to some known issue
 
 - **Related issues**
     - [[BUG] Upgrade: rancher-monitoring charts can't be upgraded](https://github.com/harvester/harvester/issues/1983)
+
+### Predictable interface names deviate from previous versions
+
+- **Description**
+
+    Phyical NIC names might be changed in v1.0.1-rc1 or above because `systemd` is upgraded to `246.16-150300.7.39.1`.
+
+- **Workaround**
+
+    You could refer to KB and [migration script](https://github.com/harvester/upgrade-helpers/blob/main/hack/udev_v238_sle15-sp3.py) to update NIC name manually.
+
+- **Related issues**
+    - [[BUG] Predictable interface names deviate from previous versions](https://github.com/harvester/harvester/issues/2073)
