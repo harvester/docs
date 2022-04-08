@@ -1352,7 +1352,7 @@
 <p>After deploying the <code>Harvester Cloud provider</code>, you can use the Kubernetes <code>LoadBalancer</code> service to expose a microservice inside the guest cluster to the external world. When you create a Kubernetes <code>LoadBalancer</code> service, a Harvester load balancer is assigned to the service and you can edit it through the <code>Add-on Config</code> in the Rancher UI.</p>
 <p><img alt="" src="../assets/lb-svc.png" /></p>
 <h3 id="ipam">IPAM<a class="headerlink" href="#ipam" title="Permanent link">&para;</a></h3>
-<p>Harvester's built-in load balancer supports both <code>pool</code> and <code>dhcp</code> modes. You can select the mode in the Rancher UI. Harvester adds the annotation <code>cloudprovider.harvesterhci.io/healthcheck-port</code> to the service behind.</p>
+<p>Harvester's built-in load balancer supports both <code>pool</code> and <code>dhcp</code> modes. You can select the mode in the Rancher UI. Harvester adds the annotation <code>cloudprovider.harvesterhci.io/ipam</code> to the service behind.</p>
 <ul>
 <li>pool: You should configure an IP address pool in Harvester in advance. The Harvester LoadBalancer controller will allocate an IP address from the IP address pool for the load balancer.</li>
 </ul>
@@ -1367,7 +1367,7 @@
 <h3 id="health-checks">Health Checks<a class="headerlink" href="#health-checks" title="Permanent link">&para;</a></h3>
 <p>The Harvester load balancer supports TCP health checks. You can specify the parameters in the Rancher UI if you enable the <code>Health Check</code> option.</p>
 <p><img alt="" src="../assets/health-check.png" /></p>
-<p>Alternatively, you can speficy the parameters by adding annotations to the service manually. The following annotations are supported:</p>
+<p>Alternatively, you can specify the parameters by adding annotations to the service manually. The following annotations are supported:</p>
 <table>
 <thead>
 <tr>
@@ -1410,10 +1410,6 @@
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Currently, the health check port needs to be a <code>nodeport</code>. There's <a href="https://github.com/harvester/harvester/issues/1697">a feature request</a> to change it to a service port and which will be implemented in a future release.</p>
-</div>
 
               
             </article>
