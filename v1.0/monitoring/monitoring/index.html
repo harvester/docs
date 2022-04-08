@@ -748,6 +748,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#change-resources-setting-of-monitoring" class="md-nav__link">
+    Change resources setting of Monitoring
+  </a>
+  
+    <nav class="md-nav" aria-label="Change resources setting of Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#change-resources-settings-of-monitoring-prometheus" class="md-nav__link">
+    Change resources settings of Monitoring-Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#change-resources-settings-of-monitoring-prometheus-node-exporter" class="md-nav__link">
+    Change resources settings of Monitoring-Prometheus-node-exporter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1159,6 +1186,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#change-resources-setting-of-monitoring" class="md-nav__link">
+    Change resources setting of Monitoring
+  </a>
+  
+    <nav class="md-nav" aria-label="Change resources setting of Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#change-resources-settings-of-monitoring-prometheus" class="md-nav__link">
+    Change resources settings of Monitoring-Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#change-resources-settings-of-monitoring-prometheus-node-exporter" class="md-nav__link">
+    Change resources settings of Monitoring-Prometheus-node-exporter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1191,6 +1245,41 @@ Also, users can click the <a href="http://grafana.com/">Grafana</a> dashboard li
 <h2 id="vm-detail-metrics">VM Detail Metrics<a class="headerlink" href="#vm-detail-metrics" title="Permanent link">&para;</a></h2>
 <p>For each VM, users can view the VM metrics by clicking the VM details page.
 <img alt="" src="../assets/vm-metrics.png" /></p>
+<h2 id="change-resources-setting-of-monitoring">Change resources setting of Monitoring<a class="headerlink" href="#change-resources-setting-of-monitoring" title="Permanent link">&para;</a></h2>
+<p><em>Available as of v1.0.1</em></p>
+<p>The <code>Monitoring</code> has a couple of components to collect metrics data from all NODEs/PODs/VMs/... and summarize them. The resources required by the <code>Monitoring</code> are related to workloads and hardware resources. Harvester sets the default values according to engineering practices, and you can change them accordingly.</p>
+<p>The following two components <code>resources settings</code> are available:</p>
+<p>(1) Monitoring-Prometheus</p>
+<p>(2) Monitoring-Prometheus-node-exporter</p>
+<h3 id="change-resources-settings-of-monitoring-prometheus">Change resources settings of Monitoring-Prometheus<a class="headerlink" href="#change-resources-settings-of-monitoring-prometheus" title="Permanent link">&para;</a></h3>
+<p>In the <code>Advanced Settings</code> page, you can view and change the resources settings as follow:</p>
+<p>(1) Navigate to settings page, find <code>harvester monitoring</code>.
+<img alt="" src="../assets/monitoring-setting.png" /></p>
+<p>(2) Click <code>Show harvester-monitoring</code> to view the current values.
+<img alt="" src="../assets/monitoring-setting-view-current.png" /></p>
+<p>(3) Click in the up-right corner pop up menu and select <code>Edit Setting</code> to set a new value.
+<img alt="" src="../assets/monitoring-setting-edit-config.png" /></p>
+<p>(4) Click <code>Save</code>. The <code>Monitoring</code> will be restarted with the new resources settings. Please note, the restart can take some time.</p>
+<p>The most frequently used option is memory setting.</p>
+<p><code>Requested Memory</code> is the minimum memory of the <code>Monitoring</code>. The recommended value is about 5% to 10% of system memory of one single management node. A value less than 500Mi will be denied.</p>
+<p><code>Memory Limit</code> is the maximum memory of the <code>Monitoring</code>. The recommended value is about 30% of system memory of one single management node, when the <code>Monitoring</code> reaches this value, it will be restarted.</p>
+<p>Depending on the available hardware resources and system loads, you may change the settings accordingly.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have multiple management nodes with different hardware resources, please set the value based on the smaller one.</p>
+</div>
+<h3 id="change-resources-settings-of-monitoring-prometheus-node-exporter">Change resources settings of Monitoring-Prometheus-node-exporter<a class="headerlink" href="#change-resources-settings-of-monitoring-prometheus-node-exporter" title="Permanent link">&para;</a></h3>
+<p><code>Monitoring-Prometheus-node-exporter</code> has a similar resources specifications as <code>Monitoring-Prometheus</code>. In future versions, a new <code>WebUI</code> setting will be available.</p>
+<p>To update the values, you may use the CLI command: <code>kubectl edit managedchart rancher-monitoring -n fleet-local</code>.</p>
+<p>The related path and default value are:</p>
+<p><code>spec.values.prometheus.prometheus-node-exporter.resources.limits.cpu</code>:<code>200m</code></p>
+<p><code>spec.values.prometheus.prometheus-node-exporter.resources.limits.memory</code>:<code>180Mi</code></p>
+<p><code>spec.values.prometheus.prometheus-node-exporter.resources.requests.cpu</code>:<code>100m</code></p>
+<p><code>spec.values.prometheus.prometheus-node-exporter.resources.requests.memory</code>:<code>30Mi</code></p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>When many VMs are deployed in one NODE, the OOM(out of memory)/abnormal restarting of prometheus-node-exporter POD(s) may be observed. In that case, you should change the <code>limits.memory</code> to a bigger value.</p>
+</div>
 
               
             </article>
