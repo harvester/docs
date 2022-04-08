@@ -370,21 +370,6 @@
 
   
   
-  
-    <li class="md-nav__item">
-      <a href="../../authentication/" class="md-nav__link">
-        Authentication
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
     
   
   
@@ -396,10 +381,104 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Upgrading Harvester
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Upgrading Harvester
       </a>
       
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-version" class="md-nav__link">
+    Create a version
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-the-upgrade" class="md-nav__link">
+    Start the upgrade
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issues" class="md-nav__link">
+    Known issues
+  </a>
+  
+    <nav class="md-nav" aria-label="Known issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stuck-in-upgrading-system-service" class="md-nav__link">
+    Stuck in Upgrading System Service
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vms-fail-to-migrate" class="md-nav__link">
+    VMs fail to migrate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fleet-locallocal-another-operation-installupgraderollback-is-in-progress" class="md-nav__link">
+    fleet-local/local: another operation (install/upgrade/rollback) is in progress
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#single-node-upgrade-might-fail-if-node-name-is-too-long-24-characters" class="md-nav__link">
+    Single node upgrade might fail if node name is too long (&gt;24 characters)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../authentication/" class="md-nav__link">
+        Authentication
+      </a>
     </li>
   
 
@@ -1101,6 +1180,69 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-version" class="md-nav__link">
+    Create a version
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-the-upgrade" class="md-nav__link">
+    Start the upgrade
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issues" class="md-nav__link">
+    Known issues
+  </a>
+  
+    <nav class="md-nav" aria-label="Known issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stuck-in-upgrading-system-service" class="md-nav__link">
+    Stuck in Upgrading System Service
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vms-fail-to-migrate" class="md-nav__link">
+    VMs fail to migrate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fleet-locallocal-another-operation-installupgraderollback-is-in-progress" class="md-nav__link">
+    fleet-local/local: another operation (install/upgrade/rollback) is in progress
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#single-node-upgrade-might-fail-if-node-name-is-too-long-24-characters" class="md-nav__link">
+    Single node upgrade might fail if node name is too long (&gt;24 characters)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1118,12 +1260,174 @@
 
 
 <h1 id="upgrading-harvester">Upgrading Harvester<a class="headerlink" href="#upgrading-harvester" title="Permanent link">&para;</a></h1>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<p>This document describes how to upgrade from Harvester <code>v1.0.0</code> to <code>v1.0.1</code>.</p>
+<p>Note we are still working towards zero-downtime upgrade, due to some known issues please follow the steps below before you upgrade your Harvester cluster:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <ul>
-<li>One-click upgrade will be supported starting with the v1.0.0 release.</li>
+<li>Before you upgrade your Harvester cluster, we highly recommend:<ul>
+<li>Shutting down all your VMs (Harvester GUI -&gt; Virtual Machines -&gt; Select VMs -&gt; Actions -&gt; Stop).</li>
+<li>Back up your VMs.</li>
+</ul>
+</li>
+<li>Do not operate the cluster during an upgrade. For example, creating new VMs, uploading new images, etc.</li>
+<li>Make sure your hardware meets the <strong>preferred</strong> <a href="../..#hardware-requirements">hardware requirements</a>. This is due to there will be intermediate resources consumed by an upgrade.</li>
+<li>Make sure each node has at least 25 GB of free space (<code>df -h /usr/local/</code>).</li>
 </ul>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul>
+<li>
+<p>Make sure all nodes' times are in sync. Using an NTP server to synchronize time is recommended. If an NTP server is not configured during the installation, you can manually add an NTP server <strong>on each node</strong>:</p>
+<div class="highlight"><pre><span></span><code>$ sudo -i
+
+# Add time servers
+$ vim /etc/systemd/timesyncd.conf
+[ntp]
+NTP=0.pool.ntp.org
+
+# Enable and start the systemd-timesyncd
+$ timedatectl set-ntp true
+
+# Check status
+$ timedatectl status
+</code></pre></div>
+</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul>
+<li>NICs that connect to a PCI bridge might be renamed after an upgrade. Please check the <a href="https://harvesterhci.io/kb/nic-naming-scheme">knowledge base article</a> for further information.</li>
+</ul>
+</div>
+<h2 id="create-a-version">Create a version<a class="headerlink" href="#create-a-version" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Log in to one of your server nodes.</li>
+<li>
+<p>Become root and create a version:
+    <div class="highlight"><pre><span></span><code>rancher@node1:~&gt; sudo -i
+
+node1:~ # kubectl create -f https://releases.rancher.com/harvester/v1.0.1/version.yaml
+version.harvesterhci.io/1.0.1 created
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default, the ISO image is downloaded from the Harvester release server. To speed up the upgrade and make the upgrade progress smoother, the user can also download the ISO file to a local HTTP server first and substitute the <code>isoURL</code> value in the <code>version.yaml</code> manifest.</p>
+<p>e.g., </p>
+<div class="highlight"><pre><span></span><code># Download the ISO from release server first, assume it&#39;s store in http://10.10.0.1/harvester.iso
+$ sudo -i
+$ curl -fL https://releases.rancher.com/harvester/v1.0.1/version.yaml -o version.yaml
+$ vim version.yaml 
+apiVersion: harvesterhci.io/v1beta1
+kind: Version
+metadata:
+  name: v1.0.1
+  namespace: harvester-system
+spec:
+  isoChecksum: &lt;SHA-512 checksum of the ISO&gt; 
+  isoURL: http://10.10.0.1/harvester.iso
+  releaseDate: 20220408
+</code></pre></div>
+</div>
+</li>
+</ul>
+<h2 id="start-the-upgrade">Start the upgrade<a class="headerlink" href="#start-the-upgrade" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Make sure to read the Warning paragraph at the top of this document first.</li>
+<li>
+<p>Navigate to Harvester GUI and click the upgrade button on the Dashboard page.</p>
+<p><img alt="" src="../assets/upgrade_button.png" /></p>
+</li>
+<li>
+<p>Select a version to start upgrading.</p>
+<p><img alt="" src="../assets/upgrade_select_version.png" style="width:50%" /></p>
+</li>
+<li>
+<p>Click the circle on the top to display the upgrade progress.
+    <img alt="" src="../assets/upgrade_progress.png" /></p>
+</li>
+</ul>
+<h2 id="known-issues">Known issues<a class="headerlink" href="#known-issues" title="Permanent link">&para;</a></h2>
+<h3 id="stuck-in-upgrading-system-service">Stuck in <strong>Upgrading System Service</strong><a class="headerlink" href="#stuck-in-upgrading-system-service" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Description</strong></p>
+<ul>
+<li>The upgrade is stuck at <strong>Upgrading System service</strong>.</li>
+<li>
+<p>Similar logs are found in rancher pods:</p>
+<div class="highlight"><pre><span></span><code>[ERROR] available chart version (100.0.2+up0.3.8) for fleet is less than the min version (100.0.3+up0.3.9-rc1) 
+[ERROR] Failed to find system chart fleet will try again in 5 seconds: no chart name found
+</code></pre></div>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Workaround</strong></p>
+<p>Delete rancher cluster repositories and restart rancher pods.</p>
+<div class="highlight"><pre><span></span><code># login to a server node and become root first
+kubectl delete clusterrepos.catalog.cattle.io rancher-charts
+kubectl delete clusterrepos.catalog.cattle.io rancher-rke2-charts
+kubectl delete clusterrepos.catalog.cattle.io rancher-partner-charts
+kubectl delete settings.management.cattle.io chart-default-branch
+kubectl rollout restart deployment rancher -n cattle-system
+</code></pre></div>
+</li>
+<li>
+<p><strong>Related issues</strong></p>
+<ul>
+<li><a href="https://github.com/harvester/harvester/issues/2011">[BUG] Rancher upgrade fail: Failed to find system chart "fleet"</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="vms-fail-to-migrate">VMs fail to migrate<a class="headerlink" href="#vms-fail-to-migrate" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Description</strong></p>
+<ul>
+<li>A node keeps waiting in <code>Pre-draining</code> state.</li>
+<li>There are VMs on that node (checking for <code>virt-launcher-xxx</code> pods) and they can't be live-migrated out of the node.</li>
+</ul>
+</li>
+<li>
+<p><strong>Workaround</strong></p>
+<p>Shutdown the VMs, you can do this by:</p>
+<ul>
+<li>Using the GUI.</li>
+<li>Using the <code>virtctl</code> command.</li>
+</ul>
+</li>
+<li>
+<p><strong>Related issues</strong></p>
+<ul>
+<li><a href="https://github.com/harvester/harvester/issues/2029">[BUG] Upgrade: VMs fail to live-migrate to other hosts in some cases</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="fleet-locallocal-another-operation-installupgraderollback-is-in-progress">fleet-local/local: another operation (install/upgrade/rollback) is in progress<a class="headerlink" href="#fleet-locallocal-another-operation-installupgraderollback-is-in-progress" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Description</strong></p>
+<p>You see bundles have <code>fleet-local/local: another operation (install/upgrade/rollback) is in progress</code> status in the output:</p>
+<div class="highlight"><pre><span></span><code>kubectl get bundles -A
+</code></pre></div>
+</li>
+<li>
+<p><strong>Related issues</strong></p>
+<ul>
+<li><a href="https://github.com/harvester/harvester/issues/1983">[BUG] Upgrade: rancher-monitoring charts can't be upgraded</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="single-node-upgrade-might-fail-if-node-name-is-too-long-24-characters">Single node upgrade might fail if node name is too long (&gt;24 characters)<a class="headerlink" href="#single-node-upgrade-might-fail-if-node-name-is-too-long-24-characters" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Related issues</strong><ul>
+<li><a href="https://github.com/harvester/harvester/issues/2114">https://github.com/harvester/harvester/issues/2114</a></li>
+</ul>
+</li>
+</ul>
 
               
             </article>
@@ -1137,7 +1441,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../authentication/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Authentication" rel="prev">
+        <a href="../../airgap/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Air Gapped Environment" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1146,20 +1450,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Authentication
+              Air Gapped Environment
             </div>
           </div>
         </a>
       
       
         
-        <a href="../../upload-image/" class="md-footer__link md-footer__link--next" aria-label="Next: Upload Images" rel="next">
+        <a href="../../authentication/" class="md-footer__link md-footer__link--next" aria-label="Next: Authentication" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Upload Images
+              Authentication
             </div>
           </div>
           <div class="md-footer__button md-icon">
