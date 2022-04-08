@@ -2315,8 +2315,8 @@
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8.8.8.8</span><span class="w"></span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.1.1.1</span><span class="w"></span>
 <span class="w">  </span><span class="nt">ntp_servers</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.us.pool.ntp.org</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.us.pool.ntp.org</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.suse.pool.ntp.org</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.suse.pool.ntp.org</span><span class="w"></span>
 <span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rancher</span><span class="w"></span>
 <span class="w">  </span><span class="nt">environment</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">http_proxy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://myserver</span><span class="w"></span>
@@ -2457,12 +2457,12 @@ Values must be specified as strings.</p>
 </code></pre></div>
 <h3 id="osntp_servers"><code>os.ntp_servers</code><a class="headerlink" href="#osntp_servers" title="Permanent link">&para;</a></h3>
 <h4 id="definition_7">Definition<a class="headerlink" href="#definition_7" title="Permanent link">&para;</a></h4>
-<p><strong>Fallback</strong> ntp servers to use if NTP is not configured elsewhere in the OS.</p>
+<p><strong>Fallback</strong> ntp servers to use if NTP is not configured elsewhere in the OS. Highly recommend to configure <code>os.ntp_servers</code> to avoid time synchronization issue between machines.</p>
 <h4 id="example_7">Example<a class="headerlink" href="#example_7" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nt">os</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">ntp_servers</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.us.pool.ntp.org</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.us.pool.ntp.org</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.suse.pool.ntp.org</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.suse.pool.ntp.org</span><span class="w"></span>
 </code></pre></div>
 <h3 id="ospassword"><code>os.password</code><a class="headerlink" href="#ospassword" title="Permanent link">&para;</a></h3>
 <h4 id="definition_8">Definition<a class="headerlink" href="#definition_8" title="Permanent link">&para;</a></h4>

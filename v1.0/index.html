@@ -1328,7 +1328,7 @@
 <li>Configure the <code>Virtual IP</code> which you can use to access the cluster or join other nodes to the cluster <small>(Note: If your IP address is configured via DHCP, you will need to configure static MAC-to-IP address mapping on your DHCP server in order to have a persistent Virtual IP)</small>.</li>
 <li>Configure the <code>cluster token</code>. This token will be used for adding other nodes to the cluster.</li>
 <li>Configure the login password of the host. The default SSH user is <code>rancher</code>.</li>
-<li>(Optional) Configure the NTP Servers of the node. This defaults to <code>0.suse.pool.ntp.org</code>.</li>
+<li>Recommended configuring the NTP server to make sure all nodes' times are synchronized. This defaults to <code>0.suse.pool.ntp.org</code>.</li>
 <li>(Optional) If you need to use an HTTP proxy to access the outside world, enter the proxy URL address here. Otherwise, leave this blank.</li>
 <li>(Optional) You can choose to import SSH keys from a remote server URL. Your GitHub public keys can be used with <code>https://github.com/&lt;username&gt;.keys</code>.</li>
 <li>(Optional) If you need to customize the host with a <a href="install/harvester-configuration/">Harvester configuration</a> file, enter the HTTP URL here.</li>
