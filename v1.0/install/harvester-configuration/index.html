@@ -867,11 +867,11 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#installno_data_partition" class="md-nav__link">
-    install.no_data_partition
+  <a href="#installdata_disk" class="md-nav__link">
+    install.data_disk
   </a>
   
-    <nav class="md-nav" aria-label="install.no_data_partition">
+    <nav class="md-nav" aria-label="install.data_disk">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -910,6 +910,33 @@
         
           <li class="md-nav__item">
   <a href="#example_16" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cluster_networks" class="md-nav__link">
+    cluster_networks
+  </a>
+  
+    <nav class="md-nav" aria-label="cluster_networks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition_18" class="md-nav__link">
+    Definition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_17" class="md-nav__link">
     Example
   </a>
   
@@ -2213,11 +2240,11 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#installno_data_partition" class="md-nav__link">
-    install.no_data_partition
+  <a href="#installdata_disk" class="md-nav__link">
+    install.data_disk
   </a>
   
-    <nav class="md-nav" aria-label="install.no_data_partition">
+    <nav class="md-nav" aria-label="install.data_disk">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2256,6 +2283,33 @@
         
           <li class="md-nav__item">
   <a href="#example_16" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cluster_networks" class="md-nav__link">
+    cluster_networks
+  </a>
+  
+    <nav class="md-nav" aria-label="cluster_networks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition_18" class="md-nav__link">
+    Definition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_17" class="md-nav__link">
     Example
   </a>
   
@@ -2343,7 +2397,6 @@
 <span class="w">  </span><span class="nt">vip_hw_addr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">52:54:00:ec:0e:0b</span><span class="w"></span>
 <span class="w">  </span><span class="nt">vip_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dhcp</span><span class="w"></span>
 <span class="w">  </span><span class="nt">force_mbr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="w">  </span><span class="nt">no_data_partition</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
 <span class="nt">system_settings</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">auto-disk-provision-paths</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
 </code></pre></div>
@@ -2623,30 +2676,24 @@ Please make sure the interface name is present on the target machine before inst
 However, if you face compatibility issues, the MBR partitioning scheme can be forced on BIOS systems.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Harvester creates an additional partition for storing VM data by default.
-When force using MBR, <a href="./#installno_data_partition"><code>install.no_data_partition</code></a> will be forced to <code>true</code>.
-In other words, no additional partition will be created and VM data will
+<p>Harvester creates an additional partition for storing VM data if
+<a href="./#installdata_disk"><code>install.data_disk</code></a> is configured to use the same
+storage device as the one set for <a href="./#installdevice"><code>install.device</code></a>.
+When force using MBR, no additional partition will be created and VM data will
 be stored in a partition shared with the OS data.</p>
 </div>
 <h4 id="example_14">Example<a class="headerlink" href="#example_14" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">force_mbr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 </code></pre></div>
-<h3 id="installno_data_partition"><code>install.no_data_partition</code><a class="headerlink" href="#installno_data_partition" title="Permanent link">&para;</a></h3>
+<h3 id="installdata_disk"><code>install.data_disk</code><a class="headerlink" href="#installdata_disk" title="Permanent link">&para;</a></h3>
+<p><em>Available as of v1.0.1</em></p>
 <h4 id="definition_16">Definition<a class="headerlink" href="#definition_16" title="Permanent link">&para;</a></h4>
-<p>Do not create an additional disk partition for storing VM data.
-An OS partition will then be used to store VM data.
-This is useful when you want to use additional disks to store VM data with the
-<a href="../../settings/settings/#auto-disk-provision-paths">auto-disk-provision-paths</a> setting.</p>
-<p>Default: <code>false</code>.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>If VM data is stored in the OS partition and you have created too many VMs,
-there is a high chance of causing OS to malfunction due to the lack of disk space.</p>
-</div>
+<p>Sets the default storage device to store the VM data.</p>
+<p>Default: Same storage device as the one set for <a href="./#installdevice"><code>install.device</code></a></p>
 <h4 id="example_15">Example<a class="headerlink" href="#example_15" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">no_data_partition</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">  </span><span class="nt">data_disk</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/sdb</span><span class="w"></span>
 </code></pre></div>
 <h3 id="system_settings"><code>system_settings</code><a class="headerlink" href="#system_settings" title="Permanent link">&para;</a></h3>
 <h4 id="definition_17">Definition<a class="headerlink" href="#definition_17" title="Permanent link">&para;</a></h4>
@@ -2663,6 +2710,36 @@ Installing in "join" mode will adopt the system settings from the existing Harve
 <div class="highlight"><pre><span></span><code><span class="nt">system_settings</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">http-proxy</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{&quot;httpProxy&quot;:</span><span class="nv"> </span><span class="s">&quot;http://my.proxy&quot;,</span><span class="nv"> </span><span class="s">&quot;httpsProxy&quot;:</span><span class="nv"> </span><span class="s">&quot;https://my.proxy&quot;,</span><span class="nv"> </span><span class="s">&quot;noProxy&quot;:</span><span class="nv"> </span><span class="s">&quot;some.internal.svc&quot;}&#39;</span><span class="w"></span>
 <span class="w">  </span><span class="nt">ui-source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auto</span><span class="w"></span>
+</code></pre></div>
+<h3 id="cluster_networks"><code>cluster_networks</code><a class="headerlink" href="#cluster_networks" title="Permanent link">&para;</a></h3>
+<p><em>Available as of v1.0.1</em></p>
+<h4 id="definition_18">Definition<a class="headerlink" href="#definition_18" title="Permanent link">&para;</a></h4>
+<p>You can setup the default network in Harvester by configuring <code>cluster_networks</code>. Network configuration reference:</p>
+<ul>
+<li><code>vlan</code>: Setup for VLAN network. The following fields are supported:<ul>
+<li><code>enable</code>: enable VLAN network settings or not. Default value: <code>false</code>.</li>
+<li><code>description</code>: Additional information for <code>ClusterNetworks</code>. Default value: "".</li>
+<li><code>config</code>: <code>ClusterNetworks</code> configuration to be used. Valid configuration fields are:<ul>
+<li><code>defaultPhysicalNIC</code> (string, required): assign a physical NIC to be external entry of VLAN network.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To configure the <code>cluster_networks</code>, Harvester needs to be installed in "create" mode.
+If you install Harvester in "join" mode, this setting is ignored.
+Installing in "join" mode will apply the <code>cluster_networks</code> configuration from the existing Harvester system.</p>
+</div>
+<h4 id="example_17">Example<a class="headerlink" href="#example_17" title="Permanent link">&para;</a></h4>
+<p>The following example sets the default physical NIC name of the VLAN network:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">cluster_networks</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">vlan</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;some</span><span class="nv"> </span><span class="s">description</span><span class="nv"> </span><span class="s">about</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">cluster</span><span class="nv"> </span><span class="s">network&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">defaultPhysicalNIC</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens3</span><span class="w"></span>
 </code></pre></div>
 
               

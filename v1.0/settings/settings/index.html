@@ -1204,26 +1204,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#vlan" class="md-nav__link">
-    vlan
-  </a>
-  
-    <nav class="md-nav" aria-label="vlan">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example_13" class="md-nav__link">
-    Example
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#auto-disk-provision-paths-experimental" class="md-nav__link">
     auto-disk-provision-paths [Experimental]
   </a>
@@ -1232,7 +1212,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example_14" class="md-nav__link">
+  <a href="#example_13" class="md-nav__link">
     Example
   </a>
   
@@ -1252,7 +1232,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example_15" class="md-nav__link">
+  <a href="#example_14" class="md-nav__link">
     Example
   </a>
   
@@ -1712,26 +1692,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#vlan" class="md-nav__link">
-    vlan
-  </a>
-  
-    <nav class="md-nav" aria-label="vlan">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example_13" class="md-nav__link">
-    Example
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#auto-disk-provision-paths-experimental" class="md-nav__link">
     auto-disk-provision-paths [Experimental]
   </a>
@@ -1740,7 +1700,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example_14" class="md-nav__link">
+  <a href="#example_13" class="md-nav__link">
     Example
   </a>
   
@@ -1760,7 +1720,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example_15" class="md-nav__link">
+  <a href="#example_14" class="md-nav__link">
     Example
   </a>
   
@@ -1942,12 +1902,6 @@ CPU for it from Kubernetes scheduler.</p>
 <h4 id="example_12">Example<a class="headerlink" href="#example_12" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>https://your.upgrade.checker-url/v99/checkupgrade
 </code></pre></div>
-<h2 id="vlan"><code>vlan</code><a class="headerlink" href="#vlan" title="Permanent link">&para;</a></h2>
-<p>This setting allows you to configure the default physical NIC name of the VLAN network.</p>
-<p>Default: none</p>
-<h4 id="example_13">Example<a class="headerlink" href="#example_13" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>ens3
-</code></pre></div>
 <h2 id="auto-disk-provision-paths-experimental"><code>auto-disk-provision-paths</code> [Experimental]<a class="headerlink" href="#auto-disk-provision-paths-experimental" title="Permanent link">&para;</a></h2>
 <p>This setting allows Harvester to automatically add disks that match the given glob pattern as VM storage.
 It's possible to provide multiple patterns by separating them with a comma.</p>
@@ -1959,14 +1913,14 @@ It's possible to provide multiple patterns by separating them with a comma.</p>
 </ul>
 </div>
 <p>Default: none</p>
-<h4 id="example_14">Example<a class="headerlink" href="#example_14" title="Permanent link">&para;</a></h4>
+<h4 id="example_13">Example<a class="headerlink" href="#example_13" title="Permanent link">&para;</a></h4>
 <p>The following example will add disks matching the glob pattern <code>/dev/sd*</code> or <code>/dev/hd*</code>:</p>
 <div class="highlight"><pre><span></span><code>/dev/sd*,/dev/hd*
 </code></pre></div>
 <h2 id="vm-force-reset-policy"><code>vm-force-reset-policy</code><a class="headerlink" href="#vm-force-reset-policy" title="Permanent link">&para;</a></h2>
 <p>This setting allows you to force reschedule VMs when a node is unavailable. When a node turns to be <code>Not Ready</code>, it will force delete the VM on that node and reschedule it to another available node after a period of seconds.</p>
 <p>Default: <code>{"enable":true, "period":300}</code></p>
-<h4 id="example_15">Example<a class="headerlink" href="#example_15" title="Permanent link">&para;</a></h4>
+<h4 id="example_14">Example<a class="headerlink" href="#example_14" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="nt">&quot;enable&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">  </span><span class="nt">&quot;period&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="w"></span>
