@@ -2587,6 +2587,7 @@ the values are configurations for each network. Valid configuration fields are:<
 <li><code>miimon: 100</code></li>
 </ul>
 </li>
+<li><code>mtu</code>: The MTU for the interface.</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2608,6 +2609,7 @@ Please make sure the interface name is present on the target machine before inst
 <span class="w">      </span><span class="nt">bond_options</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">balance-tlb</span><span class="w"></span>
 <span class="w">        </span><span class="nt">miimon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
+<span class="w">      </span><span class="nt">mtu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1492</span><span class="w"></span>
 <span class="w">    </span><span class="nt">harvester-vlan</span><span class="p">:</span><span class="w">       </span><span class="c1"># The VLAN network bond name. User can then input `harvester-vlan` in the VLAN NIC setting in the GUI.</span><span class="w"></span>
 <span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens6</span><span class="w"></span>
@@ -2622,6 +2624,7 @@ Please make sure the interface name is present on the target machine before inst
 <span class="w">      </span><span class="nt">ip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.10.18.2</span><span class="w"></span>
 <span class="w">      </span><span class="nt">subnet_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255.255.255.0</span><span class="w"></span>
 <span class="w">      </span><span class="nt">gateway</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.11.1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">mtu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span><span class="w"></span>
 </code></pre></div>
 <h3 id="installforce_efi"><code>install.force_efi</code><a class="headerlink" href="#installforce_efi" title="Permanent link">&para;</a></h3>
 <p>Force EFI installation even when EFI is not detected. Default: <code>false</code>.</p>

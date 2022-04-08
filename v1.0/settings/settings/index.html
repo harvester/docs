@@ -1064,6 +1064,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#release-download-url" class="md-nav__link">
+    release-download-url
+  </a>
+  
+    <nav class="md-nav" aria-label="release-download-url">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-of-the-versionyaml" class="md-nav__link">
+    Example of the version.yaml
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#server-version" class="md-nav__link">
     server-version
   </a>
@@ -1552,6 +1572,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#release-download-url" class="md-nav__link">
+    release-download-url
+  </a>
+  
+    <nav class="md-nav" aria-label="release-download-url">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-of-the-versionyaml" class="md-nav__link">
+    Example of the version.yaml
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#server-version" class="md-nav__link">
     server-version
   </a>
@@ -1831,6 +1871,20 @@ CPU for it from Kubernetes scheduler.</p>
 <span class="w">  </span><span class="nt">&quot;memory&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"></span>
 <span class="w">  </span><span class="nt">&quot;storage&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<h2 id="release-download-url"><code>release-download-url</code><a class="headerlink" href="#release-download-url" title="Permanent link">&para;</a></h2>
+<p><em>Available as of v1.0.1</em></p>
+<p>This setting allows you to configure the <code>upgrade release download</code> URL address. Harvester will get the ISO URL and checksum value from the <code>${URL}/${VERSION}/version.yaml</code> file hosted by the configured URL.</p>
+<p>Default: <code>https://releases.rancher.com/harvester</code></p>
+<h4 id="example-of-the-versionyaml">Example of the version.yaml<a class="headerlink" href="#example-of-the-versionyaml" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>apiVersion: harvesterhci.io/v1beta1
+kind: Version
+metadata:
+  name: ${VERSION}
+  namespace: harvester-system
+spec:
+  isoChecksum: ${ISO_CHECKSUM}
+  isoURL: ${ISO_URL}
 </code></pre></div>
 <h2 id="server-version"><code>server-version</code><a class="headerlink" href="#server-version" title="Permanent link">&para;</a></h2>
 <p>This setting displays the version of Harvester server.</p>
