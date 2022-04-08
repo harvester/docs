@@ -39,8 +39,8 @@ os:
     - 8.8.8.8
     - 1.1.1.1
   ntp_servers:
-    - 0.us.pool.ntp.org
-    - 1.us.pool.ntp.org
+    - 0.suse.pool.ntp.org
+    - 1.suse.pool.ntp.org
   password: rancher
   environment:
     http_proxy: http://myserver
@@ -236,15 +236,15 @@ os:
 
 #### Definition
 
-**Fallback** ntp servers to use if NTP is not configured elsewhere in the OS.
+**Fallback** ntp servers to use if NTP is not configured elsewhere in the OS. Highly recommend to configure `os.ntp_servers` to avoid time synchronization issue between machines.
 
 #### Example
 
 ```yaml
 os:
   ntp_servers:
-    - 0.us.pool.ntp.org
-    - 1.us.pool.ntp.org
+    - 0.suse.pool.ntp.org
+    - 1.suse.pool.ntp.org
 ```
 
 ### `os.password`
