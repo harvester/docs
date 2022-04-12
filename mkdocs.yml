@@ -75,6 +75,7 @@ nav:
     - vm/backup-restore.md
     - vm/live-migration.md
     - vm/hotplug-volume.md
+    - vm/resource-overcommit.md
   - Networking:
     - networking/harvester-network.md
     - Best Practice:
