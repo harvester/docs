@@ -98,6 +98,32 @@ Note we are still working towards zero-downtime upgrade, due to some known issue
 
 ## Known issues
 
+### Fail to download upgrade image
+
+- **Description**
+
+    Downloading the upgrade image can't complete.
+
+    ![](./assets/known_issue_downloading_image_failure.png)
+
+- **Workaround**
+
+    We can delete the current upgrade and start over.
+    
+    ```
+    # log in to one of the server nodes
+    $ sudo -i
+
+    # list current upgrade, the name changes between deployments
+    $ kubectl get upgrades.harvesterhci.io -n harvester-system
+    NAMESPACE          NAME                 AGE
+    harvester-system   hvst-upgrade-77cks   119m
+
+    $ kubectl delete upgrades.harvesterhci.io hvst-upgrade-77cks -n harvester-system
+    ```
+
+    We recommend mirroring the ISO file to a local webserver, please check the notes in the [previous section](#create-a-version).
+
 ### Stuck in **Upgrading System Service**
 
 - **Description**
