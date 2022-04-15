@@ -1241,6 +1241,10 @@
 <li>The Kubernetes cluster is built on top of Harvester virtual machines.</li>
 <li>The Harvester virtual machines run as guest Kubernetes nodes are in the same namespace.</li>
 </ul>
+<div class="admonition notes">
+<p class="admonition-title">Notes</p>
+<p>Currently, the Harvester CSI driver only supports single-node read-write(RWO) volumes. Please follow the <a href="https://github.com/harvester/harvester/issues/1992">issue #1992</a> for future multi-node <code>read-only</code>(ROX) and <code>read-write</code>(RWX) support.</p>
+</div>
 <h3 id="deploying-with-harvester-rke1-node-driver">Deploying with Harvester RKE1 Node Driver<a class="headerlink" href="#deploying-with-harvester-rke1-node-driver" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
