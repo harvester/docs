@@ -17,6 +17,20 @@ Also, users can click the [Grafana](http://grafana.com/) dashboard link to view 
 For each VM, users can view the VM metrics by clicking the VM details page.
 ![](./assets/vm-metrics.png)
 
+!!! note
+    The `Memory Usage` formula is `(1 - free/total) * 100%`, not `(used/total) * 100%`.
+
+For example, in a Linux OS, the `free -h` command outputs the current memory statistics as following.
+
+```
+$ free -h
+              total        used        free      shared  buff/cache   available
+Mem:          7.7Gi       166Mi       4.6Gi       1.0Mi       2.9Gi       7.2Gi
+Swap:            0B          0B          0B
+```
+
+The corresponding `Memory Usage` is `(1 - 4.6/7.7) * 100%`, roughly `40%`.
+
 
 ## Change resources setting of Monitoring
 _Available as of v1.0.1_
