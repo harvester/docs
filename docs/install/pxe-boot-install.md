@@ -300,3 +300,17 @@ boot
 ```
 
 The parameter `initrd=harvester-<version>-initrd` is required.
+
+## Useful Kernel Parameters
+
+Besides Harvester configuration, you can also specify other kernal parameters that are useful in different scenarios.
+See also [dracut.cmdline(7)](https://man7.org/linux/man-pages/man7/dracut.cmdline.7.html).
+
+### `ip=dhcp`
+
+If you have multiple network interfaces, you could add `ip=dhcp` parameter to get IP from DHCP server from all interfaces.
+
+### `rd.net.dhcp.retry=<cnt>`
+
+Failing to get IP from DHCP server would cause iPXE booting to fail. You can add parameter `rd.net.dhcp.retry=<cnt>`
+to retry DHCP request for `<cnt>` times.
