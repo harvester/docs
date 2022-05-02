@@ -31,6 +31,8 @@ The following two components `resources settings` are available:
 
 ### Change resources settings of Monitoring-Prometheus
 
+#### From WebUI
+
 In the `Advanced Settings` page, you can view and change the resources settings as follow:
 
 (1) Navigate to settings page, find `harvester monitoring`.
@@ -55,22 +57,48 @@ Depending on the available hardware resources and system loads, you may change t
 !!! note
     If you have multiple management nodes with different hardware resources, please set the value based on the smaller one.
 
-
-### Change resources settings of Monitoring-Prometheus-node-exporter
-
-`Monitoring-Prometheus-node-exporter` has a similar resources specifications as `Monitoring-Prometheus`. In future versions, a new `WebUI` setting will be available.
+#### From CLI
 
 To update the values, you may use the CLI command: `kubectl edit managedchart rancher-monitoring -n fleet-local`.
 
-The related path and default value are:
+In v1.0.1 and later versions, the related path and default value are:
 
- `spec.values.prometheus.prometheus-node-exporter.resources.limits.cpu`:`200m`
+ `spec.values.prometheus.prometheusSpec.resources.limits.cpu`:`1000m`
 
- `spec.values.prometheus.prometheus-node-exporter.resources.limits.memory`:`180Mi`
+ `spec.values.prometheus.prometheusSpec.resources.limits.memory`:`2500Mi`
 
- `spec.values.prometheus.prometheus-node-exporter.resources.requests.cpu`:`100m`
+ `spec.values.prometheus.prometheusSpec.resources.requests.cpu`:`750m`
 
- `spec.values.prometheus.prometheus-node-exporter.resources.requests.memory`:`30Mi`
+ `spec.values.prometheus.prometheusSpec.resources.requests.memory`:`1750Mi`
+
+In v1.0.0 and ealier versions, the related path and default value are not in the `managedchart rancher-monitoring`, you need to add them accordingly.
+
+### Change resources settings of Monitoring-Prometheus-node-exporter
+
+`Monitoring-Prometheus-node-exporter` has a similar resources specifications as `Monitoring-Prometheus`.
+
+#### From WebUI
+
+_Available as of v1.0.2_
+
+Follow the steps described in previous chapter `Change resources settings of Monitoring-Prometheus` `From WebUI`, after selecting `Edit Setting`, the page will be shown as:
+![](./assets/monitoring-setting-edit-config-v1.0.2.png)
+
+#### From CLI
+
+To update the values, you may use the CLI command: `kubectl edit managedchart rancher-monitoring -n fleet-local`.
+
+In v1.0.1 and later versions, the related path and default value are:
+
+ `spec.values.prometheus-node-exporter.resources.limits.cpu`:`200m`
+
+ `spec.values.prometheus-node-exporter.resources.limits.memory`:`180Mi`
+
+ `spec.values.prometheus-node-exporter.resources.requests.cpu`:`100m`
+
+ `spec.values.prometheus-node-exporter.resources.requests.memory`:`30Mi`
+
+In v1.0.0 and ealier versions, the related path and default value are not in the `managedchart rancher-monitoring`, you need to add them accordingly.
 
 !!! attention
     When many VMs are deployed in one NODE, the OOM(out of memory)/abnormal restarting of prometheus-node-exporter POD(s) may be observed. In that case, you should change the `limits.memory` to a bigger value.
