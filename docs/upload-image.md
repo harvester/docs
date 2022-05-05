@@ -35,3 +35,12 @@ Currently, qcow2, raw, and ISO images are supported.
 On the **Volumes** page, click **Export Image**. Enter image name to create image.
 
 ![](./assets/export-image.png)
+
+### Image labels
+
+
+You can add labels to the image, which will help identify the OS type more accurately. Additionally, you can also add any custom labels when needed.
+
+If you create an image from a URL, the UI will automatically recognize the OS type and image category based on the image name. However, if you created the image by uploading a local file, you will need to manually select the corresponding labels.
+
+![](./assets/image-labels.png)
