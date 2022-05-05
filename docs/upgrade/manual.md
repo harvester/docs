@@ -1,9 +1,16 @@
+---
+sidebar_position: 2
+sidebar_label: "Manual Harvester Upgrade"
+title: ""
+---
+
 # Upgrading Harvester manually
 
 ## Manual Upgrade from v0.3.0 to v1.0.0
 
-!!!warning
-    Upgrading Harvester from v0.3.0 to v1.0.0 is **not supported**. Please use at your own risk.
+:::caution
+Upgrading Harvester from v0.3.0 to v1.0.0 is **not supported**. Please use at your own risk.
+:::
 
 ### Overview
 
@@ -94,7 +101,7 @@ You need to upgrade nodes one by one. Only proceed to the next node once the cur
 
 ### Create Harvester cluster repo
 
-<span style="color:#DE3163">**On the controller node:**</span>
+<span style={{color:'#DE3163'}}>**On the controller node:**</span>
 
 Check if all nodes are ready:
 
@@ -122,7 +129,7 @@ harvester-cluster-repo   1/1     1            1           59s
 
 ### Upgrade Rancher
 
-<span style="color:#DE3163">**On the controller node**:</span>
+<span style={{color:'#DE3163'}}>**On the controller node**:</span>
 
 - Check the new Rancher version:
 
@@ -155,7 +162,7 @@ harvester-cluster-repo   1/1     1            1           59s
 
 ### Upgrade RKE2
 
-<span style="color:#DE3163">**On the controller node**:</span>
+<span style={{color:'#DE3163'}}>**On the controller node**:</span>
 
 - Check the new RKE2 version:
 
@@ -191,7 +198,7 @@ harvester-cluster-repo   1/1     1            1           59s
 
 ### Upgrade Harvester and Monitoring services
 
-<span style="color:#DE3163">**On the controller node**:</span>
+<span style={{color:'#DE3163'}}>**On the controller node**:</span>
 
 ```bash
 sudo -i /usr/local/harvester-upgrade/upgrade-helpers/bin/harv-upgrade-harvester.sh

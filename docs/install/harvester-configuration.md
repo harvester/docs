@@ -1,5 +1,7 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
+sidebar_label: "Harvester Configuration"
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -290,7 +292,7 @@ os:
 !!! note
     This example sets the HTTP(S) proxy for **foundational OS components**.
     To set up an HTTP(S) proxy for Harvester components such as fetching external images and backup to S3 services,
-    see [Settings/http-proxy](../../settings/settings/#http-proxy).
+    see [Settings/http-proxy](../settings/settings.md#http-proxy).
 
 ### `os.labels`
 
@@ -427,7 +429,7 @@ install:
     - `static`: Harvester uses a static VIP.
 - `install.vip_hw_addr`: The hardware address corresponding to the VIP. Users must configure their on-premise DHCP server to offer the configured VIP. The field is mandatory when `install.vip_mode` is `dhcp`.
 
-See [Management Address](../management-address) for more information.
+See [Management Address](management-address) for more information.
 
 #### Example
 
@@ -457,8 +459,8 @@ However, if you face compatibility issues, the MBR partitioning scheme can be fo
 
 !!! note
     Harvester creates an additional partition for storing VM data if
-    [`install.data_disk`](./#installdata_disk) is configured to use the same
-    storage device as the one set for [`install.device`](./#installdevice).
+    [`install.data_disk`](#installdata_disk) is configured to use the same
+    storage device as the one set for [`install.device`](#installdevice).
     When force using MBR, no additional partition will be created and VM data will
     be stored in a partition shared with the OS data.
 
@@ -477,7 +479,7 @@ _Available as of v1.0.1_
 
 Sets the default storage device to store the VM data.
 
-Default: Same storage device as the one set for [`install.device`](./#installdevice)
+Default: Same storage device as the one set for [`install.device`](#installdevice)
 
 #### Example
 
@@ -491,7 +493,7 @@ install:
 #### Definition
 
 You can overwrite the default Harvester system settings by configuring `system_settings`.
-See the [Settings](../../settings/settings) page for additional information and the list of all the options.
+See the [Settings](../settings/settings.md) page for additional information and the list of all the options.
 
 !!! note
     Overwriting system settings only works when Harvester is installed in "create" mode.

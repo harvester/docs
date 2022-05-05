@@ -1,5 +1,7 @@
 ---
-sidebar_position: 2
+sidebar_position: 4
+sidebar_label: "Harvester Cloud Provider"
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -12,7 +14,7 @@ Description: The Harvester cloud provider used by the guest cluster in Harvester
 ---
 # Harvester Cloud Provider
 
-[RKE1](./rke1-cluster.md) and [RKE2](./rke2-cluster.md) clusters can be provisioned in Rancher using the built-in Harvester Node Driver. Harvester provides [load balancer](./cloud-provider.md#load-balancer-support) and [cluster Persistent Storage](./csi-driver.md) support to the guest Kubernetes cluster.
+[RKE1](./node-driver/rke1-cluster.md) and [RKE2](./node-driver/rke2-cluster.md) clusters can be provisioned in Rancher using the built-in Harvester Node Driver. Harvester provides [load balancer](./cloud-provider.md#load-balancer-support) and [cluster Persistent Storage](./csi-driver.md) support to the guest Kubernetes cluster.
 
 In this page we will learn:
 

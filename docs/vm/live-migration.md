@@ -1,5 +1,7 @@
 ---
 sidebar_position: 5
+sidebar_label: "Live Migration"
+title: ""
 keywords:
   - Harvester
   - harvester

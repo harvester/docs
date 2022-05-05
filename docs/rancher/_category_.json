@@ -1,0 +1,10 @@
+{
+    "position": 11,
+    "label": "Rancher Integration",
+    "collapsible": true,
+    "collapsed": true,
+    "link": {
+        "type": "generated-index",
+        "title": "Rancher Integration"
+    }
+}

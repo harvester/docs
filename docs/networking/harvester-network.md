@@ -1,5 +1,7 @@
 ---
-sidebar_position: 40
+sidebar_position: 1
+sidebar_label: "Harvester Network"
+title: ""
 keywords:
   - Harvester
   - harvester

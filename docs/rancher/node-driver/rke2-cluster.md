@@ -1,8 +1,14 @@
+---
+sidebar_position: 3
+sidebar_label: "Creating an RKE2 Kubernetes Cluster"
+title: ""
+---
+
 # Creating an RKE2 Kubernetes Cluster
 
 Users can now provision RKE2 Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.1+` using the built-in Harvester node driver.
 
-![rke2-cluster](assets/rke2-k3s-node-driver.png)
+![rke2-cluster](../assets/rke2-k3s-node-driver.png)
 
 !!! note
     - Harvester RKE2 node driver is in tech preview.
@@ -18,7 +24,7 @@ Users can now provision RKE2 Kubernetes clusters on top of the Harvester cluster
 6. Select "Imported Harvester" or "External Harvester".
 7. Click **Create**.
 
-![create-harvester-cloud-credentials](assets/create-cloud-credentials.png)
+![create-harvester-cloud-credentials](../assets/create-cloud-credentials.png)
 
 ###  Create RKE2 Kubernetes Cluster
 
@@ -36,7 +42,7 @@ Users can create a RKE2 Kubernetes cluster from the **Cluster Management** page 
 10. Enter **SSH User** (required).
 11. Click **Create**.
 
-![create-rke2-harvester-cluster](assets/create-rke2-harvester-cluster.png)
+![create-rke2-harvester-cluster](../assets/create-rke2-harvester-cluster.png)
 
 !!! note
     - RKE2 v1.21.5+rke2r2 or above provides a built-in Harvester Cloud Provider and Guest CSI driver integration.
