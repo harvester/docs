@@ -17,6 +17,9 @@ SOME-CA-CERTIFICATES
 -----END CERTIFICATE-----
 ```
 
+!!! warning
+    Changing this setting might cause a short downtime for single-node clusters.
+
 ## `backup-target`
 
 This setting allows you to set a custom backup target to store VM backups. It supports NFS and S3.
@@ -76,8 +79,11 @@ The following options and values can be set:
 ```
 
 !!!note
-Harvester appends necessary addresses to user configured `no-proxy` to ensure the internal traffic works.
-i.e., `localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,cattle-system.svc,.svc,.cluster.local`
+    Harvester appends necessary addresses to user configured `no-proxy` to ensure the internal traffic works.
+    i.e., `localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,cattle-system.svc,.svc,.cluster.local`
+
+!!! warning
+    Changing this setting might cause a short downtime for single-node clusters.
 
 ## `log-level`
 
@@ -167,6 +173,9 @@ Default: `{}`
   "privateKey": "-----BEGIN RSA PRIVATE KEY-----\nSOME-PRIVATE-KEY-ENCODED-IN-PEM-FORMAT\n-----END RSA PRIVATE KEY-----"
 }
 ```
+
+!!! warning
+    Changing this setting might cause a short downtime on single-node clusters.
 
 ## `ssl-parameters`
 
