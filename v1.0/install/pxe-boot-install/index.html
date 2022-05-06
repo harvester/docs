@@ -438,6 +438,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#useful-kernel-parameters" class="md-nav__link">
+    Useful Kernel Parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="Useful Kernel Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ipdhcp" class="md-nav__link">
+    ip=dhcp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rdnetdhcpretrycnt" class="md-nav__link">
+    rd.net.dhcp.retry=&lt;cnt&gt;
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1325,6 +1352,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#useful-kernel-parameters" class="md-nav__link">
+    Useful Kernel Parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="Useful Kernel Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ipdhcp" class="md-nav__link">
+    ip=dhcp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rdnetdhcpretrycnt" class="md-nav__link">
+    rd.net.dhcp.retry=&lt;cnt&gt;
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1588,6 +1642,14 @@ initrd harvester-&lt;version&gt;-initrd
 boot
 </code></pre></div>
 <p>The parameter <code>initrd=harvester-&lt;version&gt;-initrd</code> is required.</p>
+<h2 id="useful-kernel-parameters">Useful Kernel Parameters<a class="headerlink" href="#useful-kernel-parameters" title="Permanent link">&para;</a></h2>
+<p>Besides the Harvester configuration, you can also specify other kernel parameters that are useful in different scenarios.
+See also <a href="https://man7.org/linux/man-pages/man7/dracut.cmdline.7.html">dracut.cmdline(7)</a>.</p>
+<h3 id="ipdhcp"><code>ip=dhcp</code><a class="headerlink" href="#ipdhcp" title="Permanent link">&para;</a></h3>
+<p>If you have multiple network interfaces, you could add the <code>ip=dhcp</code> parameter to get IP from the DHCP server from all interfaces.</p>
+<h3 id="rdnetdhcpretrycnt"><code>rd.net.dhcp.retry=&lt;cnt&gt;</code><a class="headerlink" href="#rdnetdhcpretrycnt" title="Permanent link">&para;</a></h3>
+<p>Failing to get IP from the DHCP server would cause iPXE booting to fail. You can add parameter <code>rd.net.dhcp.retry=&lt;cnt&gt;</code>
+to retry DHCP request for <code>&lt;cnt&gt;</code> times.</p>
 
               
             </article>
