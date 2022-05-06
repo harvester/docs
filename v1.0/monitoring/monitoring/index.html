@@ -775,12 +775,52 @@
     Change resources settings of Monitoring-Prometheus
   </a>
   
+    <nav class="md-nav" aria-label="Change resources settings of Monitoring-Prometheus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-webui" class="md-nav__link">
+    From WebUI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-cli" class="md-nav__link">
+    From CLI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
   <a href="#change-resources-settings-of-monitoring-prometheus-node-exporter" class="md-nav__link">
     Change resources settings of Monitoring-Prometheus-node-exporter
   </a>
+  
+    <nav class="md-nav" aria-label="Change resources settings of Monitoring-Prometheus-node-exporter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-webui_1" class="md-nav__link">
+    From WebUI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-cli_1" class="md-nav__link">
+    From CLI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1213,12 +1253,52 @@
     Change resources settings of Monitoring-Prometheus
   </a>
   
+    <nav class="md-nav" aria-label="Change resources settings of Monitoring-Prometheus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-webui" class="md-nav__link">
+    From WebUI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-cli" class="md-nav__link">
+    From CLI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
   <a href="#change-resources-settings-of-monitoring-prometheus-node-exporter" class="md-nav__link">
     Change resources settings of Monitoring-Prometheus-node-exporter
   </a>
+  
+    <nav class="md-nav" aria-label="Change resources settings of Monitoring-Prometheus-node-exporter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-webui_1" class="md-nav__link">
+    From WebUI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-cli_1" class="md-nav__link">
+    From CLI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1277,6 +1357,7 @@ Swap:            0B          0B          0B
 <p>(1) Monitoring-Prometheus</p>
 <p>(2) Monitoring-Prometheus-node-exporter</p>
 <h3 id="change-resources-settings-of-monitoring-prometheus">Change resources settings of Monitoring-Prometheus<a class="headerlink" href="#change-resources-settings-of-monitoring-prometheus" title="Permanent link">&para;</a></h3>
+<h4 id="from-webui">From WebUI<a class="headerlink" href="#from-webui" title="Permanent link">&para;</a></h4>
 <p>In the <code>Advanced Settings</code> page, you can view and change the resources settings as follow:</p>
 <p>(1) Navigate to settings page, find <code>harvester monitoring</code>.
 <img alt="" src="../assets/monitoring-setting.png" /></p>
@@ -1293,14 +1374,28 @@ Swap:            0B          0B          0B
 <p class="admonition-title">Note</p>
 <p>If you have multiple management nodes with different hardware resources, please set the value based on the smaller one.</p>
 </div>
-<h3 id="change-resources-settings-of-monitoring-prometheus-node-exporter">Change resources settings of Monitoring-Prometheus-node-exporter<a class="headerlink" href="#change-resources-settings-of-monitoring-prometheus-node-exporter" title="Permanent link">&para;</a></h3>
-<p><code>Monitoring-Prometheus-node-exporter</code> has a similar resources specifications as <code>Monitoring-Prometheus</code>. In future versions, a new <code>WebUI</code> setting will be available.</p>
+<h4 id="from-cli">From CLI<a class="headerlink" href="#from-cli" title="Permanent link">&para;</a></h4>
 <p>To update the values, you may use the CLI command: <code>kubectl edit managedchart rancher-monitoring -n fleet-local</code>.</p>
-<p>The related path and default value are:</p>
-<p><code>spec.values.prometheus.prometheus-node-exporter.resources.limits.cpu</code>:<code>200m</code></p>
-<p><code>spec.values.prometheus.prometheus-node-exporter.resources.limits.memory</code>:<code>180Mi</code></p>
-<p><code>spec.values.prometheus.prometheus-node-exporter.resources.requests.cpu</code>:<code>100m</code></p>
-<p><code>spec.values.prometheus.prometheus-node-exporter.resources.requests.memory</code>:<code>30Mi</code></p>
+<p>In v1.0.1 and later versions, the related path and default value are:</p>
+<p><code>spec.values.prometheus.prometheusSpec.resources.limits.cpu</code>:<code>1000m</code></p>
+<p><code>spec.values.prometheus.prometheusSpec.resources.limits.memory</code>:<code>2500Mi</code></p>
+<p><code>spec.values.prometheus.prometheusSpec.resources.requests.cpu</code>:<code>750m</code></p>
+<p><code>spec.values.prometheus.prometheusSpec.resources.requests.memory</code>:<code>1750Mi</code></p>
+<p>In v1.0.0 and ealier versions, the related path and default value are not in the <code>managedchart rancher-monitoring</code>, you need to add them accordingly.</p>
+<h3 id="change-resources-settings-of-monitoring-prometheus-node-exporter">Change resources settings of Monitoring-Prometheus-node-exporter<a class="headerlink" href="#change-resources-settings-of-monitoring-prometheus-node-exporter" title="Permanent link">&para;</a></h3>
+<p><code>Monitoring-Prometheus-node-exporter</code> has a similar resources specifications as <code>Monitoring-Prometheus</code>.</p>
+<h4 id="from-webui_1">From WebUI<a class="headerlink" href="#from-webui_1" title="Permanent link">&para;</a></h4>
+<p><em>Available as of v1.0.2</em></p>
+<p>Follow the steps described in previous chapter <code>Change resources settings of Monitoring-Prometheus</code> <code>From WebUI</code>, after selecting <code>Edit Setting</code>, the page will be shown as:
+<img alt="" src="../assets/monitoring-setting-edit-config-v1.0.2.png" /></p>
+<h4 id="from-cli_1">From CLI<a class="headerlink" href="#from-cli_1" title="Permanent link">&para;</a></h4>
+<p>To update the values, you may use the CLI command: <code>kubectl edit managedchart rancher-monitoring -n fleet-local</code>.</p>
+<p>In v1.0.1 and later versions, the related path and default value are:</p>
+<p><code>spec.values.prometheus-node-exporter.resources.limits.cpu</code>:<code>200m</code></p>
+<p><code>spec.values.prometheus-node-exporter.resources.limits.memory</code>:<code>180Mi</code></p>
+<p><code>spec.values.prometheus-node-exporter.resources.requests.cpu</code>:<code>100m</code></p>
+<p><code>spec.values.prometheus-node-exporter.resources.requests.memory</code>:<code>30Mi</code></p>
+<p>In v1.0.0 and ealier versions, the related path and default value are not in the <code>managedchart rancher-monitoring</code>, you need to add them accordingly.</p>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>When many VMs are deployed in one NODE, the OOM(out of memory)/abnormal restarting of prometheus-node-exporter POD(s) may be observed. In that case, you should change the <code>limits.memory</code> to a bigger value.</p>
