@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/dev/dev-mode/">
+        <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/vm/resource-overcommit/">
       
       <link rel="icon" href="../../assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.13">
     
     
       
-        <title>Developer Mode Installation - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>Resource Overcommit - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#developer-mode-installation" class="md-skip">
+        <a href="#resource-overcommit" class="md-skip">
           Skip to content
         </a>
       
@@ -107,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Developer Mode Installation
+              Resource Overcommit
             
           </span>
         </div>
@@ -430,12 +430,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" checked>
       
       
       
@@ -458,7 +460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vm/create-vm/" class="md-nav__link">
+      <a href="../create-vm/" class="md-nav__link">
         Create a VM
       </a>
     </li>
@@ -472,7 +474,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vm/create-windows-vm/" class="md-nav__link">
+      <a href="../create-windows-vm/" class="md-nav__link">
         Create a Windows VM
       </a>
     </li>
@@ -486,7 +488,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vm/access-to-the-vm/" class="md-nav__link">
+      <a href="../access-to-the-vm/" class="md-nav__link">
         Access to the Virtual Machine (VM)
       </a>
     </li>
@@ -500,7 +502,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vm/backup-restore/" class="md-nav__link">
+      <a href="../backup-restore/" class="md-nav__link">
         VM Backup & Restore
       </a>
     </li>
@@ -514,7 +516,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vm/live-migration/" class="md-nav__link">
+      <a href="../live-migration/" class="md-nav__link">
         Live Migration
       </a>
     </li>
@@ -528,7 +530,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vm/hotplug-volume/" class="md-nav__link">
+      <a href="../hotplug-volume/" class="md-nav__link">
         Hot-Plug Volumes
       </a>
     </li>
@@ -540,11 +542,73 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../vm/resource-overcommit/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Resource Overcommit
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Resource Overcommit
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configure-the-global-setting-overcommit-config" class="md-nav__link">
+    Configure the global setting overcommit-config
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-ovvercommit-for-a-single-virtual-machine" class="md-nav__link">
+    Configure ovvercommit for a single virtual machine
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reserve-more-memory-for-the-system-overhead" class="md-nav__link">
+    Reserve more memory for the system overhead
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-my-virtual-machines-are-scheduled-unevenly" class="md-nav__link">
+    Why my virtual machines are scheduled unevenly?
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -937,72 +1001,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Developer Mode Installation
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../dev/dev-mode/" class="md-nav__link">
         Developer Mode Installation
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
-    Requirements
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
-  </a>
-  
-    <nav class="md-nav" aria-label="Installation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#digitalocean-test-environment" class="md-nav__link">
-    DigitalOcean Test Environment
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1173,29 +1176,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
-    Requirements
+  <a href="#configure-the-global-setting-overcommit-config" class="md-nav__link">
+    Configure the global setting overcommit-config
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
-  </a>
-  
-    <nav class="md-nav" aria-label="Installation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#digitalocean-test-environment" class="md-nav__link">
-    DigitalOcean Test Environment
+  <a href="#configure-ovvercommit-for-a-single-virtual-machine" class="md-nav__link">
+    Configure ovvercommit for a single virtual machine
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#reserve-more-memory-for-the-system-overhead" class="md-nav__link">
+    Reserve more memory for the system overhead
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-my-virtual-machines-are-scheduled-unevenly" class="md-nav__link">
+    Why my virtual machines are scheduled unevenly?
+  </a>
   
 </li>
       
@@ -1211,116 +1215,49 @@
             <article class="md-content__inner md-typeset">
               
                 
-  <a href="https://github.com/harvester/docs/edit/main/docs/dev/dev-mode.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/harvester/docs/edit/main/docs/vm/resource-overcommit.md" title="Edit this page" class="md-content__button md-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
 
-<h1 id="developer-mode-installation">Developer Mode Installation<a class="headerlink" href="#developer-mode-installation" title="Permanent link">&para;</a></h1>
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p>Developer mode (dev mode) is intended to be used for local testing and development purposes.</p>
-</div>
-<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
+<h1 id="resource-overcommit">Resource Overcommit<a class="headerlink" href="#resource-overcommit" title="Permanent link">&para;</a></h1>
+<p>Harvester supports global configuration of resource overload percentages on CPU, memory, and storage. By setting <a href="../../settings/settings/#overcommit-config"><code>overcommit-config</code></a>, this will allow scheduling of additional virtual machines even when physical resources are fully utilized.</p>
+<p>Harvester allows you to overcommit CPU and RAM on compute nodes. This allows you to increase the number of instances running on your cloud at the cost of reducing the performance of the instances. The Compute service uses the following ratios by default:</p>
 <ul>
-<li>The Kubernetes node must pass the <a href="https://raw.githubusercontent.com/harvester/harvester/master/hack/host-check.sh">host-check</a></li>
-<li>If the Kubelet's RootDir is not <code>/var/lib/kubelet</code>, you must create a <code>bind mount</code> to <code>/var/lib/kubelet</code> as follows:
-   <div class="highlight"><pre><span></span><code><span class="nv">KUBELET_ROOT_DIR</span><span class="o">=</span><span class="s2">&quot;path to your kubelet root dir&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">KUBELET_ROOT_DIR</span><span class="si">}</span><span class="s2"> /var/lib/kubelet none bind 0 0&quot;</span> &gt;&gt; /etc/fstab
-mkdir -p /var/lib/kubelet <span class="o">&amp;&amp;</span> mount -a
-</code></pre></div></li>
-<li><a href="https://kubernetes.io/docs/concepts/cluster-administration/networking/#multus-a-multi-network-plugin"><strong>Multus</strong></a> is installed across your cluster and a corresponding <code>NetworkAttachmentDefinition</code> CRD is created.</li>
-<li>The Harvester Chart already contains the Kubevirt and Longhorn</li>
+<li>CPU allocation ratio: 1600%</li>
+<li>RAM allocation ratio: 150%</li>
+<li>Storage allocation ratio: 200%</li>
 </ul>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<p>For development purpose, Harvester can be installed on a Kubernetes cluster by using the <a href="https://helm.sh/">Helm</a> CLI.</p>
-<p>Please refer to the Harvester <a href="https://github.com/harvester/harvester/blob/master/deploy/charts/harvester/README.md">Helm chart</a> for more details on installing and configuring the Helm chart.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Classic memory overcommitment or memory ballooning is not yet supported by this feature. In other words, memory used by a virtual machine instance cannot be returned once allocated.</p>
+</div>
+<h2 id="configure-the-global-setting-overcommit-config">Configure the global setting <a href="../../settings/settings/#overcommit-config"><code>overcommit-config</code></a><a class="headerlink" href="#configure-the-global-setting-overcommit-config" title="Permanent link">&para;</a></h2>
+<p>Users can modify the global <code>overcommit-config</code> by following the steps below, and it will be applied to each newly created virtual machine after the change.</p>
 <ol>
-<li>
-<p>Create the cattle-system namespace
-   <div class="highlight"><pre><span></span><code>kubectl create ns cattle-system
-</code></pre></div></p>
-</li>
-<li>
-<p>Add the rancher-latest helm repo
-   <div class="highlight"><pre><span></span><code>helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
-</code></pre></div></p>
-</li>
-<li>
-<p>Install Rancher chart
-   <div class="highlight"><pre><span></span><code>helm install rancher rancher-latest/rancher <span class="se">\</span>
---namespace cattle-system <span class="se">\</span>
---set <span class="nv">tls</span><span class="o">=</span>external <span class="se">\</span>
---set <span class="nv">rancherImagePullPolicy</span><span class="o">=</span>IfNotPresent <span class="se">\</span>
---set <span class="nv">rancherImage</span><span class="o">=</span>rancher/rancher <span class="se">\</span>
---set <span class="nv">rancherImageTag</span><span class="o">=</span>v2.6.3-harvester1 <span class="se">\</span>
---set <span class="nv">noDefaultAdmin</span><span class="o">=</span><span class="nb">false</span> <span class="se">\</span>
---set <span class="nv">features</span><span class="o">=</span><span class="s2">&quot;multi-cluster-management=false\,multi-cluster-management-agent=false&quot;</span> <span class="se">\</span>
---set <span class="nv">useBundledSystemChart</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
---set <span class="nv">bootstrapPassword</span><span class="o">=</span>admin
-</code></pre></div></p>
-</li>
-<li>
-<p>Change the 'status.provider' of the local cluster object to "harvester"
-   <div class="highlight"><pre><span></span><code>kubectl edit clusters.management.cattle.io <span class="nb">local</span>
-</code></pre></div></p>
-</li>
-<li>
-<p>Clone the GitHub repository
-   <div class="highlight"><pre><span></span><code>git clone https://github.com/harvester/harvester.git --depth<span class="o">=</span><span class="m">1</span>
-</code></pre></div></p>
-</li>
-<li>
-<p>Go to the Helm chart
-   <div class="highlight"><pre><span></span><code><span class="nb">cd</span> harvester/deploy/charts
-</code></pre></div></p>
-</li>
-<li>
-<p>Create the harvester-system namespace
-   <div class="highlight"><pre><span></span><code>kubectl create ns harvester-system
-</code></pre></div></p>
-</li>
-<li>
-<p>Install the Harvester crd chart
-   <div class="highlight"><pre><span></span><code>helm install harvester-crd ./harvester-crd --namespace harvester-system
-</code></pre></div></p>
-</li>
-<li>
-<p>Install the Harvester chart
-   <div class="highlight"><pre><span></span><code><span class="c1">## In order to use the service type LoadBalancer and create a vip in control-plane nodes, we need to enable kubevip.</span>
-<span class="nv">VIP_IP</span><span class="o">=</span><span class="s2">&quot;replace with your vip ip, such as 192.168.5.10&quot;</span>
-<span class="nv">VIP_NIC</span><span class="o">=</span><span class="s2">&quot;replace with your vip interface name, such as eth0&quot;</span>
-helm install harvester ./harvester --namespace harvester-system <span class="se">\</span>
---set harvester-node-disk-manager.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
---set harvester-network-controller.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
---set harvester-load-balancer.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
---set kube-vip.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
---set kube-vip.config.vip_interface<span class="o">=</span><span class="si">${</span><span class="nv">VIP_NIC</span><span class="si">}</span> <span class="se">\</span>
---set kube-vip.config.vip_address<span class="o">=</span><span class="si">${</span><span class="nv">VIP_IP</span><span class="si">}</span> <span class="se">\</span>
---set service.vip.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
---set service.vip.ip<span class="o">=</span><span class="si">${</span><span class="nv">VIP_IP</span><span class="si">}</span>
-</code></pre></div></p>
-</li>
+<li>Go to the <strong>Advanced &gt; Settings</strong> page.</li>
+<li>Find the <code>overcommit-config</code> setting.</li>
+<li>Configure the desired CPU, Memory, and Storage ratio.</li>
 </ol>
-<div class="highlight"><pre><span></span><code><span class="c1">## In some Kubernetes distributions (such as kubeadm), we need to modify the kube-vip nodeSelector to match the control-plane nodes.</span>
---set kube-vip.nodeSelector.<span class="s2">&quot;node-role\.kubernetes\.io/master&quot;</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<h2 id="configure-ovvercommit-for-a-single-virtual-machine">Configure ovvercommit for a single virtual machine<a class="headerlink" href="#configure-ovvercommit-for-a-single-virtual-machine" title="Permanent link">&para;</a></h2>
+<p>If you need to configure individual virtual machines without involving global configuration, consider adjusting the <code>spec.template.spec.domain.resources.&lt;memory|cpu&gt;</code> value on the target VirtualMachine resource individually. Note that by modifying these values, you are taking over control of virtual machine resource management from Harvester.</p>
+<h2 id="reserve-more-memory-for-the-system-overhead">Reserve more memory for the system overhead<a class="headerlink" href="#reserve-more-memory-for-the-system-overhead" title="Permanent link">&para;</a></h2>
+<p>By default, the Harvester reserves a certain amount of system management overhead memory from the memory allocated for the virtual machine. In most cases, this will not cause any problems. However, some operating systems, such as Windows 2022, will request more memory than is reserved.</p>
+<p>To address the issue, Harvester provides an annotation <code>harvesterhci.io/reservedMemory</code> on VirtualMachine custom resource to let you specify the amount of memory to reserve. For instance, add <code>harvesterhci.io/reservedMemory: 200Mi</code> if you decide to reserve 200 MiB for the system overhead of the VM.</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span>apiVersion: kubevirt.io/v1<span class="w"></span>
+<span class="w"> </span>kind: VirtualMachine<span class="w"></span>
+<span class="w"> </span>metadata:<span class="w"></span>
+<span class="w"> </span>  annotations:<span class="w"></span>
+<span class="gi">+    harvesterhci.io/reservedMemory: 200Mi</span><span class="w"></span>
+<span class="w"> </span>    kubevirt.io/latest-observed-api-version: v1<span class="w"></span>
+<span class="w"> </span>    kubevirt.io/storage-observed-api-version: v1alpha3<span class="w"></span>
+<span class="w"> </span>    network.harvesterhci.io/ips: &#39;[]&#39;<span class="w"></span>
+<span class="w"> </span>  ...<span class="w"></span>
+<span class="w"> </span>  ...<span class="w"></span>
 </code></pre></div>
-<ol>
-<li>Expose Harvester UI
-   <div class="highlight"><pre><span></span><code><span class="c1">## Refer to https://kube-vip.chipzoller.dev/docs/usage/cloud-provider/. Add `cidr-cattle-system: ${VIP_IP}/32` to kubevip configMap.</span>
-kubectl -n kube-system edit cm kubevip
-
-<span class="c1">## Change the rancher service type from ClusterIP to LoadBalancer, and then you can access Harvester UI via https://${VIP_IP}.</span>
-kubectl -n cattle-system edit svc rancher
-</code></pre></div></li>
-</ol>
-<h3 id="digitalocean-test-environment">DigitalOcean Test Environment<a class="headerlink" href="#digitalocean-test-environment" title="Permanent link">&para;</a></h3>
-<p>You can create a test Kubernetes environment in Rancher using <a href="https://www.digitalocean.com/">DigitalOcean</a> as a cloud provider, which supports nested virtualization.</p>
-<p>We recommend using a <code>8 core, 16 GB RAM</code> droplet, which will have nested virtualization enabled by default.</p>
-<p>This screenshot shows how to create a Rancher node template that would allow Rancher to provision such a node in DigitalOcean:</p>
-<p><img alt="do.png" src="../do.png" /></p>
-<p>For more information on how to launch DigitalOcean nodes with Rancher, refer to the <a href="https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/digital-ocean/">Rancher documentation.</a></p>
+<h2 id="why-my-virtual-machines-are-scheduled-unevenly">Why my virtual machines are scheduled unevenly?<a class="headerlink" href="#why-my-virtual-machines-are-scheduled-unevenly" title="Permanent link">&para;</a></h2>
+<p>The scheduling of virtual machines depends on the underlying behavior of the kube-scheduler. We have a dedicated article explaining the details. If you would like to learn more, check out:  <a href="https://harvesterhci.io/kb/vm-scheduling/">Harvester Knowledge Base: VM Scheduling</a>.</p>
 
               
             </article>
@@ -1334,7 +1271,7 @@ kubectl -n cattle-system edit svc rancher
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../settings/settings/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Settings" rel="prev">
+        <a href="../hotplug-volume/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Hot-Plug Volumes" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1343,20 +1280,20 @@ kubectl -n cattle-system edit svc rancher
               <span class="md-footer__direction">
                 Previous
               </span>
-              Settings
+              Hot-Plug Volumes
             </div>
           </div>
         </a>
       
       
         
-        <a href="../../troubleshooting/installation/" class="md-footer__link md-footer__link--next" aria-label="Next: Installation" rel="next">
+        <a href="../../networking/harvester-network/" class="md-footer__link md-footer__link--next" aria-label="Next: Harvester Network" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Installation
+              Harvester Network
             </div>
           </div>
           <div class="md-footer__button md-icon">
