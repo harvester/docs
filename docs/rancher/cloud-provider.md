@@ -147,7 +147,7 @@ users:
     token: TOKEN
 ```
 
-This cloud-config file can now be injected via the user-data available in the advanced options for the nodepool
+This cloud-config file can now be injected via the `user-data` available in the `advanced options` for the nodepool.
   ![](assets/cloud-config-userdata.png)
 
 With these settings in place a K3s / RKE2 cluster should provision successfully while using the external cloud provider.
