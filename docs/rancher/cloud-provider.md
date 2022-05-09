@@ -95,7 +95,7 @@ The cloud provider needs a kubeconfig file to work, a limited scoped one can be 
 ./deploy/generate_addon.sh <serviceaccount name> <namespace>
 ```
 
-The output should something as follows:
+The output will look as follows:
 
 ```
 (⎈ |local:default)➜  cloud-provider-harvester git:(master) ✗ ./deploy/generate_addon.sh harvester-cloud-provider default
