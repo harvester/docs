@@ -66,7 +66,7 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 ### Deploy external cloud provider
 Deploying external cloud provider is similar for both RKE2 and K3s based clusters.
 
-Once the intree cloud provider has been disabled by following the steps above the users can deploy the external cloud provider via the 
+Once the in-tree cloud provider has been disabled by following the above steps, you can deploy the external cloud provider via:
 
   ![](assets/external-cloud-provider-addon.png)
 
