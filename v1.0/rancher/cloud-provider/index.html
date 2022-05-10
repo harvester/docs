@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/rancher/cloud-provider/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.13">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.14">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.e411adfe.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.3de6f41f.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.cc9b2e1e.min.css">
@@ -944,6 +944,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#deploy-external-cloud-provider" class="md-nav__link">
+    Deploy external cloud provider
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1251,6 +1258,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#deploy-external-cloud-provider" class="md-nav__link">
+    Deploy external cloud provider
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1355,13 +1369,81 @@
 <ul>
 <li><a href="https://github.com/harvester/cloud-provider-harvester/blob/master/deploy/generate_addon.sh">Generate addon configuration</a> and put it in K3s VMs <code>/etc/kubernetes/cloud-config</code>.</li>
 </ul>
+<h3 id="deploy-external-cloud-provider">Deploy external cloud provider<a class="headerlink" href="#deploy-external-cloud-provider" title="Permanent link">&para;</a></h3>
+<p>Deploying external cloud provider is similar for both RKE2 and K3s based clusters.</p>
+<p>Once the in-tree cloud provider has been disabled by following the above steps, you can deploy the external cloud provider via:</p>
+<p><img alt="" src="../assets/external-cloud-provider-addon.png" /></p>
+<p>A sample additional manifest is as follows:
+<div class="highlight"><pre><span></span><code>apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: harvester-cloud-provider
+  namespace: kube-system
+spec:
+  targetNamespace: kube-system
+  bootstrap: true
+  repo: https://charts.harvesterhci.io/
+  chart: harvester-cloud-provider
+  version: 0.1.12
+  helmVersion: v3
+</code></pre></div></p>
+<p>The cloud provider needs a kubeconfig file to work, a limited scoped one can be generated using the <code>generate_addon.sh</code> script available in the <a href="https://github.com/harvester/cloud-provider-harvester">harvester/cloud-provider-harvester</a> repo.</p>
+<p><em>NOTE:</em> The script needs access to the harvester cluster kubeconfig to work. In addition the namespace needs to be the namespace in which the workload cluster will be created.</p>
 <div class="highlight"><pre><span></span><code># depend on kubectl to operate the Harvester cluster
 ./deploy/generate_addon.sh &lt;serviceaccount name&gt; &lt;namespace&gt;
 </code></pre></div>
-<ul>
-<li>Install <code>Harvester Cloud Provider</code> from the Rancher marketplace.</li>
-</ul>
-<p><img alt="" src="../assets/install-harvester-cloud-provider-in-k3s.png" /></p>
+<p>The output will look as follows:</p>
+<div class="highlight"><pre><span></span><code>(⎈ |local:default)➜  cloud-provider-harvester git:(master) ✗ ./deploy/generate_addon.sh harvester-cloud-provider default
+Creating target directory to hold files in ./tmp/kube...done
+Creating a service account in default namespace: harvester-cloud-provider
+W0506 16:44:15.429068 3008674 helpers.go:598] --dry-run is deprecated and can be replaced with --dry-run=client.
+serviceaccount/harvester-cloud-provider configured
+
+Creating a role in default namespace: harvester-cloud-provider
+role.rbac.authorization.k8s.io/harvester-cloud-provider unchanged
+
+Creating a rolebinding in default namespace: harvester-cloud-provider
+W0506 16:44:23.798293 3008738 helpers.go:598] --dry-run is deprecated and can be replaced with --dry-run=client.
+rolebinding.rbac.authorization.k8s.io/harvester-cloud-provider configured
+
+Getting secret of service account harvester-cloud-provider on default
+Secret name: harvester-cloud-provider-token-5zkk9
+
+Extracting ca.crt from secret...done
+Getting user token from secret...done
+Setting current context to: local
+Cluster name: local
+Endpoint: https://HARVESTER_ENDPOINT/k8s/clusters/local
+
+Preparing k8s-harvester-cloud-provider-default-conf
+Setting a cluster entry in kubeconfig...Cluster &quot;local&quot; set.
+Setting token credentials entry in kubeconfig...User &quot;harvester-cloud-provider-default-local&quot; set.
+Setting a context entry in kubeconfig...Context &quot;harvester-cloud-provider-default-local&quot; created.
+Setting the current-context in the kubeconfig file...Switched to context &quot;harvester-cloud-provider-default-local&quot;.
+########## cloud config ############
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: CACERT
+    server: https://HARVESTER-ENDPOINT/k8s/clusters/local
+  name: local
+contexts:
+- context:
+    cluster: local
+    namespace: default
+    user: harvester-cloud-provider-default-local
+  name: harvester-cloud-provider-default-local
+current-context: harvester-cloud-provider-default-local
+kind: Config
+preferences: {}
+users:
+- name: harvester-cloud-provider-default-local
+  user:
+    token: TOKEN
+</code></pre></div>
+<p>This cloud-config file can now be injected via the <code>user-data</code> available in the <code>advanced options</code> for the nodepool.
+  <img alt="" src="../assets/cloud-config-userdata.png" /></p>
+<p>With these settings in place a K3s / RKE2 cluster should provision successfully while using the external cloud provider.</p>
 <h2 id="load-balancer-support">Load Balancer Support<a class="headerlink" href="#load-balancer-support" title="Permanent link">&para;</a></h2>
 <p>After deploying the <code>Harvester Cloud provider</code>, you can use the Kubernetes <code>LoadBalancer</code> service to expose a microservice inside the guest cluster to the external world. When you create a Kubernetes <code>LoadBalancer</code> service, a Harvester load balancer is assigned to the service and you can edit it through the <code>Add-on Config</code> in the Rancher UI.</p>
 <p><img alt="" src="../assets/lb-svc.png" /></p>
@@ -1492,7 +1574,7 @@
     <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.ed9748b7.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c2e1ee47.min.js"></script>
       
         <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
