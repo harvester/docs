@@ -15,7 +15,7 @@ Description: Create one or more Windows virtual machines from the Virtual Machin
 
 ---
 
-# Create a Windows VM
+# Create a Windows Virtual Machine
 
 Create one or more virtual machines from the **Virtual Machines** page.
 

@@ -71,6 +71,7 @@ nav:
   - VM Management:
     - vm/create-vm.md
     - vm/create-windows-vm.md
+    - vm/edit-vm.md
     - vm/access-to-the-vm.md
     - vm/backup-restore.md
     - vm/live-migration.md
