@@ -29,7 +29,7 @@ Users can modify the global `overcommit-config` by following the steps below, an
 1. Find the `overcommit-config` setting.
 1. Configure the desired CPU, Memory, and Storage ratio.
 
-## Configure ovvercommit for a single virtual machine
+## Configure overcommit for a single virtual machine
 
 If you need to configure individual virtual machines without involving global configuration, consider adjusting the ` spec.template.spec.domain.resources.<memory|cpu>` value on the target VirtualMachine resource individually. Note that by modifying these values, you are taking over control of virtual machine resource management from Harvester.
 
