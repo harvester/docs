@@ -5,7 +5,11 @@ This website is built using [Material for MkDocs](https://squidfunk.github.io/mk
 ## Installation
 
 Please refer to this [doc](https://squidfunk.github.io/mkdocs-material/customization/#environment-setup) to set up your local development environment.
-
+After following those instructions, while in the same `mkdocs-material` repository on your local machine, please additionally install:
+```
+pip install mkdocs-render-swagger-plugin
+```
+As referenced [here](https://github.com/bharel/mkdocs-render-swagger-plugin).
 
 ## Local Development
 
