@@ -15,7 +15,7 @@
     
     
       
-        <title>Create a VM - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>Create a Virtual Machine - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#create-a-vm" class="md-skip">
+        <a href="#create-a-virtual-machine" class="md-skip">
           Skip to content
         </a>
       
@@ -107,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Create a VM
+              Create a Virtual Machine
             
           </span>
         </div>
@@ -470,12 +470,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Create a VM
+          Create a Virtual Machine
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Create a VM
+        Create a Virtual Machine
       </a>
       
         
@@ -501,22 +501,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cloud-configuration-examples" class="md-nav__link">
-    Cloud Configuration Examples
+  <a href="#volumes" class="md-nav__link">
+    Volumes
   </a>
-  
-    <nav class="md-nav" aria-label="Cloud Configuration Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#installing-the-qemu-guest-agent" class="md-nav__link">
-    Installing the QEMU guest agent
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -547,6 +534,53 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#advanced-options" class="md-nav__link">
+    Advanced Options
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-strategy" class="md-nav__link">
+    Run Strategy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloud-configuration" class="md-nav__link">
+    Cloud Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cloud-init" class="md-nav__link">
+    Cloud-init
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-the-qemu-guest-agent" class="md-nav__link">
+    Installing the QEMU guest agent
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -563,7 +597,21 @@
   
     <li class="md-nav__item">
       <a href="../create-windows-vm/" class="md-nav__link">
-        Create a Windows VM
+        Create a Windows Virtual Machine
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../edit-vm/" class="md-nav__link">
+        Edit a Virtual Machine
       </a>
     </li>
   
@@ -577,7 +625,7 @@
   
     <li class="md-nav__item">
       <a href="../access-to-the-vm/" class="md-nav__link">
-        Access to the Virtual Machine (VM)
+        Access to the Virtual Machine
       </a>
     </li>
   
@@ -1209,22 +1257,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cloud-configuration-examples" class="md-nav__link">
-    Cloud Configuration Examples
+  <a href="#volumes" class="md-nav__link">
+    Volumes
   </a>
-  
-    <nav class="md-nav" aria-label="Cloud Configuration Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#installing-the-qemu-guest-agent" class="md-nav__link">
-    Installing the QEMU guest agent
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1255,6 +1290,53 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#advanced-options" class="md-nav__link">
+    Advanced Options
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-strategy" class="md-nav__link">
+    Run Strategy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloud-configuration" class="md-nav__link">
+    Cloud Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cloud-init" class="md-nav__link">
+    Cloud-init
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-the-qemu-guest-agent" class="md-nav__link">
+    Installing the QEMU guest agent
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1273,33 +1355,115 @@
 
 
 
-<h1 id="create-a-vm">Create a VM<a class="headerlink" href="#create-a-vm" title="Permanent link">&para;</a></h1>
+<h1 id="create-a-virtual-machine">Create a Virtual Machine<a class="headerlink" href="#create-a-virtual-machine" title="Permanent link">&para;</a></h1>
 <h2 id="how-to-create-a-vm">How to Create a VM<a class="headerlink" href="#how-to-create-a-vm" title="Permanent link">&para;</a></h2>
-<p>Create one or more virtual machines from the <strong>Virtual Machines</strong> page.</p>
+<p>You can create one or more virtual machines from the <strong>Virtual Machines</strong> page.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For creating Windows virtual machines, please refer to <a href="../create-windows-vm/">this page</a>.</p>
+<p>Please refer to <a href="../create-windows-vm/">this page</a> for creating Windows virtual machines.</p>
 </div>
 <ol>
 <li>Choose the option to create either one or multiple VM instances.</li>
+<li>Select the namespace of your VMs, only the <code>harvester-public</code> namespace is visible to all users.</li>
 <li>The VM Name is a required field.</li>
-<li>The VM Template is optional. You can select ISO, raw, and Windows image templates as default options.</li>
-<li>Configure the CPU and Memory of the VM.</li>
+<li>(Optional) VM template is optional, you can choose <code>iso-image</code>, <code>raw-image</code> or <code>windows-iso-image</code> template to speed up your VM instance creation.</li>
+<li>Configure the virtual machine's CPU and memory (see <a href="/settings/settings/#overcommit-config">overcommit settings</a> if you want to over-provision).</li>
 <li>Select SSH keys or upload new keys.</li>
 <li>Select a custom VM image on the <strong>Volumes</strong> tab. The default disk will be the root disk. You can add more disks to the VM.</li>
-<li>To configure networks, go to the <strong>Networks</strong> tab. The <strong>Management Network</strong> is added by default. It is also possible to add secondary networks to the VMs using VLAN networks. You may configure these on <strong>Advanced &gt; Networks</strong>.</li>
-<li>Advanced options such as hostname and cloud-init data are optional. You may configure these in the <strong>Advanced Options</strong> section.</li>
+<li>To configure networks, go to the <strong>Networks</strong> tab. <ol>
+<li>The <strong>Management Network</strong> is added by default, you can remove it if the VLAN network is configured.</li>
+<li>You can also add additional networks to the VMs using VLAN networks. You may configure the VLAN networks on <strong>Advanced &gt; Networks</strong> first.</li>
+</ol>
+</li>
+<li>Advanced options such as run strategy, os type and cloud-init data are optional. You may configure these in the <strong>Advanced Options</strong> section when applicable.</li>
 </ol>
 <p><img alt="create-vm" src="../assets/create-vm.png" /></p>
-<p><img alt="create-vm" src="../assets/choose-vm-image.png" /></p>
-<h2 id="cloud-configuration-examples">Cloud Configuration Examples<a class="headerlink" href="#cloud-configuration-examples" title="Permanent link">&para;</a></h2>
-<p>Password configuration for the default user:</p>
+<h2 id="volumes">Volumes<a class="headerlink" href="#volumes" title="Permanent link">&para;</a></h2>
+<p>You can add one or more additional volumes via the <code>Volumes</code> tab, by default the first disk will be the root disk, you can change the boot order by dragging and dropping volumes, or using the arrow buttons.</p>
+<p>A disk can be made accessible via the following types:</p>
+<table>
+<thead>
+<tr>
+<th align="left">type</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">disk</td>
+<td align="left">A disk disk will expose the volume as an ordinary disk to the VM.</td>
+</tr>
+<tr>
+<td align="left">cd-rom</td>
+<td align="left">A cd-rom disk will expose the volume as a cd-rom drive to the VM. It is read-only by default.</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="create-vm" src="../assets/create-vm-volumes.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Container Disk</p>
+<p><code>Container disks</code> are ephemeral storage devices that can be assigned to any number of VMs. This makes them an ideal tool for users who want to replicate a large number of VM workloads or inject machine drivers that do not require persistent data.</p>
+<p>Note: Container disks are not a good solution for any workload that requires persistent root disks across VM restarts.</p>
+</div>
+<h2 id="networks">Networks<a class="headerlink" href="#networks" title="Permanent link">&para;</a></h2>
+<p>You can choose to add both the <code>management network</code> or <code>VLAN network</code> to your VM instances via the <code>Networks</code> tab, the <code>management network</code> is optional if you have the VLAN network configured.</p>
+<p>Network interfaces are configured through the <code>Type</code> field. They describe the properties of the virtual interfaces seen inside the guest OS:</p>
+<table>
+<thead>
+<tr>
+<th align="left">type</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">bridge</td>
+<td align="left">Connect using a Linux bridge</td>
+</tr>
+<tr>
+<td align="left">masquerade</td>
+<td align="left">Connect using iptables rules to NAT the traffic</td>
+</tr>
+</tbody>
+</table>
+<h3 id="management-network">Management Network<a class="headerlink" href="#management-network" title="Permanent link">&para;</a></h3>
+<p>A management network represents the default VM eth0 interface configured by the cluster network solution that is present in each VM.</p>
+<p>By default, VMs are accessible through the management network within the cluster nodes.</p>
+<h3 id="secondary-network">Secondary Network<a class="headerlink" href="#secondary-network" title="Permanent link">&para;</a></h3>
+<p>It is also possible to connect VMs using additional networks with Harvester's built-in <a href="../../networking/harvester-network/">VLAN networks</a>. </p>
+<p>In bridge VLAN, virtual machines are connected to the host network through a linux <code>bridge</code>. The network IPv4 address is delegated to the virtual machine via DHCPv4. The virtual machine should be configured to use DHCP to acquire IPv4 addresses.</p>
+<h2 id="advanced-options">Advanced Options<a class="headerlink" href="#advanced-options" title="Permanent link">&para;</a></h2>
+<h3 id="run-strategy">Run Strategy<a class="headerlink" href="#run-strategy" title="Permanent link">&para;</a></h3>
+<p><em>Available as of v1.0.2</em></p>
+<p>Prior to v1.0.2, Harvester used the <code>Running</code> (a boolean) field to determine if the VM instance should be running. However, a simple boolean value is not always sufficient to fully describe the user's desired behavior. For example, in some cases the user wants to be able to shut down the instance from inside the virtual machine. If the <code>running</code> field is used, the VM will be restarted immediately.</p>
+<p>In order to meet the scenario requirements of more users, the <code>RunStrategy</code> field is introduced. This is mutually exclusive with <code>Running</code> because their conditions overlap somewhat. There are currently four <code>RunStrategies</code> defined:</p>
+<ul>
+<li>
+<p>Always: The VM instance will always exist. If VM instance crashes, a new one will be spawned. This is the same behavior as <code>Running: true</code>.</p>
+</li>
+<li>
+<p>RerunOnFailure (default): If the previous instance failed in an error state, a VM instance will be respawned. If the guest is successfully stopped (e.g. shut down from inside the guest), it will not be recreated.</p>
+</li>
+<li>
+<p>Manual: The presence or absence of a VM instance is controlled only by the <code>start/stop/restart</code> VirtualMachine actions.</p>
+</li>
+<li>
+<p>Stop: There will be no VM instance. If the guest is already running, it will be stopped. This is the same behavior as <code>Running: false</code>.</p>
+</li>
+</ul>
+<h3 id="cloud-configuration">Cloud Configuration<a class="headerlink" href="#cloud-configuration" title="Permanent link">&para;</a></h3>
+<p>Harvester supports the ability to assign a startup script to a virtual machine instance which is executed automatically when the VM initializes.</p>
+<p>These scripts are commonly used to automate injection of users and SSH keys into VMs in order to provide remote access to the machine. For example, a startup script can be used to inject credentials into a VM that allows an Ansible job running on a remote host to access and provision the VM.</p>
+<h4 id="cloud-init">Cloud-init<a class="headerlink" href="#cloud-init" title="Permanent link">&para;</a></h4>
+<p><a href="https://cloudinit.readthedocs.io/en/latest/">Cloud-init</a> is a widely adopted project and the industry standard multi-distribution method for cross-platform cloud instance initialization. It is supported across all major cloud image provider like SUSE, Redhat, Ubuntu and etc., cloud-init has established itself as the defacto method of providing startup scripts to VMs.</p>
+<p>Harvester supports injecting your custom cloud-init startup scripts into a VM instance through the use of an ephemeral disk. VMs with the cloud-init package installed will detect the ephemeral disk and execute custom user-data and network-data scripts at boot.</p>
+<p>Example of password configuration for the default user:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># cloud-config</span><span class="w"></span>
 <span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span><span class="w"></span>
 <span class="nt">chpasswd</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> expire</span><span class="p">:</span><span class="w"> </span><span class="nv">False</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"></span>
 <span class="nt">ssh_pwauth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
 </code></pre></div>
-<p>Network-data configuration using DHCP:</p>
+<p>Example of network-data configuration using DHCP:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
 <span class="nt">config</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">physical</span><span class="w"></span>
@@ -1311,21 +1475,15 @@
 <span class="w">    </span><span class="nt">subnets</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dhcp</span><span class="w"></span>
 </code></pre></div>
-<p>You can also use the <code>Cloud Config Template</code> feature to include a pre-defined cloud-init configuration for the VM.</p>
-<h3 id="installing-the-qemu-guest-agent">Installing the QEMU guest agent<a class="headerlink" href="#installing-the-qemu-guest-agent" title="Permanent link">&para;</a></h3>
-<p>The QEMU guest agent is a daemon that runs on the virtual machine and passes information to the host about the virtual machine, users, file systems, and secondary networks.</p>
-<p>Qemu guest agent is installed by default when a VM is created.</p>
+<p>You can also use the <code>Advanced &gt; Cloud Config Templates</code> feature to create a pre-defined cloud-init configuration template for the VM.</p>
+<h4 id="installing-the-qemu-guest-agent">Installing the QEMU guest agent<a class="headerlink" href="#installing-the-qemu-guest-agent" title="Permanent link">&para;</a></h4>
+<p>The QEMU guest agent is a daemon that runs on the virtual machine instance and passes information to the host about the VM, users, file systems, and secondary networks.</p>
+<p><code>Install guest agent</code> checkbox is enabled by default when a new VM is created.</p>
 <p><img alt="" src="../assets/qga.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If your OS is openSUSE and the version is less than 15.3, please replace <code>qemu-guest-agent.service</code> with <code>qemu-ga.service</code>.</p>
 </div>
-<h2 id="networks">Networks<a class="headerlink" href="#networks" title="Permanent link">&para;</a></h2>
-<h3 id="management-network">Management Network<a class="headerlink" href="#management-network" title="Permanent link">&para;</a></h3>
-<p>A management network represents the default VM eth0 interface configured by the cluster network solution that is present in each VM.</p>
-<p>By default, a VM can be accessed via the management network.</p>
-<h3 id="secondary-network">Secondary Network<a class="headerlink" href="#secondary-network" title="Permanent link">&para;</a></h3>
-<p>It is also possible to connect VMs using additional networks with Harvester's built-in <a href="../../networking/harvester-network/">VLAN networks</a>.</p>
 
               
             </article>
@@ -1355,13 +1513,13 @@
       
       
         
-        <a href="../create-windows-vm/" class="md-footer__link md-footer__link--next" aria-label="Next: Create a Windows VM" rel="next">
+        <a href="../create-windows-vm/" class="md-footer__link md-footer__link--next" aria-label="Next: Create a Windows Virtual Machine" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Create a Windows VM
+              Create a Windows Virtual Machine
             </div>
           </div>
           <div class="md-footer__button md-icon">

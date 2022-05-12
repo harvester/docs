@@ -196,6 +196,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.harvesterhci.io/v1.0/vm/edit-vm/</loc>
+         <lastmod>2022-05-12</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.harvesterhci.io/v1.0/vm/hotplug-volume/</loc>
          <lastmod>2022-05-12</lastmod>
          <changefreq>daily</changefreq>
