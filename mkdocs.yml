@@ -64,7 +64,10 @@ nav:
     - install/harvester-configuration.md
     - install/management-address.md
   - airgap.md
-  - upgrade/automatic.md
+  - Upgrade:
+    - upgrade/automatic.md
+    - upgrade/v1-0-1-to-v1-0-2.md
+    - upgrade/v1-0-0-to-v1-0-1.md
   - authentication.md
   - upload-image.md
   - host/host.md
