@@ -25,9 +25,9 @@ If the VGA display is not enabled on the VM, as with the `Ubuntu-minimal-cloud` 
 
 ## SSH Access
 
-Harvester provides two ways to inject SSH public keys into virtual machines. Generally, these methods fall into two categories. [Static key injection](#static-ssh-key-injection-via-cloud-init), which places keys on the cloud-init when the virtual machine is first powered on; [dynamic injection](#dynamic-ssh-key-injection-via-qemu-guest-agent), which allows keys or basic auth to be updated dynamically at runtime.
+Harvester provides two ways to inject SSH public keys into virtual machines. Generally, these methods fall into two categories. [Static key injection](#static-ssh-key-injection-via-cloud-init), which places keys in the cloud-init script when the virtual machine is first powered on; [dynamic injection](#dynamic-ssh-key-injection-via-qemu-guest-agent), which allows keys or basic auth to be updated dynamically at runtime.
 
-### Static SSH Key Injection via Cloud Init
+### Static SSH Key Injection via cloud-init
 
 You can provide ssh keys to your virtual machines during the creation time on the `Basics` tab. Additionally, you can place the public ssh keys into your cloud-init script to allow it to take place.
 
@@ -46,7 +46,7 @@ ssh_authorized_keys:
 
 _Available as of v1.0.1_
 
-Harvester supports dynamically injecting public ssh keys at run time through the use of the qemu guest agent. This is achieved through the `qemuGuestAgent` propagation method.
+Harvester supports dynamically injecting public ssh keys at run time through the use of the [qemu guest agent](https://wiki.qemu.org/Features/GuestAgent). This is achieved through the `qemuGuestAgent` propagation method.
 
 !!! note
     This method requires the qemu guest agent to be installed within the guest VM.
