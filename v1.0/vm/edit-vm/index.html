@@ -1331,19 +1331,19 @@
 </div>
 <h3 id="basics">Basics<a class="headerlink" href="#basics" title="Permanent link">&para;</a></h3>
 <p>On the basics tab, you can config your requested CPU and memory, a VM restart is required for this configuration to take effect.</p>
-<p>SSH Keys are injected into the cloud-init script when the virtual machine is first powered on. In order for the modified ssh key to take effect after the virtual machine is startup, the cloud-init script needs to be <a href="/faq/#how-to-install-the-qemu-guest-agent-of-a-running-vm">reinstalled</a> from your guest OS.</p>
+<p>SSH Keys are injected into the cloud-init script when the virtual machine is first powered on. In order for the modified ssh key to take effect after the virtual machine is startup, the cloud-init script needs to be <a href="../../faq/#how-to-install-the-qemu-guest-agent-of-a-running-vm">reinstalled</a> from your guest OS.</p>
 <p><img alt="edit-vm" src="../assets/edit-vm-basics.png" /></p>
 <h3 id="networks">Networks<a class="headerlink" href="#networks" title="Permanent link">&para;</a></h3>
 <p>You can add additional VLAN networks to your VM instances after booting, the <code>management network</code> is optional if you have the VLAN network configured.</p>
 <p>Additional NICs are not enabled by default unless you configure them manually in the guest OS, e.g. using <a href="https://doc.opensuse.org/documentation/leap/reference/html/book-reference/cha-network.html#sec-network-manconf">wicked for your OpenSUSE Server</a> or <a href="https://ubuntu.com/server/docs/network-configuration">netplan for your Ubuntu Server</a>.</p>
 <p><img alt="edit-vm" src="../assets/edit-vm-networks.png" /></p>
-<p>For more details about the network implementation, please refer to the <a href="/networking/harvester-network">Networking</a> page.</p>
+<p>For more details about the network implementation, please refer to the <a href="../../networking/harvester-network/">Networking</a> page.</p>
 <h3 id="volumes">Volumes<a class="headerlink" href="#volumes" title="Permanent link">&para;</a></h3>
 <p>You can add additional volumes to the VM after booting. You can also expand the size of the volume after shutting down the VM, click the VM and go to the <code>Volumes</code> tab, then click <code>Edit Image Volume</code> to edit the size of the expanded volume. After waiting for the resize to complete and restarting the VM, your disk will automatically finish expanding.</p>
 <p><img alt="edit-vm" src="../assets/edit-vm-volumes.png" /></p>
 <h3 id="access-credentials">Access Credentials<a class="headerlink" href="#access-credentials" title="Permanent link">&para;</a></h3>
 <p>Access Credentials allow you to inject basic auth or ssh keys dynamically at run time when your guest OS has quemu guest agent installed.</p>
-<p>For more details please check the page here: <a href="/vm/access-to-the-vm/#dynamic-ssh-key-injection-via-qemu-guest-agent">Dynamic SSH Key Injection via Qemu guest agent</a>.</p>
+<p>For more details please check the page here: <a href="../access-to-the-vm/#dynamic-ssh-key-injection-via-qemu-guest-agent">Dynamic SSH Key Injection via Qemu guest agent</a>.</p>
 
               
             </article>
