@@ -24,7 +24,7 @@ After creating a virtual machine, you can edit your virtual machine by clicking 
 
 On the basics tab, you can config your requested CPU and memory, a VM restart is required for this configuration to take effect.
 
-SSH Keys are injected into the cloud-init script when the virtual machine is first powered on. In order for the modified ssh key to take effect after the virtual machine is startup, the cloud-init script needs to be [reinstalled](/faq/#how-to-install-the-qemu-guest-agent-of-a-running-vm) from your guest OS.
+SSH Keys are injected into the cloud-init script when the virtual machine is first powered on. In order for the modified ssh key to take effect after the virtual machine is startup, the cloud-init script needs to be [reinstalled](../faq.md#how-to-install-the-qemu-guest-agent-of-a-running-vm) from your guest OS.
 
 ![edit-vm](assets/edit-vm-basics.png)
 
@@ -36,7 +36,7 @@ Additional NICs are not enabled by default unless you configure them manually in
 
 ![edit-vm](assets/edit-vm-networks.png)
 
-For more details about the network implementation, please refer to the [Networking](/networking/harvester-network) page.
+For more details about the network implementation, please refer to the [Networking](../networking/harvester-network.md) page.
 
 ### Volumes
 
@@ -48,4 +48,4 @@ You can add additional volumes to the VM after booting. You can also expand the 
 
 Access Credentials allow you to inject basic auth or ssh keys dynamically at run time when your guest OS has quemu guest agent installed.
 
-For more details please check the page here: [Dynamic SSH Key Injection via Qemu guest agent](/vm/access-to-the-vm/#dynamic-ssh-key-injection-via-qemu-guest-agent).
+For more details please check the page here: [Dynamic SSH Key Injection via Qemu guest agent](./access-to-the-vm.md#dynamic-ssh-key-injection-via-qemu-guest-agent).
