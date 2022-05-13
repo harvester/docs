@@ -24,7 +24,7 @@ You can create one or more virtual machines from the **Virtual Machines** page.
 1. Select the namespace of your VMs, only the `harvester-public` namespace is visible to all users.
 1. The VM Name is a required field.
 1. (Optional) VM template is optional, you can choose `iso-image`, `raw-image` or `windows-iso-image` template to speed up your VM instance creation.
-1. Configure the virtual machine's CPU and memory (see [overcommit settings](/settings/settings/#overcommit-config) if you want to over-provision).
+1. Configure the virtual machine's CPU and memory (see [overcommit settings](../settings/settings.md#overcommit-config) if you want to over-provision).
 1. Select SSH keys or upload new keys.
 1. Select a custom VM image on the **Volumes** tab. The default disk will be the root disk. You can add more disks to the VM.
 1. To configure networks, go to the **Networks** tab. 

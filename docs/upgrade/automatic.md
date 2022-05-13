@@ -78,7 +78,7 @@ Note we are still working towards zero-downtime upgrade, due to some known issue
 
         Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section first about upgradable versions.
 
-- Download a Harvester ISO file from [relaese pages](https://github.com/harvester/harvester/releases).
+- Download a Harvester ISO file from [release pages](https://github.com/harvester/harvester/releases).
 - Save the ISO to a local HTTP server. Assume the file is hosted at `http://10.10.0.1/harvester.iso`.
 - Download the version file from release pages, for example, `https://releases.rancher.com/harvester/{version}/version.yaml`
 
@@ -93,7 +93,7 @@ Note we are still working towards zero-downtime upgrade, due to some known issue
         spec:
           isoChecksum: <SHA-512 checksum of the ISO> 
           isoURL: http://10.10.0.1/harvester.iso  # change to local ISO URL
-          releaseDate: 20220512
+          releaseDate: '20220512'
         ```
 
     - Assume the file is hosted at `http://10.10.0.1/version.yaml`.
