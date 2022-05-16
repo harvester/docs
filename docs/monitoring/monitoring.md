@@ -116,3 +116,8 @@ In v1.0.0 and ealier versions, the related path and default value are not in the
 
 !!! attention
     When many VMs are deployed in one NODE, the OOM(out of memory)/abnormal restarting of prometheus-node-exporter POD(s) may be observed. In that case, you should change the `limits.memory` to a bigger value.
+
+### Troubleshooting
+
+When you encounter issues while using Monitoring, please refer [troubleshooting](../troubleshooting/monitoring.md) .
+

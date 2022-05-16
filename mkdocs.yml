@@ -106,6 +106,7 @@ nav:
     - troubleshooting/installation.md
     - troubleshooting/harvester.md
     - troubleshooting/os.md
+    - troubleshooting/monitoring.md
   - Reference:
     - reference/api.md
   - faq.md
