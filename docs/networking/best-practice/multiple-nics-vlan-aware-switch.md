@@ -76,7 +76,7 @@ switch# copy running-config startup-config
 
 You can create a new VLAN network in the **Advanced > Networks** page, and click the **Create** button.
 
-Specify the name and a VLAN ID that you want to create for the VLAN network <small>(You can specify the same VLAN ID in different namespaces if you have [Rancher multi-tenancy](/rancher/virtualization-management/#multi-tenancy) configured)</small>.
+Specify the name and a VLAN ID that you want to create for the VLAN network <small>(You can specify the same VLAN ID in different namespaces if you have [Rancher multi-tenancy](../../rancher/virtualization-management.md#multi-tenancy) configured)</small>.
 
    ![create-vlan-network.png](assets/create-network.png)
 
@@ -93,4 +93,4 @@ Therefore, if you need VMs to connect to the VLAN ID 1, you need to create a VLA
 
 You need to create a VLAN network with a specific VLAN ID and associate the VM with that VLAN network.
 
-Please refer to [this page](/networking/harvester-network/) for additional information on Harvester Networking.
+Please refer to [this page](../harvester-network.md) for additional information on Harvester Networking.
