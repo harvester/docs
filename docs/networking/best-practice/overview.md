@@ -22,6 +22,6 @@ In a real production environment, we generally recommend that you have multiple 
 ## Best Practice
 
 - [Multiple NICs with VLAN-aware switch](multiple-nics-vlan-aware-switch.md)
-- [Mulitple NICs with non VLAN-aware switch](multiple-nics-non-vlan-aware-switch.md)
+- [Multiple NICs with non VLAN-aware switch](multiple-nics-non-vlan-aware-switch.md)
 - [Single NIC with VLAN-aware switch](single-nic-vlan-aware-switch.md)
 - [Single NIC with non VLAN-aware switch](single-nic-non-vlan-aware-switch.md)
