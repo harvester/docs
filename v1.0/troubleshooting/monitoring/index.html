@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/vm/live-migration/">
+        <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/troubleshooting/monitoring/">
       
       <link rel="icon" href="../../assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
     
     
       
-        <title>Live Migration - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>Monitoring - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#live-migration" class="md-skip">
+        <a href="#monitoring" class="md-skip">
           Skip to content
         </a>
       
@@ -107,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Live Migration
+              Monitoring
             
           </span>
         </div>
@@ -491,14 +491,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
       
       
       
@@ -521,7 +519,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../create-vm/" class="md-nav__link">
+      <a href="../../vm/create-vm/" class="md-nav__link">
         Create a Virtual Machine
       </a>
     </li>
@@ -535,7 +533,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../create-windows-vm/" class="md-nav__link">
+      <a href="../../vm/create-windows-vm/" class="md-nav__link">
         Create a Windows Virtual Machine
       </a>
     </li>
@@ -549,7 +547,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../edit-vm/" class="md-nav__link">
+      <a href="../../vm/edit-vm/" class="md-nav__link">
         Edit a Virtual Machine
       </a>
     </li>
@@ -563,7 +561,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../access-to-the-vm/" class="md-nav__link">
+      <a href="../../vm/access-to-the-vm/" class="md-nav__link">
         Access to the Virtual Machine
       </a>
     </li>
@@ -577,7 +575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../backup-restore/" class="md-nav__link">
+      <a href="../../vm/backup-restore/" class="md-nav__link">
         VM Backup & Restore
       </a>
     </li>
@@ -589,86 +587,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Live Migration
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../vm/live-migration/" class="md-nav__link">
         Live Migration
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#starting-a-migration" class="md-nav__link">
-    Starting a Migration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#aborting-a-migration" class="md-nav__link">
-    Aborting a Migration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#migration-timeouts" class="md-nav__link">
-    Migration Timeouts
-  </a>
-  
-    <nav class="md-nav" aria-label="Migration Timeouts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#completion-timeout" class="md-nav__link">
-    Completion Timeout
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#progress-timeout" class="md-nav__link">
-    Progress Timeout
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -680,7 +603,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hotplug-volume/" class="md-nav__link">
+      <a href="../../vm/hotplug-volume/" class="md-nav__link">
         Hot-Plug Volumes
       </a>
     </li>
@@ -694,7 +617,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../resource-overcommit/" class="md-nav__link">
+      <a href="../../vm/resource-overcommit/" class="md-nav__link">
         Resource Overcommit
       </a>
     </li>
@@ -1104,12 +1027,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" checked>
       
       
       
@@ -1132,7 +1057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/installation/" class="md-nav__link">
+      <a href="../installation/" class="md-nav__link">
         Installation
       </a>
     </li>
@@ -1146,7 +1071,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/harvester/" class="md-nav__link">
+      <a href="../harvester/" class="md-nav__link">
         Harvester
       </a>
     </li>
@@ -1160,7 +1085,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/os/" class="md-nav__link">
+      <a href="../os/" class="md-nav__link">
         Operating System
       </a>
     </li>
@@ -1172,11 +1097,65 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../troubleshooting/monitoring/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Monitoring
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Monitoring
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-is-unusable" class="md-nav__link">
+    Monitoring is unusable
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring is unusable">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-is-unusable-due-to-pod-stucks-in-terminating" class="md-nav__link">
+    Monitoring is unusable due to POD stucks in "Terminating"
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1278,37 +1257,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#starting-a-migration" class="md-nav__link">
-    Starting a Migration
+  <a href="#monitoring-is-unusable" class="md-nav__link">
+    Monitoring is unusable
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#aborting-a-migration" class="md-nav__link">
-    Aborting a Migration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#migration-timeouts" class="md-nav__link">
-    Migration Timeouts
-  </a>
-  
-    <nav class="md-nav" aria-label="Migration Timeouts">
+    <nav class="md-nav" aria-label="Monitoring is unusable">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#completion-timeout" class="md-nav__link">
-    Completion Timeout
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#progress-timeout" class="md-nav__link">
-    Progress Timeout
+  <a href="#monitoring-is-unusable-due-to-pod-stucks-in-terminating" class="md-nav__link">
+    Monitoring is unusable due to POD stucks in "Terminating"
   </a>
   
 </li>
@@ -1330,40 +1288,61 @@
             <article class="md-content__inner md-typeset">
               
                 
-  <a href="https://github.com/harvester/docs/edit/main/docs/vm/live-migration.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/harvester/docs/edit/main/docs/troubleshooting/monitoring.md" title="Edit this page" class="md-content__button md-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
 
-<h1 id="live-migration">Live Migration<a class="headerlink" href="#live-migration" title="Permanent link">&para;</a></h1>
-<p>Live migration means moving a virtual machine to a different host without downtime.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul>
-<li>Live migration is not allowed when the virtual machine is using a management network of bridge interface type.</li>
-<li>To support live migration, three or more hosts in the Harvester cluster are required due to <a href="https://github.com/harvester/harvester/issues/798">a known issue</a>.</li>
-</ul>
-</div>
-<h2 id="starting-a-migration">Starting a Migration<a class="headerlink" href="#starting-a-migration" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Go to the <strong>Virtual Machines</strong> page.</li>
-<li>Find the virtual machine that you want to migrate and select <strong>⋮ &gt; Migrate</strong>.</li>
-<li>Choose the node to which you want to migrate the virtual machine. Click <strong>Apply</strong>.</li>
-</ol>
-<p><img alt="" src="../assets/migrate-action.png" /></p>
-<p><img alt="" src="../assets/migrate.png" /></p>
-<h2 id="aborting-a-migration">Aborting a Migration<a class="headerlink" href="#aborting-a-migration" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Go to the <strong>Virtual Machines</strong> page.</li>
-<li>Find the virtual machine in migrating status that you want to abort. Select <strong>⋮ &gt; Abort Migration</strong>.</li>
-</ol>
-<h2 id="migration-timeouts">Migration Timeouts<a class="headerlink" href="#migration-timeouts" title="Permanent link">&para;</a></h2>
-<h3 id="completion-timeout">Completion Timeout<a class="headerlink" href="#completion-timeout" title="Permanent link">&para;</a></h3>
-<p>The live migration process will copy virtual machine memory pages and disk blocks to the destination. In some cases, the virtual machine can write to different memory pages or disk blocks at a higher rate than these can be copied. As a result, the migration process is prevented from being completed in a reasonable amount of time. </p>
-<p>Live migration will be aborted if it exceeds the completion timeout of 800s per GiB of data. For example, a virtual machine with 8 GiB of memory will time out after 6400 seconds.</p>
-<h3 id="progress-timeout">Progress Timeout<a class="headerlink" href="#progress-timeout" title="Permanent link">&para;</a></h3>
-<p>Live migration will also be aborted when copying memory doesn't make any progress in 150s.</p>
+<h1 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h1>
+<p>The following sections contain tips to troubleshoot Harvester Monitoring.</p>
+<h2 id="monitoring-is-unusable">Monitoring is unusable<a class="headerlink" href="#monitoring-is-unusable" title="Permanent link">&para;</a></h2>
+<p>When the Harvester dashboard displays nothing of the Monitoring, it may be caused by the below reasons.</p>
+<h3 id="monitoring-is-unusable-due-to-pod-stucks-in-terminating">Monitoring is unusable due to POD stucks in "Terminating"<a class="headerlink" href="#monitoring-is-unusable-due-to-pod-stucks-in-terminating" title="Permanent link">&para;</a></h3>
+<p>Harvester Monitoring related PODs are deployed randomly in the cluster NODEs, when the NODE hosting following PODs is accidentally down, the related PODs may stuck in status "Terminating", then the Monitoring is unusable from the WebUI.</p>
+<div class="highlight"><pre><span></span><code>$ kubectl get pods -n cattle-monitoring-system
+
+NAMESPACE                   NAME                                                     READY   STATUS        RESTARTS   AGE
+cattle-monitoring-system    prometheus-rancher-monitoring-prometheus-0               3/3     Terminating   0          3d23h
+cattle-monitoring-system    rancher-monitoring-admission-create-fwjn9                0/1     Terminating   0          137m
+cattle-monitoring-system    rancher-monitoring-crd-create-9wtzf                      0/1     Terminating   0          137m
+cattle-monitoring-system    rancher-monitoring-grafana-d9c56d79b-ph4nz               3/3     Terminating   0          3d23h
+cattle-monitoring-system    rancher-monitoring-grafana-d9c56d79b-t24sz               0/3     Init:0/2      0          132m
+
+cattle-monitoring-system    rancher-monitoring-kube-state-metrics-5bc8bb48bd-nbd92   1/1     Running       4          4d1h
+...
+</code></pre></div>
+<p>Monitoring can be recovered via using CLI commands to delete related PODs forcely, the cluster will deploy new PODs to replace them.</p>
+<div class="highlight"><pre><span></span><code>Delete each none-running POD in namespace cattle-monitoring-system.
+
+$ kubectl delete pod --force -n cattle-monitoring-system prometheus-rancher-monitoring-prometheus-0
+
+pod &quot;prometheus-rancher-monitoring-prometheus-0&quot; force deleted
+
+
+$ kubectl delete pod --force -n cattle-monitoring-system rancher-monitoring-admission-create-fwjn9
+
+$ kubectl delete pod --force -n cattle-monitoring-system rancher-monitoring-crd-create-9wtzf
+
+$ kubectl delete pod --force -n cattle-monitoring-system rancher-monitoring-grafana-d9c56d79b-ph4nz 
+
+$ kubectl delete pod --force -n cattle-monitoring-system rancher-monitoring-grafana-d9c56d79b-t24sz
+</code></pre></div>
+<p>Wait a few minutes, the new PODs are created and become ready. The Monitoring dashboard will be usable again.</p>
+<div class="highlight"><pre><span></span><code>$ kubectl get pods -n cattle-monitoring-system 
+
+NAME                                                     READY   STATUS     RESTARTS   AGE
+prometheus-rancher-monitoring-prometheus-0               0/3     Init:0/1   0          98s
+rancher-monitoring-grafana-d9c56d79b-cp86w               0/3     Init:0/2   0          27s
+...
+
+$ kubectl get pods -n cattle-monitoring-system 
+
+NAME                                                     READY   STATUS    RESTARTS   AGE
+prometheus-rancher-monitoring-prometheus-0               3/3     Running   0          7m57s
+rancher-monitoring-grafana-d9c56d79b-cp86w               3/3     Running   0          6m46s
+...
+</code></pre></div>
 
               
             </article>
@@ -1377,7 +1356,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../backup-restore/" class="md-footer__link md-footer__link--prev" aria-label="Previous: VM Backup &amp; Restore" rel="prev">
+        <a href="../os/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Operating System" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1386,20 +1365,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              VM Backup & Restore
+              Operating System
             </div>
           </div>
         </a>
       
       
         
-        <a href="../hotplug-volume/" class="md-footer__link md-footer__link--next" aria-label="Next: Hot-Plug Volumes" rel="next">
+        <a href="../../reference/api/" class="md-footer__link md-footer__link--next" aria-label="Next: API Reference" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Hot-Plug Volumes
+              API Reference
             </div>
           </div>
           <div class="md-footer__button md-icon">
