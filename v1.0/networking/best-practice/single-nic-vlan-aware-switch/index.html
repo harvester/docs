@@ -1357,7 +1357,7 @@ switch# copy running-config startup-config
 </code></pre></div>
 <h2 id="create-a-vlan-network-in-harvester">Create a VLAN Network in Harvester<a class="headerlink" href="#create-a-vlan-network-in-harvester" title="Permanent link">&para;</a></h2>
 <p>You can create a new VLAN network in the <strong>Advanced &gt; Networks</strong> page, and click the <strong>Create</strong> button.</p>
-<p>Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same VLAN ID in different namespaces if you have <a href="/rancher/virtualization-management/#multi-tenancy">Rancher multi-tenancy</a> configured)</small>.</p>
+<p>Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same VLAN ID in different namespaces if you have <a href="../../../rancher/virtualization-management/#multi-tenancy">Rancher multi-tenancy</a> configured)</small>.</p>
 <p><img alt="create-vlan-network.png" src="../assets/create-network.png" /></p>
 <h3 id="connect-a-vm-to-the-subnet-of-the-harvester-hosts">Connect a VM to the subnet of the Harvester hosts<a class="headerlink" href="#connect-a-vm-to-the-subnet-of-the-harvester-hosts" title="Permanent link">&para;</a></h3>
 <p>Once you finished the configuration in the previous section, the external switch will send out untagged network traffic to the subnet of the Harvester hosts. In Harvester, the untagged traffic is received in VLAN 1.</p>
@@ -1370,7 +1370,7 @@ switch# copy running-config startup-config
 </div>
 <h3 id="connect-a-vm-to-specific-vlan-network">Connect a VM to specific VLAN network<a class="headerlink" href="#connect-a-vm-to-specific-vlan-network" title="Permanent link">&para;</a></h3>
 <p>You need to create a VLAN Network with specific VLAN ID and associate the VM to that VLAN network. </p>
-<p>Please refer to <a href="/networking/harvester-network/">this page</a> for additional information on Harvester Networking.</p>
+<p>Please refer to <a href="../../harvester-network/">this page</a> for additional information on Harvester Networking.</p>
 
               
             </article>
