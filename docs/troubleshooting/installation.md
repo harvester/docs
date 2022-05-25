@@ -91,7 +91,7 @@ Please include the following information in a bug report when reporting a failed
 
 - A failed installation screenshot.
 - System information and logs.
-    - Since v1.0.2
+    - Available as of v1.0.2
 
         Please follow the guide in [Logging into the Harvester Installer (a live OS)](#logging-into-the-harvester-installer-a-live-os) to log in. And run the command to generate a tarball that contains troubleshooting information:
 
@@ -105,7 +105,7 @@ Please include the following information in a bug report when reporting a failed
 
     - Before v1.0.2
 
-        Please help capture these files:
+        Please help capture the content of these files:
 
         ```
         /var/log/console.log
@@ -114,7 +114,7 @@ Please include the following information in a bug report when reporting a failed
         /tmp/cos.*
         ```
 
-        And output of thse commands:
+        And output of these commands:
 
         ```
         blkid
