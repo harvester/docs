@@ -56,7 +56,7 @@ For better network performances and isolation, we recommend to choose different 
 !!! note
     - When selecting the network interface, the value in parentheses represents the distribution percentage of the network interface on all hosts. If a network interface with a value less than 100% is selected, the network interface needs to be manually specified on the host where the VLAN network configuration fails.
     - Modifying the default VLAN network setting will not update the existing configured host network.
-    - Harvester VLAN network supports bond interfaces. Currently it can only be created automatically via [PXE Boot Configuration](/install/harvester-configuration/#installnetworks). You may also login to the node and create it manually.
+    - Harvester VLAN network supports bond interfaces. Currently it can only be created automatically via [PXE Boot Configuration](../install/harvester-configuration.md#installnetworks). You may also login to the node and create it manually.
 
 
 You can also customize each node's VLAN network via the **Hosts > Network** tab.
@@ -67,7 +67,7 @@ You can also customize each node's VLAN network via the **Hosts > Network** tab.
 
 A new VLAN network can be created via the **Advanced > Networks** page and clicking the **Create** button.
 
- 1. Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same vlan ID on different namespaces of [Rancher multi-tenancy](/rancher/virtualization-management/#multi-tenancy) support)</small>.
+ 1. Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same vlan ID on different namespaces of [Rancher multi-tenancy](../rancher/virtualization-management.md#multi-tenancy) support)</small>.
    ![create-vlan-network.png](assets/create-network.png)
   
  2. Configure a route in order to allow the hosts to connect to the VLAN network using IPv4 addresses. The CIDR and gateway of the VLAN network are mandatory parameters for the route configuration.  You can configure the route by choosing one of the following options:
