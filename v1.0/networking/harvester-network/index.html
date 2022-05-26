@@ -1382,7 +1382,7 @@ By default, the management network IP of a VM can only be accessed within the cl
 <ul>
 <li>When selecting the network interface, the value in parentheses represents the distribution percentage of the network interface on all hosts. If a network interface with a value less than 100% is selected, the network interface needs to be manually specified on the host where the VLAN network configuration fails.</li>
 <li>Modifying the default VLAN network setting will not update the existing configured host network.</li>
-<li>Harvester VLAN network supports bond interfaces. Currently it can only be created automatically via <a href="/install/harvester-configuration/#installnetworks">PXE Boot Configuration</a>. You may also login to the node and create it manually.</li>
+<li>Harvester VLAN network supports bond interfaces. Currently it can only be created automatically via <a href="../../install/harvester-configuration/#installnetworks">PXE Boot Configuration</a>. You may also login to the node and create it manually.</li>
 </ul>
 </div>
 <p>You can also customize each node's VLAN network via the <strong>Hosts &gt; Network</strong> tab.</p>
@@ -1391,7 +1391,7 @@ By default, the management network IP of a VM can only be accessed within the cl
 <p>A new VLAN network can be created via the <strong>Advanced &gt; Networks</strong> page and clicking the <strong>Create</strong> button.</p>
 <ol>
 <li>
-<p>Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same vlan ID on different namespaces of <a href="/rancher/virtualization-management/#multi-tenancy">Rancher multi-tenancy</a> support)</small>.
+<p>Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same vlan ID on different namespaces of <a href="../../rancher/virtualization-management/#multi-tenancy">Rancher multi-tenancy</a> support)</small>.
    <img alt="create-vlan-network.png" src="../assets/create-network.png" /></p>
 </li>
 <li>
