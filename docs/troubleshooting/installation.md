@@ -103,6 +103,10 @@ Please include the following information in a bug report when reporting a failed
 
         ![](./assets/installation-support-config-example.png)
 
+        !!! note
+
+            A failure PXE Boot installation automatically generates a tarball if the [`install.debug`](../install/harvester-configuration.md#installdebug) field is set to `true` in the Harvester configuration file.
+
     - Before v1.0.2
 
         Please help capture the content of these files:
