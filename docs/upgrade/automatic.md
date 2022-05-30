@@ -49,7 +49,7 @@ Note we are still working towards zero-downtime upgrade, due to some known issue
         $ timedatectl set-ntp true
 
         # Check status
-        $ timedatectl status
+        $ sudo timedatectl status
         ```
 
 !!!warning
