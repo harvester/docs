@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/networking/harvester-network/">
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.16">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.c382b1dc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1c3799f8.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.cc9b2e1e.min.css">
@@ -1361,7 +1361,7 @@
 </ul>
 <h2 id="management-network">Management Network<a class="headerlink" href="#management-network" title="Permanent link">&para;</a></h2>
 <p>Harvester uses <a href="https://projectcalico.docs.tigera.io/getting-started/kubernetes/flannel/flannel">canal</a> as its default management network. It is a built-in network that can be used directly from the cluster. 
-By default, the management network IP of a VM can only be accessed within the cluster nodes, and the management network IP will not remain unchanged after the VM reboot.</p>
+By default, the management network IP of a VM can only be accessed within the cluster nodes, and the management network IP will change after the VM reboot. This is non-typical behaviour that needs to be taken note of since VM IPs are expected to remain unchanged after a reboot.</p>
 <p>However, users can leverage the Kubernetes <a href="https://kubevirt.io/user-guide/virtual_machines/service_objects/">service object</a> to create a stable IP for your VMs with the management network.</p>
 <h2 id="vlan-network">VLAN Network<a class="headerlink" href="#vlan-network" title="Permanent link">&para;</a></h2>
 <p>The <a href="https://github.com/harvester/harvester-network-controller">Harvester network-controller</a> leverages the <a href="https://github.com/k8snetworkplumbingwg/multus-cni">multus</a> and <a href="https://www.cni.dev/plugins/current/main/bridge/">bridge</a> CNI plugins to implement its customized L2 bridge VLAN network. It helps to connect your VMs to the host network interface and can be accessed from internal and external networks using the physical switch.</p>
@@ -1511,7 +1511,7 @@ Harvester is fully compatible with the <code>cloud-init network configs</code>. 
     <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.a6c66575.min.js"></script>
+      <script src="../../assets/javascripts/bundle.3a4b43e5.min.js"></script>
       
         <script src="../../assets/swagger-ui/swagger-ui-bundle.js"></script>
       
