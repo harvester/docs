@@ -85,23 +85,42 @@ stages:
     $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
     ```
 
-## Collecting information
+## Collecting troubleshooting information
 
 Please include the following information in a bug report when reporting a failed installation:
 
 - A failed installation screenshot.
-- Content of these files:
+- System information and logs.
+    - Available as of v1.0.2
 
-    ```
-    /var/log/console.log
-    /run/cos/target/rke2.log
-    /tmp/harvester.*
-    /tmp/cos.*
-    ```
+        Please follow the guide in [Logging into the Harvester Installer (a live OS)](#logging-into-the-harvester-installer-a-live-os) to log in. And run the command to generate a tarball that contains troubleshooting information:
 
-- Output of these commands:
+        ```
+        supportconfig -k -c
+        ```
+        
+        The command output messages contain the generated tarball path. For example the path is `/var/loq/scc_aaa_220520_1021 804d65d-c9ba-4c54-b12d-859631f892c5.txz` in the following example:
 
-    ```
-    blkid
-    dmesg
-    ```
+        ![](./assets/installation-support-config-example.png)
+
+        !!! note
+
+            A failure PXE Boot installation automatically generates a tarball if the [`install.debug`](../install/harvester-configuration.md#installdebug) field is set to `true` in the Harvester configuration file.
+
+    - Before v1.0.2
+
+        Please help capture the content of these files:
+
+        ```
+        /var/log/console.log
+        /run/cos/target/rke2.log
+        /tmp/harvester.*
+        /tmp/cos.*
+        ```
+
+        And output of these commands:
+
+        ```
+        blkid
+        dmesg
+        ```
