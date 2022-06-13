@@ -33,13 +33,13 @@ virt-launcher-upgrade-repo-hvst-upgrade-9gmg2-4mnmq     1/1     Running     0   
 
 ### Phase 2: Preload container images
 
-The Harvester controller creates jobs on each Harvester node to download images from the repository VM and preload them. These are container images required for the next release.
+The Harvester controller creates jobs on each Harvester node to download images from the repository VM and preload them. These are the container images required for the next release.
 
 During this stage you can see the upgrade status windows shows:
 
 ![](./assets/ts_status_phase2.png){: style="width:60%"}
 
-It will take a while for all nodes to preload images. If the upgrade fails at this phase, the user can check job logs in `cattle-system` namespace:
+It will take a while for all nodes to preload images. If the upgrade fails at this phase, the user can check job logs in the `cattle-system` namespace:
 
 ```
 $ kubectl get jobs -n cattle-system | grep prepare
@@ -97,7 +97,7 @@ $ kubectl logs -n harvester-system jobs/hvst-upgrade-9gmg2-post-drain-node2
 
 ### Phase 5: Clean-up
 
-The Harvester controller deletes the upgrade repository VM and all files that are not needed anymore.
+The Harvester controller deletes the upgrade repository VM and all files that are no longer needed.
 
 
 ## Common operations
