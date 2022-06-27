@@ -1,7 +1,5 @@
 ---
-sidebar_position: 6
-sidebar_label: "Upload Images"
-title: ""
+sidebar_position: 60
 keywords:
   - Harvester
   - harvester
@@ -18,16 +16,23 @@ Currently, there are three ways that are supported to create an image: uploading
 ### Upload Images via URL
 
 To import virtual machine images in the **Images** page, enter a URL that can be accessed from the cluster. Description and labels are optional.
-!!!note
-    The image name will be auto-filled using the URL address's filename. You can customize the image name at any time.
+:::note
+
+The image name will be auto-filled using the URL address's filename. You can customize the image name at any time.
+
+:::
+
 ![](./assets/upload-image.png)
 
 ### Upload Images via Local File
 
 Currently, qcow2, raw, and ISO images are supported.
 
-!!!note
-    - Please do not refresh the page until the file upload is finished.
+:::note
+
+- Please do not refresh the page until the file upload is finished.
+
+:::
 
 ![](./assets/upload-image-local.png)
 
@@ -37,3 +42,12 @@ Currently, qcow2, raw, and ISO images are supported.
 On the **Volumes** page, click **Export Image**. Enter image name to create image.
 
 ![](./assets/export-image.png)
+
+### Image labels
+
+
+You can add labels to the image, which will help identify the OS type more accurately. Additionally, you can also add any custom labels when needed.
+
+If you create an image from a URL, the UI will automatically recognize the OS type and image category based on the image name. However, if you created the image by uploading a local file, you will need to manually select the corresponding labels.
+
+![](./assets/image-labels.png)

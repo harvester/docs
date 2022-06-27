@@ -1,7 +1,5 @@
 ---
-sidebar_position: 5
-sidebar_label: "Authentication"
-title: ""
+sidebar_position: 30
 keywords:
   - Harvester
   - harvester
@@ -16,5 +14,8 @@ After installation, user will be prompted to set the password for the default `a
 
 ![auth](./install/assets/first-time-login.png)
 
-!!!note
-    In the single cluster mode, only one default `admin` user is provided. Check out the [Rancher Integration](./rancher/rancher-integration.md) for multi-tenant management.
+:::note
+
+In the single cluster mode, only one default `admin` user is provided. Check out the [Rancher Integration](./rancher/rancher-integration.md) for multi-tenant management.
+
+:::

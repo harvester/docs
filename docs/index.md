@@ -1,8 +1,5 @@
 ---
-slug: /
 sidebar_position: 1
-sidebar_label: "Harvester Overview"
-title: ""
 keywords:
   - Harvester
   - harvester
@@ -99,5 +96,8 @@ During the installation, you can either choose to form a new cluster or join the
 
 Harvester can also be installed automatically. Please refer to [PXE Boot Install](./install/pxe-boot-install.md) for detailed instructions and additional guidance.
 
-!!! note
-    More iPXE usage examples are available at [harvester/ipxe-examples](https://github.com/harvester/ipxe-examples).
+:::note
+
+More iPXE usage examples are available at [harvester/ipxe-examples](https://github.com/harvester/ipxe-examples).
+
+:::

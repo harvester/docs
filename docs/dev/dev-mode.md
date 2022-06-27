@@ -1,7 +1,5 @@
 ---
 sidebar_position: 9
-sidebar_label: "Developer Mode Installation"
-title: ""
 keywords:
   - Harvester
   - harvester
@@ -13,8 +11,11 @@ Description: Developer mode (dev mode) is intended to be used for testing and de
 
 # Developer Mode Installation
 
-!!! attention
-    Developer mode (dev mode) is intended to be used for local testing and development purposes.
+:::caution attention
+
+Developer mode (dev mode) is intended to be used for local testing and development purposes.
+
+:::
 
 ## Requirements
 

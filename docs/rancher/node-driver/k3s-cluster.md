@@ -11,8 +11,10 @@ You can now provision K3s Kubernetes clusters on top of the Harvester cluster in
 ![k3s-cluster](../assets/rke2-k3s-node-driver.png)
 
 :::note
-    - Harvester K3s node driver is in tech preview.
-    - [VLAN network](https://docs.harvesterhci.io/v1.0/networking/harvester-network/#create-a-vlan-network) is required for Harvester node driver.
+
+- Harvester K3s node driver is in tech preview.
+- [VLAN network](https://docs.harvesterhci.io/v1.0/networking/harvester-network/#create-a-vlan-network) is required for Harvester node driver.
+
 :::
 
 ### Create Your Cloud Credentials

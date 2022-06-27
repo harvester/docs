@@ -23,7 +23,9 @@ Additionally, Harvester now can provide built-in [Load Balancer support](../clou
 While you can [upload and view `.ISO` images in the Harvester UI](../../upload-image.md#upload-images-via-local-file), the same capability is not available in the Rancher UI. For more information on this, see the [Rancher docs](https://rancher.com/docs/rancher/v2.6/en/virtualization-admin/#harvester-node-driver).
 
 :::note
-    Harvester v1.0.0 is compatible with Rancher `v2.6.3+` only.
+
+Harvester v1.0.0 is compatible with Rancher `v2.6.3+` only.
+
 :::
 
 ## Harvester Node Driver

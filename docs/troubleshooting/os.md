@@ -1,9 +1,3 @@
----
-sidebar_position: 3
-sidebar_label: "Operating System"
-title: ""
----
-
 # Operating System
 
 Harvester runs on an OpenSUSE-based OS. The OS is an artifact produced by the [cOS toolkit](https://github.com/rancher-sandbox/cOS-toolkit). The following sections contain information and tips to help users troubleshoot OS-related issues.
@@ -25,8 +19,11 @@ node1:~ # blkid
 
 The OS file system, like a container image, is image-based and immutable except in some directories. To temporarily enable the read-write mode, please use the following steps:
 
-!!! warning
-    Enabling read-write mode might break your system if files are modified. Please use it at your own risk.
+:::caution
+
+Enabling read-write mode might break your system if files are modified. Please use it at your own risk.
+
+:::
 
 - For version `v0.3.0`, we need to apply a workaround first to [make some directories non-overlaid](https://github.com/harvester/harvester/issues/1388) after enabling read-write mode. On a running Harvester node, run the following command as root:
 
@@ -51,8 +48,11 @@ The OS file system, like a container image, is image-based and immutable except 
 
 ## How to permanently edit kernel parameters
 
-!!! note
-    The following steps are a workaround. Harvester will inform the community once a permanent resolution is in place.
+:::note
+
+The following steps are a workaround. Harvester will inform the community once a permanent resolution is in place.
+
+:::
 
 - Re-mount state directory in rw mode:
     ```
@@ -109,8 +109,12 @@ To enable outputting of kernel messages to a serial console, please use the foll
 
     ![](./assets/os-edit-first-menuentry-add-console.png)
 
-    !!! note
-        Adjust the [console options](https://www.kernel.org/doc/html/latest/admin-guide/serial-console.html) according to your environment. **Make sure** to append the `console=` string at the end of the line.
+    :::note
+
+    Adjust the [console options](https://www.kernel.org/doc/html/latest/admin-guide/serial-console.html) according to your environment. **Make sure** to append the `console=` string at the end of the line.
+
+    :::
+
 - Connect to the serial port to capture logs.
 ### Collect crash dumps
 For kernel panic crashes, you can use kdump to collect crash dumps.

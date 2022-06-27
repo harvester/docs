@@ -10,9 +10,12 @@ Users can now provision RKE2 Kubernetes clusters on top of the Harvester cluster
 
 ![rke2-cluster](../assets/rke2-k3s-node-driver.png)
 
-!!! note
-    - Harvester RKE2 node driver is in tech preview.
-    - VLAN network is required for Harvester node driver.
+:::note
+
+- Harvester RKE2 node driver is in tech preview.
+- VLAN network is required for Harvester node driver.
+
+:::
 
 ### Create Your Cloud Credentials
 
@@ -44,10 +47,12 @@ Users can create a RKE2 Kubernetes cluster from the **Cluster Management** page 
 
 ![create-rke2-harvester-cluster](../assets/create-rke2-harvester-cluster.png)
 
-!!! note
-    - RKE2 v1.21.5+rke2r2 or above provides a built-in Harvester Cloud Provider and Guest CSI driver integration.
-    - Currently only imported Harvester clusters are supported automatically.
+:::note
 
+- RKE2 v1.21.5+rke2r2 or above provides a built-in Harvester Cloud Provider and Guest CSI driver integration.
+- Currently only imported Harvester clusters are supported automatically.
+
+:::
 
 ### Using Harvester RKE2 Node Driver in Air Gapped Environment
 

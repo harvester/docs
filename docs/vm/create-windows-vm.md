@@ -1,7 +1,5 @@
 ---
 sidebar_position: 2
-sidebar_label: "Create a Windows VM"
-title: ""
 keywords:
   - Harvester
   - harvester
@@ -17,12 +15,15 @@ Description: Create one or more Windows virtual machines from the Virtual Machin
 
 ---
 
-# Create a Windows VM
+# Create a Windows Virtual Machine
 
 Create one or more virtual machines from the **Virtual Machines** page.
 
-!!! note
-	For creating Linux virtual machines, please refer to [this page](./create-vm.md).
+:::note
+
+For creating Linux virtual machines, please refer to [this page](./create-vm.md).
+
+:::
 
 ## Header Section
 
@@ -39,11 +40,17 @@ Create one or more virtual machines from the **Virtual Machines** page.
 
 ![create-windows-vm](assets/create-windows-vm.png)
 
-!!! note
-    As mentioned above, it is recommended that you use the Windows VM template. The `Volumes` section will describe the options which the Windows VM template created automatically.
+:::note
 
-!!! warning
-	The `bootOrder` values need to be set with the installation image first. If you change it, your VM might not boot into the installation disk.
+As mentioned above, it is recommended that you use the Windows VM template. The `Volumes` section will describe the options which the Windows VM template created automatically.
+
+:::
+
+:::caution
+
+The `bootOrder` values need to be set with the installation image first. If you change it, your VM might not boot into the installation disk.
+
+:::
 
 ## Volumes Tab
 
@@ -76,8 +83,11 @@ Create one or more virtual machines from the **Virtual Machines** page.
 
 ![create-windows-vm-networks](assets/create-windows-vm-networks.png)
 
-!!! warning
-	Changing the `Node Scheduling` settings can impact Harvester features, such as disabling `Live migration`.
+:::caution
+
+Changing the `Node Scheduling` settings can impact Harvester features, such as disabling `Live migration`.
+
+:::
 
 ## Node Scheduling Tab
 
@@ -100,6 +110,9 @@ Create one or more virtual machines from the **Virtual Machines** page.
 
 Once all the settings are in place, click on `Create` to create the VM.
 
-!!! note
-    If you need to add advanced settings, you can edit the VM configuration directly by clicking on `Edit as YAML`. 
-    And if you want to cancel all changes made, click `Cancel`.
+:::note
+
+If you need to add advanced settings, you can edit the VM configuration directly by clicking on `Edit as YAML`. 
+And if you want to cancel all changes made, click `Cancel`.
+
+:::

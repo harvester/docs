@@ -1,7 +1,5 @@
 ---
 sidebar_position: 4
-sidebar_label: "VM Backup & Restore"
-title: ""
 keywords:
   - Harvester
   - harvester
@@ -18,8 +16,11 @@ _Available as of v0.3.0_
 VM backups are created from the **Virtual Machines** page. The VM backup volumes will be stored in the **Backup Target** (an NFS or S3 server), and they can be used to either restore a new VM or replace an existing VM.
 ![vm-backup.png](assets/vm-backup.png)
 
-!!! Note
-    A backup target must be set up. For more information, see [Configure Backup Target](#configure-backup-target). If the backup target has not been set, you’ll be prompted with a message to do so.
+:::note
+
+A backup target must be set up. For more information, see [Configure Backup Target](#configure-backup-target). If the backup target has not been set, you’ll be prompted with a message to do so.
+
+:::
 
 ## Configure Backup Target
 
@@ -77,8 +78,11 @@ _Available as of v1.0.0_
 
 Users can now restore a new VM on another cluster by leveraging the VM metadata & content backup feature.
 
-!!! prerequisites "Prerequisites"
-     You must manually configure the virtual machine images with the same name on the new cluster first, otherwise the virtual machines will be failed to recover.
+:::info prerequisites
+
+You must manually configure the virtual machine images with the same name on the new cluster first, otherwise the virtual machines will be failed to recover.
+
+:::
 
 ### Upload the same VM images to a new cluster
 

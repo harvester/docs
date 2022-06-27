@@ -1,7 +1,5 @@
 ---
-sidebar_position: 5
-sidebar_label: "Management Address"
-title: ""
+sidebar_position: 2
 keywords:
   - VIP
 Description: The Harvester provides a virtual IP as the management address.
@@ -10,8 +8,11 @@ Description: The Harvester provides a virtual IP as the management address.
 # Management Address
 Harvester provides a fixed virtual IP (VIP) as the management address. You can find the management address on the console dashboard after the installation.
 
-!!! note
-    If you selected the IP address to be configured via DHCP, you will need to configure static MAC-to-IP address mapping on your DHCP server in order to have a persistent Virtual IP
+:::note
+
+If you selected the IP address to be configured via DHCP, you will need to configure static MAC-to-IP address mapping on your DHCP server in order to have a persistent Virtual IP
+
+:::
 
 ![](./assets/iso-installed.png)
 

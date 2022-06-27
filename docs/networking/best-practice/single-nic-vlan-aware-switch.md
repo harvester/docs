@@ -1,7 +1,5 @@
 ---
-sidebar_position: 4
-sidebar_label: "Single NIC with VLAN-aware Switch"
-title: ""
+sidebar_position: 60
 keywords:
   - Harvester
   - harvester
@@ -58,7 +56,7 @@ switch# copy running-config startup-config
 
 You can create a new VLAN network in the **Advanced > Networks** page, and click the **Create** button.
 
-Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same VLAN ID in different namespaces if you have [Rancher multi-tenancy](/rancher/virtualization-management/#multi-tenancy) configured)</small>.
+Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same VLAN ID in different namespaces if you have [Rancher multi-tenancy](../../rancher/virtualization-management.md#multi-tenancy) configured)</small>.
 
    ![create-vlan-network.png](assets/create-network.png)
 
@@ -72,11 +70,14 @@ The external switch will remove the VLAN 100 tag from the packet for egress and 
 
    ![vlan-aware-native-vlan.png](assets/vlan-aware-native-vlan.png)
 
-!!! warning
-    Do not create a VLAN Network with VLAN 100 and associate any VM to it. The connectivity will not always be ensured and depends on the external switch behavior to add/remove VLAN tag from packets.
+:::caution
+
+Do not create a VLAN Network with VLAN 100 and associate any VM to it. The connectivity will not always be ensured and depends on the external switch behavior to add/remove VLAN tag from packets.
+
+:::
 
 ### Connect a VM to specific VLAN network
 
 You need to create a VLAN Network with specific VLAN ID and associate the VM to that VLAN network. 
 
-Please refer to [this page](/networking/harvester-network/) for additional information on Harvester Networking.
+Please refer to [this page](../harvester-network.md) for additional information on Harvester Networking.

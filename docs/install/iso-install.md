@@ -1,7 +1,5 @@
 ---
 sidebar_position: 1
-sidebar_label: "ISO Installation"
-title: ""
 keywords:
   - Harvester
   - harvester

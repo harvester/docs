@@ -10,8 +10,11 @@ You can now provision RKE1 Kubernetes clusters on top of the Harvester cluster i
 
 ![rke1-cluster](../assets/rke1-node-driver.png)
 
-!!! note
-      - VLAN network is required for Harvester node driver.
+:::note
+
+- VLAN network is required for Harvester node driver.
+
+:::
 
 When you create a Kubernetes cluster hosted by the Harvester infrastructure, [node templates](https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/#node-templates) are used to provision the cluster nodes. These templates use Docker Machine configuration options to define an operating system image and settings/parameters for the node.
 

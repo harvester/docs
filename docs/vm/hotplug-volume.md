@@ -1,7 +1,5 @@
 ---
 sidebar_position: 6
-sidebar_label: "Hot-Plug Volumes"
-title: ""
 keywords:
   - Harvester
   - Hot-plug

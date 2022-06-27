@@ -1,7 +1,4 @@
 ---
-sidebar_position: 2
-sidebar_label: "Virtualization Management"
-title: ""
 keywords:
   - Harvester
   - Rancher
@@ -21,21 +18,25 @@ For Harvester v0.3.0 and above, virtualization management with the multi-cluster
     - [Vagrant](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/quickstart-vagrant/)
     - [Equinix Metal](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/equinix-metal-qs/)
 
-    !!! Warning
-        **Do not install Rancher with Docker in production**. Otherwise, your environment may be damaged and your cluster may not be recovered. Installing Rancher in Docker should only be used for quick evaluation and testing purposes.
+    :::caution
 
-        To install Rancher with Docker:
-        
-        1. Begin creation of a custom cluster by provisioning a Linux host. Your host can be any of the following:
-            - A cloud-hosted virtual machine (VM)
-            - An on-premises VM
-            - A bare-metal server
-        1. Log into your Linux host using your preferred shell, such as PuTTy or a remote terminal connection.
-        1. From your shell, enter the following command:
-        ```shell
-        # for a quick evaluation, you can run the Rancher server with the following command
-        $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.3
-        ```
+    **Do not install Rancher with Docker in production**. Otherwise, your environment may be damaged and your cluster may not be recovered. Installing Rancher in Docker should only be used for quick evaluation and testing purposes.
+
+    To install Rancher with Docker:
+
+    1. Begin creation of a custom cluster by provisioning a Linux host. Your host can be any of the following:
+        - A cloud-hosted virtual machine (VM)
+        - An on-premises VM
+        - A bare-metal server
+    1. Log into your Linux host using your preferred shell, such as PuTTy or a remote terminal connection.
+    1. From your shell, enter the following command:
+
+    ```shell
+    # for a quick evaluation, you can run the Rancher server with the following command
+    $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.3
+    ```
+
+    :::
 
     
 1. Once the Rancher server is up and running, log in and click the hamburger menu and choose the **Virtualization Management** tab. Select **Import Existing** to import the downstream Harvester cluster into the Rancher server.
@@ -90,5 +91,8 @@ Users can delete the imported Harvester cluster from the Rancher UI via **Virtua
 
 ![delete-cluster](assets/delete-harvester-cluster.png)
 
-!!! warning
-    Please do not run the `kubectl delete -f ...` command to delete the imported Harvester cluster as it will remove the entire `cattle-system` namespace which is required of the Harvester cluster.
+:::caution
+
+Please do not run the `kubectl delete -f ...` command to delete the imported Harvester cluster as it will remove the entire `cattle-system` namespace which is required of the Harvester cluster.
+
+:::

@@ -1,9 +1,3 @@
----
-sidebar_position: 12
-sidebar_label: "Harvester Terraform Provider"
-title: ""
----
-
 # Harvester Terraform Provider
 
 ## Requirements

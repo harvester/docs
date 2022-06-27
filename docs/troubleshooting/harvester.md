@@ -1,8 +1,3 @@
----
-sidebar_position: 2
-sidebar_label: "Harvester"
-title: ""
----
 
 ## Generate a support bundle
 
@@ -21,26 +16,32 @@ Users can generate a support bundle in the Harvester GUI with the following step
 
 You can access the embedded Rancher dashboard via `https://{{HARVESTER_IP}}/dashboard/c/local/explorer`.
 
-!!! note
-    We only support to use the embedded Rancher dashboard for debugging and validation purpose.
-    For Rancher's multi-cluster and multi-tenant integration, please refer to the docs [here](../rancher/rancher-integration.md).
+:::note
+
+We only support to use the embedded Rancher dashboard for debugging and validation purpose.
+For Rancher's multi-cluster and multi-tenant integration, please refer to the docs [here](../rancher/rancher-integration.md).
+
+:::
 
 ## Access Embedded Longhorn
 
 You can access the embedded Longhorn UI via `https://{{HARVESTER_IP}}/dashboard/c/local/longhorn`.
 
-!!! note
-    We only support to use the embedded Longhorn UI for debugging and validation purpose .
+:::note
+
+We only support to use the embedded Longhorn UI for debugging and validation purpose .
+
+:::
 
 ## I can't access Harvester after I changed SSL/TLS enabled protocols and ciphers
 
 If you changed
-[SSL/TLS enabled protocols and ciphers settings](../settings/settings.md#ssl-parameters)
+[SSL/TLS enabled protocols and ciphers settings](../../settings/settings/#ssl-parameters)
 and you no longer have access to Harvester GUI and API,
 it's highly possible that NGINX Ingress Controller has stopped working due to the misconfigured SSL/TLS protocols and ciphers.
 Follow these steps to reset the setting:
 
-1. Following [FAQ](../faq) to SSH into Harvester node and switch to `root` user.
+1. Following [FAQ](../../faq/) to SSH into Harvester node and switch to `root` user.
 ```
 $ sudo -s
 ```

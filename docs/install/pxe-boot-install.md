@@ -1,7 +1,5 @@
 ---
-sidebar_position: 3
-sidebar_label: "PXE Boot Installation"
-title: ""
+sidebar_position: 2
 keywords:
   - Harvester
   - harvester
@@ -24,8 +22,11 @@ To see sample iPXE scripts, please visit [Harvester iPXE Examples](https://githu
 
 ## Prerequisite
 
-!!! important
-    Nodes need to have at least **8G** of RAM because the installer loads the full ISO file into tmpfs.
+:::info
+
+Nodes need to have at least **8G** of RAM because the installer loads the full ISO file into tmpfs.
+
+:::
 
 ## Preparing HTTP Servers
 
@@ -62,8 +63,11 @@ When performing an automatic installation, there are two modes:
 
 ### CREATE Mode
 
-!!! warning
-    **Security Risks**: The configuration file below contains credentials which should be kept secret. Please do not make the configuration file publicly accessible.
+:::caution
+
+**Security Risks**: The configuration file below contains credentials which should be kept secret. Please do not make the configuration file publicly accessible.
+
+:::
 
 Create a [Harvester configuration file](./harvester-configuration.md) called `config-create.yaml` for `CREATE` mode. Modify the values as needed:
 
@@ -112,18 +116,24 @@ boot
 
 This assumes the iPXE script is stored in `/usr/share/nginx/html/harvester/ipxe-create`.
 
-!!! note
-    If you have multiple network interfaces,
-    you can leverage dracut's `ip=` parameter to specify the booting interface
-    and any other network configurations that dracut supports (e.g., `ip=eth1:dhcp`)
-    See [`man dracut.cmdline`](https://man7.org/linux/man-pages/man7/dracut.cmdline.7.html) for more information.
+:::note
 
-    Use `ip=` parameter to designate the booting interface only, as we only support **one single `ip=` parameter**.
+If you have multiple network interfaces,
+you can leverage dracut's `ip=` parameter to specify the booting interface
+and any other network configurations that dracut supports (e.g., `ip=eth1:dhcp`)
+See [`man dracut.cmdline`](https://man7.org/linux/man-pages/man7/dracut.cmdline.7.html) for more information.
+
+Use `ip=` parameter to designate the booting interface only, as we only support **one single `ip=` parameter**.
+
+:::
 
 ### JOIN Mode
 
-!!! warning
-    **Security Risks**: The configuration file below contains credentials which should be kept secret. Please do not make the configuration file publicly accessible.
+:::caution
+
+**Security Risks**: The configuration file below contains credentials which should be kept secret. Please do not make the configuration file publicly accessible.
+
+:::
 
 Create a [Harvester configuration file](./harvester-configuration.md) called `config-join.yaml` for `JOIN` mode. Modify the values as needed:
 
@@ -305,3 +315,17 @@ boot
 ```
 
 The parameter `initrd=harvester-<version>-initrd` is required.
+
+## Useful Kernel Parameters
+
+Besides the Harvester configuration, you can also specify other kernel parameters that are useful in different scenarios.
+See also [dracut.cmdline(7)](https://man7.org/linux/man-pages/man7/dracut.cmdline.7.html).
+
+### `ip=dhcp`
+
+If you have multiple network interfaces, you could add the `ip=dhcp` parameter to get IP from the DHCP server from all interfaces.
+
+### `rd.net.dhcp.retry=<cnt>`
+
+Failing to get IP from the DHCP server would cause iPXE booting to fail. You can add parameter `rd.net.dhcp.retry=<cnt>`
+to retry DHCP request for `<cnt>` times.

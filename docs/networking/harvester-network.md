@@ -1,7 +1,5 @@
 ---
-sidebar_position: 1
-sidebar_label: "Harvester Network"
-title: ""
+sidebar_position: 40
 keywords:
   - Harvester
   - harvester
@@ -28,7 +26,7 @@ Currently, Harvester supports two types of networks:
 ## Management Network
 
 Harvester uses [canal](https://projectcalico.docs.tigera.io/getting-started/kubernetes/flannel/flannel) as its default management network. It is a built-in network that can be used directly from the cluster. 
-By default, the management network IP of a VM can only be accessed within the cluster nodes, and the management network IP will not remain unchanged after the VM reboot.
+By default, the management network IP of a VM can only be accessed within the cluster nodes, and the management network IP will change after the VM reboot. This is non-typical behaviour that needs to be taken note of since VM IPs are expected to remain unchanged after a reboot.
 
 However, users can leverage the Kubernetes [service object](https://kubevirt.io/user-guide/virtual_machines/service_objects/) to create a stable IP for your VMs with the management network.
 
@@ -55,11 +53,13 @@ For better network performances and isolation, we recommend to choose different 
 
 ![](assets/enable-vlan.png)
 
-!!! note
-    - When selecting the network interface, the value in parentheses represents the distribution percentage of the network interface on all hosts. If a network interface with a value less than 100% is selected, the network interface needs to be manually specified on the host where the VLAN network configuration fails.
-    - Modifying the default VLAN network setting will not update the existing configured host network.
-    - Harvester VLAN network supports bond interfaces. Currently it can only be created automatically via [PXE Boot Configuration](/install/harvester-configuration/#installnetworks). You may also login to the node and create it manually.
+:::note
 
+- When selecting the network interface, the value in parentheses represents the distribution percentage of the network interface on all hosts. If a network interface with a value less than 100% is selected, the network interface needs to be manually specified on the host where the VLAN network configuration fails.
+- Modifying the default VLAN network setting will not update the existing configured host network.
+- Harvester VLAN network supports bond interfaces. Currently it can only be created automatically via [PXE Boot Configuration](../install/harvester-configuration.md#installnetworks). You may also login to the node and create it manually.
+
+:::
 
 You can also customize each node's VLAN network via the **Hosts > Network** tab.
 
@@ -69,7 +69,7 @@ You can also customize each node's VLAN network via the **Hosts > Network** tab.
 
 A new VLAN network can be created via the **Advanced > Networks** page and clicking the **Create** button.
 
- 1. Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same vlan ID on different namespaces of [Rancher multi-tenancy](/rancher/virtualization-management/#multi-tenancy) support)</small>.
+ 1. Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same vlan ID on different namespaces of [Rancher multi-tenancy](../rancher/virtualization-management.md#multi-tenancy) support)</small>.
    ![create-vlan-network.png](assets/create-network.png)
   
  2. Configure a route in order to allow the hosts to connect to the VLAN network using IPv4 addresses. The CIDR and gateway of the VLAN network are mandatory parameters for the route configuration.  You can configure the route by choosing one of the following options:
@@ -87,11 +87,13 @@ Users can now create a new VM using the above configured VLAN network,
 
 ![](./assets/vm-network-configuration.png)
 
-!!! note
-    - Only the first NIC will be enabled by default. Users can either choose to use a management network or a VLAN network. 
-    - You need to be careful to configure virtual machines with multiple NICs to avoid connectivity issues. You can refer to the [knowledge base](https://harvesterhci.io/kb/multiple-nics-vm-connectivity) for more details.
-    - You will need to select the `Install guest agent` option in the **Advanced Options** tab to get the VLAN network IP address from the Harvester UI.
+:::note
 
+- Only the first NIC will be enabled by default. Users can either choose to use a management network or a VLAN network. 
+- You need to be careful to configure virtual machines with multiple NICs to avoid connectivity issues. You can refer to the [knowledge base](https://harvesterhci.io/kb/multiple-nics-vm-connectivity) for more details.
+- You will need to select the `Install guest agent` option in the **Advanced Options** tab to get the VLAN network IP address from the Harvester UI.
+
+:::
 
 - You can choose to add one or multiple network interface cards. The additional network interface cards can be enabled by default via the cloud-init network data setting. e.g.,
 ```YAML
@@ -109,8 +111,11 @@ config:
 ```
 Harvester is fully compatible with the `cloud-init network configs`. You can refer to the [documentation](https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html) for more details.
 
-!!! note
-    If you add additional NICs after the VM has started, you will need to manually configure IPs for the additional NICs.
+:::note
+
+If you add additional NICs after the VM has started, you will need to manually configure IPs for the additional NICs.
+
+:::
 
 ### Configure DHCP servers on Networks
 
