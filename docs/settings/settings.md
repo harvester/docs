@@ -1,3 +1,9 @@
+---
+sidebar_position: 13
+sidebar_label: "Settings"
+title: ""
+---
+
 # Settings
 
 This page contains a list of advanced settings which can be used in Harvester.

@@ -1,4 +1,7 @@
 ---
+sidebar_position: 2
+sidebar_label: "Virtualization Management"
+title: ""
 keywords:
   - Harvester
   - Rancher

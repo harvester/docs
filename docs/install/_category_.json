@@ -1,0 +1,10 @@
+{
+    "position": 2,
+    "label": "Installation",
+    "collapsible": true,
+    "collapsed": true,
+    "link": {
+        "type": "generated-index",
+        "title": "Harvester Installation"
+    }
+}

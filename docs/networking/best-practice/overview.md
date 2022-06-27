@@ -1,5 +1,7 @@
 ---
-sidebar_position: 51
+sidebar_position: 1
+sidebar_label: "Overview"
+title: ""
 keywords:
   - Harvester
   - harvester

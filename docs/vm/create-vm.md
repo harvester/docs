@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+sidebar_label: "Create a VM"
+title: ""
 keywords:
   - Harvester
   - harvester

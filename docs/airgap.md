@@ -1,5 +1,7 @@
 ---
-sidebar_position: 20
+sidebar_position: 3
+sidebar_label: "Air Gapped Environment"
+title: ""
 keywords:
 - Harvester
 - offline

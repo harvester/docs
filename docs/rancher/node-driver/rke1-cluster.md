@@ -1,8 +1,14 @@
+---
+sidebar_position: 2
+sidebar_label: "Creating an RKE1 Kubernetes Cluster"
+title: ""
+---
+
 # Creating an RKE1 Kubernetes Cluster
 
 You can now provision RKE1 Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.3+` with the built-in Harvester node driver.
 
-![rke1-cluster](assets/rke1-node-driver.png)
+![rke1-cluster](../assets/rke1-node-driver.png)
 
 !!! note
       - VLAN network is required for Harvester node driver.
@@ -28,7 +34,7 @@ All `cloud credentials` are bound to your user profile and cannot be shared with
 1. Select "Imported Harvester" or "External Harvester".
 1. Click **Create**.
 
-![create-harvester-cloud-credentials](assets/create-cloud-credentials.png)
+![create-harvester-cloud-credentials](../assets/create-cloud-credentials.png)
 
 ### Create Node Template 
 
@@ -43,7 +49,7 @@ You can use the Harvester node driver to create node templates and eventually no
 1. (Optional) Configure **Advanced Options** if you want to customise the cloud-init config of the VMs:
 1. Enter a **RANCHER TEMPLATE** name.
 
-![](assets/node-template.png)
+![](../assets/node-template.png)
 
 See [nodes hosted by an infrastructure provider](https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/) for more information.
 
@@ -59,11 +65,11 @@ Users can create an RKE1 Kubernetes cluster from the **Cluster Management** page
 1. Enter **Name Prefix** (required).
 1. Enter **Template** (required).
 1. Select **etcd** and **Control Plane** (required).
-1. On the **Cluster Options** configure `Cloud Provider` to `Harvester` if you want to use the Harvester [Cloud Provider](/rancher/cloud-provider) and [CSI Diver](/rancher/csi-driver).
-   ![](assets/enable-harvester-cloud-provider.png)
+1. On the **Cluster Options** configure `Cloud Provider` to `Harvester` if you want to use the Harvester [Cloud Provider](../../rancher/cloud-provider) and [CSI Diver](../../rancher/csi-driver).
+   ![](../assets/enable-harvester-cloud-provider.png)
 1. Click **Create**.
 
-![create-rke-harvester-cluster](assets/create-rke-harvester-cluster.png)
+![create-rke-harvester-cluster](../assets/create-rke-harvester-cluster.png)
 
 ### Using Harvester RKE1 Node Driver in Air Gapped Environment
 

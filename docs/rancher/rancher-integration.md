@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+sidebar_label: "Rancher Integration"
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -68,9 +70,10 @@ For more details, please check the [virtualization management](virtualization-ma
 
 ## Creating Kubernetes Clusters using the Harvester Node Driver
 
-[Harvester node driver](node-driver.md) is used to provision VMs in the Harvester cluster, which Rancher uses to launch and manage guest Kubernetes clusters.
+[Harvester node driver](node-driver/node-driver.md) is used to provision VMs in the Harvester cluster, which Rancher uses to launch and manage guest Kubernetes clusters.
 
-Starting with Rancher `v2.6.1`, the Harvester node driver has been added by default. Users can reference the [node-driver](node-driver.md) page for more details.
+Starting with Rancher `v2.6.1`, the Harvester node driver has been added by default. Users can reference the [node-driver](node-driver/node-driver.md) page for more details.
 
-!!!note
-    Harvester Node Driver with RKE2/k3s is in Tech Preview.
+:::note
+Harvester Node Driver with RKE2/k3s is in Tech Preview.
+:::

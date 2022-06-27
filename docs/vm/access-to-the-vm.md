@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+sidebar_label: "Access to the Virtual Machine (VM)"
+title: ""
 keywords:
   - Harvester
   - harvester

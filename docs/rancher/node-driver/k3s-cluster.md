@@ -1,12 +1,19 @@
+---
+sidebar_position: 4
+sidebar_label: "Creating an K3s Kubernetes Cluster"
+title: ""
+---
+
 # Creating an K3s Kubernetes Cluster
 
 You can now provision K3s Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.3+` using the built-in Harvester node driver.
 
-![k3s-cluster](assets/rke2-k3s-node-driver.png)
+![k3s-cluster](../assets/rke2-k3s-node-driver.png)
 
-!!! note
+:::note
     - Harvester K3s node driver is in tech preview.
     - [VLAN network](https://docs.harvesterhci.io/v1.0/networking/harvester-network/#create-a-vlan-network) is required for Harvester node driver.
+:::
 
 ### Create Your Cloud Credentials
 
@@ -18,7 +25,7 @@ You can now provision K3s Kubernetes clusters on top of the Harvester cluster in
 6. Select "Imported Harvester" or "External Harvester".
 7. Click **Create**.
 
-![create-harvester-cloud-credentials](assets/create-cloud-credentials.png)
+![create-harvester-cloud-credentials](../assets/create-cloud-credentials.png)
 
 ###  Create K3s Kubernetes Cluster
 
@@ -36,7 +43,7 @@ You can create a K3s Kubernetes cluster from the **Cluster Management** page via
 10. Enter **SSH User** (required).
 11. Click **Create**.
 
-![create-k3s-harvester-cluster](assets/create-k3s-harvester-cluster.png)
+![create-k3s-harvester-cluster](../assets/create-k3s-harvester-cluster.png)
 
 ### Using Harvester K3s Node Driver in Air Gapped Environment
 
