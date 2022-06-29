@@ -1,3 +1,9 @@
+---
+sidebar_position: 1
+sidebar_label: Monitoring
+title: ""
+---
+
 # Monitoring
 
 _Available as of v0.3.0_

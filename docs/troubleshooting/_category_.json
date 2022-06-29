@@ -2,9 +2,5 @@
     "position": 15,
     "label": "Troubleshooting",
     "collapsible": true,
-    "collapsed": true,
-    "link": {
-        "type": "generated-index",
-        "title": "Troubleshooting"
-    }
+    "collapsed": true
 }

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+sidebar_label: Create a Virtual Machine
+title: ""
 keywords:
   - Harvester
   - harvester

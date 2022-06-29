@@ -1,5 +1,7 @@
 ---
-sidebar_position: 60
+sidebar_position: 4
+sidebar_label: Single NIC with VLAN-aware Switch
+title: ""
 keywords:
   - Harvester
   - harvester

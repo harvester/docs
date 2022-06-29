@@ -1,11 +1,14 @@
 ---
-sidebar_position: 20
+sidebar_position: 3
+sidebar_label: Air Gapped Environment
+title: ""
 keywords:
 - Harvester
 - offline
 - Air-gap
 - HTTP proxy
 ---
+
 # Air Gapped Environment
 
 This section describes how to use Harvester in an air gapped environment. Some use cases could be where Harvester will be installed offline, behind a firewall, or behind a proxy.

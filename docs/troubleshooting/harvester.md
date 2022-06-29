@@ -1,3 +1,8 @@
+---
+sidebar_position: 2
+sidebar_label: Harvester
+title: ""
+---
 
 ## Generate a support bundle
 
@@ -36,7 +41,7 @@ We only support to use the embedded Longhorn UI for debugging and validation pur
 ## I can't access Harvester after I changed SSL/TLS enabled protocols and ciphers
 
 If you changed
-[SSL/TLS enabled protocols and ciphers settings](../../settings/settings/#ssl-parameters)
+[SSL/TLS enabled protocols and ciphers settings](../settings/#ssl-parameters)
 and you no longer have access to Harvester GUI and API,
 it's highly possible that NGINX Ingress Controller has stopped working due to the misconfigured SSL/TLS protocols and ciphers.
 Follow these steps to reset the setting:

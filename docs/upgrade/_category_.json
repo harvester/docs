@@ -1,8 +1,4 @@
 {
     "position": 4,
-    "label": "Upgrading Harvester",
-    "link": {
-        "type": "doc",
-        "id": "automatic"
-    }
+    "label": "Upgrade"
 }

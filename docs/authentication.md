@@ -1,5 +1,7 @@
 ---
-sidebar_position: 30
+sidebar_position: 5
+sidebar_label: Authentication
+title: ""
 keywords:
   - Harvester
   - harvester

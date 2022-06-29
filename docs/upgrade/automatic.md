@@ -1,5 +1,7 @@
 ---
-sidebar_position: 30
+sidebar_position: 1
+sidebar_label: Upgrading Harvester
+title: ""
 keywords:
   - Harvester
   - harvester

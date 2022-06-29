@@ -1,5 +1,7 @@
 ---
-sidebar_position: 51
+sidebar_position: 3
+sidebar_label: Multiple NICs with Non VLAN-aware Switch
+title: ""
 keywords:
   - Harvester
   - harvester

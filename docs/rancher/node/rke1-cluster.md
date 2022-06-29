@@ -68,7 +68,7 @@ Users can create an RKE1 Kubernetes cluster from the **Cluster Management** page
 1. Enter **Name Prefix** (required).
 1. Enter **Template** (required).
 1. Select **etcd** and **Control Plane** (required).
-1. On the **Cluster Options** configure `Cloud Provider` to `Harvester` if you want to use the Harvester [Cloud Provider](../../rancher/cloud-provider) and [CSI Diver](../../rancher/csi-driver).
+1. On the **Cluster Options** configure `Cloud Provider` to `Harvester` if you want to use the Harvester [Cloud Provider](../cloud-provider) and [CSI Diver](../csi-driver).
    ![](../assets/enable-harvester-cloud-provider.png)
 1. Click **Create**.
 

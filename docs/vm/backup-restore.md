@@ -1,5 +1,7 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
+sidebar_label: VM Backup & Restore
+title: ""
 keywords:
   - Harvester
   - harvester

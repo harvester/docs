@@ -1,4 +1,7 @@
 ---
+sidebar_position: 5
+sidebar_label: Harvester CSI Driver
+title: ""
 keywords:
   - Harvester
   - harvester
