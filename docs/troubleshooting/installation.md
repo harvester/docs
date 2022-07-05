@@ -39,7 +39,7 @@ If the cluster token setup in the agent node is not matching the server node tok
 ```
 ...
 msg="Bootstrapping Rancher (master-head/v1.21.5+rke2r1)"
-msg="failed to bootstrap system, will retry: generating plan: insecure cacerts download from https://192.168.122.115:8443/cacerts: Get \"https://192.168.122.115:8443/cacerts\": EOF"
+msg="failed to bootstrap system, will retry: generating plan: insecure cacerts download from https://192.168.122.115:443/cacerts: Get \"https://192.168.122.115:443/cacerts\": EOF"
 ...
 ```
 

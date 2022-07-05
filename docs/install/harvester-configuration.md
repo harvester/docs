@@ -16,7 +16,7 @@ Description: Harvester configuration file can be provided during manual or autom
 Harvester configuration file can be provided during manual or automatic installation to configure various settings. The following is a configuration example:
 
 ```yaml
-server_url: https://someserver:8443
+server_url: https://someserver:443
 token: TOKEN_VALUE
 os:
   ssh_authorized_keys:
@@ -94,7 +94,7 @@ This configuration is mandatory when the installation is in `JOIN` mode. It tell
 #### Example
 
 ```yaml
-server_url: https://someserver:8443
+server_url: https://someserver:443
 install:
   mode: join
 ```
