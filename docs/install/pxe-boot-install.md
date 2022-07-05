@@ -127,7 +127,7 @@ Create a [Harvester configuration file](./harvester-configuration.md) called `co
 
 ```YAML
 # cat /usr/share/nginx/html/harvester/config-join.yaml
-server_url: https://10.100.0.99:8443  # Should be the VIP set up in "CREATE" config
+server_url: https://10.100.0.99:443  # Should be the VIP set up in "CREATE" config
 token: token
 os:
   hostname: node2
