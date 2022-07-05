@@ -47,6 +47,31 @@ You can use the Harvester node driver to create node templates and eventually no
 
 See [nodes hosted by an infrastructure provider](https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/) for more information.
 
+#### Add Node Affinity
+
+_Available as of v1.0.3 + Rancher v2.6.7_
+
+The Harvester node driver now supports scheduling a group of machines to particular nodes through the node affinity rules, which can provide high availability and better resource utilization.
+
+Node affinity can be added to the node template during the cluster creation, click `Add Node Template` or edit your existing node template via `RKE1 Configuration > Node Templates`:
+
+1. Check the `Advanced Options` tab and click `Add Node Selector`
+   ![affinity-add-node-selector](assets/affinity-add-node-selector.png)
+1. Set priority to `Required` if you wish the scheduler to schedule the machines only when the rules are met.
+1. Click `Add Rule` to specify the node affinity rules, e.g., for the [topology spread constraints](./node-driver.md#topology-spread-constraints) use case, you can add the `region` and `zone` labels as follows:
+   ```yaml
+   key: topology.kubernetes.io/region
+   operator: in list 
+   values: us-east-1
+   ---
+   key: topology.kubernetes.io/zone
+   operator: in list 
+   values: us-east-1a
+   ```
+   ![affinity-add-rules](assets/affinity-add-rules.png)
+1. Click `Create` to save the node template. After the cluster is installed, you can check whether its machine nodes are scheduled accordingly to the affinity rules.
+
+
 ### Create RKE1 Kubernetes Cluster
 
 Users can create an RKE1 Kubernetes cluster from the **Cluster Management** page via the Harvester RKE1 node driver.
