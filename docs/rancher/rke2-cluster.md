@@ -42,6 +42,30 @@ Users can create a RKE2 Kubernetes cluster from the **Cluster Management** page 
     - RKE2 v1.21.5+rke2r2 or above provides a built-in Harvester Cloud Provider and Guest CSI driver integration.
     - Currently only imported Harvester clusters are supported automatically.
 
+#### Add Node Affinity
+
+_Available as of v1.0.3 + Rancher v2.6.7_
+
+The Harvester node driver now supports scheduling a group of machines to particular nodes through the node affinity rules, which can provide high availability and better resource utilization.
+
+Node affinity can be added to the machine pools during the cluster creation:
+
+1. Click the `Show Advanced` button and click the `Add Node Selector`
+   ![affinity-add-node-selector](assets/affinity-rke2-add-node-selector.png)
+2. Set priority to `Required` if you wish the scheduler to schedule the machines only when the rules are met.
+3. Click `Add Rule` to specify the node affinity rules, e.g., for the [topology spread constraints](./node-driver.md#topology-spread-constraints) use case, you can add the `region` and `zone` labels as follows:
+   ```yaml
+   key: topology.kubernetes.io/region
+   operator: in list 
+   values: us-east-1
+   ---
+   key: topology.kubernetes.io/zone
+   operator: in list 
+   values: us-east-1a
+   ```
+   ![affinity-add-rules](assets/affinity-rke2-add-rules.png)
+4. Click `Create` to save the node template. After the cluster is installed, you can check whether its machine nodes are scheduled accordingly to the affinity rules.
+
 
 ### Using Harvester RKE2 Node Driver in Air Gapped Environment
 
