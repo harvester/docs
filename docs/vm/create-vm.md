@@ -112,7 +112,7 @@ Harvester supports injecting your custom cloud-init startup scripts into a VM in
 Example of password configuration for the default user:
 
 ```YAML
-# cloud-config
+#cloud-config
 password: password
 chpasswd: { expire: False }
 ssh_pwauth: True
