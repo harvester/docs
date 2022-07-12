@@ -1548,7 +1548,7 @@
 <p><a href="https://cloudinit.readthedocs.io/en/latest/">Cloud-init</a> is a widely adopted project and the industry standard multi-distribution method for cross-platform cloud instance initialization. It is supported across all major cloud image provider like SUSE, Redhat, Ubuntu and etc., cloud-init has established itself as the defacto method of providing startup scripts to VMs.</p>
 <p>Harvester supports injecting your custom cloud-init startup scripts into a VM instance through the use of an ephemeral disk. VMs with the cloud-init package installed will detect the ephemeral disk and execute custom user-data and network-data scripts at boot.</p>
 <p>Example of password configuration for the default user:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># cloud-config</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">#cloud-config</span><span class="w"></span>
 <span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span><span class="w"></span>
 <span class="nt">chpasswd</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> expire</span><span class="p">:</span><span class="w"> </span><span class="nv">False</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"></span>
 <span class="nt">ssh_pwauth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
