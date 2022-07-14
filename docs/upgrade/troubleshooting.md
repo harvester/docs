@@ -120,7 +120,7 @@ The Harvester controller deletes the upgrade repository VM and all files that ar
 3. Delete the Upgrade CR
 
     ```
-    $ kubectl delete hvst-upgrade-9gmg2 -n harvester-system
+    $ kubectl delete upgrade.harvesterhci.io/hvst-upgrade-9gmg2 -n harvester-system
     ```
 
 4. Click the upgrade button in the Harvester dashboard to start an upgrade again.
