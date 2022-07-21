@@ -25,11 +25,33 @@ const config = {
           routeBasePath: '/',
           sidebarPath: require.resolve("./sidebars.js"),
           editUrl: "https://github.com/harvester/docs/edit/main/docs/",
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: 'v1.0',
+              path: 'v1.0',
+              banner: 'none',
+            }
+          }
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
       }),
+    ],
+  ],
+
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {
+            to: '/v1.0/',
+            from: '/',
+          },
+        ],
+      },
     ],
   ],
 
@@ -40,6 +62,11 @@ const config = {
         src: "img/logo_horizontal.svg",
       },
       items: [
+        {
+          type: 'docsVersionDropdown',
+          position: 'right',
+          dropdownActiveClassDisabled: true,
+        },
         {
           type: 'doc',
           docId: 'index',
