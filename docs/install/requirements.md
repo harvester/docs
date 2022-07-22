@@ -1,3 +1,9 @@
+---
+sidebar_position: 1
+keywords:
+- Installation Requirements
+Description: Outline the Harvester installation requirements
+---
 # Requirements
 As an HCI solution on bare metal servers, Harvester has some minimum requirements as outlined below.
 
@@ -56,9 +62,9 @@ Typically, all outbound traffic will be allowed.
 #### Guest clusters
 As for the port requirements for the guest clusters deployed inside Harvester virtual machines, refer to the following links.
 
-K3s: https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking
+K3s: [https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
 
-RKE: https://rancher.com/docs/rke/latest/en/os/#ports
+RKE: [https://rancher.com/docs/rke/latest/en/os/#ports](https://rancher.com/docs/rke/latest/en/os/#ports)
 
-RKE2: https://docs.rke2.io/install/requirements/#networking
+RKE2: [https://docs.rke2.io/install/requirements/#networking](https://docs.rke2.io/install/requirements/#networking)
 
