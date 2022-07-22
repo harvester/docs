@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 keywords:
   - VIP
 Description: The Harvester provides a virtual IP as the management address.

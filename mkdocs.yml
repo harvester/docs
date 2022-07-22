@@ -58,6 +58,7 @@ markdown_extensions:
 nav:
   - index.md
   - Installation:
+    - install/requirements.md
     - install/iso-install.md
     - install/usb-install.md
     - install/pxe-boot-install.md
