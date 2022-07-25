@@ -108,7 +108,7 @@ Once all the settings are in place, click on `Create` to create the VM.
 
 1. Select the VM you just created, and click `Start` to boot up the VM.(If you checked `Start virtual machine on creation` the VM will start automatically once it's created)
 
-2. Boot into the installer, and follow the instruction given by the installer.
+2. Boot into the installer, and follow the instructions given by the installer.
 
 3. (Optional) If you are using `virtio` based volumes, you will need to load the specific driver to allow the installer to detect them. If you're using VM template `windows-iso-image-base-template`, the instruction is as follows:
     1. Click on `Load driver`, and then click `Browse` on the dialog box, and find a CD-ROM drive with a `VMDP-WIN` prefix. Next, find the driver directory according to the Windows version you're installing; for example, Windows Server 2012r2 should expand `win8.1-2012r2` and choose the `pvvx` directory inside.
@@ -144,21 +144,21 @@ The support matrix of VMDP driver pack for Windows are as follows (assume the VM
 
 ### Windows ISO unable to boot when using EFI mode
 
-When using EFI mode with Windows, you may find out the system booted with other devices like HDD or UEFI shell like the one below:
+When using EFI mode with Windows, you may find the system booted with other devices like HDD or UEFI shell like the one below:
 
 ![efi-shell](assets/efi-shell.png)
 
-That's because Windows will prompt a `Press any key to boot from CD or DVD...` to let the user decide whether to boot from the installer ISO or not, and it needs human interaction to allow boot from CD or DVD.
+That's because Windows will prompt a `Press any key to boot from CD or DVD...` to let the user decide whether to boot from the installer ISO or not, and it needs human intervention to allow the system to boot from CD or DVD.
 
 ![boot-from-cd](assets/boot-from-cd.png)
 
-As a workaround, if the system already booted into UEFI shell, you can type in `reset` to let the system reboot, once the prompt appears you can press any key to let system boot from Windows ISO.
+Alternately if the system has already booted into the UEFI shell, you can type in `reset` to force the system to reboot again. Once the prompt appears you can press any key to let system boot from Windows ISO.
 
 ### VM crashes when reserved memory not enough
 
-There is a known issue with Windows VM, when allocated more than 8GiB of memory to Windows VM and not enough reserved memory configured, the VM crashes without warning. This can be fixed by allocating at least 256MiB of reserved memory to the on the `Advanced Options` tab. 
+There is a known issue with Windows VM when it is allocated more than 8GiB without enough reserve memory configured. The VM crashes without warning.
 
-Click `Edit config` of your crashing VM, go to the `Advanced Options` tab, click `Show More` and fill in at least 256MiB of reserved memory to prevent crashes.
+This can be fixed by allocating at least 256MiB of reserved memory to the template on the Advanced Options tab.
 
 ![reserved-memory-config](assets/reserved-memory-config.png)
 
