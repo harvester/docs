@@ -20,6 +20,7 @@ Option 1. You can download the kubeconfig file from the support page of the Harv
 
 Option 2. You can get the kubeconfig file from one of the Harvester management nodes. E.g.,
 ```shell
+$ sudo su
 $ cat /etc/rancher/rke2/rke2.yaml
 ```
 

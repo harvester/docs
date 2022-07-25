@@ -15,6 +15,16 @@ _Available as of v0.3.0_
 
 [Rancher](https://github.com/rancher/rancher) is an open-source multi-cluster management platform. Harvester has integrated Rancher by default starting with Rancher v2.6.1.
 
+
+## Rancher & Harvester Support Matrix
+
+| Rancher Version | Harvester Version | Note |
+| :--|:--|:--|
+| v2.6.6 | v1.0.3 - v1.0.1 | |
+| v2.6.5 | v1.0.2 - v1.0.1 | |
+| v2.6.4 | v1.0.1 | |
+| v2.6.3 | v1.0.0 | |
+
 !!!note
     Harvester v1.0.0 is compatible with Rancher v2.6.3 or above only.
 
@@ -28,7 +38,7 @@ Users can now import and manage multiple Harvester clusters using the Rancher [V
 
 ## Deploying Rancher Server
 
-To use Rancher with Harvester, please install the Rancher and Harvester in two separated servers. If you want to try out the integration features, you can create a VM in Harvester and install Rancher v2.6.3 or above.
+To use Rancher with Harvester, please install the Rancher and Harvester in two separated servers. If you want to try out the integration features, you can create a VM in Harvester and install Rancher v2.6.3 or above(the latest stable version is recommended).
 
 Use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:
 
@@ -54,7 +64,7 @@ Use one of the following guides to deploy and provision Rancher and a Kubernetes
     1. From your shell, enter the following command:
     ```shell
     # for a quick evaluation, you can run the Rancher server with the following command
-    $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.3
+    $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.6
     ```
 
 ## Virtualization Management
@@ -71,6 +81,3 @@ For more details, please check the [virtualization management](virtualization-ma
 [Harvester node driver](node-driver.md) is used to provision VMs in the Harvester cluster, which Rancher uses to launch and manage guest Kubernetes clusters.
 
 Starting with Rancher `v2.6.1`, the Harvester node driver has been added by default. Users can reference the [node-driver](node-driver.md) page for more details.
-
-!!!note
-    Harvester Node Driver with RKE2/k3s is in Tech Preview.

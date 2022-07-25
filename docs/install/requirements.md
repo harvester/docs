@@ -7,23 +7,23 @@ Description: Outline the Harvester installation requirements
 # Requirements
 As an HCI solution on bare metal servers, Harvester has some minimum requirements as outlined below.
 
-## Hardware
+## Hardware Requirements
 To get the Harvester server up and running the following minimum hardware is required:
   
-| Type             | Requirements                                                                                                                                                                                           |
-|:-----------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| CPU              | x86_64 only. Hardware-assisted virtualization is required. 8-core processor minimum; 16-core or above preferred                                                                                        |
-| Memory           | 32 GB minimum, 64 GB or above preferred                                                                                                                                                                |
-| Disk Capacity    | 140 GB minimum, 500 GB or above preferred                                                                                                                                                              |
-| Disk Performance | 5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be [fast enough for Etcd](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd). |
-| Network Card     | 1 Gbps Ethernet minimum, 10Gbps Ethernet recommended                                                                                                                                                   |
-| Network Switch   | Trunking of ports required for VLAN support                                                                                                                                                            |
+| Type             | Requirements                                                                                                                                                                                          |
+|:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| CPU              | x86_64 only. Hardware-assisted virtualization is required. 8-core processor minimum; 16-core or above preferred                                                                                       |
+| Memory           | 32 GB minimum, 64 GB or above preferred                                                                                                                                                               |
+| Disk Capacity    | 140 GB minimum for testing, 500 GB or above preferred for production                                                                                                                                  |
+| Disk Performance | 5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be [fast enough for Etcd](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd) |
+| Network Card     | 1 Gbps Ethernet minimum for testing, 10Gbps Ethernet recommended for production                                                                                                                       |
+| Network Switch   | Trunking of ports required for VLAN support                                                                                                                                                           |
   
   We recommend server-class hardware for best results. Laptops and nested virtualization are not officially supported.
 
-## Ports
-### Harvester hosts
-Inbound Rules
+## Networking
+
+### Harvester Hosts Inbound Rules
 
 | Protocol  |   Port	                 |  Source	                                |   Description                           |
 |:----------|:---------------------------|:-----------------------------------------|:----------------------------------------|
@@ -68,9 +68,7 @@ The VMs of Kubernetes clusters, that are provisioned from Rancher into Harvester
 #### Guest clusters
 As for the port requirements for the guest clusters deployed inside Harvester virtual machines, refer to the following links.
 
-K3s: [https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
-
-RKE: [https://rancher.com/docs/rke/latest/en/os/#ports](https://rancher.com/docs/rke/latest/en/os/#ports)
-
-RKE2: [https://docs.rke2.io/install/requirements/#networking](https://docs.rke2.io/install/requirements/#networking)
+- K3s: [https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
+- RKE: [https://rancher.com/docs/rke/latest/en/os/#ports](https://rancher.com/docs/rke/latest/en/os/#ports)
+- RKE2: [https://docs.rke2.io/install/requirements/#networking](https://docs.rke2.io/install/requirements/#networking)
 

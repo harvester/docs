@@ -3,7 +3,7 @@
 ## Requirements
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 0.13.x
-- [Go](https://golang.org/doc/install) 1.16 to build the provider plugin
+- [Go](https://golang.org/doc/install) 1.18 to build the provider plugin
 
 ## Install The Provider
 
@@ -25,4 +25,6 @@ provider "harvester" {
 
 ## Using the provider
 
-More details about the provider-specific configurations can be found on the [docs](https://registry.terraform.io/providers/harvester/harvester/latest/docs).
+More details about the provider-specific configurations can be found in the [docs](https://registry.terraform.io/providers/harvester/harvester/latest/docs).
+
+Github Repo: [https://github.com/harvester/terraform-provider-harvester](https://github.com/harvester/terraform-provider-harvester)

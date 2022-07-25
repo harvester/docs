@@ -6,7 +6,7 @@ keywords:
 
 ## Virtualization Management
 
-For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6.x.
+For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6 and above.
 
 1. As a prerequisite, Harvester `v1.0.0` integration requires Rancher server `v2.6.3` or above. In production, use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:
     - [AWS](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/amazon-aws-qs/) (uses Terraform)
@@ -31,7 +31,7 @@ For Harvester v0.3.0 and above, virtualization management with the multi-cluster
         1. From your shell, enter the following command:
         ```shell
         # for a quick evaluation, you can run the Rancher server with the following command
-        $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.3
+        $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.6
         ```
 
     

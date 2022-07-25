@@ -17,7 +17,7 @@ Users can press the key combination `CTRL + ALT + F2` to switch to another TTY a
 
 - Because the system doesn't have a default route, your installer may become "stuck" in this state. You can check your route status by executing the following command:
 
-```console
+```shell
 $ ip route
 default via 10.10.0.10 dev harvester-mgmt proto dhcp        <-- Does a default route exist?
 10.10.0.0/24 dev harvester-mgmt proto kernel scope link src 10.10.0.15
@@ -30,17 +30,15 @@ default via 10.10.0.10 dev harvester-mgmt proto dhcp        <-- Does a default r
 When an agent node fails to join the cluster, it can be related to the cluster token not being identical to the server node token.
 In order to confirm the issue, connect to your agent node (i.e. with [SSH](../os#how-to-log-into-a-harvester-node)) and check the `rancherd` service log with the following command:
 
-```bash
+```shell
 $ sudo journalctl -b -u rancherd
 ```
 
 If the cluster token setup in the agent node is not matching the server node token, you will find several entries of the following message:
 
-```
-...
+```shell
 msg="Bootstrapping Rancher (master-head/v1.21.5+rke2r1)"
 msg="failed to bootstrap system, will retry: generating plan: insecure cacerts download from https://192.168.122.115:443/cacerts: Get \"https://192.168.122.115:443/cacerts\": EOF"
-...
 ```
 
 To fix the issue, you need to update the token value in the `rancherd` configuration file `/etc/rancher/rancherd/config.yaml`.
@@ -48,9 +46,7 @@ To fix the issue, you need to update the token value in the `rancherd` configura
 For example, if the cluster token setup in the server node is `ThisIsTheCorrectOne`, you will update the token value as follow:
 
 ```yaml
-...
 token: 'ThisIsTheCorrectOne'
-...
 ```
 
 To ensure the change is persistent across reboots, update the `token` value of the OS configuration file `/oem/99_custom.yaml`:

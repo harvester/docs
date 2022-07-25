@@ -4,13 +4,13 @@ The following sections contain tips to troubleshoot Harvester Monitoring.
 
 ## Monitoring is unusable
 
-When the Harvester dashboard displays nothing of the Monitoring, it may be caused by the below reasons.
+When the Harvester Dashboard is not showing any monitoring metrics, it can be caused by the following reasons.
 
-### Monitoring is unusable due to POD stucks in "Terminating"
+### Monitoring is unusable due to Pod being stuck in `Terminating` status
 
-Harvester Monitoring related PODs are deployed randomly in the cluster NODEs, when the NODE hosting following PODs is accidentally down, the related PODs may stuck in status "Terminating", then the Monitoring is unusable from the WebUI.
+Harvester Monitoring pods are deployed randomly on the cluster Nodes. When the Node hosting the pods accidentally goes down, the related pods may become stuck in the `Terminating` status rendering the Monitoring unusable from the WebUI.
 
-```
+```shell
 $ kubectl get pods -n cattle-monitoring-system
 
 NAMESPACE                   NAME                                                     READY   STATUS        RESTARTS   AGE
@@ -25,15 +25,14 @@ cattle-monitoring-system    rancher-monitoring-kube-state-metrics-5bc8bb48bd-nbd
 
 ```
 
-Monitoring can be recovered via using CLI commands to delete related PODs forcely, the cluster will deploy new PODs to replace them.
+Monitoring can be recovered using CLI commands to force delete the related pods. The cluster will redeploy new pods to replace them.
 
-```
-
-Delete each none-running POD in namespace cattle-monitoring-system.
+```shell
+# Delete each none-running Pod in namespace cattle-monitoring-system.
 
 $ kubectl delete pod --force -n cattle-monitoring-system prometheus-rancher-monitoring-prometheus-0
 
-pod "prometheus-rancher-monitoring-prometheus-0" force deleted
+ pod "prometheus-rancher-monitoring-prometheus-0" force deleted
 
 
 $ kubectl delete pod --force -n cattle-monitoring-system rancher-monitoring-admission-create-fwjn9
@@ -45,7 +44,7 @@ $ kubectl delete pod --force -n cattle-monitoring-system rancher-monitoring-graf
 $ kubectl delete pod --force -n cattle-monitoring-system rancher-monitoring-grafana-d9c56d79b-t24sz
 ```
 
-Wait a few minutes, the new PODs are created and become ready. The Monitoring dashboard will be usable again.
+Wait for a few minutes so that the new pods are created and readied for the Monitoring dashboard to be usable again.
 
 ```
 $ kubectl get pods -n cattle-monitoring-system 

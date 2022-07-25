@@ -39,20 +39,20 @@ The following diagram outlines a high-level architecture of Harvester:
 
 - [Longhorn](https://longhorn.io/) is a lightweight, reliable and easy-to-use distributed block storage system for Kubernetes.
 - [KubeVirt](https://kubevirt.io/) is a virtual machine management add-on for Kubernetes.
-- [Elemental for openSUSE Leap 15.3](https://github.com/rancher-sandbox/cOS-toolkit) is a Linux distribution designed to remove as much OS maintenance as possible in a Kubernetes cluster.
+- [Elemental for SLE-Micro 5.2](https://github.com/rancher-sandbox/cOS-toolkit) (based on openSUSE Leap 15.3 before v1.0.3) is an immutable Linux distribution designed to remove as much OS maintenance as possible in a Kubernetes cluster.
 
 ## Hardware Requirements
 
 To get the Harvester server up and running, the following minimum hardware is required:
 
-| Type | Requirements |
-|:---|:---|
-| CPU | x86_64 only. Hardware-assisted virtualization is required. 8-core processor minimum; 16-core or above preferred |
-| Memory | 32 GB minimum; 64 GB or above preferred |
-| Disk Capacity |  140 GB minimum; 500 GB or above preferred |
-| Disk Performance |  5,000+ random IOPS per disk (SSD/NVMe). Management nodes (first three nodes) must be [fast enough for etcd](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd). |
-| Network Card | 1 Gbps Ethernet minimum; 10Gbps Ethernet recommended |
-| Network Switch | Trunking of ports required for VLAN support |
+| Type | Requirements                                                                                                                                                                                               |
+|:---|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| CPU | x86_64 only. Hardware-assisted virtualization is required. 8-core processor minimum; 16-core or above preferred                                                                                            |
+| Memory | 32 GB minimum; 64 GB or above preferred                                                                                                                                                                    |
+| Disk Capacity | 140 GB minimum for testing; 500 GB or above preferred for production                                                                                                                                       |
+| Disk Performance | 5,000+ random IOPS per disk (SSD/NVMe). Management nodes (first three nodes) must be [fast enough for etcd](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd) |
+| Network Card | 1 Gbps Ethernet minimum for testing; 10Gbps Ethernet recommended for production                                                                                                                            |
+| Network Switch | Trunking of ports required for VLAN support                                                                                                                                                                |
 
 ## Quick start
 
@@ -68,26 +68,26 @@ During the installation, you can either choose to form a new cluster or join the
 
 1. Mount the Harvester ISO disk and boot the server by selecting the `Harvester Installer`.
    ![iso-install.png](./install/assets/iso-install.png)
-1. Choose the installation mode by either creating a new Harvester cluster or by joining an existing one.
-1. Choose the installation device on which the Harvester cluster will be installed
+2. Choose the installation mode by either creating a new Harvester cluster or by joining an existing one.
+3. Choose the installation device on which the Harvester cluster will be installed
      - Note: By default, Harvester uses [GPT](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [MBR](https://en.wikipedia.org/wiki/Master_boot_record).
    ![iso-install-disk.png](./install/assets/iso-install-disk.png)
-2. Configure the hostname and select the network interface for the management network. By default, Harvester will create a bonded NIC named `harvester-mgmt`, and the IP address can either be configured via DHCP or a static assigned one <small>(Note: The NODE IP can not change at the lifecycle of a Harvester cluster, in case the DHCP is used, user must make sure the DHCP server always offers the same IP for the same NODE. A changed NODE IP will cause the related NODE can not join the cluster, or even break the cluster)</small>.
+4. Configure the hostname and select the network interface for the management network. By default, Harvester will create a bonded NIC named `harvester-mgmt`, and the IP address can be configured via DHCP or a statically assigned one <small>(Note: The Node IP can not change at the lifecycle of a Harvester cluster, in case the DHCP is used, the user must make sure the DHCP server always offers the same IP for the same Node. Due to a changed Node IP the related Node can not join the cluster, or even break the cluster)</small>.
    ![iso-installed.png](./install/assets/iso-nic-config.gif)
-3. Optional: Configure the DNS servers; use commas as delimiters.
-4. Configure the `Virtual IP` which you can use to access the cluster or join other nodes to the cluster <small>(Note: If your IP address is configured via DHCP, you will need to configure static MAC-to-IP address mapping on your DHCP server in order to have a persistent Virtual IP, VIP must be different than any NODE IP)</small>.
-5. Configure the `cluster token`. This token will be used for adding other nodes to the cluster.
-6. Configure the login password of the host. The default SSH user is `rancher`.
-7. Recommended configuring the NTP server to make sure all nodes' times are synchronized. This defaults to `0.suse.pool.ntp.org`.
-8. (Optional) If you need to use an HTTP proxy to access the outside world, enter the proxy URL address here. Otherwise, leave this blank.
-9. (Optional) You can choose to import SSH keys from a remote server URL. Your GitHub public keys can be used with `https://github.com/<username>.keys`.
-10. (Optional) If you need to customize the host with a [Harvester configuration](./install/harvester-configuration.md) file, enter the HTTP URL here.
-11. Confirm the installation options and Harvester will be installed to your host. The installation may take a few minutes to complete.
-12. Once the installation is complete, the host will restart, and a console UI with management URL and status will be displayed. <small>(You can Use F12 to switch between the Harvester console and the Shell).</small>
-13. The default URL of the web interface is `https://your-virtual-ip`.
-   ![iso-installed.png](./install/assets/iso-installed.png)
-14. Users will be prompted to set the password for the default `admin` user at first login.
-    ![first-login.png](./install/assets/first-time-login.png)
+5. Optional: Configure the DNS servers; use commas as delimiters.
+6. Configure the `Virtual IP` which you can use to access the cluster or join other nodes to the cluster <small>(Note: If your IP address is configured via DHCP, you will need to configure static MAC-to-IP address mapping on your DHCP server in order to have a persistent Virtual IP, VIP must be different than any Node IP)</small>.
+7. Configure the `cluster token`. This token will be used for adding other nodes to the cluster.
+8. Configure the login password of the host. The default SSH user is `rancher`.
+9. Recommended configuring the NTP server to make sure all nodes' times are synchronized. This defaults to `0.suse.pool.ntp.org`.
+10. (Optional) If you need to use an HTTP proxy to access the outside world, enter the proxy URL address here. Otherwise, leave this blank.
+11. (Optional) You can choose to import SSH keys from a remote server URL. Your GitHub public keys can be used with `https://github.com/<username>.keys`.
+12. (Optional) If you need to customize the host with a [Harvester configuration](./install/harvester-configuration.md) file, enter the HTTP URL here.
+13. Confirm the installation options and Harvester will be installed to your host. The installation may take a few minutes to complete.
+14. Once the installation is complete, the host will restart, and a console UI with management URL and status will be displayed. <small>(You can Use F12 to switch between the Harvester console and the Shell).</small>
+15. The default URL of the web interface is `https://your-virtual-ip`.
+    ![iso-installed.png](./install/assets/iso-installed.png)
+16. Users will be prompted to set the password for the default `admin` user at first login.
+     ![first-login.png](./install/assets/first-time-login.png)
 
 <div class="text-center">
 <iframe width="950" height="475" src="https://www.youtube.com/embed/Ngsk7m6NYf4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
