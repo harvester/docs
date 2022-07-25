@@ -57,7 +57,7 @@ Create one or more virtual machines from the **Virtual Machines** page.
     3.  `Bus`: The value `VirtIO` is set by default. You can keep it or change it to the other available options, `SATA` or `SCSI`.
 3. The **third volume** is a `Container` with the following values:
     1. `Name`: The value `virtio-container-disk` is set by default. You can keep it or change it.
-    2. `Docker Image`: The value `registry.suse.com/harvester-beta/vmdp:latest` is set by default. It's recommended you don't change it.
+    2. `Docker Image`: The value `registry.suse.com/suse/vmdp/vmdp:2.5.3` is set by default. It's recommended you don't change it.
     3. `Bus`: The value `SATA` is set by default. It's recommended you don't change it.
 4. You can add additional disks using the buttons `Add Volume`, `Add Existing Volume`, `Add VM Image`, or `Add Container`.
 
