@@ -80,7 +80,7 @@ The following options and values can be set:
 
 !!!note
     Harvester appends necessary addresses to user configured `no-proxy` to ensure the internal traffic works.
-    i.e., `localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,cattle-system.svc,.svc,.cluster.local`
+    i.e., `localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,longhorn-system,cattle-system,cattle-system.svc,.svc,.cluster.local`
 
 !!! warning
     Changing this setting might cause a short downtime for single-node clusters.
