@@ -184,4 +184,17 @@ Alternatively, you can specify the parameters by adding annotations to the servi
 | `cloudprovider.harvesterhci.io/healthcheck-failure-threshold` | string | false | Specifies the health check failure threshold. The default value is 3. The backend server will stop forwarding traffic if the number of health check failures reaches the threshold.
 | `cloudprovider.harvesterhci.io/healthcheck-periodseconds` | string | false |  Specifies the health check period. The default value is 5 seconds.
 | `cloudprovider.harvesterhci.io/healthcheck-timeoutseconds` | string | false | Specifies the timeout of every health check. The default value is 3 seconds.
-    
+
+ ### Sync Harvester Node's Topology to Guest Cluster Node   
+After configuring the topology of the Harvester node, the cluster node created by RKE2 node driver will sync the topology labels of the Harvester node to the Guest Cluster automatically via CCM, and the topology labels of each Guest Cluster node will be the same as the host Harvester node. It is better to use Kubernetes scheduling rules when creating nodes to effectively avoid node changes due to reboots, etc.
+
+
+*NOTE:* Currently, the labels can only be synced when the node is first initialized. If the host node is changed, the guest cluster node needs to be redeployed manually.
+
+- Harvester node configuration topology labels.
+  ![](assets/config-node-topology.png) 
+
+- Create cluster via [RKE2](./rke2-cluster.md).
+
+- After the cluster is successfully created, check the node's labels and you will find the topology labels just configured by the node.
+  ![](assets/guest-node-topology.png)
