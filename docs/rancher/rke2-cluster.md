@@ -60,3 +60,13 @@ apt:
   http_proxy: http://192.168.0.1:3128
   https_proxy: http://192.168.0.1:3128
 ```
+
+
+### Deploying Nodes with Affinity
+
+RKE2 already supports affinity feature, using affinity can fix the guest node in the specified topology, avoiding the guest node virtual machine restart and cause the region change.
+
+Follow the steps above to create a cluster, you can see the `Node Scheduling` and `Pod Scheduling` after click the `Show Adavnced`.
+
+![create-rke2-harvester-cluster-show-advanced](assets/create-rke2-harvester-cluster-show-advanced.png)
+![create-rke2-harvester-cluster-show-advanced-scheduling](assets/create-rke2-harvester-cluster-show-advanced-scheduling.png)

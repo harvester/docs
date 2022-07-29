@@ -88,3 +88,11 @@ write_files:
     HTTPS_PROXY="http://192.168.0.1:3128"
   append: true
 ```
+
+### Deploying Nodes with Affinity
+
+RKE already supports affinity feature, using affinity can fix the guest node in the specified topology, avoiding the guest node virtual machine restart and cause the region change.
+
+Follow the steps above to create a node template, you can see the `Node Scheduling` and `Pod Scheduling` in the `Advanced Options`.
+
+![node-template-scheduling](assets/node-template-scheduling.png)
