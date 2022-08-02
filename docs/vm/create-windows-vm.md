@@ -101,3 +101,20 @@ Once all the settings are in place, click on `Create` to create the VM.
 !!! note
     If you need to add advanced settings, you can edit the VM configuration directly by clicking on `Edit as YAML`. 
     And if you want to cancel all changes made, click `Cancel`.
+
+## Installation of Windows
+
+1. Select the VM you just created, and click `Start` to boot up the VM.(If you checked `Start virtual machine on creation` the VM will start automatically once it's created)
+2. Boot into the installer, and follow the instruction given by the installer.
+3. [Optional] If you are using `virtio` based volumes, you will need to load the specific driver to allow installer detect them. If you're using VM template `windows-iso-image-base-template`, the instruction are as follows:
+    1. Click on `Load driver` and click `Browse` on the dialog box, and find a CD-ROM drive with `VMDP-WIN` prefix. Find the driver directory according to the Windows version you're installing, for example: Windows Server 2012r2 should expand `win8.1-2012r2` and choose the `pvvx` directory inside.
+    ![find-virtio-driver-directory](assets/find-virtio-driver-directory.png)
+    2. Click `OK` to allow installer to scan this directory for drivers, choose `SUSE Block Driver for Windows` and clock `Next` to load the driver.
+    ![select-virtio-block-driver](assets/select-virtio-block-driver.png)
+    1. Wait for the installer to load up the driver. If you're choosing correct version of driver the `virtio` volumes should be detected once the driver is loaded.
+    ![installer-found-virtio-drive](assets/installer-found-virtio-drive.png)
+    1. Operate this drive at your own discretion.
+4. [Optional] If you are using `virtio` based hardware, like virtio network adapter, you will need to manually install those drivers after you complete the installation. To install drivers, open the virtio driver disk, and open the installer based on your platform.
+
+!!! note
+    If you need to use other VM template rather than the `windows-iso-image-base-template` we provided, and you still need `virtio` devices, please be sure to provide your own virtio driver disk in order to detect hardware correctly.
