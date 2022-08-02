@@ -17,6 +17,7 @@ The following table shows the upgrade path of all supported versions.
 
 | Upgrade from version | Supported new version(s) |
 |----------------------|--------------------------|
+| [v1.0.2](./v1-0-2-to-v1-0-3.md) | v1.0.3        |
 | [v1.0.1](./v1-0-1-to-v1-0-2.md) | v1.0.2        |
 | [v1.0.0](./v1-0-0-to-v1-0-1.md) | v1.0.1        |
 
