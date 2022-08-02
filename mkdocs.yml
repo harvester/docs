@@ -67,8 +67,10 @@ nav:
   - airgap.md
   - Upgrade:
     - upgrade/automatic.md
-    - upgrade/v1-0-1-to-v1-0-2.md
-    - upgrade/v1-0-0-to-v1-0-1.md
+    - upgrade/v1-0-2-to-v1-0-3.md
+    - Previous releases:
+      - upgrade/v1-0-1-to-v1-0-2.md
+      - upgrade/v1-0-0-to-v1-0-1.md
     - upgrade/troubleshooting.md
   - authentication.md
   - upload-image.md
