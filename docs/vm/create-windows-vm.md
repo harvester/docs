@@ -105,16 +105,37 @@ Once all the settings are in place, click on `Create` to create the VM.
 ## Installation of Windows
 
 1. Select the VM you just created, and click `Start` to boot up the VM.(If you checked `Start virtual machine on creation` the VM will start automatically once it's created)
+
 2. Boot into the installer, and follow the instruction given by the installer.
+
 3. [Optional] If you are using `virtio` based volumes, you will need to load the specific driver to allow installer detect them. If you're using VM template `windows-iso-image-base-template`, the instruction are as follows:
     1. Click on `Load driver` and click `Browse` on the dialog box, and find a CD-ROM drive with `VMDP-WIN` prefix. Find the driver directory according to the Windows version you're installing, for example: Windows Server 2012r2 should expand `win8.1-2012r2` and choose the `pvvx` directory inside.
     ![find-virtio-driver-directory](assets/find-virtio-driver-directory.png)
-    2. Click `OK` to allow installer to scan this directory for drivers, choose `SUSE Block Driver for Windows` and clock `Next` to load the driver.
+    1. Click `OK` to allow installer to scan this directory for drivers, choose `SUSE Block Driver for Windows` and clock `Next` to load the driver.
     ![select-virtio-block-driver](assets/select-virtio-block-driver.png)
     1. Wait for the installer to load up the driver. If you're choosing correct version of driver the `virtio` volumes should be detected once the driver is loaded.
     ![installer-found-virtio-drive](assets/installer-found-virtio-drive.png)
     1. Operate this drive at your own discretion.
+
 4. [Optional] If you are using `virtio` based hardware, like virtio network adapter, you will need to manually install those drivers after you complete the installation. To install drivers, open the virtio driver disk, and open the installer based on your platform.
 
 !!! note
     If you need to use other VM template rather than the `windows-iso-image-base-template` we provided, and you still need `virtio` devices, please be sure to provide your own virtio driver disk in order to detect hardware correctly.
+
+## Known Issues
+
+### Windows ISO unable to boot when using EFI mode
+
+When using EFI mode with Windows, you may find out the system booted with other devices like HDD or UEFI shell like the one below:
+
+![efi-shell](assets/efi-shell.png)
+
+That's because Windows will prompt a `Press any key to boot from CD or DVD...` to prevent boot to ISO after installed Windows, and it needs human interaction to allow boot from CD or DVD.
+
+![boot-from-cd](assets/boot-from-cd.png)
+
+As a workaround, if the system already booted into UEFI shell, you can type in `reset` to let the system reboot, once the prompt appears you can press any key to let system boot from Windows ISO.
+
+!!! note
+    For advanced users, although in most cases you don't need to modify the original installer ISO, there's still another solution to skip this prompt. For more information please refer to [this page](https://www.ntlite.com/community/index.php?threads/how-to-remove-press-any-key-to-boot-from-cd-or-dvd.2147/).
+
