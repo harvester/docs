@@ -130,12 +130,43 @@ When using EFI mode with Windows, you may find out the system booted with other 
 
 ![efi-shell](assets/efi-shell.png)
 
-That's because Windows will prompt a `Press any key to boot from CD or DVD...` to prevent boot to ISO after installed Windows, and it needs human interaction to allow boot from CD or DVD.
+That's because Windows will prompt a `Press any key to boot from CD or DVD...` to let user decide whether to boot to installer ISO or not, and it needs human interaction to allow boot from CD or DVD.
 
 ![boot-from-cd](assets/boot-from-cd.png)
 
 As a workaround, if the system already booted into UEFI shell, you can type in `reset` to let the system reboot, once the prompt appears you can press any key to let system boot from Windows ISO.
 
-!!! note
-    For advanced users, although in most cases you don't need to modify the original installer ISO, there's still another solution to skip this prompt. For more information please refer to [this page](https://www.ntlite.com/community/index.php?threads/how-to-remove-press-any-key-to-boot-from-cd-or-dvd.2147/).
+### VM crashes when reserved memory not enough
 
+There is a known issue with Windows VM, when allocated more than 8GiB of memory to Windows VM and not enough reserved memory configured, the VM crashes without warning. This can be temporarily fixed by allocating at least 256MiB of reserved memory to the VM before the installation. 
+
+Click `Edit config` of your crashing VM, go to the `Advanced Options` tab, click `Show More` and fill in at least 256MiB of reserved memory to prevent crashes.
+
+![reserved-memory-config](assets/reserved-memory-config.png)
+
+We will add a default 256MiB of reserved memory to the Windows template to prevent this problem in the future release.
+
+### BSoD (Blue Screen of Death) at first boot time of Windows
+
+There is a known issue with Windows VM using Windows Server 2016 and above, a BSoD with error code `KMODE_EXCEPTION_NOT_HANDLED` may appears at the first boot time of Windows. We are still looking into it and will fix this issue in the future release.
+
+As a workaround, you can create or modify the file `/etc/modprobe.d/kvm.conf` within the installation of Harvester by updating `/oem/99_custom.yaml` like below:
+
+```YAML
+name: Harvester Configuration
+stages:
+  initramfs:
+  - commands: # ...
+    files:
+    - path: /etc/modprobe.d/kvm.conf
+      permissions: 384
+      owner: 0
+      group: 0
+      content: |
+          options kvm ignore_msrs=1
+      encoding: ""
+      ownerstring: ""
+      # ...
+```
+!!! note
+    This is still a temporary solution and it's danger to modify this configuration. We don't recommend user to do this. For more information please refer to [this issue](https://github.com/harvester/harvester/issues/276).
