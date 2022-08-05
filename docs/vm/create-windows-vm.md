@@ -117,7 +117,24 @@ Once all the settings are in place, click on `Create` to create the VM.
     ![installer-found-virtio-drive](assets/installer-found-virtio-drive.png)
     4. Operate this drive at your own discretion.
 
-4. [Optional] If you are using `virtio` based hardware, like virtio network adapter, you will need to manually install those drivers after you complete the installation. To install drivers, open the virtio driver disk, and open the installer based on your platform.
+4. [Optional] If you are using other `virtio` based hardware like network adapter, you will need to manually install those drivers after completed the installation. To install drivers, open VMDP driver disk, and use the installer based on your platform.
+
+The support matrix of VMDP driver pack for Windows are as follows (assumes VMDP CD-ROM drive letter are E):
+
+| Version | Supported | Driver path |
+| :-----: | :-------: | :---------- |
+| Windows 7 | No | `N/A` |
+| Windows Server 2008 | No | `N/A` |
+| Windows Server 2008r2 | No | `N/A` |
+| Windows 8 x86(x64) | Yes | `E:\win8-2012\x86(x64)\pvvx` |
+| Windows Server 2012 x86(x64) | Yes | `E:\win8-2012\x86(x64)\pvvx` |
+| Windows 8.1 x86(x64) | Yes | `E:\win8.1-2012r2\x86(x64)\pvvx` |
+| Windows Server 2012r2 x86(x64) | Yes | `E:\win8.1-2012r2\x86(x64)\pvvx` |
+| Windows 10 x86(x64) | Yes | `E:\win10-server\x86(x64)\pvvx` |
+| Windows Server 2016 x86(x64) | Yes | `E:\win10-server\x86(x64)\pvvx` |
+| Windows Server 2019 x86(x64) | Yes | `E:\win10-server\x86(x64)\pvvx` |
+| Windows 11 x86(x64) | Yes | `E:\win10-2004\x86(x64)\pvvx` |
+| Windows Server 2022 x86(x64) | Yes | `E:\win10-2004\x86(x64)\pvvx` |
 
 !!! note
     If you need to use other VM template rather than the `windows-iso-image-base-template` we provided, and you still need `virtio` devices, please be sure to provide your own virtio driver disk in order to detect hardware correctly.
