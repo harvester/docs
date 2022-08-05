@@ -22,18 +22,20 @@ Create one or more virtual machines from the **Virtual Machines** page.
 !!! note
 	For creating Linux virtual machines, please refer to [this page](./create-vm.md).
 
-## Header Section
+## How to Create a Windows VM
+
+### Header Section
 
 1. Create a single VM instance or multiple VM instances.
 1. Set the VM name.
-1. [Optional] Provide a description for the VM.
-1. [Optional] Select the VM template `windows-iso-image-base-template`. This template will add a volume with the `virtio` drivers for Windows.
+1. (Optional) Provide a description for the VM.
+1. (Optional) Select the VM template `windows-iso-image-base-template`. This template will add a volume with the `virtio` drivers for Windows.
 
-## Basics Tab
+### Basics Tab
 
 1. Configure the number of `CPU` cores assigned to the VM.
 1. Configure the amount of `Memory` assigned to the VM.
-1. [Optional] Select existing `SSH keys` or upload new ones.
+1. (Optional) Select existing `SSH keys` or upload new ones.
 
 ![create-windows-vm](assets/create-windows-vm.png)
 
@@ -43,7 +45,7 @@ Create one or more virtual machines from the **Virtual Machines** page.
 !!! warning
 	The `bootOrder` values need to be set with the installation image first. If you change it, your VM might not boot into the installation disk.
 
-## Volumes Tab
+### Volumes Tab
 
 1. The **first volume** is an `Image Volume` with the following values: 
     1. `Name`: The value `cdrom-disk` is set by default. You can keep it or change it.
@@ -63,7 +65,7 @@ Create one or more virtual machines from the **Virtual Machines** page.
 
 ![create-windows-vm-volumes](assets/create-windows-vm-volumes.png)
 
-## Networks Tab
+### Networks Tab
 
 1. The **Management Network** is added by default with the following values: 
     1. `Name`:  The value `default` is set by default. You can keep it or change it.
@@ -77,22 +79,22 @@ Create one or more virtual machines from the **Virtual Machines** page.
 !!! warning
 	Changing the `Node Scheduling` settings can impact Harvester features, such as disabling `Live migration`.
 
-## Node Scheduling Tab
+### Node Scheduling Tab
 
 1. `Node Scheduling` is set to `Run VM on any available node` by default. You can keep it or change it to the other available options from the dropdown.
 
 ![create-windows-vm-scheduling](assets/create-windows-vm-scheduling.png)
 
-## Advanced Options Tab
+### Advanced Options Tab
 
 1. `OS Type`: The value `Windows` is set by default. It's recommended you don't change it.
 2. `Machine Type`: The value `None` is set by default. It's recommended you don't change it. See the [KubeVirt Machine Type](https://kubevirt.io/user-guide/virtual_machines/virtual_hardware/#machine-type) documentation before you change this value.
-3. [Optional] `Hostname`: Set the VM hostname.
-4. [Optional] `Cloud Config`: Both `User Data` and `Network Data` values are set with default values. Currently, these configurations are not applied to Windows-based VMs.
+3. (Optional) `Hostname`: Set the VM hostname.
+4. (Optional) `Cloud Config`: Both `User Data` and `Network Data` values are set with default values. Currently, these configurations are not applied to Windows-based VMs.
 
 ![create-windows-vm-advanced](assets/create-windows-vm-advanced.png)
 
-## Footer Section
+### Footer Section
 
 1. `Start virtual machine on creation`: This option is checked by default. You can uncheck it if you don't want the VM to start once it's created.
 
@@ -108,18 +110,17 @@ Once all the settings are in place, click on `Create` to create the VM.
 
 2. Boot into the installer, and follow the instruction given by the installer.
 
-3. [Optional] If you are using `virtio` based volumes, you will need to load the specific driver to allow installer detect them. If you're using VM template `windows-iso-image-base-template`, the instruction are as follows:
-    1. Click on `Load driver` and click `Browse` on the dialog box, and find a CD-ROM drive with `VMDP-WIN` prefix. Find the driver directory according to the Windows version you're installing, for example: Windows Server 2012r2 should expand `win8.1-2012r2` and choose the `pvvx` directory inside.
+3. (Optional) If you are using `virtio` based volumes, you will need to load the specific driver to allow the installer to detect them. If you're using VM template `windows-iso-image-base-template`, the instruction is as follows:
+    1. Click on `Load driver`, and then click `Browse` on the dialog box, and find a CD-ROM drive with a `VMDP-WIN` prefix. Next, find the driver directory according to the Windows version you're installing; for example, Windows Server 2012r2 should expand `win8.1-2012r2` and choose the `pvvx` directory inside.
     ![find-virtio-driver-directory](assets/find-virtio-driver-directory.png)
-    2. Click `OK` to allow installer to scan this directory for drivers, choose `SUSE Block Driver for Windows` and clock `Next` to load the driver.
+    2. Click `OK` to allow the installer to scan this directory for drivers, choose `SUSE Block Driver for Windows`, and click `Next` to load the driver.
     ![select-virtio-block-driver](assets/select-virtio-block-driver.png)
-    3. Wait for the installer to load up the driver. If you're choosing correct version of driver the `virtio` volumes should be detected once the driver is loaded.
+    1. Wait for the installer to load up the driver. If you choose the correct driver version the `virtio` volumes will be detected once the driver is loaded.
     ![installer-found-virtio-drive](assets/installer-found-virtio-drive.png)
-    4. Operate this drive at your own discretion.
 
-4. [Optional] If you are using other `virtio` based hardware like network adapter, you will need to manually install those drivers after completed the installation. To install drivers, open VMDP driver disk, and use the installer based on your platform.
+4. (Optional) If you are using other `virtio` based hardware like network adapter, you will need to install those drivers manually after completing the installation. To install drivers, open the VMDP driver disk, and use the installer based on your platform.
 
-The support matrix of VMDP driver pack for Windows are as follows (assumes VMDP CD-ROM drive letter are E):
+The support matrix of VMDP driver pack for Windows are as follows (assume the VMDP CD-ROM drive path is E):
 
 | Version | Supported | Driver path |
 | :-----: | :-------: | :---------- |
@@ -137,7 +138,7 @@ The support matrix of VMDP driver pack for Windows are as follows (assumes VMDP 
 | Windows Server 2022 x86(x64) | Yes | `E:\win10-2004\x86(x64)\pvvx` |
 
 !!! note
-    If you need to use other VM template rather than the `windows-iso-image-base-template` we provided, and you still need `virtio` devices, please be sure to provide your own virtio driver disk in order to detect hardware correctly.
+    If you didn't use the `windows-iso-image-base-template` template, and you still need `virtio` devices, please make sure to add your custom Windows virtio driver to allow it to detect the hardware correctly.
 
 ## Known Issues
 
@@ -147,7 +148,7 @@ When using EFI mode with Windows, you may find out the system booted with other 
 
 ![efi-shell](assets/efi-shell.png)
 
-That's because Windows will prompt a `Press any key to boot from CD or DVD...` to let user decide whether to boot to installer ISO or not, and it needs human interaction to allow boot from CD or DVD.
+That's because Windows will prompt a `Press any key to boot from CD or DVD...` to let the user decide whether to boot from the installer ISO or not, and it needs human interaction to allow boot from CD or DVD.
 
 ![boot-from-cd](assets/boot-from-cd.png)
 
@@ -155,7 +156,7 @@ As a workaround, if the system already booted into UEFI shell, you can type in `
 
 ### VM crashes when reserved memory not enough
 
-There is a known issue with Windows VM, when allocated more than 8GiB of memory to Windows VM and not enough reserved memory configured, the VM crashes without warning. This can be temporarily fixed by allocating at least 256MiB of reserved memory to the VM before the installation. 
+There is a known issue with Windows VM, when allocated more than 8GiB of memory to Windows VM and not enough reserved memory configured, the VM crashes without warning. This can be fixed by allocating at least 256MiB of reserved memory to the on the `Advanced Options` tab. 
 
 Click `Edit config` of your crashing VM, go to the `Advanced Options` tab, click `Show More` and fill in at least 256MiB of reserved memory to prevent crashes.
 
@@ -186,4 +187,4 @@ stages:
       # ...
 ```
 !!! note
-    This is still a temporary solution and it's danger to modify this configuration. We don't recommend user to do this. For more information please refer to [this issue](https://github.com/harvester/harvester/issues/276).
+    This is still an experimental solution. For more information, please refer to [this issue](https://github.com/harvester/harvester/issues/276) and please let us know if you have encountered any issues after applying this workaround.
