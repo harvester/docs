@@ -2516,6 +2516,7 @@
 <span class="w">    </span><span class="nt">harvester-mgmt</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens5</span><span class="w"></span>
+<span class="w">        </span><span class="nt">hwAddr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;B8:CA:3A:6A:64:7C&quot;</span><span class="w"></span>
 <span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dhcp</span><span class="w"></span>
 <span class="w">  </span><span class="nt">force_efi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 <span class="w">  </span><span class="nt">device</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/vda</span><span class="w"></span>
@@ -2712,6 +2713,7 @@ the values are configurations for each network. Valid configuration fields are:<
 <li><code>gateway</code>: Gateway for this network. Required if <code>static</code> method is chosen.</li>
 <li><code>interfaces</code>: An array of interface names. If provided, the installer then combines these NICs into a single logical bonded interface.<ul>
 <li><code>interfaces.name</code>: The name of the slave interface for the bonded network.</li>
+<li><code>interfaces.hwAddr</code>: The hardware MAC address of the interface.</li>
 </ul>
 </li>
 <li><code>bond_options</code>: Options for bonded interfaces. Refer to <a href="https://www.kernel.org/doc/Documentation/networking/bonding.txt">here</a> for more info. If not provided, the following options would be used:<ul>
@@ -2737,6 +2739,7 @@ Please make sure the interface name is present on the target machine before inst
 <span class="w">    </span><span class="nt">harvester-mgmt</span><span class="p">:</span><span class="w">       </span><span class="c1"># The management bond name. This is mandatory.</span><span class="w"></span>
 <span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens5</span><span class="w"></span>
+<span class="w">        </span><span class="nt">hwAddr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;B8:CA:3A:6A:64:7D&quot;</span><span class="w">     </span><span class="c1"># The hwAddr is optional</span><span class="w"></span>
 <span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dhcp</span><span class="w"></span>
 <span class="w">      </span><span class="nt">bond_options</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">balance-tlb</span><span class="w"></span>
@@ -2745,6 +2748,7 @@ Please make sure the interface name is present on the target machine before inst
 <span class="w">    </span><span class="nt">harvester-vlan</span><span class="p">:</span><span class="w">       </span><span class="c1"># The VLAN network bond name. User can then input `harvester-vlan` in the VLAN NIC setting in the GUI.</span><span class="w"></span>
 <span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens6</span><span class="w"></span>
+<span class="w">        </span><span class="nt">hwAddr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;B8:CA:3A:6A:64:7E&quot;</span><span class="w">     </span><span class="c1"># The hwAddr is optional</span><span class="w"></span>
 <span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span><span class="w"></span>
 <span class="w">      </span><span class="nt">bond_options</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">balance-tlb</span><span class="w"></span>
@@ -2752,6 +2756,7 @@ Please make sure the interface name is present on the target machine before inst
 <span class="w">    </span><span class="nt">bond0</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">interfaces</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ens8</span><span class="w"></span>
+<span class="w">        </span><span class="nt">hwAddr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;B8:CA:3A:6A:64:7F&quot;</span><span class="w">     </span><span class="c1"># The hwAddr is optional</span><span class="w"></span>
 <span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">static</span><span class="w"></span>
 <span class="w">      </span><span class="nt">ip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.10.18.2</span><span class="w"></span>
 <span class="w">      </span><span class="nt">subnet_mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255.255.255.0</span><span class="w"></span>
