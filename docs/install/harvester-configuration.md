@@ -79,6 +79,11 @@ Below is a reference of all configuration keys.
 !!!warning
     **Security Risks**: The configuration file contains credentials which should be kept secret. Please do not make the configuration file publicly accessible.
 
+!!!note
+    **Configuration Priority**: When you provide a remote Harvester Configuration file during the install of Harvester, the Harvester Configuration file will not
+    overwrite the values for the inputs you had previously filled out and selected.  Priority is given to the values that you input during the guided install.
+    For instance, if you have in your Harvester Configuration file specified `os.hostname` and during install you fill in the field of `hostname` when prompted,
+    the value that you filled in will take priority over your Harvester Configuration's `os.hostname`.  
 
 ### `server_url`
 
