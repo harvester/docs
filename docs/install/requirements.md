@@ -59,6 +59,12 @@ Inbound Rules
 
 Typically, all outbound traffic will be allowed.
 
+### Integrating Harvester with Rancher
+
+If you want to [integrate Harvester with Rancher](../rancher/rancher-integration.md), you need to make sure, that all Harvester nodes can connect to TCP port 443 of the Rancher load balancer.
+
+The VMs of Kubernetes clusters, that are provisioned from Rancher into Harvester, also need to be able to connect to TCP port 443 of the Rancher load balancer. Otherwise the cluster won't be manageable by Rancher. For more information see also [Rancher Architecture](https://rancher.com/docs/rancher/v2.6/en/overview/architecture/).
+
 #### Guest clusters
 As for the port requirements for the guest clusters deployed inside Harvester virtual machines, refer to the following links.
 
