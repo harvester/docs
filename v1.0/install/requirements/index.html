@@ -335,7 +335,14 @@
     Harvester hosts
   </a>
   
-    <nav class="md-nav" aria-label="Harvester hosts">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integrating-harvester-with-rancher" class="md-nav__link">
+    Integrating Harvester with Rancher
+  </a>
+  
+    <nav class="md-nav" aria-label="Integrating Harvester with Rancher">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1325,7 +1332,14 @@
     Harvester hosts
   </a>
   
-    <nav class="md-nav" aria-label="Harvester hosts">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integrating-harvester-with-rancher" class="md-nav__link">
+    Integrating Harvester with Rancher
+  </a>
+  
+    <nav class="md-nav" aria-label="Integrating Harvester with Rancher">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1592,6 +1606,9 @@
 </tbody>
 </table>
 <p>Typically, all outbound traffic will be allowed.</p>
+<h3 id="integrating-harvester-with-rancher">Integrating Harvester with Rancher<a class="headerlink" href="#integrating-harvester-with-rancher" title="Permanent link">&para;</a></h3>
+<p>If you want to <a href="../../rancher/rancher-integration/">integrate Harvester with Rancher</a>, you need to make sure, that all Harvester nodes can connect to TCP port 443 of the Rancher load balancer.</p>
+<p>The VMs of Kubernetes clusters, that are provisioned from Rancher into Harvester, also need to be able to connect to TCP port 443 of the Rancher load balancer. Otherwise the cluster won't be manageable by Rancher. For more information see also <a href="https://rancher.com/docs/rancher/v2.6/en/overview/architecture/">Rancher Architecture</a>.</p>
 <h4 id="guest-clusters">Guest clusters<a class="headerlink" href="#guest-clusters" title="Permanent link">&para;</a></h4>
 <p>As for the port requirements for the guest clusters deployed inside Harvester virtual machines, refer to the following links.</p>
 <p>K3s: <a href="https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking">https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking</a></p>
