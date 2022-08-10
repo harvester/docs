@@ -946,6 +946,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rancher-harvester-support-matrix" class="md-nav__link">
+    Rancher &amp; Harvester Support Matrix
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#deploying-rancher-server" class="md-nav__link">
     Deploying Rancher Server
   </a>
@@ -1342,6 +1349,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rancher-harvester-support-matrix" class="md-nav__link">
+    Rancher &amp; Harvester Support Matrix
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#deploying-rancher-server" class="md-nav__link">
     Deploying Rancher Server
   </a>
@@ -1385,6 +1399,38 @@
 <h2 id="rancher-integration">Rancher Integration<a class="headerlink" href="#rancher-integration" title="Permanent link">&para;</a></h2>
 <p><em>Available as of v0.3.0</em></p>
 <p><a href="https://github.com/rancher/rancher">Rancher</a> is an open-source multi-cluster management platform. Harvester has integrated Rancher by default starting with Rancher v2.6.1.</p>
+<h2 id="rancher-harvester-support-matrix">Rancher &amp; Harvester Support Matrix<a class="headerlink" href="#rancher-harvester-support-matrix" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th align="left">Rancher Version</th>
+<th align="left">Harvester Version</th>
+<th align="left">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">v2.6.6</td>
+<td align="left">v1.0.3 - v1.0.1</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">v2.6.5</td>
+<td align="left">v1.0.2 - v1.0.1</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">v2.6.4</td>
+<td align="left">v1.0.1</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">v2.6.3</td>
+<td align="left">v1.0.0</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Harvester v1.0.0 is compatible with Rancher v2.6.3 or above only.</p>
@@ -1396,7 +1442,7 @@
 
 <p><img alt="virtualization-management" src="../assets/virtualization-management.png" /></p>
 <h2 id="deploying-rancher-server">Deploying Rancher Server<a class="headerlink" href="#deploying-rancher-server" title="Permanent link">&para;</a></h2>
-<p>To use Rancher with Harvester, please install the Rancher and Harvester in two separated servers. If you want to try out the integration features, you can create a VM in Harvester and install Rancher v2.6.3 or above.</p>
+<p>To use Rancher with Harvester, please install the Rancher and Harvester in two separated servers. If you want to try out the integration features, you can create a VM in Harvester and install Rancher v2.6.3 or above(the latest stable version is recommended).</p>
 <p>Use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:</p>
 <ul>
 <li><a href="https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/amazon-aws-qs/">AWS</a> (uses Terraform)</li>
@@ -1422,7 +1468,7 @@
 <li>Log into your Linux host using your preferred shell, such as PuTTy or a remote terminal connection.</li>
 <li>From your shell, enter the following command:
 <div class="highlight"><pre><span></span><code><span class="c1"># for a quick evaluation, you can run the Rancher server with the following command</span>
-$ sudo docker run -d --restart<span class="o">=</span>unless-stopped -p <span class="m">80</span>:80 -p <span class="m">443</span>:443 --privileged rancher/rancher:v2.6.3
+$ sudo docker run -d --restart<span class="o">=</span>unless-stopped -p <span class="m">80</span>:80 -p <span class="m">443</span>:443 --privileged rancher/rancher:v2.6.6
 </code></pre></div></li>
 </ol>
 </div>
@@ -1434,10 +1480,6 @@ By clicking on one of the clusters, you are able to view and manage the imported
 <h2 id="creating-kubernetes-clusters-using-the-harvester-node-driver">Creating Kubernetes Clusters using the Harvester Node Driver<a class="headerlink" href="#creating-kubernetes-clusters-using-the-harvester-node-driver" title="Permanent link">&para;</a></h2>
 <p><a href="../node-driver/">Harvester node driver</a> is used to provision VMs in the Harvester cluster, which Rancher uses to launch and manage guest Kubernetes clusters.</p>
 <p>Starting with Rancher <code>v2.6.1</code>, the Harvester node driver has been added by default. Users can reference the <a href="../node-driver/">node-driver</a> page for more details.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Harvester Node Driver with RKE2/k3s is in Tech Preview.</p>
-</div>
 
               
             </article>

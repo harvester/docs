@@ -316,23 +316,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#hardware" class="md-nav__link">
-    Hardware
+  <a href="#hardware-requirements" class="md-nav__link">
+    Hardware Requirements
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#ports" class="md-nav__link">
-    Ports
+  <a href="#networking" class="md-nav__link">
+    Networking
   </a>
   
-    <nav class="md-nav" aria-label="Ports">
+    <nav class="md-nav" aria-label="Networking">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#harvester-hosts" class="md-nav__link">
-    Harvester hosts
+  <a href="#harvester-hosts-inbound-rules" class="md-nav__link">
+    Harvester Hosts Inbound Rules
   </a>
   
 </li>
@@ -1360,23 +1360,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#hardware" class="md-nav__link">
-    Hardware
+  <a href="#hardware-requirements" class="md-nav__link">
+    Hardware Requirements
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#ports" class="md-nav__link">
-    Ports
+  <a href="#networking" class="md-nav__link">
+    Networking
   </a>
   
-    <nav class="md-nav" aria-label="Ports">
+    <nav class="md-nav" aria-label="Networking">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#harvester-hosts" class="md-nav__link">
-    Harvester hosts
+  <a href="#harvester-hosts-inbound-rules" class="md-nav__link">
+    Harvester Hosts Inbound Rules
   </a>
   
 </li>
@@ -1426,7 +1426,7 @@
 
 <h1 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h1>
 <p>As an HCI solution on bare metal servers, Harvester has some minimum requirements as outlined below.</p>
-<h2 id="hardware">Hardware<a class="headerlink" href="#hardware" title="Permanent link">&para;</a></h2>
+<h2 id="hardware-requirements">Hardware Requirements<a class="headerlink" href="#hardware-requirements" title="Permanent link">&para;</a></h2>
 <p>To get the Harvester server up and running the following minimum hardware is required:</p>
 <table>
 <thead>
@@ -1446,15 +1446,15 @@
 </tr>
 <tr>
 <td align="left">Disk Capacity</td>
-<td align="left">140 GB minimum, 500 GB or above preferred</td>
+<td align="left">140 GB minimum for testing, 500 GB or above preferred for production</td>
 </tr>
 <tr>
 <td align="left">Disk Performance</td>
-<td align="left">5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be <a href="https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd">fast enough for Etcd</a>.</td>
+<td align="left">5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be <a href="https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd">fast enough for Etcd</a></td>
 </tr>
 <tr>
 <td align="left">Network Card</td>
-<td align="left">1 Gbps Ethernet minimum, 10Gbps Ethernet recommended</td>
+<td align="left">1 Gbps Ethernet minimum for testing, 10Gbps Ethernet recommended for production</td>
 </tr>
 <tr>
 <td align="left">Network Switch</td>
@@ -1463,9 +1463,8 @@
 </tbody>
 </table>
 <p>We recommend server-class hardware for best results. Laptops and nested virtualization are not officially supported.</p>
-<h2 id="ports">Ports<a class="headerlink" href="#ports" title="Permanent link">&para;</a></h2>
-<h3 id="harvester-hosts">Harvester hosts<a class="headerlink" href="#harvester-hosts" title="Permanent link">&para;</a></h3>
-<p>Inbound Rules</p>
+<h2 id="networking">Networking<a class="headerlink" href="#networking" title="Permanent link">&para;</a></h2>
+<h3 id="harvester-hosts-inbound-rules">Harvester Hosts Inbound Rules<a class="headerlink" href="#harvester-hosts-inbound-rules" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -1658,9 +1657,11 @@
 <p>The VMs of Kubernetes clusters, that are provisioned from Rancher into Harvester, also need to be able to connect to TCP port 443 of the Rancher load balancer. Otherwise the cluster won't be manageable by Rancher. For more information see also <a href="https://rancher.com/docs/rancher/v2.6/en/overview/architecture/">Rancher Architecture</a>.</p>
 <h4 id="guest-clusters">Guest clusters<a class="headerlink" href="#guest-clusters" title="Permanent link">&para;</a></h4>
 <p>As for the port requirements for the guest clusters deployed inside Harvester virtual machines, refer to the following links.</p>
-<p>K3s: <a href="https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking">https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking</a></p>
-<p>RKE: <a href="https://rancher.com/docs/rke/latest/en/os/#ports">https://rancher.com/docs/rke/latest/en/os/#ports</a></p>
-<p>RKE2: <a href="https://docs.rke2.io/install/requirements/#networking">https://docs.rke2.io/install/requirements/#networking</a></p>
+<ul>
+<li>K3s: <a href="https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking">https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking</a></li>
+<li>RKE: <a href="https://rancher.com/docs/rke/latest/en/os/#ports">https://rancher.com/docs/rke/latest/en/os/#ports</a></li>
+<li>RKE2: <a href="https://docs.rke2.io/install/requirements/#networking">https://docs.rke2.io/install/requirements/#networking</a></li>
+</ul>
 
               
             </article>

@@ -914,19 +914,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#change-resources-setting-of-monitoring" class="md-nav__link">
-    Change resources setting of Monitoring
+  <a href="#how-to-configure-monitoring-settings" class="md-nav__link">
+    How to Configure Monitoring Settings
   </a>
   
-    <nav class="md-nav" aria-label="Change resources setting of Monitoring">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#change-resources-settings-of-monitoring-prometheus" class="md-nav__link">
-    Change resources settings of Monitoring-Prometheus
-  </a>
-  
-    <nav class="md-nav" aria-label="Change resources settings of Monitoring-Prometheus">
+    <nav class="md-nav" aria-label="How to Configure Monitoring Settings">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -947,43 +939,11 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#change-resources-settings-of-monitoring-prometheus-node-exporter" class="md-nav__link">
-    Change resources settings of Monitoring-Prometheus-node-exporter
-  </a>
-  
-    <nav class="md-nav" aria-label="Change resources settings of Monitoring-Prometheus-node-exporter">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#from-webui_1" class="md-nav__link">
-    From WebUI
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#from-cli_1" class="md-nav__link">
-    From CLI
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#troubleshooting" class="md-nav__link">
     Troubleshooting
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1413,19 +1373,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#change-resources-setting-of-monitoring" class="md-nav__link">
-    Change resources setting of Monitoring
+  <a href="#how-to-configure-monitoring-settings" class="md-nav__link">
+    How to Configure Monitoring Settings
   </a>
   
-    <nav class="md-nav" aria-label="Change resources setting of Monitoring">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#change-resources-settings-of-monitoring-prometheus" class="md-nav__link">
-    Change resources settings of Monitoring-Prometheus
-  </a>
-  
-    <nav class="md-nav" aria-label="Change resources settings of Monitoring-Prometheus">
+    <nav class="md-nav" aria-label="How to Configure Monitoring Settings">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1446,43 +1398,11 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#change-resources-settings-of-monitoring-prometheus-node-exporter" class="md-nav__link">
-    Change resources settings of Monitoring-Prometheus-node-exporter
-  </a>
-  
-    <nav class="md-nav" aria-label="Change resources settings of Monitoring-Prometheus-node-exporter">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#from-webui_1" class="md-nav__link">
-    From WebUI
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#from-cli_1" class="md-nav__link">
-    From CLI
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#troubleshooting" class="md-nav__link">
     Troubleshooting
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1507,80 +1427,90 @@
 <h1 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h1>
 <p><em>Available as of v0.3.0</em></p>
 <h2 id="dashboard-metrics">Dashboard Metrics<a class="headerlink" href="#dashboard-metrics" title="Permanent link">&para;</a></h2>
-<p>Harvester <code>v0.3.0</code> has provided a built-in monitoring integration using <a href="https://prometheus.io/">Prometheus</a>. Monitoring is automatically installed during ISO installations.</p>
+<p>Harvester has provided a built-in monitoring integration using <a href="https://prometheus.io/">Prometheus</a>. Monitoring is automatically enabled during the Harvester installations.</p>
 <p>From the <code>Dashboard</code> page, users can view the cluster metrics and top 10 most used VM metrics respectively.
-Also, users can click the <a href="http://grafana.com/">Grafana</a> dashboard link to view more dashboard on the Grafana UI.
-<img alt="" src="../assets/monitoring-dashboard.png" /></p>
+Also, users can click the <a href="http://grafana.com/">Grafana</a> dashboard link to view more dashboards on the Grafana UI.</p>
+<p><img alt="" src="../assets/monitoring-dashboard.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Only admin users are able to view the dashboard metrics.</p>
+<p>Only admin users are able to view the cluster dashboard metrics.</p>
 </div>
 <h2 id="vm-detail-metrics">VM Detail Metrics<a class="headerlink" href="#vm-detail-metrics" title="Permanent link">&para;</a></h2>
-<p>For each VM, users can view the VM metrics by clicking the VM details page.
-<img alt="" src="../assets/vm-metrics.png" /></p>
+<p>For VMs, you can view VM metrics by clicking on the <code>VM details page &gt; VM Metrics</code>.</p>
+<p><img alt="" src="../assets/vm-metrics.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code>Memory Usage</code> formula is <code>(1 - free/total) * 100%</code>, not <code>(used/total) * 100%</code>.</p>
-</div>
-<p>For example, in a Linux OS, the <code>free -h</code> command outputs the current memory statistics as following.</p>
+<p>The current <code>Memory Usage</code> is calculated based on <code>(1 - free/total) * 100%</code>, not <code>(used/total) * 100%</code>.</p>
+<p>For example, in a Linux OS, the <code>free -h</code> command outputs the current memory statistics as follows</p>
 <div class="highlight"><pre><span></span><code>$ free -h
               total        used        free      shared  buff/cache   available
 Mem:          7.7Gi       166Mi       4.6Gi       1.0Mi       2.9Gi       7.2Gi
 Swap:            0B          0B          0B
 </code></pre></div>
 <p>The corresponding <code>Memory Usage</code> is <code>(1 - 4.6/7.7) * 100%</code>, roughly <code>40%</code>.</p>
-<h2 id="change-resources-setting-of-monitoring">Change resources setting of Monitoring<a class="headerlink" href="#change-resources-setting-of-monitoring" title="Permanent link">&para;</a></h2>
+</div>
+<h2 id="how-to-configure-monitoring-settings">How to Configure Monitoring Settings<a class="headerlink" href="#how-to-configure-monitoring-settings" title="Permanent link">&para;</a></h2>
 <p><em>Available as of v1.0.1</em></p>
-<p>The <code>Monitoring</code> has a couple of components to collect metrics data from all NODEs/PODs/VMs/... and summarize them. The resources required by the <code>Monitoring</code> are related to workloads and hardware resources. Harvester sets the default values according to engineering practices, and you can change them accordingly.</p>
-<p>The following two components <code>resources settings</code> are available:</p>
-<p>(1) Monitoring-Prometheus</p>
-<p>(2) Monitoring-Prometheus-node-exporter</p>
-<h3 id="change-resources-settings-of-monitoring-prometheus">Change resources settings of Monitoring-Prometheus<a class="headerlink" href="#change-resources-settings-of-monitoring-prometheus" title="Permanent link">&para;</a></h3>
-<h4 id="from-webui">From WebUI<a class="headerlink" href="#from-webui" title="Permanent link">&para;</a></h4>
-<p>In the <code>Advanced Settings</code> page, you can view and change the resources settings as follow:</p>
-<p>(1) Navigate to settings page, find <code>harvester monitoring</code>.
+<p>Monitoring has several components that help to collect and aggregate metric data from all Nodes/Pods/VMs. The resources required for monitoring depend on your workloads and hardware resources. Harvester sets defaults based on general use cases, and you can change them accordingly.</p>
+<p>Currently, <code>Resources Settings</code> can be configured for the following components:</p>
+<ul>
+<li>Prometheus</li>
+<li>Prometheus Node Exporter(<em>UI configurable as of v1.0.2</em>)</li>
+</ul>
+<h3 id="from-webui">From WebUI<a class="headerlink" href="#from-webui" title="Permanent link">&para;</a></h3>
+<p>In the <code>Advanced Settings</code> page, you can view and change the resources settings as follows:</p>
+<ol>
+<li>
+<p>Navigate to settings page, find <code>harvester-monitoring</code>.
 <img alt="" src="../assets/monitoring-setting.png" /></p>
-<p>(2) Click <code>Show harvester-monitoring</code> to view the current values.
-<img alt="" src="../assets/monitoring-setting-view-current.png" /></p>
-<p>(3) Click in the up-right corner pop up menu and select <code>Edit Setting</code> to set a new value.
+</li>
+<li>
+<p>Click <code>Show harvester-monitoring</code> to view the current values.</p>
+</li>
+<li>
+<p>Click <code>⋮ &gt; Edit Setting</code> to set a new value.
 <img alt="" src="../assets/monitoring-setting-edit-config.png" /></p>
-<p>(4) Click <code>Save</code>. The <code>Monitoring</code> will be restarted with the new resources settings. Please note, the restart can take some time.</p>
-<p>The most frequently used option is memory setting.</p>
-<p><code>Requested Memory</code> is the minimum memory of the <code>Monitoring</code>. The recommended value is about 5% to 10% of system memory of one single management node. A value less than 500Mi will be denied.</p>
-<p><code>Memory Limit</code> is the maximum memory of the <code>Monitoring</code>. The recommended value is about 30% of system memory of one single management node, when the <code>Monitoring</code> reaches this value, it will be restarted.</p>
-<p>Depending on the available hardware resources and system loads, you may change the settings accordingly.</p>
+</li>
+<li>
+<p>Click <code>Save</code> and the <code>Monitoring</code> resource will be restarted within a few seconds. Please be aware that the reboot can take some time to reload previous data.</p>
+</li>
+</ol>
+<p><strong>The most frequently used option is the memory setting:</strong></p>
+<ul>
+<li>
+<p>The <code>Requested Memory</code> is the minimum memory required by the <code>Monitoring</code> resource. The recommended value is about 5% to 10% of the system memory of one single management node. A value less than 500Mi will be denied.</p>
+</li>
+<li>
+<p>The <code>Memory Limit</code> is the maximum memory that can be allocated to a <code>Monitoring</code> resource. The recommended value is about 30% of the system's memory for one single management node. When the <code>Monitoring</code> reaches this threshold, it will automatically restart.</p>
+</li>
+</ul>
+<p>Depending on the available hardware resources and system loads, you may change the above settings accordingly.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you have multiple management nodes with different hardware resources, please set the value based on the smaller one.</p>
+<p>If you have multiple management nodes with different hardware resources, please set the value of Prometheus based on the smaller one.</p>
 </div>
-<h4 id="from-cli">From CLI<a class="headerlink" href="#from-cli" title="Permanent link">&para;</a></h4>
-<p>To update the values, you may use the CLI command: <code>kubectl edit managedchart rancher-monitoring -n fleet-local</code>.</p>
-<p>In v1.0.1 and later versions, the related path and default value are:</p>
-<p><code>spec.values.prometheus.prometheusSpec.resources.limits.cpu</code>:<code>1000m</code></p>
-<p><code>spec.values.prometheus.prometheusSpec.resources.limits.memory</code>:<code>2500Mi</code></p>
-<p><code>spec.values.prometheus.prometheusSpec.resources.requests.cpu</code>:<code>750m</code></p>
-<p><code>spec.values.prometheus.prometheusSpec.resources.requests.memory</code>:<code>1750Mi</code></p>
-<p>In v1.0.0 and ealier versions, the related path and default value are not in the <code>managedchart rancher-monitoring</code>, you need to add them accordingly.</p>
-<h3 id="change-resources-settings-of-monitoring-prometheus-node-exporter">Change resources settings of Monitoring-Prometheus-node-exporter<a class="headerlink" href="#change-resources-settings-of-monitoring-prometheus-node-exporter" title="Permanent link">&para;</a></h3>
-<p><code>Monitoring-Prometheus-node-exporter</code> has a similar resources specifications as <code>Monitoring-Prometheus</code>.</p>
-<h4 id="from-webui_1">From WebUI<a class="headerlink" href="#from-webui_1" title="Permanent link">&para;</a></h4>
-<p><em>Available as of v1.0.2</em></p>
-<p>Follow the steps described in previous chapter <code>Change resources settings of Monitoring-Prometheus</code> <code>From WebUI</code>, after selecting <code>Edit Setting</code>, the page will be shown as:
-<img alt="" src="../assets/monitoring-setting-edit-config-v1.0.2.png" /></p>
-<h4 id="from-cli_1">From CLI<a class="headerlink" href="#from-cli_1" title="Permanent link">&para;</a></h4>
-<p>To update the values, you may use the CLI command: <code>kubectl edit managedchart rancher-monitoring -n fleet-local</code>.</p>
-<p>In v1.0.1 and later versions, the related path and default value are:</p>
-<p><code>spec.values.prometheus-node-exporter.resources.limits.cpu</code>:<code>200m</code></p>
-<p><code>spec.values.prometheus-node-exporter.resources.limits.memory</code>:<code>180Mi</code></p>
-<p><code>spec.values.prometheus-node-exporter.resources.requests.cpu</code>:<code>100m</code></p>
-<p><code>spec.values.prometheus-node-exporter.resources.requests.memory</code>:<code>30Mi</code></p>
-<p>In v1.0.0 and ealier versions, the related path and default value are not in the <code>managedchart rancher-monitoring</code>, you need to add them accordingly.</p>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
-<p>When many VMs are deployed in one NODE, the OOM(out of memory)/abnormal restarting of prometheus-node-exporter POD(s) may be observed. In that case, you should change the <code>limits.memory</code> to a bigger value.</p>
+<p>When an increasing number of VMs get deployed on one node, the <code>prometheus-node-exporter</code> pod might get killed due to OOM(out of memory). In that case, you should increase the value of <code>limits.memory</code>.</p>
 </div>
-<h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h3>
-<p>When you encounter issues while using Monitoring, please refer <a href="../../troubleshooting/monitoring/">troubleshooting</a> .</p>
+<h3 id="from-cli">From CLI<a class="headerlink" href="#from-cli" title="Permanent link">&para;</a></h3>
+<p>To update those values, you can also use the CLI command with: <code>$kubectl edit managedchart rancher-monitoring -n fleet-local</code>.</p>
+<p>For Harvester version <code>&gt;= v1.0.1</code>, the related path and default value are:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Prometheus configs</span><span class="w"></span>
+<span class="nt">spec.values.prometheus.prometheusSpec.resources.limits.cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000m</span><span class="w"></span>
+<span class="nt">spec.values.prometheus.prometheusSpec.resources.limits.memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2500Mi</span><span class="w"></span>
+<span class="nt">spec.values.prometheus.prometheusSpec.resources.requests.cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">750m</span><span class="w"></span>
+<span class="nt">spec.values.prometheus.prometheusSpec.resources.requests.memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1750Mi</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="c1"># node exporter configs</span><span class="w"></span>
+<span class="nt">spec.values.prometheus-node-exporter.resources.limits.cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200m</span><span class="w"></span>
+<span class="nt">spec.values.prometheus-node-exporter.resources.limits.memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">180Mi</span><span class="w"></span>
+<span class="nt">spec.values.prometheus-node-exporter.resources.requests.cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100m</span><span class="w"></span>
+<span class="nt">spec.values.prometheus-node-exporter.resources.requests.memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30Mi</span><span class="w"></span>
+</code></pre></div>
+<p>For versions <code>&lt;= v1.0.0</code>, the related path and default value are not specified in the <code>managedchart rancher-monitoring</code>, you need to add them accordingly.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<p>For Monitoring support and troubleshooting, please refer to the <a href="../../troubleshooting/monitoring/">troubleshooting page</a> .</p>
 
               
             </article>

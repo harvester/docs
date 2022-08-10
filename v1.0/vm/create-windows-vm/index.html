@@ -1635,7 +1635,7 @@ And if you want to cancel all changes made, click <code>Cancel</code>.</p>
 <p>Select the VM you just created, and click <code>Start</code> to boot up the VM.(If you checked <code>Start virtual machine on creation</code> the VM will start automatically once it's created)</p>
 </li>
 <li>
-<p>Boot into the installer, and follow the instruction given by the installer.</p>
+<p>Boot into the installer, and follow the instructions given by the installer.</p>
 </li>
 <li>
 <p>(Optional) If you are using <code>virtio</code> based volumes, you will need to load the specific driver to allow the installer to detect them. If you're using VM template <code>windows-iso-image-base-template</code>, the instruction is as follows:</p>
@@ -1730,14 +1730,14 @@ And if you want to cancel all changes made, click <code>Cancel</code>.</p>
 </div>
 <h2 id="known-issues">Known Issues<a class="headerlink" href="#known-issues" title="Permanent link">&para;</a></h2>
 <h3 id="windows-iso-unable-to-boot-when-using-efi-mode">Windows ISO unable to boot when using EFI mode<a class="headerlink" href="#windows-iso-unable-to-boot-when-using-efi-mode" title="Permanent link">&para;</a></h3>
-<p>When using EFI mode with Windows, you may find out the system booted with other devices like HDD or UEFI shell like the one below:</p>
+<p>When using EFI mode with Windows, you may find the system booted with other devices like HDD or UEFI shell like the one below:</p>
 <p><img alt="efi-shell" src="../assets/efi-shell.png" /></p>
-<p>That's because Windows will prompt a <code>Press any key to boot from CD or DVD...</code> to let the user decide whether to boot from the installer ISO or not, and it needs human interaction to allow boot from CD or DVD.</p>
+<p>That's because Windows will prompt a <code>Press any key to boot from CD or DVD...</code> to let the user decide whether to boot from the installer ISO or not, and it needs human intervention to allow the system to boot from CD or DVD.</p>
 <p><img alt="boot-from-cd" src="../assets/boot-from-cd.png" /></p>
-<p>As a workaround, if the system already booted into UEFI shell, you can type in <code>reset</code> to let the system reboot, once the prompt appears you can press any key to let system boot from Windows ISO.</p>
+<p>Alternately if the system has already booted into the UEFI shell, you can type in <code>reset</code> to force the system to reboot again. Once the prompt appears you can press any key to let system boot from Windows ISO.</p>
 <h3 id="vm-crashes-when-reserved-memory-not-enough">VM crashes when reserved memory not enough<a class="headerlink" href="#vm-crashes-when-reserved-memory-not-enough" title="Permanent link">&para;</a></h3>
-<p>There is a known issue with Windows VM, when allocated more than 8GiB of memory to Windows VM and not enough reserved memory configured, the VM crashes without warning. This can be fixed by allocating at least 256MiB of reserved memory to the on the <code>Advanced Options</code> tab. </p>
-<p>Click <code>Edit config</code> of your crashing VM, go to the <code>Advanced Options</code> tab, click <code>Show More</code> and fill in at least 256MiB of reserved memory to prevent crashes.</p>
+<p>There is a known issue with Windows VM when it is allocated more than 8GiB without enough reserve memory configured. The VM crashes without warning.</p>
+<p>This can be fixed by allocating at least 256MiB of reserved memory to the template on the Advanced Options tab.</p>
 <p><img alt="reserved-memory-config" src="../assets/reserved-memory-config.png" /></p>
 <p>We will add a default 256MiB of reserved memory to the Windows template to prevent this problem in the future release.</p>
 <h3 id="bsod-blue-screen-of-death-at-first-boot-time-of-windows">BSoD (Blue Screen of Death) at first boot time of Windows<a class="headerlink" href="#bsod-blue-screen-of-death-at-first-boot-time-of-windows" title="Permanent link">&para;</a></h3>

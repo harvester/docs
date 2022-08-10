@@ -1395,7 +1395,7 @@
   <h1>Virtualization management</h1>
 
 <h2 id="virtualization-management">Virtualization Management<a class="headerlink" href="#virtualization-management" title="Permanent link">&para;</a></h2>
-<p>For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6.x.</p>
+<p>For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6 and above.</p>
 <ol>
 <li>
 <p>As a prerequisite, Harvester <code>v1.0.0</code> integration requires Rancher server <code>v2.6.3</code> or above. In production, use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:</p>
@@ -1423,7 +1423,7 @@
 <li>Log into your Linux host using your preferred shell, such as PuTTy or a remote terminal connection.</li>
 <li>From your shell, enter the following command:
 <div class="highlight"><pre><span></span><code><span class="c1"># for a quick evaluation, you can run the Rancher server with the following command</span>
-$ sudo docker run -d --restart<span class="o">=</span>unless-stopped -p <span class="m">80</span>:80 -p <span class="m">443</span>:443 --privileged rancher/rancher:v2.6.3
+$ sudo docker run -d --restart<span class="o">=</span>unless-stopped -p <span class="m">80</span>:80 -p <span class="m">443</span>:443 --privileged rancher/rancher:v2.6.6
 </code></pre></div></li>
 </ol>
 </div>
