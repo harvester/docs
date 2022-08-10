@@ -201,6 +201,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.harvesterhci.io/v1.0/upgrade/v1-0-2-to-v1-0-3/</loc>
+         <lastmod>2022-08-10</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.harvesterhci.io/v1.0/vm/access-to-the-vm/</loc>
          <lastmod>2022-08-10</lastmod>
          <changefreq>daily</changefreq>

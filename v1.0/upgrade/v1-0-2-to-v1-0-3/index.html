@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/upgrade/v1-0-0-to-v1-0-1/">
+        <link rel="canonical" href="https://docs.harvesterhci.io/v1.0/upgrade/v1-0-2-to-v1-0-3/">
       
       <link rel="icon" href="../../assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
     
     
       
-        <title>Upgrade from v1.0.0 to v1.0.1 - Harvester - Open Source Hyperconverged Infrastructure</title>
+        <title>Upgrade from v1.0.2 to v1.0.3 - Harvester - Open Source Hyperconverged Infrastructure</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#upgrade-from-v100-to-v101" class="md-skip">
+        <a href="#upgrade-from-v102-to-v103" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Upgrade from v1.0.0 to v1.0.1
+              Upgrade from v1.0.2 to v1.0.3
             
           </span>
         </div>
@@ -427,11 +427,86 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../v1-0-2-to-v1-0-3/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Upgrade from v1.0.2 to v1.0.3
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Upgrade from v1.0.2 to v1.0.3
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-information" class="md-nav__link">
+    General information
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issues" class="md-nav__link">
+    Known issues
+  </a>
+  
+    <nav class="md-nav" aria-label="Known issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-fail-to-download-the-upgrade-image" class="md-nav__link">
+    1. Fail to download the upgrade image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-an-upgrade-is-stuck-a-node-is-in-pre-drained-state-case-1" class="md-nav__link">
+    2. An upgrade is stuck, a node is in "Pre-drained" state (case 1)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-an-upgrade-is-stuck-a-node-is-in-pre-drained-state-case-2" class="md-nav__link">
+    3. An upgrade is stuck, a node is in "Pre-drained" state (case 2)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -441,14 +516,12 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
       
       
       
@@ -483,107 +556,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Upgrade from v1.0.0 to v1.0.1
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../v1-0-0-to-v1-0-1/" class="md-nav__link">
         Upgrade from v1.0.0 to v1.0.1
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#create-a-version" class="md-nav__link">
-    Create a version
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#start-the-upgrade" class="md-nav__link">
-    Start the upgrade
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#known-issues" class="md-nav__link">
-    Known issues
-  </a>
-  
-    <nav class="md-nav" aria-label="Known issues">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fail-to-download-upgrade-image" class="md-nav__link">
-    Fail to download upgrade image
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stuck-in-upgrading-system-service" class="md-nav__link">
-    Stuck in Upgrading System Service
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#vms-fail-to-migrate" class="md-nav__link">
-    VMs fail to migrate
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#fleet-locallocal-another-operation-installupgraderollback-is-in-progress" class="md-nav__link">
-    fleet-local/local: another operation (install/upgrade/rollback) is in progress
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#single-node-upgrade-might-fail-if-node-name-is-too-long-24-characters" class="md-nav__link">
-    Single node upgrade might fail if node name is too long (&gt;24 characters)
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1377,15 +1354,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-a-version" class="md-nav__link">
-    Create a version
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#start-the-upgrade" class="md-nav__link">
-    Start the upgrade
+  <a href="#general-information" class="md-nav__link">
+    General information
   </a>
   
 </li>
@@ -1399,36 +1369,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fail-to-download-upgrade-image" class="md-nav__link">
-    Fail to download upgrade image
+  <a href="#1-fail-to-download-the-upgrade-image" class="md-nav__link">
+    1. Fail to download the upgrade image
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#stuck-in-upgrading-system-service" class="md-nav__link">
-    Stuck in Upgrading System Service
+  <a href="#2-an-upgrade-is-stuck-a-node-is-in-pre-drained-state-case-1" class="md-nav__link">
+    2. An upgrade is stuck, a node is in "Pre-drained" state (case 1)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#vms-fail-to-migrate" class="md-nav__link">
-    VMs fail to migrate
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#fleet-locallocal-another-operation-installupgraderollback-is-in-progress" class="md-nav__link">
-    fleet-local/local: another operation (install/upgrade/rollback) is in progress
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#single-node-upgrade-might-fail-if-node-name-is-too-long-24-characters" class="md-nav__link">
-    Single node upgrade might fail if node name is too long (&gt;24 characters)
+  <a href="#3-an-upgrade-is-stuck-a-node-is-in-pre-drained-state-case-2" class="md-nav__link">
+    3. An upgrade is stuck, a node is in "Pre-drained" state (case 2)
   </a>
   
 </li>
@@ -1450,202 +1406,199 @@
             <article class="md-content__inner md-typeset">
               
                 
-  <a href="https://github.com/harvester/docs/edit/main/docs/upgrade/v1-0-0-to-v1-0-1.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/harvester/docs/edit/main/docs/upgrade/v1-0-2-to-v1-0-3.md" title="Edit this page" class="md-content__button md-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
 
-<h1 id="upgrade-from-v100-to-v101">Upgrade from v1.0.0 to v1.0.1<a class="headerlink" href="#upgrade-from-v100-to-v101" title="Permanent link">&para;</a></h1>
-<p>This document describes how to upgrade from Harvester <code>v1.0.0</code> to <code>v1.0.1</code>.</p>
-<p>Note we are still working towards zero-downtime upgrade, due to some known issues please follow the steps below before you upgrade your Harvester cluster:</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<ul>
-<li>Before you upgrade your Harvester cluster, we highly recommend:<ul>
-<li>Shutting down all your VMs (Harvester GUI -&gt; Virtual Machines -&gt; Select VMs -&gt; Actions -&gt; Stop).</li>
-<li>Back up your VMs.</li>
-</ul>
-</li>
-<li>Do not operate the cluster during an upgrade. For example, creating new VMs, uploading new images, etc.</li>
-<li>Make sure your hardware meets the <strong>preferred</strong> <a href="../..#hardware-requirements">hardware requirements</a>. This is due to there will be intermediate resources consumed by an upgrade.</li>
-<li>Make sure each node has at least 25 GB of free space (<code>df -h /usr/local/</code>).</li>
-</ul>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<ul>
-<li>
-<p>Make sure all nodes' times are in sync. Using an NTP server to synchronize time is recommended. If an NTP server is not configured during the installation, you can manually add an NTP server <strong>on each node</strong>:</p>
-<div class="highlight"><pre><span></span><code>$ sudo -i
-
-# Add time servers
-$ vim /etc/systemd/timesyncd.conf
-[ntp]
-NTP=0.pool.ntp.org
-
-# Enable and start the systemd-timesyncd
-$ timedatectl set-ntp true
-
-# Check status
-$ timedatectl status
-</code></pre></div>
-</li>
-</ul>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<ul>
-<li>NICs that connect to a PCI bridge might be renamed after an upgrade. Please check the <a href="https://harvesterhci.io/kb/nic-naming-scheme">knowledge base article</a> for further information.</li>
-</ul>
-</div>
-<h2 id="create-a-version">Create a version<a class="headerlink" href="#create-a-version" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Log in to one of your server nodes.</li>
-<li>
-<p>Become root and create a version:
-    <div class="highlight"><pre><span></span><code>rancher@node1:~&gt; sudo -i
-
-node1:~ # kubectl create -f https://releases.rancher.com/harvester/v1.0.1/version.yaml
-version.harvesterhci.io/1.0.1 created
-</code></pre></div></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>By default, the ISO image is downloaded from the Harvester release server. To speed up the upgrade and make the upgrade progress smoother, the user can also download the ISO file to a local HTTP server first and substitute the <code>isoURL</code> value in the <code>version.yaml</code> manifest.</p>
-<p>e.g., </p>
-<div class="highlight"><pre><span></span><code># Download the ISO from release server first, assume it&#39;s store in http://10.10.0.1/harvester.iso
-$ sudo -i
-$ curl -fL https://releases.rancher.com/harvester/v1.0.1/version.yaml -o version.yaml
-$ vim version.yaml 
-apiVersion: harvesterhci.io/v1beta1
-kind: Version
-metadata:
-  name: v1.0.1
-  namespace: harvester-system
-spec:
-  isoChecksum: &lt;SHA-512 checksum of the ISO&gt; 
-  isoURL: http://10.10.0.1/harvester.iso
-  releaseDate: &#39;20220408&#39;
-</code></pre></div>
-</div>
-</li>
-</ul>
-<h2 id="start-the-upgrade">Start the upgrade<a class="headerlink" href="#start-the-upgrade" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Make sure to read the Warning paragraph at the top of this document first.</li>
-<li>
-<p>Navigate to Harvester GUI and click the upgrade button on the Dashboard page.</p>
-<p><img alt="" src="../assets/upgrade_button.png" /></p>
-</li>
-<li>
-<p>Select a version to start upgrading.</p>
-<p><img alt="" src="../assets/upgrade_select_version.png" style="width:50%" /></p>
-</li>
-<li>
-<p>Click the circle on the top to display the upgrade progress.
-    <img alt="" src="../assets/upgrade_progress.png" /></p>
-</li>
-</ul>
+<h1 id="upgrade-from-v102-to-v103">Upgrade from v1.0.2 to v1.0.3<a class="headerlink" href="#upgrade-from-v102-to-v103" title="Permanent link">&para;</a></h1>
+<h2 id="general-information">General information<a class="headerlink" href="#general-information" title="Permanent link">&para;</a></h2>
+<p>The Harvester GUI Dashboard page should have an upgrade button to perform an upgrade. For more details please refer to <a href="../automatic/#start-an-upgrade">start an upgrade</a>.</p>
+<p>For the air-gap env upgrade, please refer to <a href="../automatic/#prepare-an-air-gapped-upgrade">prepare an air-gapped upgrade</a>.</p>
 <h2 id="known-issues">Known issues<a class="headerlink" href="#known-issues" title="Permanent link">&para;</a></h2>
-<h3 id="fail-to-download-upgrade-image">Fail to download upgrade image<a class="headerlink" href="#fail-to-download-upgrade-image" title="Permanent link">&para;</a></h3>
-<ul>
-<li>
+<hr />
+<h3 id="1-fail-to-download-the-upgrade-image">1. Fail to download the upgrade image<a class="headerlink" href="#1-fail-to-download-the-upgrade-image" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong></p>
-<p>Downloading the upgrade image can't complete.</p>
+<p>Downloading the upgrade image can't be complete or fails with an error.</p>
 <p><img alt="" src="../assets/known_issue_downloading_image_failure.png" /></p>
-</li>
-<li>
-<p><strong>Workaround</strong></p>
-<p>We can delete the current upgrade and start over.</p>
-<div class="highlight"><pre><span></span><code># log in to one of the server nodes
-$ sudo -i
-
-# list current upgrade, the name changes between deployments
-$ kubectl get upgrades.harvesterhci.io -n harvester-system
-NAMESPACE          NAME                 AGE
-harvester-system   hvst-upgrade-77cks   119m
-
-$ kubectl delete upgrades.harvesterhci.io hvst-upgrade-77cks -n harvester-system
-</code></pre></div>
-<p>We recommend mirroring the ISO file to a local webserver, please check the notes in the <a href="#create-a-version">previous section</a>.</p>
-</li>
-</ul>
-<h3 id="stuck-in-upgrading-system-service">Stuck in <strong>Upgrading System Service</strong><a class="headerlink" href="#stuck-in-upgrading-system-service" title="Permanent link">&para;</a></h3>
-<ul>
-<li>
-<p><strong>Description</strong></p>
-<ul>
-<li>The upgrade is stuck at <strong>Upgrading System service</strong>.</li>
-<li>
-<p>Similar logs are found in rancher pods:</p>
-<div class="highlight"><pre><span></span><code>[ERROR] available chart version (100.0.2+up0.3.8) for fleet is less than the min version (100.0.3+up0.3.9-rc1) 
-[ERROR] Failed to find system chart fleet will try again in 5 seconds: no chart name found
-</code></pre></div>
-</li>
-</ul>
-</li>
-<li>
-<p><strong>Workaround</strong></p>
-<p>Delete rancher cluster repositories and restart rancher pods.</p>
-<div class="highlight"><pre><span></span><code># login to a server node and become root first
-kubectl delete clusterrepos.catalog.cattle.io rancher-charts
-kubectl delete clusterrepos.catalog.cattle.io rancher-rke2-charts
-kubectl delete clusterrepos.catalog.cattle.io rancher-partner-charts
-kubectl delete settings.management.cattle.io chart-default-branch
-kubectl rollout restart deployment rancher -n cattle-system
-</code></pre></div>
-</li>
-<li>
 <p><strong>Related issues</strong></p>
 <ul>
-<li><a href="https://github.com/harvester/harvester/issues/2011">[BUG] Rancher upgrade fail: Failed to find system chart "fleet"</a></li>
+<li><a href="https://github.com/harvester/harvester/issues/2104">[BUG] failed to create upgrade image</a></li>
 </ul>
-</li>
-</ul>
-<h3 id="vms-fail-to-migrate">VMs fail to migrate<a class="headerlink" href="#vms-fail-to-migrate" title="Permanent link">&para;</a></h3>
-<ul>
-<li>
-<p><strong>Description</strong></p>
-<ul>
-<li>A node keeps waiting in <code>Pre-draining</code> state.</li>
-<li>There are VMs on that node (checking for <code>virt-launcher-xxx</code> pods) and they can't be live-migrated out of the node.</li>
-</ul>
-</li>
-<li>
 <p><strong>Workaround</strong></p>
-<p>Shutdown the VMs, you can do this by:</p>
-<ul>
-<li>Using the GUI.</li>
-<li>Using the <code>virtctl</code> command.</li>
-</ul>
-</li>
-<li>
-<p><strong>Related issues</strong></p>
-<ul>
-<li><a href="https://github.com/harvester/harvester/issues/2029">[BUG] Upgrade: VMs fail to live-migrate to other hosts in some cases</a></li>
-</ul>
-</li>
-</ul>
-<h3 id="fleet-locallocal-another-operation-installupgraderollback-is-in-progress">fleet-local/local: another operation (install/upgrade/rollback) is in progress<a class="headerlink" href="#fleet-locallocal-another-operation-installupgraderollback-is-in-progress" title="Permanent link">&para;</a></h3>
-<ul>
-<li>
+<p>Delete the current upgrade and start over. Please see <a href="../troubleshooting/#start-over-an-upgrade">"Start over an upgrade"</a>.</p>
+<hr />
+<h3 id="2-an-upgrade-is-stuck-a-node-is-in-pre-drained-state-case-1">2. An upgrade is stuck, a node is in "Pre-drained" state (case 1)<a class="headerlink" href="#2-an-upgrade-is-stuck-a-node-is-in-pre-drained-state-case-1" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong></p>
-<p>You see bundles have <code>fleet-local/local: another operation (install/upgrade/rollback) is in progress</code> status in the output:</p>
-<div class="highlight"><pre><span></span><code>kubectl get bundles -A
+<p>Users might see a node is stuck at the Pre-drained state for a while (&gt; 30 minutes).</p>
+<p><img alt="" src="../assets/known_issues/2053-stuck.png" style="width:50%" /></p>
+<p>This might be caused by <code>instance-manager-r-*</code> pod on node <code>harvester-z7j2g</code> can’t be drained. To verify the above case:</p>
+<ul>
+<li>
+<p>Check rancher server logs:</p>
+<div class="highlight"><pre><span></span><code>kubectl logs deployment/rancher -n cattle-system
+</code></pre></div>
+<p>Example output:</p>
+<div class="highlight"><pre><span></span><code>error when evicting pods/&quot;instance-manager-r-10dd59c4&quot; -n &quot;longhorn-system&quot; (will retry after 5s): Cannot evict pod as it would violate the pod&#39;s disruption budget.
+evicting pod longhorn-system/instance-manager-r-10dd59c4
+error when evicting pods/&quot;instance-manager-r-10dd59c4&quot; -n &quot;longhorn-system&quot; (will retry after 5s): Cannot evict pod as it would violate the pod&#39;s disruption budget.
+evicting pod longhorn-system/instance-manager-r-10dd59c4
+error when evicting pods/&quot;instance-manager-r-10dd59c4&quot; -n &quot;longhorn-system&quot; (will retry after 5s): Cannot evict pod as it would violate the pod&#39;s disruption budget.
+evicting pod longhorn-system/instance-manager-r-10dd59c4
+error when evicting pods/&quot;instance-manager-r-10dd59c4&quot; -n &quot;longhorn-system&quot; (will retry after 5s): Cannot evict pod as it would violate the pod&#39;s disruption budget.
 </code></pre></div>
 </li>
 <li>
-<p><strong>Related issues</strong></p>
-<ul>
-<li><a href="https://github.com/harvester/harvester/issues/1983">[BUG] Upgrade: rancher-monitoring charts can't be upgraded</a></li>
-</ul>
+<p>Verify the pod <code>longhorn-system/instance-manager-r-10dd59c4</code> is on the stuck node:</p>
+<div class="highlight"><pre><span></span><code>kubectl get pod instance-manager-r-10dd59c4 -n longhorn-system -o=jsonpath=&#39;{.spec.nodeName}&#39;
+</code></pre></div>
+<p>Example output:</p>
+<div class="highlight"><pre><span></span><code>harvester-z7j2g
+</code></pre></div>
+</li>
+<li>
+<p>Check degraded volumes:</p>
+<div class="highlight"><pre><span></span><code>kubectl get volumes -n longhorn-system
+</code></pre></div>
+<p>Example output:</p>
+<div class="highlight"><pre><span></span><code>NAME                                       STATE      ROBUSTNESS   SCHEDULED   SIZE          NODE              AGE
+pvc-08c34593-8225-4be6-9899-10a978df6ea1   attached   healthy      True        10485760      harvester-279l2   3d13h
+pvc-526600f5-bde2-4244-bb8e-7910385cbaeb   attached   healthy      True        21474836480   harvester-x9jqw   3d1h
+pvc-7b3fc2c3-30eb-48b8-8a98-11913f8314c2   attached   healthy      True        10737418240   harvester-x9jqw   3d
+pvc-8065ed6c-a077-472c-920e-5fe9eacff96e   attached   healthy      True        21474836480   harvester-x9jqw   3d
+pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599   attached   degraded     True        10737418240   harvester-x9jqw   2d23h
+pvc-9a6539b8-44e5-430e-9b24-ea8290cb13b7   attached   healthy      True        53687091200   harvester-x9jqw   3d13h
+</code></pre></div>
+<p>Here we can see volume <code>pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599</code> is degraded.</p>
+<div class="admonition notes">
+<p class="admonition-title">Notes</p>
+<p>the user needs to check all degraded volumes one by one.</p>
+</div>
+</li>
+<li>
+<p>Check degraded volume’s replica state:</p>
+<div class="highlight"><pre><span></span><code>kubectl get replicas -n longhorn-system --selector <span class="nv">longhornvolume</span><span class="o">=</span>pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599 -o json <span class="p">|</span> jq <span class="s1">&#39;.items[] | {replica: .metadata.name, healthyAt: .spec.healthyAt, nodeID: .spec.nodeID, state: .status.currentState}&#39;</span>
+</code></pre></div>
+<p>Example output:</p>
+<div class="highlight"><pre><span></span><code>{
+  &quot;replica&quot;: &quot;pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599-r-15e31246&quot;,
+  &quot;healthyAt&quot;: &quot;2022-07-25T07:33:16Z&quot;,
+  &quot;nodeID&quot;: &quot;harvester-z7j2g&quot;,
+  &quot;state&quot;: &quot;running&quot;
+}
+{
+  &quot;replica&quot;: &quot;pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599-r-22974d0f&quot;,
+  &quot;healthyAt&quot;: &quot;&quot;,
+  &quot;nodeID&quot;: &quot;harvester-279l2&quot;,
+  &quot;state&quot;: &quot;running&quot;
+}
+{
+  &quot;replica&quot;: &quot;pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599-r-bc6f7fa5&quot;,
+  &quot;healthyAt&quot;: &quot;&quot;,
+  &quot;nodeID&quot;: &quot;harvester-x9jqw&quot;,
+  &quot;state&quot;: &quot;stopped&quot;
+}
+</code></pre></div>
+<p>Here the only healthy replica is <code>pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599-r-15e31246</code> and it’s on node <code>harvester-z7j2g</code>. So we can confirm the <code>instance-manager-r-*</code> pod resides on node <code>harvester-z7j2g</code> and avoids the drain.</p>
 </li>
 </ul>
-<h3 id="single-node-upgrade-might-fail-if-node-name-is-too-long-24-characters">Single node upgrade might fail if node name is too long (&gt;24 characters)<a class="headerlink" href="#single-node-upgrade-might-fail-if-node-name-is-too-long-24-characters" title="Permanent link">&para;</a></h3>
+<p><strong>Related issues</strong></p>
 <ul>
-<li><strong>Related issues</strong><ul>
-<li><a href="https://github.com/harvester/harvester/issues/2114">https://github.com/harvester/harvester/issues/2114</a></li>
+<li><a href="https://github.com/harvester/harvester/issues/2053">[BUG] Upgrade: longhorn-system can't be evicted</a></li>
 </ul>
+<p><strong>Workaround</strong></p>
+<p>We need to start the “Stopped” replica, from the previous example, the stopped replica’s name is <code>pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599-r-bc6f7fa5</code>. </p>
+<ul>
+<li>
+<p>Check the Longhorn manager log, we should see a replica waiting for the backing image. First, we need to get the manager's name:</p>
+<div class="highlight"><pre><span></span><code>kubectl get pods -n longhorn-system --selector app=longhorn-manager --field-selector spec.nodeName=harvester-x9jqw
+</code></pre></div>
+<p>Example output:</p>
+<div class="highlight"><pre><span></span><code>NAME                     READY   STATUS    RESTARTS   AGE
+longhorn-manager-zmfbw   <span class="m">1</span>/1     Running   <span class="m">0</span>          3d10h
+</code></pre></div>
+</li>
+<li>
+<p>Get pod log:</p>
+<div class="highlight"><pre><span></span><code>kubectl logs longhorn-manager-zmfbw -n longhorn-system | grep pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599-r-bc6f7fa5
+</code></pre></div>
+<p>Example output:</p>
+<div class="highlight"><pre><span></span><code>(...)
+time=&quot;2022-07-28T04:35:34Z&quot; level=debug msg=&quot;Prepare to create instance pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599-r-bc6f7fa5&quot;
+time=&quot;2022-07-28T04:35:34Z&quot; level=debug msg=&quot;Replica pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599-r-bc6f7fa5 is waiting for backing image harvester-system-harvester-iso-n7bxh downloading file to node harvester-x9jqw disk 3830342d-c13d-4e55-ac74-99cad529e9d4, the current state is in-progress&quot; controller=longhorn-replica dataPath= node=harvester-x9jqw nodeID=harvester-x9jqw ownerID=harvester-x9jqw replica=pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599-r-bc6f7fa5
+time=&quot;2022-07-28T04:35:34Z&quot; level=info msg=&quot;Event(v1.ObjectReference{Kind:\&quot;Replica\&quot;, Namespace:\&quot;longhorn-system\&quot;, Name:\&quot;pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599-r-bc6f7fa5\&quot;, UID:\&quot;c511630f-2fe2-4cf9-97a4-21bce73782b1\&quot;, APIVersion:\&quot;longhorn.io/v1beta1\&quot;, ResourceVersion:\&quot;632926\&quot;, FieldPath:\&quot;\&quot;}): type: &#39;Normal&#39; reason: &#39;Start&#39; Starts pvc-9a40e5b9-543a-4c90-aafd-ac78b05d7599-r-bc6f7fa5&quot;
+</code></pre></div>
+<p>Here we can determine the replica is waiting for the backing image <code>harvester-system-harvester-iso-n7bxh</code>.</p>
+</li>
+<li>
+<p>Get the disk file map from the backing image:</p>
+<div class="highlight"><pre><span></span><code>kubectl describe backingimage harvester-system-harvester-iso-n7bxh -n longhorn-system
+</code></pre></div>
+<p>Example output:</p>
+<div class="highlight"><pre><span></span><code><span class="o">(</span>...<span class="o">)</span>
+Disk File Status Map:
+    3830342d-c13d-4e55-ac74-99cad529e9d4:
+      Last State Transition Time:  <span class="m">2022</span>-07-25T08:30:34Z
+      Message:
+      Progress:                    <span class="m">29</span>
+      State:                       <span class="k">in</span>-progress
+    3aa804e1-229d-4141-8816-1f6a7c6c3096:
+      Last State Transition Time:  <span class="m">2022</span>-07-25T08:33:20Z
+      Message:
+      Progress:                    <span class="m">100</span>
+      State:                       ready
+    92726efa-bfb3-478e-8553-3206ad34ce70:
+      Last State Transition Time:  <span class="m">2022</span>-07-28T04:31:49Z
+      Message:
+      Progress:                    <span class="m">100</span>
+      State:                       ready
+</code></pre></div>
+<p>The disk file with UUID <code>3830342d-c13d-4e55-ac74-99cad529e9d4</code> has the state <code>in-progress</code>.</p>
+</li>
+<li>
+<p>Next, we need to find backing-image-manager that contains this disk file:</p>
+<div class="highlight"><pre><span></span><code>kubectl get pod -n longhorn-system --selector<span class="o">=</span>longhorn.io/disk-uuid<span class="o">=</span>3830342d-c13d-4e55-ac74-99cad529e9d4
+</code></pre></div>
+<p>Example output:</p>
+<div class="highlight"><pre><span></span><code>NAME                              READY   STATUS    RESTARTS   AGE
+backing-image-manager-c00e-3830   1/1     Running   0          3d1h
+</code></pre></div>
+</li>
+<li>
+<p>Restart the backing-image-manager by deleting its pod:</p>
+<div class="highlight"><pre><span></span><code>kubectl delete pod -n longhorn-system backing-image-manager-c00e-3830
+</code></pre></div>
+</li>
+</ul>
+<hr />
+<h3 id="3-an-upgrade-is-stuck-a-node-is-in-pre-drained-state-case-2">3. An upgrade is stuck, a node is in "Pre-drained" state (case 2)<a class="headerlink" href="#3-an-upgrade-is-stuck-a-node-is-in-pre-drained-state-case-2" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong></p>
+<p>Users might see a node is stuck at the Pre-drained state for a while (&gt; 30 minutes).</p>
+<p><img alt="" src="../assets/known_issues/2640-stuck.png" style="width:50%" /></p>
+<p>Here are some steps to verify this issue has happened:</p>
+<ul>
+<li>
+<p>Visit the Longhorn GUI: <code>https://{{VIP}}/k8s/clusters/local/api/v1/namespaces/longhorn-system/services/http:longhorn-frontend:80/proxy/#/volume</code> (replace VIP with an appropriate value) and check degraded volumes. The degraded volume might contain a healthy replica only (with blue background) and the healthy replica resides on the "Pre-drained" node:</p>
+<p><img alt="" src="../assets/known_issues/2640-vol-1.png" /></p>
+</li>
+<li>
+<p>Hover the mouse to the red scheduled icon, the reason is <code>toomanysnapshots</code>:</p>
+<p><img alt="" src="../assets/known_issues/2640-vol-2.png" /></p>
+</li>
+</ul>
+<p><strong>Related issues</strong></p>
+<ul>
+<li><a href="https://github.com/harvester/harvester/issues/2640">[BUG] Upgrade is stuck in "Pre-drained" state (Volume has too many system snapshots)</a></li>
+</ul>
+<p><strong>Workaround</strong></p>
+<ul>
+<li>
+<p>In the "Snapshots and Backup" panel, toggle the "Show System Hidden" switch and delete the latest system snapshot (which is just before the "Volume Head").</p>
+<p><img alt="" src="../assets/known_issues/2640-vol-3.png" /></p>
+</li>
+<li>
+<p>The volume will continue rebuilding to resume the upgrade.</p>
 </li>
 </ul>
 
@@ -1663,7 +1616,7 @@ kubectl rollout restart deployment rancher -n cattle-system
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../v1-0-1-to-v1-0-2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Upgrade from v1.0.1 to v1.0.2" rel="prev">
+        <a href="../automatic/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Upgrading Harvester" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1672,20 +1625,20 @@ kubectl rollout restart deployment rancher -n cattle-system
               <span class="md-footer__direction">
                 Previous
               </span>
-              Upgrade from v1.0.1 to v1.0.2
+              Upgrading Harvester
             </div>
           </div>
         </a>
       
       
         
-        <a href="../troubleshooting/" class="md-footer__link md-footer__link--next" aria-label="Next: Troubleshooting" rel="next">
+        <a href="../v1-0-1-to-v1-0-2/" class="md-footer__link md-footer__link--next" aria-label="Next: Upgrade from v1.0.1 to v1.0.2" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Troubleshooting
+              Upgrade from v1.0.1 to v1.0.2
             </div>
           </div>
           <div class="md-footer__button md-icon">
