@@ -1005,6 +1005,19 @@
     Create K3s Kubernetes Cluster
   </a>
   
+    <nav class="md-nav" aria-label="Create K3s Kubernetes Cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-node-affinity" class="md-nav__link">
+    Add Node Affinity
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1300,6 +1313,19 @@
     Create K3s Kubernetes Cluster
   </a>
   
+    <nav class="md-nav" aria-label="Create K3s Kubernetes Cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-node-affinity" class="md-nav__link">
+    Add Node Affinity
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1364,6 +1390,26 @@
 <li>Click <strong>Create</strong>.</li>
 </ol>
 <p><img alt="create-k3s-harvester-cluster" src="../assets/create-k3s-harvester-cluster.png" /></p>
+<h4 id="add-node-affinity">Add Node Affinity<a class="headerlink" href="#add-node-affinity" title="Permanent link">&para;</a></h4>
+<p><em>Available as of v1.0.3 + Rancher v2.6.7</em></p>
+<p>The Harvester node driver now supports scheduling a group of machines to particular nodes through the node affinity rules. This provides high availability and better resource utilization.</p>
+<p>Node affinity can be added to the machine pools during the cluster creation:</p>
+<ol>
+<li>Click the <code>Show Advanced</code> button and click the <code>Add Node Selector</code>
+   <img alt="affinity-add-node-selector" src="../assets/affinity-rke2-add-node-selector.png" /></li>
+<li>Set priority to <code>Required</code> if you wish the scheduler to schedule the machines only when the rules are met.</li>
+<li>Click <code>Add Rule</code> to specify the node affinity rules, e.g., for the <a href="../node-driver/#topology-spread-constraints">topology spread constraints</a> use case, you can add the <code>region</code> and <code>zone</code> labels as follows:
+   <div class="highlight"><pre><span></span><code><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">topology.kubernetes.io/region</span><span class="w"></span>
+<span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">in list</span><span class="w"> </span>
+<span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">topology.kubernetes.io/zone</span><span class="w"></span>
+<span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">in list</span><span class="w"> </span>
+<span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1a</span><span class="w"></span>
+</code></pre></div>
+   <img alt="affinity-add-rules" src="../assets/affinity-rke2-add-rules.png" /></li>
+<li>Click <code>Create</code> to save the node template. After the cluster is installed, you can check whether its machine nodes are scheduled according to the affinity rules.</li>
+</ol>
 <h3 id="using-harvester-k3s-node-driver-in-air-gapped-environment">Using Harvester K3s Node Driver in Air Gapped Environment<a class="headerlink" href="#using-harvester-k3s-node-driver-in-air-gapped-environment" title="Permanent link">&para;</a></h3>
 <p>K3s provisioning relies on the <code>qemu-guest-agent</code> to get the IP of the virtual machine. However, it may not be feasible to install <code>qemu-guest-agent</code> in an air gapped environment.</p>
 <p>You can address the installation constraints with the following options:</p>

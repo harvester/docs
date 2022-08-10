@@ -977,6 +977,19 @@
     Create Node Template
   </a>
   
+    <nav class="md-nav" aria-label="Create Node Template">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-node-affinity" class="md-nav__link">
+    Add Node Affinity
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1307,6 +1320,19 @@
     Create Node Template
   </a>
   
+    <nav class="md-nav" aria-label="Create Node Template">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-node-affinity" class="md-nav__link">
+    Add Node Affinity
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1385,6 +1411,26 @@
 </ol>
 <p><img alt="" src="../assets/node-template.png" /></p>
 <p>See <a href="https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/">nodes hosted by an infrastructure provider</a> for more information.</p>
+<h4 id="add-node-affinity">Add Node Affinity<a class="headerlink" href="#add-node-affinity" title="Permanent link">&para;</a></h4>
+<p><em>Available as of v1.0.3 + Rancher v2.6.7</em></p>
+<p>The Harvester node driver now supports scheduling a group of machines to particular nodes through the node affinity rules, which can provide high availability and better resource utilization.</p>
+<p>Node affinity can be added to the node template during the cluster creation, click <code>Add Node Template</code> or edit your existing node template via <code>RKE1 Configuration &gt; Node Templates</code>:</p>
+<ol>
+<li>Check the <code>Advanced Options</code> tab and click <code>Add Node Selector</code>
+   <img alt="affinity-add-node-selector" src="../assets/affinity-add-node-selector.png" /></li>
+<li>Set priority to <code>Required</code> if you wish the scheduler to schedule the machines only when the rules are met.</li>
+<li>Click <code>Add Rule</code> to specify the node affinity rules, e.g., for the <a href="../node-driver/#topology-spread-constraints">topology spread constraints</a> use case, you can add the <code>region</code> and <code>zone</code> labels as follows:
+   <div class="highlight"><pre><span></span><code><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">topology.kubernetes.io/region</span><span class="w"></span>
+<span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">in list</span><span class="w"> </span>
+<span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">topology.kubernetes.io/zone</span><span class="w"></span>
+<span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">in list</span><span class="w"> </span>
+<span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1a</span><span class="w"></span>
+</code></pre></div>
+   <img alt="affinity-add-rules" src="../assets/affinity-add-rules.png" /></li>
+<li>Click <code>Create</code> to save the node template. After the cluster is installed, you can check whether its machine nodes are scheduled accordingly to the affinity rules.</li>
+</ol>
 <h3 id="create-rke1-kubernetes-cluster">Create RKE1 Kubernetes Cluster<a class="headerlink" href="#create-rke1-kubernetes-cluster" title="Permanent link">&para;</a></h3>
 <p>Users can create an RKE1 Kubernetes cluster from the <strong>Cluster Management</strong> page via the Harvester RKE1 node driver.</p>
 <ol>

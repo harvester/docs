@@ -979,6 +979,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#topology-spread-constraints" class="md-nav__link">
+    Topology Spread Constraints
+  </a>
+  
+    <nav class="md-nav" aria-label="Topology Spread Constraints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sync-topology-labels-to-the-guest-cluster-node" class="md-nav__link">
+    Sync Topology Labels to the Guest Cluster Node
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1323,6 +1343,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#topology-spread-constraints" class="md-nav__link">
+    Topology Spread Constraints
+  </a>
+  
+    <nav class="md-nav" aria-label="Topology Spread Constraints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sync-topology-labels-to-the-guest-cluster-node" class="md-nav__link">
+    Sync Topology Labels to the Guest Cluster Node
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1352,8 +1392,7 @@ Additionally, Harvester now can provide built-in <a href="../cloud-provider/">Lo
 <p>Harvester v1.0.0 is compatible with Rancher <code>v2.6.3+</code> only.</p>
 </div>
 <h2 id="harvester-node-driver_1">Harvester Node Driver<a class="headerlink" href="#harvester-node-driver_1" title="Permanent link">&para;</a></h2>
-<p>The Harvester node driver is enabled by default in Rancher <code>v2.6.3+</code>. You can go to <code>Cluster Management &gt; Drivers &gt; Node Drivers</code> page to manage the Harvester node driver manually.</p>
-<p><img alt="" src="../assets/harvester-node-driver.png" /></p>
+<p>The Harvester node driver is enabled by default from Rancher <code>v2.6.3</code>. You can go to <code>Cluster Management</code> &gt; <code>Drivers</code> &gt; <code>Node Drivers</code> page to manage the Harvester node driver manually.</p>
 <p>When the Harvester node driver is enabled, you can create Kubernetes clusters on top of the Harvester cluster and manage them from Rancher.</p>
 <p><img alt="rke1-cluster" src="../assets/rke1-node-driver.png" /></p>
 <h2 id="rke1-kubernetes-cluster">RKE1 Kubernetes Cluster<a class="headerlink" href="#rke1-kubernetes-cluster" title="Permanent link">&para;</a></h2>
@@ -1362,6 +1401,33 @@ Additionally, Harvester now can provide built-in <a href="../cloud-provider/">Lo
 <p>Click to learn <a href="../rke2-cluster/">how to create RKE2 Kubernetes Clusters</a>.</p>
 <h2 id="k3s-kubernetes-cluster">K3s Kubernetes Cluster<a class="headerlink" href="#k3s-kubernetes-cluster" title="Permanent link">&para;</a></h2>
 <p>Click to learn <a href="../k3s-cluster/">how to create k3s Kubernetes Clusters</a>.</p>
+<h2 id="topology-spread-constraints">Topology Spread Constraints<a class="headerlink" href="#topology-spread-constraints" title="Permanent link">&para;</a></h2>
+<p><em>Available as of v1.0.3</em></p>
+<p>In your guest Kubernetes cluster, you can use <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/">topology spread constraints</a> to control how workloads are spread across the Harvester VMs among failure-domains such as regions and zones. This can help to achieve high availability as well as efficient resource utilization of your cluster resources.</p>
+<h3 id="sync-topology-labels-to-the-guest-cluster-node">Sync Topology Labels to the Guest Cluster Node<a class="headerlink" href="#sync-topology-labels-to-the-guest-cluster-node" title="Permanent link">&para;</a></h3>
+<p>During the cluster installation, the Harvester node driver will automatically help synchronize topology labels from VM nodes to guest cluster nodes. Currently, only <code>region</code> and <code>zone</code> typology labels are supported.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Label synchronization will only take effect during guest node initialization. To avoid node drifts to another region or zone, it is recommended to add the <a href="../rke2-cluster/#add-node-affinity">node affinity rules</a> during the cluster provisioning, so that the VMs can be scheduled to the same zone even after rebuilding.</p>
+</div>
+<ol>
+<li>
+<p>Configuring topology labels on the Harvester nodes through <code>Hosts &gt; Edit Config &gt; Labels</code>. e.g., add the topology labels as follows:
+   <div class="highlight"><pre><span></span><code><span class="nt">topology.kubernetes.io/region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1</span><span class="w"></span>
+<span class="nt">topology.kubernetes.io/zone</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1a</span><span class="w"></span>
+</code></pre></div>
+   <img alt="" src="../assets/node-add-affinity-labels.png" /></p>
+</li>
+<li>
+<p>Creating a guest Kubernetes cluster using the Harvester node driver and it is recommended to add the <a href="../rke2-cluster/#add-node-affinity">node affinity rules</a>, this will help to avoid node drifting to other zones after VM rebuilding.</p>
+</li>
+<li>
+<p>After the cluster is successfully deployed, confirm that guest Kubernetes node labels are successfully synchronized from the Harvester VM node.</p>
+</li>
+<li>
+<p>Now deploy workloads on your guest Kubernetes cluster, and you should be able to manage them using the <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/">topology spread constraints</a>.</p>
+</li>
+</ol>
 
               
             </article>
