@@ -52,12 +52,11 @@ os:
     mylabel: myvalue
 install:
   mode: create
-  networks:
-    harvester-mgmt:
-      interfaces:
-      - name: ens5
-        hwAddr: "B8:CA:3A:6A:64:7C"
-      method: dhcp
+  management_interface:
+    interfaces:
+    - name: ens5
+      hwAddr: "B8:CA:3A:6A:64:7C"
+    method: dhcp
   force_efi: true
   device: /dev/vda
   silent: true
@@ -331,7 +330,7 @@ install:
   mode: create
 ```
 
-### `install.networks`
+### `install.management_interface`
 
 #### Definition
 
@@ -353,10 +352,11 @@ the values are configurations for each network. Valid configuration fields are:
     - `mode: balance-tlb`
     - `miimon: 100`
 - `mtu`: The MTU for the interface.
+- `vlan_id`: The VLAN ID for the interface
 
 :::note
 
-A network called `harvester-mgmt` is mandatory to establish a valid [management network](../networking/harvester-network.md#management-network).
+A network called `mgmt-br` is mandatory to establish a valid [management network](../networking/harvester-network.md#management-network).
 
 :::
 
@@ -372,33 +372,16 @@ Please make sure the interface name is present on the target machine before inst
 ```yaml
 install:
   mode: create
-  networks:
-    harvester-mgmt:       # The management bond name. This is mandatory.
-      interfaces:
-      - name: ens5
-        hwAddr: "B8:CA:3A:6A:64:7D"     # The hwAddr is optional
-      method: dhcp
-      bond_options:
-        mode: balance-tlb
-        miimon: 100
-      mtu: 1492
-    harvester-vlan:       # The VLAN network bond name. User can then input `harvester-vlan` in the VLAN NIC setting in the GUI.
-      interfaces:
-      - name: ens6
-        hwAddr: "B8:CA:3A:6A:64:7E"     # The hwAddr is optional
-      method: none
-      bond_options:
-        mode: balance-tlb
-        miimon: 100
-    bond0:
-      interfaces:
-      - name: ens8
-        hwAddr: "B8:CA:3A:6A:64:7F"     # The hwAddr is optional
-      method: static
-      ip: 10.10.18.2
-      subnet_mask: 255.255.255.0
-      gateway: 192.168.11.1
-      mtu: 9000
+  management_interface:
+    interfaces:
+    - name: ens5
+      hwAddr: "B8:CA:3A:6A:64:7D"     # The hwAddr is optional
+    method: dhcp
+    bond_options:
+      mode: balance-tlb
+      miimon: 100
+    mtu: 1492
+    vlan_id: 101
 ```
 
 ### `install.force_efi`
