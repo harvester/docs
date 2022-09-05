@@ -539,38 +539,3 @@ system_settings:
   http-proxy: '{"httpProxy": "http://my.proxy", "httpsProxy": "https://my.proxy", "noProxy": "some.internal.svc"}'
   ui-source: auto
 ```
-
-### `cluster_networks`
-
-_Available as of v1.0.1_
-
-#### Definition
-
-You can setup the default network in Harvester by configuring `cluster_networks`. Network configuration reference:
-
-- `vlan`: Setup for VLAN network. The following fields are supported:
-    - `enable`: enable VLAN network settings or not. Default value: `false`.
-    - `description`: Additional information for `ClusterNetworks`. Default value: "".
-    - `config`: `ClusterNetworks` configuration to be used. Valid configuration fields are:
-        - `defaultPhysicalNIC` (string, required): assign a physical NIC to be external entry of VLAN network.
-
-:::note
-
-To configure the `cluster_networks`, Harvester needs to be installed in "create" mode.
-If you install Harvester in "join" mode, this setting is ignored.
-Installing in "join" mode will apply the `cluster_networks` configuration from the existing Harvester system.
-
-:::
-
-#### Example
-
-The following example sets the default physical NIC name of the VLAN network:
-
-```yaml
-cluster_networks:
-  vlan:
-    enable: true
-    description: "some description about this cluster network"
-    config:
-      defaultPhysicalNIC: ens3
-```
