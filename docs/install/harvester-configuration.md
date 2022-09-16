@@ -18,6 +18,7 @@ Description: Harvester configuration file can be provided during manual or autom
 Harvester configuration file can be provided during manual or automatic installation to configure various settings. The following is a configuration example:
 
 ```yaml
+scheme_version: 1
 server_url: https://someserver:443
 token: TOKEN_VALUE
 os:
@@ -89,6 +90,20 @@ Below is a reference of all configuration keys.
 For instance, if you have in your Harvester Configuration file specified `os.hostname` and during install you fill in the field of `hostname` when prompted, the value that you filled in will take priority over your Harvester Configuration's `os.hostname`.
 
 :::
+
+### `scheme_version`
+
+#### Definition
+
+The version of scheme is reserved for the future configuration migration.
+
+This configuration is mandatory for migrating configuration to new scheme version. It tells the Harvester the previous version and need to migrate.
+
+!!!note
+    This field didn't take any effect in the current Harvester version.
+
+!!!warning
+    Make sure that your custom configuration always has the correct scheme version.
 
 ### `server_url`
 
