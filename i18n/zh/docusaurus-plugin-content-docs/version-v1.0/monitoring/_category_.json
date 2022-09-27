@@ -1,0 +1,10 @@
+{
+    "position": 10,
+    "label": "监控",
+    "collapsible": false,
+    "collapsed": false,
+    "link": {
+        "type": "doc",
+        "id": "monitoring"
+    }
+}

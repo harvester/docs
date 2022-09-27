@@ -1,3 +1,9 @@
+---
+sidebar_position: 1
+sidebar_label: Installation
+title: ""
+---
+
 # Installation
 
 The following sections contain tips to troubleshoot or get assistance with failed installations.
@@ -28,7 +34,7 @@ default via 10.10.0.10 dev harvester-mgmt proto dhcp        <-- Does a default r
 ## Modifying cluster token on agent nodes
 
 When an agent node fails to join the cluster, it can be related to the cluster token not being identical to the server node token.
-In order to confirm the issue, connect to your agent node (i.e. with [SSH](../os#how-to-log-into-a-harvester-node)) and check the `rancherd` service log with the following command:
+In order to confirm the issue, connect to your agent node (i.e. with [SSH](./os#how-to-log-into-a-harvester-node) and check the `rancherd` service log with the following command:
 
 ```shell
 $ sudo journalctl -b -u rancherd
@@ -73,13 +79,17 @@ stages:
       ownerstring: ""
 ```
 
-!!! note
-    To see what is the current cluster token value, log in your server node (i.e. with SSH)
-    and look in the file `/etc/rancher/rancherd/config.yaml`. For example,
-    you can run the following command to only display the token's value:
-    ```bash
-    $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
-    ```
+:::note
+
+To see what is the current cluster token value, log in your server node (i.e. with SSH)
+and look in the file `/etc/rancher/rancherd/config.yaml`. For example,
+you can run the following command to only display the token's value:
+
+```bash
+$ sudo yq eval .token /etc/rancher/rancherd/config.yaml
+```
+
+:::
 
 ## Collecting troubleshooting information
 
@@ -97,11 +107,13 @@ Please include the following information in a bug report when reporting a failed
         
         The command output messages contain the generated tarball path. For example the path is `/var/loq/scc_aaa_220520_1021 804d65d-c9ba-4c54-b12d-859631f892c5.txz` in the following example:
 
-        ![](./assets/installation-support-config-example.png)
+        ![](/img/v1.1/troubleshooting/installation-support-config-example.png)
 
-        !!! note
+    :::note
 
-            A failure PXE Boot installation automatically generates a tarball if the [`install.debug`](../install/harvester-configuration.md#installdebug) field is set to `true` in the Harvester configuration file.
+    A failure PXE Boot installation automatically generates a tarball if the [`install.debug`](../install/harvester-configuration.md#installdebug) field is set to `true` in the Harvester configuration file.
+
+    :::
 
     - Before v1.0.2
 

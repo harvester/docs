@@ -1,5 +1,7 @@
 ---
-sidebar_position: 30
+sidebar_position: 1
+sidebar_label: Upgrading Harvester
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -18,66 +20,73 @@ The following table shows the upgrade path of all supported versions.
 | Upgrade from version | Supported new version(s) |
 |----------------------|--------------------------|
 | [v1.0.2](./v1-0-2-to-v1-0-3.md) | v1.0.3        |
-| [v1.0.1](./v1-0-1-to-v1-0-2.md) | v1.0.2        |
-| [v1.0.0](./v1-0-0-to-v1-0-1.md) | v1.0.1        |
+| [v1.0.1](./previous-releases/v1-0-1-to-v1-0-2.md) | v1.0.2        |
+| [v1.0.0](./previous-releases/v1-0-0-to-v1-0-1.md) | v1.0.1        |
 
 ## Start an upgrade
 
 Note we are still working towards zero-downtime upgrade, due to some known issues please follow the steps below before you upgrade your Harvester cluster:
 
-!!!warning
+:::caution
 
-    - Before you upgrade your Harvester cluster, we highly recommend:
-        - Shutting down all your VMs (Harvester GUI -> Virtual Machines -> Select VMs -> Actions -> Stop).
-        - Back up your VMs.
-    - Do not operate the cluster during an upgrade. For example, creating new VMs, uploading new images, etc.
-    - Make sure your hardware meets the **preferred** [hardware requirements](../index.md#hardware-requirements). This is due to there will be intermediate resources consumed by an upgrade.
-    - Make sure each node has at least 25 GB of free space (`df -h /usr/local/`).
+- Before you upgrade your Harvester cluster, we highly recommend:
+    - Shutting down all your VMs (Harvester GUI -> Virtual Machines -> Select VMs -> Actions -> Stop).
+    - Back up your VMs.
+- Do not operate the cluster during an upgrade. For example, creating new VMs, uploading new images, etc.
+- Make sure your hardware meets the **preferred** [hardware requirements](../index.md#hardware-requirements). This is due to there will be intermediate resources consumed by an upgrade.
+- Make sure each node has at least 25 GB of free space (`df -h /usr/local/`).
 
-!!!warning
+:::
 
-    - Make sure all nodes' times are in sync. Using an NTP server to synchronize time is recommended. If an NTP server is not configured during the installation, you can manually add an NTP server **on each node**:
+:::caution
 
-        ```
-        $ sudo -i
+- Make sure all nodes' times are in sync. Using an NTP server to synchronize time is recommended. If an NTP server is not configured during the installation, you can manually add an NTP server **on each node**:
 
-        # Add time servers
-        $ vim /etc/systemd/timesyncd.conf
-        [ntp]
-        NTP=0.pool.ntp.org
+    ```
+    $ sudo -i
 
-        # Enable and start the systemd-timesyncd
-        $ timedatectl set-ntp true
+    # Add time servers
+    $ vim /etc/systemd/timesyncd.conf
+    [ntp]
+    NTP=0.pool.ntp.org
 
-        # Check status
-        $ sudo timedatectl status
-        ```
+    # Enable and start the systemd-timesyncd
+    $ timedatectl set-ntp true
 
-!!!warning
+    # Check status
+    $ sudo timedatectl status
+    ```
 
-    - NICs that connect to a PCI bridge might be renamed after an upgrade. Please check the [knowledge base article](https://harvesterhci.io/kb/nic-naming-scheme) for further information.
+:::
 
+:::caution
+
+- NICs that connect to a PCI bridge might be renamed after an upgrade. Please check the [knowledge base article](https://harvesterhci.io/kb/nic-naming-scheme) for further information.
+
+:::
 
 - Make sure to read the Warning paragraph at the top of this document first.
 - Harvester checks if there are new upgradable versions periodically. If there are new versions, an upgrade button shows up on the Dashboard page.
     - If the cluster is in an air-gapped environment, please see [Prepare an air-gapped upgrade](#prepare-an-air-gapped-upgrade) section first. You can also speed up the ISO download by using the approach in that section.
 - Navigate to Harvester GUI and click the upgrade button on the Dashboard page.
 
-    ![](./assets/upgrade_button.png)
+    ![](/img/v1.1/upgrade/upgrade_button.png)
 
 - Select a version to start upgrading.
 
-    ![](./assets/upgrade_select_version.png){: style="width:50%"}
+    ![](/img/v1.1/upgrade/upgrade_select_version.png)
 
 - Click the circle on the top to display the upgrade progress.
-    ![](./assets/upgrade_progress.png)
+    ![](/img/v1.1/upgrade/upgrade_progress.png)
 
 
 ## Prepare an air-gapped upgrade
 
-!!!warning
+:::caution
 
-        Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section first about upgradable versions.
+Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section first about upgradable versions.
+
+:::
 
 - Download a Harvester ISO file from [release pages](https://github.com/harvester/harvester/releases).
 - Save the ISO to a local HTTP server. Assume the file is hosted at `http://10.10.0.1/harvester.iso`.

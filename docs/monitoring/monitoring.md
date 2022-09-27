@@ -1,3 +1,9 @@
+---
+sidebar_position: 1
+sidebar_label: Monitoring
+title: ""
+---
+
 # Monitoring
 
 _Available as of v0.3.0_
@@ -8,31 +14,37 @@ Harvester has provided a built-in monitoring integration using [Prometheus](http
 From the `Dashboard` page, users can view the cluster metrics and top 10 most used VM metrics respectively.
 Also, users can click the [Grafana](http://grafana.com/) dashboard link to view more dashboards on the Grafana UI.
 
-![](./assets/monitoring-dashboard.png)
+![](/img/v1.1/monitoring/monitoring-dashboard.png)
 
-!!! note
-    Only admin users are able to view the cluster dashboard metrics.
+:::note
+
+Only admin users are able to view the cluster dashboard metrics.
+
+:::
 
 
 ## VM Detail Metrics
 
 For VMs, you can view VM metrics by clicking on the `VM details page > VM Metrics`.
 
-![](./assets/vm-metrics.png)
+![](/img/v1.1/monitoring/vm-metrics.png)
 
-!!! note
-    The current `Memory Usage` is calculated based on `(1 - free/total) * 100%`, not `(used/total) * 100%`.
+:::note
 
-    For example, in a Linux OS, the `free -h` command outputs the current memory statistics as follows
+The current `Memory Usage` is calculated based on `(1 - free/total) * 100%`, not `(used/total) * 100%`.
 
-    ```
-    $ free -h
-                  total        used        free      shared  buff/cache   available
-    Mem:          7.7Gi       166Mi       4.6Gi       1.0Mi       2.9Gi       7.2Gi
-    Swap:            0B          0B          0B
-    ```
+:::
 
-    The corresponding `Memory Usage` is `(1 - 4.6/7.7) * 100%`, roughly `40%`.
+For example, in a Linux OS, the `free -h` command outputs the current memory statistics as follows
+
+```
+$ free -h
+                total        used        free      shared  buff/cache   available
+Mem:          7.7Gi       166Mi       4.6Gi       1.0Mi       2.9Gi       7.2Gi
+Swap:            0B          0B          0B
+```
+
+The corresponding `Memory Usage` is `(1 - 4.6/7.7) * 100%`, roughly `40%`.
 
 
 ## How to Configure Monitoring Settings
@@ -51,12 +63,12 @@ Currently, `Resources Settings` can be configured for the following components:
 In the `Advanced Settings` page, you can view and change the resources settings as follows:
 
 1. Navigate to settings page, find `harvester-monitoring`.
-![](./assets/monitoring-setting.png)
+![](/img/v1.1/monitoring/monitoring-setting.png)
 
 1. Click `Show harvester-monitoring` to view the current values.
 
 1. Click `⋮ > Edit Setting` to set a new value.
-![](./assets/monitoring-setting-edit-config.png)
+![](/img/v1.1/monitoring/monitoring-setting-edit-config.png)
 
 1. Click `Save` and the `Monitoring` resource will be restarted within a few seconds. Please be aware that the reboot can take some time to reload previous data.
 
@@ -68,11 +80,17 @@ In the `Advanced Settings` page, you can view and change the resources settings 
 
 Depending on the available hardware resources and system loads, you may change the above settings accordingly.
 
-!!! note
-    If you have multiple management nodes with different hardware resources, please set the value of Prometheus based on the smaller one.
+:::note
 
-!!! attention
-    When an increasing number of VMs get deployed on one node, the `prometheus-node-exporter` pod might get killed due to OOM(out of memory). In that case, you should increase the value of `limits.memory`.
+If you have multiple management nodes with different hardware resources, please set the value of Prometheus based on the smaller one.
+
+:::
+
+:::caution
+
+When an increasing number of VMs get deployed on one node, the `prometheus-node-exporter` pod might get killed due to OOM(out of memory). In that case, you should increase the value of `limits.memory`.
+
+:::
 
 ### From CLI
 

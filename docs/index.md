@@ -1,5 +1,8 @@
 ---
 sidebar_position: 1
+sidebar_label: Harvester Overview
+slug: /
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -13,7 +16,7 @@ Description: Harvester is an open source hyper-converged infrastructure (HCI) so
 
 Harvester is an open-source [hyper-converged infrastructure](https://en.wikipedia.org/wiki/Hyper-converged_infrastructure) (HCI) software built on Kubernetes. It is an open alternative to using a proprietary HCI stack that incorporates the design and ethos of [Cloud Native Computing](https://en.wikipedia.org/wiki/Cloud_native_computing).
 
-![harvester-ui](./assets/dashboard.png)
+![harvester-ui](/img/v1.1/dashboard.png)
 
 ## Harvester Features
 
@@ -35,7 +38,7 @@ Some notable features of Harvester include the following:
 ## Harvester Architecture
 The following diagram outlines a high-level architecture of Harvester:
 
-![](./assets/architecture.svg)
+![](/img/v1.1/architecture.svg)
 
 - [Longhorn](https://longhorn.io/) is a lightweight, reliable and easy-to-use distributed block storage system for Kubernetes.
 - [KubeVirt](https://kubevirt.io/) is a virtual machine management add-on for Kubernetes.
@@ -54,7 +57,7 @@ To get the Harvester server up and running, the following minimum hardware is re
 | Network Card | 1 Gbps Ethernet minimum for testing; 10Gbps Ethernet recommended for production                                                                                                                            |
 | Network Switch | Trunking of ports required for VLAN support                                                                                                                                                                |
 
-## Quick start
+## Quick Start
 
 You can install Harvester via the [ISO](./install/iso-install.md) installation or the [PXE](./install/pxe-boot-install.md) boot installation. Instructions are provided in the sections below.
 
@@ -67,13 +70,14 @@ To get the Harvester ISO, download it from the [Github releases](https://github.
 During the installation, you can either choose to form a new cluster or join the node to an existing cluster.
 
 1. Mount the Harvester ISO disk and boot the server by selecting the `Harvester Installer`.
-   ![iso-install.png](./install/assets/iso-install.png)
+   ![iso-install.png](/img/v1.1/install/iso-install.png)
 2. Choose the installation mode by either creating a new Harvester cluster or by joining an existing one.
 3. Choose the installation device on which the Harvester cluster will be installed
-     - Note: By default, Harvester uses [GPT](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [MBR](https://en.wikipedia.org/wiki/Master_boot_record).
-   ![iso-install-disk.png](./install/assets/iso-install-disk.png)
+    - Note: By default, Harvester uses [GPT](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [MBR](https://en.wikipedia.org/wiki/Master_boot_record).
+   ![iso-install-disk.png](/img/v1.1/install/iso-install-disk.png)
 4. Configure the hostname and select the network interface for the management network. By default, Harvester will create a bonded NIC named `harvester-mgmt`, and the IP address can be configured via DHCP or a statically assigned one <small>(Note: The Node IP can not change at the lifecycle of a Harvester cluster, in case the DHCP is used, the user must make sure the DHCP server always offers the same IP for the same Node. Due to a changed Node IP the related Node can not join the cluster, or even break the cluster)</small>.
-   ![iso-installed.png](./install/assets/iso-nic-config.gif)
+
+   ![iso-installed.png](/img/v1.1/install/iso-nic-config.gif)
 5. Optional: Configure the DNS servers; use commas as delimiters.
 6. Configure the `Virtual IP` which you can use to access the cluster or join other nodes to the cluster <small>(Note: If your IP address is configured via DHCP, you will need to configure static MAC-to-IP address mapping on your DHCP server in order to have a persistent Virtual IP, VIP must be different than any Node IP)</small>.
 7. Configure the `cluster token`. This token will be used for adding other nodes to the cluster.
@@ -85,16 +89,20 @@ During the installation, you can either choose to form a new cluster or join the
 13. Confirm the installation options and Harvester will be installed to your host. The installation may take a few minutes to complete.
 14. Once the installation is complete, the host will restart, and a console UI with management URL and status will be displayed. <small>(You can Use F12 to switch between the Harvester console and the Shell).</small>
 15. The default URL of the web interface is `https://your-virtual-ip`.
-    ![iso-installed.png](./install/assets/iso-installed.png)
+    ![iso-installed.png](/img/v1.1/install/iso-installed.png)
 16. Users will be prompted to set the password for the default `admin` user at first login.
-     ![first-login.png](./install/assets/first-time-login.png)
+    ![first-login.png](/img/v1.1/install/first-time-login.png)
 
 <div class="text-center">
 <iframe width="950" height="475" src="https://www.youtube.com/embed/Ngsk7m6NYf4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
+
 ### PXE/iPXE Installation
 
 Harvester can also be installed automatically. Please refer to [PXE Boot Install](./install/pxe-boot-install.md) for detailed instructions and additional guidance.
 
-!!! note
-    More iPXE usage examples are available at [harvester/ipxe-examples](https://github.com/harvester/ipxe-examples).
+:::note
+
+More iPXE usage examples are available at [harvester/ipxe-examples](https://github.com/harvester/ipxe-examples).
+
+:::

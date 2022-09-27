@@ -1,5 +1,7 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
+sidebar_label: Live Migration
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -13,11 +15,12 @@ Description: Live migration means moving a virtual machine to a different host w
 
 Live migration means moving a virtual machine to a different host without downtime.
 
-!!!note
+:::note
 
-    - Live migration is not allowed when the virtual machine is using a management network of bridge interface type.
-    - To support live migration, three or more hosts in the Harvester cluster are required due to [a known issue](https://github.com/harvester/harvester/issues/798).
+- Live migration is not allowed when the virtual machine is using a management network of bridge interface type.
+- To support live migration, three or more hosts in the Harvester cluster are required due to [a known issue](https://github.com/harvester/harvester/issues/798).
 
+:::
 
 ## Starting a Migration
 
@@ -25,9 +28,9 @@ Live migration means moving a virtual machine to a different host without downti
 1. Find the virtual machine that you want to migrate and select **⋮ > Migrate**.
 1. Choose the node to which you want to migrate the virtual machine. Click **Apply**.
 
-![](assets/migrate-action.png)
+![](/img/v1.1/vm/migrate-action.png)
 
-![](assets/migrate.png)
+![](/img/v1.1/vm/migrate.png)
 
 ## Aborting a Migration
 

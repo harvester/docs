@@ -1,5 +1,7 @@
 ---
-sidebar_position: 61
+sidebar_position: 5
+sidebar_label: Single NIC with Non VLAN-aware Switch
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -33,7 +35,7 @@ Cabling:
 
 The following diagram illustrates the cabling used for this guide:
 
-   ![non-vlan-aware-case.png](assets/non-vlan-aware-case.png)
+   ![non-vlan-aware-case.png](/img/v1.1/networking/best-practice/non-vlan-aware-case.png)
 
 ## External Switch Configuration
 
@@ -44,7 +46,8 @@ Typically, a "non VLAN-aware" switch cannot be configured.
 You can create a new VLAN network in the **Advanced > Networks** page, and click the **Create** button.
 
 Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same VLAN ID in different namespaces if you have [Rancher multi-tenancy](../../rancher/virtualization-management.md#multi-tenancy) configured)</small>.
-   ![create-vlan-network.png](assets/create-network.png)
+
+   ![create-vlan-network.png](/img/v1.1/networking/best-practice/create-network.png)
 
 ### Connect a VM to the subnet of the Harvester hosts
 
@@ -52,9 +55,12 @@ The "non VLAN-aware" switch will only send out untagged network traffic to the s
 
 If you need a VM to connect to the subnet of the Harvester hosts, you have to create a VLAN Network in Harvester with VLAN ID 1.
 
-   ![non-vlan-aware-vlan1.png](assets/non-vlan-aware-vlan1.png)
+   ![non-vlan-aware-vlan1.png](/img/v1.1/networking/best-practice/non-vlan-aware-vlan1.png)
 
 Please refer to [this page](../harvester-network.md) for additional information on Harvester Networking.
 
-!!! note
-    If you create a VLAN Network different from `1`, the connection between VMs in different nodes will fail.
+:::note
+
+If you create a VLAN Network different from `1`, the connection between VMs in different nodes will fail.
+
+:::
