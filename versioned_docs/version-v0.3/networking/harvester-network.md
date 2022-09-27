@@ -54,7 +54,7 @@ It is recommended to choose a separate NIC for the VLAN other than the one used 
 :::note
 
 - Modifying the default VLAN network setting will not update the existing configured host network.
-- Harvester VLAN network supports bond interfaces, currently it can only be created automatically via [PEX Boot Configuration](/install/harvester-configuration/#example_11). Users may also login to the node and create it manually.
+- Harvester VLAN network supports bond interfaces, currently it can only be created automatically via [PEX Boot Configuration](../install/harvester-configuration#example_11). Users may also login to the node and create it manually.
 
 :::
 

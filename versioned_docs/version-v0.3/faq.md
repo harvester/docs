@@ -29,7 +29,7 @@ $ cat /etc/rancher/rke2/rke2.yaml
 
 1. How do I access the embedded Rancher dashboard?
 
-    Please refer to the [troubleshooting section](/troubleshooting/harvester#access-embedded-rancher).
+    Please refer to the [troubleshooting section](./troubleshooting/harvester#access-embedded-rancher).
 
 1. How to install the qemu-guest-agent of a running VM.
 ```shell
