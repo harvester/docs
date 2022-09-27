@@ -1,5 +1,7 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
+sidebar_label: VM Backup & Restore
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -14,10 +16,13 @@ Description: VM backups are created from the Virtual Machines page. The VM backu
 _Available as of v0.3.0_
 
 VM backups are created from the **Virtual Machines** page. The VM backup volumes will be stored in the **Backup Target** (an NFS or S3 server), and they can be used to either restore a new VM or replace an existing VM.
-![vm-backup.png](assets/vm-backup.png)
+![vm-backup.png](/img/v1.1/vm/vm-backup.png)
 
-!!! Note
-    A backup target must be set up. For more information, see [Configure Backup Target](#configure-backup-target). If the backup target has not been set, you’ll be prompted with a message to do so.
+:::note
+
+A backup target must be set up. For more information, see [Configure Backup Target](#configure-backup-target). If the backup target has not been set, you’ll be prompted with a message to do so.
+
+:::
 
 ## Configure Backup Target
 
@@ -39,7 +44,7 @@ A backup target is an endpoint used to access a backup store in Harvester. A bac
 1. Once the backup target is set, go to the `Virtual Machines` page.
 1. Click `Take Backup` of the VM actions to create a new VM backup.
 1. Set a custom backup name and click `Create` to create a new VM backup.
-![create-backup.png](assets/create-backup.png)
+![create-backup.png](/img/v1.1/vm/create-backup.png)
 
 **Result:** The backup is created. You will receive a notification message, and you can also go to the `Advanced > Backups` page to view all VM backups.
 
@@ -54,7 +59,7 @@ To restore a new VM from a backup, follow these steps:
 1. Go to the `Backups` page.
 1. Specify the new VM name and click `Create`.
 1. A new VM will be restored using the backup volumes and metadata, and you can access it from the `Virtual Machines` page.
-![restore-vm.png](assets/restore-vm.png)
+![restore-vm.png](/img/v1.1/vm/restore-vm.png)
 
 ## Replace an Existing VM using a backup
 
@@ -75,8 +80,11 @@ _Available as of v1.0.0_
 
 Users can now restore a new VM on another cluster by leveraging the VM metadata & content backup feature.
 
-!!! prerequisites "Prerequisites"
-     You must manually configure the virtual machine images with the same name on the new cluster first, otherwise the virtual machines will be failed to recover.
+:::info prerequisites
+
+You must manually configure the virtual machine images with the same name on the new cluster first, otherwise the virtual machines will be failed to recover.
+
+:::
 
 ### Upload the same VM images to a new cluster
 

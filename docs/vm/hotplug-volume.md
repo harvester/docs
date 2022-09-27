@@ -1,5 +1,7 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
+sidebar_label: Hot-Plug Volumes
+title: ""
 keywords:
   - Harvester
   - Hot-plug
@@ -20,4 +22,4 @@ The following steps assume that you have a running VM and a ready volume:
 1. Enter the **Name** and select the **Volume**.
 1. Click **Apply**.
 
-![Add Volume](assets/add-volume.png)
+![Add Volume](/img/v1.1/vm/add-volume.png)

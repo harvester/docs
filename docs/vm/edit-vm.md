@@ -1,5 +1,7 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
+sidebar_label: Edit a Virtual Machine
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -17,8 +19,11 @@ Description: Edit Virtual Machines from the Harvester VM page.
 
 After creating a virtual machine, you can edit your virtual machine by clicking the `⋮` button and selecting the `Edit Configurations` button.
 
-!!! notes
-	In addition to editing the description, a restart of the virtual machine is required for configuration changes to take effect.
+:::note
+
+In addition to editing the description, a restart of the virtual machine is required for configuration changes to take effect.
+
+:::
 
 ### Basics
 
@@ -26,7 +31,7 @@ On the basics tab, you can config your requested CPU and memory, a VM restart is
 
 SSH Keys are injected into the cloud-init script when the virtual machine is first powered on. In order for the modified ssh key to take effect after the virtual machine is startup, the cloud-init script needs to be [reinstalled](../faq.md#how-to-install-the-qemu-guest-agent-of-a-running-vm) from your guest OS.
 
-![edit-vm](assets/edit-vm-basics.png)
+![edit-vm](/img/v1.1/vm/edit-vm-basics.png)
 
 ### Networks
 
@@ -34,7 +39,7 @@ You can add additional VLAN networks to your VM instances after booting, the `ma
 
 Additional NICs are not enabled by default unless you configure them manually in the guest OS, e.g. using [wicked for your OpenSUSE Server](https://doc.opensuse.org/documentation/leap/reference/html/book-reference/cha-network.html#sec-network-manconf) or [netplan for your Ubuntu Server](https://ubuntu.com/server/docs/network-configuration).
 
-![edit-vm](assets/edit-vm-networks.png)
+![edit-vm](/img/v1.1/vm/edit-vm-networks.png)
 
 For more details about the network implementation, please refer to the [Networking](../networking/harvester-network.md) page.
 
@@ -42,7 +47,7 @@ For more details about the network implementation, please refer to the [Networki
 
 You can add additional volumes to the VM after booting. You can also expand the size of the volume after shutting down the VM, click the VM and go to the `Volumes` tab, then click `Edit Image Volume` to edit the size of the expanded volume. After waiting for the resize to complete and restarting the VM, your disk will automatically finish expanding.
 
-![edit-vm](assets/edit-vm-volumes.png)
+![edit-vm](/img/v1.1/vm/edit-vm-volumes.png)
 
 ### Access Credentials
 

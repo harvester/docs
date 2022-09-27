@@ -1,5 +1,7 @@
 ---
-sidebar_position: 50
+sidebar_position: 2
+sidebar_label: Multiple NICs with VLAN-aware Switch
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -34,7 +36,7 @@ Cabling:
 
 The following diagram illustrates the cabling used for this guide:
 
-   ![mulitple-nics-vlan-aware.png](assets/mulitple-nics-vlan-aware.png)
+   ![mulitple-nics-vlan-aware.png](/img/v1.1/networking/best-practice/mulitple-nics-vlan-aware.png)
 
 ## External Switch Configuration
 
@@ -53,8 +55,11 @@ switch(config-if)# end
 switch# copy running-config startup-config
 ```
 
-!!! note
-    In this case, you need to avoid using `harvester-mgmt` as the VLAN Network interface. This setting will only allow the traffic in the same subnet of `harvester-mgmt` and disallow other VLAN traffic.
+:::note
+
+In this case, you need to avoid using `harvester-mgmt` as the VLAN Network interface. This setting will only allow the traffic in the same subnet of `harvester-mgmt` and disallow other VLAN traffic.
+
+:::
 
 For VLAN network ports:
 ```
@@ -69,8 +74,11 @@ switch(config-if)# end
 switch# copy running-config startup-config
 ```
 
-!!! note
-    We use the VLAN Trunk setup to set up the network ports for the VLAN Network. In this case, you can simply set VLAN 100 for the VMs in the Harvester VLAN network to connect to the same subnet of `harvester-mgmt`.
+:::note
+
+We use the VLAN Trunk setup to set up the network ports for the VLAN Network. In this case, you can simply set VLAN 100 for the VMs in the Harvester VLAN network to connect to the same subnet of `harvester-mgmt`.
+
+:::
 
 ## Create a VLAN Network in Harvester
 
@@ -78,7 +86,7 @@ You can create a new VLAN network in the **Advanced > Networks** page, and click
 
 Specify the name and a VLAN ID that you want to create for the VLAN network <small>(You can specify the same VLAN ID in different namespaces if you have [Rancher multi-tenancy](../../rancher/virtualization-management.md#multi-tenancy) configured)</small>.
 
-   ![create-vlan-network.png](assets/create-network.png)
+   ![create-vlan-network.png](/img/v1.1/networking/best-practice/create-network.png)
 
 ### Connect a VM to the subnet of the Harvester hosts
 
@@ -86,8 +94,11 @@ Once you finished the configuration in the previous section, the external switch
 
 Therefore, if you need VMs to connect to the VLAN ID 1, you need to create a VLAN ID 1 Network in Harvester also.
 
-!!! note
-    We strongly recommend against using VLAN 1 in this scenario.
+:::note
+
+We strongly recommend against using VLAN 1 in this scenario.
+
+:::
 
 ### Connect a VM to specific VLAN network
 

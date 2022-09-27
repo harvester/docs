@@ -1,5 +1,7 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
+sidebar_label: Access to the Virtual Machine
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -21,7 +23,7 @@ VMs can be accessed from the UI directly using either VNC or the serial console.
 
 If the VGA display is not enabled on the VM, as with the `Ubuntu-minimal-cloud` image, the VM can only be accessed with the serial console.
 
-![](assets/access-to-vm.png)
+![](/img/v1.1/vm/access-to-vm.png)
 
 ## SSH Access
 
@@ -31,7 +33,7 @@ Harvester provides two ways to inject SSH public keys into virtual machines. Gen
 
 You can provide ssh keys to your virtual machines during the creation time on the `Basics` tab. Additionally, you can place the public ssh keys into your cloud-init script to allow it to take place.
 
-![](assets/vm-ssh-keys.png)
+![](/img/v1.1/vm/vm-ssh-keys.png)
 
 #### Example of SSH key cloud-init configuration:
 ```yaml
@@ -41,17 +43,19 @@ ssh_authorized_keys:
     ssh-rsa #replace with your public key
 ```
 
-
 ### Dynamic SSH Key Injection via Qemu guest agent
 
 _Available as of v1.0.1_
 
 Harvester supports dynamically injecting public ssh keys at run time through the use of the [qemu guest agent](https://wiki.qemu.org/Features/GuestAgent). This is achieved through the `qemuGuestAgent` propagation method.
 
-!!! note
-    This method requires the qemu guest agent to be installed within the guest VM.
+:::note
 
-    When using `qemuGuestAgent` propagation, the `/home/$USER/.ssh/authorized_keys` file will be owned by the guest agent. Changes to that file that are made outside of the qemu guest agent's control will get deleted.
+This method requires the qemu guest agent to be installed within the guest VM.
+
+When using `qemuGuestAgent` propagation, the `/home/$USER/.ssh/authorized_keys` file will be owned by the guest agent. Changes to that file that are made outside of the qemu guest agent's control will get deleted.
+
+:::
 
 You can inject your access credentials via the Harvester dashboard as below:
 
@@ -59,10 +63,14 @@ You can inject your access credentials via the Harvester dashboard as below:
 2. Click the `Edit Config` button and go to the `Access Credentials` tab.
 3. Click to add either basic auth credentials or ssh keys, (e.g., add `opensuse` as the user and select your ssh keys if your guest OS is OpenSUSE).
 4. Make sure your qemu guest agent is already installed and the VM should be restarted after the credentials are added.
-!!! note
-    You need to enter the VM to edit password or remove SSH-Key after deleting the credentials from the UI.
 
-![](assets/vm-add-access-credentails.png)
+:::note
+
+You need to enter the VM to edit password or remove SSH-Key after deleting the credentials from the UI.
+
+:::
+
+![](/img/v1.1/vm/vm-add-access-credentails.png)
 
 
 

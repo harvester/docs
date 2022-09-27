@@ -1,0 +1,10 @@
+{
+    "position": 13,
+    "label": "Settings",
+    "collapsible": false,
+    "collapsed": false,
+    "link": {
+        "type": "doc",
+        "id": "settings"
+    }
+}

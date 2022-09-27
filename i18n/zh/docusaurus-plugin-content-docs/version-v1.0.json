@@ -1,0 +1,42 @@
+{
+  "version.label": {
+    "message": "v1.0",
+    "description": "The label for version v1.0"
+  },
+  "sidebar.tutorialSidebar.category.Installation": {
+    "message": "安装",
+    "description": "The label for category Installation in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Upgrade": {
+    "message": "升级",
+    "description": "The label for category Upgrade in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Previous Releases": {
+    "message": "以前的版本",
+    "description": "The label for category Previous Releases in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.VM Management": {
+    "message": "虚拟机管理",
+    "description": "The label for category VM Management in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Networking": {
+    "message": "网络",
+    "description": "The label for category Networking in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Best Practice": {
+    "message": "最佳实践",
+    "description": "The label for category Best Practice in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Rancher Integration": {
+    "message": "Rancher 集成",
+    "description": "The label for category Rancher Integration in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Harvester Node Driver": {
+    "message": "Harvester 主机驱动",
+    "description": "The label for category Harvester Node Driver in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Troubleshooting": {
+    "message": "故障排除",
+    "description": "The label for category Troubleshooting in sidebar tutorialSidebar"
+  }
+}

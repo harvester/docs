@@ -1,0 +1,10 @@
+{
+    "position": 11,
+    "label": "Harvester Terraform Provider",
+    "collapsible": false,
+    "collapsed": false,
+    "link": {
+        "type": "doc",
+        "id": "terraform"
+    }
+}

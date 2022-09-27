@@ -1,5 +1,7 @@
 ---
 sidebar_position: 9
+sidebar_label: Developer Mode Installation
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -11,8 +13,11 @@ Description: Developer mode (dev mode) is intended to be used for testing and de
 
 # Developer Mode Installation
 
-!!! attention
-    Developer mode (dev mode) is intended to be used for local testing and development purposes.
+:::caution attention
+
+Developer mode (dev mode) is intended to be used for local testing and development purposes.
+
+:::
 
 ## Requirements
 
@@ -119,6 +124,6 @@ We recommend using a `8 core, 16 GB RAM` droplet, which will have nested virtual
 
 This screenshot shows how to create a Rancher node template that would allow Rancher to provision such a node in DigitalOcean:
 
-![do.png](do.png)
+![do.png](/img/v1.1/do.png)
 
 For more information on how to launch DigitalOcean nodes with Rancher, refer to the [Rancher documentation.](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/digital-ocean/)

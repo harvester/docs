@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+sidebar_label: Create a Virtual Machine
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -17,8 +19,11 @@ Description: Create one or more virtual machines from the Virtual Machines page.
 
 You can create one or more virtual machines from the **Virtual Machines** page.
 
-!!! note
-	Please refer to [this page](./create-windows-vm.md) for creating Windows virtual machines.
+:::note
+
+Please refer to [this page](./create-windows-vm.md) for creating Windows virtual machines.
+
+:::
 
 1. Choose the option to create either one or multiple VM instances.
 1. Select the namespace of your VMs, only the `harvester-public` namespace is visible to all users.
@@ -32,7 +37,7 @@ You can create one or more virtual machines from the **Virtual Machines** page.
     1. You can also add additional networks to the VMs using VLAN networks. You may configure the VLAN networks on **Advanced > Networks** first.
 1. Advanced options such as run strategy, os type and cloud-init data are optional. You may configure these in the **Advanced Options** section when applicable.
 
-![create-vm](assets/create-vm.png)
+![create-vm](/img/v1.1/vm/create-vm.png)
 
 ## Volumes
 
@@ -45,12 +50,15 @@ A disk can be made accessible via the following types:
 | disk   | A disk disk will expose the volume as an ordinary disk to the VM.                              |
 | cd-rom | A cd-rom disk will expose the volume as a cd-rom drive to the VM. It is read-only by default.  |
 
-![create-vm](assets/create-vm-volumes.png)
+![create-vm](/img/v1.1/vm/create-vm-volumes.png)
 
-!!! note "Container Disk"
-    `Container disks` are ephemeral storage devices that can be assigned to any number of VMs. This makes them an ideal tool for users who want to replicate a large number of VM workloads or inject machine drivers that do not require persistent data.
+:::info Container Disk
 
-    Note: Container disks are not a good solution for any workload that requires persistent root disks across VM restarts.
+`Container disks` are ephemeral storage devices that can be assigned to any number of VMs. This makes them an ideal tool for users who want to replicate a large number of VM workloads or inject machine drivers that do not require persistent data.
+
+Note: Container disks are not a good solution for any workload that requires persistent root disks across VM restarts.
+
+:::
 
 ## Networks
 
@@ -140,8 +148,10 @@ The QEMU guest agent is a daemon that runs on the virtual machine instance and p
 
 `Install guest agent` checkbox is enabled by default when a new VM is created.
 
-![](assets/qga.png)
+![](/img/v1.1/vm/qga.png)
 
-!!! note
-	If your OS is openSUSE and the version is less than 15.3, please replace `qemu-guest-agent.service` with `qemu-ga.service`.
+:::note
 
+If your OS is openSUSE and the version is less than 15.3, please replace `qemu-guest-agent.service` with `qemu-ga.service`.
+
+:::

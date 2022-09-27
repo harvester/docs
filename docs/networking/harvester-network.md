@@ -1,5 +1,7 @@
 ---
-sidebar_position: 40
+sidebar_position: 1
+sidebar_label: Harvester Network
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -37,7 +39,7 @@ The [Harvester network-controller](https://github.com/harvester/harvester-networ
 
 The below diagram illustrates how the VLAN network works in Harvester.
 
-  ![](./assets/vlan-case.png)
+  ![](/img/v1.1/networking/vlan-case.png)
 
 - The Harvester network-controller creates a bridge for each node and a pair of veth for each VM to implement its VLAN network. The bridge acts as a switch to forward the network traffic from or to VMs and the veth pair is like the connected ports between VMs and the switch.
 - VMs within the same VLAN can communicate with each other, while the VMs from different VLANs can't.
@@ -51,30 +53,33 @@ You can enable VLAN network via **Settings > vlan**. Select `enabled` and you wi
 For better network performances and isolation, we recommend to choose different network interfaces for the VLAN and the one used for the management network (i.e., `harvester-mgmt`).
 
 
-![](assets/enable-vlan.png)
+![](/img/v1.1/networking/enable-vlan.png)
 
-!!! note
-    - When selecting the network interface, the value in parentheses represents the distribution percentage of the network interface on all hosts. If a network interface with a value less than 100% is selected, the network interface needs to be manually specified on the host where the VLAN network configuration fails.
-    - Modifying the default VLAN network setting will not update the existing configured host network.
-    - Harvester VLAN network supports bond interfaces. Currently it can only be created automatically via [PXE Boot Configuration](../install/harvester-configuration.md#installnetworks). You may also login to the node and create it manually.
+:::note
 
+- When selecting the network interface, the value in parentheses represents the distribution percentage of the network interface on all hosts. If a network interface with a value less than 100% is selected, the network interface needs to be manually specified on the host where the VLAN network configuration fails.
+- Modifying the default VLAN network setting will not update the existing configured host network.
+- Harvester VLAN network supports bond interfaces. Currently it can only be created automatically via [PXE Boot Configuration](../install/harvester-configuration.md#installnetworks). You may also login to the node and create it manually.
+
+:::
 
 You can also customize each node's VLAN network via the **Hosts > Network** tab.
 
-  ![](assets/node-network-configuration.png)
+  ![](/img/v1.1/networking/node-network-configuration.png)
 
 ### Create a VLAN Network
 
 A new VLAN network can be created via the **Advanced > Networks** page and clicking the **Create** button.
 
  1. Specify the name and VLAN ID that you want to create for the VLAN network <small>(You can specify the same vlan ID on different namespaces of [Rancher multi-tenancy](../rancher/virtualization-management.md#multi-tenancy) support)</small>.
-   ![create-vlan-network.png](assets/create-network.png)
+ 
+   ![create-vlan-network.png](/img/v1.1/networking/create-network.png)
   
  2. Configure a route in order to allow the hosts to connect to the VLAN network using IPv4 addresses. The CIDR and gateway of the VLAN network are mandatory parameters for the route configuration.  You can configure the route by choosing one of the following options:
     - auto(DHCP) mode: the Harvester network controller will get the CIDR and gateway values from the DHCP server using the DHCP protocol. Optionally, you can specify the DHCP server address.
-      ![](assets/create-network-auto.png)
+      ![](/img/v1.1/networking/create-network-auto.png)
     - manual mode: You need to specify the CIDR and gateway values manually.
-      ![](assets/create-network-manual.png)
+      ![](/img/v1.1/networking/create-network-manual.png)
 
 ### Create a VM with VLAN Network
 Users can now create a new VM using the above configured VLAN network,
@@ -83,13 +88,15 @@ Users can now create a new VM using the above configured VLAN network,
 - Specify the required parameters and click the **Networks** tab.
 - Either configure the default network to be a VLAN network or select an additional network to add.
 
-![](./assets/vm-network-configuration.png)
+![](/img/v1.1/networking/vm-network-configuration.png)
 
-!!! note
-    - Only the first NIC will be enabled by default. Users can either choose to use a management network or a VLAN network. 
-    - You need to be careful to configure virtual machines with multiple NICs to avoid connectivity issues. You can refer to the [knowledge base](https://harvesterhci.io/kb/multiple-nics-vm-connectivity) for more details.
-    - You will need to select the `Install guest agent` option in the **Advanced Options** tab to get the VLAN network IP address from the Harvester UI.
+:::note
 
+- Only the first NIC will be enabled by default. Users can either choose to use a management network or a VLAN network. 
+- You need to be careful to configure virtual machines with multiple NICs to avoid connectivity issues. You can refer to the [knowledge base](https://harvesterhci.io/kb/multiple-nics-vm-connectivity) for more details.
+- You will need to select the `Install guest agent` option in the **Advanced Options** tab to get the VLAN network IP address from the Harvester UI.
+
+:::
 
 - You can choose to add one or multiple network interface cards. The additional network interface cards can be enabled by default via the cloud-init network data setting. e.g.,
 ```YAML
@@ -107,8 +114,11 @@ config:
 ```
 Harvester is fully compatible with the `cloud-init network configs`. You can refer to the [documentation](https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html) for more details.
 
-!!! note
-    If you add additional NICs after the VM has started, you will need to manually configure IPs for the additional NICs.
+:::note
+
+If you add additional NICs after the VM has started, you will need to manually configure IPs for the additional NICs.
+
+:::
 
 ### Configure DHCP servers on Networks
 

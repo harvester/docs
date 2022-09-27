@@ -1,3 +1,9 @@
+---
+sidebar_position: 5
+sidebar_label: Troubleshooting
+title: ""
+---
+
 # Troubleshooting
 
 ## Overview
@@ -10,13 +16,13 @@ Here are some tips to troubleshoot a failed upgrade:
 ## Diagnose the upgrade flow 
 
 A Harvester upgrade process contains several phases. 
-    ![](./assets/ts_upgrade_phases.png)
+    ![](/img/v1.1/upgrade/ts_upgrade_phases.png)
 
 ### Phase 1: Provision upgrade repository VM.
 
 The Harvester controller downloads a Harvester release ISO file and uses it to provision a VM. During this phase you can see the upgrade status windows show:
 
-![](./assets/ts_status_phase1.png){: style="width:60%"}
+![](/img/v1.1/upgrade/ts_status_phase1.png)
 
 The time to complete the phase depends on the user's network speed and cluster resource utilization. We see failures in this phase due to network speed. If this happens, the user can [start over the upgrade](#start-over-an-upgrade) again.
 
@@ -37,7 +43,7 @@ The Harvester controller creates jobs on each Harvester node to download images 
 
 During this stage you can see the upgrade status windows shows:
 
-![](./assets/ts_status_phase2.png){: style="width:60%"}
+![](/img/v1.1/upgrade/ts_status_phase2.png)
 
 It will take a while for all nodes to preload images. If the upgrade fails at this phase, the user can check job logs in the `cattle-system` namespace:
 
@@ -54,7 +60,7 @@ It's also safe to [start over the upgrade](#start-over-an-upgrade) if an upgrade
 
 ### Phase 3: Upgrade system services
 
-![](./assets/ts_status_phase3.png){: style="width:60%"}
+![](/img/v1.1/upgrade/ts_status_phase3.png)
 
 In this phase, Harvester controller upgrades component Helm charts with a job. The user can check the `apply-manifest` job with the following command:
 
@@ -69,7 +75,7 @@ $ kubectl logs jobs/hvst-upgrade-9gmg2-apply-manifests -n harvester-system
 
 ### Phase 4: Upgrade nodes
 
-![](./assets/ts_status_phase4.png){: style="width:60%"}
+![](/img/v1.1/upgrade/ts_status_phase4.png)
 
 The Harvester controller creates jobs on each node (one by one) to upgrade nodes' OSes and RKE2 runtime. For multi-node clusters, there are two kinds of jobs to update a node:
 
@@ -92,8 +98,11 @@ $ kubectl logs -n harvester-system jobs/hvst-upgrade-9gmg2-post-drain-node2
 ...
 ```
 
-!!! warning
-    Please do not start over an upgrade if the upgrade fails at this phase.
+:::caution
+
+Please do not start over an upgrade if the upgrade fails at this phase.
+
+:::
 
 ### Phase 5: Clean-up
 

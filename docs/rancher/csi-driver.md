@@ -1,4 +1,7 @@
 ---
+sidebar_position: 5
+sidebar_label: Harvester CSI Driver
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -16,8 +19,11 @@ The Harvester Container Storage Interface (CSI) Driver provides a CSI interface 
 - The Kubernetes cluster is built on top of Harvester virtual machines.
 - The Harvester virtual machines run as guest Kubernetes nodes are in the same namespace.
 
-!!! notes
-      Currently, the Harvester CSI driver only supports single-node read-write(RWO) volumes. Please follow the [issue #1992](https://github.com/harvester/harvester/issues/1992) for future multi-node `read-only`(ROX) and `read-write`(RWX) support.
+:::note
+
+Currently, the Harvester CSI driver only supports single-node read-write(RWO) volumes. Please follow the [issue #1992](https://github.com/harvester/harvester/issues/1992) for future multi-node `read-only`(ROX) and `read-write`(RWX) support.
+
+:::
 
 ### Deploying with Harvester RKE1 Node Driver
 
@@ -34,7 +40,7 @@ The Harvester Container Storage Interface (CSI) Driver provides a CSI interface 
 
 When spinning up a Kubernetes cluster using Rancher RKE2 node driver, the Harvester CSI driver will be deployed when Harvester cloud provider is selected.
 
-![select-harvester-cloud-provider](assets/select-harvester-cloud-provider.png)
+![select-harvester-cloud-provider](/img/v1.1/rancher/select-harvester-cloud-provider.png)
 
 ### Deploying with Harvester K3s Node Driver
 
@@ -47,4 +53,4 @@ When spinning up a Kubernetes cluster using Rancher RKE2 node driver, the Harves
 
 - Install `Harvester CSI Driver` from the Rancher marketplace.
 
-  ![](assets/install-harvester-csi-driver-in-k3s.png)
+  ![](/img/v1.1/rancher/install-harvester-csi-driver-in-k3s.png)

@@ -1,5 +1,7 @@
 ---
-sidebar_position: 2
+sidebar_position: 4
+sidebar_label: Harvester Cloud Provider
+title: ""
 keywords:
   - Harvester
   - harvester
@@ -12,12 +14,12 @@ Description: The Harvester cloud provider used by the guest cluster in Harvester
 ---
 # Harvester Cloud Provider
 
-[RKE1](./rke1-cluster.md) and [RKE2](./rke2-cluster.md) clusters can be provisioned in Rancher using the built-in Harvester Node Driver. Harvester provides [load balancer](./cloud-provider.md#load-balancer-support) and [cluster Persistent Storage](./csi-driver.md) support to the guest Kubernetes cluster.
+[RKE1](./node/rke1-cluster.md) and [RKE2](./node/rke2-cluster.md) clusters can be provisioned in Rancher using the built-in Harvester Node Driver. Harvester provides [load balancer](#load-balancer-support) and [cluster Persistent Storage](./csi-driver.md) support to the guest Kubernetes cluster.
 
 In this page we will learn:
 
 - How to deploy the Harvester cloud provider in both RKE1 and RKE2.
-- How to use the [Harvester load balancer](./cloud-provider.md#load-balancer-support).
+- How to use the [Harvester load balancer](#load-balancer-support).
 
 ## Deploying
 
@@ -30,35 +32,38 @@ When spinning up an RKE cluster using the Harvester node driver, you can perform
 
 - Select `Harvester(Out-of-tree)` option.
 
-    ![](assets/rke-cloud-provider.png)
+    ![](/img/v1.1/rancher/rke-cloud-provider.png)
   
 - Install `Harvester Cloud Provider` from the Rancher marketplace.
 
-    ![](assets/install-harvester-cloud-provider.png)
+    ![](/img/v1.1/rancher/install-harvester-cloud-provider.png)
   
-!!!note 
-    You should specify the `Cluster name`. The default value `kubernetes` will be set if no `Cluster name` is entered. The `Cluster name` is used to distinguish the ownership of the Harvester load balancers. 
+:::note
+
+You should specify the `Cluster name`. The default value `kubernetes` will be set if no `Cluster name` is entered. The `Cluster name` is used to distinguish the ownership of the Harvester load balancers. 
+
+:::
 
 - Install Harvester csi driver from the Rancher marketplace if needed.
 
-    ![](assets/install-harvester-csi-driver.png)
+    ![](/img/v1.1/rancher/install-harvester-csi-driver.png)
   
 ### Deploying to the RKE2 Cluster with Harvester Node Driver [Experimental]
 When spinning up an RKE2 cluster using the Harvester node driver, select the `Harvester` cloud provider. The node driver will then help deploy both the CSI driver and CCM automatically.
 
-  ![](assets/rke2-cloud-provider.png)
+  ![](/img/v1.1/rancher/rke2-cloud-provider.png)
 
 ### Deploying to the K3s Cluster with Harvester Node Driver [Experimental]
 
 - Choose the Kubernetes version to be k3s and click the `Edit as YAML` button to config the K3s cluster YAML (For existing cluster, you can also click the `Edit YAML` button to update it):
 
-  ![](assets/edit-k3s-cluster-yaml.png)
+  ![](/img/v1.1/rancher/edit-k3s-cluster-yaml.png)
 
 - Edit K3s cluster YAML.
     - Set `disable-cloud-provider: true` to disable default k3s cloud provider.
     - Add `cloud-provider=external` to use harvester cloud provider.
 
-  ![](assets/k3s-cluster-yaml-content-for-harvester-cloud-provider.png)
+  ![](/img/v1.1/rancher/k3s-cluster-yaml-content-for-harvester-cloud-provider.png)
 
 - [Generate addon configuration](https://github.com/harvester/cloud-provider-harvester/blob/master/deploy/generate_addon.sh) and put it in K3s VMs `/etc/kubernetes/cloud-config`.
 
@@ -68,7 +73,7 @@ Deploying external cloud provider is similar for both RKE2 and K3s based cluster
 
 Once the in-tree cloud provider has been disabled by following the above steps, you can deploy the external cloud provider via:
 
-  ![](assets/external-cloud-provider-addon.png)
+  ![](/img/v1.1/rancher/external-cloud-provider-addon.png)
 
 A sample additional manifest is as follows:
 ```
@@ -148,14 +153,14 @@ users:
 ```
 
 This cloud-config file can now be injected via the `user-data` available in the `advanced options` for the nodepool.
-  ![](assets/cloud-config-userdata.png)
+  ![](/img/v1.1/rancher/cloud-config-userdata.png)
 
 With these settings in place a K3s / RKE2 cluster should provision successfully while using the external cloud provider.
 
 ## Load Balancer Support
 After deploying the `Harvester Cloud provider`, you can use the Kubernetes `LoadBalancer` service to expose a microservice inside the guest cluster to the external world. When you create a Kubernetes `LoadBalancer` service, a Harvester load balancer is assigned to the service and you can edit it through the `Add-on Config` in the Rancher UI.
 
-  ![](assets/lb-svc.png)
+  ![](/img/v1.1/rancher/lb-svc.png)
   
 
 ### IPAM
@@ -163,17 +168,20 @@ Harvester's built-in load balancer supports both `pool` and `dhcp` modes. You ca
 
 - pool: You should configure an IP address pool in Harvester in advance. The Harvester LoadBalancer controller will allocate an IP address from the IP address pool for the load balancer.
   
-  ![](assets/vip-pool.png) 
+  ![](/img/v1.1/rancher/vip-pool.png) 
   
 - dhcp:  A DHCP server is required. The Harvester LoadBalancer controller will request an IP address from the DHCP server.
 
-!!!note
-    It is not allowed to modify the IPAM mode. You need to create a new service if you want to modify the IPAM mode.
+:::note
+
+It is not allowed to modify the IPAM mode. You need to create a new service if you want to modify the IPAM mode.
+
+:::
 
 ### Health Checks
 The Harvester load balancer supports TCP health checks. You can specify the parameters in the Rancher UI if you enable the `Health Check` option.
 
-  ![](assets/health-check.png)
+  ![](/img/v1.1/rancher/health-check.png)
 
 Alternatively, you can specify the parameters by adding annotations to the service manually. The following annotations are supported:
 
