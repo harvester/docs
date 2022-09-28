@@ -34,7 +34,7 @@ default via 10.10.0.10 dev harvester-mgmt proto dhcp        <-- Does a default r
 ## 修改 Agent 节点的集群 Token
 
 如果 Agent 无法加入集群，可能与集群 Token 与服务器节点 Token 不一致有关。
-为了确认问题，你可以连接到你的 Agent 节点（例如使用 [SSH](./os#如何登录到-harvester-节点)），并运行以下命令来检查 `rancherd` 的服务日志：
+为了确认问题，你可以连接到你的 Agent 节点（例如使用 [SSH](./os.md#如何登录到-harvester-节点)），并运行以下命令来检查 `rancherd` 的服务日志：
 
 ```shell
 $ sudo journalctl -b -u rancherd

@@ -78,7 +78,7 @@ The `bootOrder` values need to be set with the installation image first. If you 
 
 1. The **Management Network** is added by default with the following values: 
     1. `Name`:  The value `default` is set by default. You can keep it or change it.
-    2. `Network`: The value `management Network` is set by default. You can't change this option if no other network has been created. See [Harvester Network](../networking/harvester-network) for the full description on how to create new networks.
+    2. `Network`: The value `management Network` is set by default. You can't change this option if no other network has been created. See [Harvester Network](../networking/harvester-network.md) for the full description on how to create new networks.
     3. `Model`: The value `e1000` is set by default. You can keep it or change it to the other available options from the dropdown.
     4. `Type`: The value `masquerade` is set by default. You can keep it or change it to the other available option, `bridge`.
 2. You can add additional networks by clicking  `Add Network`.

@@ -34,7 +34,7 @@ default via 10.10.0.10 dev harvester-mgmt proto dhcp        <-- Does a default r
 ## Modifying cluster token on agent nodes
 
 When an agent node fails to join the cluster, it can be related to the cluster token not being identical to the server node token.
-In order to confirm the issue, connect to your agent node (i.e. with [SSH](./os#how-to-log-into-a-harvester-node) and check the `rancherd` service log with the following command:
+In order to confirm the issue, connect to your agent node (i.e. with [SSH](./os.md#how-to-log-into-a-harvester-node) and check the `rancherd` service log with the following command:
 
 ```shell
 $ sudo journalctl -b -u rancherd

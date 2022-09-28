@@ -40,6 +40,9 @@ const config = {
             current: {
               label: 'v1.1-dev 🚧',
             },
+            "v1.0": {
+              path: "v1.0",
+            }
           }
         },
         theme: {

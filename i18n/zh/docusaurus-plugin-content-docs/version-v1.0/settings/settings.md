@@ -209,7 +209,7 @@ v1.0.0-abcdef-head
 
 :::note
 
-如果你进行了错误配置，或者不再能访问 Harvester GUI 和 API，请参见[故障排查](../troubleshooting/harvester#修改-ssl/tls-启用的协议和密码后无法访问-harvester)。
+如果你进行了错误配置，或者不再能访问 Harvester GUI 和 API，请参见[故障排查](../troubleshooting/harvester.md#修改-ssl/tls-启用的协议和密码后无法访问-harvester)。
 
 :::
 
