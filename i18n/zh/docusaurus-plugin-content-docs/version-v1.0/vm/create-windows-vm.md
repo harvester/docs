@@ -78,7 +78,7 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 
 1. **Management Network** 默认添加，并带有以下值：
    1. `Name`：默认设置为 `default`。你也可以修改它。
-   2. `Network`：默认值是 `management Network`。如果尚未创建其他网络，则无法更改此选项。有关如何创建新网络的完整说明，请参见 [Harvester 网络](../networking/harvester-network)。
+   2. `Network`：默认值是 `management Network`。如果尚未创建其他网络，则无法更改此选项。有关如何创建新网络的完整说明，请参见 [Harvester 网络](../networking/harvester-network.md)。
    3. `Model`：默认设置为 `e1000`。你也可以将其设为下拉菜单中的其他可用选项。
    4. `Type`：默认值是 `masquerade`。你也可以将其设置为 `bridge`。
 2. 你可以点击 `Add Network` 来添加其他网络：
