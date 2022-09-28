@@ -80,3 +80,86 @@ If you are testing Harvester in a QEMU environment, you'll need to use QEMU v6.0
 
 ![Edit Config](/img/v1.1/host/edit-config.png)
 ![Add Disks](/img/v1.1/host/add-disks.png)
+
+## Ksmtuned Mode
+
+_Available as of v1.1.0_
+
+Ksmtuned is a KSM automation tool deployed as a DaemonSet to run Ksmtuned on each node. It will start or stop the KSM by watching the available memory percentage ratio (**i.e. Threshold Coefficient**). By default, you need to manually enable Ksmtuned on each node UI. You will be able to see the KSM statistics from the node UI after 1-2 minutes.(check [KSM](https://www.kernel.org/doc/html/latest/admin-guide/mm/ksm.html#ksm-daemon-sysfs-interface) for more details).
+
+### **Quick Run**
+
+1. Go to the **Hosts** page.
+2. On the node you want to modify, click **⋮ > Edit Config**.
+3. Select the **Ksmtuned** tab and **Run Strategy** in Run.
+4. (Optional) You can modify **Threshold Coefficient** as needed.
+
+![Edit Ksmtuned](/img/v1.1/host/edit-ksmtuned.png)
+
+5. Click **Save** to update.
+6. Wait for about 1-2 minutes and you can check its **Statistics** by clicking **⋮ >  Your Node > Ksmtuned tab.**
+
+![View Ksmtuned Statistics](/img/v1.1/host/view-ksmtuned-statistics.png)
+
+### **Parameters**
+
+**Run Strategy：**
+
+- **Stop:** Stop Ksmtuned and KSM. VMs can still use shared memory pages.
+- **Run:** Run Ksmtuned.
+- **Prune:** Stop Ksmtuned and prune KSM memory pages.
+
+**Threshold Coefficient**: configures the available memory percentage ratio. If the available memory is less than the threshold, KSM will be started; otherwise, KSM will be stopped.
+
+**Merge Across Nodes:** specifies if pages from different NUMA nodes can be merged.
+
+**Mode:**
+
+- **Standard:** The default mode. The control node ksmd uses about 20% of a single CPU. It uses the following parameters:
+
+```yaml
+Boost: 0
+Decay: 0
+Maximum Pages: 100
+Minimum Pages: 100
+Sleep Time: 20
+```
+
+- **High-performance:** Node ksmd uses 20% to 100% of a single CPU and has higher scanning and merging efficiency. It uses the following parameters:
+
+```yaml
+Boost: 200
+Decay: 50
+Maximum Pages: 100
+Minimum Pages: 10000
+Sleep Time: 20
+```
+
+- **Customized:** You can customize the configuration to reach the performance that you want.
+
+Ksmtuned uses the following parameters to control KSM efficiency:
+
+
+| Parameters      | Description                                                                                                                               |
+|:----------------|:------------------------------------------------------------------------------------------------------------------------------------------|
+| Boost           | The number of scanned pages is incremented each time if the available memory is less than the **Threshold Coefficient**.                  |
+| Decay           | The number of scanned pages is decremented each time if the available memory is greater than the **Threshold Coefficient**.               |
+| Maximum Pages   | Maximum number of pages per scan.                                                                                                         |
+| Minimum Pages   | The minimum number of pages per scan, also the configuration for the first run.                                                           |
+| Sleep Time (ms) | The interval between two scans, which is calculated with the formula (**Sleep Time** \* 16 \* 1024\* 1024 / Total Memory). Minimum: 10ms. |
+
+**For example, assume you have a 512GiB memory node that uses the following parameters:**
+
+```yaml
+Boost: 300
+Decay: 100
+Minimum Pages: 1000
+Maximum Pages: 5000
+Sleep Time: 50
+```
+
+When Ksmtuned starts, initialize `pages_to_scan` in KSM to 1000 (**Minimum Pages**) and set `sleep_millisecs` to 10 (50 \* 16 \* 1024 \* 1024 / 536870912 KiB < 10).
+
+KSM starts when the available memory falls below the **Threshold Coefficient**. If it detects that it is running, `pages_to_scan` increments by 300 (**Boost**) every minute until it reaches 5000 (**Maximum Pages**).
+
+KSM will stop when the available memory is above the **Threshold Coefficient**. If it detects that it is stopped, `pages_to_scan` decrements by 100 (**Decay**) every minute until it reaches 1000 (**Minimum Pages**).
