@@ -29,6 +29,28 @@ Changing this setting might cause a short downtime for single-node clusters.
 
 :::
 
+## `auto-disk-provision-paths` [Experimental]
+
+This setting allows Harvester to automatically add disks that match the given glob pattern as VM storage.
+It's possible to provide multiple patterns by separating them with a comma.
+
+:::caution
+
+- This setting is applied to **every Node** in the cluster.
+- All the data in these storage devices **will be destroyed**. Use at your own risk.
+
+:::
+
+Default: none
+
+#### Example
+
+The following example will add disks matching the glob pattern `/dev/sd*` or `/dev/hd*`:
+
+```
+/dev/sd*,/dev/hd*
+```
+
 ## `backup-target`
 
 This setting allows you to set a custom backup target to store VM backups. It supports NFS and S3.
@@ -228,6 +250,31 @@ The following example sets the enabled SSL/TLS protocols to `TLSv1.2` and `TLSv1
 }
 ```
 
+## `storage-network`
+
+By default, Longhorn uses the default management network in the Harvester cluster that is limited to a single interface and shared with other workloads cluster-wide. This setting allows you to configure a segregated storage network when network isolation is preferred.
+
+For details, please refer to the [Harvester Storage Network](./storagenetwork/)
+
+:::caution
+
+Any change to storage-network requires shutting down all VMs before applying this setting.
+IP Range should be IPv4 CIDR format and 4 times the number of your cluster nodes.
+
+:::
+
+Default: ""
+
+#### Example
+
+```
+{
+  "vlan": 100,
+  "clusterNetwork": "storage",
+  "range": "192.168.0.0/24"
+}
+```
+
 ## `ui-index`
 
 This setting allows you to configure HTML index location for the UI.
@@ -278,28 +325,6 @@ Default: `https://harvester-upgrade-responder.rancher.io/v1/checkupgrade`
 
 ```
 https://your.upgrade.checker-url/v99/checkupgrade
-```
-
-## `auto-disk-provision-paths` [Experimental]
-
-This setting allows Harvester to automatically add disks that match the given glob pattern as VM storage.
-It's possible to provide multiple patterns by separating them with a comma.
-
-:::caution
-
-- This setting is applied to **every Node** in the cluster.
-- All the data in these storage devices **will be destroyed**. Use at your own risk.
-
-:::
-
-Default: none
-
-#### Example
-
-The following example will add disks matching the glob pattern `/dev/sd*` or `/dev/hd*`:
-
-```
-/dev/sd*,/dev/hd*
 ```
 
 ## `vm-force-reset-policy`
