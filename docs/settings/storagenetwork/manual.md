@@ -6,18 +6,18 @@ title: ""
 
 # Manual Storage Network Configuration 
 
-This page describe the maunal method to configure Longhorn Storage Network in Harvester. 
+This page describes the manual method to configure Longhorn Storage Network in Harvester.
 
 ## Prerequisite
 
 1. Make sure that Harvester version is v1.1.0 or above.
-2. Prepare phyical interfaces networks for the storage network, and make sure the VLAN configuration in the external switch side.
-3. Create Network Config in Web UI with the phyical interfaces that you expected for the storage network, and remember the `Cluster Network` field for the next step.
-4. Prepare a IPv4 subnet range in the CIDR format. IP Range should be IPv4 CIDR format and 4 times the number of your cluster nodes. This IP range should not overlap with Kubernetes Cluster IPs and Pods IPs.
+2. Prepare physical interface networks for the storage network, and ensure the VLAN configuration on the external switch side is correct.
+3. Create Network Config in Web UI with the physical interfaces that you expected for the storage network, and remember the `Cluster Network` field for the next step.
+4. Prepare an IPv4 subnet range in the CIDR format. IP Range should be IPv4 CIDR format and 4 times the number of your cluster nodes. This IP range should not overlap with Kubernetes Cluster IPs and Pods IPs.
 
 ### Example Configuration
 
-In the following configuration steps, we will use below configurations for example.
+In the following configuration steps, we will use the below configurations for example.
 
 Network Config:
 - ClusterNetwork: test
@@ -37,15 +37,17 @@ IP Range:
 
 ### Step 1: Create VLANs
 
-- Create VLANs in Web UI with desired namespace, name, VLAN ID, Cluster Network, and keep the namespace and name for the further configurations
-- Put Name in name field
-- Put Namespace in namespace field
-- Put ClusterNetwork name with `-br` suffix in "bridge" field
-- Put IP Range into `ipam.range` field
+- Create Cluster Networks/Configs in Web UI.
+    - Choose Networks > Cluster Networks/Configs in the left sidebar.
+- Create VLANs via kubectl command below with desired namespace, name, and VLAN ID, and keep the namespace and name for further configurations.
+- Put Name in name field.
+- Put Namespace in namespace field.
+- Put ClusterNetwork name with `-br` suffix in "bridge" field.
+- Put IP Range into `ipam.range` field.
 
 :::caution
 
-Don't remove the VLAN if Longhorn storage-network is still using that VLAN
+Don't remove the VLAN if Longhorn storage-network is still using that VLAN.
 
 :::
 
@@ -65,32 +67,28 @@ EOF
 
 ### Step 2: Shutdown All VMs
 
-- Stop all VMs
-- Check all VMs are off
-
-```bash
-kubectl get -A vmi
-```
-
-- You should not see any existing VMI
+- Stop all VMs.
+- Check all VMs are off.
+    - `kubectl get -A vmi`
+- You should not see any existing VMI.
 
 ### Step 3: Shutdown All Pods with Longhorn Volumes
 
 :::caution
 
-Please stop pods by order
+Please stop pods by order.
 
 :::
 
 #### Stop Rancher Monitoring
 
-- Stop Rancher Monitoting
+- Stop Rancher Monitoring.
 
 ```bash
 kubectl patch -n fleet-local managedchart rancher-monitoring --type merge -p '{"spec":{"paused": true}}'
 ```
 
-- Check Rancher Monitoring paused is true
+- Check Rancher Monitoring paused is true.
 
 ```bash
 kubectl get -n fleet-local managedchart rancher-monitoring -o=jsonpath='{.spec.paused}'
@@ -98,13 +96,13 @@ kubectl get -n fleet-local managedchart rancher-monitoring -o=jsonpath='{.spec.p
 
 #### Stop Grafana
 
-- Stop Grafana
+- Stop Grafana.
 
 ```bash
 kubectl patch -n cattle-monitoring-system deployments rancher-monitoring-grafana --type merge -p '{"spec":{"replicas": 0}}'
 ```
 
-- Check Deployment replicas is 0
+- Check Deployment replicas are 0.
 
 ```bash
 kubectl get -n cattle-monitoring-system deployments rancher-monitoring-grafana -o=jsonpath='{.spec.replicas}'
@@ -112,13 +110,13 @@ kubectl get -n cattle-monitoring-system deployments rancher-monitoring-grafana -
 
 #### Stop Prometheus
 
-- Stop Prometheus
+- Stop Prometheus.
 
 ```bash
 kubectl patch -n cattle-monitoring-system prometheuses rancher-monitoring-prometheus --type merge -p '{"spec":{"replicas": 0}}'
 ```
 
-- Check Prometheus replicas is 0
+- Check Prometheus replicas is 0.
 
 ```bash
 kubectl get -n cattle-monitoring-system prometheuses rancher-monitoring-prometheus -o=jsonpath='{.spec.replicas}'
@@ -126,20 +124,20 @@ kubectl get -n cattle-monitoring-system prometheuses rancher-monitoring-promethe
 
 #### Stop Harvester VM Import Controller
 
-- Check VM Import Controller is existing
-- If no, skip this step
+- Check VM Import Controller is existing.
+- If not, skip this step.
 
 ```bash
 kubectl get -n harvester-system deployments harvester-harvester-vm-import-controller
 ```
 
-- If VM Import Controller is existing, please stop Harvester VM Import Controller
+- If VM Import Controller is existing, please stop Harvester VM Import Controller.
 
 ```bash
 kubectl patch -n harvester-system deployments harvester-harvester-vm-import-controller --type merge -p '{"spec":{"replicas": 0}}'
 ```
 
-- Check Deployment replicas is 0
+- Check Deployment replicas are 0.
 
 ```bash
 kubectl get -n harvester-system deployments harvester-harvester-vm-import-controller -o=jsonpath='{.spec.replicas}'
@@ -147,20 +145,20 @@ kubectl get -n harvester-system deployments harvester-harvester-vm-import-contro
 
 #### Stop Alertmanager
 
-- Check VM Import Controller is existing
-- If no, skip this step
+- Check VM Import Controller is existing.
+- If not, skip this step.
 
 ```bash
 kubectl get -n cattle-monitoring-system alertmanager rancher-monitoring-alertmanager
 ```
 
-- If Alertmanager is existing, please stop Alertmanager
+- If Alertmanager is existing, please stop Alertmanager.
 
 ```bash
 kubectl patch -n cattle-monitoring-system alertmanager rancher-monitoring-alertmanager --type merge -p '{"spec":{"replicas": 0}}'
 ```
 
-- Check alertmanager replicas is 0
+- Check alertmanager replicas is 0.
 
 ```bash
 kubectl get -n cattle-monitoring-system alertmanager rancher-monitoring-alertmanager -o=jsonpath='{.spec.replicas}'
@@ -168,14 +166,14 @@ kubectl get -n cattle-monitoring-system alertmanager rancher-monitoring-alertman
 
 ### Step 4: Check all Longhorn Volumes are detached
 
-- Please check Longhorn Volumes states are detached
-- If there is still any attached volume, please wait for some monents and re-check it again before do next step
+- Please check Longhorn Volumes states are detached.
+- If there is still any attached volume, please wait for some monents and re-check it again before doing the next step.
 
 ```bash
 kubectl get -A volume
 ```
 
-- You could check with the following command, should get empty result.
+- You could check with the following command, and should get an empty result.
 
 ```bash
 kubectl get -A volume | grep attached
@@ -183,13 +181,13 @@ kubectl get -A volume | grep attached
 
 ### Step 5: Setup Longhorn Storage Network Setting
 
-- Set Longhorn storage-network settings
+- Set Longhorn storage-network settings.
 
 ```bash
 kubectl patch -n longhorn-system settings.longhorn.io storage-network --type merge -p '{"value": "default/storagenetwork-1"}'
 ```
 
-- Check Longhorn storage-network settings
+- Check Longhorn storage-network settings.
 
 ```bash
 kubectl get -n longhorn-system settings.longhorn.io storage-network -o=jsonpath='{.value}'
@@ -197,40 +195,40 @@ kubectl get -n longhorn-system settings.longhorn.io storage-network -o=jsonpath=
 
 ### Step 6: Wait and Check Longhorn Pods
 
-- Wait for longhorn Pods 
-- Check Longhorn Pods
+- Wait for longhorn Pods.
+- Check Longhorn Pods.
 
 ```bash
 kubectl get -n longhorn-system pods -l longhorn.io/component=instance-manager -o=jsonpath='{range .items[*]}{.metadata.annotations.k8s\.v1\.cni\.cncf\.io/networks}{"\n"}{end}'
 ```
 
-- Check all "interface" is "lhnet1"
+- Check all "interface" is "lhnet1".
 
 ### Step 7: Restart Pods
 
 
 :::caution
 
-Please start pods by order
+Please start pods by order.
 
 :::
 
 #### Start Alertmanager
 
-- Check VM Import Controller is existing
-- If no, skip this step
+- Check VM Import Controller is existing.
+- If not, skip this step.
 
 ```bash
 kubectl get -n cattle-monitoring-system alertmanager rancher-monitoring-alertmanager
 ```
 
-- If Alertmanager is existing, please start Alertmanager
+- If Alertmanager is existing, please start Alertmanager.
 
 ```bash
 kubectl patch -n cattle-monitoring-system alertmanager rancher-monitoring-alertmanager --type merge -p '{"spec":{"replicas": 1}}'
 ```
 
-- Check alertmanager replicas is 1
+- Check alertmanager replicas is 1.
 
 ```bash
 kubectl get -n cattle-monitoring-system alertmanager rancher-monitoring-alertmanager -o=jsonpath='{.spec.replicas}'
@@ -238,33 +236,33 @@ kubectl get -n cattle-monitoring-system alertmanager rancher-monitoring-alertman
 
 #### Start Harvester VM Import Controller
 
-- Check VM Import Controller is existing
-- If no, skip this step
+- Check VM Import Controller is existing.
+- If not, skip this step.
 
 ```bash
 kubectl get -n harvester-system deployments harvester-harvester-vm-import-controller
 ```
 
-- If VM Import Controller is existing, please start Harvester VM Import Controller
+- If VM Import Controller is existing, please start Harvester VM Import Controller.
 
 ```bash
 kubectl patch -n harvester-system deployments harvester-harvester-vm-import-controller --type merge -p '{"spec":{"replicas": 1}}'
 ```
 
-- Check Deployment replicas is 1
+- Check Deployment replicas is 1.
 
 ```bash
 kubectl get -n harvester-system deployments harvester-harvester-vm-import-controller -o=jsonpath='{.spec.replicas}'
 ```
 #### Start Prometheus
 
-- Start Prometheus
+- Start Prometheus.
 
 ```bash
 kubectl patch -n cattle-monitoring-system prometheuses rancher-monitoring-prometheus --type merge -p '{"spec":{"replicas": 1}}'
 ```
 
-- Check Prometheus replicas is 1
+- Check Prometheus replicas is 1.
 
 ```bash
 kubectl get -n cattle-monitoring-system prometheuses rancher-monitoring-prometheus -o=jsonpath='{.spec.replicas}'
@@ -273,13 +271,13 @@ kubectl get -n cattle-monitoring-system prometheuses rancher-monitoring-promethe
 
 #### Start Grafana
 
-- Stop Grafana
+- Stop Grafana.
 
 ```bash
 kubectl patch -n cattle-monitoring-system deployments rancher-monitoring-grafana --type merge -p '{"spec":{"replicas": 1}}'
 ```
 
-- Check Deployment replicas is 1
+- Check Deployment replicas is 1.
 
 ```bash
 kubectl get -n cattle-monitoring-system deployments rancher-monitoring-grafana -o=jsonpath='{.spec.replicas}'
@@ -287,13 +285,13 @@ kubectl get -n cattle-monitoring-system deployments rancher-monitoring-grafana -
 
 #### Start Rancher Monitoring
 
-- Stop Rancher Monitoting
+- Stop Rancher Monitoring.
 
 ```bash
 kubectl patch -n fleet-local managedchart rancher-monitoring --type merge -p '{"spec":{"paused": false}}'
 ```
 
-- Check Rancher Monitoring paused is true
+- Check Rancher Monitoring paused is true.
 
 ```bash
 kubectl get -n fleet-local managedchart rancher-monitoring -o=jsonpath='{.spec.paused}'
@@ -301,11 +299,11 @@ kubectl get -n fleet-local managedchart rancher-monitoring -o=jsonpath='{.spec.p
 
 ### Step 8: Restart all VMs
 
-- Restart all your VMs
+- Restart all your VMs.
 
 ### Step 9: Reset to Default (Optional)
 
-- Follow Step 1 to 4
-- Follow Step 5, and set the value to empty string `""` in Longhorn storage-network setting
-- Follow Step 6 to 8
-- Remove VLAN `default/storagenetwork-1`
+- Follow Step 1 to 4.
+- Follow Step 5, and set the value to the empty string `""` in Longhorn storage-network setting.
+- Follow Step 6 to 8.
+- Remove VLAN `default/storagenetwork-1`.
