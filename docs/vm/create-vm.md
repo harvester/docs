@@ -155,3 +155,25 @@ The QEMU guest agent is a daemon that runs on the virtual machine instance and p
 If your OS is openSUSE and the version is less than 15.3, please replace `qemu-guest-agent.service` with `qemu-ga.service`.
 
 :::
+
+
+## One-time Boot For ISO Installation
+
+When creating a VM to boot from cd-rom, you can use the **bootOrder** option so that the OS can boot from cd-rom during image installation, and boot from the disk when the installation is complete without unmounting the cd-rom.
+
+The following example describes how to install an ISO image using [openSUSE Leap 15.4](https://get.opensuse.org/leap/15.4/):
+
+1. Click **Images** in the left sidebar and download the openSUSE Leap 15.4 ISO image.
+2. Click **Virtual Machines** in the left sidebar, then create a VM. You need to fill up those VM basic configurations.
+3. Click the **Volumes** tab, In the **Image** field, select the image downloaded in step 1 and ensure **Type** is `cd-rom`
+4. Click **Add Volume** and select an existing **Storage Class**.
+5. Drag **Volume** to the top of **Image Volume** as follows. In this way, the **bootOrder** of **Volume** will become `1`.
+
+![one-time-boot-create-vm-bootorder](/img/v1.1/vm/one-time-boot-create-vm-bootorder.png)
+
+6. Click **Create**.
+7. Open the VM web-vnc you just created and follow the instructions given by the installer.
+8. After the installation is complete, reboot the VM  as instructed by the operating system (you can remove the installation media after booting the system).
+9. After the VM reboots, it will automatically boot from the disk volume and start the operating system.
+
+
