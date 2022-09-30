@@ -102,6 +102,12 @@ hr {
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+@media screen and (max-width: 1024px){
+  .btn.navbar__github {
+    display: none;
+  }
+}
+
 a.btn.navbar__github {
   border: 2px solid transparent;
   padding: 8px 20px 7px 47px;

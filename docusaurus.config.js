@@ -35,6 +35,7 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve("./sidebars.js"),
+          showLastUpdateTime: true,
           editUrl: "https://github.com/harvester/docs/edit/main/",
           versions: {
             current: {
@@ -52,11 +53,20 @@ const config = {
     ],
   ],
   themeConfig: {
+    algolia: {
+      appId: 'U7QCSJFCWR',
+      apiKey: '954c1b1327687e818ef6930a5e8f8770',
+      indexName: 'harvester',
+      contextualSearch: true,
+      searchParameters: {},
+      // Optional: path for search page that enabled by default (`false` to disable it)
+      searchPagePath: 'search',
+    },
     docs: {
-        sidebar: {
-          hideable: true,
-        },
+      sidebar: {
+        hideable: true,
       },
+    },
     navbar: {
       logo: {
         alt: "Harvester Logo",
@@ -69,8 +79,8 @@ const config = {
           dropdownActiveClassDisabled: true,
         },
         {
-            type: "localeDropdown",
-            position: "right",
+          type: "localeDropdown",
+          position: "right",
         },
         {
           type: 'doc',
