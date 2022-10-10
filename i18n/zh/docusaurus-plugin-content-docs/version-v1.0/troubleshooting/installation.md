@@ -97,15 +97,15 @@ $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
 - 系统信息和日志。
    - 从 v1.0.2 开始可用
 
-      请按照[登录 Harvester 安装程序（实时操作系统）](#登录到-harvester-安装程序（实时操作系统）)中的说明进行登录。然后，运行以下命令生成包含故障排除信息的 tarball：
+   请按照[登录 Harvester 安装程序（实时操作系统）](#登录到-harvester-安装程序（实时操作系统）)中的说明进行登录。然后，运行以下命令生成包含故障排除信息的 tarball：
 
-      ```
-      supportconfig -k -c
-      ```
+   ```
+   supportconfig -k -c
+   ```
 
-      命令输出的消息会包含生成的 tarball 路径。例如，以下示例中的路径为 `/var/loq/scc_aaa_220520_1021 804d65d-c9ba-4c54-b12d-859631f892c5.txz`：
+   命令输出的消息会包含生成的 tarball 路径。例如，以下示例中的路径为 `/var/loq/scc_aaa_220520_1021 804d65d-c9ba-4c54-b12d-859631f892c5.txz`：
 
-      ![](/img/v1.0/troubleshooting/installation-support-config-example.png)
+   ![](/img/v1.0/troubleshooting/installation-support-config-example.png)
 
    :::note
 
@@ -115,18 +115,18 @@ $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
 
    - v1.0.2 之前的版本
 
-      请获取以下文件的内容：
+   请获取以下文件的内容：
 
-      ```
-      /var/log/console.log
-      /run/cos/target/rke2.log
-      /tmp/harvester.*
-      /tmp/cos.*
-      ```
+   ```
+   /var/log/console.log
+   /run/cos/target/rke2.log
+   /tmp/harvester.*
+   /tmp/cos.*
+   ```
 
-      以及以下命令的输出：
+   以及以下命令的输出：
 
-      ```
-      blkid
-      dmesg
-      ```
+   ```
+   blkid
+   dmesg
+   ```
