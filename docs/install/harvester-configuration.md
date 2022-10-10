@@ -49,6 +49,7 @@ os:
     http_proxy: http://myserver
     https_proxy: http://myserver
   labels:
+    topology.kubernetes.io/zone: zone1
     foo: bar
     mylabel: myvalue
 install:
@@ -330,6 +331,16 @@ see [Settings/http-proxy](../settings/settings.md#http-proxy).
 #### Definition
 
 Labels to be added to this Node.
+
+#### Example
+
+```yaml
+os:
+  labels:
+    topology.kubernetes.io/zone: zone1
+    foo: bar
+    mylabel: myvalue
+```
 
 ### `install.mode`
 

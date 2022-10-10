@@ -251,6 +251,10 @@ The config file declares a subnet and two groups. The first group is for hosts t
 
 For more information about Harvester configuration, please refer to the [Harvester configuration](./harvester-configuration.md) page.
 
+By default, the first node will be the management node of the cluster. When there are 3 nodes, the other 2 nodes added first are automatically promoted to management nodes to form an HA cluster
+
+If you want to promote management nodes from different zones, you can add the node label `topology.kubernetes.io/zone` in the [os.labels](./harvester-configuration.md#oslabels) config. In this case, at least three different zones are required.
+
 Users can also provide configuration via kernel parameters. For example, to specify the `CREATE` install mode, users can pass the `harvester.install.mode=create` kernel parameter when booting. Values passed through kernel parameters have higher priority than values specified in the config file.
 
 ## UEFI HTTP Boot support
