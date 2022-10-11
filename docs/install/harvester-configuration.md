@@ -95,15 +95,17 @@ For instance, if you have in your Harvester Configuration file specified `os.hos
 
 #### Definition
 
-The version of scheme is reserved for the future configuration migration.
+The version of scheme reserved for future configuration migration.
 
-This configuration is mandatory for migrating configuration to new scheme version. It tells the Harvester the previous version and need to migrate.
+This configuration is mandatory for migrating the configuration to a new scheme version. It tells Harvester the previous version and the need to migrate.
 
-!!!note
-    This field didn't take any effect in the current Harvester version.
+:::note
+This field didn't take any effect in the current Harvester version.
+:::
 
-!!!warning
-    Make sure that your custom configuration always has the correct scheme version.
+:::caution
+Make sure that your custom configuration always has the correct scheme version.
+:::
 
 ### `server_url`
 
