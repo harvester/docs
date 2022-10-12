@@ -322,7 +322,7 @@ os:
 
 This example sets the HTTP(S) proxy for **foundational OS components**.
 To set up an HTTP(S) proxy for Harvester components such as fetching external images and backup to S3 services,
-see [Settings/http-proxy](../settings/settings.md#http-proxy).
+see [Settings/http-proxy](../advanced/settings.md#http-proxy).
 
 :::
 
@@ -531,7 +531,7 @@ install:
 #### Definition
 
 You can overwrite the default Harvester system settings by configuring `system_settings`.
-See the [Settings](../settings/settings.md) page for additional information and the list of all the options.
+See the [Settings](../advanced/settings.md) page for additional information and the list of all the options.
 
 :::note
 
