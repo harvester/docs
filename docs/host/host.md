@@ -55,13 +55,15 @@ Once resolved, the last step can be skipped.
 
 ![delete.png](/img/v1.1/host/delete.png)
 
-## Multi-disk Management - `Tech Preview`
+## Multi-disk Management
+
+### Add Additional Disks
 
 Users can view and add multiple disks as additional data volumes from the host detail page.
 
 1. Go to the **Hosts** page.
 2. On the node you want to modify, click **⋮ > Edit Config**.
-2. Select the **Disks** tab and click **Add Disks**.
+2. Select the **Storage** tab and click **Add Disk**.
 3. Select an additional raw block device to add as an additional data volume.
     - The `Force Formatted` option is required if the block device has never been force-formatted.
 
@@ -80,6 +82,29 @@ If you are testing Harvester in a QEMU environment, you'll need to use QEMU v6.0
 
 ![Edit Config](/img/v1.1/host/edit-config.png)
 ![Add Disks](/img/v1.1/host/add-disks.png)
+
+### Storage Tags
+
+The storage tag feature enables only certain nodes or disks to be used for storing Longhorn volume data. For example, performance-sensitive data can use only the high-performance disks which can be tagged as `fast`, `ssd` or `nvme`, or only the high-performance nodes tagged as `baremetal`.
+
+This feature supports both disks and nodes.
+
+#### Setup
+
+The tags can be set up through the Harvester UI on the host page:
+
+1. Click `Hosts` -> `Edit Config` -> `Storage`
+1. Click the `Host/Disk` tags to start typing to hit enter to add new tags.
+1. Click `Save` to update tags.
+1. On the [Storage Classes](../advanced/storageclass.md) page, create a new storage class and select those defined tags on the `Node Selector` and `Disk Selector` fields.
+
+All the existing scheduled volumes on the node or disk won’t be affected by the new tags.
+
+:::note
+
+When multiple tags are specified for a volume, the disk and the nodes (that the disk belongs to) must have all the specified tags to become usable.
+
+:::
 
 ## Ksmtuned Mode
 

@@ -58,18 +58,21 @@ The `bootOrder` values need to be set with the installation image first. If you 
 
 1. The **first volume** is an `Image Volume` with the following values: 
     1. `Name`: The value `cdrom-disk` is set by default. You can keep it or change it.
-    2. `Image`: Select the Windows image to be installed. See [Upload Images](../upload-image.md) for the full description on how to create new images.
-    3. `Type`: Select `cd-rom`.
+    2. `Type`: Select `cd-rom`.
+    3. `Image`: Select the Windows image to be installed. See [Upload Images](../upload-image.md) for the full description on how to create new images.
     4. `Size`: The value `20` is set by default. You can change it if your image has a bigger size.
     5. `Bus`: The value `SATA` is set by default. It's recommended you don't change it.
 2. The **second volume** is a `Volume` with the following values:
-    1.  `Name`: The value `rootdisk` is set by default. You can keep it or change it.
-    2.  `Size`: The value `32` is set by default. See the disk space requirements for [Windows Server](https://docs.microsoft.com/en-us/windows-server/get-started/hardware-requirements#storage-controller-and-disk-space-requirements) and [Windows 11](https://docs.microsoft.com/en-us/windows/whats-new/windows-11-requirements#hardware-requirements) before changing this value.
-    3.  `Bus`: The value `VirtIO` is set by default. You can keep it or change it to the other available options, `SATA` or `SCSI`.
+    1. `Name`: The value `rootdisk` is set by default. You can keep it or change it.
+    2. `Type`: Select `disk`.
+    3. `Storage Class`: You can use the default StorageClass `harvester-longhorn` or specify a custom one.
+    4. `Size`: The value `32` is set by default. See the disk space requirements for [Windows Server](https://docs.microsoft.com/en-us/windows-server/get-started/hardware-requirements#storage-controller-and-disk-space-requirements) and [Windows 11](https://docs.microsoft.com/en-us/windows/whats-new/windows-11-requirements#hardware-requirements) before changing this value.
+    5. `Bus`: The value `VirtIO` is set by default. You can keep it or change it to the other available options, `SATA` or `SCSI`.
 3. The **third volume** is a `Container` with the following values:
     1. `Name`: The value `virtio-container-disk` is set by default. You can keep it or change it.
-    2. `Docker Image`: The value `registry.suse.com/suse/vmdp/vmdp:2.5.3` is set by default. It's recommended you don't change it.
-    3. `Bus`: The value `SATA` is set by default. It's recommended you don't change it.
+    2. `Type`: Select `cd-rom`.
+    3. `Docker Image`: The value `registry.suse.com/suse/vmdp/vmdp:2.5.3` is set by default. It's recommended you don't change it.
+    4. `Bus`: The value `SATA` is set by default. It's recommended you don't change it.
 4. You can add additional disks using the buttons `Add Volume`, `Add Existing Volume`, `Add VM Image`, or `Add Container`.
 
 ![create-windows-vm-volumes](/img/v1.1/vm/create-windows-vm-volumes.png)
@@ -78,8 +81,8 @@ The `bootOrder` values need to be set with the installation image first. If you 
 
 1. The **Management Network** is added by default with the following values: 
     1. `Name`:  The value `default` is set by default. You can keep it or change it.
-    2. `Network`: The value `management Network` is set by default. You can't change this option if no other network has been created. See [Harvester Network](../networking/harvester-network.md) for the full description on how to create new networks.
-    3. `Model`: The value `e1000` is set by default. You can keep it or change it to the other available options from the dropdown.
+    2. `Model`: The value `e1000` is set by default. You can keep it or change it to the other available options from the dropdown.
+    3. `Network`: The value `management Network` is set by default. You can't change this option if no other network has been created. See [Harvester Network](../networking/harvester-network.md) for the full description on how to create new networks.
     4. `Type`: The value `masquerade` is set by default. You can keep it or change it to the other available option, `bridge`.
 2. You can add additional networks by clicking  `Add Network`.
 
@@ -176,11 +179,9 @@ Alternately if the system has already booted into the UEFI shell, you can type i
 
 There is a known issue with Windows VM when it is allocated more than 8GiB without enough reserve memory configured. The VM crashes without warning.
 
-This can be fixed by allocating at least 256MiB of reserved memory to the template on the Advanced Options tab.
+This can be fixed by allocating at least 256MiB of reserved memory to the template on the Advanced Options tab. If `256MiB` doesn't work, try `512MiB`.
 
 ![reserved-memory-config](/img/v1.1/vm/reserved-memory-config.png)
-
-We will add a default 256MiB of reserved memory to the Windows template to prevent this problem in the future release.
 
 ### BSoD (Blue Screen of Death) at first boot time of Windows
 

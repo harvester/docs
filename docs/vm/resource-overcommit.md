@@ -12,7 +12,7 @@ Description: Overcommit resources to a VM.
 
 # Resource Overcommit
 
-Harvester supports global configuration of resource overload percentages on CPU, memory, and storage. By setting [`overcommit-config`](../settings/settings.md#overcommit-config), this will allow scheduling of additional virtual machines even when physical resources are fully utilized.
+Harvester supports global configuration of resource overload percentages on CPU, memory, and storage. By setting [`overcommit-config`](../advanced/settings.md#overcommit-config), this will allow scheduling of additional virtual machines even when physical resources are fully utilized.
 
 Harvester allows you to overcommit CPU and RAM on compute nodes. This allows you to increase the number of instances running on your cloud at the cost of reducing the performance of the instances. The Compute service uses the following ratios by default:
 
@@ -26,7 +26,7 @@ Classic memory overcommitment or memory ballooning is not yet supported by this 
 
 :::
 
-## Configure the global setting [`overcommit-config`](../settings/settings.md#overcommit-config)
+## Configure the global setting [`overcommit-config`](../advanced/settings.md#overcommit-config)
 
 Users can modify the global `overcommit-config` by following the steps below, and it will be applied to each newly created virtual machine after the change.
 
