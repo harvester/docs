@@ -19,7 +19,7 @@ Harvester configuration file can be provided during manual or automatic installa
 
 ```yaml
 scheme_version: 1
-server_url: https://someserver:443
+server_url: https://cluster-VIP:443
 token: TOKEN_VALUE
 os:
   ssh_authorized_keys:
@@ -111,20 +111,20 @@ Make sure that your custom configuration always has the correct scheme version.
 
 #### Definition
 
-The URL of the Harvester server to join as an agent.
+`server_url` is the URL of the Harvester cluster, which is used for the new `node` to join the cluster.
 
-This configuration is mandatory when the installation is in `JOIN` mode. It tells the Harvester installer where the main server is.
+This configuration is mandatory when the installation is in `JOIN` mode. The default format of `server_url` is `https://cluster-VIP:443`.
 
 :::note
 
-To ensure a high availability (HA) Harvester cluster, either use the Harvester main server [VIP](#installvip) or a domain name in `server_url`.
+To ensure a high availability (HA) Harvester cluster, please use either the Harvester cluster [VIP](#installvip) or a domain name in `server_url`.
 
 :::
 
 #### Example
 
 ```yaml
-server_url: https://someserver:443
+server_url: https://cluster-VIP:443
 install:
   mode: join
 ```
