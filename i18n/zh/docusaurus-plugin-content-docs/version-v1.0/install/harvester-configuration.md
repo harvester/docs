@@ -18,7 +18,7 @@ Description: 你可以在手动或自动安装期间提供 Harvester 配置文�
 你可以在手动或自动安装期间提供 Harvester 配置文件，来进行特定的配置。以下是一个配置示例：
 
 ```yaml
-server_url: https://someserver:443
+server_url: https://cluster-VIP:443
 token: TOKEN_VALUE
 os:
   ssh_authorized_keys:
@@ -95,20 +95,20 @@ system_settings:
 
 #### 定义
 
-要作为 Agent 加入的 Harvester Server URL。
+`server_url` 是 Harvester 集群的 URL，用于在集群中加入新的`节点`。
 
-对于使用 `JOIN` 模式进行的安装，配置是必须的。配置可以将主服务器的位置告知 Harvester 安装程序。
+对于使用 `JOIN` 模式进行的安装，配置是必须的。`server_url` 的默认格式是 `https://cluster-VIP:443`。
 
 :::note
 
-为确保高可用的 Harvester 集群，请使用 Harvester 主服务器 [VIP](#installvip) 或 `server_url` 中的一个域名。
+为确保高可用的 Harvester 集群，请使用 Harvester 集群 [VIP](#installvip) 或 `server_url` 中的域名。
 
 :::
 
 #### 示例
 
 ```yaml
-server_url: https://someserver:443
+server_url: https://cluster-VIP:443
 install:
   mode: join
 ```
