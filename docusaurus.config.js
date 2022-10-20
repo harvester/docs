@@ -40,6 +40,7 @@ const config = {
           versions: {
             current: {
               label: 'v1.1-dev 🚧',
+              path: "v1.1",
             },
             "v1.0": {
               path: "v1.0",
