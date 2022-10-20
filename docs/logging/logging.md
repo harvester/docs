@@ -1,24 +1,44 @@
 ---
 sidebar_position: 1
-sidebar_label: Logging
+sidebar_label: Logging Audit Event
 title: ""
 keywords:
 - Harvester
-- harvester
 - Logging
+- Audit
+- Event
 ---
 
-# Harvester Logging
+# Harvester Integration with Logging, Auditing and Event
 
 _Available as of v1.1.0_
 
-The Harvester logging infrastructure allows you to aggregate Harvester logs into an external service such as [Elasticsearch](https://www.elastic.co/elasticsearch/),
-[Grafana Loki](https://grafana.com/oss/loki/), or [Splunk](https://www.splunk.com/).
+It is important to know what is happending / has happend in the `Harvester Cluster`.
 
-## Collected Logs
+`Harvester` collects the `cluster running log`, kubernetes `audit` and `event` log right after the cluster is powered on, which is helpful for monitoring, logging, auditing and troubleshooting.
+
+`Harvester` supports sending those logs to various types of log servers.
+
+:::note
+The size of logging data is related to the cluster scale, workload and other factors. `Harvester` does not use persistent storage to store log data inside the cluster. Users need to set up a log server to receive logs accordingly.
+:::
+
+## High-level Architecture
+
+The [Banzai Cloud Logging operator](https://banzaicloud.com/docs/one-eye/logging-operator/) now powers both `Harvester` and `Rancher` as an in-house logging solution.
+
+![](/img/v1.1/logging/fluent-operator.png)
+
+In Harvester's practice, the `Logging`, `Audit` and `Event` shares one architecture, the `Logging` is the infrastructure, while the `Audit` and `Event` are on top of it.
+
+## Logging
+
+The Harvester logging infrastructure allows you to aggregate Harvester logs into an external service such as [Graylog](https://www.graylog.org), [Elasticsearch](https://www.elastic.co/elasticsearch/), [Splunk](https://www.splunk.com/), [Grafana Loki](https://grafana.com/oss/loki/) and others.
+
+### Collected Logs
 See below for a list logs that are collected:
  - Logs from all cluster `Pods`
- - Kernel logs from each node
+ - Kernel logs from each `node`
  - Logs from select systemd services from each node
    - `rke2-server`
    - `rke2-agent`
@@ -28,15 +48,15 @@ See below for a list logs that are collected:
    - `iscsid`
 
 :::note
-While users are able to configure and modify where the aggregated logs are sent, as well as some basic filtering, they cannot change which logs are aggregated.
+Users are able to configure and modify where the aggregated logs are sent, as well as some basic filtering. It is not supported to change which logs are collected.
 :::
 
-## Configuring Log Resources
+### Configuring Log Resources
 
 Underneath Banzai Cloud's logging operator are [`fluentd`](https://www.fluentd.org/) and [`fluent-bit`](https://fluentbit.io/), which handle the log routing and collecting respectively.
 If desired, you can modify how many resources are dedicated to those components.
 
-### From UI
+#### From UI
 
  1. Navigate to the `Configuration` page under `Monitoring & Logging > Logging`.
  2. Under the `Fluentbit` tab, change the resource requests and limits.
@@ -45,7 +65,7 @@ If desired, you can modify how many resources are dedicated to those components.
 
 ![](/img/v1.1/logging/modify-logging-fluent-resources.png)
 
-### From CLI
+#### From CLI
 
 You can also change the resource configurations from the command line using `kubectl edit managedchart -n fleet-local rancher-logging` and modifying the relevant files.
 
@@ -65,13 +85,13 @@ values.fluentbit.resources.requests.cpu: 50m
 values.fluentbit.resources.requests.memory: 50mi
 ```
 
-## Configuring Log Destinations
+### Configuring Log Destinations
 
 Logging is backed by the [Banzai Cloud Logging Operator](https://banzaicloud.com/docs/one-eye/logging-operator/), and so is controlled by [`Flows`/`ClusterFlows`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/flow/) and [`Outputs`/`ClusterOutputs`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/output/). You can route and filter logs as you like by applying these `CRD`s to the Harvester cluster.
 
 When applying new `Ouptuts` and `Flows` to the cluster, it can take some time for the logging operator to effectively apply them. So please allow a few minutes for the logs to start flowing.
 
-### Clustered vs Namespaced
+#### Clustered vs Namespaced
 
 One important thing to understand when routing logs is the difference between `ClusterFlow` vs `Flow` and `ClusterOutput` vs `Output`. The main difference between the clustered and non-clustered version of each is that the non-clustered versions are namespaced.
 
@@ -82,13 +102,13 @@ For more information, see the documentation:
  - [`Flows`/`ClusterFlows`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/flow/)
  - [`Outputs`/`ClusterOutputs`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/output/)
 
-### From UI
+#### From UI
 
 :::note
 UI images are for `Output` and `Flow` whose configuration process is almost identical to their clustered counterparts. Any differences will be noted in the steps below.
 :::
 
-#### Creating Outputs
+##### Creating Outputs
 
  1. Choose the option to create a new `Output` or `ClusterOutput`.
  2. If creating an `Output`, select the desired namespace.
@@ -112,19 +132,19 @@ UI images are for `Output` and `Flow` whose configuration process is almost iden
 Depending on the output selected (Splunk, Elasticsearch, etc), there will be additional fields to specify in the form.
 :::
 
-##### Output
+###### Output
 
 The fields present in the **Output** form will change depending on the `Output` chosen, in order to expose the fields present for each [output plugin](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/plugins/outputs/).
 
-##### Output Buffer
+###### Output Buffer
 
 The `Output Buffer` editor allows you to describe how you want the output buffer to behave. You can find the documentation for the buffer fields [here](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/plugins/outputs/buffer/).
 
-##### Labels & Annotations
+###### Labels & Annotations
 
 You can append labels and annotations to the created resource.
 
-#### Creating Flows
+##### Creating Flows
 
  1. Choose the option to create a new `Flow` or `ClusterFlow`.
  2. If creating a `Flow`, select the desired namespace.
@@ -143,25 +163,25 @@ You can append labels and annotations to the created resource.
 
  7. Once done, click `Create` on the lower left.
 
-##### Matches
+###### Matches
 
 Matches allow you to filter which logs you want to include in the `Flow`. The form only allows you to include or exclude node logs, but if needed, you can add other match rules supported by the resource by selecting `Edit as YAML`.
 
 For more information about the match directive, see [Routing your logs with match directive](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/log-routing/).
 
-##### Outputs
+###### Outputs
 
-Outputs allow you to select one or more `OutputRefs` to send the aggregated logs to. When creating or editing a `Flow` / `ClusterFLow`, it is required that the user selects at least one `Output`.
+Outputs allow you to select one or more `OutputRefs` to send the aggregated logs to. When creating or editing a `Flow` / `ClusterFlow`, it is required that the user selects at least one `Output`.
 
 :::note
 There must be at least one existing `ClusterOutput` or `Output` that can be attached to the flow, or you will not be able to create / edit the flow.
 :::
 
-##### Filters
+###### Filters
 
 Filters allow you to transform, process, and mutate the logs. In the text edit, you will find descriptions of the supported filters, but for more information, you can visit the list of [supported filters](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/plugins/filters/).
 
-### From CLI
+#### From CLI
 
 To configure log routes via the command line, you only need to define the YAML files for the relevant resources:
 
@@ -199,7 +219,7 @@ And then apply them:
 kubectl apply -f elasticsearch-logging.yaml
 ```
 
-#### Referencing Secrets
+##### Referencing Secrets
 
 There are 3 ways Banzai Cloud allows specifying secret values via yaml values.
 
@@ -232,9 +252,9 @@ tls_cert_path:
 
 For more information, you can find the related documentation [here](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/plugins/outputs/secret/).
 
-## Example `Outputs`
+### Example `Outputs`
 
-### Elasticsearch
+#### Elasticsearch
 
 For the simplest deployment, you can deploy Elasticsearch on your local system using docker:
 
@@ -337,7 +357,7 @@ $ curl localhost:9200/fluentd/_search
 }
 ```
 
-### Graylog
+#### Graylog
 You can follow the instructions [here](https://github.com/w13915984028/harvester-develop-summary/blob/main/integrate-harvester-logging-with-log-servers.md#integrate-harvester-logging-with-graylog) to deploy and view cluster logs via [Graylog](https://www.graylog.org/):
 
 ```yaml
@@ -362,7 +382,7 @@ spec:
     protocol: "udp"
 ```
 
-### Splunk
+#### Splunk
 
 You can follow the instructions [here](https://github.com/w13915984028/harvester-develop-summary/blob/main/test-log-event-audit-with-splunk.md) to deploy and view cluster logs via [Splunk](https://www.splunk.com/).
 
@@ -401,7 +421,7 @@ spec:
       - harvester-logging-splunk
 ```
 
-### Loki
+#### Loki
 
 You can follow the instructions in the [logging HEP](https://github.com/joshmeranda/harvester/blob/logging/enhancements/20220525-system-logging.md) on deploying and viewing cluster logs via [Grafana Loki](https://grafana.com/oss/loki/).
 
@@ -427,4 +447,230 @@ spec:
     url: http://loki-stack.cattle-logging-system.svc:3100
     extra_labels:
       logOutput: harvester-loki
+```
+
+## Audit
+
+Harvester collects Kubernetes `audit` and is able to send the `audit` to various types of log servers.
+
+The policy file to guide `kube-apiserver` is [here](https://github.com/harvester/harvester-installer/blob/5991dcf6307aa5da79c5d6926566541f48105778/pkg/config/templates/rke2-92-harvester-kube-audit-policy.yaml).
+
+### Audit Definition
+
+In `kubernetes`, the [audit](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/) data is generated by `kube-apiserver` according to defined policy.
+
+```
+...
+Audit policy
+Audit policy defines rules about what events should be recorded and what data they should include. The audit policy object structure is defined in the audit.k8s.io API group. When an event is processed, it's compared against the list of rules in order. The first matching rule sets the audit level of the event. The defined audit levels are:
+
+None - don't log events that match this rule.
+Metadata - log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body.
+Request - log event metadata and request body but not response body. This does not apply for non-resource requests.
+RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests.
+```
+
+### Audit Log Format
+
+#### Audit Log Format in Kubernetes
+
+Kubernetes apiserver logs audit with following JSON format into a local file.
+
+```
+{
+"kind":"Event",
+"apiVersion":"audit.k8s.io/v1",
+"level":"Metadata",
+"auditID":"13d0bf83-7249-417b-b386-d7fc7c024583",
+"stage":"RequestReceived",
+"requestURI":"/apis/flowcontrol.apiserver.k8s.io/v1beta2/prioritylevelconfigurations?fieldManager=api-priority-and-fairness-config-producer-v1",
+"verb":"create",
+"user":{"username":"system:apiserver","uid":"d311c1fe-2d96-4e54-a01b-5203936e1046","groups":["system:masters"]},
+"sourceIPs":["::1"],
+"userAgent":"kube-apiserver/v1.24.7+rke2r1 (linux/amd64) kubernetes/e6f3597",
+"objectRef":{"resource":"prioritylevelconfigurations",
+"apiGroup":"flowcontrol.apiserver.k8s.io",
+"apiVersion":"v1beta2"},
+"requestReceivedTimestamp":"2022-10-19T18:55:07.244781Z",
+"stageTimestamp":"2022-10-19T18:55:07.244781Z"
+}
+```
+
+#### Audit Log Format before Being Sent to Log Servers
+
+Harvester keeps the `audit` log unchanged before sending it to the log server.
+
+### Audit Log Output/ClusterOutput
+
+To output audit related log, the `Output`/`ClusterOutput` requires the value of `loggingRef` to be `harvester-kube-audit-log-ref`.
+
+When you configure from the Harvester dashboard, the field is added automatically.
+
+Select type `Audit Only` from the `Type` drpo-down list.
+
+![](/img/v1.1/logging/cluster-output-type.png)
+
+When you configure from the CLI, please add the field manually.
+
+Example:
+
+```
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: ClusterOutput
+metadata:
+  name: "harvester-audit-webhook"
+  namespace: "cattle-logging-system"
+spec:
+  http:
+    endpoint: "http://192.168.122.159:8096/"
+    open_timeout: 3
+    format: 
+      type: "json"
+    buffer:
+      chunk_limit_size: 3MB
+      timekey: 2m
+      timekey_wait: 1m
+  loggingRef: harvester-kube-audit-log-ref   # this reference is fixed and must be here
+```
+
+### Audit Log Flow/ClusterFlow
+
+To route audit related logs, the `Flow`/`ClusterFlow` requires the value of `loggingRef` to be `harvester-kube-audit-log-ref`.
+
+When you configure from the Harvester dashboard, the field is added automatically.
+
+Select type `Audit`.
+
+![](/img/v1.1/logging/cluster-flow-type.png)
+
+When you config from the CLI, please add the field manually.
+
+Example:
+
+```
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: ClusterFlow
+metadata:
+  name: "harvester-audit-webhook"
+  namespace: "cattle-logging-system"
+spec:
+  globalOutputRefs:
+    - "harvester-audit-webhook"
+  loggingRef: harvester-kube-audit-log-ref  # this reference is fixed and must be here
+```
+
+### Harvester
+
+## Event
+
+Harvester collects Kubernetes `event` and is able to send the `event` to various types of log servers.
+
+### Event Definition
+
+Kubernetes `events` are objects that show you what is happening inside a cluster, such as what decisions were made by the scheduler or why some pods were evicted from the node. All core components and extensions (operators/controllers) may create events through the API Server.
+
+Events have no direct relationship with log messages generated by the various components, and are not affected with the log verbosity level. When a component creates an event, it often emits a corresponding log message. Events are garbage collected by the API Server after a short time (typically after an hour), which means that they can be used to understand issues that are happening, but you have to collect them to investigate past events.
+
+Events are the first thing to look at for application, as well as infrastructure operations when something is not working as expected. Keeping them for a longer period is essential if the failure is the result of earlier events, or when conducting post-mortem analysis.
+
+### Event Log Format
+
+#### Event Log Format in Kubernetes
+
+A `kubernetes event` example:
+
+```
+        {
+            "apiVersion": "v1",
+            "count": 1,
+            "eventTime": null,
+            "firstTimestamp": "2022-08-24T11:17:35Z",
+            "involvedObject": {
+                "apiVersion": "kubevirt.io/v1",
+                "kind": "VirtualMachineInstance",
+                "name": "vm-ide-1",
+                "namespace": "default",
+                "resourceVersion": "604601",
+                "uid": "1bd4133f-5aa3-4eda-bd26-3193b255b480"
+            },
+            "kind": "Event",
+            "lastTimestamp": "2022-08-24T11:17:35Z",
+            "message": "VirtualMachineInstance defined.",
+            "metadata": {
+                "creationTimestamp": "2022-08-24T11:17:35Z",
+                "name": "vm-ide-1.170e43cbdd833b62",
+                "namespace": "default",
+                "resourceVersion": "604626",
+                "uid": "0114f4e7-1d4a-4201-b0e5-8cc8ede202f4"
+            },
+            "reason": "Created",
+            "reportingComponent": "",
+            "reportingInstance": "",
+            "source": {
+                "component": "virt-handler",
+                "host": "harv1"
+            },
+            "type": "Normal"
+        },
+```
+
+#### Event Log Format before Being Sent to Log Servers
+
+Each `event log` has the format of: `{"stream":"","logtag":"F","message":"","kubernetes":{""}}`. The `kubernetes event` is in the field `message`.
+
+```
+{
+"stream":"stdout",
+
+"logtag":"F",
+
+"message":"{
+\\"verb\\":\\"ADDED\\",
+
+\\"event\\":{\\"metadata\\":{\\"name\\":\\"vm-ide-1.170e446c3f890433\\",\\"namespace\\":\\"default\\",\\"uid\\":\\"0b44b6c7-b415-4034-95e5-a476fcec547f\\",\\"resourceVersion\\":\\"612482\\",\\"creationTimestamp\\":\\"2022-08-24T11:29:04Z\\",\\"managedFields\\":[{\\"manager\\":\\"virt-controller\\",\\"operation\\":\\"Update\\",\\"apiVersion\\":\\"v1\\",\\"time\\":\\"2022-08-24T11:29:04Z\\"}]},\\"involvedObject\\":{\\"kind\\":\\"VirtualMachineInstance\\",\\"namespace\\":\\"default\\",\\"name\\":\\"vm-ide-1\\",\\"uid\\":\\"1bd4133f-5aa3-4eda-bd26-3193b255b480\\",\\"apiVersion\\":\\"kubevirt.io/v1\\",\\"resourceVersion\\":\\"612477\\"},\\"reason\\":\\"SuccessfulDelete\\",\\"message\\":\\"Deleted PodDisruptionBudget kubevirt-disruption-budget-hmmgd\\",\\"source\\":{\\"component\\":\\"disruptionbudget-controller\\"},\\"firstTimestamp\\":\\"2022-08-24T11:29:04Z\\",\\"lastTimestamp\\":\\"2022-08-24T11:29:04Z\\",\\"count\\":1,\\"type\\":\\"Normal\\",\\"eventTime\\":null,\\"reportingComponent\\":\\"\\",\\"reportingInstance\\":\\"\\"}
+}",
+
+"kubernetes":{"pod_name":"harvester-default-event-tailer-0","namespace_name":"cattle-logging-system","pod_id":"d3453153-58c9-456e-b3c3-d91242580df3","labels":{"app.kubernetes.io/instance":"harvester-default-event-tailer","app.kubernetes.io/name":"event-tailer","controller-revision-hash":"harvester-default-event-tailer-747b9d4489","statefulset.kubernetes.io/pod-name":"harvester-default-event-tailer-0"},"annotations":{"cni.projectcalico.org/containerID":"aa72487922ceb4420ebdefb14a81f0d53029b3aec46ed71a8875ef288cde4103","cni.projectcalico.org/podIP":"10.52.0.178/32","cni.projectcalico.org/podIPs":"10.52.0.178/32","k8s.v1.cni.cncf.io/network-status":"[{\\n    \\"name\\": \\"k8s-pod-network\\",\\n    \\"ips\\": [\\n        \\"10.52.0.178\\"\\n    ],\\n    \\"default\\": true,\\n    \\"dns\\": {}\\n}]","k8s.v1.cni.cncf.io/networks-status":"[{\\n    \\"name\\": \\"k8s-pod-network\\",\\n    \\"ips\\": [\\n        \\"10.52.0.178\\"\\n    ],\\n    \\"default\\": true,\\n    \\"dns\\": {}\\n}]","kubernetes.io/psp":"global-unrestricted-psp"},"host":"harv1","container_name":"harvester-default-event-tailer-0","docker_id":"455064de50cc4f66e3dd46c074a1e4e6cfd9139cb74d40f5ba00b4e3e2a7ab2d","container_hash":"docker.io/banzaicloud/eventrouter@sha256:6353d3f961a368d95583758fa05e8f4c0801881c39ed695bd4e8283d373a4262","container_image":"docker.io/banzaicloud/eventrouter:v0.1.0"}
+
+}
+
+```
+
+### Event Log Output/ClusterOutput
+
+Events share the `Output`/`ClusterOutput` with `Logging`.
+
+Select `Logging/Event` from the `Type` drop-down list.
+
+![](/img/v1.1/logging/cluster-output-type.png)
+
+### Event Log Flow/ClusterFlow
+
+Compared with the normal Logging `Flow`/`ClusterFlow`, the `Event` related `Flow`/`ClusterFlow`, has one more match field with the value of `event-tailer`.
+
+When you configure from the Harvester dashboard, the field is added automatically.
+
+Select `Event` from the `Type` drop-down list.
+
+![](/img/v1.1/logging/cluster-flow-type.png)
+
+When you configure from the CLI, please add the field manually.
+
+Example:
+
+```
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: ClusterFlow
+metadata:
+  name: harvester-event-webhook
+  namespace: cattle-logging-system
+spec:
+  filters:
+  - tag_normaliser: {}
+  match:
+  - select:
+      labels:
+        app.kubernetes.io/name: event-tailer
+  globalOutputRefs:
+    - harvester-event-webhook
 ```
