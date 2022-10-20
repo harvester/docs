@@ -114,6 +114,149 @@ spec.values.prometheus-node-exporter.resources.requests.memory: 30Mi
 
 For versions `<= v1.0.0`, the related path and default value are not specified in the `managedchart rancher-monitoring`, you need to add them accordingly.
 
+## Alertmanager
+
+_Available as of v1.1.0_
+
+`Harvester` uses `Alertmanager` to collect and manage all the alerts that happened/happening in the cluster.
+
+### Alertmanager Config
+
+#### Enable/Disable Alertmanager
+
+`Alertmanager` is enabled by default. You may disable it from the following config path.
+
+![](/img/v1.1/monitoring/alertmanager-config-enable-and-resource.png)
+
+#### Change Resource Setting
+
+You can also change the resource settings of `Alertmanager` as shown in the picture above.
+
+#### Configure AlertmanagerConfig from WebUI
+
+To send the alerts to third-party servers, you need to config `AlertmanagerConfig`.
+
+On the WebUI, navigate to `Monitoring & Logging` -> `Monitoring` -> `Alertmanager Configs`.
+
+On the `Alertmanager Config: Create` page, click `Namespace` to select the target namespace from the drop-down list and set the `Name`. After this, click `Create` in the lower right corner.
+
+![](/img/v1.1/monitoring/alertmanager-config-create-1.png)
+
+Click the `Alertmanager Configs` you just created to continue the configuration.
+
+![](/img/v1.1/monitoring/view-alertmanager-config.png)
+
+Click `Add Receiver`.
+
+![](/img/v1.1/monitoring/prepare-to-add-receiver.png)
+
+Set the `Name` for the receiver. After this, select the receiver type, for example, `Webhook`, and click `Add Webhook`.
+
+![](/img/v1.1/monitoring/webhook-receiver-1.png)
+
+Fill in the required parameters and click `Create`.
+
+![](/img/v1.1/monitoring/webhook-receiver-2.png)
+
+#### Configure AlertmanagerConfig from CLI
+
+You can also add `AlertmanagerConfig` from the CLI.
+
+Exampe: a Webhook receiver in the `default` namespace.
+
+```
+cat << EOF > a-single-receiver.yaml
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: amc-example
+  # namespace: your value
+  labels:
+    alertmanagerConfig: example
+spec:
+  route:
+    continue: true
+    groupBy:
+    - cluster
+    - alertname
+    receiver: "amc-webhook-receiver"
+  receivers:
+  - name: "amc-webhook-receiver"
+    webhookConfigs:
+    - sendResolved: true
+      url: "http://192.168.122.159:8090/"
+EOF
+
+# kubectl apply -f a-single-receiver.yaml
+alertmanagerconfig.monitoring.coreos.com/amc-example created
+
+# kubectl get alertmanagerconfig -A
+NAMESPACE   NAME          AGE
+default     amc-example   27s
+
+```
+
+#### Example of an Alert Received by Webhook
+
+Alerts sent to the webhook server will be in the following format:
+
+```
+{
+'receiver': 'longhorn-system-amc-example-amc-webhook-receiver',
+'status': 'firing', 
+'alerts': [], 
+'groupLabels': {}, 
+'commonLabels': {'alertname': 'LonghornVolumeStatusWarning', 'container': 'longhorn-manager', 'endpoint': 'manager', 'instance': '10.52.0.83:9500', 'issue': 'Longhorn volume is Degraded.',
+'job': 'longhorn-backend', 'namespace': 'longhorn-system', 'node': 'harv2', 'pod': 'longhorn-manager-r5bgm', 'prometheus': 'cattle-monitoring-system/rancher-monitoring-prometheus',
+'service': 'longhorn-backend', 'severity': 'warning'},
+'commonAnnotations': {'description': 'Longhorn volume is Degraded for more than 5 minutes.', 'runbook_url': 'https://longhorn.io/docs/1.3.0/monitoring/metrics/',
+'summary': 'Longhorn volume is Degraded'},
+'externalURL': 'https://192.168.122.200/api/v1/namespaces/cattle-monitoring-system/services/http:rancher-monitoring-alertmanager:9093/proxy',
+'version': '4',
+'groupKey': '{}/{namespace="longhorn-system"}:{}',
+'truncatedAlerts': 0
+}
+```
+
+:::note
+
+Different receivers may present the alerts in different formats. For details, please refer to the related documents.
+
+:::
+
+#### Known Limitation
+
+The `AlertmanagerConfig` is enforced by the `namespace`. Gloabl-level `AlertmanagerConfig` without a namespace is not supported.
+
+We have already created a [GithHb issue](https://github.com/harvester/harvester/issues/2760) to track upstream changes. Once the feature is available, `Harvester` will adopt it.
+
+### View and Manage Alerts
+
+#### From Alertmanager Dashboard
+
+You can visit the original dashboard of `Alertmanager` from the link below. Note that you need to replace `the-cluster-vip` with the actual cluster-vip:
+
+> https://the-cluster-vip/api/v1/namespaces/cattle-monitoring-system/services/http:rancher-monitoring-alertmanager:9093/proxy/#/alerts
+
+The overall view of the `Alertmanager` dashboard is as follows.
+
+![](/img/v1.1/monitoring/alertmanager-dashboard.png)
+
+You can view the details of an alert:
+
+![](/img/v1.1/monitoring/alert-view-detail.png)
+
+#### From Prometheus Dashboard
+
+You can visit the original dashboard of `Prometheus` from the link below. Note that you need to replace `the-cluster-vip` with the actual cluster-vip:
+
+> https://the-cluster-vip/api/v1/namespaces/cattle-monitoring-system/services/http:rancher-monitoring-prometheus:9090/proxy/
+
+The `Alerts` menu in the top navigation bar shows all defined rules in Prometheus. You can use the filters `Inactive`, `Pending`, and `Firing` to quickly find the information that you need.
+
+![](/img/v1.1/monitoring/prometheus-original-alerts.png)
+
+
 ## Troubleshooting
 
 For Monitoring support and troubleshooting, please refer to the [troubleshooting page](../troubleshooting/monitoring.md) .
