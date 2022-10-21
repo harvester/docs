@@ -1,7 +1,5 @@
 ---
-sidebar_position: 9
-sidebar_label: 开发者模式安装
-title: ""
+title: "开发者模式安装"
 keywords:
   - Harvester
   - harvester

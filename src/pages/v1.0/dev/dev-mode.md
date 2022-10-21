@@ -1,7 +1,5 @@
 ---
-sidebar_position: 9
-sidebar_label: Developer Mode Installation
-title: ""
+title: "Developer Mode Installation"
 keywords:
   - Harvester
   - harvester
