@@ -42,7 +42,7 @@ Go to the VM UI and select "Edit Config"
 
 ![](/img/v1.1/pcidevices/vm-pcidevices-edit-config.png)
 
-Then select "PCI Devices" and use the "Available PCI Devices" drop-down, select the devices you want to attach, and then click Save.
+Then select "PCI Devices" and use the "Available PCI Devices" drop-down. Select the devices you want to attach from the list displayed and then click Save.
 
 ![](/img/v1.1/pcidevices/vm-pcidevices-attach.png)
 
