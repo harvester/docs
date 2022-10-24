@@ -26,9 +26,12 @@ Select the devices you want to enable for passthrough:
 
 ![](/img/v1.1/pcidevices/select-pcidevices.png)
 
-Then click "Enable Passthrough", and wait until all the devices say "Enabled":
+Then click "Enable Passthrough", read the warning*, and if you still want to enable for those devices, click "Enable" and wait until all the devices say "Enabled"
 
 ![](/img/v1.1/pcidevices/enable-pcidevices-inprogress.png)
+
+*The warning looks like this:
+![](/img/v1.1/pcidevices/warning.png)
 
 
 ![](/img/v1.1/pcidevices/enable-pcidevices-done.png)
