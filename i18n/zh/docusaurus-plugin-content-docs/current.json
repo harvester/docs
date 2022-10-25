@@ -1,6 +1,6 @@
 {
   "version.label": {
-    "message": "v1.1-dev 🚧",
+    "message": "v1.1",
     "description": "The label for version current"
   },
   "sidebar.tutorialSidebar.category.Installation": {
