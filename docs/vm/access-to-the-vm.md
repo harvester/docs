@@ -21,7 +21,7 @@ Additionally, you can connect directly from your computer's SSH client.
 
 VMs can be accessed from the UI directly using either VNC or the serial console.
 
-If the VGA display is not enabled on the VM, as with the `Ubuntu-minimal-cloud` image, the VM can only be accessed with the serial console.
+If the VGA display is not enabled on the VM, e.g., the `Ubuntu-Minimal-Cloud` image, the VM can only be accessed with the serial console.
 
 ![](/img/v1.1/vm/access-to-vm.png)
 

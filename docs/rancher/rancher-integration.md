@@ -20,9 +20,10 @@ _Available as of v0.3.0_
 
 ## Rancher & Harvester Support Matrix
 
-| Rancher Version | Harvester Version | Note |
+| Rancher Version | Supported Harvester Version | Note |
 | :--|:--|:--|
-| v2.6.6 | v1.0.3 - v1.0.1 | |
+| v2.6.9 | v1.1.0 | |
+| v2.6.6 - v2.6.8 | v1.0.3 - v1.0.1 | |
 | v2.6.5 | v1.0.2 - v1.0.1 | |
 | v2.6.4 | v1.0.1 | |
 | v2.6.3 | v1.0.0 | |
@@ -71,7 +72,7 @@ To install Rancher with Docker:
 
 ```shell
 # for a quick evaluation, you can run the Rancher server with the following command
-$ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.6
+$ sudo docker run -d --restart=unless-stopped -v /opt/rancher:/var/lib/rancher -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.9
 ```
 
 :::

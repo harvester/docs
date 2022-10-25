@@ -31,9 +31,11 @@ Note: This [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of the I
 1. Choose the installation device on which the Harvester cluster will be installed
       - Note: By default, Harvester uses [GPT](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [MBR](https://en.wikipedia.org/wiki/Master_boot_record).
    ![iso-install-disk.png](/img/v1.1/install/iso-install-disk.png)
-1. Configure the hostname and select the network interface for the management network. By default, Harvester will create a bonded NIC named `harvester-mgmt`, and the IP address can be configured via DHCP or a statically assigned one <small>(Note: The Node IP can not change at the lifecycle of a Harvester cluster, in case the DHCP is used, the user must make sure the DHCP server always offers the same IP for the same Node. Due to a changed Node IP the related Node can not join the cluster, or even break the cluster)</small>.
+1. We recommend choosing a separate disk to store VM data.
+   ![iso-install-disk.png](/img/v1.1/install/iso-select-data-disk.png )
+1. Configure the hostname and select the network interface for the management network. By default, Harvester will create a bonded NIC named `mgmt-bo`, and the IP address can be configured via DHCP or a statically assigned one <small>(Note: The Node IP can not change at the lifecycle of a Harvester cluster. If DHCP is used, users must make sure the DHCP server always offers the same IP for the same Node. If Node IP is changed, the related Node cannot join the cluster and might even break the cluster)</small>.
 
-   ![iso-installed.png](/img/v1.1/install/iso-nic-config.gif)
+   ![iso-installed.png](/img/v1.1/install/iso-nic-config.png)
 1. (Optional) Configure the DNS servers. Use commas as a delimiter.
 1. Configure the `Virtual IP` which you can use to access the cluster or join other nodes to the cluster <small>(Note: If your IP address is configured via DHCP, you will need to configure static MAC-to-IP address mapping on your DHCP server in order to have a persistent Virtual IP, VIP must be different than any Node IP)</small>.
 1. Configure the `cluster token`. This token will be used for adding other nodes to the cluster.
@@ -48,3 +50,8 @@ Note: This [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of the I
    ![iso-installed.png](/img/v1.1/install/iso-installed.png)
 1. You will be prompted to set the password for the default `admin` user when logging in for the first time.
    ![first-login.png](/img/v1.1/install/first-time-login.png)
+
+
+:::note
+In some cases, if you are using an older VGA connector, you may encounter an `panic: invalid dimensions` error with ISO installation. See issue [#2937](https://github.com/harvester/harvester/issues/2937#issuecomment-1278545927) for a workaround.
+:::

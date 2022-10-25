@@ -26,9 +26,6 @@ Currently, the Harvester CSI driver only supports single-node read-write(RWO) vo
 :::
 
 ### Deploying with Harvester RKE1 Node Driver
-
-- Select the external cloud provider option.
-
 - [Generate addon configuration](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon.sh) and add it in the RKE config YAML.
 
 ```
