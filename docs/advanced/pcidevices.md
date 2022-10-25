@@ -1,48 +1,55 @@
 ---
-sidebar_position: 0
+sidebar_position: 1
 sidebar_label: PCI Devices
 title: ""
 ---
 
-# PCI Devices
+# PCI Devices (Experimental)
 
-A PCIDevice represents a host device with a PCI address. 
-The devices can be passed through the hypervisor to a VM by creating a PCIDeviceClaim, 
+_Available as of v1.1.0_
+
+A `PCIDevice` in Harvester represents a host device with a PCI address. 
+The devices can be passed through the hypervisor to a VM by creating a `PCIDeviceClaim` resource, 
 or by using the UI to enable passthrough. Passing a device through the hypervisor means that 
 the VM can directly access the device, and effectively owns the device. A VM can even install 
-it's own drivers for that device.
+its own drivers for that device.
 
-## Enabling passthrough on a PCI Device
+This is accomplished by using the `pcidevices-controller` addon.
 
-Go to the Advanced -> PCI Devices UI:
+To use the PCI devices feature, users need to enable the `pcidevices-controller` addon first.
 
-![](/img/v1.1/pcidevices/advanced-pcidevices-index.png)
+![](/img/v1.1/vm-import-controller/EnableAddon.png)
 
-Search for your device by vendor name (e.g. NVIDIA, Intel, etc.) or device name.
+## Enabling Passthrough on a PCI Device
 
-![](/img/v1.1/pcidevices/search-pcidevices.png)
+1. Now go to the `Advanced -> PCI Devices` page:
 
-Select the devices you want to enable for passthrough:
+   ![](/img/v1.1/pcidevices/advanced-pcidevices-index.png)
 
-![](/img/v1.1/pcidevices/select-pcidevices.png)
+1. Search for your device by vendor name (e.g. NVIDIA, Intel, etc.) or device name.
 
-Then click "Enable Passthrough", read the warning*, and if you still want to enable for those devices, click "Enable" and wait until all the devices say "Enabled"
+   ![](/img/v1.1/pcidevices/search-pcidevices.png)
 
-![](/img/v1.1/pcidevices/enable-pcidevices-inprogress.png)
+1. Select the devices you want to enable for passthrough:
 
-*The warning looks like this:
-![](/img/v1.1/pcidevices/warning.png)
+   ![](/img/v1.1/pcidevices/select-pcidevices.png)
 
+1. Then click **Enable Passthrough** and read the warning message. If you still want to enable these devices, click **Enable** and wait for all devices to be `Enabled`.
+   :::caution
+   Please do not use `host-owned` PCI devices (e.g., management and VLAN NICs). Incorrect device allocation may cause damage to your cluster, including node failure.
+   :::
 
-![](/img/v1.1/pcidevices/enable-pcidevices-done.png)
+   ![](/img/v1.1/pcidevices/enable-pcidevices-inprogress.png)
+
+   ![](/img/v1.1/pcidevices/enable-pcidevices-done.png)
 
 ## Attaching PCI Devices to a VM
 
-Go to the VM UI and select "Edit Config"
+After enabling these PCI devices, you can navigate to the **Virtual Machines** page and select **Edit Config** to pass these devices.
 
 ![](/img/v1.1/pcidevices/vm-pcidevices-edit-config.png)
 
-Then select "PCI Devices" and use the "Available PCI Devices" drop-down. Select the devices you want to attach from the list displayed and then click Save.
+Select **PCI Devices** and use the **Available PCI Devices** drop-down. Select the devices you want to attach from the list displayed and then click **Save**.
 
 ![](/img/v1.1/pcidevices/vm-pcidevices-attach.png)
 

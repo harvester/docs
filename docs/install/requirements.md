@@ -14,14 +14,16 @@ To get the Harvester server up and running the following minimum hardware is req
   
 | Type             | Requirements                                                                                                                                                                                          |
 |:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| CPU              | x86_64 only. Hardware-assisted virtualization is required. 8-core processor minimum; 16-core or above preferred                                                                                       |
+| CPU              | x86_64 only. Hardware-assisted virtualization is required. 8-core processor minimum for testing; 16-core or above preferred for production                                                            |
 | Memory           | 32 GB minimum, 64 GB or above preferred                                                                                                                                                               |
-| Disk Capacity    | 140 GB minimum for testing, 500 GB or above preferred for production                                                                                                                                  |
+| Disk Capacity    | 200 GB minimum for testing, 500 GB or above preferred for production                                                                                                                                  |
 | Disk Performance | 5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be [fast enough for Etcd](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd) |
 | Network Card     | 1 Gbps Ethernet minimum for testing, 10Gbps Ethernet recommended for production                                                                                                                       |
 | Network Switch   | Trunking of ports required for VLAN support                                                                                                                                                           |
   
+:::info
   We recommend server-class hardware for best results. Laptops and nested virtualization are not officially supported.
+:::
 
 ## Networking
 
@@ -63,9 +65,9 @@ Typically, all outbound traffic will be allowed.
 
 ### Integrating Harvester with Rancher
 
-If you want to [integrate Harvester with Rancher](../rancher/rancher-integration.md), you need to make sure, that all Harvester nodes can connect to TCP port 443 of the Rancher load balancer.
+If you want to [integrate Harvester with Rancher](../rancher/rancher-integration.md), you need to make sure, that all Harvester nodes can connect to TCP port `443` of the Rancher load balancer.
 
-The VMs of Kubernetes clusters, that are provisioned from Rancher into Harvester, also need to be able to connect to TCP port 443 of the Rancher load balancer. Otherwise the cluster won't be manageable by Rancher. For more information see also [Rancher Architecture](https://rancher.com/docs/rancher/v2.6/en/overview/architecture/).
+The VMs of Kubernetes clusters, that are provisioned from Rancher into Harvester, also need to be able to connect to TCP port `443` of the Rancher load balancer. Otherwise the cluster won't be manageable by Rancher. For more information see also [Rancher Architecture](https://rancher.com/docs/rancher/v2.6/en/overview/architecture/).
 
 #### Guest clusters
 As for the port requirements for the guest clusters deployed inside Harvester virtual machines, refer to the following links.

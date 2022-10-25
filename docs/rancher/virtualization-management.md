@@ -11,7 +11,7 @@ keywords:
 
 For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6 and above.
 
-1. As a prerequisite, Harvester `v1.0.0` integration requires Rancher server `v2.6.3` or above. In production, use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:
+1. As a prerequisite, Harvester `v1.1.0` integration requires Rancher server `v2.6.9` or above. In production, use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:
     - [AWS](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/amazon-aws-qs/) (uses Terraform)
     - [AWS Marketplace](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/amazon-aws-marketplace-qs/) (uses Amazon EKS)
     - [Azure](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/microsoft-azure-qs/) (uses Terraform)
@@ -36,7 +36,7 @@ For Harvester v0.3.0 and above, virtualization management with the multi-cluster
 
     ```shell
     # for a quick evaluation, you can run the Rancher server with the following command
-    $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.6
+    $ sudo docker run -d --restart=unless-stopped -v /opt/rancher:/var/lib/rancher -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.9
     ```
 
     :::
@@ -49,7 +49,7 @@ For Harvester v0.3.0 and above, virtualization management with the multi-cluster
 1. Once the agent node is ready, you should be able to view and access the imported Harvester cluster from the Rancher server and manage your VMs accordingly.
 ![](/img/v1.1/rancher/harv-cluster-view.png)
 1. From the Harvester UI, you can click the hamburger menu to navigate back to the Rancher multi-cluster management page.
-![](/img/v1.1/rancher/harv-back.png)
+![](/img/v1.1/rancher/harv-go-back.png)
 
 ## Multi-Tenancy
 

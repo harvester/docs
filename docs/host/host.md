@@ -53,7 +53,7 @@ Once resolved, the last step can be skipped.
 
 :::
 
-![delete.png](/img/v1.1/host/delete.png)
+![delete.png](/img/v1.1/host/delete-node.png)
 
 ## Multi-disk Management
 

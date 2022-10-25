@@ -60,15 +60,10 @@ Currently, `Resources Settings` can be configured for the following components:
 
 ### From WebUI
 
-In the `Advanced Settings` page, you can view and change the resources settings as follows:
+On the `Monitoring & Logging` page, you can view and change the resource settings as follows:
 
-1. Navigate to settings page, find `harvester-monitoring`.
-![](/img/v1.1/monitoring/monitoring-setting.png)
-
-1. Click `Show harvester-monitoring` to view the current values.
-
-1. Click `⋮ > Edit Setting` to set a new value.
-![](/img/v1.1/monitoring/monitoring-setting-edit-config.png)
+1. Navigate to the `Monitoring > Configuration` page.
+![](/img/v1.1/monitoring/monitoring-config.png)
 
 1. Click `Save` and the `Monitoring` resource will be restarted within a few seconds. Please be aware that the reboot can take some time to reload previous data.
 
