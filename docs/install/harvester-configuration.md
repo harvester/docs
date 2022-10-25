@@ -369,7 +369,6 @@ the values are configurations for each network. Valid configuration fields are:
 - `method`: Method to assign an IP to this network. The following are supported:
     - `static`: Manually assign an IP and gateway.
     - `dhcp`: Request an IP from the DHCP server.
-    - `none`: Do nothing. Useful when the interface does not need an IP, such as when creating [VLAN network](../networking/harvester-network.md#vlan) NIC in Harvester.
 - `ip`: Static IP for this network. Required if `static` method is chosen.
 - `subnet_mask`: Subnet mask for this network. Required if `static` method is chosen.
 - `gateway`: Gateway for this network. Required if `static` method is chosen.
@@ -381,12 +380,6 @@ the values are configurations for each network. Valid configuration fields are:
     - `miimon: 100`
 - `mtu`: The MTU for the interface.
 - `vlan_id`: The VLAN ID for the interface
-
-:::note
-
-A network called `mgmt-br` is mandatory to establish a valid [management network](../networking/harvester-network.md#management-network).
-
-:::
 
 :::note
 

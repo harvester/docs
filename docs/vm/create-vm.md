@@ -81,7 +81,7 @@ By default, VMs are accessible through the management network within the cluster
 
 ### Secondary Network
 
-It is also possible to connect VMs using additional networks with Harvester's built-in [VLAN networks](../networking/harvester-network.md). 
+It is also possible to connect VMs using additional networks with Harvester's built-in [VLAN networks](../networking/harvester-network.md).
 
 In bridge VLAN, virtual machines are connected to the host network through a linux `bridge`. The network IPv4 address is delegated to the virtual machine via DHCPv4. The virtual machine should be configured to use DHCP to acquire IPv4 addresses.
 
