@@ -6,6 +6,13 @@ title: ""
 
 # Harvester Terraform Provider
 
+## Support Matrix
+
+| Harvester Version                                                    | Supported Terraform Provider Harvester                                                  | Supported Terraformer Harvester                                                            |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| [v1.1.0](https://github.com/harvester/harvester/releases/tag/v1.1.0) | [v0.6.0](https://github.com/harvester/terraform-provider-harvester/releases/tag/v0.6.0) | [v1.1.0-harvester](https://github.com/harvester/terraformer/releases/tag/v1.1.0-harvester) |
+| [v1.0.3](https://github.com/harvester/harvester/releases/tag/v1.0.3) | [v0.5.3](https://github.com/harvester/terraform-provider-harvester/releases/tag/v0.5.3) | [v1.0.1-harvester](https://github.com/harvester/terraformer/releases/tag/v1.0.1-harvester) |
+
 ## Requirements
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 0.13.x
