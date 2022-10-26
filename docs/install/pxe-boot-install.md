@@ -7,9 +7,9 @@ keywords:
   - harvester
   - Rancher
   - rancher
-  - Install Harverster
-  - Installing Harverster
-  - Harverster Installation
+  - Install Harvester
+  - Installing Harvester
+  - Harvester Installation
   - PXE Boot Install
 Description: Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do an automatic installation with PXE boot.
 ---
@@ -75,36 +75,34 @@ Create a [Harvester configuration file](./harvester-configuration.md) called `co
 
 ```YAML
 # cat /usr/share/nginx/html/harvester/config-create.yaml
-token: token
+scheme_version: 1
+token: token # Replace with a desired token
 os:
-  hostname: node1
+  hostname: node1 # Set a hostname. This can be omitted if DHCP server offers hostnames
   ssh_authorized_keys:
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDbeUa9A7Kee+hcCleIXYxuaPksn2m4PZTd4T7wPcse8KbsQfttGRax6vxQXoPO6ehddqOb2nV7tkW2mEhR50OE7W7ngDHbzK2OneAyONYF44bmMsapNAGvnsBKe9rNrev1iVBwOjtmyVLhnLrJIX+2+3T3yauxdu+pmBsnD5OIKUrBrN1sdwW0rA2rHDiSnzXHNQM3m02aY6mlagdQ/Ovh96h05QFCHYxBc6oE/mIeFRaNifa4GU/oELn3a6HfbETeBQz+XOEN+IrLpnZO9riGyzsZroB/Y3Ju+cJxH06U0B7xwJCRmWZjuvfFQUP7RIJD1gRGZzmf3h8+F+oidkO2i5rbT57NaYSqkdVvR6RidVLWEzURZIGbtHjSPCi4kqD05ua8r/7CC0PvxQb1O5ILEdyJr2ZmzhF6VjjgmyrmSmt/yRq8MQtGQxyKXZhJqlPYho4d5SrHi5iGT2PvgDQaWch0I3ndEicaaPDZJHWBxVsCVAe44Wtj9g3LzXkyu3k= root@admin
-  password: rancher
+  - ssh-rsa ... # Replace with your public key
+  password: p@ssword     # Replace with your password
   ntp_servers:
   - 0.suse.pool.ntp.org
   - 1.suse.pool.ntp.org
 install:
   mode: create
-  networks:
-    harvester-mgmt:       # (Mandatory) The management bond name.
-      interfaces:
+  management_interface: # available as of v1.1.0
+    interfaces:
       - name: ens5
-      method: dhcp
-      bond_options:
-        mode: balance-tlb
-        miimon: 100
-    harvester-vlan:       # (Optional) The VLAN network bond name. If VLAN NIC names vary from
-      interfaces:         # host to host, consider creating a bonding device. Users can then select
-      - name: ens6        # `harvester-vlan` as the VLAN network NIC in the Harvester GUI.
-      method: none
-      bond_options:
-        mode: balance-tlb
-        miimon: 100
-  device: /dev/sda
+    default_route: true
+    method: dhcp
+    bond_options:
+      mode: balance-tlb
+      miimon: 100
+  device: /dev/sda # The target disk to install
+#  data_disk: /dev/sdb # It is recommended to use a separate disk to store VM data
   iso_url: http://10.100.0.10/harvester/harvester-<version>-amd64.iso
-  vip: 10.100.0.99        # The VIP to access the Harvester GUI. Make sure the IP is free to use.
-  vip_mode: static        # Or dhcp, check configuration file for more information.
+#  tty: ttyS1,115200n8   # For machines without a VGA console
+
+  vip: 10.100.0.99        # The VIP to access the Harvester GUI. Make sure the IP is free to use
+  vip_mode: static        # Or dhcp, check configuration file for more information
+#  vip_hw_addr: 52:54:00:ec:0e:0b   # Leave empty when vip_mode is static
 ```
 
 For machines that needs to be installed using `CREATE` mode, the following is an iPXE script that boots the kernel with the above config:
@@ -139,35 +137,31 @@ Create a [Harvester configuration file](./harvester-configuration.md) called `co
 
 ```YAML
 # cat /usr/share/nginx/html/harvester/config-join.yaml
+scheme_version: 1
 server_url: https://10.100.0.99:443  # Should be the VIP set up in "CREATE" config
 token: token
 os:
   hostname: node2
   ssh_authorized_keys:
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDbeUa9A7Kee+hcCleIXYxuaPksn2m4PZTd4T7wPcse8KbsQfttGRax6vxQXoPO6ehddqOb2nV7tkW2mEhR50OE7W7ngDHbzK2OneAyONYF44bmMsapNAGvnsBKe9rNrev1iVBwOjtmyVLhnLrJIX+2+3T3yauxdu+pmBsnD5OIKUrBrN1sdwW0rA2rHDiSnzXHNQM3m02aY6mlagdQ/Ovh96h05QFCHYxBc6oE/mIeFRaNifa4GU/oELn3a6HfbETeBQz+XOEN+IrLpnZO9riGyzsZroB/Y3Ju+cJxH06U0B7xwJCRmWZjuvfFQUP7RIJD1gRGZzmf3h8+F+oidkO2i5rbT57NaYSqkdVvR6RidVLWEzURZIGbtHjSPCi4kqD05ua8r/7CC0PvxQb1O5ILEdyJr2ZmzhF6VjjgmyrmSmt/yRq8MQtGQxyKXZhJqlPYho4d5SrHi5iGT2PvgDQaWch0I3ndEicaaPDZJHWBxVsCVAe44Wtj9g3LzXkyu3k= root@admin
+    - ssh-rsa ... # Replace with your public key
+  password: p@ssword     # Replace with your password
   dns_nameservers:
   - 1.1.1.1
   - 8.8.8.8
-  password: rancher
 install:
   mode: join
-  networks:
-    harvester-mgmt:       # (Mandatory) The management bond name.
-      interfaces:
+  management_interface: # available as of v1.1.0
+    interfaces:
       - name: ens5
-      method: dhcp
-      bond_options:
-        mode: balance-tlb
-        miimon: 10
-    harvester-vlan:       # (Optional) The VLAN network bond name. If VLAN NIC names vary from
-      interfaces:         # host to host, consider creating a bonding device. Users can then select
-      - name: ens6        # `harvester-vlan` as the VLAN network NIC in the Harvester GUI.
-      method: none
-      bond_options:
-        mode: balance-tlb
-        miimon: 100
-  device: /dev/sda
+    default_route: true
+    method: dhcp
+    bond_options:
+      mode: balance-tlb
+      miimon: 100
+  device: /dev/sda # The target disk to install
+#  data_disk: /dev/sdb # It is recommended to use a separate disk to store VM data
   iso_url: http://10.100.0.10/harvester/harvester-<version>-amd64.iso
+#  tty: ttyS1,115200n8   # For machines without a VGA console
 ```
 
 Note that the `mode` is `join` and the `server_url` needs to be provided.
