@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 sidebar_label: Storage Network
 title: ""
 ---
@@ -64,7 +64,7 @@ Take `eth2` and `eth3` as an example for VM VLAN traffic and Longhorn Storage Ne
 
 Please refer Networking page to configure `ClusterNetwork` and `VLAN Config` with `eth2` and `eth3` and remember the `ClusterNetwork` name for the further step.
 
-![storagenetwork-same.png](./storagenetwork-same.png)
+![storagenetwork-same.png](/img/v1.1/storagenetwork/storagenetwork-same.png)
 
 
 #### Different Physical Interfaces
@@ -73,7 +73,7 @@ Please refer Networking page to configure `ClusterNetwork` and `VLAN Config` wit
 
 Please refer Networking page to configure `ClusterNetwork` and `VLAN Config` with `eth4` and `eth5` for Storage Network and remember the `ClusterNetwork` name for the further step.
 
-![storagenetwork-diff.png](./storagenetwork-diff.png)
+![storagenetwork-diff.png](/img/v1.1/storagenetwork/storagenetwork-diff.png)
 
 ### Harvester Storage Network Setting
 
@@ -83,7 +83,7 @@ Harvester Storage Network setting will need `range`, `clusterNetwork`, `vlan` fi
 
 Harvester Storage Network setting could be easily modified on the `Settings > storage-network` page.
 
-![storagenetwork-ui.png](./storagenetwork-ui.png)
+![storagenetwork-ui.png](/img/v1.1/storagenetwork/storagenetwork-ui.png)
 
 #### CLI
 
