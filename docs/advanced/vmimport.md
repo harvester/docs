@@ -182,3 +182,6 @@ spec:
 :::note 
 OpenStack allows users to have multiple instances with the same name. In such a scenario, users are advised to use the Instance ID. The reconciliation logic tries to perform a name-to-ID lookup when a name is used.
 :::
+:::note 
+OpenStack vm-import has been tested on version stable/train.
+:::
