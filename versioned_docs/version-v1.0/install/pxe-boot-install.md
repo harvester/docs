@@ -7,9 +7,9 @@ keywords:
   - harvester
   - Rancher
   - rancher
-  - Install Harverster
-  - Installing Harverster
-  - Harverster Installation
+  - Install Harvester
+  - Installing Harvester
+  - Harvester Installation
   - PXE Boot Install
 Description: Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do an automatic installation with PXE boot.
 ---
@@ -20,7 +20,7 @@ Starting from version `0.2.0`, Harvester can be installed automatically. This do
 
 We recommend using [iPXE](https://ipxe.org/) to perform the network boot. It has more features than the traditional PXE Boot program and is likely available in modern NIC cards. If the iPXE firmware is not available for your NIC card, the iPXE firmware images can be loaded from the TFTP server first.
 
-To see sample iPXE scripts, please visit [Harvester iPXE Examples](https://github.com/harvester/ipxe-examples).
+To see sample iPXE scripts, please visit [Harvester iPXE Examples](https://github.com/harvester/ipxe-examples/tree/v1.0).
 
 ## Prerequisite
 

@@ -25,8 +25,8 @@ Users can press the key combination `CTRL + ALT + F2` to switch to another TTY a
 
 ```shell
 $ ip route
-default via 10.10.0.10 dev harvester-mgmt proto dhcp        <-- Does a default route exist?
-10.10.0.0/24 dev harvester-mgmt proto kernel scope link src 10.10.0.15
+default via 10.10.0.10 dev mgmt-br proto dhcp        <-- Does a default route exist?
+10.10.0.0/24 dev mgmt-br proto kernel scope link src 10.10.0.15
 ```
 
 - Check that your DHCP server offers a default route option. Attaching content from `/run/cos/target/rke2.log` is helpful too.
@@ -63,7 +63,7 @@ stages:
   ...
   initramfs:
   - commands:
-    - rm -f /etc/sysconfig/network/ifroute-harvester-mgmt
+    - rm -f /etc/sysconfig/network/ifroute-mgmt-br
     files:
     - path: /etc/rancher/rancherd/config.yaml
       permissions: 384

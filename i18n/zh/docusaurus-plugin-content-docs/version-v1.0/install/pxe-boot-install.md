@@ -7,9 +7,9 @@ keywords:
   - harvester
   - Rancher
   - rancher
-  - 安装 Harverster
-  - 安装 Harverster
-  - Harverster 安装
+  - 安装 Harvester
+  - 安装 Harvester
+  - Harvester 安装
   - PXE 引导安装
 Description: 从 `0.2.0` 开始，Harvester 可以自动安装。本文提供使用 pxe 引导进行自动安装的示例。
 ---
@@ -20,7 +20,7 @@ Description: 从 `0.2.0` 开始，Harvester 可以自动安装。本文提供使
 
 我们建议使用 [iPXE](https://ipxe.org/) 进行网络启动。iPXE 比传统 pxe 引导程序功能更多，而且与现代网卡更匹配。如果你的网卡不支持 iPXE 固件，你可以先从 TFTP 服务器加载 iPXE 固件镜像。
 
-如果需要获得 iPXE 脚本示例，请参见 [Harvester iPXE 示例](https://github.com/harvester/ipxe-examples)。
+如果需要获得 iPXE 脚本示例，请参见 [Harvester iPXE 示例](https://github.com/harvester/ipxe-examples/tree/v1.0)。
 
 ## 前提
 

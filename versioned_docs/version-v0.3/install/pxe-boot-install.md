@@ -7,9 +7,9 @@ keywords:
   - harvester
   - Rancher
   - rancher
-  - Install Harverster
-  - Installing Harverster
-  - Harverster Installation
+  - Install Harvester
+  - Installing Harvester
+  - Harvester Installation
   - PXE Boot Install
 Description: Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do an automatic installation with PXE boot.
 ---
