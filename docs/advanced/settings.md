@@ -254,7 +254,7 @@ The following example sets the enabled SSL/TLS protocols to `TLSv1.2` and `TLSv1
 
 By default, Longhorn uses the default management network in the Harvester cluster that is limited to a single interface and shared with other workloads cluster-wide. This setting allows you to configure a segregated storage network when network isolation is preferred.
 
-For details, please refer to the [Harvester Storage Network](./storagenetwork/)
+For details, please refer to the [Harvester Storage Network](./storagenetwork.md)
 
 :::caution
 
