@@ -14,7 +14,7 @@ One of the keys reasons for the same is to ensure that Harvester installation fo
 Some level of customization, is allowed for each addon, which depends on the underlying addon.
 
 v1.1.0 currently ships with two Addons:
-* pcidevices-controller
-* vm-import-controller
+* [pcidevices-controller](./pcidevices.md)
+* [vm-import-controller](./vmimport.md)
 
 ![](/img/v1.1/addons/DefaultAddons.png)
