@@ -8,7 +8,7 @@ keywords:
 ---
 # Network
 
-Harvester provides three types of virtual network devices for virtual machines (VMs), including:
+Harvester provides three types of virtual networks for virtual machines (VMs), including:
 
 - Management Network
 - VLAN Network
@@ -16,9 +16,13 @@ Harvester provides three types of virtual network devices for virtual machines (
 
 The management network is usually used for VMs whose traffic only flows inside the cluster. If your VMs need to connect to the external network, use the VLAN network or untagged network.
 
+_Available as of v1.0.1_
+
+Harvester also introduced storage networking to separate the storage traffic from other cluster-wide workloads. Please refer to [the storage network document](../advanced/storagenetwork) for more details.
+
 
 ## Management Network
-Harvester uses [canal](https://projectcalico.docs.tigera.io/getting-started/kubernetes/flannel/flannel) as its default management network. It is a built-in network that can be used directly from the cluster.
+Harvester uses [Canal](https://projectcalico.docs.tigera.io/getting-started/kubernetes/flannel/flannel) as its default management network. It is a built-in network that can be used directly from the cluster.
 By default, the management network IP of a VM can only be accessed within the cluster nodes, and the management network IP will change after the VM reboot. This is non-typical behaviour that needs to be taken note of since VM IPs are expected to remain unchanged after a reboot.
 
 However, you can leverage the Kubernetes [service object](https://kubevirt.io/user-guide/virtual_machines/service_objects/) to create a stable IP for your VMs with the management network.
@@ -58,10 +62,10 @@ You can now create a new VM using the VLAN network configured above:
 
 ## Untagged Network
 
-As is known, the traffic under a VLAN network has a VLAN ID tag and we can use the VLAN network with `PVID` (default: 1) to communicate with any normal untagged traffic. However, some network devices may not be able to receive an explicitly tagged VLAN ID that matches the native/default VLAN on the switch the uplink belongs to. That's the reason why we provide the untagged network.
+As is known, the traffic under a VLAN network has a VLAN ID tag and we can use the VLAN network with `PVID` (default 1) to communicate with any normal untagged traffic. However, some network devices may not expect to receive an explicitly tagged VLAN ID that matches the native VLAN on the switch the uplink belongs to. That's the reason why we provide the untagged network.
 
 ### How to use untagged network
-The way to use an untagged network is similar to the VLAN network. Before adding a new untagged network device for the VM, you have to create a new one if you don't already have one.
+The usage of untagged network is similar to [the VLAN network](./harvester-network#how-to-use-vlan-network).
 
 To create a new untagged network, go to the **Networks > Networks** page and click the **Create** button. You have to specify the name, select the type `Untagged Network` and choose the cluster network.
 
