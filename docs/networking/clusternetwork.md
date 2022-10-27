@@ -9,7 +9,7 @@ keywords:
 - NetworkConfig
 - Network
 ---
-# Harvester Networking
+# Cluster Network
 
 ## Concepts
 
@@ -34,7 +34,7 @@ Network configuration only works under a certain cluster network. Each network c
 
 ### Network
 
-A network is an interface in a virtual machine that connects to the host network. As with network configuration, every network except the built-in `mgmt` network must be under some cluster network.
+A network is an interface in a virtual machine that connects to the host network. As with network configuration, every network except the built-in [management network](./harvester-network/#management-network) must be under a cluster network.
 
 Harvester supports adding multiple networks to one VM. If a network's cluster network is not enabled on some hosts, the VM that owns this network will not be scheduled to those hosts.
 
@@ -44,14 +44,14 @@ Please refer to [network part](./harvester-network.md) for more details about ne
 
 ### Built-in Cluster Network
 
-Harvester provides a built-in cluster network called `mgmt`. It's different from the custom cluster network. `mgmt`:
+Harvester provides a built-in cluster network called `mgmt`. It's different from the custom cluster network. The mgmt cluster network:
 
 - Cannot be deleted.
 - Does not need any network configuration.
 - Is enabled on all hosts and cannot be disabled.
 - Shares the same traffic egress with the management network.
 
-If there is no need for traffic separation, you can put all your network under the `mgmt` cluster network.
+If there is no need for traffic separation, you can put all your network under the mgmt cluster network.
 
 ### Custom Cluster Network
 
@@ -63,7 +63,7 @@ You are allowed to add the custom cluster network, which will not be available u
 
    ![](/img/v1.1/networking/create-clusternetwork.png)
 
-2. Click the **Create Network Config** button on the left of the cluster network to create a new network configuration.
+2. Click the **Create Network Config** button on the right of the cluster network to create a new network configuration.
 
    ![](/img/v1.1/networking/create-network-config-button.png)
 
@@ -71,11 +71,11 @@ You are allowed to add the custom cluster network, which will not be available u
 
    ![](/img/v1.1/networking/select-nodes.png)
 
-4. Click the **Uplink** tab to add the NICs, and configure the bond options and link attributes.
+4. Click the **Uplink** tab to add the NICs, and configure the bond options and link attributes. The bond mode defaults to `active-backup`.
     
    ![](/img/v1.1/networking/config-uplink.png)
 
 :::note
 - The NICs drop-down list shows all the common NICs on all the selected nodes. The drop-down list will change as you select different nodes.
-- The text `enp7s3 (1/3 Down)` in the NICs drop-down list indicates that the enp7s3 NIC is down in one of the there selected nodes. In this case, you need to find the NIC, set it up, and refresh this page. After this, it should be selectable.
+- The text `enp7s3 (1/3 Down)` in the NICs drop-down list indicates that the enp7s3 NIC is down in one of the three selected nodes. In this case, you need to find the NIC, set it up, and refresh this page. After this, it should be selectable.
 :::
