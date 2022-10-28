@@ -37,16 +37,7 @@ When spinning up an RKE cluster using the Harvester node driver, you can perform
 - Install `Harvester Cloud Provider` from the Rancher marketplace.
 
     ![](/img/v1.1/rancher/install-harvester-cloud-provider.png)
-  
-:::note
 
-You should specify the `Cluster name`. The default value `kubernetes` will be set if no `Cluster name` is entered. The `Cluster name` is used to distinguish the ownership of the Harvester load balancers. 
-
-:::
-
-- Install Harvester csi driver from the Rancher marketplace if needed.
-
-    ![](/img/v1.1/rancher/install-harvester-csi-driver.png)
   
 ### Deploying to the RKE2 Cluster with Harvester Node Driver [Experimental]
 When spinning up an RKE2 cluster using the Harvester node driver, select the `Harvester` cloud provider. The node driver will then help deploy both the CSI driver and CCM automatically.
