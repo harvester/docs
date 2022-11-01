@@ -285,14 +285,14 @@ The password for the default user, `rancher`. By default, there is no password f
 If you set a password at runtime it will be reset on the next boot. The
 value of the password can be clear text or an encrypted form. The easiest way to get this encrypted
 form is to change your password on a Linux system and copy the value of the second field from
-`/etc/shadow`. You can also encrypt a password using `openssl passwd -1`.
+`/etc/shadow`. You can also encrypt a password using `openssl passwd -6`.
 
 #### Example
 
 Encrypted:
 ```yaml
 os:
-  password: "$1$tYtghCfK$QHa51MS6MVAcfUKuOzNKt0"
+  password: "$6$kZYUnRaTxNdg4W8H$WSEJydGWsNpaRbbbRdTDLJ2hDLbkizxSFGW2RtexlqG6njEATaGQG9ssztjaKDCsaNUPBZ1E1YdsvSLMAi/IO/"
 ```
 
 Or clear text:
