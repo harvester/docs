@@ -263,14 +263,14 @@ os:
 #### 定义
 
 默认用户 `rancher` 的密码。默认情况下，`rancher` 用户没有密码。
-如果你在运行时设置密码，密码会在下次启动时重置。密码可以是明文或加密形式。获得这种加密密码最容易的方法，是在 Linux 系统上更改你的密码，并从 `/etc/shadow` 复制第二个字段的值。你也可以使用 `openssl passwd -1` 来加密密码。
+如果你在运行时设置密码，密码会在下次启动时重置。密码可以是明文或加密形式。获得这种加密密码最容易的方法，是在 Linux 系统上更改你的密码，并从 `/etc/shadow` 复制第二个字段的值。你也可以使用 `openssl passwd -6` 来加密密码。
 
 #### 示例
 
 加密形式：
 ```yaml
 os:
-  password: "$1$tYtghCfK$QHa51MS6MVAcfUKuOzNKt0"
+  password: "$6$kZYUnRaTxNdg4W8H$WSEJydGWsNpaRbbbRdTDLJ2hDLbkizxSFGW2RtexlqG6njEATaGQG9ssztjaKDCsaNUPBZ1E1YdsvSLMAi/IO/"
 ```
 
 明文形式：
