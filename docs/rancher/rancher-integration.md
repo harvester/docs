@@ -22,7 +22,7 @@ _Available as of v0.3.0_
 
 | Rancher Version | Supported Harvester Version | Note |
 | :--|:--|:--|
-| v2.6.9 | v1.1.0 | |
+| v2.6.9 | v1.1.0, v1.0.3 |  |
 | v2.6.6 - v2.6.8 | v1.0.3 - v1.0.1 | |
 | v2.6.5 | v1.0.2 - v1.0.1 | |
 | v2.6.4 | v1.0.1 | |
