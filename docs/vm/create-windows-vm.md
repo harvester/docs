@@ -161,6 +161,12 @@ If you didn't use the `windows-iso-image-base-template` template, and you still 
 
 :::
 
+:::note
+
+For full instructions on how to install the VMDP guest driver and tools see the documentation at https://documentation.suse.com/sle-vmdp/2.5/html/vmdp/index.html
+
+:::
+
 ## Known Issues
 
 ### Windows ISO unable to boot when using EFI mode
