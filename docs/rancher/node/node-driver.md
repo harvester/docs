@@ -36,6 +36,9 @@ When the Harvester node driver is enabled, you can create Kubernetes clusters on
 
 ![rke1-cluster](/img/v1.1/rancher/rke1-node-driver.png)
 
+### Support Matrix
+Refer to [Rancher Downstream Cluster Support Matrix](https://www.suse.com/suse-rancher/support-matrix/all-supported-versions/rancher-v2-6-9)
+
 ## RKE1 Kubernetes Cluster
 Click to learn [how to create RKE1 Kubernetes Clusters](./rke1-cluster.md).
 
