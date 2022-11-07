@@ -12,8 +12,8 @@ You can now provision K3s Kubernetes clusters on top of the Harvester cluster in
 
 :::note
 
-- Harvester K3s node driver is in tech preview.
-- [VLAN network](https://docs.harvesterhci.io/v1.0/networking/harvester-network/#create-a-vlan-network) is required for Harvester node driver.
+- Harvester K3s node driver is in **Tech Preview**.
+- [VLAN network](https://docs.harvesterhci.io/v1.1/networking/harvester-network/#create-a-vlan-network) is required for Harvester node driver.
 
 :::
 
@@ -74,13 +74,15 @@ Node affinity can be added to the machine pools during the cluster creation:
 
 ### Using Harvester K3s Node Driver in Air Gapped Environment
 
-K3s provisioning relies on the `qemu-guest-agent` to get the IP of the virtual machine. However, it may not be feasible to install `qemu-guest-agent` in an air gapped environment.
+K3s provisioning relies on the `qemu-guest-agent` package to get the IP of the virtual machine.
+
+However, it may not be feasible to install packages in an air gapped environment.
 
 You can address the installation constraints with the following options:
 
-Option 1. Use a VM image with `qemu-guest-agent` installed.
+Option 1. Use a VM image with required packages installed.
 
-Option 2. Configure the `cloud init` user data to enable the VMs to install `qemu-guest-agent` via an HTTP(S) proxy.
+Option 2. Configure the **Show Advanced > User Data** to enable the VMs to install required packages via an HTTP(S) proxy.
 
 Example of `user data` in Harvester node template:
 ```

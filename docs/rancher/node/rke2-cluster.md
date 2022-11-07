@@ -12,8 +12,7 @@ Users can now provision RKE2 Kubernetes clusters on top of the Harvester cluster
 
 :::note
 
-- Harvester RKE2 node driver is in tech preview.
-- VLAN network is required for Harvester node driver.
+- [VLAN network](https://docs.harvesterhci.io/v1.1/networking/harvester-network/#create-a-vlan-network) is required for Harvester node driver.
 
 :::
 
@@ -43,9 +42,24 @@ Users can create a RKE2 Kubernetes cluster from the **Cluster Management** page 
 8. Enter **Image** (required).
 9. Enter **Network Name** (required).
 10. Enter **SSH User** (required).
-11. Click **Create**.
+11. (optional) Configure the **Show Advanced > User Data** to install the required packages of VM.
+```yaml
+#cloud-config
+packages:
+  - iptables
+```
 
-![create-rke2-harvester-cluster](/img/v1.1/rancher/create-rke2-harvester-cluster.png)
+:::note
+
+Calico and Canal require the `iptables` or `xtables-nft` package to be installed on the node, for more details, please refer to the [RKE2 known issues](https://docs.rke2.io/known_issues/#canal-and-ip-exhaustion).
+
+:::
+
+
+12. Click **Create**.
+
+![create-rke2-harvester-cluster-1](/img/v1.1/rancher/create-rke2-harvester-cluster-1.png)
+![create-rke2-harvester-cluster-2](/img/v1.1/rancher/create-rke2-harvester-cluster-2.png)
 
 :::note
 
@@ -81,13 +95,17 @@ Node affinity can be added to the machine pools during the cluster creation:
 
 ### Using Harvester RKE2 Node Driver in Air Gapped Environment
 
-RKE2 provisioning relies on the `qemu-guest-agent` to get the IP of the virtual machine. However, it may not be feasible to install `qemu-guest-agent` in an air gapped environment.
+RKE2 provisioning relies on the `qemu-guest-agent` package to get the IP of the virtual machine.
+
+Calico and Canal require the `iptables` or `xtables-nft` package to be installed on the node.
+
+However, it may not be feasible to install packages in an air gapped environment.
 
 You can address the installation constraints with the following options:
 
-Option 1. Use a VM image with `qemu-guest-agent` installed.
+Option 1. Use a VM image with required packages installed.
 
-Option 2. Configure the `cloud init` user data to enable the VMs to install `qemu-guest-agent` via an HTTP(S) proxy.
+Option 2. Configure the **Show Advanced > User Data** to enable the VMs to install required packages via an HTTP(S) proxy.
 
 Example user data in Harvester node template:
 ```
