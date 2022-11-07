@@ -87,6 +87,42 @@ Default: none
 https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhrc7c_c-m-zxbbbck9.yaml
 ```
 
+## `containerd-registry`
+
+This setting allows you to configure a private registry for the Harvester cluster. The value will be set in `/etc/rancher/rke2/registries.yaml` of each node. You can read [RKE2 - Containerd Registry Configuration](https://docs.rke2.io/install/containerd_registry_configuration/) for more information.
+
+:::note
+
+If you set an username and password for a private registry, the system will automatically remove it to protect the credential after the system saves it in `registries.yaml`.
+
+:::
+
+#### Example
+
+![containerd-registry](/img/v1.1/advanced/containerd-registry.png)
+
+```json
+{
+  "Mirrors": {
+    "docker.io": {
+      "Endpoints": ["https://myregistry.local:5000"],
+      "Rewrites": null
+    }
+  },
+  "Configs": {
+    "myregistry.local:5000": {
+      "Auth": {
+        "Username": "testuser",
+        "Password": "testpassword"
+      },
+      "TLS": {
+        "InsecureSkipVerify": false
+      }
+    }
+  }
+}
+```
+
 ## `http-proxy`
 
 This setting allows you to configure an HTTP proxy to access external services, including the download of images and backup to s3 services.
