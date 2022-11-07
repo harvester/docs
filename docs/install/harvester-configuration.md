@@ -536,10 +536,11 @@ Installing in "join" mode will adopt the system settings from the existing Harve
 
 #### Example
 
-The example below overwrites `http-proxy` and `ui-source` settings. The values must be a `string`.
+The example below overwrites `containerd-registry`, `http-proxy` and `ui-source` settings. The values must be a `string`.
 
 ```yaml
 system_settings:
+  containerd-registry: '{"Mirrors": {"docker.io": {"Endpoints": ["https://myregistry.local:5000"]}}, "Configs": {"myregistry.local:5000": {"Auth": {"Username": "testuser", "Password": "testpassword"}, "TLS": {"InsecureSkipVerify": false}}}}'
   http-proxy: '{"httpProxy": "http://my.proxy", "httpsProxy": "https://my.proxy", "noProxy": "some.internal.svc"}'
   ui-source: auto
 ```
