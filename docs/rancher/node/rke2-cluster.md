@@ -12,7 +12,7 @@ Users can now provision RKE2 Kubernetes clusters on top of the Harvester cluster
 
 :::note
 
-- [VLAN network](https://docs.harvesterhci.io/v1.1/networking/harvester-network/#create-a-vlan-network) is required for Harvester node driver.
+- [VLAN network](../../networking/harvester-network.md#vlan-network) is required for Harvester node driver.
 
 :::
 

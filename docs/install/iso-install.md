@@ -27,7 +27,8 @@ Note: This [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of the I
 1. Mount the Harvester ISO disk and boot the server by selecting the `Harvester Installer` option.
    ![iso-install.png](/img/v1.1/install/iso-install.png)
 1. Choose the installation mode by either creating a new Harvester cluster, or by joining an existing one.
-      - Note: By default, the first node will be the management node of the cluster. When there are 3 nodes, the other 2 nodes added first are automatically promoted to management nodes to form an HA cluster
+      - Note: By default, the first node will be the management node of the cluster. When there are 3 nodes, the other 2 nodes added first are automatically promoted to management nodes to form an HA cluster.
+      
       If you want to promote management nodes from different zones, you can add the node label `topology.kubernetes.io/zone` in the [os.labels](./harvester-configuration.md#oslabels) config by providing a URL of [Harvester configuration](./harvester-configuration.md) on the customize the host step. In this case, at least three different zones are required.
 1. Choose the installation device on which the Harvester cluster will be installed
       - Note: By default, Harvester uses [GPT](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [MBR](https://en.wikipedia.org/wiki/Master_boot_record).

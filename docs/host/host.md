@@ -59,7 +59,7 @@ Once resolved, the last step can be skipped.
 
 ### Add Additional Disks
 
-Users can view and add multiple disks as additional data volumes from the host detail page.
+Users can view and add multiple disks as additional data volumes from the edit host page.
 
 1. Go to the **Hosts** page.
 2. On the node you want to modify, click **⋮ > Edit Config**.
@@ -94,7 +94,7 @@ This feature supports both disks and nodes.
 The tags can be set up through the Harvester UI on the host page:
 
 1. Click `Hosts` -> `Edit Config` -> `Storage`
-1. Click the `Host/Disk` tags to start typing to hit enter to add new tags.
+1. Click `Host/Disk Tags` to start typing and hit enter to add new tags.
 1. Click `Save` to update tags.
 1. On the [Storage Classes](../advanced/storageclass.md) page, create a new storage class and select those defined tags on the `Node Selector` and `Disk Selector` fields.
 
@@ -112,23 +112,23 @@ _Available as of v1.1.0_
 
 Ksmtuned is a KSM automation tool deployed as a DaemonSet to run Ksmtuned on each node. It will start or stop the KSM by watching the available memory percentage ratio (**i.e. Threshold Coefficient**). By default, you need to manually enable Ksmtuned on each node UI. You will be able to see the KSM statistics from the node UI after 1-2 minutes.(check [KSM](https://www.kernel.org/doc/html/latest/admin-guide/mm/ksm.html#ksm-daemon-sysfs-interface) for more details).
 
-### **Quick Run**
+### Quick Run
 
 1. Go to the **Hosts** page.
 2. On the node you want to modify, click **⋮ > Edit Config**.
-3. Select the **Ksmtuned** tab and **Run Strategy** in Run.
+3. Select the **Ksmtuned** tab and select **Run** in **Run Strategy**.
 4. (Optional) You can modify **Threshold Coefficient** as needed.
 
 ![Edit Ksmtuned](/img/v1.1/host/edit-ksmtuned.png)
 
 5. Click **Save** to update.
-6. Wait for about 1-2 minutes and you can check its **Statistics** by clicking **⋮ >  Your Node > Ksmtuned tab.**
+6. Wait for about 1-2 minutes and you can check its **Statistics** by clicking **Your Node > Ksmtuned tab**.
 
 ![View Ksmtuned Statistics](/img/v1.1/host/view-ksmtuned-statistics.png)
 
-### **Parameters**
+### Parameters
 
-**Run Strategy：**
+**Run Strategy:**
 
 - **Stop:** Stop Ksmtuned and KSM. VMs can still use shared memory pages.
 - **Run:** Run Ksmtuned.
