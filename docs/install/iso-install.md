@@ -13,6 +13,7 @@ Description: To get the Harvester ISO, download it from the Github releases. Dur
 
 # ISO Installation
 
+## Installation Steps
 To get the Harvester ISO image, download it from the [Github releases](https://github.com/harvester/harvester/releases) page.
 
 During the installation you can either choose to form a new cluster, or join the node to an existing cluster.
@@ -52,6 +53,21 @@ Note: This [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of the I
    ![first-login.png](/img/v1.1/install/first-time-login.png)
 
 
-:::note
+<!-- :::note
 In some cases, if you are using an older VGA connector, you may encounter an `panic: invalid dimensions` error with ISO installation. See issue [#2937](https://github.com/harvester/harvester/issues/2937#issuecomment-1278545927) for a workaround.
-:::
+::: -->
+
+## Known Issue
+
+### Installer may crash when using an older graphics card/monitor
+
+In some cases, if you are using an older graphics card/monitor, you may encounter a `panic: invalid dimensions` error during ISO installation.
+
+![invalid-dimensions.png](/img/v1.1/install/invalid-dimensions.png)
+
+This is a known issue we are working on, and will be fixed in future releases. Here is a workaround for this issue:
+1. Boot up with the ISO, and press `E` to edit the first menu entry:
+   ![grub-menu.png](/img/v1.1/install/grub-menu.png)
+2. Append `vga=792` to the line started with `$linux`:
+   ![edit-menu-entry.png](/img/v1.1/install/edit-menu-entry.png)
+3. Press `Ctrl+X` or `F10` to boot up.
