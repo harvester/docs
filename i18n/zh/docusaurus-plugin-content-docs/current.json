@@ -4,31 +4,27 @@
     "description": "The label for version current"
   },
   "sidebar.tutorialSidebar.category.Installation": {
-    "message": "Installation",
+    "message": "安装",
     "description": "The label for category Installation in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Upgrade": {
-    "message": "Upgrade",
+    "message": "升级",
     "description": "The label for category Upgrade in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Previous Releases": {
-    "message": "Previous Releases",
+    "message": "以前的版本",
     "description": "The label for category Previous Releases in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.VM Management": {
-    "message": "VM Management",
+    "message": "VM 管理",
     "description": "The label for category VM Management in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Networking": {
-    "message": "Networking",
+    "message": "网络",
     "description": "The label for category Networking in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.Best Practice": {
-    "message": "Best Practice",
-    "description": "The label for category Best Practice in sidebar tutorialSidebar"
-  },
   "sidebar.tutorialSidebar.category.Rancher Integration": {
-    "message": "Rancher Integration",
+    "message": "Rancher 集成",
     "description": "The label for category Rancher Integration in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Harvester Node Driver": {
@@ -36,15 +32,15 @@
     "description": "The label for category Harvester Node Driver in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Troubleshooting": {
-    "message": "Troubleshooting",
+    "message": "故障排除",
     "description": "The label for category Troubleshooting in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Advanced": {
-    "message": "Advanced",
+    "message": "高级设置",
     "description": "The label for category Advanced in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Volume Management": {
-    "message": "Volume Management",
+    "message": "卷管理",
     "description": "The label for category Volume Management in sidebar tutorialSidebar"
   }
 }

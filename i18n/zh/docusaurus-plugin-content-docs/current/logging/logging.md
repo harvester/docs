@@ -1,45 +1,45 @@
 ---
 sidebar_position: 1
-sidebar_label: Logging Audit Event
+sidebar_label: 日志审计事件
 title: ""
 keywords:
 - Harvester
 - Logging
-- Audit
-- Event
+- 审计
+- 事件
 ---
 
-# Harvester Integration with Logging, Auditing and Event
+# Harvester 的日志、审计和事件集成
 
-_Available as of v1.1.0_
+_从 v1.1.0 起可用_
 
-It is important to know what is happening/has happened in the `Harvester Cluster`.
+了解 `Harvester 集群`中正在发生/已经发生的事情是非常重要的。
 
-`Harvester` collects the `cluster running log`, kubernetes `audit` and `event` log right after the cluster is powered on, which is helpful for monitoring, logging, auditing and troubleshooting.
+`Harvester` 在集群通电后会立即收集`集群运行日志`、kubernetes `审计`和`事件`日志，这有助于监控、记录、审计和排除故障。
 
-`Harvester` supports sending those logs to various types of log servers.
+`Harvester` 支持将这些日志发送到各种日志服务器上。
 
 :::note
-The size of logging data is related to the cluster scale, workload and other factors. `Harvester` does not use persistent storage to store log data inside the cluster. Users need to set up a log server to receive logs accordingly.
+日志数据的大小与集群规模、工作负载等因素有关。`Harvester` 不使用持久存储在集群内存储日志数据。用户需要设置一个日志服务器来接收相应的日志。
 :::
 
-## High-level Architecture
+## 上层架构
 
-The [Banzai Cloud Logging operator](https://banzaicloud.com/docs/one-eye/logging-operator/) now powers both `Harvester` and `Rancher` as an in-house logging solution.
+[Banzai Cloud Logging Operator](https://banzaicloud.com/docs/one-eye/logging-operator/) 现在支持使用 `Harvester` 和 `Rancher` 作为内部日志解决方案。
 
 ![](/img/v1.1/logging/fluent-operator.png)
 
-In Harvester's practice, the `Logging`, `Audit` and `Event` shares one architecture, the `Logging` is the infrastructure, while the `Audit` and `Event` are on top of it.
+在 Harvester 的实践中，`Logging`、`Audit` 和 `Event` 共享一个架构，`Logging` 是基础架构，而 `Audit` 和 `Event` 在它之上。
 
 ## Logging
 
-The Harvester logging infrastructure allows you to aggregate Harvester logs into an external service such as [Graylog](https://www.graylog.org), [Elasticsearch](https://www.elastic.co/elasticsearch/), [Splunk](https://www.splunk.com/), [Grafana Loki](https://grafana.com/oss/loki/) and others.
+Harvester 日志基础架构支持将 Harvester 日志聚合到外部服务中，例如 [Graylog](https://www.graylog.org)、[Elasticsearch](https://www.elastic.co/elasticsearch/)、[Splunk](https://www.splunk.com/)、[Grafana Loki](https://grafana.com/oss/loki/) 等。
 
-### Collected Logs
-See below for a list logs that are collected:
- - Logs from all cluster `Pods`
- - Kernel logs from each `node`
- - Logs from select systemd services from each node
+### 收集的日志
+收集的日志如下：
+- 所有集群 `Pod` 的日志
+- 每个`节点`的内核日志
+- 每个节点所选的 systemd 服务的日志
    - `rke2-server`
    - `rke2-agent`
    - `rancherd`
@@ -48,28 +48,28 @@ See below for a list logs that are collected:
    - `iscsid`
 
 :::note
-Users are able to configure and modify where the aggregated logs are sent, as well as some basic filtering. It is not supported to change which logs are collected.
+用户可以配置和修改聚合日志的发送位置，以及一些基本的过滤条件。不支持更改收集哪些日志。
 :::
 
-### Configuring Log Resources
+### 配置日志资源
 
-Underneath Banzai Cloud's logging operator are [`fluentd`](https://www.fluentd.org/) and [`fluent-bit`](https://fluentbit.io/), which handle the log routing and collecting respectively.
-If desired, you can modify how many resources are dedicated to those components.
+Banzai Cloud Logging Operator 下面是 [`fluentd` ](https://www.fluentd.org/)和 [`fluent-bit`](https://fluentbit.io/)，它们分别处理日志路由和收集。
+如果需要，你可以修改专用于这些组件的资源数量。
 
-#### From UI
+#### 使用 UI
 
- 1. Navigate to the `Configuration` page under `Monitoring & Logging > Logging`.
- 2. Under the `Fluentbit` tab, change the resource requests and limits.
- 3. Under the `Fluentd` tab, change the resource requests and limits.
- 4. Click `Save` on the bottom right of the screen.
+1. 导航到 `Monitoring & Logging > Logging` 下的 `Configuration` 页面。
+2. 在 `Fluentbit` 选项卡下，更改资源请求和限制。
+3. 在 `Fluentd` 选项卡下，更改资源请求和限制。
+4. 点击屏幕右下方的 `Save`。
 
 ![](/img/v1.1/logging/modify-logging-fluent-resources.png)
 
-#### From CLI
+#### 使用 CLI
 
-You can also change the resource configurations from the command line using `kubectl edit managedchart -n fleet-local rancher-logging` and modifying the relevant files.
+你还可以通过在命令行运行 `kubectl edit managedchart -nfleet-local rancher-logging` 来更改资源配置并修改相关文件。
 
-For harvester version `>= v1.1.0`, the related paths and default values are:
+如果你的 Harvester 版本 `>= v1.1.0`，相关路径和默认值为：
 
 ```yaml
 # fluentbit
@@ -85,105 +85,105 @@ values.fluentbit.resources.requests.cpu: 50m
 values.fluentbit.resources.requests.memory: 50mi
 ```
 
-### Configuring Log Destinations
+### 配置日志目标
 
-Logging is backed by the [Banzai Cloud Logging Operator](https://banzaicloud.com/docs/one-eye/logging-operator/), and so is controlled by [`Flows`/`ClusterFlows`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/flow/) and [`Outputs`/`ClusterOutputs`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/output/). You can route and filter logs as you like by applying these `CRD`s to the Harvester cluster.
+Logging 由 [Banzai Cloud Logging Operator](https://banzaicloud.com/docs/one-eye/logging-operator/) 提供支持，因此由 [`Flows`/`ClusterFlows`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/flow/) 和 [`Outputs`/`ClusterOutputs`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/output/) 控制。你可以通过将这些 `CRD` 应用到 Harvester 集群来对日志进行路由和过滤。
 
-When applying new `Ouptuts` and `Flows` to the cluster, it can take some time for the logging operator to effectively apply them. So please allow a few minutes for the logs to start flowing.
+将新的 `Ouptuts` 和 `Flows` 应用到集群时，Logging Operator 可能需要一些时间才能使应用生效。因此，请等待几分钟让日志开始流动。
 
-#### Clustered vs Namespaced
+#### 集群化 VS 命名空间化
 
-One important thing to understand when routing logs is the difference between `ClusterFlow` vs `Flow` and `ClusterOutput` vs `Output`. The main difference between the clustered and non-clustered version of each is that the non-clustered versions are namespaced.
+在路由日志时，你需要了解 `ClusterFlow`/`Flow` 和 `ClusterOutput`/`Output` 之间的区别。集群和非集群版本之间的主要区别在于非集群版本是命名空间化的。
 
-The biggest implication of this is that `Flows` can only access `Outputs` that are within the same namespace, but can still access any `ClusterOutput`.
+这样做的最大意义，是 `Flows` 只能访问同一命名空间内的 `Outputs`，但仍然可以访问任何 `ClusterOutput`。
 
-For more information, see the documentation:
+有关更多信息，请参阅文档：
 
- - [`Flows`/`ClusterFlows`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/flow/)
- - [`Outputs`/`ClusterOutputs`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/output/)
+- [`Flows`/`ClusterFlows`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/flow/)
+- [`Outputs`/`ClusterOutputs`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/output/)
 
-#### From UI
+#### 使用 UI
 
 :::note
-UI images are for `Output` and `Flow` whose configuration process is almost identical to their clustered counterparts. Any differences will be noted in the steps below.
+UI 截图是 `Output` 和 `Flow`，它们的配置过程几乎与 ClusterOutput 和 ClusterFlow 相同。如果存在任何差异，我们都会在步骤中注明。
 :::
 
-##### Creating Outputs
+##### 创建 Outputs
 
- 1. Choose the option to create a new `Output` or `ClusterOutput`.
- 2. If creating an `Output`, select the desired namespace.
- 3. Add a name for the resources.
- 4. Select the logging type.
- 5. Select the logging output type.
+1. 选择创建新 `Output` 或 `ClusterOutput` 的选项。
+2. 如果创建 `Output`，请选择所需的命名空间。
+3. 为资源添加名称。
+4. 选择 Logging 类型。
+5. 选择 Logging 输出类型。
 
 ![](/img/v1.1/logging/create-output.png)
 
- 6. Configure the output buffer if necessary.
+6. 如有必要，配置 Output Buffer。
 
 ![](/img/v1.1/logging/create-output-buffer.png)
 
- 7. Add any labels or annotations.
+7. 添加标签或注释。
 
 ![](/img/v1.1/logging/create-output-labels-and-annotations.png)
 
- 8. Once done, click `Create` on the lower right.
+8. 完成后，单击右下角的 `Create`。
 
 :::note
-Depending on the output selected (Splunk, Elasticsearch, etc), there will be additional fields to specify in the form.
+根据选择的输出（Splunk、Elasticsearch 等），在表单中指定其他字段。
 :::
 
 ###### Output
 
-The fields present in the **Output** form will change depending on the `Output` chosen, in order to expose the fields present for each [output plugin](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/plugins/outputs/).
+**Output** 表单中显示的字段将根据所选的 `Output` 而不同，以便公开每个 [output plugin](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/plugins/outputs/) 的字段。
 
 ###### Output Buffer
 
-The `Output Buffer` editor allows you to describe how you want the output buffer to behave. You can find the documentation for the buffer fields [here](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/plugins/outputs/buffer/).
+`Output Buffer` 编辑器允许你描述期望的 output buffer 行为方式。你可以在[此处](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/plugins/outputs/buffer/)找到 buffer 字段的文档。
 
-###### Labels & Annotations
+###### 标签和注释
 
-You can append labels and annotations to the created resource.
+你可以将标签和注释附加到创建的资源。
 
-##### Creating Flows
+##### 创建 Flows
 
- 1. Choose the option to create a new `Flow` or `ClusterFlow`.
- 2. If creating a `Flow`, select the desired namespace.
- 3. Add a name for the resource.
- 4. Select any nodes whose logs to include or exclude.
+1. 选择创建新 `Flow` 或 `ClusterFlow` 的选项。
+2. 如果创建 `Flow`，请选择所需的命名空间。
+3. 为资源添加名称。
+4. 选择要包括或排除日志的节点。
 
 ![](/img/v1.1/logging/create-flow-matches.png)
 
- 5. Select target `Outputs` and `ClusterOutputs`.
+5. 选择目标 `Outputs` 和 `ClusterOutputs`。
 
 ![](/img/v1.1/logging/create-flow-outputs.png)
 
- 6. Add any filters if desired.
+6. 如果需要，添加过滤器。
 
 ![](/img/v1.1/logging/create-flow-filters.png)
 
- 7. Once done, click `Create` on the lower left.
+7. 完成后，单击左下角的 `Create`。
 
 ###### Matches
 
-Matches allow you to filter which logs you want to include in the `Flow`. The form only allows you to include or exclude node logs, but if needed, you can add other match rules supported by the resource by selecting `Edit as YAML`.
+Matches 允许你过滤要包含在 `Flow` 中的日志。该表单仅允许你包含或排除节点日志，但如果需要，你可以通过选择 `Edit as YAML` 来添加资源支持的其他匹配规则。
 
-For more information about the match directive, see [Routing your logs with match directive](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/log-routing/).
+有关 match 指令的更多信息，请参阅[使用 match 指令路由日志](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/log-routing/)。
 
 ###### Outputs
 
-Outputs allow you to select one or more `OutputRefs` to send the aggregated logs to. When creating or editing a `Flow` / `ClusterFlow`, it is required that the user selects at least one `Output`.
+Outputs 允许你选择一个或多个 `OutputRefs` 来发送聚合的日志。创建或编辑 `Flow`/`ClusterFlow` 时，用户至少需要选择一个 `Output`。
 
 :::note
-There must be at least one existing `ClusterOutput` or `Output` that can be attached to the flow, or you will not be able to create / edit the flow.
+必须至少有一个可以附加到 Flow 的现有 `ClusterOutput` 或 `Output`，否则你将无法创建/编辑 Flow。
 :::
 
-###### Filters
+###### 过滤器
 
-Filters allow you to transform, process, and mutate the logs. In the text edit, you will find descriptions of the supported filters, but for more information, you can visit the list of [supported filters](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/plugins/filters/).
+过滤器用于转换、处理和改变日志。你可以在文本编辑器中找到支持的过滤器的说明。要了解更多信息，你可以查看[支持的过滤器](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/plugins/filters/)。
 
-#### From CLI
+#### 使用 CLI
 
-To configure log routes via the command line, you only need to define the YAML files for the relevant resources:
+通过命令行配置日志路由，你只需要定义相关资源的 YAML 文件即可：
 
 ```yaml
 # elasticsearch-logging.yaml
@@ -213,24 +213,24 @@ spec:
       - elasticsearch-example
 ```
 
-And then apply them:
+然后应用它们：
 
 ```bash
 kubectl apply -f elasticsearch-logging.yaml
 ```
 
-##### Referencing Secrets
+##### 引用 Secret
 
-There are 3 ways Banzai Cloud allows specifying secret values via yaml values.
+Banzai Cloud 支持使用以下三种方式通过 YAML 值来指定 Secret 值。
 
-The simplest is to use the `value` key, which is a simple string value for the desired secret. This method should only be used for testing and never in production:
+最简单的是使用 `value` 键，它是所需 Secret 的简单字符串值。此方法应仅用于测试，切勿用于生产：
 
 ```yaml
 aws_key_id:
   value: "secretvalue"
 ```
 
-The next is to use `valueFrom`, which allows referencing a specific value from a secret by a name and key pair:
+第二种方法是使用 `valueFrom`，它允许你通过 name/key 对来引用 Secret 的特定值：
 
 ```yaml
 aws_key_id:
@@ -240,7 +240,7 @@ aws_key_id:
          key: <kubernetes-secret-key>
 ```
 
-Some plugins require a file to read from rather than simply receiving a value from the secret (this is often the case for CA cert files). In these cases, you need to use `mountFrom`, which will mount the secret as a file to the underlying `fluentd` deployment and point the plugin to the file. The `valueFrom` and `mountFrom` object look the same:
+一些插件需要读取文件，不能简单地从 Secret 中接收一个值（例如 CA 证书文件）。在这些情况下，你需要使用 `mountFrom`，它将 Secret 作为文件挂载到底层 `fluentd` Deployment 并将插件指向该文件。`valueFrom` 和 `mountFrom` 对象是相同的：
 
 ```yaml
 tls_cert_path:
@@ -250,19 +250,19 @@ tls_cert_path:
          key: <kubernetes-secret-key>
 ```
 
-For more information, you can find the related documentation [here](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/plugins/outputs/secret/).
+如需更多信息，你可以在[此处](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/plugins/outputs/secret/)找到相关文档。
 
-### Example `Outputs`
+### 示例 `Outputs`
 
 #### Elasticsearch
 
-For the simplest deployment, you can deploy Elasticsearch on your local system using docker:
+对于最简单的 Deployment，你可以使用 Docker 在本地系统上部署 Elasticsearch：
 
 ```sh
 docker run --name elasticsearch -p 9200:9200 -p 9300:9300 -e xpack.security.enabled=false -e node.name=es01 -it docker.elastic.co/elasticsearch/elasticsearch:6.8.23
 ```
 
-Make sure that you have set `vm.max_map_count` to be >= 262144 or the docker command above will fail. Once the Elasticsearch server is up, you can create the yaml file for the `ClusterOutput` and `ClusterFlow`:
+确保你已将 `vm.max_map_count` 设置为 >= 262144，否则上述 Docker 命令将失败。Elasticsearch 服务器启动后，你可以为 `ClusterOutput` 和 `ClusterFlow` 创建 YAML 文件：
 
 ```shell
 cat << EOF > elasticsearch-example.yaml
@@ -293,13 +293,13 @@ spec:
 EOF
 ```
 
-And apply the file:
+然后应用文件：
 
 ```shell
 kubectl apply -f elasticsearch-example.yaml
 ```
 
-After allowing some time for the logging operator to apply the resources, you can test that the logs are flowing:
+允许 Logging Operator 应用资源一段时间后，你可以测试日志是否正在流动：
 
 ```shell
 $ curl localhost:9200/fluentd/_search
@@ -349,16 +349,16 @@ $ curl localhost:9200/fluentd/_search
           }
         }
       },
-       
+
       ...
-       
+
     ]
   }
 }
 ```
 
 #### Graylog
-You can follow the instructions [here](https://github.com/w13915984028/harvester-develop-summary/blob/main/integrate-harvester-logging-with-log-servers.md#integrate-harvester-logging-with-graylog) to deploy and view cluster logs via [Graylog](https://www.graylog.org/):
+你可以按照[此处](https://github.com/w13915984028/harvester-develop-summary/blob/main/integrate-harvester-logging-with-log-servers.md#integrate-harvester-logging-with-graylog)的说明通过 [Graylog](https://www.graylog.org/) 部署和查看集群日志：
 
 ```yaml
 apiVersion: logging.banzaicloud.io/v1beta1
@@ -384,14 +384,14 @@ spec:
 
 #### Splunk
 
-You can follow the instructions [here](https://github.com/w13915984028/harvester-develop-summary/blob/main/test-log-event-audit-with-splunk.md) to deploy and view cluster logs via [Splunk](https://www.splunk.com/).
+你可以按照[此处](https://github.com/w13915984028/harvester-develop-summary/blob/main/test-log-event-audit-with-splunk.md)的说明通过 [Splunk](https://www.splunk.com/) 部署和查看集群日志：
 
 ```yaml
 apiVersion: logging.banzaicloud.io/v1beta1
 kind: ClusterOutput
 metadata:
   name: harvester-logging-splunk
-  namespace: cattle-logging-system 
+  namespace: cattle-logging-system
 spec:
  splunkHec:
     hec_host: 192.168.122.101
@@ -423,7 +423,7 @@ spec:
 
 #### Loki
 
-You can follow the instructions in the [logging HEP](https://github.com/joshmeranda/harvester/blob/logging/enhancements/20220525-system-logging.md) on deploying and viewing cluster logs via [Grafana Loki](https://grafana.com/oss/loki/).
+你可以按照 [logging HEP](https://github.com/joshmeranda/harvester/blob/logging/enhancements/20220525-system-logging.md) 中的说明通过 [Grafana Loki](https://grafana.com/oss/loki/) 部署和查看集群日志：
 
 ```yaml
 apiVersion: logging.banzaicloud.io/v1beta1
@@ -449,15 +449,15 @@ spec:
       logOutput: harvester-loki
 ```
 
-## Audit
+## 审计
 
-Harvester collects Kubernetes `audit` and is able to send the `audit` to various types of log servers.
+Harvester 收集 Kubernetes `audit`（审计）并能够将 `audit` 发送到各种类型的日志服务器。
 
-The policy file to guide `kube-apiserver` is [here](https://github.com/harvester/harvester-installer/blob/5991dcf6307aa5da79c5d6926566541f48105778/pkg/config/templates/rke2-92-harvester-kube-audit-policy.yaml).
+指导 `kube-apiserver` 的策略文件在[这里](https://github.com/harvester/harvester-installer/blob/5991dcf6307aa5da79c5d6926566541f48105778/pkg/config/templates/rke2-92-harvester-kube-audit-policy.yaml)。
 
-### Audit Definition
+### 审计定义
 
-In `kubernetes`, the [audit](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/) data is generated by `kube-apiserver` according to defined policy.
+在 `kubernetes`中，[审计（audit）](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/)数据由 `kube-apiserver` 根据定义的策略生成。
 
 ```
 ...
@@ -470,11 +470,11 @@ Request - log event metadata and request body but not response body. This does n
 RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests.
 ```
 
-### Audit Log Format
+### 审计日志格式
 
-#### Audit Log Format in Kubernetes
+#### Kubernetes 中的审计日志格式
 
-Kubernetes apiserver logs audit with following JSON format into a local file.
+Kubernetes apiserver 使用以下 JSON 格式将审计记录到本地文件中。
 
 ```
 {
@@ -496,23 +496,23 @@ Kubernetes apiserver logs audit with following JSON format into a local file.
 }
 ```
 
-#### Audit Log Format before Being Sent to Log Servers
+#### 在发送到日志服务器之前的审计日志格式
 
-Harvester keeps the `audit` log unchanged before sending it to the log server.
+Harvester 在将 `audit` 日志发送到日志服务器之前不会改变审计日志。
 
-### Audit Log Output/ClusterOutput
+### 审计日志 Output/ClusterOutput
 
-To output audit related log, the `Output`/`ClusterOutput` requires the value of `loggingRef` to be `harvester-kube-audit-log-ref`.
+要输出审计相关日志，`Output`/`ClusterOutput` 要求 `loggingRef` 的值为 `harvester-kube-audit-log-ref `。
 
-When you configure from the Harvester dashboard, the field is added automatically.
+通过 Harvester 仪表板进行配置时会自动添加该字段。
 
-Select type `Audit Only` from the `Type` drpo-down list.
+从 `Type` 下拉列表中选择 `Audit Only`。
 
 ![](/img/v1.1/logging/cluster-output-type.png)
 
-When you configure from the CLI, please add the field manually.
+通过 CLI 进行配置时，请手动添加该字段。
 
-Example:
+示例：
 
 ```
 apiVersion: logging.banzaicloud.io/v1beta1
@@ -524,7 +524,7 @@ spec:
   http:
     endpoint: "http://192.168.122.159:8096/"
     open_timeout: 3
-    format: 
+    format:
       type: "json"
     buffer:
       chunk_limit_size: 3MB
@@ -533,19 +533,19 @@ spec:
   loggingRef: harvester-kube-audit-log-ref   # this reference is fixed and must be here
 ```
 
-### Audit Log Flow/ClusterFlow
+### 审计日志 Flow/ClusterFlow
 
-To route audit related logs, the `Flow`/`ClusterFlow` requires the value of `loggingRef` to be `harvester-kube-audit-log-ref`.
+要路由审计相关日志，`Flow`/`ClusterFlow` 要求 `loggingRef` 的值为 `harvester-kube-audit-log-ref `。
 
-When you configure from the Harvester dashboard, the field is added automatically.
+通过 Harvester 仪表板进行配置时会自动添加该字段。
 
-Select type `Audit`.
+选择 `Audit` 类型。
 
 ![](/img/v1.1/logging/cluster-flow-type.png)
 
-When you config from the CLI, please add the field manually.
+通过 CLI 进行配置时，请手动添加该字段。
 
-Example:
+示例：
 
 ```
 apiVersion: logging.banzaicloud.io/v1beta1
@@ -561,23 +561,23 @@ spec:
 
 ### Harvester
 
-## Event
+## 事件
 
-Harvester collects Kubernetes `event` and is able to send the `event` to various types of log servers.
+Harvester 收集 Kubernetes `event`（事件）并能够将 `event` 发送到各种类型的日志服务器。
 
-### Event Definition
+### 事件定义
 
-Kubernetes `events` are objects that show you what is happening inside a cluster, such as what decisions were made by the scheduler or why some pods were evicted from the node. All core components and extensions (operators/controllers) may create events through the API Server.
+Kubernetes `events` 是向你展示集群内正在发生的事情的对象，例如调度程序做出了哪些决定或 Pod 被驱逐出节点的原因。所有核心组件和扩展（Operator/控制器）都可以通过 API Server 创建事件。
 
-Events have no direct relationship with log messages generated by the various components, and are not affected with the log verbosity level. When a component creates an event, it often emits a corresponding log message. Events are garbage collected by the API Server after a short time (typically after an hour), which means that they can be used to understand issues that are happening, but you have to collect them to investigate past events.
+事件与各种组件生成的日志消息没有直接关系，并且不受日志详细程度级别的影响。组件创建事件时通常会发出相应的日志消息。事件是 API Server 在短时间内（通常是一小时后）收集的垃圾，换言之，事件可用于了解正在发生的问题，但你必须收集它们才能调查以前的事件。
 
-Events are the first thing to look at for application, as well as infrastructure operations when something is not working as expected. Keeping them for a longer period is essential if the failure is the result of earlier events, or when conducting post-mortem analysis.
+如果某事情没有按照预期工作，应用程序和基础设施操作会首先查看事件。如果故障是早期事件导致的，或者你需要在事后分析故障，则需要将事件保留更长的时间。
 
-### Event Log Format
+### 事件日志格式
 
-#### Event Log Format in Kubernetes
+#### Kubernetes 中的事件日志格式
 
-A `kubernetes event` example:
+`kubernetes event` 示例：
 
 ```
         {
@@ -614,9 +614,9 @@ A `kubernetes event` example:
         },
 ```
 
-#### Event Log Format before Being Sent to Log Servers
+#### 发送到日志服务器之前的事件日志格式
 
-Each `event log` has the format of: `{"stream":"","logtag":"F","message":"","kubernetes":{""}}`. The `kubernetes event` is in the field `message`.
+每个 `event log`  的格式为：`{"stream":"","logtag":"F","message":"","kubernetes":{""}}`。`kubernetes event` 在 `message` 字段中。
 
 ```
 {
@@ -636,27 +636,27 @@ Each `event log` has the format of: `{"stream":"","logtag":"F","message":"","kub
 
 ```
 
-### Event Log Output/ClusterOutput
+### 事件日志 Output/ClusterOutput
 
-Events share the `Output`/`ClusterOutput` with `Logging`.
+事件与 `Logging` 共享 `Output`/`ClusterOutput`。
 
-Select `Logging/Event` from the `Type` drop-down list.
+从 `Type` 下拉列表中选择 `Logging/Event`。
 
 ![](/img/v1.1/logging/cluster-output-type.png)
 
-### Event Log Flow/ClusterFlow
+### 事件日志 Flow/ClusterFlow
 
-Compared with the normal Logging `Flow`/`ClusterFlow`, the `Event` related `Flow`/`ClusterFlow`, has one more match field with the value of `event-tailer`.
+与普通的 Logging `Flow`/`ClusterFlow` 相比，`Event` 相关的 `Flow`/`ClusterFlow` 多了一个匹配字段，其值为 `event-tailer`。
 
-When you configure from the Harvester dashboard, the field is added automatically.
+通过 Harvester 仪表板进行配置时会自动添加该字段。
 
-Select `Event` from the `Type` drop-down list.
+从 `Type` 下拉列表中选择 `Event`。
 
 ![](/img/v1.1/logging/cluster-flow-type.png)
 
-When you configure from the CLI, please add the field manually.
+通过 CLI 进行配置时，请手动添加该字段。
 
-Example:
+示例：
 
 ```
 apiVersion: logging.banzaicloud.io/v1beta1

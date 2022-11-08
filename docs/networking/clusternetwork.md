@@ -34,7 +34,7 @@ Network configuration only works under a certain cluster network. Each network c
 
 ### Network
 
-A network is an interface in a virtual machine that connects to the host network. As with network configuration, every network except the built-in [management network](./harvester-network/#management-network) must be under a cluster network.
+A network is an interface in a virtual machine that connects to the host network. As with network configuration, every network except the built-in [management network](./harvester-network.md#management-network) must be under a cluster network.
 
 Harvester supports adding multiple networks to one VM. If a network's cluster network is not enabled on some hosts, the VM that owns this network will not be scheduled to those hosts.
 
@@ -76,6 +76,8 @@ You are allowed to add the custom cluster network, which will not be available u
    ![](/img/v1.1/networking/config-uplink.png)
 
 :::note
+
 - The NICs drop-down list shows all the common NICs on all the selected nodes. The drop-down list will change as you select different nodes.
 - The text `enp7s3 (1/3 Down)` in the NICs drop-down list indicates that the enp7s3 NIC is down in one of the three selected nodes. In this case, you need to find the NIC, set it up, and refresh this page. After this, it should be selectable.
+
 :::
