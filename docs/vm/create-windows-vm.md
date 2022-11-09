@@ -111,8 +111,6 @@ Changing the `Node Scheduling` settings can impact Harvester features, such as d
 
 ### Footer Section
 
-1. `Start virtual machine on creation`: This option is checked by default. You can uncheck it if you don't want the VM to start once it's created.
-
 Once all the settings are in place, click on `Create` to create the VM.
 
 :::note
@@ -124,7 +122,7 @@ And if you want to cancel all changes made, click `Cancel`.
 
 ## Installation of Windows
 
-1. Select the VM you just created, and click `Start` to boot up the VM.(If you checked `Start virtual machine on creation` the VM will start automatically once it's created)
+1. Select the VM you just created, and click `Start` to boot up the VM.
 
 2. Boot into the installer, and follow the instructions given by the installer.
 
