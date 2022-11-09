@@ -17,7 +17,7 @@ Description: Edit Virtual Machines from the Harvester VM page.
 
 ## How to Edit a VM
 
-After creating a virtual machine, you can edit your virtual machine by clicking the `⋮` button and selecting the `Edit Configurations` button.
+After creating a virtual machine, you can edit your virtual machine by clicking the `⋮` button and selecting the `Edit Config` button.
 
 :::note
 
