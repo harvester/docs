@@ -93,7 +93,7 @@ This setting allows you to configure a private registry for the Harvester cluste
 
 :::note
 
-If you set an username and password for a private registry, the system will automatically remove it to protect the credential after the system saves it in `registries.yaml`.
+If you set a username and password for a private registry, the system will automatically remove it to protect the credential after the system saves it in `registries.yaml`.
 
 :::
 
