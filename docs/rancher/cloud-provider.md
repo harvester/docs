@@ -148,6 +148,22 @@ This cloud-config file can now be injected via the `user-data` available in the 
 
 With these settings in place a K3s / RKE2 cluster should provision successfully while using the external cloud provider.
 
+## Upgrade Cloud Provider
+
+### Upgrade RKE2
+The cloud provider can be upgraded by upgrading the RKE2 version. You can upgrade the RKE2 cluster via the Rancher UI as follows:
+1. Click **☰ > Cluster Management**.
+2. Find the guest cluster that you want to upgrade and select ⋮ **> Edit Config**.
+3. Select **Kubernetes Version**.
+4. Click **Save**.
+
+### Upgrade RKE/K3s
+RKE/K3s upgrade cloud provider via the Rancher UI, as follows:
+1. Click **☰ > RKE/K3s Cluster > Apps > Installed Apps**.
+2. Find the cloud provider chart and select ⋮ **> Edit/Upgrade**.
+3. Select **Version**. 
+4. Click **Next > Update**.
+
 ## Load Balancer Support
 After deploying the `Harvester Cloud provider`, you can use the Kubernetes `LoadBalancer` service to expose a microservice inside the guest cluster to the external world. When you create a Kubernetes `LoadBalancer` service, a Harvester load balancer is assigned to the service and you can edit it through the `Add-on Config` in the Rancher UI.
 

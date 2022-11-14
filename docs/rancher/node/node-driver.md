@@ -55,6 +55,15 @@ _Available as of v1.0.3_
 
 In your guest Kubernetes cluster, you can use [topology spread constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) to control how workloads are spread across the Harvester VMs among failure-domains such as regions and zones. This can help to achieve high availability as well as efficient resource utilization of your cluster resources.
 
+The minimum RKE2 versions required to support the sync topology label feature are as follows:
+
+| Supported RKE2 Version |
+| :--|
+| \>=  v1.24.4+rke2r1 |
+| \>=  v1.23.10+rke2r1 |
+| \>=  v1.22.13+rke2r1 |
+
+In addition, the cloud provider version installed via the `Apps` of RKE/K3s must be >= v0.1.4
 
 ### Sync Topology Labels to the Guest Cluster Node
 
@@ -78,3 +87,4 @@ Label synchronization will only take effect during guest node initialization. To
 1. After the cluster is successfully deployed, confirm that guest Kubernetes node labels are successfully synchronized from the Harvester VM node.
 
 1. Now deploy workloads on your guest Kubernetes cluster, and you should be able to manage them using the [topology spread constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/).
+
