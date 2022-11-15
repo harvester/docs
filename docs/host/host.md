@@ -63,9 +63,27 @@ Users can view and add multiple disks as additional data volumes from the host d
 
 1. Go to the **Hosts** page.
 2. On the node you want to modify, click **⋮ > Edit Config**.
-2. Select the **Storage** tab and click **Add Disk**.
-3. Select an additional raw block device to add as an additional data volume.
+
+![Edit Config](/img/v1.1/host/edit-config.png)
+
+3. Select the **Storage** tab and click **Add Disk**.
+
+![Add Disks](/img/v1.1/host/add-disks.png)
+
+:::caution
+
+As of Harvester v1.0.2, we no longer support adding partitions as additional disks. If you want to add it as an additional disk, be sure to reformat it properly first (e.g., using `fdisk`).
+
+:::
+
+4. Select an additional raw block device to add as an additional data volume.
     - The `Force Formatted` option is required if the block device has never been force-formatted.
+
+![Force Format](/img/v1.1/host/force-format-disks.png)
+
+5. Last, you can click **⋮ > Edit Config** again to check the newly added disk. Meanwhile, you can also add the "Host/Disk" tag (details are described in the [next section](#storage-tags)).
+
+![Check Result](/img/v1.1/host/check-added-disks.png)
 
 :::note
 
@@ -79,9 +97,6 @@ If your disk does not have a WWN, you can format it with the `EXT4` filesystem t
 If you are testing Harvester in a QEMU environment, you'll need to use QEMU v6.0 or later. Previous versions of QEMU will always generate the same WWN for NVMe disks emulation. This will cause Harvester to not add the additional disks, as explained above.
 
 :::
-
-![Edit Config](/img/v1.1/host/edit-config.png)
-![Add Disks](/img/v1.1/host/add-disks.png)
 
 ### Storage Tags
 
