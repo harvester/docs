@@ -38,7 +38,7 @@ Harvester 使用 [Canal](https://projectcalico.docs.tigera.io/getting-started/ku
 
 ### 如何使用 VLAN 网络
 
-要创建新的 VLAN 网络，转到 **Networks > Networks** 页面并单击 **Create** 按钮。
+要创建新的 VLAN 网络，转到 **Networks > VM Networks** 页面并单击 **Create** 按钮。
 
 1. 指定名称，选择类型 `L2VlanNetwork`，输入 VLAN ID，并选择集群网络。
 

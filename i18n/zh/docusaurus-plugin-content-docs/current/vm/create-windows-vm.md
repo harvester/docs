@@ -38,7 +38,6 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 
 1. 配置要分配给虚拟机的 `CPU` 核数。
 1. 配置要分配给虚拟机的 `Memory`。
-1. （可选）选择现有的 `SSH keys` 或上传新的密钥​​。
 
 ![create-windows-vm](/img/v1.1/vm/create-windows-vm.png)
 

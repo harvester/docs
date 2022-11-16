@@ -38,7 +38,6 @@ For creating Linux virtual machines, please refer to [this page](./create-vm.md)
 
 1. Configure the number of `CPU` cores assigned to the VM.
 1. Configure the amount of `Memory` assigned to the VM.
-1. (Optional) Select existing `SSH keys` or upload new ones.
 
 ![create-windows-vm](/img/v1.1/vm/create-windows-vm.png)
 

@@ -38,7 +38,7 @@ The [Harvester network-controller](https://github.com/harvester/harvester-networ
 
 ### How to use VLAN network
 
-To create a new VLAN network, go to the **Networks > Networks** page and click the **Create** button.
+To create a new VLAN network, go to the **Networks > VM Networks** page and click the **Create** button.
 
 1. Specify the name, select the type `L2VlanNetwork`, input the VLAN ID and select the cluster network.
 
