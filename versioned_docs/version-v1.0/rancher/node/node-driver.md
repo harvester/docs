@@ -54,11 +54,11 @@ In your guest Kubernetes cluster, you can use [topology spread constraints](http
 
 The minimum RKE2 versions required to support the sync topology label feature are as follows:
 
-| Supported RKE2 Version | Cloud Provider Version |
-| :--| :-- |
-| \>=  v1.24.4+rke2r1 | \>= v0.1.4 |
-| \>=  v1.23.10+rke2r1 | \>= v0.1.4 |
-| \>=  v1.22.13+rke2r1 | \>= v0.1.4 |
+| Supported RKE2 Version |
+| :--|
+| \>=  v1.24.3+rke2r1 |
+| \>=  v1.23.9+rke2r1 |
+| \>=  v1.22.12+rke2r1 |
 
 In addition, the cloud provider version installed via the `Apps` of RKE/K3s must be >= v0.1.4
 
