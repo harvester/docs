@@ -1,13 +1,11 @@
 ---
 sidebar_position: 3
 sidebar_label: Clone a Volume
-title: ""
+title: "Clone a Volume"
 keywords:
 - Volume
 Description: Clone volume from the Volume page.
 ---
-
-# Clone a Volume
 
 After creating a volume, you can clone the volume by following the steps below:
 

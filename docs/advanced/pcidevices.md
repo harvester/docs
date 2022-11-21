@@ -1,10 +1,8 @@
 ---
 sidebar_position: 6
 sidebar_label: PCI Devices
-title: ""
+title: "PCI Devices (Experimental)"
 ---
-
-# PCI Devices (Experimental)
 
 _Available as of v1.1.0_
 

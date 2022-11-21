@@ -1,14 +1,12 @@
 ---
 sidebar_position: 5
 sidebar_label: Volume Snapshots
-title: ""
+title: "Volume Snapshots"
 keywords:
 - Volume Snapshot
 - Volume Snapshots
 Description: Take a snapshot for a volume from the Volume page.
 ---
-
-# Volume Snapshots
 
 ## Create Volume Snapshots
 

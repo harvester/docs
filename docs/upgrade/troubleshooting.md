@@ -1,10 +1,8 @@
 ---
 sidebar_position: 3
 sidebar_label: Troubleshooting
-title: ""
+title: "Troubleshooting"
 ---
-
-# Troubleshooting
 
 ## Overview
 

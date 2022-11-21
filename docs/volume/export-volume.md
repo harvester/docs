@@ -1,13 +1,11 @@
 ---
 sidebar_position: 4
 sidebar_label: Export a Volume to Image
-title: ""
+title: "Export a Volume to Image"
 keywords:
 - Volume
 Description: Export volume to image from the Volume page.
 ---
-
-# Export a Volume to Image
 
 You can select and export an existing volume to an image by following the steps below:
 

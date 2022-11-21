@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 sidebar_label: PXE Boot Installation
-title: ""
+title: "PXE Boot Installation"
 keywords:
   - Harvester
   - harvester
@@ -13,8 +13,6 @@ keywords:
   - PXE Boot Install
 Description: Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do an automatic installation with PXE boot.
 ---
-
-# PXE Boot Installation
 
 Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do an automatic installation with PXE boot.
 

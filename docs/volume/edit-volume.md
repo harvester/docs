@@ -1,13 +1,11 @@
 ---
 sidebar_position: 2
 sidebar_label: Edit a Volume
-title: ""
+title: "Edit a Volume"
 keywords:
 - Volume
 Description: Edit volume from the Volume page.
 ---
-
-# Edit a Volume
 
 After creating a volume, you can edit your volume by clicking the `⋮` button and selecting the `Edit Config` option.
 

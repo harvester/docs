@@ -1,15 +1,13 @@
 ---
 sidebar_position: 1
 sidebar_label: Logging Audit Event
-title: ""
+title: "Logging Audit Event"
 keywords:
 - Harvester
 - Logging
 - Audit
 - Event
 ---
-
-# Harvester Integration with Logging, Auditing and Event
 
 _Available as of v1.1.0_
 

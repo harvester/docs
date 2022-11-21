@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: Cluster Network
-title: ""
+title: "Cluster Network"
 keywords:
 - Harvester
 - Networking
@@ -9,7 +9,6 @@ keywords:
 - NetworkConfig
 - Network
 ---
-# Cluster Network
 
 ## Concepts
 
