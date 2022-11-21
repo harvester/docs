@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 sidebar_label: Edit a Virtual Machine
-title: ""
+title: "Edit a Virtual Machine"
 keywords:
   - Harvester
   - harvester
@@ -12,8 +12,6 @@ keywords:
   - Edit a VM
 Description: Edit Virtual Machines from the Harvester VM page.
 ---
-
-# Edit a Virtual Machine
 
 ## How to Edit a VM
 

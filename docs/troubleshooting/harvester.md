@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 sidebar_label: Harvester
-title: ""
+title: "Harvester"
 ---
 
 ## Fail to Deploy a Multi-node Cluster Due to Incorrect HTTP Proxy Setting

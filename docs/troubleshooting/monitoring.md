@@ -1,10 +1,8 @@
 ---
 sidebar_position: 4
 sidebar_label: Monitoring
-title: ""
+title: "Monitoring"
 ---
-
-# Monitoring
 
 The following sections contain tips to troubleshoot Harvester Monitoring.
 

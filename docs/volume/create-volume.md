@@ -1,13 +1,11 @@
 ---
 sidebar_position: 1
 sidebar_label: Create a Volume
-title: ""
+title: "Create a Volume"
 keywords:
 - Volume
 Description: Create a volume from the Volume page.
 ---
-
-# Create a Volume
 
 ## Create an Empty Volume
 

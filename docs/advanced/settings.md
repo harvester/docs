@@ -1,10 +1,8 @@
 ---
 sidebar_position: 1
 sidebar_label: Settings
-title: ""
+title: "Settings"
 ---
-
-# Settings
 
 This page contains a list of advanced settings which can be used in Harvester.
 You can modify the custom resource `settings.harvesterhci.io` from the Dashboard UI or with the `kubectl` command.

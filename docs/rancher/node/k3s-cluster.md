@@ -1,10 +1,8 @@
 ---
 sidebar_position: 4
 sidebar_label: Creating an K3s Kubernetes Cluster
-title: ""
+title: "Creating an K3s Kubernetes Cluster"
 ---
-
-# Creating an K3s Kubernetes Cluster
 
 You can now provision K3s Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.3+` using the built-in Harvester node driver.
 

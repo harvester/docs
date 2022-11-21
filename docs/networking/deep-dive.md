@@ -1,13 +1,12 @@
 ---
 sidebar_position: 3
-sidebar_label: Deep Dive
-title: ""
+sidebar_label: Harvester Network Deep Dive
+title: "Harvester Network Deep Dive"
 keywords:
 - Harvester
 - Networking
 - Topology
 ---
-# Harvester Network Deep Dive
 
 The network topology below reveals how we implement the Harvester network.
 

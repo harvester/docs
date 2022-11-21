@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
 sidebar_label: Live Migration
-title: ""
+title: "Live Migration"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - Live Migration
 Description: Live migration means moving a virtual machine to a different host without downtime.
 ---
-
-# Live Migration
 
 Live migration means moving a virtual machine to a different host without downtime.
 

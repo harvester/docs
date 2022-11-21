@@ -1,7 +1,7 @@
 ---
 sidebar_position: 9
 sidebar_label: Clone VM 
-title: ""
+title: "Clone VM"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - Clone VM
 Description: VM can be cloned with/without data. This function doesn't need to take a VM snapshot or set up a backup target first.
 ---
-
-# Clone VM
 
 _Available as of v1.1.0_
 

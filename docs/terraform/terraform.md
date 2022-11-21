@@ -1,10 +1,8 @@
 ---
 sidebar_position: 1
 sidebar_label: Harvester Terraform Provider
-title: ""
+title: "Harvester Terraform Provider"
 ---
-
-# Harvester Terraform Provider
 
 ## Support Matrix
 

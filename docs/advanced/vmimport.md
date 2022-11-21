@@ -1,10 +1,9 @@
 ---
 sidebar_position: 5
 sidebar_label: VM Import
-title: ""
+title: "VM Import"
 ---
 
-# VM Import
 _Available as of v1.1.0_
 
 Beginning with v1.1.0, users can import their virtual machines from VMWare and OpenStack into Harvester.

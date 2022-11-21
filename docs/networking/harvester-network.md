@@ -1,12 +1,11 @@
 ---
 sidebar_position: 2
 sidebar_label: Network
-title: ""
+title: "Network"
 keywords:
 - Harvester
 - Network
 ---
-# Network
 
 Harvester provides three types of virtual networks for virtual machines (VMs), including:
 

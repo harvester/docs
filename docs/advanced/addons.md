@@ -1,10 +1,9 @@
 ---
 sidebar_position: 4
 sidebar_label: Addons
-title: ""
+title: "Addons"
 ---
 
-# Addons
 _Available as of v1.1.0_
 
 Beginning with v1.1.0, Harvester will make optional functionality available as Addons.
