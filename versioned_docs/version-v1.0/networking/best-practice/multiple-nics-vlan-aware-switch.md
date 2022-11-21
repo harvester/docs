@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 sidebar_label: Multiple NICs with VLAN-aware Switch
-title: ""
+title: "Multiple NICs with VLAN-aware Switch"
 keywords:
   - Harvester
   - harvester
@@ -13,8 +13,6 @@ keywords:
   - vlan
 Description: Harvester is built on top of Kubernetes, and uses the [CNI](https://github.com/containernetworking/cni) as the interface between network providers and Kubernetes pod networking. Naturally, we implement the Harvester network based on CNI. Moreover, the Harvester UI integrates the network configuration in order to provide a user-friendly way to configure networks for VMs.
 ---
-
-# Mulitple NICs with VLAN-aware Switch
 
 In this best practice guide on how to configure "VLAN-aware", we will introduce Harvester VLAN network and external switch configuration for common scenario.
 

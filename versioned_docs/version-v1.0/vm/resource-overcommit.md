@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
 sidebar_label: Resource Overcommit
-title: ""
+title: "Resource Overcommit"
 keywords:
   - Harvester
   - Overcommit
@@ -9,8 +9,6 @@ keywords:
   - ballooning
 Description: Overcommit resources to a VM.
 ---
-
-# Resource Overcommit
 
 Harvester supports global configuration of resource overload percentages on CPU, memory, and storage. By setting [`overcommit-config`](../settings/settings.md#overcommit-config), this will allow scheduling of additional virtual machines even when physical resources are fully utilized.
 

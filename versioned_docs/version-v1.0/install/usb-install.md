@@ -1,10 +1,8 @@
 ---
 sidebar_position: 3
 sidebar_label: USB Installation
-title: ""
+title: "USB Installation"
 ---
-
-# USB Installation
 
 ## Create a bootable USB flash drive
 

@@ -1,10 +1,8 @@
 ---
 sidebar_position: 1
 sidebar_label: Installation
-title: ""
+title: "Installation"
 ---
-
-# Installation
 
 The following sections contain tips to troubleshoot or get assistance with failed installations.
 

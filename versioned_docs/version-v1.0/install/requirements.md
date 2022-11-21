@@ -1,12 +1,12 @@
 ---
 sidebar_position: 1
 sidebar_label: Requirements
-title: ""
+title: "Requirements"
 keywords:
 - Installation Requirements
 Description: Outline the Harvester installation requirements
 ---
-# Requirements
+
 As an HCI solution on bare metal servers, Harvester has some minimum requirements as outlined below.
 
 ## Hardware Requirements
