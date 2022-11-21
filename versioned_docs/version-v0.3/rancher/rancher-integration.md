@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: Rancher Integration
-title: ""
+title: "Rancher Integration"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - Rancher Integration
 Description: Rancher is an open source multi-cluster management platform. Harvester has integrated Rancher by default starting with Rancher v2.6.1.
 ---
-
-## Rancher Integration
 
 _Available as of v0.3.0_
 

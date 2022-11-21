@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: ISO Installation
-title: ""
+title: "ISO Installation"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - ISO Installation
 Description: To get the Harvester ISO, download it from the Github releases. During the installation you can either choose to form a new cluster, or join the node to an existing cluster.
 ---
-
-# ISO Installation
 
 To get the Harvester ISO, download it from the [Github releases.](https://github.com/harvester/harvester/releases)
 

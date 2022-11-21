@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 sidebar_label: Creating an RKE2 Kubernetes Cluster
-title: ""
+title: "Creating an RKE2 Kubernetes Cluster"
 keywords:
   - Harvester
   - harvester
@@ -11,8 +11,6 @@ keywords:
   - RKE2
 Description: Users can now provision RKE2 Kubernetes clusters on top of the Harvester cluster in Rancher v2.6.1+ using the built-in Harvester node driver.
 ---
-
-# Creating an RKE2 Kubernetes Cluster
 
 Users can now provision RKE2 Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.1+` using the built-in Harvester node driver.
 
