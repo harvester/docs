@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 sidebar_label: Upload Images
-title: ""
+title: "Upload Images"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - Import Images
 Description: To import virtual machine images in the **Images** page, enter a URL that can be accessed from the cluster. The image name will be auto-filled using the URL address's filename. You can always customize it when required.
 ---
-
-# Upload Images
 
 Currently, there are three ways that are supported to create an image: uploading images via URL, uploading images via local files, and creating images via volumes.
 

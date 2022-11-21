@@ -1,13 +1,12 @@
 ---
 sidebar_position: 5
 sidebar_label: Management Address
-title: ""
+title: "Management Address"
 keywords:
   - VIP
 Description: The Harvester provides a virtual IP as the management address.
 ---
 
-# Management Address
 Harvester provides a fixed virtual IP (VIP) as the management address. Users can see the management address on the console dashboard after installation.
 
 ![](./assets/console-dashboard.png)

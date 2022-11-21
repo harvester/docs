@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: Create a Virtual Machine
-title: ""
+title: "Create a Virtual Machine"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - Create a VM
 Description: Create one or more virtual machines from the Virtual Machines page.
 ---
-
-# Create a VM
 
 ## How to Create a VM
 

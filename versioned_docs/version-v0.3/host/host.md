@@ -1,10 +1,8 @@
 ---
 sidebar_position: 1
 sidebar_label: Host Management
-title: ""
+title: "Host Management"
 ---
-
-# Host Management
 
 Users can view and manage Harvester nodes from the host page. The first node always defaults to be a management node of the cluster. When there are more than three nodes, the two other nodes that first joined are automatically promoted to management nodes to form a HA cluster.
 

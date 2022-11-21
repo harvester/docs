@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 sidebar_label: Harvester Configuration
-title: ""
+title: "Harvester Configuration"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - Harvester Configuration
 Description: Harvester configuration file can be provided during manual or automatic installation to configure various settings.
 ---
-
-# Harvester Configuration
 
 ## Configuration Example
 

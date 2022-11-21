@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 sidebar_label: VM Backup & Restore
-title: ""
+title: "VM Backup & Restore"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - VM Backup & Restore
 Description: VM backups are created from the Virtual Machines page. The VM backup volumes will be stored in the Backup Target(an NFS or S3 server) and they can be used to either restore a new VM or replace an existing VM.
 ---
-
-# VM Backup & Restore
 
 _Available as of v0.3.0_
 

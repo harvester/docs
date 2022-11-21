@@ -1,13 +1,11 @@
 ---
 sidebar_position: 2
 sidebar_label: Virtualization Management
-title: ""
+title: "Virtualization Management"
 keywords:
   - Harvester
   - Rancher
 ---
-
-## Virtualization Management
 
 For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6.x.
 
