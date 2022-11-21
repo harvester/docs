@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 sidebar_label: Authentication
-title: ""
+title: "Authentication"
 keywords:
   - Harvester
   - harvester
@@ -10,7 +10,6 @@ keywords:
   - Authentication
 Description: With ISO installation mode, user will be prompted to set the password for the default `admin` user on the first-time login.
 ---
-# Authentication
 
 After installation, user will be prompted to set the password for the default `admin` user on the first-time login.
 

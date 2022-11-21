@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: Harvester Node Driver
-title: ""
+title: "Harvester Node Driver"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - Harvester Node Driver
 Description: The Harvester node driver is used to provision VMs in the Harvester cluster. In this section, you'll learn how to configure Rancher to use the Harvester node driver to launch and manage Kubernetes clusters.
 ---
-
-# Harvester Node Driver
 
 The Harvester node driver is used to provision VMs in the Harvester cluster. In this section, you'll learn how to configure Rancher to use the Harvester node driver to launch and manage Kubernetes clusters.
 

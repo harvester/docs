@@ -1,10 +1,8 @@
 ---
 sidebar_position: 17
 sidebar_label: FAQ
-title: ""
+title: "FAQ"
 ---
-
-# FAQ
 
 This FAQ is a work in progress designed to answer the questions our users most frequently ask about Harvester.
 

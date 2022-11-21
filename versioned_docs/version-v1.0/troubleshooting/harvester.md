@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 sidebar_label: Harvester
-title: ""
+title: "Harvester"
 ---
 
 ## Generate a support bundle

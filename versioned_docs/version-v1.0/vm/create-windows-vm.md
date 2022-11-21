@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 sidebar_label: Create a Windows Virtual Machine
-title: ""
+title: "Create a Windows Virtual Machine"
 keywords:
   - Harvester
   - harvester
@@ -15,7 +15,6 @@ keywords:
 Description: Create one or more Windows virtual machines from the Virtual Machines page.
 ---
 
-# Create a Windows Virtual Machine
 
 Create one or more virtual machines from the **Virtual Machines** page.
 

@@ -1,15 +1,13 @@
 ---
 sidebar_position: 7
 sidebar_label: Hot-Plug Volumes
-title: ""
+title: "Hot-Plug Volumes"
 keywords:
   - Harvester
   - Hot-plug
   - Volume
 Description: Adding hot-plug volumes to a running VM.
 ---
-
-# Hot-Plug Volumes
 
 Harvester supports adding hot-plug volumes to a running VM.
 

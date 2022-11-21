@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 sidebar_label: Access to the Virtual Machine
-title: ""
+title: "Access to the Virtual Machine"
 keywords:
   - Harvester
   - harvester
@@ -11,7 +11,6 @@ keywords:
 Description: Once the VM is up and running, it can be accessed using either VNC or the serial console from the Harvester UI.
 ---
 
-# Access to the Virtual Machine
 
 Once the VM is up and running, you can access it using either the Virtual Network Computing (VNC) client or the serial console from the Harvester UI.
 
