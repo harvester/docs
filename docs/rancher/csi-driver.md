@@ -8,7 +8,7 @@ keywords:
   - Rancher Integration
 ---
 
-The Harvester Container Storage Interface (CSI) Driver provides a CSI interface used by guest Kubernetes clusters in Harvester. It connects to the host cluster and hot-plugs host volumes to the virtual machines (VMs) to provide native storage performance.
+The Harvester Container Storage Interface (CSI) Driver provides a standard CSI interface used by guest Kubernetes clusters in Harvester. It connects to the host cluster and hot-plugs host volumes to the virtual machines (VMs) to provide native storage performance.
 
 ## Deploying
 
@@ -25,7 +25,7 @@ Currently, the Harvester CSI driver only supports single-node read-write(RWO) vo
 
 ### Deploying with Harvester RKE1 Node Driver
 
-- Select `Harvester(Out-of-tree)` option.
+- Select `Harvester(Out-of-tree)` option (optional. If you don't need to use the Cloud Provider feature at the same time, you can select the `None` option).
 
     ![](/img/v1.1/rancher/rke-cloud-provider.png)
 

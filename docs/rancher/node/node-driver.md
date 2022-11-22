@@ -16,15 +16,9 @@ The Harvester node driver is used to provision VMs in the Harvester cluster. In 
 A node driver is the same as a [Docker Machine driver](https://docs.docker.com/machine/), and the project repo is available at [harvester/docker-machine-driver-harvester](https://github.com/harvester/docker-machine-driver-harvester).
 
 You can now provision RKE1/RKE2 Kubernetes clusters in Rancher `v2.6.3+` with the built-in Harvester node driver. 
-Additionally, Harvester now can provide built-in [Load Balancer support](../cloud-provider.md) as well as raw cluster [persistent storage](../csi-driver.md) support to the guest Kubernetes cluster.
+Additionally, Harvester now can provide built-in [Load Balancer support](../cloud-provider.md) as well as Harvester cluster [storage passthrough](../csi-driver.md) support to the guest Kubernetes cluster.
 
 While you can [upload and view `.ISO` images in the Harvester UI](../../upload-image.md#upload-images-via-local-file), the same capability is not available in the Rancher UI. For more information on this, see the [Rancher docs](https://rancher.com/docs/rancher/v2.6/en/virtualization-admin/#harvester-node-driver).
-
-:::note
-
-Harvester v1.0.0 is compatible with Rancher `v2.6.3+` only.
-
-:::
 
 ## Harvester Node Driver
 
@@ -85,4 +79,3 @@ Label synchronization will only take effect during guest node initialization. To
 1. After the cluster is successfully deployed, confirm that guest Kubernetes node labels are successfully synchronized from the Harvester VM node.
 
 1. Now deploy workloads on your guest Kubernetes cluster, and you should be able to manage them using the [topology spread constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/).
-
