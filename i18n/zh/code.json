@@ -136,11 +136,11 @@
     "description": "The title of the page for a docs tag"
   },
   "theme.docs.versions.unreleasedVersionLabel": {
-    "message": "此为 Harvester {versionLabel} 版尚未发行的文档。",
+    "message": "此为 {siteTitle} {versionLabel} 版尚未发行的文档。",
     "description": "The label used to tell the user that he's browsing an unreleased doc version"
   },
   "theme.docs.versions.unmaintainedVersionLabel": {
-    "message": "此为 Harvester {versionLabel} 版的文档，现已不再积极维护。",
+    "message": "此为 {siteTitle} {versionLabel} 版的文档，现已不再积极维护。",
     "description": "The label used to tell the user that he's browsing an unmaintained doc version"
   },
   "theme.docs.versions.latestVersionSuggestionLabel": {
