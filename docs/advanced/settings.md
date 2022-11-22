@@ -135,6 +135,12 @@ The following options and values can be set:
 - Proxy URL for HTTPS requests: `"httpsProxy": "https://<username>:<pswd>@<ip>:<port>"`
 - Comma-separated list of hostnames and/or CIDRs: `"noProxy": "<hostname | CIDR>"`
 
+:::caution
+
+If you configure `httpProxy` and `httpsProxy`, you must also put Harvester node's CIDR into `noProxy`, otherwise the Harvester cluster will be broken.
+
+:::
+
 #### Example
 
 ```json

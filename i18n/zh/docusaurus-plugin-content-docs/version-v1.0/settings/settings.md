@@ -77,6 +77,12 @@ https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhr
 - HTTPS 请求的代理 URL：`"httpsProxy": "https://<username>:<pswd>@<ip>:<port>"`
 - 主机名和/或 CIDR 的逗号分隔列表：`"noProxy": "<hostname | CIDR>"`
 
+:::caution
+
+如果你配置了 `httpProxy` 和 `httpsProxy`, 那么你必须同时将 Harvester 节点的 CIDR 填入 `noProxy`, 否则 Harvester 集群将会崩溃。
+
+:::
+
 #### 示例
 
 ```json
