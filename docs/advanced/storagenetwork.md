@@ -28,6 +28,20 @@ There are some prerequisites before configuring the Harvester Storage Network se
 - All pods that are attached to Longhorn Volumes should be stopped.
     - Users could skip this step with the Harvester Storage Network setting. Harvester will stop Longhorn-related pods automatically.
 
+:::caution
+
+If the Harvester cluster was upgraded from v1.0.3, please check if Whereabouts CNI is installed properly before you move on to the next step. We will always recommend following this guide to check. [Issue 3168](https://github.com/harvester/harvester/issues/3168) describes that the Harvester cluster will not always install Whereabouts CNI properly.
+
+- Verify the `ippools.whereabouts.cni.cncf.io` CRD exists with the following command.
+    - `kubectl get crd ippools.whereabouts.cni.cncf.io`
+- If the Harvester cluster doesn't have `ippools.whereabouts.cni.cncf.io`, please add [these two CRDs](https://github.com/harvester/harvester/tree/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds) before configuring `storage-network` setting.
+```
+kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds/whereabouts.cni.cncf.io_ippools.yaml
+kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds/whereabouts.cni.cncf.io_overlappingrangeipreservations.yaml
+```
+
+:::
+
 ## Configuration Example
 
 - VLAN ID
