@@ -13,7 +13,7 @@ Description: Rancher is an open source multi-cluster management platform. Harves
 
 _Available as of v0.3.0_
 
-[Rancher](https://github.com/rancher/rancher) is an open-source multi-cluster management platform. Harvester has integrated Rancher by default starting with Rancher v2.6.1.
+[Rancher](https://github.com/rancher/rancher) is an open-source multi-cluster management platform. Starting with Rancher v2.6.1, Rancher has integrated Harvester by default to centrally manage VMs and containers.
 
 
 ## Rancher & Harvester Support Matrix
@@ -25,12 +25,6 @@ _Available as of v0.3.0_
 | v2.6.5 | v1.0.2 - v1.0.1 | |
 | v2.6.4 | v1.0.1 | |
 | v2.6.3 | v1.0.0 | |
-
-:::note
-
-Harvester v1.0.0 is compatible with Rancher v2.6.3 or above only.
-
-:::
 
 Users can now import and manage multiple Harvester clusters using the Rancher [Virtualization Management](virtualization-management.md) page and leverage the Rancher [authentication](https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/) feature and RBAC control for [multi-tenancy](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/) support.
 

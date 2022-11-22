@@ -11,6 +11,7 @@ You can now provision RKE1 Kubernetes clusters on top of the Harvester cluster i
 :::note
 
 - VLAN network is required for Harvester node driver.
+- Harvester node driver only supports cloud images.
 
 :::
 
