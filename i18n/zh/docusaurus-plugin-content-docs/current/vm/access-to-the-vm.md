@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 sidebar_label: 访问虚拟机
-title: ""
+title: "访问虚拟机"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - 访问虚拟机
 Description: 虚拟机运行后，你可以在 Harvester UI 通过 VNC 客户端或串行控制台访问虚拟机。
 ---
-
-# 访问虚拟机
 
 虚拟机运行后，你可以在 Harvester UI 通过 `VNC` 客户端或串行控制台访问虚拟机。
 

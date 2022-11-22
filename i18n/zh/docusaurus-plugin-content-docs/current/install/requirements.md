@@ -1,12 +1,12 @@
 ---
 sidebar_position: 1
 sidebar_label: 要求
-title: ""
+title: "要求"
 keywords:
 - 安装要求
 Description: Harvester 安装要求概述
 ---
-# 要求
+
 Harvester 是裸机服务器上的 HCI 解决方案，以下是 Harvester 安装的最低要求。
 
 ## 硬件要求

@@ -1,10 +1,8 @@
 ---
 sidebar_position: 3
 sidebar_label: 操作系统
-title: ""
+title: "操作系统"
 ---
-
-# 操作系统
 
 Harvester 在基于 OpenSUSE 的操作系统上运行。这个操作系统是 [cOS toolkit](https://github.com/rancher-sandbox/cOS-toolkit) 的项目。本文介绍如何对操作系统相关问题进行故障排除。
 

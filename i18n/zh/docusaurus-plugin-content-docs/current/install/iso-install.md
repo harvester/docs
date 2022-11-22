@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 sidebar_label: ISO 安装
-title: ""
+title: "ISO 安装"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - ISO 安装
 Description: 如果需要获取 Harvester ISO，访问 GitHub 上的发行版本进行下载。在安装过程中，你可以选择组建一个新的集群，或者将节点加入到现有的集群中。
 ---
-
-# ISO 安装
 
 ## 安装步骤
 如果需要获取 Harvester ISO 镜像，访问 [GitHub 上的发行版本](https://github.com/harvester/harvester/releases)进行下载。

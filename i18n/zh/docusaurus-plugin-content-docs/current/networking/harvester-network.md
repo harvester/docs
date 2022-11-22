@@ -1,12 +1,11 @@
 ---
 sidebar_position: 2
 sidebar_label: 网络
-title: ""
+title: "网络"
 keywords:
 - Harvester
 - 网络
 ---
-# 网络
 
 Harvester 为虚拟机 (VM) 提供了三种类型的虚拟网络，包括：
 

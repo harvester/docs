@@ -1,10 +1,8 @@
 ---
 sidebar_position: 3
 sidebar_label: U 盘安装
-title: ""
+title: "U 盘安装"
 ---
-
-# U 盘安装
 
 ## 创建一个 USB 启动盘
 

@@ -1,10 +1,9 @@
 ---
 sidebar_position: 4
 sidebar_label: 插件
-title: ""
+title: "插件"
 ---
 
-# 插件
 _从 v1.1.0 起可用_
 
 从 v1.1.0 开始，Harvester 将使用插件（Addon）来提供可选功能。

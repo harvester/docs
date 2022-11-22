@@ -1,15 +1,13 @@
 ---
 sidebar_position: 1
 sidebar_label: 日志审计事件
-title: ""
+title: "日志审计事件"
 keywords:
 - Harvester
 - Logging
 - 审计
 - 事件
 ---
-
-# Harvester 的日志、审计和事件集成
 
 _从 v1.1.0 起可用_
 

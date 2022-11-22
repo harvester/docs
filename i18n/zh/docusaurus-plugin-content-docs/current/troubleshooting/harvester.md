@@ -1,10 +1,56 @@
 ---
 sidebar_position: 2
 sidebar_label: Harvester
-title: ""
+title: "Harvester"
 ---
 
-## 生成支持包
+## HTTP Proxy 设置错误导致多节点集群部署失败
+
+### 没有 Harvester 配置文件的 ISO 安装
+
+#### 在 Harvester 安装期间配置 HTTP 代理
+
+在某些环境中，你会在安装 Harvester 时配置 [OS Environment](../install/harvester-configuration.md#osenvironment) 的 [http-proxy](../airgap/#在安装期间配置-http-代理)。
+
+#### 在第一个节点就绪后配置 HTTP 代理
+
+第一个节点安装成功后，登录到 `Harvester GUI` 以配置 [Harvester 系统设置](../install/harvester-configuration.md#system_settings)的 [http-proxy](../airgap.md#在-harvester-设置中配置-http-代理)。
+
+然后继续向集群添加更多节点。
+
+#### 一个节点不可用
+
+你可能遇到的问题：
+
+```
+第一个节点安装成功。
+
+第二个节点安装成功。
+
+第三个节点安装成功。
+
+然后第二个节点变为 Unavialable 状态，而且无法自动恢复。
+```
+
+#### 解决方案
+
+当集群中的节点不使用 HTTP Proxy 进行相互通信时，成功安装第一个节点后，你需要为这些节点使用的 CIDR 配置 [http-proxy.noProxy](../airgap.md#在-harvester-设置中配置-http-代理)。
+
+例如，如果你的集群通过 DHCP/静态设置将 CIDR `172.26.50.128/27` 的 IP 分配给节点，请将此 CIDR 添加到 `noProxy`。
+
+设置好之后，你就可以继续往集群中添加新的节点了。
+
+有关详细信息，请参阅 [Harvester issue 3091](https://github.com/harvester/harvester/issues/3091)。
+
+### 具有 Harvester 配置文件的 ISO 安装
+
+如果在 ISO 安装时使用了 Harvester 配置文件，请在 [Harvester System Settings](../install/harvester-configuration.md#system_settings) 中配置适当的 `http-proxy`。
+
+### PXE 引导安装
+
+使用 [PXE 引导安装](../install/pxe-boot-install.md)时，请在 [OS Environment](../install/harvester-configuration.md#osenvironment) 和 [Harvester System Settings](../install/harvester-configuration.md#system_settings) 中配置合适的 `http-proxy`。
+
+## 生成 Support Bundle
 
 你可以按照以下步骤在 Harvester GUI 中生成 Support Bundle：
 

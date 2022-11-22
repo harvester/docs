@@ -1,10 +1,8 @@
 ---
 sidebar_position: 4
 sidebar_label: 监控
-title: ""
+title: "监控"
 ---
-
-# 监控
 
 本文介绍了对 Harvester Monitoring 进行故障排除的提示。
 

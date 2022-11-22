@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
 sidebar_label: 上传镜像
-title: ""
+title: "上传镜像"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - 导入镜像
 Description: 如果需要在 **Images** 页面导入虚拟机镜像，输入集群可以访问的 URL。镜像名称将使用 URL 地址的文件名自动填充。你可以随时在需要时对其进行自定义。
 ---
-
-# 上传镜像
 
 目前支持三种方式创建镜像：通过 URL 上传镜像、通过本地文件上传镜像、通过卷创建镜像。
 

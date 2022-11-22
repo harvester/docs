@@ -1,10 +1,8 @@
 ---
 sidebar_position: 3
 sidebar_label: 故障排除
-title: ""
+title: "故障排除"
 ---
-
-# 故障排除
 
 ## 概述
 

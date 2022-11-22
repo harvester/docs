@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: 集群网络
-title: ""
+title: "集群网络"
 keywords:
 - Harvester
 - 网络
@@ -9,7 +9,6 @@ keywords:
 - NetworkConfig
 - 网络
 ---
-# 集群网络
 
 ## 概念
 

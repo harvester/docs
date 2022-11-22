@@ -1,10 +1,8 @@
 ---
 sidebar_position: 3
 sidebar_label: 存储网络
-title: ""
+title: "存储网络"
 ---
-
-# 存储网络
 
 Harvester 内置 Longhorn 作为存储系统，用于为 VM 和 Pod 提供块设备卷。如果用户希望将 Longhorn 复制流量与 Kubernetes 集群网络（即管理网络）或其它集群工作负载隔离开来，用户可以为 Longhorn 复制流量分配一个专用的存储网络来提高网络带宽和性能。
 
@@ -27,6 +25,20 @@ Harvester 内置 Longhorn 作为存储系统，用于为 VM 和 Pod 提供块设
    - `kubectl get -A vmi`
 - 停止了连接到 Longhorn 卷的所有 Pod。
    - 用户可以使用 Harvester 存储网络设置跳过此步骤。Harvester 将自动停止与 Longhorn 相关的 Pod。
+
+:::caution
+
+如果 Harvester 集群是从 v1.0.3 升级来的，请在继续下一步之前检查是否已正确安装 Whereabouts CNI。我们始终建议按照本指南进行检查。[Issue 3168](https://github.com/harvester/harvester/issues/3168) 描述了 Harvester 集群可能无法正确安装 Whereabouts CNI。
+
+- 使用以下命令验证 `ippools.whereabouts.cni.cncf.io` CRD 是否存在。
+   - `kubectl get crd ippools.whereabouts.cni.cncf.io`
+- 如果 Harvester 集群没有 `ippools.whereabouts.cni.cncf.io`，请在配置 `storage-network` 之前添加[这两个 CRD](https://github.com/harvester/harvester/tree/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds)。
+```
+kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds/whereabouts.cni.cncf.io_ippools.yaml
+kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds/whereabouts.cni.cncf.io_overlappingrangeipreservations.yaml
+```
+
+:::
 
 ## 配置示例
 

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: Harvester 主机驱动
-title: ""
+title: "Harvester 主机驱动"
 keywords:
   - Harvester
   - harvester
@@ -11,8 +11,6 @@ keywords:
 Description: Harvester 主机驱动（Node Driver）用于在 Harvester 集群中配置虚拟机。在本节中，你将学习如何配置 Rancher 以使用 Harvester 主机驱动来启动和管理 Kubernetes 集群。
 ---
 
-# Harvester 主机驱动
-
 Harvester 主机驱动（Node Driver）用于在 Harvester 集群中配置虚拟机。在本节中，你将学习如何配置 Rancher 以使用 Harvester 主机驱动来启动和管理 Kubernetes 集群。
 
 主机驱动的设计与 [Docker Machine Driver](https://docs.docker.com/machine/) 相同，它的项目仓库位于 [harvester/docker-machine-driver-harvester](https://github.com/harvester/docker-machine-driver-harvester)。
@@ -21,7 +19,6 @@ Harvester 主机驱动（Node Driver）用于在 Harvester 集群中配置虚拟
 此外，Harvester 可以为这些 Kubernetes 集群提供内置的[负载均衡器](../cloud-provider.md)以及 Harvester 集群的[存储直通](../csi-driver.md)支持。
 
 虽然你可以中[在 Harvester UI 中上传和查看 `.ISO` 镜像](../../upload-image.md#通过本地文件上传镜像)，但 Rancher UI 不支持此功能。有关更多信息，请参阅 [Rancher 文档](https://rancher.com/docs/rancher/v2.6/en/virtualization-admin/#harvester-node-driver)。
-
 
 ## Harvester 主机驱动
 
@@ -50,6 +47,15 @@ _从 v1.0.3 起可用_
 
 在你的 Kubernetes 集群中，你可以使用[拓扑分布约束](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/)来控制工作负载如何在容错域（例如区域和可用区）之间分布在 Harvester 虚拟机中。这有助于实现集群资源的高可用性和提高资源利用率。
 
+支持同步拓扑标签功能所需的最低 RKE2 版本如下：
+
+| 支持的 RKE2 版本 |
+| :--|
+| \>=  v1.24.3+rke2r1 |
+| \>=  v1.23.9+rke2r1 |
+| \>=  v1.22.12+rke2r1 |
+
+另外，通过 RKE/K3s `应用程序`安装的 Cloud Provider 版本必须 >= v0.1.4。
 
 ### 将拓扑标签同步到 Guest 集群节点
 

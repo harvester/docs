@@ -1,10 +1,8 @@
 ---
 sidebar_position: 17
 sidebar_label: 常见问题
-title: ""
+title: "常见问题"
 ---
-
-# 常见问题
 
 本文包含了用户常见的 Harvester 问题。
 
