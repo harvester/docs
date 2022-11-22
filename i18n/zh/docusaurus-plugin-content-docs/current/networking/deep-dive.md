@@ -1,13 +1,12 @@
 ---
 sidebar_position: 3
-sidebar_label: 深度解释
-title: ""
+sidebar_label: Harvester 网络深度解释
+title: "Harvester 网络深度解释"
 keywords:
 - Harvester
 - 网络
 - 拓扑
 ---
-# Harvester 网络深度解释
 
 下面的网络拓扑展示了我们是如何实现 Harvester 网络的。
 

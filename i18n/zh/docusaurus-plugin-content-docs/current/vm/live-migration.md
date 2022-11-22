@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
 sidebar_label: 热迁移
-title: ""
+title: "热迁移"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - 热迁移
 Description: 热迁移（也称为实时迁移，动态迁移）指的是在不停机的情况下将虚拟机移动到不同的主机。
 ---
-
-# 热迁移
 
 热迁移（也称为实时迁移，动态迁移）指的是在不停机的情况下将虚拟机移动到不同的主机。
 

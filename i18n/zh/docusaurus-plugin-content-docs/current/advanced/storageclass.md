@@ -1,10 +1,8 @@
 ---
 sidebar_position: 2
 sidebar_label: 存储类
-title: ""
+title: "存储类"
 ---
-
-# 存储类
 
 StorageClass 允许管理员描述存储的**类**。不同的 Longhorn StorageClass 可能会映射到集群管理员配置的不同的副本策略、不同的节点调度策略或不同的磁盘调度策略。这个概念在其他存储系统中也称为 **profiles**。
 

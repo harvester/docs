@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 sidebar_label: 编辑虚拟机
-title: ""
+title: "编辑虚拟机"
 keywords:
   - Harvester
   - harvester
@@ -12,8 +12,6 @@ keywords:
   - 编辑虚拟机
 Description: 在 Harvester VM 页面编辑虚拟机。
 ---
-
-# 编辑虚拟机
 
 ## 如何编辑虚拟机
 

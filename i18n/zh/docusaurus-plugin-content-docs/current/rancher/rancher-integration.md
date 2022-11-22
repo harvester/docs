@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: Rancher 集成
-title: ""
+title: "Rancher 集成"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - Rancher 集成
 Description: Rancher 是一个开源的多集群管理平台。从 Rancher v2.6.1 开始，Harvester 默认集成 Rancher。
 ---
-
-# Rancher 集成
 
 _从 v0.3.0 起可用_
 
@@ -27,7 +25,6 @@ _从 v0.3.0 起可用_
 | v2.6.5 | v1.0.2 - v1.0.1 | |
 | v2.6.4 | v1.0.1 | |
 | v2.6.3 | v1.0.0 | |
-
 
 你现在可以使用 Rancher 的[虚拟化管理](virtualization-management.md)页面导入和管理多个 Harvester 集群，并利用 Rancher 的[认证](https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/)功能和 RBAC 控制来实现[多租户](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/)支持。
 

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 9
 sidebar_label: 克隆虚拟机
-title: ""
+title: "克隆虚拟机"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - 克隆虚拟机
 Description: 在克隆 VM 时，你可以选择是否同时克隆 VM 数据。此功能不需要你先获取 VM 快照或设置备份目标。
 ---
-
-# 克隆虚拟机
 
 _从 v1.1.0 起可用_
 

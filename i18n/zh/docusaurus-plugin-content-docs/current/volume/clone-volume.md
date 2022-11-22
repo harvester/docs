@@ -1,13 +1,11 @@
 ---
 sidebar_position: 3
 sidebar_label: 克隆卷
-title: ""
+title: "克隆卷"
 keywords:
 - 卷
 Description: 通过 Volume 页面克隆卷。
 ---
-
-# 克隆卷
 
 创建卷后，你可以按照以下步骤克隆卷：
 

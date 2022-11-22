@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 sidebar_label: 创建 Windows 虚拟机
-title: ""
+title: "创建 Windows 虚拟机"
 keywords:
   - Harvester
   - harvester
@@ -14,8 +14,6 @@ keywords:
   - 创建 Windows 虚拟机
 Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 ---
-
-# 创建 Windows 虚拟机
 
 你可以从 **Virtual Machines** 页面创建一个或多个虚拟机。
 

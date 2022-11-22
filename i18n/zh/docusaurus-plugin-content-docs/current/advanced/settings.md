@@ -1,10 +1,8 @@
 ---
 sidebar_position: 1
 sidebar_label: 设置
-title: ""
+title: "设置"
 ---
-
-# 设置
 
 本文将介绍可在 Harvester 中使用的高级配置。
 你可以从仪表盘 UI 或使用 `kubectl` 命令修改 `settings.harvesterhci.io` 自定义资源。

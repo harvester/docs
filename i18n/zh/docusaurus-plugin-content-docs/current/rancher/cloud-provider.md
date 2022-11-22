@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 sidebar_label: Harvester Cloud Provider
-title: ""
+title: "Harvester Cloud Provider"
 keywords:
   - Harvester
   - harvester
@@ -12,7 +12,6 @@ keywords:
   - Harvester Cloud Provider
 Description: Harvester 中的 k8s 集群使用的 Harvester Cloud Provider 提供了一个 CSI 接口和 Cloud Controller Manager (CCM)，来实现一个内置的负载均衡器。
 ---
-# Harvester Cloud Provider
 
 你可以使用内置的 Harvester 主机驱动在 Rancher 中配置 [RKE1](./node/rke1-cluster.md) 和 [RKE2](./node/rke2-cluster.md) 集群。Harvester 会为这些 Kubernetes 集群提供[负载均衡器](#负载均衡器支持)和 Harvester 集群[存储直通](./csi-driver.md)支持。
 
@@ -40,6 +39,7 @@ Description: Harvester 中的 k8s 集群使用的 Harvester Cloud Provider 提�
 
 
 ### 使用 Harvester 主机驱动部署到 RKE2 集群
+
 使用 Harvester 主机驱动启动 RKE2 集群时，选择 `Harvester` 云提供商。然后，主机驱动将自动部署 CSI 驱动和 CCM。
 
 ![](/img/v1.1/rancher/rke2-cloud-provider.png)
@@ -147,6 +147,22 @@ users:
 ![](/img/v1.1/rancher/cloud-config-userdata.png)
 
 有了这些设置，K3s/RKE 集群应该可以在你使用外部云提供商时成功配置。
+
+## 升级 Cloud Provider
+
+### 升级 RKE2
+你可以通过升级 RKE2 版本来升级 Cloud Provider。要升级 RKE2 集群，你可以在 Rancher UI 中执行以下操作：
+1. 单击 **☰ > Cluster Management**。
+2. 找到要升级的 guest 集群，然后选择 **⋮ > Edit Config**。
+3. 选择 **Kubernetes Version**。
+4. 单击 **Save**。
+
+### 升级 RKE/K3s
+你可以通过 Rancher UI 升级 RKE/K3s cloud provider，如下所示：
+1. 单击 **☰ > RKE/K3s Cluster > Apps > Installed Apps**。
+2. 找到 cloud provider 表并选择 **⋮ > Edit/Upgrade**。
+3. 选择 **Version**。
+4. 单击 **Next > Update**。
 
 ## 负载均衡器支持
 部署 `Harvester Cloud Provider` 后，你可以使用 Kubernetes `LoadBalancer` 服务将集群内的微服务公开给外部。在你创建 Kubernetes `LoadBalancer` 服务时，会为该服务分配一个 Harvester 负载均衡器，你可以通过 Rancher UI 中的 `Add-on Config` 对其进行编辑。

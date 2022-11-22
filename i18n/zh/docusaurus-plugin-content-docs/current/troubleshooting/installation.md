@@ -1,10 +1,8 @@
 ---
 sidebar_position: 1
 sidebar_label: 安装
-title: ""
+title: "安装"
 ---
-
-# 安装
 
 本节介绍如何在安装失败的情况下进行故障排除或获取帮助。
 

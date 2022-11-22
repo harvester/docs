@@ -1,13 +1,11 @@
 ---
 sidebar_position: 2
 sidebar_label: 编辑卷
-title: ""
+title: "编辑卷"
 keywords:
 - 卷
 Description: 通过 Volume 页面编辑卷。
 ---
-
-# 编辑卷
 
 创建卷后，你可以通过单击 `⋮` 按钮并选择 `Edit Config` 选项来编辑卷。
 

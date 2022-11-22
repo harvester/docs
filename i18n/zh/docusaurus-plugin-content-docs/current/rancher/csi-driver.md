@@ -1,14 +1,12 @@
 ---
 sidebar_position: 5
 sidebar_label: Harvester CSI Driver
-title: ""
+title: "Harvester CSI Driver"
 keywords:
   - Harvester
   - harvester
   - Rancher 集成
 ---
-
-# Harvester CSI Driver
 
 Harvester CSI Driver 提供了一个标准的 CSI 接口，供 Harvester 中所创建的 Kubernetes 集群使用。这个 CIS 接口连接到主机集群，并将主机卷热插拔到虚拟机来提供裸金属集群磁盘的存储性能。
 
@@ -27,7 +25,7 @@ Harvester CSI Driver 提供了一个标准的 CSI 接口，供 Harvester 中所�
 
 ### 使用 Harvester RKE1 主机驱动进行部署
 
-- 选择 `Harvester(Out-of-tree)` 选项（可选，如不需要同时使用 Cloud Provider 功能可以选择 None 选项）。
+- 选择 `Harvester(Out-of-tree)` 选项（可选，如不需要同时使用 Cloud Provider 功能可以选择 `None` 选项）。
 
    ![](/img/v1.1/rancher/rke-cloud-provider.png)
 

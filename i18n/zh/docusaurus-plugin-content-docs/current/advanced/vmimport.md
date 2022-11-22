@@ -1,10 +1,9 @@
 ---
 sidebar_position: 5
 sidebar_label: VM 导入
-title: ""
+title: "VM 导入"
 ---
 
-# VM 导入
 _从 v1.1.0 起可用_
 
 从 v1.1.0 开始，用户可以将他们的 VMWare 和 OpenStack 虚拟机导入到 Harvester。

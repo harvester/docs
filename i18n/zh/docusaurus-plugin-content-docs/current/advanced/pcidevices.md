@@ -1,10 +1,8 @@
 ---
 sidebar_position: 6
 sidebar_label: PCI 设备
-title: ""
+title: "PCI 设备（实验功能）"
 ---
-
-# PCI 设备（实验功能）
 
 _从 v1.1.0 起可用_
 

@@ -1,10 +1,8 @@
 ---
 sidebar_position: 1
 sidebar_label: 主机管理
-title: ""
+title: "主机管理"
 ---
-
-# 主机管理
 
 用户可以从主机页面查看和管理 Harvester 节点。第一个节点默认为集群的管理节点。当节点数量大于等于三个时，先加入的另外两个节点会自动升级为管理节点，从而形成一个高可用 (HA) 集群。
 
@@ -63,9 +61,27 @@ Admin 用户可以点击 **Enable Maintenance Mode** 来自动驱逐节点中所
 
 1. 前往 **Hosts** 页面。
 2. 找到需要修改的节点，点击 **⋮ > Edit Config**。
-2. 选择 **Storage** 选项卡并单击 **Add Disk**。
-3. 选择额外的原始块设备，将其添加为额外的数据卷。
+
+![Edit Config](/img/v1.1/host/edit-config.png)
+
+3. 选择 **Storage** 选项卡并单击 **Add Disk**。
+
+![Add Disks](/img/v1.1/host/add-disks.png)
+
+:::caution
+
+从 Harvester v1.0.2 开始，我们不再支持将分区添加为附加磁盘。如果你想将其添加为附加磁盘，请先重新进行格式化（例如，使用 `fdisk`）。
+
+:::
+
+4. 选择额外的原始块设备，将其添加为额外的数据卷。
    - 如果块设备从未被强制格式化，则需要 `Force Formatted` 选项。
+
+![Force Format](/img/v1.1/host/force-format-disks.png)
+
+5. 最后，你可以再次点击 **⋮ > Edit Config** 查看新添加的磁盘。同时，你还可以添加 “Host/Disk” 标签（详见[下一节](#存储标签)）。
+
+![Check Result](/img/v1.1/host/check-added-disks.png)
 
 :::note
 
@@ -79,9 +95,6 @@ Admin 用户可以点击 **Enable Maintenance Mode** 来自动驱逐节点中所
 如果你在 QEMU 环境中测试 Harvester，你需要使用 QEMU v6.0 或更高版本。以前版本的 QEMU 将始终为 NVMe 磁盘模拟生成相同的 WWN，这将导致 Harvester 不添加其他磁盘。
 
 :::
-
-![Edit Config](/img/v1.1/host/edit-config.png)
-![Add Disks](/img/v1.1/host/add-disks.png)
 
 ### 存储标签
 

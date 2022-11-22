@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 sidebar_label: PXE 引导安装
-title: ""
+title: "PXE 引导安装"
 keywords:
   - Harvester
   - harvester
@@ -13,8 +13,6 @@ keywords:
   - PXE 引导安装
 Description: 从 `0.2.0` 开始，Harvester 可以自动安装。本文提供使用 pxe 引导进行自动安装的示例。
 ---
-
-# PXE 引导安装
 
 从 `0.2.0` 开始，Harvester 可以自动安装。本文提供使用 pxe 引导进行自动安装的示例。
 
