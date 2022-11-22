@@ -1,16 +1,15 @@
 ---
 sidebar_position: 5
 sidebar_label: Harvester CSI Driver
-title: ""
+title: "Harvester CSI Driver"
 keywords:
   - Harvester
   - harvester
   - Rancher 集成
 ---
 
-# Harvester CSI Driver
 
-Harvester CSI Driver 提供了一个 CSI 接口，供 Harvester 中的 Kubernetes 集群使用。这个 CIS 接口连接到主机集群，并将主机卷热插拔到虚拟机来提供本机存储性能。
+Harvester CSI Driver 提供了一个 CSI 接口，供 Harvester 中所创建的 Kubernetes 集群使用。这个 CIS 接口连接到主机集群，并将主机卷热插拔到虚拟机来提供裸金属集群磁盘的存储性能。
 
 ## 部署
 
@@ -21,7 +20,7 @@ Harvester CSI Driver 提供了一个 CSI 接口，供 Harvester 中的 Kubernete
 
 :::note
 
-目前，Harvester CSI Driver 仅支持单节点读写 (RWO) 卷。请留意 [issue #1992](https://github.com/harvester/harvester/issues/1992) 以获得后续多节点 `read-only`(ROX) 和 `read-write`(RWX) 的支持。
+目前，Harvester CSI Driver 仅支持单节点读写 (RWO) 卷。请留意 [issue #1992](https://github.com/harvester/harvester/issues/1992) 以获得后续多节点 `read-only` (ROX) 和 `read-write` (RWX) 的支持。
 
 :::
 
@@ -38,7 +37,7 @@ Harvester CSI Driver 提供了一个 CSI 接口，供 Harvester 中的 Kubernete
 
 ### 使用 Harvester RKE2 主机驱动进行部署
 
-当使用 Rancher RKE2 主机驱动启动 Kubernetes 集群时，Harvester CSI Driver 会在选择 Harvester 云提供商时被部署。
+当使用 Rancher RKE2 主机驱动启动 Kubernetes 集群时，Harvester CSI Driver 会在选中 Harvester 云提供商后被自动部署。
 
 ![select-harvester-cloud-provider](/img/v1.0/rancher/select-harvester-cloud-provider.png)
 

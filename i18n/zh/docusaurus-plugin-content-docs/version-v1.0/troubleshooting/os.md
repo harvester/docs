@@ -1,10 +1,8 @@
 ---
 sidebar_position: 3
 sidebar_label: 操作系统
-title: ""
+title: "操作系统"
 ---
-
-# 操作系统
 
 Harvester 在基于 OpenSUSE 的操作系统上运行。这个操作系统是 [cOS toolkit](https://github.com/rancher-sandbox/cOS-toolkit) 的项目。本文介绍如何对操作系统相关问题进行故障排除。
 
@@ -21,13 +19,13 @@ rancher@node1:~> sudo blkid
 rancher@node1:~> sudo -i
 node1:~ # blkid
 ```
-## 如何安装包？为什么有些路径仅能读？
+## 如何安装包？为什么有些路径是只读的？
 
 操作系统文件系统，就像容器镜像一样，是基于镜像并且不可变的（除了某些目录）。要临时启用读写模式，请按照以下步骤操作：
 
 :::caution
 
-如果文件被修改，启用读写模式可能会破坏你的系统。请谨慎使用。
+读写模式下，文件被修改可能会破坏你的系统，请谨慎使用。
 
 :::
 

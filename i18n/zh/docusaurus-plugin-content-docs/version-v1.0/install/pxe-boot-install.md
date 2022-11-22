@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 sidebar_label: PXE 引导安装
-title: ""
+title: "PXE 引导安装"
 keywords:
   - Harvester
   - harvester
@@ -13,8 +13,6 @@ keywords:
   - PXE 引导安装
 Description: 从 `0.2.0` 开始，Harvester 可以自动安装。本文提供使用 pxe 引导进行自动安装的示例。
 ---
-
-# PXE 引导安装
 
 从 `0.2.0` 开始，Harvester 可以自动安装。本文提供使用 pxe 引导进行自动安装的示例。
 
@@ -316,7 +314,7 @@ boot
 
 `initrd=harvester-<version>-initrd` 参数是必须的。
 
-## 好用的内核参数
+## 实用的内核参数
 
 除了 Harvester 配置之外，你还可以指定用于其他场景的内核参数。
 另请参见 [dracut.cmdline(7)](https://man7.org/linux/man-pages/man7/dracut.cmdline.7.html)。

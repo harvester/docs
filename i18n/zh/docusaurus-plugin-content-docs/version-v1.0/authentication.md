@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 sidebar_label: 身份验证
-title: ""
+title: "身份验证"
 keywords:
   - Harvester
   - harvester
@@ -10,7 +10,6 @@ keywords:
   - 身份验证
 Description: 在 ISO 安装模式下，首次登录时会提示用户为默认 `admin` 用户设置密码。
 ---
-# 身份验证
 
 在完成安装后的首次登录时，你会收到为默认 `admin` 用户设置密码的提示。
 

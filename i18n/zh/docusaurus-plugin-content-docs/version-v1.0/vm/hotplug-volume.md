@@ -1,15 +1,13 @@
 ---
 sidebar_position: 7
 sidebar_label: 热插拔卷
-title: ""
+title: "热插拔卷"
 keywords:
   - Harvester
   - 热插拔
   - 卷
 Description: 向运行中的虚拟机添加热插拔卷
 ---
-
-# 热插拔卷
 
 Harvester 支持向运行中的虚拟机添加热插拔卷。
 

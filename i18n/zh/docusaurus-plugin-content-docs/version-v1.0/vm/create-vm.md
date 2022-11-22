@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: 创建虚拟机
-title: ""
+title: "创建虚拟机"
 keywords:
   - Harvester
   - harvester
@@ -12,8 +12,6 @@ keywords:
   - 创建虚拟机
 Description: 从"虚拟机"页面创建一个或多个虚拟机。
 ---
-
-# 创建虚拟机
 
 ## 如何创建虚拟机
 
