@@ -155,8 +155,8 @@ Sleep Time: 20
 ```yaml
 Boost: 200
 Decay: 50
-Maximum Pages: 100
-Minimum Pages: 10000
+Maximum Pages: 10000
+Minimum Pages: 100
 Sleep Time: 20
 ```
 
@@ -178,8 +178,8 @@ Ksmtuned 使用以下参数来控制 KSM 效率：
 ```yaml
 Boost: 300
 Decay: 100
-Minimum Pages: 1000
 Maximum Pages: 5000
+Minimum Pages: 1000
 Sleep Time: 50
 ```
 
