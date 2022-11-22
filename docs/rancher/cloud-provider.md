@@ -29,11 +29,11 @@ In this page we will learn:
 ### Deploying to the RKE1 Cluster with Harvester Node Driver
 When spinning up an RKE cluster using the Harvester node driver, you can perform two steps to deploy the `Harvester` cloud provider:
 
-- Select `Harvester(Out-of-tree)` option.
+1. Select `Harvester(Out-of-tree)` option.
 
     ![](/img/v1.1/rancher/rke-cloud-provider.png)
   
-- Install `Harvester Cloud Provider` from the Rancher marketplace.
+2. Install `Harvester Cloud Provider` from the Rancher marketplace.
 
     ![](/img/v1.1/rancher/install-harvester-cloud-provider.png)
 
@@ -46,69 +46,47 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 
 ### Deploying to the K3s Cluster with Harvester Node Driver [Experimental]
 
-- Choose the Kubernetes version to be k3s and click the `Edit as YAML` button to config the K3s cluster YAML (For existing cluster, you can also click the `Edit YAML` button to update it):
+When spinning up a K3s cluster using the Harvester node driver, you can perform the following steps to deploy the harvester cloud provider:
 
-  ![](/img/v1.1/rancher/edit-k3s-cluster-yaml.png)
+1. Generate and inject cloud config for `harvester-cloud-provider`
 
-- Edit K3s cluster YAML.
-    - Set `disable-cloud-provider: true` to disable default k3s cloud provider.
-    - Add `cloud-provider=external` to use harvester cloud provider.
+The cloud provider needs a kubeconfig file to work, a limited scoped one can be generated using the [generate_addon.sh](https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh) script available in the [harvester/cloud-provider-harvester](https://github.com/harvester/cloud-provider-harvester) repo.
 
-  ![](/img/v1.1/rancher/k3s-cluster-yaml-content-for-harvester-cloud-provider.png)
+:::note
 
-- [Generate addon configuration](https://github.com/harvester/cloud-provider-harvester/blob/master/deploy/generate_addon.sh) and put it in K3s VMs `/etc/kubernetes/cloud-config`.
+The script depends on `kubectl` and `jq` to operate the Harvester cluster
 
+The script needs access to the `Harvester Cluster` kubeconfig to work.
 
-### Deploy external cloud provider
-Deploying external cloud provider is similar for both RKE2 and K3s based clusters.
+The namespace needs to be the namespace in which the guest cluster will be created.
 
-Once the in-tree cloud provider has been disabled by following the above steps, you can deploy the external cloud provider via:
-
-  ![](/img/v1.1/rancher/external-cloud-provider-addon.png)
-
-A sample additional manifest is as follows:
-```
-apiVersion: helm.cattle.io/v1
-kind: HelmChart
-metadata:
-  name: harvester-cloud-provider
-  namespace: kube-system
-spec:
-  targetNamespace: kube-system
-  bootstrap: true
-  repo: https://charts.harvesterhci.io/
-  chart: harvester-cloud-provider
-  version: 0.1.12
-  helmVersion: v3
-```
-
-The cloud provider needs a kubeconfig file to work, a limited scoped one can be generated using the `generate_addon.sh` script available in the [harvester/cloud-provider-harvester](https://github.com/harvester/cloud-provider-harvester) repo.
-
-*NOTE:* The script needs access to the harvester cluster kubeconfig to work. In addition the namespace needs to be the namespace in which the workload cluster will be created.
+:::
 
 ```
-# depend on kubectl to operate the Harvester cluster
-./deploy/generate_addon.sh <serviceaccount_name> <namespace>
+./deploy/generate_addon.sh <serviceaccount name> <namespace>
 ```
 
 The output will look as follows:
 
 ```
-(⎈ |local:default)➜  cloud-provider-harvester git:(master) ✗ ./deploy/generate_addon.sh harvester-cloud-provider default
+# ./deploy/generate_addon.sh harvester-cloud-provider default
 Creating target directory to hold files in ./tmp/kube...done
 Creating a service account in default namespace: harvester-cloud-provider
-W0506 16:44:15.429068 3008674 helpers.go:598] --dry-run is deprecated and can be replaced with --dry-run=client.
+W1104 16:10:21.234417    4319 helpers.go:663] --dry-run is deprecated and can be replaced with --dry-run=client.
 serviceaccount/harvester-cloud-provider configured
 
 Creating a role in default namespace: harvester-cloud-provider
 role.rbac.authorization.k8s.io/harvester-cloud-provider unchanged
 
 Creating a rolebinding in default namespace: harvester-cloud-provider
-W0506 16:44:23.798293 3008738 helpers.go:598] --dry-run is deprecated and can be replaced with --dry-run=client.
+W1104 16:10:21.986771    4369 helpers.go:663] --dry-run is deprecated and can be replaced with --dry-run=client.
 rolebinding.rbac.authorization.k8s.io/harvester-cloud-provider configured
 
-Getting secret of service account harvester-cloud-provider on default
-Secret name: harvester-cloud-provider-token-5zkk9
+Getting uid of service account harvester-cloud-provider on default
+Service Account uid: ea951643-53d2-4ea8-a4aa-e1e72a9edc91
+
+Creating a user token secret in default namespace: harvester-cloud-provider-token
+Secret name: harvester-cloud-provider-token
 
 Extracting ca.crt from secret...done
 Getting user token from secret...done
@@ -125,7 +103,7 @@ Setting the current-context in the kubeconfig file...Switched to context "harves
 apiVersion: v1
 clusters:
 - cluster:
-    certificate-authority-data: CACERT
+    certificate-authority-data: <CACERT>
     server: https://HARVESTER-ENDPOINT/k8s/clusters/local
   name: local
 contexts:
@@ -140,13 +118,66 @@ preferences: {}
 users:
 - name: harvester-cloud-provider-default-local
   user:
-    token: TOKEN
+    token: <TOKEN>
+    
+    
+########## cloud-init user data ############
+write_files:
+- encoding: b64
+  content: <CONTENT>
+  owner: root:root
+  path: /etc/kubernetes/cloud-config
+  permissions: '0644'
 ```
 
-This cloud-config file can now be injected via the `user-data` available in the `advanced options` for the nodepool.
-  ![](/img/v1.1/rancher/cloud-config-userdata.png)
+Copy and paste the output below `cloud-init user data` to **Machine Pools >Show Advanced > User Data**.
 
-With these settings in place a K3s / RKE cluster should provision successfully while using the external cloud provider.
+![](/img/v1.1/rancher/cloud-config-userdata.png)
+
+3. Add the following `HelmChart` yaml of `harvester-cloud-provider` to **Cluster Configuration > Add-On Config > Additional Manifest**
+
+```
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: harvester-cloud-provider
+  namespace: kube-system
+spec:
+  targetNamespace: kube-system
+  bootstrap: true
+  repo: https://charts.harvesterhci.io/
+  chart: harvester-cloud-provider
+  version: 0.1.13
+  helmVersion: v3
+```
+
+![](/img/v1.1/rancher/external-cloud-provider-addon.png)
+
+4. Disable the in-tree cloud provider by
+
+- Click the `Edit as YAML` button
+
+![](/img/v1.1/rancher/edit-k3s-cluster-yaml.png)
+- Disable `servicelb` and Set `disable-cloud-controller: true` to disable default k3s cloud controller.
+```yaml
+    machineGlobalConfig:
+      disable:
+        - servicelb
+      disable-cloud-controller: true
+```
+
+- Add `cloud-provider=external` to use harvester cloud provider.
+```yaml
+    machineSelectorConfig:
+      - config:
+          kubelet-arg:
+          - cloud-provider=external
+          protect-kernel-defaults: false
+```
+
+![](/img/v1.1/rancher/k3s-cluster-yaml-content-for-harvester-cloud-provider.png)
+
+With these settings in place a K3s cluster should provision successfully while using the external cloud provider.
 
 ## Upgrade Cloud Provider
 
