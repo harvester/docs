@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: 升级 Harvester
-title: ""
+title: "升级 Harvester"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - 升级 Harvester
 Description: 升级 Harvester 有两种方法。你可以使用 ISO 镜像或通过 UI 进行升级。
 ---
-
-# 升级 Harvester
 
 ## 升级支持矩阵
 
@@ -108,7 +106,7 @@ Description: 升级 Harvester 有两种方法。你可以使用 ISO 镜像或通
 
    - 假设文件托管在 `http://10.10.0.1/version.yaml` 中。
 
-- 登录到其中一个 controlplane 节点。
+- 登录到其中一个 control plane 节点。
 - 成为 root 并创建一个版本：
 
    ```

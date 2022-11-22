@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 sidebar_label: 虚拟机备份和恢复
-title: ""
+title: "虚拟机备份和恢复"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - 虚拟机备份和恢复
 Description: 你可以在“虚拟机”页面创建虚拟机备份。虚拟机备份卷将存储在备份目标（NFS 或 S3 服务器）中，用于还原新虚拟机或替换现有虚拟机。
 ---
-
-# 虚拟机备份和恢复
 
 _从 v0.3.0 起可用_
 

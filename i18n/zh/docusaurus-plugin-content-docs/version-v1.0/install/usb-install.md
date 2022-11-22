@@ -1,10 +1,8 @@
 ---
 sidebar_position: 3
 sidebar_label: U 盘安装
-title: ""
+title: "U 盘安装"
 ---
-
-# U 盘安装
 
 ## 创建一个 USB 启动盘
 
@@ -43,7 +41,7 @@ title: ""
 
 ### 显示问题
 
-某些显卡的固件在 `v0.3.0` 中无法发送。
+某些显卡的固件在 `v0.3.0` 中没有携带。
 你可以按下 `e` 来编辑 GRUB 菜单入口，并将 `nomodeset` 尾附到启动参数后。然后按下 `Ctrl + x` 来启动。
 
 ![](/img/v1.0/install/usb-install-nomodeset.png)

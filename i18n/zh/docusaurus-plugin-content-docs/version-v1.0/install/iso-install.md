@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 sidebar_label: ISO 安装
-title: ""
+title: "ISO 安装"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - ISO 安装
 Description: 如果需要获取 Harvester ISO，访问 GitHub 上的发行版本进行下载。在安装过程中，你可以选择组建一个新的集群，或者将节点加入到现有的集群中。
 ---
-
-# ISO 安装
 
 如果需要获取 Harvester ISO 镜像，访问 [GitHub 上的发行版本](https://github.com/harvester/harvester/releases)进行下载。
 
@@ -27,7 +25,7 @@ Description: 如果需要获取 Harvester ISO，访问 GitHub 上的发行版本
    ![iso-install.png](/img/v1.0/install/iso-install.png)
 1. 通过创建新的 Harvester 集群或加入现有集群来选择安装模式。
 1. 选择要安装 Harvester 集群的设备。
-   - 注意：默认情况下，Harvester 对 UEFI 和 BIOS 使用 [GPT](https://en.wikipedia.org/wiki/GUID_Partition_Table) 分区架构。如果你使用 BIOS 引导，则可以选择 [MBR](https://en.wikipedia.org/wiki/Master_boot_record)。
+   - 注意：默认情况下，Harvester 对 UEFI 和 BIOS 使用 [GPT](https://en.wikipedia.org/wiki/GUID_Partition_Table) 分区表。如果你使用 BIOS 引导，则可以选择 [MBR](https://en.wikipedia.org/wiki/Master_boot_record)。
       ![iso-install-disk.png](/img/v1.0/install/iso-install-disk.png)
 1. 配置主机名并选择管理网络的网络接口。默认情况下，Harvester 将创建一个名为 `harvester-mgmt` 的绑定 NIC，IP 地址可以通过 DHCP 进行配置或静态分配。<small>（注意：Node IP 在 Harvester 集群的生命周期中无法更改。如果使用了 DHCP，用户必须确保 DHCP 服务器始终为同一个节点提供相同的 IP。由于节点 IP 发生变化，相关节点无法加入集群，甚至会破坏集群)。</small>
 
@@ -40,7 +38,7 @@ Description: 如果需要获取 Harvester ISO，访问 GitHub 上的发行版本
 1. （可选）如果你需要使用 HTTP 代理来访问外部环境，在此处输入代理的 URL。否则，请留空。
 1. （可选）你可以从远端服务器 URL 导入 SSH 密钥。你的 GitHub 公钥可以与 `https://github.com/<username>.keys` 一起使用。
 1. （可选）如果你需要使用 [Harvester 配置文件](./harvester-configuration.md)来自定义主机，在此处输入 HTTP URL。
-1. 确认安装选项后，Harvester 会自动安装到你的主机上。安装过程可能需要几分钟。
+1. 确认安装选项后，Harvester 会安装到你的主机上。安装过程可能需要几分钟。
 1. 主机会在安装完成后重启。重启后，包含管理 URL 和状态的 Harvester 控制台会显示。你可以使用 `F12` 在 Harvester 控制台和 Shell 之间切换。
 1. 网页界面的默认 URL 是 `https://your-virtual-ip`。
    ![iso-installed.png](/img/v1.0/install/iso-installed.png)

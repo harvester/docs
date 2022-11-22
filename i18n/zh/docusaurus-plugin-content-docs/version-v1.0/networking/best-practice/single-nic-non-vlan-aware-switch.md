@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 sidebar_label: 具有非 VLAN 感知交换机的单个 NIC
-title: ""
+title: "具有非 VLAN 感知交换机的单个 NIC"
 keywords:
   - Harvester
   - harvester
@@ -13,8 +13,6 @@ keywords:
   - vlan
 Description: Harvester 构建在 Kubernetes 之上，而 Kubernetes 使用 [CNI](https://github.com/containernetworking/cni) 作为网络提供商和 Kubernetes Pod 网络之间的接口。因此，我们也基于 CNI 实现 Harvester 网络。此外，Harvester UI 集成了网络配置，来实现用户友好的虚拟机网络配置。
 ---
-
-# 具有非 VLAN 感知交换机的单个 NIC
 
 在此“非 VLAN 感知”交换机（也称为“虚拟”交换机）的最佳实践指南中，我们将介绍常见场景下的 Harvester VLAN 网络和外部交换机配置。
 

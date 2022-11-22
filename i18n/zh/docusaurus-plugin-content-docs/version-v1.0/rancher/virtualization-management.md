@@ -1,13 +1,11 @@
 ---
 sidebar_position: 2
 sidebar_label: 虚拟化管理
-title: ""
+title: "虚拟化管理"
 keywords:
   - Harvester
   - Rancher
 ---
-
-## 虚拟化管理
 
 对于 Harvester v0.3.0 及更高版本，使用 Rancher v2.6 及更高版本将支持具有多集群管理功能的虚拟化管理。
 

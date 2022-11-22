@@ -1,10 +1,8 @@
 ---
 sidebar_position: 5
 sidebar_label: 故障排除
-title: ""
+title: "故障排除"
 ---
-
-# 故障排除
 
 ## 概述
 
@@ -18,7 +16,7 @@ title: ""
 Harvester 升级包含了几个阶段：
 ![](/img/v1.0/upgrade/ts_upgrade_phases.png)
 
-### 阶段 1：预配升级仓库 VM。
+### 阶段 1：预配置升级仓库 VM。
 
 Harvester controller 下载 Harvester 版本 ISO 文件并使用它来配置 VM。在此阶段，你可以看到升级状态窗口显示：
 
@@ -113,7 +111,7 @@ Harvester controller 会删除升级仓库 VM 和不再需要的文件。
 
 ### 重新开始升级
 
-1. 登录到 controlplane 节点。
+1. 登录到 control plane 节点。
 2. 列出集群中的 `Upgrade` CR：
 
    ```

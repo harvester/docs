@@ -1,15 +1,13 @@
 ---
 sidebar_position: 3
 sidebar_label: 离线环境
-title: ""
+title: "离线环境"
 keywords:
 - Harvester
 - 离线
 - 离线
 - HTTP 代理
 ---
-
-# 离线环境
 
 本节介绍如何在离线环境中使用 Harvester。在某些用例中，Harvester 会在离线环境，或在防火墙/代理后安装。
 

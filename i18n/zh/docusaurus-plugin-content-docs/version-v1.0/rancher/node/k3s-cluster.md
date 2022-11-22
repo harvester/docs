@@ -1,12 +1,10 @@
 ---
 sidebar_position: 4
 sidebar_label: 创建 K3s Kubernetes 集群
-title: ""
+title: "创建 K3s Kubernetes 集群"
 ---
 
-# 创建 K3s Kubernetes 集群
-
-你可以使用内置的 Harvester 主机驱动在 Rancher `2.6.3` 中配置在 Harvester 集群之上的 K3s Kubernetes 集群。
+在 Rancher `2.6.3` 或以上的版本，你可以使用内置的 Harvester 主机驱动创建基于 Harvester 集群之上的 K3s Kubernetes 集群。
 
 ![k3s-cluster](/img/v1.0/rancher/rke2-k3s-node-driver.png)
 

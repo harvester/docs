@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: Harvester 网络
-title: ""
+title: "Harvester 网络"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - 升级 Harvester
 Description: Harvester 构建在 Kubernetes 之上，而 Kubernetes 使用 CNI 作为网络提供商和 Kubernetes Pod 网络之间的接口。因此，我们也基于 CNI 实现 Harvester 网络。此外，Harvester UI 集成了 Harvester 网络，来实现用户友好的虚拟机网络配置。
 ---
-
-# Harvester 网络
 
 Harvester 构建在 [Kubernetes](https://kubernetes.io/) 之上，并使用其内置的 [CNI](https://github.com/containernetworking/cni) 机制来提供网络提供商与虚拟机网络之间的接口。
 

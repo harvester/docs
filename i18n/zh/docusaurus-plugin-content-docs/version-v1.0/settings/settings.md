@@ -1,10 +1,8 @@
 ---
 sidebar_position: 1
 sidebar_label: 设置
-title: ""
+title: "设置"
 ---
-
-# 设置
 
 本文将介绍可在 Harvester 中使用的高级配置。
 你可以从仪表盘 UI 或使用 `kubectl` 命令修改 `settings.harvesterhci.io` 自定义资源。
@@ -25,7 +23,7 @@ SOME-CA-CERTIFICATES
 
 :::caution
 
-更改此设置可能会导致单节点集群的停机时间较短。
+更改此设置可能会导致单节点集群产生较短的停机时间。
 
 :::
 
@@ -102,7 +100,7 @@ Harvester 在用户配置的 `no-proxy` 后附加必要的地址，来确保内�
 
 :::caution
 
-更改此设置可能会导致单节点集群的停机时间较短。
+更改此设置可能会导致单节点集群产生较短的停机时间。
 
 :::
 
@@ -130,11 +128,11 @@ debug
 
 ## `overcommit-config`
 
-配置 CPU、内存和存储的资源超量使用百分比。设置资源超量后，即使物理资源已经用完，也能安排额外的虚拟机。
+配置 CPU、内存和存储的资源超售百分比。设置资源超售后，即使物理资源已经用完，也能调度额外的虚拟机。
 
 默认值：`{ "cpu":1600, "memory":150, "storage":200 }`
 
-默认超量使用 CPU 1600% 指的是，如果虚拟机的 CPU 资源限制是 `1600m` 核，Harvester 只会向 Kubernetes 调度器请求 `100m` CPU。
+默认超售比 CPU 1600% 指的是，如果虚拟机的 CPU 资源限制是 `1600m` 核，Harvester 只会向 Kubernetes 调度器请求 `100m` CPU。
 
 #### 示例
 
@@ -195,7 +193,7 @@ v1.0.0-abcdef-head
 
 :::caution
 
-更改此设置可能会导致单节点集群的停机时间较短。
+更改此设置可能会导致单节点集群产生较短的停机时间。
 
 :::
 
@@ -215,7 +213,7 @@ v1.0.0-abcdef-head
 
 :::note
 
-如果你进行了错误配置，或者不再能访问 Harvester GUI 和 API，请参见[故障排查](../troubleshooting/harvester.md#修改-ssl/tls-启用的协议和密码后无法访问-harvester)。
+如果你进行了错误配置，导致无法访问 Harvester GUI 和 API，请参见[故障排查](../troubleshooting/harvester.md#修改-ssl/tls-启用的协议和密码后无法访问-harvester)。
 
 :::
 

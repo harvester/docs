@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 sidebar_label: 创建 Windows 虚拟机
-title: ""
+title: "创建 Windows 虚拟机"
 keywords:
   - Harvester
   - harvester
@@ -15,7 +15,6 @@ keywords:
 Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 ---
 
-# 创建 Windows 虚拟机
 
 你可以从 **Virtual Machines** 页面创建一个或多个虚拟机。
 
@@ -27,7 +26,7 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 
 ## 如何创建 Windows 虚拟机
 
-### Header Section
+### 标题部分
 
 1. 选择创建单个实例或多个实例。
 1. 设置虚拟机名称。
@@ -44,7 +43,7 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 
 :::note
 
-如上所述，建议你使用 Windows 虚拟机模板。`Volumes` 部分将描述 Windows 虚拟机模板自动创建的选项。
+如上所述，建议你使用 Windows 虚拟机模板。`Volumes` 部分将使用 Windows 虚拟机模板自动创建的选项。
 
 :::
 
@@ -79,7 +78,7 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 1. **Management Network** 默认添加，并带有以下值：
    1. `Name`：默认设置为 `default`。你也可以修改它。
    2. `Network`：默认值是 `management Network`。如果尚未创建其他网络，则无法更改此选项。有关如何创建新网络的完整说明，请参见 [Harvester 网络](../networking/harvester-network.md)。
-   3. `Model`：默认设置为 `e1000`。你也可以将其设为下拉菜单中的其他可用选项。
+   3. `Model`：默认设置为 `e1000`。你也可以将其设为菜单中的其他可用选项。
    4. `Type`：默认值是 `masquerade`。你也可以将其设置为 `bridge`。
 2. 你可以点击 `Add Network` 来添加其他网络：
 
@@ -93,7 +92,7 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 
 ### 节点调度选项卡
 
-1. `Node Scheduling` 默认设置为 `Run VM on any available node`（在任何可用节点上运行虚拟机）。你也可以将其设为下拉菜单中的其他可用选项。
+1. `Node Scheduling` 默认设置为 `Run VM on any available node`（在任何可用节点上运行虚拟机）。你也可以将其设为菜单中的其他可用选项。
 
 ![create-windows-vm-scheduling](/img/v1.0/vm/create-windows-vm-scheduling.png)
 

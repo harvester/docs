@@ -1,10 +1,8 @@
 ---
 sidebar_position: 1
 sidebar_label: 监控
-title: ""
+title: "监控"
 ---
-
-# 监控
 
 _从 v0.3.0 起可用_
 

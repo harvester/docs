@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
 sidebar_label: 资源超量
-title: ""
+title: "资源超量"
 keywords:
   - Harvester
   - 过度使用
@@ -9,8 +9,6 @@ keywords:
   - 膨胀
 Description: 过度使用 VM 资源。
 ---
-
-# 资源超量
 
 Harvester 支持全局配置 CPU、内存和存储资源的过载百分比。[`overcommit-config`](../settings/settings.md#overcommit-config) 让你在物理资源被充分利用的情况下调度额外的虚拟机。
 

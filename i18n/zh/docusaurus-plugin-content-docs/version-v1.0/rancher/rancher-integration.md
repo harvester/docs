@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: Rancher 集成
-title: ""
+title: "Rancher 集成"
 keywords:
   - Harvester
   - harvester
@@ -10,8 +10,6 @@ keywords:
   - Rancher 集成
 Description: Rancher 是一个开源的多集群管理平台。从 Rancher v2.6.1 开始，Harvester 默认集成 Rancher。
 ---
-
-# Rancher 集成
 
 _从 v0.3.0 起可用_
 
@@ -33,7 +31,7 @@ Harvester v1.0.0 仅与 Rancher v2.6.3 或更高版本兼容。
 
 :::
 
-你现在可以使用 Rancher 的[可视化管理](virtualization-management.md)页面导入和管理多个 Harvester 集群，并利用 Rancher 的[认证](https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/)功能和 RBAC 控制来实现[多租户](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/)支持。
+你现在可以使用 Rancher 的[虚拟化管理](virtualization-management.md)页面导入和管理多个 Harvester 集群，并利用 Rancher 的[认证](https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/)功能和 RBAC 控制来实现[多租户](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/)支持。
 
 <div class="text-center">
 <iframe width="950" height="475" src="https://www.youtube.com/embed/fyxDm3HVwWI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -43,7 +41,7 @@ Harvester v1.0.0 仅与 Rancher v2.6.3 或更高版本兼容。
 
 ## 部署 Rancher Server
 
-要通过 Harvester 使用 Rancher，请将 Rancher 和 Harvester 安装在两个独立的服务器中。如果你想试用集成功能，你可以在 Harvester 中创建一个虚拟机，然后安装 Rancher v2.6.3 或以上版本（建议使用最新的稳定版本）。
+要想通过 Rancher 使用 Harvester，请将 Rancher 和 Harvester 安装在两个独立的服务器中。如果你想试用集成功能，你可以在 Harvester 中创建一个虚拟机，然后安装 Rancher v2.6.3 或以上版本（建议使用最新的稳定版本）。
 
 你可使用以下指南之一，在你选择的提供商中部署和配置 Rancher 和 Kubernetes 集群。
 
@@ -87,6 +85,6 @@ $ sudo docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged r
 
 ## 使用 Harvester 主机驱动创建 Kubernetes 集群
 
-[Harvester 主机驱动](./node/node-driver.md)用于在 Harvester 集群中配置虚拟机，而 Rancher 会使用这些虚拟机来启动和管理 Kubernetes 集群。
+[Harvester 主机驱动](./node/node-driver.md)用于在 Harvester 集群中创建并配置虚拟机，而 Rancher 会使用这些虚拟机来启动和管理 Kubernetes 集群。
 
-Rancher `v2.6.1` 开始默认添加 Harvester 主机驱动。详情请参见 [node-driver](./node/node-driver.md) 页面。
+Rancher `v2.6.1` 开始已默认添加 Harvester 主机驱动。详情请参见 [node-driver](./node/node-driver.md) 页面。
