@@ -67,7 +67,7 @@ In addition, the cloud provider version installed via the `Apps` of RKE/K3s must
 
 ### Sync Topology Labels to the Guest Cluster Node
 
-During the cluster installation, the Harvester node driver will automatically help synchronize topology labels from VM nodes to guest cluster nodes. Currently, only `region` and `zone` typology labels are supported.
+During the cluster installation, the Harvester node driver will automatically help synchronize topology labels from VM nodes to guest cluster nodes. Currently, only `region` and `zone` topology labels are supported.
 
 :::note
 
