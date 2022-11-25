@@ -367,6 +367,25 @@ Default: `https://harvester-upgrade-responder.rancher.io/v1/checkupgrade`
 https://your.upgrade.checker-url/v99/checkupgrade
 ```
 
+## `vip-pools`
+
+This setting allows you to configure the global or namespace IP address pools of the VIP by CIDR or IP range.
+
+Default: `{}`
+
+:::note
+Configuring multi-CIDR or IP range from UI is only available from Harvester v1.1.1.
+:::
+
+#### Example
+
+```json
+{
+  "default": "172.16.0.0/24,172.16.1.0/24",
+  "demo": "172.16.2.50-172.16.2.100,172.16.2.150-172.16.3.200"
+}
+```
+
 ## `vm-force-reset-policy`
 
 This setting allows you to force reschedule VMs when a node is unavailable. When a node turns to be `Not Ready`, it will force delete the VM on that node and reschedule it to another available node after a period of seconds.
