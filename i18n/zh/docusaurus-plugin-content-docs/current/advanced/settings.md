@@ -365,6 +365,25 @@ false
 https://your.upgrade.checker-url/v99/checkupgrade
 ```
 
+## `vip-pools`
+
+使用 CIDR 或 IP 范围配置 VIP 的全局或命名空间 IP 地址池。
+
+Default: `{}`
+
+:::note
+从用户界面配置多CIDR或IP范围，只在Harvester v1.1.1中可用。
+:::
+
+#### 示例
+
+```json
+{
+  "default": "172.16.0.0/24,172.16.1.0/24",
+  "demo": "172.16.2.50-172.16.2.100,172.16.2.150-172.16.3.200"
+}
+```
+
 ## `vm-force-reset-policy`
 
 当节点不可用时，强制重新调度虚拟机。当节点状态变成 `Not Ready` 时，此设置会强制删除该节点上的虚拟机，并在几秒后将虚拟机重新调度到另一个可用的节点。 Harvester 升级检查配置 URL。
