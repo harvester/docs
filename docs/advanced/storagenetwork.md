@@ -150,7 +150,7 @@ Harvester will not start VM automatically. Users should check whether the config
 
 :::
 
-### Verify Configruation is Completed
+### Verify Configuration is Completed
 
 #### Step 1
 
