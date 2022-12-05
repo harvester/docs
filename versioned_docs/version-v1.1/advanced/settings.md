@@ -152,7 +152,7 @@ If you configure `httpProxy` and `httpsProxy`, you must also put Harvester node'
 :::note
 
 Harvester appends necessary addresses to user configured `no-proxy` to ensure the internal traffic works.
-i.e., `localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,longhorn-system,cattle-system,cattle-system.svc,.svc,.cluster.local`
+i.e., `localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,longhorn-system,cattle-system,cattle-system.svc,harvester-system,.svc,.cluster.local`. `harvester-system` was added into the list since v1.1.2.
 
 :::
 
