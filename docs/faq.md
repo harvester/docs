@@ -44,3 +44,7 @@ $ kubectl  -n cattle-system exec $(kubectl --kubeconfig $KUBECONFIG -n cattle-sy
 New password for default administrator (user-xxxxx):
 <new_password>
 ```
+
+### I want to add an additional disk but it does not get detected?
+
+As of Harvester v1.0.2, we no longer support adding additional partitioned disks, so be sure to delete all partitions first (e.g., using `fdisk`).
