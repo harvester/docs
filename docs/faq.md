@@ -45,6 +45,6 @@ New password for default administrator (user-xxxxx):
 <new_password>
 ```
 
-### I want to add an additional disk but it does not get detected?
+### I added an additional disk, but why can the disk not get detected?
 
 As of Harvester v1.0.2, we no longer support adding additional partitioned disks, so be sure to delete all partitions first (e.g., using `fdisk`).
