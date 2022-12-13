@@ -70,7 +70,7 @@ Users can view and add multiple disks as additional data volumes from the edit h
 
 :::caution
 
-As of Harvester v1.0.2, we no longer support adding partitions as additional disks. If you want to add it as an additional disk, be sure to reformat it properly first (e.g., using `fdisk`).
+As of Harvester v1.0.2, we no longer support adding partitions as additional disks. If you want to add it as an additional disk, be sure to delete all partitions first (e.g., using `fdisk`).
 
 :::
 
