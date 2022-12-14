@@ -30,8 +30,8 @@ Note we are still working towards zero-downtime upgrade, due to some known issue
 :::caution
 
 - Before you upgrade your Harvester cluster, we highly recommend:
-    - Shutting down all your VMs (Harvester GUI -> Virtual Machines -> Select VMs -> Actions -> Stop).
-    - Back up your VMs.
+    - For upgrading from v1.0.3 to v1.1.0/v1.1.1, please shut down all your VMs first (Harvester GUI -> Virtual Machines -> Select VMs -> Actions -> Stop). Check the [link](./v1-0-3-to-v1-1-1.md#general-information) for more information.
+    - Back up your VMs if needed.
 - Do not operate the cluster during an upgrade. For example, creating new VMs, uploading new images, etc.
 - Make sure your hardware meets the **preferred** [hardware requirements](../index.md#hardware-requirements). This is due to there will be intermediate resources consumed by an upgrade.
 - Make sure each node has at least 25 GB of free space (`df -h /usr/local/`).
