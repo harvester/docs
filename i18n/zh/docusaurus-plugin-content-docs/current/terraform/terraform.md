@@ -6,10 +6,11 @@ title: "Harvester Terraform Provider"
 
 ## 支持矩阵
 
-| Harvester 版本 | 支持的 Terraform Provider Harvester | 支持的 Terraformer Harvester |
-| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| [v1.1.0](https://github.com/harvester/harvester/releases/tag/v1.1.0) | [v0.6.0](https://github.com/harvester/terraform-provider-harvester/releases/tag/v0.6.0) | [v1.1.0-harvester](https://github.com/harvester/terraformer/releases/tag/v1.1.0-harvester) |
-| [v1.0.3](https://github.com/harvester/harvester/releases/tag/v1.0.3) | [v0.5.3](https://github.com/harvester/terraform-provider-harvester/releases/tag/v0.5.3) | [v1.0.1-harvester](https://github.com/harvester/terraformer/releases/tag/v1.0.1-harvester) |
+| Harvester 版本 | 支持的 Terraform Provider Harvester                                                        | 支持的 Terraformer Harvester |
+| -------------------------------------------------------------------- |-----------------------------------------------------------------------------------------| ------------------------------------------------------------------------------------------ |
+| [v1.1.1](https://github.com/harvester/harvester/releases/tag/v1.1.1) | [v0.6.1](https://github.com/harvester/terraform-provider-harvester/releases/tag/v0.6.1) | [v1.1.0-harvester](https://github.com/harvester/terraformer/releases/tag/v1.1.0-harvester) |
+| [v1.1.0](https://github.com/harvester/harvester/releases/tag/v1.1.0) | [v0.6.1](https://github.com/harvester/terraform-provider-harvester/releases/tag/v0.6.1) | [v1.1.0-harvester](https://github.com/harvester/terraformer/releases/tag/v1.1.0-harvester) |
+| [v1.0.3](https://github.com/harvester/harvester/releases/tag/v1.0.3) | [v0.5.4](https://github.com/harvester/terraform-provider-harvester/releases/tag/v0.5.4) | [v1.0.1-harvester](https://github.com/harvester/terraformer/releases/tag/v1.0.1-harvester) |
 
 ## 要求
 
