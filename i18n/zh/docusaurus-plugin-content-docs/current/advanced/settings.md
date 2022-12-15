@@ -135,7 +135,7 @@ https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhr
 
 :::caution
 
-如果你配置了 `httpProxy` 和 `httpsProxy`, 那么你必须同时将 Harvester 节点的 CIDR 填入 `noProxy`, 否则 Harvester 集群将会崩溃。
+如果你配置了 `httpProxy` 和 `httpsProxy`，那么你必须同时将 Harvester 节点的 CIDR 填入 `noProxy`，否则 Harvester 集群将会崩溃。
 
 :::
 
@@ -367,10 +367,10 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
 使用 CIDR 或 IP 范围配置 VIP 的全局或命名空间 IP 地址池。
 
-Default: `{}`
+默认值：`{}`
 
 :::note
-从用户界面配置多CIDR或IP范围，只在Harvester v1.1.1中可用。
+从 UI 配置多 CIDR 或 IP 范围，只在 Harvester v1.1.1 中可用。
 :::
 
 #### 示例
