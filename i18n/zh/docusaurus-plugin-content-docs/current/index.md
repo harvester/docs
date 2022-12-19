@@ -11,6 +11,9 @@ keywords:
   - Harvester 介绍
 Description: Harvester 是基于 Kubernetes 构建的开源超融合基础架构 (HCI) 软件。它是 vSphere 和 Nutanix 的开源替代方案。
 ---
+:::info
+我们会定期更新中文文档，如需查看最新的文档内容，请访问[英文文档](https://docs.harvesterhci.io/)。
+:::
 
 Harvester 是基于 Kubernetes 构建的开源[超融合基础架构](https://en.wikipedia.org/wiki/Hyper-converged_infrastructure) (HCI) 软件。它是使用专有 HCI 堆栈的一种开放替代方案，该堆栈结合了 [Cloud Native Computing](https://en.wikipedia.org/wiki/Cloud_native_computing) 的设计和精神。
 
