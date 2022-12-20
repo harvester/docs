@@ -63,24 +63,23 @@ Users can generate a support bundle in the Harvester GUI with the following step
 - Enter a useful description for the support bundle and click `Create` to generate and download a support bundle.
     ![](/img/v1.1/troubleshooting/harvester-sb-support-modal.png)
 
-## Access Embedded Rancher
+## Access Embedded Rancher and Longhorn Dashboards
 
-You can access the embedded Rancher dashboard via `https://{{HARVESTER_IP}}/dashboard/c/local/explorer`.
+_Available as of v1.1.0_
+
+You can now access the embedded Rancher and Longhorn dashboards directly on the `Support` page, but you must enable the `Developer Tools & Features` first via the Preference page.
+
+![](/img/v1.1/troubleshooting/support-access-embedded-ui.png)
+
+For previous versions, you can access them manually through:
+- `https://{{HARVESTER_IP}}/dashboard/c/local/explorer` (Embedded Rancher)
+- `https://{{HARVESTER_IP}}/dashboard/c/local/longhorn` (Embedded Longhorn)
+
 
 :::note
 
-We only support to use the embedded Rancher dashboard for debugging and validation purpose.
+We only support using the embedded Rancher and Longhorn dashboards for debugging and validation purposes.
 For Rancher's multi-cluster and multi-tenant integration, please refer to the docs [here](../rancher/rancher-integration.md).
-
-:::
-
-## Access Embedded Longhorn
-
-You can access the embedded Longhorn UI via `https://{{HARVESTER_IP}}/dashboard/c/local/longhorn`.
-
-:::note
-
-We only support to use the embedded Longhorn UI for debugging and validation purpose .
 
 :::
 
