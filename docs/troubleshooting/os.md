@@ -45,9 +45,11 @@ Enabling read-write mode might break your system if files are modified. Please u
     ```
 
 - Reboot the system to GRUB menu. Press ESC to stay on the menu.
+
     ![](/img/v1.1/troubleshooting/os-stop-on-first-menuentry.png)
 
 - Press `e` on first menuentry. Append `rd.cos.debugrw` to the `linux (loop0)$kernel $kernelcmd` line. Press `Ctrl + x` to boot the system.
+
     ![](/img/v1.1/troubleshooting/os-edit-first-menuentry-add-debugrw.png)
 
 ## How to permanently edit kernel parameters
