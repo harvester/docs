@@ -25,7 +25,7 @@ The size of logging data is related to the cluster scale, workload and other fac
 
 The [Banzai Cloud Logging operator](https://banzaicloud.com/docs/one-eye/logging-operator/) now powers both `Harvester` and `Rancher` as an in-house logging solution.
 
-![](/img/v1.1/logging/fluent-operator.png)
+![](/img/v1.2/logging/fluent-operator.png)
 
 In Harvester's practice, the `Logging`, `Audit` and `Event` shares one architecture, the `Logging` is the infrastructure, while the `Audit` and `Event` are on top of it.
 
@@ -61,7 +61,7 @@ If desired, you can modify how many resources are dedicated to those components.
  3. Under the `Fluentd` tab, change the resource requests and limits.
  4. Click `Save` on the bottom right of the screen.
 
-![](/img/v1.1/logging/modify-logging-fluent-resources.png)
+![](/img/v1.2/logging/modify-logging-fluent-resources.png)
 
 #### From CLI
 
@@ -114,15 +114,15 @@ UI images are for `Output` and `Flow` whose configuration process is almost iden
  4. Select the logging type.
  5. Select the logging output type.
 
-![](/img/v1.1/logging/create-output.png)
+![](/img/v1.2/logging/create-output.png)
 
  6. Configure the output buffer if necessary.
 
-![](/img/v1.1/logging/create-output-buffer.png)
+![](/img/v1.2/logging/create-output-buffer.png)
 
  7. Add any labels or annotations.
 
-![](/img/v1.1/logging/create-output-labels-and-annotations.png)
+![](/img/v1.2/logging/create-output-labels-and-annotations.png)
 
  8. Once done, click `Create` on the lower right.
 
@@ -149,15 +149,15 @@ You can append labels and annotations to the created resource.
  3. Add a name for the resource.
  4. Select any nodes whose logs to include or exclude.
 
-![](/img/v1.1/logging/create-flow-matches.png)
+![](/img/v1.2/logging/create-flow-matches.png)
 
  5. Select target `Outputs` and `ClusterOutputs`.
 
-![](/img/v1.1/logging/create-flow-outputs.png)
+![](/img/v1.2/logging/create-flow-outputs.png)
 
  6. Add any filters if desired.
 
-![](/img/v1.1/logging/create-flow-filters.png)
+![](/img/v1.2/logging/create-flow-filters.png)
 
  7. Once done, click `Create` on the lower left.
 
@@ -506,7 +506,7 @@ When you configure from the Harvester dashboard, the field is added automaticall
 
 Select type `Audit Only` from the `Type` drpo-down list.
 
-![](/img/v1.1/logging/cluster-output-type.png)
+![](/img/v1.2/logging/cluster-output-type.png)
 
 When you configure from the CLI, please add the field manually.
 
@@ -539,7 +539,7 @@ When you configure from the Harvester dashboard, the field is added automaticall
 
 Select type `Audit`.
 
-![](/img/v1.1/logging/cluster-flow-type.png)
+![](/img/v1.2/logging/cluster-flow-type.png)
 
 When you config from the CLI, please add the field manually.
 
@@ -640,7 +640,7 @@ Events share the `Output`/`ClusterOutput` with `Logging`.
 
 Select `Logging/Event` from the `Type` drop-down list.
 
-![](/img/v1.1/logging/cluster-output-type.png)
+![](/img/v1.2/logging/cluster-output-type.png)
 
 ### Event Log Flow/ClusterFlow
 
@@ -650,7 +650,7 @@ When you configure from the Harvester dashboard, the field is added automaticall
 
 Select `Event` from the `Type` drop-down list.
 
-![](/img/v1.1/logging/cluster-flow-type.png)
+![](/img/v1.2/logging/cluster-flow-type.png)
 
 When you configure from the CLI, please add the field manually.
 

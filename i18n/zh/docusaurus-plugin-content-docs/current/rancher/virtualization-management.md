@@ -41,13 +41,13 @@ keywords:
 
 
 1. Rancher Server 正常运行后，你可以登录进去，点击左上角的汉堡菜单，然后选择 **Virtualization Management** 选项卡。选择 **Import Existing**，将下游 Harvester 集群导入 Rancher Server。
-   ![](/img/v1.1/rancher/vm-menu.png)
+   ![](/img/v1.2/rancher/vm-menu.png)
 1. 指定 `Cluster Name` 并单击 **Create**。然后你将看到注册指南。请打开目标 Harvester 集群的仪表盘并按照指南进行操作。
-   ![](/img/v1.1/rancher/harv-importing.png)
+   ![](/img/v1.2/rancher/harv-importing.png)
 1. Agent 节点就绪后，你应该能够从 Rancher Server 查看和访问导入的 Harvester 集群，并管理你的虚拟机。
-   ![](/img/v1.1/rancher/harv-cluster-view.png)
+   ![](/img/v1.2/rancher/harv-cluster-view.png)
 1. 在 Harvester UI 中，你可以单击汉堡菜单导航回 Rancher 多集群管理页面。
-   ![](/img/v1.1/rancher/harv-go-back.png)
+   ![](/img/v1.2/rancher/harv-go-back.png)
 
 ## 多租户
 
@@ -74,13 +74,13 @@ keywords:
 1. 首先，通过 Rancher `Users & Authentication` 页面添加新用户。然后点击 `Create` 添加两个新用户，分别为 `project-owner` 和 `project-readonly`。
    - `project-owner` 是有权管理特定项目（例如默认项目）的资源的用户。
    - `project-readonly` 是具有特定项目（例如默认项目）的只读权限的用户。
-      ![](/img/v1.1/rancher/create-user.png)
+      ![](/img/v1.2/rancher/create-user.png)
 1. 导航到 Harvester UI 后，单击其中一个导入的 Harvester 集群。
    - 点击 `Projects/Namespaces` 选项卡。
    - 选择一个项目（例如 `default`），然后单击 `Edit Config` 来将用户分配给该项目并分配适当的权限。例如，`project-owner` 用户会被分配到项目所有者角色。
-      ![](/img/v1.1/rancher/add-member.png)
+      ![](/img/v1.2/rancher/add-member.png)
 1. 继续将 `project-readonly` 用户添加到同一项目中，分配只读权限，然后单击**保存**。
-   ![](/img/v1.1/rancher/added-user.png)
+   ![](/img/v1.2/rancher/added-user.png)
 1. 打开浏览器的无痕浏览模式，并以 `project-owner` 身份登录。
 1. 以 `project-owner` 用户身份登录后，单击 **Virtualization Management** 选项卡。然后，你将能看到你分配到的集群。
 1. 单击 **Images** 选项卡以查看之前上传到 harvester-public 命名空间的镜像列表。你也可以按需上传你自己的镜像。
@@ -90,7 +90,7 @@ keywords:
 ## 删除导入的 Harvester 集群
 用户可以在 **Virtualization Management > Harvester Clusters** 页面，在 Rancher UI 中删除导入的 Harvester 集群。选择要删除的集群，然后单击 **Delete** 按钮，从而删除导入的 Harvester 集群。
 
-![delete-cluster](/img/v1.1/rancher/delete-harvester-cluster.png)
+![delete-cluster](/img/v1.2/rancher/delete-harvester-cluster.png)
 
 :::caution
 

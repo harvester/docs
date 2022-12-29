@@ -19,7 +19,7 @@ _从 v1.1.0 起可用_
 
 下图描述了分离数据中心 (DC) 流量与带外 (OOB) 流量的典型网络架构：
 
-![](/img/v1.1/networking/traffic-isolation.png)
+![](/img/v1.2/networking/traffic-isolation.png)
 
 我们将 Harvester 上流量隔离转发路径上的设备、链路和配置的总和抽象为集群网络。
 
@@ -60,19 +60,19 @@ Harvester 提供了一个名为 `mgmt` 的内置集群网络。它不同于自�
 
 1. 要创建集群网络，请转到 **Networks > ClusterNetworks/Configs** 页面并单击 **Create** 按钮。你只需要指定名称即可。
 
-   ![](/img/v1.1/networking/create-clusternetwork.png)
+   ![](/img/v1.2/networking/create-clusternetwork.png)
 
 2. 点击集群网络右侧的 **Create Network Config** 按钮，创建新的网络配置。
 
-   ![](/img/v1.1/networking/create-network-config-button.png)
+   ![](/img/v1.2/networking/create-network-config-button.png)
 
 3. 在 **Node Selector** 选项卡中，指定名称并选择三种方法之一来选择要应用网络配置的节点。如果要覆盖未选中的节点，你可以创建另一个网络配置。
 
-   ![](/img/v1.1/networking/select-nodes.png)
+   ![](/img/v1.2/networking/select-nodes.png)
 
 4. 单击 **Uplink** 选项卡来添加 NIC，并配置绑定选项和链接属性。绑定模式默认为 `active-backup`。
 
-   ![](/img/v1.1/networking/config-uplink.png)
+   ![](/img/v1.2/networking/config-uplink.png)
 
 :::note
 

@@ -29,86 +29,64 @@ Description: Harvester 中的 k8s 集群使用的 Harvester Cloud Provider 提�
 ### 使用 Harvester 主机驱动部署到 RKE1 集群
 使用 Harvester 主机驱动启动 RKE 集群时，你可以执行两个步骤来部署 `Harvester` 云提供商：
 
-- 选择 `Harvester(Out-of-tree)` 选项。
+1. 选择 `Harvester(Out-of-tree)` 选项。
 
-   ![](/img/v1.1/rancher/rke-cloud-provider.png)
+   ![](/img/v1.2/rancher/rke-cloud-provider.png)
 
-- 从 Rancher 应用市场中安装 `Harvester Cloud Provider`。
+2. 从 Rancher 应用市场中安装 `Harvester Cloud Provider`。
 
-   ![](/img/v1.1/rancher/install-harvester-cloud-provider.png)
+   ![](/img/v1.2/rancher/install-harvester-cloud-provider.png)
 
 
 ### 使用 Harvester 主机驱动部署到 RKE2 集群
 
 使用 Harvester 主机驱动启动 RKE2 集群时，选择 `Harvester` 云提供商。然后，主机驱动将自动部署 CSI 驱动和 CCM。
 
-![](/img/v1.1/rancher/rke2-cloud-provider.png)
+![](/img/v1.2/rancher/rke2-cloud-provider.png)
 
 ### 使用 Harvester 主机驱动部署到 K3s 集群[实验性]
 
-- 为 K3s 选择 Kubernetes 版本，并点击 `Edit as YAML` 按钮，来配置 K3s 集群 YAML（对于现有集群，你也可以点击 `Edit YAML` 按钮进行更新)：
+使用 Harvester 主机驱动启动 K3s 集群时，你可以执行以下步骤来部署 Harvester 云提供商：
 
-   ![](/img/v1.1/rancher/edit-k3s-cluster-yaml.png)
+1. 为 `harvester-cloud-provider` 生成并注入 Cloud Config。
 
-- 编辑 K3s 集群 YAML。
-   - 设置 `disable-cloud-provider: true` 以禁用默认的 K3s 云提供商。
-   - 添加 `cloud-provider=external` 以使用 Harvester 云提供商。
+云提供商需要一个 kubeconfig 文件才能工作，你可以使用 [harvester/cloud-provider-harvester](https://github.com/harvester/cloud-provider-harvester) 仓库中的 [generate_addon.sh](https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh) 脚本来生成一个有限范围的文件。
 
-   ![](/img/v1.1/rancher/k3s-cluster-yaml-content-for-harvester-cloud-provider.png)
+:::note
 
-- [生成 addon 配置](https://github.com/harvester/cloud-provider-harvester/blob/master/deploy/generate_addon.sh)并放入 K3s 虚拟机 `/etc/kubernetes/cloud-config`。
+该脚本依赖 `kubectl` 和 `jq` 来操作 Harvester 集群。
 
+该脚本需要访问 `Harvester 集群` kubeconfig 才能工作。
 
-### 部署外部云提供商
-对于基于 RKE2 和 K3s 的集群而言，部署外部云提供商的步骤是相似的。
+命名空间需要是将在其中创建 guest 集群的命名空间。
 
-按照上述步骤禁用 in-tree 云提供商后，你可以通过以下方式部署外部云提供商：
-
-![](/img/v1.1/rancher/external-cloud-provider-addon.png)
-
-示例 manifest 如下：
-```
-apiVersion: helm.cattle.io/v1
-kind: HelmChart
-metadata:
-  name: harvester-cloud-provider
-  namespace: kube-system
-spec:
-  targetNamespace: kube-system
-  bootstrap: true
-  repo: https://charts.harvesterhci.io/
-  chart: harvester-cloud-provider
-  version: 0.1.12
-  helmVersion: v3
-```
-
-云提供商需要一个 kubeconfig 文件才能工作，你可以使用 [harvester/cloud-provider-harvester](https://github.com/harvester/cloud-provider-harvester) 仓库中的 `generate_addon.sh` 脚本来生成一个有限范围的文件。
-
-*注意*：脚本需要访问 Harvester 集群 kubeconfig 才能工作。此外，命名空间需要是将在其中创建工作负载集群的命名空间。
+:::
 
 ```
-# 依赖 kubectl 来操作 Harvester 集群
-./deploy/generate_addon.sh <serviceaccount_name> <namespace>
+./deploy/generate_addon.sh <serviceaccount name> <namespace>
 ```
 
 输出将如下所示：
 
 ```
-(⎈ |local:default)➜  cloud-provider-harvester git:(master) ✗ ./deploy/generate_addon.sh harvester-cloud-provider default
+# ./deploy/generate_addon.sh harvester-cloud-provider default
 Creating target directory to hold files in ./tmp/kube...done
 Creating a service account in default namespace: harvester-cloud-provider
-W0506 16:44:15.429068 3008674 helpers.go:598] --dry-run is deprecated and can be replaced with --dry-run=client.
+W1104 16:10:21.234417    4319 helpers.go:663] --dry-run is deprecated and can be replaced with --dry-run=client.
 serviceaccount/harvester-cloud-provider configured
 
 Creating a role in default namespace: harvester-cloud-provider
 role.rbac.authorization.k8s.io/harvester-cloud-provider unchanged
 
 Creating a rolebinding in default namespace: harvester-cloud-provider
-W0506 16:44:23.798293 3008738 helpers.go:598] --dry-run is deprecated and can be replaced with --dry-run=client.
+W1104 16:10:21.986771    4369 helpers.go:663] --dry-run is deprecated and can be replaced with --dry-run=client.
 rolebinding.rbac.authorization.k8s.io/harvester-cloud-provider configured
 
-Getting secret of service account harvester-cloud-provider on default
-Secret name: harvester-cloud-provider-token-5zkk9
+Getting uid of service account harvester-cloud-provider on default
+Service Account uid: ea951643-53d2-4ea8-a4aa-e1e72a9edc91
+
+Creating a user token secret in default namespace: harvester-cloud-provider-token
+Secret name: harvester-cloud-provider-token
 
 Extracting ca.crt from secret...done
 Getting user token from secret...done
@@ -125,7 +103,7 @@ Setting the current-context in the kubeconfig file...Switched to context "harves
 apiVersion: v1
 clusters:
 - cluster:
-    certificate-authority-data: CACERT
+    certificate-authority-data: <CACERT>
     server: https://HARVESTER-ENDPOINT/k8s/clusters/local
   name: local
 contexts:
@@ -140,13 +118,66 @@ preferences: {}
 users:
 - name: harvester-cloud-provider-default-local
   user:
-    token: TOKEN
+    token: <TOKEN>
+
+
+########## cloud-init user data ############
+write_files:
+- encoding: b64
+  content: <CONTENT>
+  owner: root:root
+  path: /etc/kubernetes/cloud-config
+  permissions: '0644'
 ```
 
-现在，你可以通过节点池 `Advanced Options` 中的 `user-data` 注入这个 cloud-config 文件：
-![](/img/v1.1/rancher/cloud-config-userdata.png)
+将 `cloud-init user data` 下的输出复制并粘贴到 **Machine Pools >Show Advanced > User Data**。
 
-有了这些设置，K3s/RKE 集群应该可以在你使用外部云提供商时成功配置。
+![](/img/v1.2/rancher/cloud-config-userdata.png)
+
+3. 将 `harvester-cloud-provider` 的以下 `HelmChart` YAML 添加到 **Cluster Configuration > Add-On Config > Additional Manifest**。
+
+```
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: harvester-cloud-provider
+  namespace: kube-system
+spec:
+  targetNamespace: kube-system
+  bootstrap: true
+  repo: https://charts.harvesterhci.io/
+  chart: harvester-cloud-provider
+  version: 0.1.13
+  helmVersion: v3
+```
+
+![](/img/v1.2/rancher/external-cloud-provider-addon.png)
+
+4. 通过以下方式禁用树内云提供商
+
+- 单击 `Edit as YAML` 按钮
+
+![](/img/v1.2/rancher/edit-k3s-cluster-yaml.png)
+- 禁用 `servicelb` 并设置 `disable-cloud-controller: true` 来禁用默认的 K3s 云控制器。
+```yaml
+    machineGlobalConfig:
+      disable:
+        - servicelb
+      disable-cloud-controller: true
+```
+
+- 添加 `cloud-provider=external` 以使用 Harvester 云提供商。
+```yaml
+    machineSelectorConfig:
+      - config:
+          kubelet-arg:
+          - cloud-provider=external
+          protect-kernel-defaults: false
+```
+
+![](/img/v1.2/rancher/k3s-cluster-yaml-content-for-harvester-cloud-provider.png)
+
+有了这些设置，K3s 集群应该可以在你使用外部云提供商时成功配置。
 
 ## 升级 Cloud Provider
 
@@ -167,7 +198,7 @@ users:
 ## 负载均衡器支持
 部署 `Harvester Cloud Provider` 后，你可以使用 Kubernetes `LoadBalancer` 服务将集群内的微服务公开给外部。在你创建 Kubernetes `LoadBalancer` 服务时，会为该服务分配一个 Harvester 负载均衡器，你可以通过 Rancher UI 中的 `Add-on Config` 对其进行编辑。
 
-![](/img/v1.1/rancher/lb-svc.png)
+![](/img/v1.2/rancher/lb-svc.png)
 
 
 ### IPAM
@@ -175,7 +206,7 @@ Harvester 的内置负载均衡器同时支持 `pool` 和 `dhcp` 模式。你可
 
 - pool：需要提前在 Harvester 的 `Settings` 中配置一个 IP 地址池。Harvester LoadBalancer Controller 将从 IP 地址池中为负载均衡器分配一个 IP 地址。
 
-   ![](/img/v1.1/rancher/vip-pool.png)
+   ![](/img/v1.2/rancher/vip-pool.png)
 
 - dhcp：需要 DHCP 服务器。Harvester LoadBalancer Controller 将从 DHCP 服务器请求 IP 地址。
 
@@ -188,7 +219,7 @@ Harvester 的内置负载均衡器同时支持 `pool` 和 `dhcp` 模式。你可
 ### 健康检查
 Harvester 负载均衡器支持 TCP 健康检查。如果启用了`健康检查`选项，你可以在 Rancher UI 中指定参数。
 
-![](/img/v1.1/rancher/health-check.png)
+![](/img/v1.2/rancher/health-check.png)
 
 你也可以手动将注释添加到服务来指定参数。支持以下注释：
 

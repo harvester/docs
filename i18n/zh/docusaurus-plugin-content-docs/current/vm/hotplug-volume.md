@@ -20,4 +20,4 @@ Harvester 支持向运行中的虚拟机添加热插拔卷。
 1. 输入 **Name**，然后选择 **Volume**。
 1. 点击 **Apply**。
 
-![Add Volume](/img/v1.1/vm/add-volume.png)
+![Add Volume](/img/v1.2/vm/add-volume.png)

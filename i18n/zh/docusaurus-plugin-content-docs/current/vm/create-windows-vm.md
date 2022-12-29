@@ -37,7 +37,7 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 1. 配置要分配给虚拟机的 `CPU` 核数。
 1. 配置要分配给虚拟机的 `Memory`。
 
-![create-windows-vm](/img/v1.1/vm/create-windows-vm.png)
+![create-windows-vm](/img/v1.2/vm/create-windows-vm.png)
 
 :::note
 
@@ -72,7 +72,7 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
    4. `Bus`：默认值是 `SATA`。建议你不要修改该值。
 4. 你可以使用 `Add Volume`、`Add Existing Volume`、`Add VM Image` 或 `Add Container` 按钮来添加其他磁盘：
 
-![create-windows-vm-volumes](/img/v1.1/vm/create-windows-vm-volumes.png)
+![create-windows-vm-volumes](/img/v1.2/vm/create-windows-vm-volumes.png)
 
 ### 网络选项卡
 
@@ -83,7 +83,7 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
    4. `Type`：默认值是 `masquerade`。你也可以将其设置为 `bridge`。
 2. 你可以点击 `Add Network` 来添加其他网络：
 
-![create-windows-vm-networks](/img/v1.1/vm/create-windows-vm-networks.png)
+![create-windows-vm-networks](/img/v1.2/vm/create-windows-vm-networks.png)
 
 :::caution
 
@@ -95,7 +95,7 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 
 1. `Node Scheduling` 默认设置为 `Run VM on any available node`（在任何可用节点上运行虚拟机）。你也可以将其设为菜单中的其他可用选项。
 
-![create-windows-vm-scheduling](/img/v1.1/vm/create-windows-vm-scheduling.png)
+![create-windows-vm-scheduling](/img/v1.2/vm/create-windows-vm-scheduling.png)
 
 ### 高级选项选项卡
 
@@ -104,7 +104,7 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 3. （可选）`Hostname`：设置虚拟机的主机名。
 4. （可选）`Cloud Config`：`User Data` 和 `Network Data` 均使用为默认值。目前，这些配置不适用于基于 Windows 的虚拟机。
 
-![create-windows-vm-advanced](/img/v1.1/vm/create-windows-vm-advanced.png)
+![create-windows-vm-advanced](/img/v1.2/vm/create-windows-vm-advanced.png)
 
 ### 页脚部分
 
@@ -125,11 +125,11 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 
 3. （可选）如果你使用的是基于 `virtio` 的卷，你需要加载特定的驱动程序来检测卷。如果你使用了虚拟机模板 `windows-iso-image-base-template`，则相关的说明如下：
    1. 点击 `Load driver`，在对话框中点击 `Browse`，然后找到带有 `VMDP-WIN` 前缀的光驱。然后，根据你的 Windows 版本找到驱动目录（例如，如果是 Windows Server 2012r2，则展开 `win8.1-2012r2`），然后选择里面的 `pvvx` 目录：
-      ![find-virtio-driver-directory](/img/v1.1/vm/find-virtio-driver-directory.png)
+      ![find-virtio-driver-directory](/img/v1.2/vm/find-virtio-driver-directory.png)
    2. 单击 `OK` 来允许安装程序扫描此目录并查找驱动程序。然后，选择 `SUSE Block Driver for Windows` 并单击 `Next` 来加载驱动程序：
-      ![select-virtio-block-driver](/img/v1.1/vm/select-virtio-block-driver.png)
+      ![select-virtio-block-driver](/img/v1.2/vm/select-virtio-block-driver.png)
    1. 等待安装程序加载驱动程序。如果你选择了正确的驱动程序版本，加载驱动程序后会检测到 `virtio` 卷：
-      ![installer-found-virtio-drive](/img/v1.1/vm/installer-found-virtio-drive.png)
+      ![installer-found-virtio-drive](/img/v1.2/vm/installer-found-virtio-drive.png)
 
 4. （可选）如果你使用其它基于 `virtio` 的硬件（例如网络适配器），你需要在完成安装后手动安装这些驱动程序。要安装驱动程序，请打开 VMDP 驱动程序磁盘，然后打开安装程序。
 
@@ -168,11 +168,11 @@ Windows VMDP 驱动包的支持矩阵如下（假设 VMDP 光驱路径为 E）�
 
 在 Windows 中使用 EFI 模式时，你可能会发现系统使用了 HDD 或 UEFI shell 等其它设备进行启动，如下：
 
-![efi-shell](/img/v1.1/vm/efi-shell.png)
+![efi-shell](/img/v1.2/vm/efi-shell.png)
 
 这是因为 Windows 会提示 `Press any key to boot from CD or DVD...` 来让用户决定是否要使用 ISO 启动。要让系统使用 CD 或 DVD 启动，你需要进行人工干预：
 
-![boot-from-cd](/img/v1.1/vm/boot-from-cd.png)
+![boot-from-cd](/img/v1.2/vm/boot-from-cd.png)
 
 如果系统已经引导到 UEFI shell，你可以键入 `reset` 以强制系统再次重新引导。出现提示后，你可以按下任意键让系统从 Windows ISO 启动。
 
@@ -182,7 +182,7 @@ Windows VMDP 驱动包的支持矩阵如下（假设 VMDP 光驱路径为 E）�
 
 你可以在 **Advanced Options** 选项卡上为模板分配至少 256MiB 的保留内存来解决这个问题：如果 `256MiB` 不起作用，请尝试使用 `512MiB`。
 
-![reserved-memory-config](/img/v1.1/vm/reserved-memory-config.png)
+![reserved-memory-config](/img/v1.2/vm/reserved-memory-config.png)
 
 ### Windows 首次启动时出现 BSoD（蓝屏死机）
 

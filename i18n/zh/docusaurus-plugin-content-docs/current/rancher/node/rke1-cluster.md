@@ -6,7 +6,7 @@ title: "创建 RKE1 Kubernetes 集群"
 
 在 Rancher `2.6.3` 或以上的版本，你可以使用内置的 Harvester 主机驱动创建基于 Harvester 集群之上的 RKE1 Kubernetes 集群。
 
-![rke1-cluster](/img/v1.1/rancher/rke1-node-driver.png)
+![rke1-cluster](/img/v1.2/rancher/rke1-node-driver.png)
 
 :::note
 
@@ -36,7 +36,7 @@ title: "创建 RKE1 Kubernetes 集群"
 1. 选择 **Imported Harvester** 或 **External Harvester**。
 1. 单击 **Create**。
 
-![create-harvester-cloud-credentials](/img/v1.1/rancher/create-cloud-credentials.png)
+![create-harvester-cloud-credentials](/img/v1.2/rancher/create-cloud-credentials.png)
 
 ### 创建节点模板
 
@@ -51,7 +51,7 @@ title: "创建 RKE1 Kubernetes 集群"
 1. （可选）如果你需要自定义虚拟机的 cloud-init 配置，设置 **Advanced Options**：
 1. 输入 **RANCHER TEMPLATE** 名称。
 
-![](/img/v1.1/rancher/node-template.png)
+![](/img/v1.2/rancher/node-template.png)
 
 详情请参见[基础设施提供商托管的节点](https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/)。
 
@@ -64,7 +64,7 @@ Harvester 主机驱动现在支持通过节点亲和性规则将一组主机调�
 你可以在集群创建期间将节点亲和性添加到节点模板中，单击 `Add Node Template` 或通过 `RKE1 Configuration > Node Templates` 编辑现有节点模板：
 
 1. 单击 `Advanced Options` 选项卡并单击 `Add Node Selector`：
-   ![affinity-add-node-selector](/img/v1.1/rancher/affinity-add-node-selector.png)
+   ![affinity-add-node-selector](/img/v1.2/rancher/affinity-add-node-selector.png)
 1. 如果你希望调度程序仅在满足规则时调度主机，请将优先级设置为 `Required`。
 1. 点击 `Add Rule` 指定节点亲和规则，例如，对于 [topology spread constraints](./node-driver.md#拓扑分布约束) 用例，你可以添加 `region` 和 `zone` 标签，如下：
    ```yaml
@@ -76,7 +76,7 @@ Harvester 主机驱动现在支持通过节点亲和性规则将一组主机调�
    operator: in list
    values: us-east-1a
    ```
-   ![affinity-add-rules](/img/v1.1/rancher/affinity-add-rules.png)
+   ![affinity-add-rules](/img/v1.2/rancher/affinity-add-rules.png)
 1. 点击 `Create` 保存节点模板。集群安装完成后，你可以查看其主机节点是否按照亲和性规则进行调度。
 
 
@@ -93,10 +93,10 @@ Harvester 主机驱动现在支持通过节点亲和性规则将一组主机调�
 1. 输入 **Template**（必须）。
 1. 选择 **Etcd** 和 **Control**（必须）。
 1. 如果你需要使用 Harvester [Cloud Provider](../cloud-provider.md) 和 [CSI 驱动](../csi-driver.md)，在**集群选项**中，把 `Cloud Provider` 配置为 `Harvester`。
-   ![](/img/v1.1/rancher/enable-harvester-cloud-provider.png)
+   ![](/img/v1.2/rancher/enable-harvester-cloud-provider.png)
 1. 单击 **Create**。
 
-![create-rke-harvester-cluster](/img/v1.1/rancher/create-rke-harvester-cluster.png)
+![create-rke-harvester-cluster](/img/v1.2/rancher/create-rke-harvester-cluster.png)
 
 ### 在离线环境中使用 Harvester RKE1 主机驱动
 

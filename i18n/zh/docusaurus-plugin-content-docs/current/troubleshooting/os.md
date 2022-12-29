@@ -45,10 +45,12 @@ node1:~ # blkid
    ```
 
 - 重新启动系统到 GRUB 菜单。按 ESC 停留在菜单上。
-   ![](/img/v1.1/troubleshooting/os-stop-on-first-menuentry.png)
+
+   ![](/img/v1.2/troubleshooting/os-stop-on-first-menuentry.png)
 
 - 在第一个菜单项上按 `e`。将 `rd.cos.debugrw` 尾附到 `linux (loop0)$kernel $kernelcmd` 行。按 `Ctrl + x` 启动系统。
-   ![](/img/v1.1/troubleshooting/os-edit-first-menuentry-add-debugrw.png)
+
+   ![](/img/v1.2/troubleshooting/os-edit-first-menuentry-add-debugrw.png)
 
 ## 如何永久编辑内核参数
 
@@ -108,10 +110,10 @@ menuentry "Harvester ea6e7f5-dirty (debug)" --id cos-debug {
 要将内核消息输出到串行控制台，请按照以下步骤操作：
 
 - 将系统启动到 GRUB 菜单。按 ESC 停留在菜单上。
-   ![](/img/v1.1/troubleshooting/os-stop-on-first-menuentry.png)
+   ![](/img/v1.2/troubleshooting/os-stop-on-first-menuentry.png)
 - 在第一个菜单项上按 `e`。将 `console=ttyS0,115200n8` 尾附到 `linux (loop0)$kernel $kernelcmd` 行。按 `Ctrl + x` 启动系统。
 
-   ![](/img/v1.1/troubleshooting/os-edit-first-menuentry-add-console.png)
+   ![](/img/v1.2/troubleshooting/os-edit-first-menuentry-add-console.png)
 
 :::note
 
@@ -125,6 +127,6 @@ menuentry "Harvester ea6e7f5-dirty (debug)" --id cos-debug {
 
 默认情况下，操作系统会在未启用 kdump 功能的情况下启动。你可以通过在启动时选择 `debug` 菜单项来启用该功能，如下例所示：
 
-![](/img/v1.1/troubleshooting/os-enable-kdump.png)
+![](/img/v1.2/troubleshooting/os-enable-kdump.png)
 
 系统崩溃时，崩溃转储将存储在 `/var/crash/<time>` 目录中。你可以将崩溃转储提供给开发人员，从而帮助他们排查故障和解决问题。

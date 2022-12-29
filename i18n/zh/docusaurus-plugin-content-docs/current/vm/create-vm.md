@@ -35,7 +35,7 @@ Description: 从"虚拟机"页面创建一个或多个虚拟机。
    1. 你还可以使用 VLAN 网络向 VM 添加其他网络。你可以先在 **Advanced > Networks** 上配置 VLAN 网络。
 1. 运行策略、操作系统类型和 cloud-init 数据等高级选项是可选的。你可以在 **Advanced Options** 选项卡中进行配置。
 
-![create-vm](/img/v1.1/vm/create-vm.png)
+![create-vm](/img/v1.2/vm/create-vm.png)
 
 ## 卷
 
@@ -50,7 +50,7 @@ Description: 从"虚拟机"页面创建一个或多个虚拟机。
 
 添加新的空卷时，你可以指定卷的 [Storage Class](../advanced/storageclass.md)。对于其他卷（例如 VM 镜像），你可以在创建镜像时定义 `Storage Class`。
 
-![create-vm](/img/v1.1/vm/create-vm-volumes.png)
+![create-vm](/img/v1.2/vm/create-vm-volumes.png)
 
 :::info Container Disk
 
@@ -148,7 +148,7 @@ QEMU GuestAgent 是在虚拟机实例上运行的 Daemon 进程，它将有关 V
 
 `Install guest agent` 复选框在创建新 VM 时默认启用。
 
-![](/img/v1.1/vm/qga.png)
+![](/img/v1.2/vm/qga.png)
 
 :::note
 
@@ -169,7 +169,7 @@ QEMU GuestAgent 是在虚拟机实例上运行的 Daemon 进程，它将有关 V
 4. 单击 **Add Volume** 并选择现有的 **Storage Class**。
 5. 将 **Volume** 拖到 **Image Volume** 的顶部，如下所示。这样，**Volume**  的**bootOrder** 会变成 `1`。
 
-![one-time-boot-create-vm-bootorder](/img/v1.1/vm/one-time-boot-create-vm-bootorder.png)
+![one-time-boot-create-vm-bootorder](/img/v1.2/vm/one-time-boot-create-vm-bootorder.png)
 
 6. 单击 **Create**。
 7. 打开刚刚创建的 VM web-vnc 并按照安装程序提示的说明进行操作。

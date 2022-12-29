@@ -41,13 +41,13 @@ For Harvester v0.3.0 and above, virtualization management with the multi-cluster
 
     
 1. Once the Rancher server is up and running, log in and click the hamburger menu and choose the **Virtualization Management** tab. Select **Import Existing** to import the downstream Harvester cluster into the Rancher server.
-![](/img/v1.1/rancher/vm-menu.png)
+![](/img/v1.2/rancher/vm-menu.png)
 1. Specify the `Cluster Name` and click **Create**. You will then see the registration guide; please open the dashboard of the target Harvester cluster and follow the guide accordingly.
-![](/img/v1.1/rancher/harv-importing.png)
+![](/img/v1.2/rancher/harv-importing.png)
 1. Once the agent node is ready, you should be able to view and access the imported Harvester cluster from the Rancher server and manage your VMs accordingly.
-![](/img/v1.1/rancher/harv-cluster-view.png)
+![](/img/v1.2/rancher/harv-cluster-view.png)
 1. From the Harvester UI, you can click the hamburger menu to navigate back to the Rancher multi-cluster management page.
-![](/img/v1.1/rancher/harv-go-back.png)
+![](/img/v1.2/rancher/harv-go-back.png)
 
 ## Multi-Tenancy
 
@@ -74,13 +74,13 @@ The following example provides a good explanation of how the multi-tenant featur
 1. First, add new users via the Rancher `Users & Authentication` page. Then click `Create` to add two new separated users, such as `project-owner` and `project-readonly` respectively.
     - A `project-owner` is a user with permission to manage a list of resources of a particular project, e.g., the default project.
     - A `project-readonly` is a user with read-only permission of a particular project, e.g., the default project.
-    ![](/img/v1.1/rancher/create-user.png)
+    ![](/img/v1.2/rancher/create-user.png)
 1. Click one of the imported Harvester clusters after navigating to the Harvester UI.
     - Click the `Projects/Namespaces` tab.
     - Select a project such as `default` and click the `Edit Config` menu to assign the users to this project with appropriate permissions. For example, the `project-owner` user will be assigned the project owner role.
-   ![](/img/v1.1/rancher/add-member.png)
+   ![](/img/v1.2/rancher/add-member.png)
 1. Continue to add the `project-readonly` user to the same project with read-only permissions and click **Save**.
-   ![](/img/v1.1/rancher/added-user.png)
+   ![](/img/v1.2/rancher/added-user.png)
 1. Open an incognito browser and log in as `project-owner`.
 1. After logging in as the `project-owner` user, click the **Virtualization Management** tab. There you should be able to view the cluster to which you have been assigned.
 1. Click the **Images** tab to view a list of images previously uploaded to the harvester-public namespace. You can also upload your own image if needed.
@@ -90,7 +90,7 @@ The following example provides a good explanation of how the multi-tenant featur
 ## Delete Imported Harvester Cluster
 Users can delete the imported Harvester cluster from the Rancher UI via **Virtualization Management > Harvester Clusters**. Select the cluster you want to remove and click the **Delete** button to delete the imported Harvester cluster.
 
-![delete-cluster](/img/v1.1/rancher/delete-harvester-cluster.png)
+![delete-cluster](/img/v1.2/rancher/delete-harvester-cluster.png)
 
 :::caution
 

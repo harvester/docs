@@ -29,7 +29,7 @@ Description: 在 Harvester VM 页面编辑虚拟机。
 
 首次启动虚拟机时，SSH 密钥会被注入到 cloud-init 脚本中。为了使修改后的 SSH 密钥在虚拟机启动后生效，你需要在 Guest 操作系统中[重新安装](../faq.md#如何在运行的虚拟机上安装-qemu-guest-agent) cloud-init 脚本。
 
-![edit-vm](/img/v1.1/vm/edit-vm-basics.png)
+![edit-vm](/img/v1.2/vm/edit-vm-basics.png)
 
 ### 网络
 
@@ -37,7 +37,7 @@ Description: 在 Harvester VM 页面编辑虚拟机。
 
 除非你在 Guest 操作系统中手动配置了其他 NIC（例如[将 wicked 用于 OpenSUSE Server](https://doc.opensuse.org/documentation/leap/reference/html/book-reference/cha-network.html#sec-network-manconf) 或[将 netplan 用于 Ubuntu Server](https://ubuntu.com/server/docs/network-configuration)），否则默认情况下不会启用其他 NIC。
 
-![edit-vm](/img/v1.1/vm/edit-vm-networks.png)
+![edit-vm](/img/v1.2/vm/edit-vm-networks.png)
 
 有关网络实现的更多详细信息，请参阅[网络](../networking/harvester-network.md)页面。
 
@@ -45,7 +45,7 @@ Description: 在 Harvester VM 页面编辑虚拟机。
 
 你可以在启动后向 VM 添加其他卷。你还可以在关闭虚拟机后扩展卷的大小，即通过点击虚拟机进入 `Volumes` 选项卡，然后点击 `Edit Image Volume` 来编辑卷的大小。大小调整完成并重启 VM 后，你的磁盘将自动完成扩展。
 
-![edit-vm](/img/v1.1/vm/edit-vm-volumes.png)
+![edit-vm](/img/v1.2/vm/edit-vm-volumes.png)
 
 ### 访问凭证
 

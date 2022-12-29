@@ -97,7 +97,7 @@ https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhr
 
 #### 示例
 
-![containerd-registry](/img/v1.1/advanced/containerd-registry.png)
+![containerd-registry](/img/v1.2/advanced/containerd-registry.png)
 
 ```json
 {

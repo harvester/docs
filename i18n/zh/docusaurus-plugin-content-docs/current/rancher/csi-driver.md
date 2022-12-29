@@ -27,18 +27,18 @@ Harvester CSI Driver 提供了一个标准的 CSI 接口，供 Harvester 中所�
 
 - 选择 `Harvester(Out-of-tree)` 选项（可选，如不需要同时使用 Cloud Provider 功能可以选择 `None` 选项）。
 
-   ![](/img/v1.1/rancher/rke-cloud-provider.png)
+   ![](/img/v1.2/rancher/rke-cloud-provider.png)
 
 - 从 Rancher 应用市场安装 `Harvester CSI Driver`：
 
-   ![](/img/v1.1/rancher/install-harvester-csi-driver.png)
+   ![](/img/v1.2/rancher/install-harvester-csi-driver.png)
 
 
 ### 使用 Harvester RKE2 主机驱动进行部署
 
 当使用 Rancher RKE2 主机驱动启动 Kubernetes 集群时，Harvester CSI Driver 会在选中 Harvester 云提供商后被自动部署。
 
-![select-harvester-cloud-provider](/img/v1.1/rancher/rke2-cloud-provider.png)
+![select-harvester-cloud-provider](/img/v1.2/rancher/rke2-cloud-provider.png)
 
 ### 使用 Harvester K3s 主机驱动进行部署
 
@@ -51,4 +51,4 @@ Harvester CSI Driver 提供了一个标准的 CSI 接口，供 Harvester 中所�
 
 - 从 Rancher 应用市场安装 `Harvester CSI Driver`：
 
-   ![](/img/v1.1/rancher/install-harvester-csi-driver-in-k3s.png)
+   ![](/img/v1.2/rancher/install-harvester-csi-driver-in-k3s.png)

@@ -19,7 +19,7 @@ Description: Create a volume from the Volume page.
 1. Select an existing `Storage Class`.
 1. Configure the `Size` of the volume.
 
-![create-empty-volume](/img/v1.1/volume/create-empty-volume.png)
+![create-empty-volume](/img/v1.2/volume/create-empty-volume.png)
 
 ## Create an Image Volume
 
@@ -33,4 +33,4 @@ Description: Create a volume from the Volume page.
 1. Select an existing `Image`.
 1. Configure the `Size` of the volume.
 
-![create-image-volume](/img/v1.1/volume/create-image-volume.png)
+![create-image-volume](/img/v1.2/volume/create-image-volume.png)

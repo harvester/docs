@@ -76,7 +76,7 @@ Longhorn 将通过图中红线所示的接口发送复制流量。
 
 请参考**网络**页面使用 `eth2` 和 `eth3` 来配置 `ClusterNetwork` 和 `VLAN Config`，并记住下一步骤需要用的 `ClusterNetwork` 名称。
 
-![storagenetwork-same.png](/img/v1.1/storagenetwork/storagenetwork-same.png)
+![storagenetwork-same.png](/img/v1.2/storagenetwork/storagenetwork-same.png)
 
 
 #### 不同的物理接口
@@ -85,7 +85,7 @@ Longhorn 将通过图中红线所示的接口发送复制流量。
 
 请参考**网络**页面使用 `eth4` 和 `eth5` 来配置 `ClusterNetwork` 和 `VLAN Config`（用于存储网络），并记住下一步骤需要用的 `ClusterNetwork` 名称。
 
-![storagenetwork-diff.png](/img/v1.1/storagenetwork/storagenetwork-diff.png)
+![storagenetwork-diff.png](/img/v1.2/storagenetwork/storagenetwork-diff.png)
 
 ### Harvester 存储网络设置
 
@@ -95,7 +95,7 @@ Harvester 存储网络需要 `range`、`clusterNetwork`、`vlan` 字段来构建
 
 你可以在 `Settings > storage-network` 页面上轻松修改 Harvester 存储网络设置。
 
-![storagenetwork-ui.png](/img/v1.1/storagenetwork/storagenetwork-ui.png)
+![storagenetwork-ui.png](/img/v1.2/storagenetwork/storagenetwork-ui.png)
 
 #### CLI
 

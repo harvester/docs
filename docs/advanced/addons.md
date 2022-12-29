@@ -16,4 +16,4 @@ v1.1.0 currently ships with two Addons:
 * [pcidevices-controller](./pcidevices.md)
 * [vm-import-controller](./vmimport.md)
 
-![](/img/v1.1/addons/DefaultAddons.png)
+![](/img/v1.2/addons/DefaultAddons.png)

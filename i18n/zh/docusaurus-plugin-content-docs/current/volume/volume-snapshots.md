@@ -21,8 +21,8 @@ Description: 通过 Volume 页面获取卷快照。
 1. 单击 `⋮` 按钮并选择 `Take Snapshot` 选项。
 1. 配置新镜像的 `Name`，然后单击 `Create`。
 
-![create-volume-snapshot-1](/img/v1.1/volume/create-volume-snapshot-1.png)
-![create-volume-snapshot-2](/img/v1.1/volume/create-volume-snapshot-2.png)
+![create-volume-snapshot-1](/img/v1.2/volume/create-volume-snapshot-1.png)
+![create-volume-snapshot-2](/img/v1.2/volume/create-volume-snapshot-2.png)
 
 ## 使用卷快照来还原新卷
 
@@ -34,7 +34,7 @@ Description: 通过 Volume 页面获取卷快照。
 1. 如果源卷不是镜像卷，你也可以选择不同的 `Storage Class`。
 1. 单击 `Create`。
 
-![restore-volume-snapshot-1](/img/v1.1/volume/restore-volume-snapshot-1.png)
-![restore-volume-snapshot-2](/img/v1.1/volume/restore-volume-snapshot-2.png)
-![restore-volume-snapshot-3](/img/v1.1/volume/restore-volume-snapshot-3.png)
-![restore-volume-snapshot-4](/img/v1.1/volume/restore-volume-snapshot-4.png)
+![restore-volume-snapshot-1](/img/v1.2/volume/restore-volume-snapshot-1.png)
+![restore-volume-snapshot-2](/img/v1.2/volume/restore-volume-snapshot-2.png)
+![restore-volume-snapshot-3](/img/v1.2/volume/restore-volume-snapshot-3.png)
+![restore-volume-snapshot-4](/img/v1.2/volume/restore-volume-snapshot-4.png)

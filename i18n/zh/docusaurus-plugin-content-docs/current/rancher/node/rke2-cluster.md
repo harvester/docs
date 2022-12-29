@@ -6,7 +6,7 @@ title: "创建 RKE2 Kubernetes 集群"
 
 在 Rancher `2.6.3` 或以上的版本，你可以使用内置的 Harvester 主机驱动创建基于 Harvester 集群之上的 RKE2 Kubernetes 集群。
 
-![rke2-cluster](/img/v1.1/rancher/rke2-k3s-node-driver.png)
+![rke2-cluster](/img/v1.2/rancher/rke2-k3s-node-driver.png)
 
 :::note
 
@@ -25,7 +25,7 @@ title: "创建 RKE2 Kubernetes 集群"
 6. 选择 **Imported Harvester** 或 **External Harvester**。
 7. 单击 **Create**。
 
-![create-harvester-cloud-credentials](/img/v1.1/rancher/create-cloud-credentials.png)
+![create-harvester-cloud-credentials](/img/v1.2/rancher/create-cloud-credentials.png)
 
 ### 创建 RKE2 Kubernetes 集群
 
@@ -57,8 +57,8 @@ Calico 和 Canal 要求在节点上安装 `iptables` 或 `xtables-nft` 包。详
 
 12. 单击 **Create**。
 
-![create-rke2-harvester-cluster-1](/img/v1.1/rancher/create-rke2-harvester-cluster-1.png)
-![create-rke2-harvester-cluster-2](/img/v1.1/rancher/create-rke2-harvester-cluster-2.png)
+![create-rke2-harvester-cluster-1](/img/v1.2/rancher/create-rke2-harvester-cluster-1.png)
+![create-rke2-harvester-cluster-2](/img/v1.2/rancher/create-rke2-harvester-cluster-2.png)
 
 :::note
 
@@ -76,7 +76,7 @@ Harvester 主机驱动现在支持通过节点亲和性规则将一组主机调�
 你可以在集群创建期间将节点亲和性添加到主机池中：
 
 1. 单击 `Show Advanced` 按钮并单击 `Add Node Selector`：
-   ![affinity-add-node-selector](/img/v1.1/rancher/affinity-rke2-add-node-selector.png)
+   ![affinity-add-node-selector](/img/v1.2/rancher/affinity-rke2-add-node-selector.png)
 2. 如果你希望调度程序仅在满足规则时调度主机，请将优先级设置为 `Required`。
 3. 点击 `Add Rule` 指定节点亲和规则，例如，对于 [topology spread constraints](./node-driver.md#拓扑分布约束) 用例，你可以添加 `region` 和 `zone` 标签，如下：
    ```yaml
@@ -88,7 +88,7 @@ Harvester 主机驱动现在支持通过节点亲和性规则将一组主机调�
    operator: in list
    values: us-east-1a
    ```
-   ![affinity-add-rules](/img/v1.1/rancher/affinity-rke2-add-rules.png)
+   ![affinity-add-rules](/img/v1.2/rancher/affinity-rke2-add-rules.png)
 4. 点击 `Create` 保存节点模板。集群安装完成后，你可以查看其主机节点是否按照亲和性规则进行调度。
 
 

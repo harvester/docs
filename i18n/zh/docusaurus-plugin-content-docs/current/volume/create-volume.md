@@ -19,7 +19,7 @@ Description: 通过 Volume 页面创建卷。
 1. 选择现有的 `Storage Class`。
 1. 配置卷的 `Size`。
 
-![create-empty-volume](/img/v1.1/volume/create-empty-volume.png)
+![create-empty-volume](/img/v1.2/volume/create-empty-volume.png)
 
 ## 创建镜像卷
 
@@ -33,4 +33,4 @@ Description: 通过 Volume 页面创建卷。
 1. 选择现有的 `Image`。
 1. 配置卷的 `Size`。
 
-![create-image-volume](/img/v1.1/volume/create-image-volume.png)
+![create-image-volume](/img/v1.2/volume/create-image-volume.png)

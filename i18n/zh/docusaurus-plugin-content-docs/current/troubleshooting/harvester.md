@@ -55,32 +55,31 @@ title: "Harvester"
 你可以按照以下步骤在 Harvester GUI 中生成 Support Bundle：
 
 - Harvester 网页 UI 的左下角点击 `Support`：
-   ![](/img/v1.1/troubleshooting/harvester-sb-support-link.png)
+   ![](/img/v1.2/troubleshooting/harvester-sb-support-link.png)
 
 - 单击 `Generate Support Bundle` 按钮：
-   ![](/img/v1.1/troubleshooting/harvester-sb-support-button.png)
+   ![](/img/v1.2/troubleshooting/harvester-sb-support-button.png)
 
 - 输入支持包的描述并点击 `Create` 以生成和下载 Support Bundle：
-   ![](/img/v1.1/troubleshooting/harvester-sb-support-modal.png)
+   ![](/img/v1.2/troubleshooting/harvester-sb-support-modal.png)
 
-## 访问内嵌的 Rancher
+## 访问嵌入式 Rancher 和 Longhorn 仪表板
 
-你可以通过 `https://{{HARVESTER_IP}}/dashboard/c/local/explorer` 访问内嵌的 Rancher Dashboard。
+_从 v1.1.0 起可用_
+
+你现在可以直接在 `Support` 页面上访问嵌入式 Rancher 和 Longhorn 仪表板，但必须先通过 **Preference** 页面启用 `Developer Tools & Features`。
+
+![](/img/v1.2/troubleshooting/support-access-embedded-ui.png)
+
+如果你使用旧的版本，你可以通过以下方式手动访问：
+- `https://{{HARVESTER_IP}}/dashboard/c/local/explorer` (Embedded Rancher)
+- `https://{{HARVESTER_IP}}/dashboard/c/local/longhorn` (Embedded Longhorn)
+
 
 :::note
 
-仅支持使用内嵌 Rancher Dashboard 来进行调试和验证。
+我们仅支持使用嵌入式 Rancher 和 Longhorn 仪表板进行调试和验证。
 对于 Rancher 的多集群和多租户集成，请参见[文档](../rancher/rancher-integration.md)。
-
-:::
-
-## 访问内嵌的 Longhorn
-
-你可以通过 `https://{{HARVESTER_IP}}/dashboard/c/local/longhorn` 访问内嵌的 Longhorn UI。
-
-:::note
-
-仅支持使用内嵌 Longhorn UI 来进行调试和验证。
 
 :::
 

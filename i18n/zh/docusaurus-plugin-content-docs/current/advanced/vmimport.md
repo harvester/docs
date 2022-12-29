@@ -12,7 +12,7 @@ _从 v1.1.0 起可用_
 
 要使用 VM 导入功能，用户需要启用 vm-import-controller 插件。
 
-![](/img/v1.1/vm-import-controller/EnableAddon.png)
+![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
 默认情况下，vm-import-controller 使用 /var/lib/kubelet 挂载的临时存储。
 
@@ -20,7 +20,7 @@ _从 v1.1.0 起可用_
 
 为避免这种情况，建议用户启用由 PVC 支持的存储并自定义所需的存储量。根据最佳实践，PVC 的大小应该是要迁移的最大 VM 大小的两倍。因为 PVC 用作下载 VM 的临时空间，并将磁盘转换为原始镜像文件，所以此设置是必不可少的。
 
-![](/img/v1.1/vm-import-controller/ConfigureAddon.png)
+![](/img/v1.2/vm-import-controller/ConfigureAddon.png)
 
 ## vm-import-controller
 

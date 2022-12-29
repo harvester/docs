@@ -14,7 +14,7 @@ Description: Harvester is an open source hyper-converged infrastructure (HCI) so
 
 Harvester is an open-source [hyper-converged infrastructure](https://en.wikipedia.org/wiki/Hyper-converged_infrastructure) (HCI) software built on Kubernetes. It is an open alternative to using a proprietary HCI stack that incorporates the design and ethos of [Cloud Native Computing](https://en.wikipedia.org/wiki/Cloud_native_computing).
 
-![harvester-ui](/img/v1.1/dashboard.png)
+![harvester-ui](/img/v1.2/dashboard.png)
 
 ## Harvester Features
 
@@ -36,7 +36,7 @@ Some notable features of Harvester include the following:
 ## Harvester Architecture
 The following diagram outlines a high-level architecture of Harvester:
 
-![](/img/v1.1/architecture.svg)
+![](/img/v1.2/architecture.svg)
 
 - [Longhorn](https://longhorn.io/) is a lightweight, reliable and easy-to-use distributed block storage system for Kubernetes.
 - [KubeVirt](https://kubevirt.io/) is a virtual machine management add-on for Kubernetes.
@@ -68,16 +68,16 @@ To get the Harvester ISO, download it from the [Github releases](https://github.
 During the installation, you can either choose to form a new cluster or join the node to an existing cluster.
 
 1. Mount the Harvester ISO disk and boot the server by selecting the `Harvester Installer`.
-   ![iso-install.png](/img/v1.1/install/iso-install.png)
+   ![iso-install.png](/img/v1.2/install/iso-install.png)
 2. Choose the installation mode by either creating a new Harvester cluster or by joining an existing one.
 3. Choose the installation device on which the Harvester cluster will be installed
     - Note: By default, Harvester uses [GPT](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [MBR](https://en.wikipedia.org/wiki/Master_boot_record).
-   ![iso-install-disk.png](/img/v1.1/install/iso-install-disk.png)
+   ![iso-install-disk.png](/img/v1.2/install/iso-install-disk.png)
 5. We recommend choosing a separate disk for storing VM data.
-   ![iso-install-disk.png](/img/v1.1/install/iso-select-data-disk.png )
+   ![iso-install-disk.png](/img/v1.2/install/iso-select-data-disk.png )
 6. Configure the hostname and select the network interface for the management network. By default, Harvester will create a bonded NIC named `mgmt-bo`, and the IP address can be configured via DHCP or a statically assigned one <small>(Note: The Node IP can not change at the lifecycle of a Harvester cluster. If DHCP is used, users must make sure the DHCP server always offers the same IP for the same Node. If Node IP is changed, the related Node cannot join the cluster and might even break the cluster)</small>.
 
-   ![iso-installed.png](/img/v1.1/install/iso-nic-config.png)
+   ![iso-installed.png](/img/v1.2/install/iso-nic-config.png)
 7. Optional: Configure the DNS servers; use commas as delimiters.
 8. Configure the `Virtual IP` which you can use to access the cluster or join other nodes to the cluster <small>(Note: If your IP address is configured via DHCP, you will need to configure static MAC-to-IP address mapping on your DHCP server in order to have a persistent Virtual IP, VIP must be different than any Node IP)</small>.
 9. Configure the `cluster token`. This token will be used for adding other nodes to the cluster.
@@ -89,9 +89,9 @@ During the installation, you can either choose to form a new cluster or join the
 15. Confirm the installation options and Harvester will be installed on your host. The installation may take a few minutes to complete.
 16. Once the installation is complete, the host will restart, and a console UI with management URL and status will be displayed. <small>(You can Use F12 to switch between the Harvester console and the Shell).</small>
 17. The default URL of the web interface is `https://your-virtual-ip`.
-    ![iso-installed.png](/img/v1.1/install/iso-installed.png)
+    ![iso-installed.png](/img/v1.2/install/iso-installed.png)
 18. Users will be prompted to set the password for the default `admin` user at first login.
-    ![first-login.png](/img/v1.1/install/first-time-login.png)
+    ![first-login.png](/img/v1.2/install/first-time-login.png)
 
 <div class="text-center">
 <iframe width="950" height="475" src="https://www.youtube.com/embed/Ngsk7m6NYf4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

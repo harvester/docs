@@ -25,7 +25,7 @@ _从 v1.1.0 起可用_
 
 [Banzai Cloud Logging Operator](https://banzaicloud.com/docs/one-eye/logging-operator/) 现在支持使用 `Harvester` 和 `Rancher` 作为内部日志解决方案。
 
-![](/img/v1.1/logging/fluent-operator.png)
+![](/img/v1.2/logging/fluent-operator.png)
 
 在 Harvester 的实践中，`Logging`、`Audit` 和 `Event` 共享一个架构，`Logging` 是基础架构，而 `Audit` 和 `Event` 在它之上。
 
@@ -61,7 +61,7 @@ Banzai Cloud Logging Operator 下面是 [`fluentd` ](https://www.fluentd.org/)�
 3. 在 `Fluentd` 选项卡下，更改资源请求和限制。
 4. 点击屏幕右下方的 `Save`。
 
-![](/img/v1.1/logging/modify-logging-fluent-resources.png)
+![](/img/v1.2/logging/modify-logging-fluent-resources.png)
 
 #### 使用 CLI
 
@@ -114,15 +114,15 @@ UI 截图是 `Output` 和 `Flow`，它们的配置过程几乎与 ClusterOutput 
 4. 选择 Logging 类型。
 5. 选择 Logging 输出类型。
 
-![](/img/v1.1/logging/create-output.png)
+![](/img/v1.2/logging/create-output.png)
 
 6. 如有必要，配置 Output Buffer。
 
-![](/img/v1.1/logging/create-output-buffer.png)
+![](/img/v1.2/logging/create-output-buffer.png)
 
 7. 添加标签或注释。
 
-![](/img/v1.1/logging/create-output-labels-and-annotations.png)
+![](/img/v1.2/logging/create-output-labels-and-annotations.png)
 
 8. 完成后，单击右下角的 `Create`。
 
@@ -149,15 +149,15 @@ UI 截图是 `Output` 和 `Flow`，它们的配置过程几乎与 ClusterOutput 
 3. 为资源添加名称。
 4. 选择要包括或排除日志的节点。
 
-![](/img/v1.1/logging/create-flow-matches.png)
+![](/img/v1.2/logging/create-flow-matches.png)
 
 5. 选择目标 `Outputs` 和 `ClusterOutputs`。
 
-![](/img/v1.1/logging/create-flow-outputs.png)
+![](/img/v1.2/logging/create-flow-outputs.png)
 
 6. 如果需要，添加过滤器。
 
-![](/img/v1.1/logging/create-flow-filters.png)
+![](/img/v1.2/logging/create-flow-filters.png)
 
 7. 完成后，单击左下角的 `Create`。
 
@@ -506,7 +506,7 @@ Harvester 在将 `audit` 日志发送到日志服务器之前不会改变审计�
 
 从 `Type` 下拉列表中选择 `Audit Only`。
 
-![](/img/v1.1/logging/cluster-output-type.png)
+![](/img/v1.2/logging/cluster-output-type.png)
 
 通过 CLI 进行配置时，请手动添加该字段。
 
@@ -539,7 +539,7 @@ spec:
 
 选择 `Audit` 类型。
 
-![](/img/v1.1/logging/cluster-flow-type.png)
+![](/img/v1.2/logging/cluster-flow-type.png)
 
 通过 CLI 进行配置时，请手动添加该字段。
 
@@ -640,7 +640,7 @@ Kubernetes `events` 是向你展示集群内正在发生的事情的对象，例
 
 从 `Type` 下拉列表中选择 `Logging/Event`。
 
-![](/img/v1.1/logging/cluster-output-type.png)
+![](/img/v1.2/logging/cluster-output-type.png)
 
 ### 事件日志 Flow/ClusterFlow
 
@@ -650,7 +650,7 @@ Kubernetes `events` 是向你展示集群内正在发生的事情的对象，例
 
 从 `Type` 下拉列表中选择 `Event`。
 
-![](/img/v1.1/logging/cluster-flow-type.png)
+![](/img/v1.2/logging/cluster-flow-type.png)
 
 通过 CLI 进行配置时，请手动添加该字段。
 

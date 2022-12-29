@@ -13,7 +13,7 @@ Description: 在 ISO 安装模式下，首次登录时会提示用户为默认 `
 
 在完成安装后的首次登录时，你会收到为默认 `admin` 用户设置密码的提示。
 
-![auth](/img/v1.1/install/first-time-login.png)
+![auth](/img/v1.2/install/first-time-login.png)
 
 :::note
 

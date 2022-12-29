@@ -16,7 +16,7 @@ Description: VM backups are created from the Virtual Machines page. The VM backu
 _Available as of v0.3.0_
 
 VM backups are created from the **Virtual Machines** page. The VM backup volumes will be stored in the **Backup Target** (an NFS or S3 server), and they can be used to either restore a new VM or replace an existing VM.
-![vm-backup.png](/img/v1.1/vm/vm-backup.png)
+![vm-backup.png](/img/v1.2/vm/vm-backup.png)
 
 :::note
 
@@ -44,7 +44,7 @@ A backup target is an endpoint used to access a backup store in Harvester. A bac
 1. Once the backup target is set, go to the `Virtual Machines` page.
 1. Click `Take Backup` of the VM actions to create a new VM backup.
 1. Set a custom backup name and click `Create` to create a new VM backup.
-![create-backup.png](/img/v1.1/vm/create-backup.png)
+![create-backup.png](/img/v1.2/vm/create-backup.png)
 
 **Result:** The backup is created. You will receive a notification message, and you can also go to the `Backup & Snapshot > VM Backups` page to view all VM backups.
 
@@ -59,7 +59,7 @@ To restore a new VM from a backup, follow these steps:
 1. Go to the `VM Backups` page.
 1. Specify the new VM name and click `Create`.
 1. A new VM will be restored using the backup volumes and metadata, and you can access it from the `Virtual Machines` page.
-![restore-vm.png](/img/v1.1/vm/restore-vm.png)
+![restore-vm.png](/img/v1.2/vm/restore-vm.png)
 
 ### Replace an existing VM using a backup
 
@@ -125,14 +125,14 @@ EOF
 _Available as of v1.1.0_
 
 VM snapshots are created from the **Virtual Machines** page. The VM snapshot volumes will be stored in the cluster, and they can be used to either restore a new VM or replace an existing VM.
-![vm-snapshot.png](/img/v1.1/vm/vm-snapshot.png)
+![vm-snapshot.png](/img/v1.2/vm/vm-snapshot.png)
 
 ### Create a VM snapshot
 
 1. Go to the `Virtual Machines` page.
 1. Click `Take VM Snapshot` of the VM actions to create a new VM snapshot.
 1. Set a custom snapshot name and click `Create` to create a new VM snapshot.
-![create-snapshot.png](/img/v1.1/vm/create-snapshot.png)
+![create-snapshot.png](/img/v1.2/vm/create-snapshot.png)
 
 **Result:** The snapshot is created. You can also go to the `Backup & Snapshot > VM Snapshots` page to view all VM snapshots.
 
@@ -147,7 +147,7 @@ To restore a new VM from a snapshot, follow these steps:
 1. Go to the `VM Snapshots` page.
 1. Specify the new VM name and click `Create`.
 1. A new VM will be restored using the snapshot volumes and metadata, and you can access it from the `Virtual Machines` page.
-![restore-vm-snapshot.png](/img/v1.1/vm/restore-vm-snapshot.png)
+![restore-vm-snapshot.png](/img/v1.2/vm/restore-vm-snapshot.png)
 
 ### Replace an existing VM using a snapshot
 

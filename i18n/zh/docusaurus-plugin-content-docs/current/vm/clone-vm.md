@@ -19,11 +19,11 @@ _从 v1.1.0 起可用_
 
 1. 在 `Virtual Machines` 页面上，单击 VM 操作的 `Clone`。
 1. 设置新的 VM 名称，然后单击 `Create` 以创建新的 VM。
-   ![clone-vm-with-data.png](/img/v1.1/vm/clone-vm-with-data.png)
+   ![clone-vm-with-data.png](/img/v1.2/vm/clone-vm-with-data.png)
 
 ## 不克隆 VM 卷数据
 
 1. 在 `Virtual Machines` 页面上，单击 VM 操作的 `Clone`。
 1. 取消选中 `clone volume data` 复选框。
 1. 设置新的 VM 名称，然后单击 `Create` 以创建新的 VM。
-   ![clone-vm-without-data.png](/img/v1.1/vm/clone-vm-without-data.png)
+   ![clone-vm-without-data.png](/img/v1.2/vm/clone-vm-without-data.png)

@@ -97,7 +97,7 @@ If you set a username and password for a private registry, the system will autom
 
 #### Example
 
-![containerd-registry](/img/v1.1/advanced/containerd-registry.png)
+![containerd-registry](/img/v1.2/advanced/containerd-registry.png)
 
 ```json
 {

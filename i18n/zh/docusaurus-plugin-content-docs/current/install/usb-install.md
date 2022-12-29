@@ -34,7 +34,7 @@ title: "U 盘安装"
 
 如果你使用的是 UEFI 模式，请尝试从 USB 设备的 UEFI 分区启动，而不是从 USB 设备本身启动。例如：
 
-![](/img/v1.1/install/usb-install-select-correct-partition.jpg)
+![](/img/v1.2/install/usb-install-select-correct-partition.jpg)
 
 选择 `UEFI: USB disk 3.0 PMAP, Partition 1` 来启动。请知悉不同的系统可能会显示不同的内容。
 
@@ -44,7 +44,7 @@ title: "U 盘安装"
 某些显卡的固件在 `v0.3.0` 中没有携带。
 你可以按下 `e` 来编辑 GRUB 菜单入口，并将 `nomodeset` 尾附到启动参数后。然后按下 `Ctrl + x` 来启动。
 
-![](/img/v1.1/install/usb-install-nomodeset.png)
+![](/img/v1.2/install/usb-install-nomodeset.png)
 
 
 ### 其他问题

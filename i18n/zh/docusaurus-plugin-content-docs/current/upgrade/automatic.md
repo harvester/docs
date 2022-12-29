@@ -30,8 +30,8 @@ Description: 升级 Harvester 有两种方法。你可以使用 ISO 镜像或通
 :::caution
 
 - 在升级 Harvester 集群之前，我们强烈建议：
-   - 关闭所有虚拟机（Harvester GUI -> Virtual Machines -> 选择虚拟机 -> Actions -> Stop）。
-   - 备份虚拟机。
+   - 要从 v1.0.3 升级到 v1.1.0/v1.1.1，请先关闭所有虚拟机（Harvester GUI > Virtual Machines > 选择虚拟机 > Actions > Stop）。查看[链接](./v1-0-3-to-v1-1-1.md#通用信息)了解更多信息。
+   - 如果需要，备份虚拟机。
 - 不要在升级期间操作集群，例如，创建新的虚拟机、上传新的镜像等。
 - 确保你的硬件符合**首选**[硬件要求](../index.md#硬件要求)。这是因为升级会消耗中间资源。
 - 确保每个节点至少有 25 GB 的可用空间 (`df -h /usr/local/`)。
@@ -70,14 +70,14 @@ Description: 升级 Harvester 有两种方法。你可以使用 ISO 镜像或通
    - 如果集群处于离线环境中，请先参阅[准备离线升级](#准备离线升级)。你还可以使用该部分中的方法加速 ISO 下载。
 - 导航到 Harvester GUI，然后单击仪表板页面上的升级按钮：
 
-   ![](/img/v1.1/upgrade/upgrade_button.png)
+   ![](/img/v1.2/upgrade/upgrade_button.png)
 
 - 选择要升级的版本：
 
-   ![](/img/v1.1/upgrade/upgrade_select_version.png)
+   ![](/img/v1.2/upgrade/upgrade_select_version.png)
 
 - 单击顶部的圆圈以显示升级进度：
-   ![](/img/v1.1/upgrade/upgrade_progress.png)
+   ![](/img/v1.2/upgrade/upgrade_progress.png)
 
 
 ## 准备离线升级

@@ -10,7 +10,7 @@ keywords:
 
 下面的网络拓扑展示了我们是如何实现 Harvester 网络的。
 
-![](/img/v1.1/networking/topology.png)
+![](/img/v1.2/networking/topology.png)
 
 该图包含[内置集群网络 mgmt](./clusternetwork.md#内置集群网络) 和一个名为 `oob` 的[自定义集群网络](./clusternetwork.md#自定义集群网络)。
 

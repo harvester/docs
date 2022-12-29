@@ -26,7 +26,7 @@ Rancher `2.6.3+` 默认启用 Harvester 主机驱动。你可以前往 `Cluster 
 
 启用 Harvester 主机驱动后，你可以在 Harvester 集群之上创建 Kubernetes 集群并从 Rancher 管理它们。
 
-![rke1-cluster](/img/v1.1/rancher/rke1-node-driver.png)
+![rke1-cluster](/img/v1.2/rancher/rke1-node-driver.png)
 
 ### 支持矩阵
 参见 [Rancher 下游集群支持矩阵](https://www.suse.com/suse-rancher/support-matrix/all-supported-versions/rancher-v2-6-9)。
@@ -72,7 +72,7 @@ _从 v1.0.3 起可用_
    topology.kubernetes.io/region: us-east-1
    topology.kubernetes.io/zone: us-east-1a
    ```
-   ![](/img/v1.1/rancher/node-add-affinity-labels.png)
+   ![](/img/v1.2/rancher/node-add-affinity-labels.png)
 
 1. 使用 Harvester 主机驱动创建 Guest Kubernetes 集群，建议添加[节点亲和性规则](./rke2-cluster.md#添加节点亲和性)，从而避免在 VM 重建后节点偏移到其它地区。
 
