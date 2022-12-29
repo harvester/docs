@@ -21,7 +21,7 @@ In some environments, the connection to external services, from the servers or V
 
 You can configure the HTTP(S) proxy during the [ISO installation](./install/iso-install.md) as shown in picture below:
 
-![iso-proxy](/img/v1.1/iso-proxy.png)
+![iso-proxy](/img/v1.2/iso-proxy.png)
 
 ### Configure an HTTP Proxy in Harvester Settings
 
@@ -31,7 +31,7 @@ You can configure the HTTP(S) proxy in the settings page of the Harvester dashbo
 1. Find the `http-proxy` setting, click **⋮ > Edit setting**
 1. Enter the value(s) for `http-proxy`, `https-proxy` and `no-proxy`.
 
-![proxy-setting](/img/v1.1/proxy-setting.png)
+![proxy-setting](/img/v1.2/proxy-setting.png)
 
 :::note
 

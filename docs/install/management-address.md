@@ -15,7 +15,7 @@ If you selected the IP address to be configured via DHCP, you will need to confi
 
 :::
 
-![](/img/v1.1/install/iso-installed.png)
+![](/img/v1.2/install/iso-installed.png)
 
 ## How to get the VIP MAC address
 
@@ -34,4 +34,4 @@ The management address has two usages.
 
 - Allows the access to the Harvester API/UI via `HTTPS` protocol.
 - Is the address the other nodes use to join the cluster.
-  ![](/img/v1.1/install/configure-management-address.png)
+  ![](/img/v1.2/install/configure-management-address.png)

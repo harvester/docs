@@ -35,7 +35,7 @@ Please refer to [this page](./create-windows-vm.md) for creating Windows virtual
     1. You can also add additional networks to the VMs using VLAN networks. You may configure the VLAN networks on **Advanced > Networks** first.
 1. Advanced options such as run strategy, os type and cloud-init data are optional. You may configure these in the **Advanced Options** section when applicable.
 
-![create-vm](/img/v1.1/vm/create-vm.png)
+![create-vm](/img/v1.2/vm/create-vm.png)
 
 ## Volumes
 
@@ -50,7 +50,7 @@ A disk can be made accessible via the following types:
 
 A volume's [Storage Class](../advanced/storageclass.md) can be specified when adding a new empty volume; for other volumes (such as VM images), the `Storage Class` is defined during image creation.
 
-![create-vm](/img/v1.1/vm/create-vm-volumes.png)
+![create-vm](/img/v1.2/vm/create-vm-volumes.png)
 
 :::info Container Disk
 
@@ -148,7 +148,7 @@ The QEMU guest agent is a daemon that runs on the virtual machine instance and p
 
 `Install guest agent` checkbox is enabled by default when a new VM is created.
 
-![](/img/v1.1/vm/qga.png)
+![](/img/v1.2/vm/qga.png)
 
 :::note
 
@@ -169,7 +169,7 @@ The following example describes how to install an ISO image using [openSUSE Leap
 4. Click **Add Volume** and select an existing **Storage Class**.
 5. Drag **Volume** to the top of **Image Volume** as follows. In this way, the **bootOrder** of **Volume** will become `1`.
 
-![one-time-boot-create-vm-bootorder](/img/v1.1/vm/one-time-boot-create-vm-bootorder.png)
+![one-time-boot-create-vm-bootorder](/img/v1.2/vm/one-time-boot-create-vm-bootorder.png)
 
 6. Click **Create**.
 7. Open the VM web-vnc you just created and follow the instructions given by the installer.

@@ -21,7 +21,7 @@ VMs can be accessed from the UI directly using either VNC or the serial console.
 
 If the VGA display is not enabled on the VM, e.g., the `Ubuntu-Minimal-Cloud` image, the VM can only be accessed with the serial console.
 
-![](/img/v1.1/vm/access-to-vm.png)
+![](/img/v1.2/vm/access-to-vm.png)
 
 ## SSH Access
 
@@ -31,7 +31,7 @@ Harvester provides two ways to inject SSH public keys into virtual machines. Gen
 
 You can provide ssh keys to your virtual machines during the creation time on the `Basics` tab. Additionally, you can place the public ssh keys into your cloud-init script to allow it to take place.
 
-![](/img/v1.1/vm/vm-ssh-keys.png)
+![](/img/v1.2/vm/vm-ssh-keys.png)
 
 #### Example of SSH key cloud-init configuration:
 ```yaml
@@ -68,7 +68,7 @@ You need to enter the VM to edit password or remove SSH-Key after deleting the c
 
 :::
 
-![](/img/v1.1/vm/vm-add-access-credentails.png)
+![](/img/v1.2/vm/vm-add-access-credentails.png)
 
 
 

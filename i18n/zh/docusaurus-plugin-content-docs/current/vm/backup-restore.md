@@ -16,7 +16,7 @@ Description: 你可以在“虚拟机”页面创建虚拟机备份。VM 备份�
 _从 v0.3.0 起可用_
 
 虚拟机备份是在 **Virtual Machines** 页面中创建的。虚拟机备份卷将存储在 **Backup Target**（NFS 或 S3 服务器）中，用于还原新虚拟机或替换现有虚拟机。
-![vm-backup.png](/img/v1.1/vm/vm-backup.png)
+![vm-backup.png](/img/v1.2/vm/vm-backup.png)
 
 :::note
 
@@ -44,7 +44,7 @@ _从 v0.3.0 起可用_
 1. 设置好备份目标后，前往 `Virtual Machines` 页面。
 1. 选择目标虚拟机，并点击 `Take Backup`。
 1. 设置备份的名称，并点击 `Create`。
-   ![create-backup.png](/img/v1.1/vm/create-backup.png)
+   ![create-backup.png](/img/v1.2/vm/create-backup.png)
 
 **结果**：备份已创建。你将收到一条通知消息。你也可以前往 `Backup & Snapshot > VM Backups` 页面查看所有 VM 备份。
 
@@ -59,7 +59,7 @@ _从 v0.3.0 起可用_
 1. 前往 `VM Backups` 页面。
 1. 设置新虚拟机的名称并单击 `Create`。
 1. 将使用备份卷和元数据还原新虚拟机。此后，你可以从 `Virtual Machine` 页面访问它。
-   ![restore-vm.png](/img/v1.1/vm/restore-vm.png)
+   ![restore-vm.png](/img/v1.2/vm/restore-vm.png)
 
 ### 使用备份替换现有虚拟机
 
@@ -125,14 +125,14 @@ EOF
 _从 v1.1.0 起可用_
 
 虚拟机快照是在 **Virtual Machines** 页面中创建的。VM 快照卷将存储在集群中，它们可用于还原新 VM 或替换现有 VM。
-![vm-snapshot.png](/img/v1.1/vm/vm-snapshot.png)
+![vm-snapshot.png](/img/v1.2/vm/vm-snapshot.png)
 
 ### 创建虚拟机快照
 
 1. 前往 `Virtual Machines` 页面。
 1. 单击 VM 操作中的 `Take VM Snapshot` 创建新的 VM 快照。
 1. 设置快照的名称，并点击 `Create`。
-   ![create-snapshot.png](/img/v1.1/vm/create-snapshot.png)
+   ![create-snapshot.png](/img/v1.2/vm/create-snapshot.png)
 
 **结果**：快照已创建。你也可以前往 `Backup & Snapshot > VM Snapshots` 页面查看所有 VM 快照。
 
@@ -147,7 +147,7 @@ _从 v1.1.0 起可用_
 1. 前往 `VM Snapshots` 页面。
 1. 设置新虚拟机的名称并单击 `Create`。
 1. 将使用快照卷和元数据还原新虚拟机。此后，你可以从 `Virtual Machine` 页面访问它。
-   ![restore-vm-snapshot.png](/img/v1.1/vm/restore-vm-snapshot.png)
+   ![restore-vm-snapshot.png](/img/v1.2/vm/restore-vm-snapshot.png)
 
 ### 使用快照替换现有虚拟机
 

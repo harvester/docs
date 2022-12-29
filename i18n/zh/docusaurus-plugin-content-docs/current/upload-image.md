@@ -23,7 +23,7 @@ Description: 如果需要在 **Images** 页面导入虚拟机镜像，输入集�
 
 :::
 
-![](/img/v1.1/upload-image.png)
+![](/img/v1.2/upload-image.png)
 
 ### 通过本地文件上传镜像
 
@@ -35,14 +35,14 @@ Description: 如果需要在 **Images** 页面导入虚拟机镜像，输入集�
 
 :::
 
-![](/img/v1.1/upload-image-local.png)
+![](/img/v1.2/upload-image-local.png)
 
 
 ### 通过卷创建镜像
 
 在 **Volumes** 页面中，点击 **Export Image**。输入镜像名称并选择一个 StorageClass 以创建镜像。
 
-![](/img/v1.1/volume/export-volume-to-image-1.png)
+![](/img/v1.2/volume/export-volume-to-image-1.png)
 
 ### 镜像 StorageClass
 
@@ -56,7 +56,7 @@ Description: 如果需要在 **Images** 页面导入虚拟机镜像，输入集�
 
 :::
 
-![](/img/v1.1/image-storageclass.png)
+![](/img/v1.2/image-storageclass.png)
 
 ### 镜像标签
 
@@ -64,4 +64,4 @@ Description: 如果需要在 **Images** 页面导入虚拟机镜像，输入集�
 
 如果你的镜像名称或 URL 包含任何有效信息，UI 将自动为你识别操作系统类型和镜像类别。如果没有，你也可以在 UI 上手动指定对应的标签。
 
-![](/img/v1.1/image-labels.png)
+![](/img/v1.2/image-labels.png)

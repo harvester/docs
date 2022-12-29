@@ -32,7 +32,7 @@ _从 v0.3.0 起可用_
 <iframe width="950" height="475" src="https://www.youtube.com/embed/fyxDm3HVwWI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-![virtualization-management](/img/v1.1/rancher/virtualization-management.png)
+![virtualization-management](/img/v1.2/rancher/virtualization-management.png)
 
 ## 部署 Rancher Server
 
@@ -76,7 +76,7 @@ $ sudo docker run -d --restart=unless-stopped -v /opt/rancher:/var/lib/rancher -
 
 详情请查看[虚拟化管理](./virtualization-management.md)页面。
 
-![import-cluster](/img/v1.1/rancher/import-harvester-cluster.png)
+![import-cluster](/img/v1.2/rancher/import-harvester-cluster.png)
 
 ## 使用 Harvester 主机驱动创建 Kubernetes 集群
 

@@ -12,19 +12,19 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 :::
 
-![host.png](/img/v1.1/host/host.png)
+![host.png](/img/v1.2/host/host.png)
 
 ## Node Maintenance
 
 For admin users, you can click **Enable Maintenance Mode** to evict all VMs from a node automatically. It will leverage the `VM live migration` feature to migrate all VMs to other nodes automatically. Note that at least two active nodes are required to use this feature.
 
-![node-maintenance.png](/img/v1.1/host/node-maintenance.png)
+![node-maintenance.png](/img/v1.2/host/node-maintenance.png)
 
 ## Cordoning a Node
 
 Cordoning a node marks it as unschedulable. This feature is useful for performing short tasks on the node during small maintenance windows, like reboots, upgrades, or decommissions. When you’re done, power back on and make the node schedulable again by uncordoning it.
 
-![cordon-node.png](/img/v1.1/host/cordon-nodes.png)
+![cordon-node.png](/img/v1.2/host/cordon-nodes.png)
 
 ## Deleting a Node
 
@@ -51,7 +51,7 @@ Once resolved, the last step can be skipped.
 
 :::
 
-![delete.png](/img/v1.1/host/delete-node.png)
+![delete.png](/img/v1.2/host/delete-node.png)
 
 ## Multi-disk Management
 
@@ -62,11 +62,11 @@ Users can view and add multiple disks as additional data volumes from the edit h
 1. Go to the **Hosts** page.
 2. On the node you want to modify, click **⋮ > Edit Config**.
 
-![Edit Config](/img/v1.1/host/edit-config.png)
+![Edit Config](/img/v1.2/host/edit-config.png)
 
 3. Select the **Storage** tab and click **Add Disk**.
 
-![Add Disks](/img/v1.1/host/add-disks.png)
+![Add Disks](/img/v1.2/host/add-disks.png)
 
 :::caution
 
@@ -77,11 +77,11 @@ As of Harvester v1.0.2, we no longer support adding partitions as additional dis
 4. Select an additional raw block device to add as an additional data volume.
     - The `Force Formatted` option is required if the block device has never been force-formatted.
 
-![Force Format](/img/v1.1/host/force-format-disks.png)
+![Force Format](/img/v1.2/host/force-format-disks.png)
 
 5. Last, you can click **⋮ > Edit Config** again to check the newly added disk. Meanwhile, you can also add the "Host/Disk" tag (details are described in the [next section](#storage-tags)).
 
-![Check Result](/img/v1.1/host/check-added-disks.png)
+![Check Result](/img/v1.2/host/check-added-disks.png)
 
 :::note
 
@@ -132,12 +132,12 @@ Ksmtuned is a KSM automation tool deployed as a DaemonSet to run Ksmtuned on eac
 3. Select the **Ksmtuned** tab and select **Run** in **Run Strategy**.
 4. (Optional) You can modify **Threshold Coefficient** as needed.
 
-![Edit Ksmtuned](/img/v1.1/host/edit-ksmtuned.png)
+![Edit Ksmtuned](/img/v1.2/host/edit-ksmtuned.png)
 
 5. Click **Save** to update.
 6. Wait for about 1-2 minutes and you can check its **Statistics** by clicking **Your Node > Ksmtuned tab**.
 
-![View Ksmtuned Statistics](/img/v1.1/host/view-ksmtuned-statistics.png)
+![View Ksmtuned Statistics](/img/v1.2/host/view-ksmtuned-statistics.png)
 
 ### Parameters
 

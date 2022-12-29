@@ -26,9 +26,9 @@ Live migration means moving a virtual machine to a different host without downti
 1. Find the virtual machine that you want to migrate and select **⋮ > Migrate**.
 1. Choose the node to which you want to migrate the virtual machine. Click **Apply**.
 
-![](/img/v1.1/vm/migrate-action.png)
+![](/img/v1.2/vm/migrate-action.png)
 
-![](/img/v1.1/vm/migrate.png)
+![](/img/v1.2/vm/migrate.png)
 
 ## Aborting a Migration
 

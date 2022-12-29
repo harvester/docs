@@ -15,7 +15,7 @@ Harvester 提供固定的虚拟 IP（VIP）作为管理地址，VIP 必须与所
 
 :::
 
-![](/img/v1.1/install/iso-installed.png)
+![](/img/v1.2/install/iso-installed.png)
 
 ## 如何获取 VIP MAC 地址
 
@@ -34,4 +34,4 @@ $ kubectl get svc -n kube-system ingress-expose -ojsonpath='{.metadata.annotatio
 
 - 允许通过 `HTTPS` 协议访问 Harvester API/UI。
 - 作为其他节点加入集群的地址。
-   ![](/img/v1.1/install/configure-management-address.png)
+   ![](/img/v1.2/install/configure-management-address.png)

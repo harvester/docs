@@ -16,4 +16,4 @@ v1.1.0 目前附带两个插件：
 * [pcidevices-controller](./pcidevices.md)
 * [vm-import-controller](./vmimport.md)
 
-![](/img/v1.1/addons/DefaultAddons.png)
+![](/img/v1.2/addons/DefaultAddons.png)

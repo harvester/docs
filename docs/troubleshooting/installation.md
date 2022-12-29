@@ -105,7 +105,7 @@ Please include the following information in a bug report when reporting a failed
     
     The command output messages contain the generated tarball path. For example the path is `/var/loq/scc_aaa_220520_1021 804d65d-c9ba-4c54-b12d-859631f892c5.txz` in the following example:
 
-    ![](/img/v1.1/troubleshooting/installation-support-config-example.png)
+    ![](/img/v1.2/troubleshooting/installation-support-config-example.png)
 
     :::note
 

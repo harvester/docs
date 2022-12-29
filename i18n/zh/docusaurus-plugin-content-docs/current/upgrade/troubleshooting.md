@@ -14,13 +14,13 @@ title: "故障排除"
 ## 升级流程
 
 Harvester 升级包含了几个阶段：
-![](/img/v1.1/upgrade/ts_upgrade_phases.png)
+![](/img/v1.2/upgrade/ts_upgrade_phases.png)
 
 ### 阶段 1：预配置升级仓库 VM。
 
 Harvester controller 下载 Harvester 版本 ISO 文件并使用它来配置 VM。在此阶段，你可以看到升级状态窗口显示：
 
-![](/img/v1.1/upgrade/ts_status_phase1.png)
+![](/img/v1.2/upgrade/ts_status_phase1.png)
 
 完成的时间取决于用户的网络速度和集群资源利用率。由于网络速度，我们看到此阶段出现了故障。如果发生这种情况，用户可以再次[重新开始升级](#重新开始升级)。
 
@@ -41,7 +41,7 @@ Harvester controller 在每个 Harvester 节点上创建 Job，以便从仓库 V
 
 在此阶段，你可以看到升级状态窗口显示：
 
-![](/img/v1.1/upgrade/ts_status_phase2.png)
+![](/img/v1.2/upgrade/ts_status_phase2.png)
 
 所有节点都需要一些时间来预加载镜像。如果升级在此阶段失败，用户可以查看 `cattle-system` 命名空间中的 Job 日志：
 
@@ -58,7 +58,7 @@ $ kubectl logs jobs/apply-hvst-upgrade-9gmg2-prepare-on-node1-with-2bbea1599a-f0
 
 ### 阶段 3：升级系统服务
 
-![](/img/v1.1/upgrade/ts_status_phase3.png)
+![](/img/v1.2/upgrade/ts_status_phase3.png)
 
 在此阶段，Harvester controller 使用 Job 来升级组件 Helm Chart。用户可以使用以下命令检查 `apply-manifest` Job：
 
@@ -73,7 +73,7 @@ $ kubectl logs jobs/hvst-upgrade-9gmg2-apply-manifests -n harvester-system
 
 ### 阶段 4：升级节点
 
-![](/img/v1.1/upgrade/ts_status_phase4.png)
+![](/img/v1.2/upgrade/ts_status_phase4.png)
 
 Harvester controller 在每个节点上（一个接一个）创建 Job 以升级节点的操作系统和 RKE2 运行时。对于多节点集群，更新节点的 Job 有两种：
 

@@ -27,18 +27,18 @@ Currently, the Harvester CSI driver only supports single-node read-write(RWO) vo
 
 - Select `Harvester(Out-of-tree)` option (optional. If you don't need to use the Cloud Provider feature at the same time, you can select the `None` option).
 
-    ![](/img/v1.1/rancher/rke-cloud-provider.png)
+    ![](/img/v1.2/rancher/rke-cloud-provider.png)
 
 - Install `Harvester CSI Driver` from the Rancher marketplace.
 
-    ![](/img/v1.1/rancher/install-harvester-csi-driver.png)
+    ![](/img/v1.2/rancher/install-harvester-csi-driver.png)
 
 
 ### Deploying with Harvester RKE2 Node Driver
 
 When spinning up a Kubernetes cluster using Rancher RKE2 node driver, the Harvester CSI driver will be deployed when Harvester cloud provider is selected.
 
-![select-harvester-cloud-provider](/img/v1.1/rancher/rke2-cloud-provider.png)
+![select-harvester-cloud-provider](/img/v1.2/rancher/rke2-cloud-provider.png)
 
 ### Deploying with Harvester K3s Node Driver
 
@@ -51,4 +51,4 @@ When spinning up a Kubernetes cluster using Rancher RKE2 node driver, the Harves
 
 - Install `Harvester CSI Driver` from the Rancher marketplace.
 
-  ![](/img/v1.1/rancher/install-harvester-csi-driver-in-k3s.png)
+  ![](/img/v1.2/rancher/install-harvester-csi-driver-in-k3s.png)

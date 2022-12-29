@@ -36,11 +36,14 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           showLastUpdateTime: true,
           editUrl: "https://github.com/harvester/docs/edit/main/",
-          lastVersion: 'current',
+          lastVersion: 'v1.1',
           versions: {
             current: {
-              label: 'v1.1',
-              path: 'v1.1',
+              label: 'v1.2-dev',
+              path: 'dev',
+            },
+            "v1.1": {
+              path: "v1.1",
             },
             "v1.0": {
               path: "v1.0",

@@ -10,7 +10,7 @@ keywords:
 
 The network topology below reveals how we implement the Harvester network.
 
-![](/img/v1.1/networking/topology.png)
+![](/img/v1.2/networking/topology.png)
 
 The diagram contains [the built-in cluster network mgmt](./clusternetwork.md/#built-in-cluster-network) and a [custom cluster network](./clusternetwork.md/#custom-cluster-network) called `oob`.
 

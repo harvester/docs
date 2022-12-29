@@ -12,7 +12,7 @@ Harvester 已使用 [Prometheus](https://prometheus.io/) 内置集成监控。�
 在 Harvester 的 `Dashboard` 页面中，你可以分别查看集群指标以及最常用的 10 个虚拟机指标。
 此外，你可以单击 [Grafana](http://grafana.com/) 仪表盘链接，从而在 Grafana UI 上查看更多仪表盘。
 
-![](/img/v1.1/monitoring/monitoring-dashboard.png)
+![](/img/v1.2/monitoring/monitoring-dashboard.png)
 
 :::note
 
@@ -25,7 +25,7 @@ Harvester 已使用 [Prometheus](https://prometheus.io/) 内置集成监控。�
 
 你可以单击 `VM details page > VM Metrics` 来查看​​各个虚拟机的指标：
 
-![](/img/v1.1/monitoring/vm-metrics.png)
+![](/img/v1.2/monitoring/vm-metrics.png)
 
 :::note
 
@@ -61,7 +61,7 @@ Monitoring 有几个可用于收集和聚合所有节点/Pod/VM 指标数据的�
 在 `Monitoring & Logging` 页面上，你可以查看和更改资源设置：
 
 1. 导航到 `Monitoring > Configuration` 页面。
-   ![](/img/v1.1/monitoring/monitoring-config.png)
+   ![](/img/v1.2/monitoring/monitoring-config.png)
 
 1. 点击 `Save`，`Monitoring` 资源会在几秒后重启。请注意，重新启动可能需要一些时间来重新加载以前的数据。
 
@@ -119,7 +119,7 @@ _从 v1.1.0 起可用_
 
 `Alertmanager` 默认启用。你可以通过以下配置路径来禁用它。
 
-![](/img/v1.1/monitoring/alertmanager-config-enable-and-resource.png)
+![](/img/v1.2/monitoring/alertmanager-config-enable-and-resource.png)
 
 #### 更改资源设置
 
@@ -133,23 +133,23 @@ _从 v1.1.0 起可用_
 
 在 `Alertmanager Config: Create` 页面中，点击 `Namespace`，从下拉列表中选择目标命名空间并设置 `Name`。然后，点击右下角的 `Create`。
 
-![](/img/v1.1/monitoring/alertmanager-config-create-1.png)
+![](/img/v1.2/monitoring/alertmanager-config-create-1.png)
 
 单击刚刚创建的 `Alertmanager Configs` 继续进行配置。
 
-![](/img/v1.1/monitoring/view-alertmanager-config.png)
+![](/img/v1.2/monitoring/view-alertmanager-config.png)
 
 单击 `Add Receiver`。
 
-![](/img/v1.1/monitoring/prepare-to-add-receiver.png)
+![](/img/v1.2/monitoring/prepare-to-add-receiver.png)
 
 为接收器设置 `Name`。然后，选择接收器类型，例如 `Webhook`，然后单击 `Add Webhook`。
 
-![](/img/v1.1/monitoring/webhook-receiver-1.png)
+![](/img/v1.2/monitoring/webhook-receiver-1.png)
 
 填写所需参数，然后单击 `Create`。
 
-![](/img/v1.1/monitoring/webhook-receiver-2.png)
+![](/img/v1.2/monitoring/webhook-receiver-2.png)
 
 #### 从 CLI 配置 AlertmanagerConfig
 
@@ -233,11 +233,11 @@ default     amc-example   27s
 
 `Alertmanager` 仪表板的整体视图如下。
 
-![](/img/v1.1/monitoring/alertmanager-dashboard.png)
+![](/img/v1.2/monitoring/alertmanager-dashboard.png)
 
 你可以查看告警的详细信息：
 
-![](/img/v1.1/monitoring/alert-view-detail.png)
+![](/img/v1.2/monitoring/alert-view-detail.png)
 
 #### 使用 Prometheus 仪表板
 
@@ -247,7 +247,7 @@ default     amc-example   27s
 
 顶部导航栏中的 `Alerts` 菜单显示了 Prometheus 中定义的所有规则。你可以使用过滤器 `Inactive`、`Pending` 和 `Firing` 快速找到你需要的信息。
 
-![](/img/v1.1/monitoring/prometheus-original-alerts.png)
+![](/img/v1.2/monitoring/prometheus-original-alerts.png)
 
 
 ## 故障排除

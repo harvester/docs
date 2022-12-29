@@ -103,7 +103,7 @@ $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
 
    命令输出的消息会包含生成的 tarball 路径。例如，以下示例中的路径为 `/var/loq/scc_aaa_220520_1021 804d65d-c9ba-4c54-b12d-859631f892c5.txz`：
 
-   ![](/img/v1.1/troubleshooting/installation-support-config-example.png)
+   ![](/img/v1.2/troubleshooting/installation-support-config-example.png)
 
    :::note
 

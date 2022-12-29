@@ -22,7 +22,7 @@ The image name will be auto-filled using the URL address's filename. You can cus
 
 :::
 
-![](/img/v1.1/upload-image.png)
+![](/img/v1.2/upload-image.png)
 
 ### Upload Images via Local File
 
@@ -34,14 +34,14 @@ Currently, qcow2, raw, and ISO images are supported.
 
 :::
 
-![](/img/v1.1/upload-image-local.png)
+![](/img/v1.2/upload-image-local.png)
 
 
 ### Create Images via Volumes
 
 On the **Volumes** page, click **Export Image**. Enter the image name and select a StorageClass to create an image.
 
-![](/img/v1.1/volume/export-volume-to-image-1.png)
+![](/img/v1.2/volume/export-volume-to-image-1.png)
 
 ### Image StorageClass
 
@@ -55,7 +55,7 @@ Instead, it will create a special StorageClass under the hood with a prefix name
 
 :::
 
-![](/img/v1.1/image-storageclass.png)
+![](/img/v1.2/image-storageclass.png)
 
 ### Image Labels
 
@@ -63,4 +63,4 @@ You can add labels to the image, which will help identify the OS type more accur
 
 If your image name or URL contains any valid information, the UI will automatically recognize the OS type and image category for you. If not, you can also manually specify those corresponding labels on the UI.
 
-![](/img/v1.1/image-labels.png)
+![](/img/v1.2/image-labels.png)

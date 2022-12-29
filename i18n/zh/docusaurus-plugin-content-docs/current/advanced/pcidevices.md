@@ -13,40 +13,40 @@ _从 v1.1.0 起可用_
 
 要使用 PCI 设备功能，你需要先启用 `pcidevices-controller` 插件。
 
-![](/img/v1.1/vm-import-controller/EnableAddon.png)
+![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
 ## 在 PCI 设备上启用直通
 
 1. 前往 `Advanced > PCI Devices` 页面：
 
-   ![](/img/v1.1/pcidevices/advanced-pcidevices-index.png)
+   ![](/img/v1.2/pcidevices/advanced-pcidevices-index.png)
 
 1. 通过输入提供商名称（例如 NVIDIA、Intel 等）或设备名称搜索你的设备：
 
-   ![](/img/v1.1/pcidevices/search-pcidevices.png)
+   ![](/img/v1.2/pcidevices/search-pcidevices.png)
 
 1. 选择要启用直通的设备：
 
-   ![](/img/v1.1/pcidevices/select-pcidevices.png)
+   ![](/img/v1.2/pcidevices/select-pcidevices.png)
 
 1. 然后，单击 **Enable Passthrough** 并阅读警告消息。如果你想启用这些设备，请单击 **Enable** 并等待所有设备的状态变为 `Enabled`。
    :::caution
    请不要使用`宿主机专用`的 PCI 设备（例如，管理网络和 VLAN 网络的网卡）。错误的设备分配可能会损坏你的集群（包括节点故障）。
    :::
 
-   ![](/img/v1.1/pcidevices/enable-pcidevices-inprogress.png)
+   ![](/img/v1.2/pcidevices/enable-pcidevices-inprogress.png)
 
-   ![](/img/v1.1/pcidevices/enable-pcidevices-done.png)
+   ![](/img/v1.2/pcidevices/enable-pcidevices-done.png)
 
 ## 将 PCI 设备附加到 VM
 
 启用这些 PCI 设备后，你可以导航到 **Virtual Machines** 页面并选择 **Edit Config** 来直通这些设备。
 
-![](/img/v1.1/pcidevices/vm-pcidevices-edit-config.png)
+![](/img/v1.2/pcidevices/vm-pcidevices-edit-config.png)
 
 选择 **PCI Devices** 并使用 **Available PCI Devices** 下拉菜单。从显示的列表中选择要附加的设备，然后单击 **Save**。
 
-![](/img/v1.1/pcidevices/vm-pcidevices-attach.png)
+![](/img/v1.2/pcidevices/vm-pcidevices-attach.png)
 
 
 ## 在 VM 内使用直通的 PCI 设备

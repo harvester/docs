@@ -12,19 +12,19 @@ title: "主机管理"
 
 :::
 
-![host.png](/img/v1.1/host/host.png)
+![host.png](/img/v1.2/host/host.png)
 
 ## 节点维护
 
 Admin 用户可以点击 **Enable Maintenance Mode** 来自动驱逐节点中所有的虚拟机。这将使用`虚拟机热迁移`功能，来将所有虚拟机自动迁移到其他节点。要使用这个功能，至少需要有两个 `active` 的节点。
 
-![node-maintenance.png](/img/v1.1/host/node-maintenance.png)
+![node-maintenance.png](/img/v1.2/host/node-maintenance.png)
 
 ## 封锁节点 (Cordon)
 
 封锁节点会将节点标记为不可调度。此功能适用于在短期维护（如重启，升级或停用）时在节点上执行短期任务。完成后，重新打开电源并通过取消封锁使节点再次可调度。
 
-![cordon-node.png](/img/v1.1/host/cordon-nodes.png)
+![cordon-node.png](/img/v1.2/host/cordon-nodes.png)
 
 ## 删除节点
 
@@ -51,7 +51,7 @@ Admin 用户可以点击 **Enable Maintenance Mode** 来自动驱逐节点中所
 
 :::
 
-![delete.png](/img/v1.1/host/delete-node.png)
+![delete.png](/img/v1.2/host/delete-node.png)
 
 ## 多磁盘管理
 
@@ -62,26 +62,26 @@ Admin 用户可以点击 **Enable Maintenance Mode** 来自动驱逐节点中所
 1. 前往 **Hosts** 页面。
 2. 找到需要修改的节点，点击 **⋮ > Edit Config**。
 
-![Edit Config](/img/v1.1/host/edit-config.png)
+![Edit Config](/img/v1.2/host/edit-config.png)
 
 3. 选择 **Storage** 选项卡并单击 **Add Disk**。
 
-![Add Disks](/img/v1.1/host/add-disks.png)
+![Add Disks](/img/v1.2/host/add-disks.png)
 
 :::caution
 
-从 Harvester v1.0.2 开始，我们不再支持将分区添加为附加磁盘。如果你想将其添加为附加磁盘，请先重新进行格式化（例如，使用 `fdisk`）。
+从 Harvester v1.0.2 开始，我们不再支持将分区添加为附加磁盘。如果你想将其添加为附加磁盘，请先删除所有分区（例如，使用 `fdisk`）。
 
 :::
 
 4. 选择额外的原始块设备，将其添加为额外的数据卷。
    - 如果块设备从未被强制格式化，则需要 `Force Formatted` 选项。
 
-![Force Format](/img/v1.1/host/force-format-disks.png)
+![Force Format](/img/v1.2/host/force-format-disks.png)
 
 5. 最后，你可以再次点击 **⋮ > Edit Config** 查看新添加的磁盘。同时，你还可以添加 “Host/Disk” 标签（详见[下一节](#存储标签)）。
 
-![Check Result](/img/v1.1/host/check-added-disks.png)
+![Check Result](/img/v1.2/host/check-added-disks.png)
 
 :::note
 
@@ -132,12 +132,12 @@ Ksmtuned 是一个部署为 DaemonSet 的 KSM 自动化工具，用于在每个�
 3. 选择 **Ksmtuned** 选项卡，并在 **Run Strategy** 中选择 **Run**。
 4. （可选）你可以根据需要修改**阈值系数**。
 
-![编辑 Ksmtuned](/img/v1.1/host/edit-ksmtuned.png)
+![编辑 Ksmtuned](/img/v1.2/host/edit-ksmtuned.png)
 
 5. 点击 **Save** 进行更新。
 6. 等待大约 1-2 分钟，然后你可以单击**你的节点 > Ksmtuned** 选项卡来检查**统计数据**。
 
-![查看 Ksmtuned 统计数据](/img/v1.1/host/view-ksmtuned-statistics.png)
+![查看 Ksmtuned 统计数据](/img/v1.2/host/view-ksmtuned-statistics.png)
 
 ### 参数
 

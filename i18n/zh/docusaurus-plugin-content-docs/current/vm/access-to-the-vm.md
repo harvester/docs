@@ -21,7 +21,7 @@ Description: 虚拟机运行后，你可以在 Harvester UI 通过 VNC 客户端
 
 如果虚拟机上未启用 VGA 显示，例如 `Ubuntu-Minimal-Cloud` 镜像，则可以使用串行控制台访问虚拟机。
 
-![](/img/v1.1/vm/access-to-vm.png)
+![](/img/v1.2/vm/access-to-vm.png)
 
 ## SSH 访问
 
@@ -31,7 +31,7 @@ Harvester 提供了两种将 SSH 公钥注入虚拟机的方法。通常，这�
 
 你可以在创建期间在 `Basics` 选项卡上为虚拟机提供 SSH 密钥。此外，你可以将公共 SSH 密钥放在 cloud-init 脚本中。
 
-![](/img/v1.1/vm/vm-ssh-keys.png)
+![](/img/v1.2/vm/vm-ssh-keys.png)
 
 #### SSH 密钥 cloud-init 配置示例：
 ```yaml
@@ -68,7 +68,7 @@ Harvester 支持在运行时通过使用 [QEMU GuestAgent](https://wiki.qemu.org
 
 :::
 
-![](/img/v1.1/vm/vm-add-access-credentails.png)
+![](/img/v1.2/vm/vm-add-access-credentails.png)
 
 
 

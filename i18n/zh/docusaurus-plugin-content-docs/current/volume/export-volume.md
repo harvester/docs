@@ -15,6 +15,6 @@ Description: 通过 Volume 页面将卷导出到镜像。
 1. 选择现有的 `Storage Class`。
 1. （可选）你可以通过 `Images` 页面下载导出的镜像，方法是单击 `⋮` 按钮并选择 `Download` 选项。
 
-![export-volume-to-image-1](/img/v1.1/volume/export-volume-to-image-1.png)
+![export-volume-to-image-1](/img/v1.2/volume/export-volume-to-image-1.png)
 
-![export-volume-to-image-2](/img/v1.1/volume/export-volume-to-image-2.png)
+![export-volume-to-image-2](/img/v1.2/volume/export-volume-to-image-2.png)

@@ -34,7 +34,7 @@ Make sure you choose the correct device. The process erases data on the selected
 
 If you are using the UEFI mode, try to boot from the UEFI boot partition on the USB device rather than the USB device itself. e.g.,
 
-![](/img/v1.1/install/usb-install-select-correct-partition.jpg)
+![](/img/v1.2/install/usb-install-select-correct-partition.jpg)
 
 Select the `UEFI: USB disk 3.0 PMAP, Partition 1` to boot. Note the representation varies from system to system.
 
@@ -44,7 +44,7 @@ Select the `UEFI: USB disk 3.0 PMAP, Partition 1` to boot. Note the representati
 Firmwares of some graphic cards are not shipped in `v0.3.0`.
 You can press `e` to edit the GRUB menu entry and append `nomodeset` to the boot parameters. Press `Ctrl + x` to boot.
 
-![](/img/v1.1/install/usb-install-nomodeset.png)
+![](/img/v1.2/install/usb-install-nomodeset.png)
 
 
 ### Other issues

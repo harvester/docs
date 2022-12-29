@@ -29,7 +29,7 @@ Harvester 使用 [Canal](https://projectcalico.docs.tigera.io/getting-started/ku
 ### 如何使用管理网络
 由于管理网络是内置的，不需要额外的操作，因此你可以在配置 VM 网络时直接添加它。
 
-![](/img/v1.1/networking/management-network.png)
+![](/img/v1.2/networking/management-network.png)
 
 ## VLAN 网络
 
@@ -41,16 +41,16 @@ Harvester 使用 [Canal](https://projectcalico.docs.tigera.io/getting-started/ku
 
 1. 指定名称，选择类型 `L2VlanNetwork`，输入 VLAN ID，并选择集群网络。
 
-   ![](/img/v1.1/networking/create-vlan-network.png)
+   ![](/img/v1.2/networking/create-vlan-network.png)
 
 1. 配置路由以允许主机使用 IPv4 地址连接到 VLAN 网络。VLAN 网络的 CIDR 和网关是路由配置的必备参数。你可以选择以下选项之一来配置路由：
    - Auto(DHCP)：Harvester 网络控制器将使用 DHCP 协议从 DHCP 服务器获取 CIDR 和网关。你也可以指定 DHCP 服务器地址。
 
-   ![](/img/v1.1/networking/create-network-auto.png)
+   ![](/img/v1.2/networking/create-network-auto.png)
 
    - Manual：你需要自行指定 CIDR 和网关。
 
-   ![](/img/v1.1/networking/create-network-manual.png)
+   ![](/img/v1.2/networking/create-network-manual.png)
 
 ### 使用 VLAN 网络创建虚拟机
 你现在可以使用上面配置的 VLAN 网络创建新 VM：
@@ -68,4 +68,4 @@ Untagged 网络的使用类似于 [VLAN 网络](./harvester-network.md#如何使
 
 要创建新的 Untagged 网络，请转到 **Networks > Networks** 页面并单击 **Create** 按钮。你需要指定名称，选择类型 `Untagged Network` 并选择集群网络。
 
-![](/img/v1.1/networking/create-untagged-network.png)
+![](/img/v1.2/networking/create-untagged-network.png)

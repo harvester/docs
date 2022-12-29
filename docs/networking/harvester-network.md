@@ -29,7 +29,7 @@ However, you can leverage the Kubernetes [service object](https://kubevirt.io/us
 ### How to use management network
 Since the management network is built-in and doesn't require extra operations, you can add it directly when configuring the VM network.
 
-![](/img/v1.1/networking/management-network.png)
+![](/img/v1.2/networking/management-network.png)
 
 ## VLAN Network
 
@@ -41,16 +41,16 @@ To create a new VLAN network, go to the **Networks > VM Networks** page and clic
 
 1. Specify the name, select the type `L2VlanNetwork`, input the VLAN ID and select the cluster network.
 
-    ![](/img/v1.1/networking/create-vlan-network.png)
+    ![](/img/v1.2/networking/create-vlan-network.png)
 
 1. Configure a route to allow the hosts to connect to the VLAN network using IPv4 addresses. The CIDR and gateway of the VLAN network are mandatory parameters for the route configuration.  You can configure the route by choosing one of the following options:
     - Auto(DHCP): the Harvester network controller will get the CIDR and gateway values from the DHCP server using the DHCP protocol. Optionally, you can specify the DHCP server address.
 
-    ![](/img/v1.1/networking/create-network-auto.png)
+    ![](/img/v1.2/networking/create-network-auto.png)
 
     - Manual: You need to specify the CIDR and gateway values manually.
 
-    ![](/img/v1.1/networking/create-network-manual.png)
+    ![](/img/v1.2/networking/create-network-manual.png)
 
 ### Create a VM with VLAN Network
 You can now create a new VM using the VLAN network configured above:
@@ -68,4 +68,4 @@ The usage of untagged network is similar to [the VLAN network](./harvester-netwo
 
 To create a new untagged network, go to the **Networks > Networks** page and click the **Create** button. You have to specify the name, select the type `Untagged Network` and choose the cluster network.
 
-![](/img/v1.1/networking/create-untagged-network.png)
+![](/img/v1.2/networking/create-untagged-network.png)

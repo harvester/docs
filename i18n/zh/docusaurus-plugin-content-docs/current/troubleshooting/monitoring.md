@@ -81,15 +81,15 @@ Harvester `Monitoring` 使用 `Persistent Volume (PV)` 来存储运行数据。�
 
 根据[此文档](../troubleshooting/harvester/#access-embedded-longhorn)访问嵌入式 Longhorn WebUI。
 
-![](/img/v1.1/troubleshooting/1-access-embedded-longhorn.png)
+![](/img/v1.2/troubleshooting/1-access-embedded-longhorn.png)
 
 默认视图。
 
-![](/img/v1.1/troubleshooting/2-longhorn-dashboard.png)
+![](/img/v1.2/troubleshooting/2-longhorn-dashboard.png)
 
 单击 `Volume` 列出所有现有的卷。
 
-![](/img/v1.1/troubleshooting/3-view-all-volume.png)
+![](/img/v1.2/troubleshooting/3-view-all-volume.png)
 
 #### 使用 CLI
 
@@ -153,11 +153,11 @@ longhorn-system   pvc-b2b2c07c-f7cd-4965-90e6-ac3319597bf7   detached   unknown 
 
 在 Longhorn WebUI 中，相关卷的状态会变成 `Detached`。点击 `Operation` 栏中的图标，然后选择 `Expand Volume`。
 
-![](/img/v1.1/troubleshooting/4-select-volume-to-expand.png)
+![](/img/v1.2/troubleshooting/4-select-volume-to-expand.png)
 
 输入一个新的大小，然后 `Longhorn` 会将卷扩展到这个大小。
 
-![](/img/v1.1/troubleshooting/5-expand-volue-to-new-size.png)
+![](/img/v1.2/troubleshooting/5-expand-volue-to-new-size.png)
 
 ### 扩展 Deployment
 
@@ -181,7 +181,7 @@ rancher-monitoring-prometheus-adapter   1/1     1            1           43h
 
 `卷`已附加到新的 Pod。
 
-![](/img/v1.1/troubleshooting/6-after-scale-up.png)
+![](/img/v1.2/troubleshooting/6-after-scale-up.png)
 
 至此，你已将`卷`扩展到新的大小，Pod 可以正常使用卷。
 
