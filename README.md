@@ -2,6 +2,17 @@
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
+## File Location
+
+Before you contribute, please read the table below first to ensure that you are modifying the correct files:
+
+| Path                                 | Version                               | URL         |
+| ------------------------------------ | ------------------------------------- | ----------- |
+| docs/hello.md                        | v1.2-dev (current, under development) | /dev/hello  |
+| versioned_docs/version-v1.1/hello.md | v1.1 (stable)                         | /v1.1/hello |
+| versioned_docs/version-v1.0/hello.md | v1.0                                  | /v1.0/hello |
+| versioned_docs/version-v0.3/hello.md | v0.3                                  | /v0.3/hello |
+
 ## Installation
 
 ```console
