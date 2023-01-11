@@ -77,7 +77,7 @@ https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhr
 
 :::caution
 
-如果你配置了 `httpProxy` 和 `httpsProxy`, 那么你必须同时将 Harvester 节点的 CIDR 填入 `noProxy`, 否则 Harvester 集群将会崩溃。
+如果你配置了 `httpProxy` 和 `httpsProxy`，那么你必须同时将 Harvester 节点的 CIDR 填入 `noProxy`，否则 Harvester 集群将会崩溃。
 
 :::
 
