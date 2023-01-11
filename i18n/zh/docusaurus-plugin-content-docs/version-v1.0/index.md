@@ -29,7 +29,7 @@ Harvester 支持在裸机服务器上实施 HCI。Harvester 使用本地、直�
 1. 虚拟机中的多个网卡支持、可连接到管理或 VLAN网络
 1. 虚拟机和 cloud-init 模板
 1. 集成 [Rancher](https://github.com/rancher/rancher) 并提供多集群管理和 Harvester 主机驱动
-1. [PXE/ipxe 引导支持](https://docs.harvesterhci.io/latest/install/pxe-boot-install)
+1. [PXE/ipxe 引导支持](./install/pxe-boot-install.md)
 1. 虚拟 IP (VIP) 和 Bond 网卡支持
 1. 监控集成
 

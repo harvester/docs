@@ -10,7 +10,7 @@ title: "Harvester"
 
 #### 在 Harvester 安装期间配置 HTTP 代理
 
-在某些环境中，你会在安装 Harvester 时配置 [OS Environment](../install/harvester-configuration.md#osenvironment) 的 [http-proxy](../airgap/#在安装期间配置-http-代理)。
+在某些环境中，你会在安装 Harvester 时配置 [OS Environment](../install/harvester-configuration.md#osenvironment) 的 [http-proxy](../airgap.md#在安装期间配置-http-代理)。
 
 #### 在第一个节点就绪后配置 HTTP 代理
 

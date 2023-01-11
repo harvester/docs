@@ -17,7 +17,7 @@ Harvester 为虚拟机 (VM) 提供了三种类型的虚拟网络，包括：
 
 _从 v1.0.1 起可用_
 
-Harvester 还引入了存储网络，用于将存储流量与其他集群内工作负载分开。有关更多信息，请参阅[存储网络文档](../advanced/storagenetwork)。
+Harvester 还引入了存储网络，用于将存储流量与其他集群内工作负载分开。有关更多信息，请参阅[存储网络文档](../advanced/storagenetwork.md)。
 
 
 ## 管理网络

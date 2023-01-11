@@ -53,7 +53,7 @@ keywords:
 
 在 Harvester 中，我们利用了现有的 Rancher [RBAC 授权](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/)，以便用户根据他们的集群和项目角色权限查看和管理一组资源。
 
-在 Rancher 中，每个人都验证为一个用户来访问 Rancher。用户可以是本地用户或外部用户（如[身份验证](https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/)中所述）。
+在 Rancher 中，每个人都验证为一个用户来访问 Rancher。用户可以是本地用户或外部用户（如[身份验证](https://ranchermanager.docs.rancher.com/v2.6/pages-for-subheaders/authentication-config)中所述）。
 
 用户登录到 Rancher 后，他们的授权（也称为访问权限）由全局权限以及集群和项目角色决定。
 

@@ -87,7 +87,7 @@ https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhr
 
 ## `containerd-registry`
 
-This setting allows you to configure a private registry for the Harvester cluster. The value will be set in `/etc/rancher/rke2/registries.yaml` of each node. You can read [RKE2 - Containerd Registry Configuration](https://docs.rke2.io/install/containerd_registry_configuration/) for more information.
+This setting allows you to configure a private registry for the Harvester cluster. The value will be set in `/etc/rancher/rke2/registries.yaml` of each node. You can read [RKE2 - Containerd Registry Configuration](https://docs.rke2.io/install/containerd_registry_configuration) for more information.
 
 :::note
 

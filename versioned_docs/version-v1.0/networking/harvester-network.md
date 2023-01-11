@@ -110,7 +110,7 @@ config:
       - type: static
         address: 10.0.0.100/24 # IP address is varies upon your environment
 ```
-Harvester is fully compatible with the `cloud-init network configs`. You can refer to the [documentation](https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html) for more details.
+Harvester is fully compatible with the `cloud-init network configs`. You can refer to the [documentation](https://cloudinit.readthedocs.io/en/latest/reference/network-config-format-v2.html) for more details.
 
 :::note
 

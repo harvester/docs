@@ -74,5 +74,5 @@ Harvester 是裸机服务器上的 HCI 解决方案，以下是 Harvester 安装
 
 - K3s: [https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
 - RKE: [https://rancher.com/docs/rke/latest/en/os/#ports](https://rancher.com/docs/rke/latest/en/os/#ports)
-- RKE2: [https://docs.rke2.io/install/requirements/#networking](https://docs.rke2.io/install/requirements/#networking)
+- RKE2: [https://docs.rke2.io/install/requirements#networking](https://docs.rke2.io/install/requirements#networking)
 

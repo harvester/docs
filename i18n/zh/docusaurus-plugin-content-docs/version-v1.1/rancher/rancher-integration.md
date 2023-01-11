@@ -26,7 +26,7 @@ _从 v0.3.0 起可用_
 | v2.6.4 | v1.0.1 | |
 | v2.6.3 | v1.0.0 | |
 
-你现在可以使用 Rancher 的[虚拟化管理](virtualization-management.md)页面导入和管理多个 Harvester 集群，并利用 Rancher 的[认证](https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/)功能和 RBAC 控制来实现[多租户](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/)支持。
+你现在可以使用 Rancher 的[虚拟化管理](virtualization-management.md)页面导入和管理多个 Harvester 集群，并利用 Rancher 的[认证](https://ranchermanager.docs.rancher.com/v2.6/pages-for-subheaders/authentication-config)功能和 RBAC 控制来实现[多租户](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/)支持。
 
 <div class="text-center">
 <iframe width="950" height="475" src="https://www.youtube.com/embed/fyxDm3HVwWI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

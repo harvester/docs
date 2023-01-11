@@ -33,7 +33,7 @@ $ cat /etc/rancher/rke2/rke2.yaml
 # cloud-init 只会执行一次。使用以下命令添加 cloud-init 配置后请重新启动它。
 $ cloud-init clean --logs --reboot
 ```
-[https://cloudinit.readthedocs.io/en/latest/topics/cli.html#clean](https://cloudinit.readthedocs.io/en/latest/topics/cli.html#clean)
+[https://cloudinit.readthedocs.io/en/latest/reference/cli.html#clean](https://cloudinit.readthedocs.io/en/latest/reference/cli.html#clean)
 
 ### 如何重置管理员密码？
 

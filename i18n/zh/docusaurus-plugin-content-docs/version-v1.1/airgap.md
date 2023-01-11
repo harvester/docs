@@ -38,6 +38,6 @@ Harvester ISO 镜像包括实现在离线环境中运行的所有包。
 Harvester 在用户配置的 `no-proxy` 后附加必要的地址，来确保内部流量能正常工作。
 例如：`localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,longhorn-system,cattle-system,cattle-system.svc,.svc,.cluster.local`
 
-如果集群中的节点之间不使用代理进行通信，你需要在第一个节点安装成功后将 CIDR 添加到 `http-proxy.noProxy`。请参阅[部署多节点集群失败](/troubleshooting/harvester.md#http-proxy-设置错误导致多节点集群部署失败)。
+如果集群中的节点之间不使用代理进行通信，你需要在第一个节点安装成功后将 CIDR 添加到 `http-proxy.noProxy`。请参阅[部署多节点集群失败](./troubleshooting/harvester.md#http-proxy-设置错误导致多节点集群部署失败)。
 
 :::

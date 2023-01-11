@@ -50,7 +50,7 @@ packages:
 
 :::note
 
-Calico and Canal require the `iptables` or `xtables-nft` package to be installed on the node, for more details, please refer to the [RKE2 known issues](https://docs.rke2.io/known_issues/#canal-and-ip-exhaustion).
+Calico and Canal require the `iptables` or `xtables-nft` package to be installed on the node, for more details, please refer to the [RKE2 known issues](https://docs.rke2.io/known_issues#canal-and-ip-exhaustion).
 
 :::
 

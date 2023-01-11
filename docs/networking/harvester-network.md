@@ -17,7 +17,7 @@ The management network is usually used for VMs whose traffic only flows inside t
 
 _Available as of v1.0.1_
 
-Harvester also introduced storage networking to separate the storage traffic from other cluster-wide workloads. Please refer to [the storage network document](../advanced/storagenetwork) for more details.
+Harvester also introduced storage networking to separate the storage traffic from other cluster-wide workloads. Please refer to [the storage network document](../advanced/storagenetwork.md) for more details.
 
 
 ## Management Network
