@@ -136,7 +136,19 @@ const config = {
     description:
       "An open-source hyperconverged infrastructure (HCI) software for a cloud-native world",
   },
-  plugins: [],
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          { // Redirects for links in the Harvester README.md file
+            to: '/v1.1/install/pxe-boot-install',
+            from: '/latest/install/pxe-boot-install'
+          },
+        ],
+      },
+    ],
+  ],
 };
 
 module.exports = config;
