@@ -33,7 +33,7 @@ $ cat /etc/rancher/rke2/rke2.yaml
 # cloud-init will only be executed once, reboot it after add the cloud-init config with the following command.
 $ cloud-init clean --logs --reboot
 ```
-[https://cloudinit.readthedocs.io/en/latest/topics/cli.html#clean](https://cloudinit.readthedocs.io/en/latest/topics/cli.html#clean)
+[https://cloudinit.readthedocs.io/en/latest/reference/cli.html#clean](https://cloudinit.readthedocs.io/en/latest/reference/cli.html#clean)
 
 ### How can I reset the administrator password?
 

@@ -10,7 +10,7 @@ title: "Harvester"
 
 #### Configure HTTP Proxy During Harvester Installation
 
-In some environments, you configure [http-proxy](../airgap/#configure-an-http-proxy-during-installation) of [OS Environment](../install/harvester-configuration.md#osenvironment) during Harvester installation.
+In some environments, you configure [http-proxy](../airgap.md#configure-an-http-proxy-during-installation) of [OS Environment](../install/harvester-configuration.md#osenvironment) during Harvester installation.
 
 #### Configure HTTP Proxy After First Node is Ready
 

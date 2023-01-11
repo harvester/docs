@@ -53,7 +53,7 @@ For Harvester v0.3.0 and above, virtualization management with the multi-cluster
 
 In Harvester, we have leveraged the existing Rancher [RBAC authorization](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/) such that users can view and manage a set of resources based on their cluster and project role permissions.
 
-Within Rancher, each person authenticates as a user, which is a login that grants a user access to Rancher. As mentioned in [Authentication](https://rancher.com/docs/rancher/v2.6/en/admin-settings/authentication/), users can either be local or external.
+Within Rancher, each person authenticates as a user, which is a login that grants a user access to Rancher. As mentioned in [Authentication](https://ranchermanager.docs.rancher.com/v2.6/pages-for-subheaders/authentication-config), users can either be local or external.
 
 Once the user logs into Rancher, their authorization, also known as access rights, is determined by global permissions and cluster and project roles.
 

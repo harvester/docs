@@ -99,7 +99,7 @@ config:
     subnets:
       - type: DHCP
 ```
-For more detailed configs you may refer to the [cloud-init network configs](https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html).
+For more detailed configs you may refer to the [cloud-init network configs](https://cloudinit.readthedocs.io/en/latest/reference/network-config-format-v2.html).
 
 ### Configure DHCP servers on Networks
 

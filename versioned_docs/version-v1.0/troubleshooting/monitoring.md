@@ -79,7 +79,7 @@ Based on the `Longhorn` `Volume` expansion guide, `Harvester` illustrates how to
 
 #### From Embedded Longhorn WebUI
 
-Access the embedded Longhorn WebUI according to [this document](../troubleshooting/harvester/#access-embedded-longhorn).
+Access the embedded Longhorn WebUI according to [this document](../troubleshooting/harvester.md#access-embedded-longhorn).
 
 ![](/img/v1.0/troubleshooting/1-access-embedded-longhorn.png)
 
