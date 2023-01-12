@@ -45,7 +45,7 @@ Note: This [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of the I
 1. (Optional) You can choose to import SSH keys from a remote server URL. Your GitHub public keys can be used with `https://github.com/<username>.keys`.
 1. (Optional) If you need to customize the host with a [Harvester configuration](./harvester-configuration.md) file, enter the HTTP URL here.
 1. After confirming the installation options, Harvester will be installed to your host. The installation may take a few minutes to be complete.
-1. Once the installation is complete, it will restart the host. After the restart, the Harvester console containing the management URL and status will be displayed. You can Use `F12` to switch between the Harvester console and the Shell.
+1. Once the installation is complete, it will restart the host. After the restart, the Harvester console containing the management URL and status will be displayed. You can use `F12` to switch from the Harvester console to the Shell and type `exit` to go back to the Harvester console.
 1. The default URL of the web interface is `https://your-virtual-ip`.
    ![iso-installed.png](/img/v1.2/install/iso-installed.png)
 1. You will be prompted to set the password for the default `admin` user when logging in for the first time.

@@ -45,7 +45,7 @@ Description: 如果需要获取 Harvester ISO，访问 GitHub 上的发行版本
 1. （可选）你可以从远端服务器 URL 导入 SSH 密钥。你的 GitHub 公钥可以与 `https://github.com/<username>.keys` 一起使用。
 1. （可选）如果你需要使用 [Harvester 配置文件](./harvester-configuration.md)来自定义主机，在此处输入 HTTP URL。
 1. 确认安装选项后，Harvester 会安装到你的主机上。安装过程可能需要几分钟。
-1. 主机会在安装完成后重启。重启后，包含管理 URL 和状态的 Harvester 控制台会显示。你可以使用 `F12` 在 Harvester 控制台和 Shell 之间切换。
+1. 主机会在安装完成后重启。重启后，包含管理 URL 和状态的 Harvester 控制台会显示。你可以使用 `F12` 从 Harvester 控制台切换到 Shell，键入 `exit` 回到 Harvester 控制台。
 1. 网页界面的默认 URL 是 `https://your-virtual-ip`。
    ![iso-installed.png](/img/v1.2/install/iso-installed.png)
 1. 在首次登录时，你会收到为默认 `admin` 用户设置密码的提示。
@@ -58,7 +58,7 @@ In some cases, if you are using an older VGA connector, you may encounter an `pa
 
 ## 已知问题
 
-### 使用较旧的显卡/显示器时，安装程​​序可能会崩溃
+### 使用较旧的显卡/显示器时，安装程序可能会崩溃
 
 如果你使用的是较旧的显卡/显示器，你可能会在 ISO 安装过程中遇到 `panic: invalid dimensions` 错误。
 

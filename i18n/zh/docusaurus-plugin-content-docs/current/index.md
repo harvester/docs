@@ -90,7 +90,7 @@ Harvester 支持在裸机服务器上实施 HCI。Harvester 使用本地、直�
 13. （可选）你可以从远端服务器 URL 导入 SSH 密钥。你的 GitHub 公钥可以与 `https://github.com/<username>.keys` 一起使用。
 14. （可选）如果你需要使用 [Harvester 配置文件](./install/harvester-configuration.md)来自定义主机，在此处输入 HTTP URL。
 15. 确认安装选项后，Harvester 会安装到你的主机上。安装过程可能需要几分钟。
-16. 主机会在安装完成后重启，然后会显示一个带有管理 URL 和状态的控制台 UI<small>（你可以使用 F12 在 Harvester 控制台和 Shell 之间切换）</small>。
+16. 主机会在安装完成后重启，然后会显示一个带有管理 URL 和状态的控制台 UI<small>（你可以使用 `F12` 从 Harvester 控制台切换到 Shell，键入 `exit` 回到 Harvester 控制台）</small>。
 17. 网页界面的默认 URL 是 `https://your-virtual-ip`。
    ![iso-installed.png](/img/v1.2/install/iso-installed.png)
 18. 在首次登录时，你会收到为默认 `admin` 用户设置密码的提示。
