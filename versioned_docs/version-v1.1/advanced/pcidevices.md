@@ -63,4 +63,4 @@ This is just like installing drivers in the host. The PCI passthrough feature wi
 
 # Known Issues
 
-1. The 1.1.0 version of PCI passthrough matches VMs to devices using `vendorId:deviceId`. This means that if there is more than one device with the same `vendorId:deviceId` pair, then kubevirt will choose which device to allocate to a VM in a way that is essentially random. This will be addressed in 1.1.2 with the new deviceplugin implementation.
+1. The 1.1.0 version of PCI passthrough matches VMs to devices using `vendorId:deviceId`. This means that if there is more than one device with the same `vendorId:deviceId` pair, then KubeVirt will choose which device to allocate to a VM in a way that is essentially random. This will be addressed in 1.1.2 with the new deviceplugin implementation.
