@@ -60,3 +60,7 @@ Boot the VM up, and run `lspci` inside the VM, the attached PCI devices will sho
 ## Installing drivers for your PCI device inside the VM
 
 This is just like installing drivers in the host. The PCI passthrough feature will bind the host device to the `vfio-pci` driver, which gives VMs the ability to use their own drivers. [Here is a screenshot](https://tobilehman.com/posts/suse-harvester-pci/#toc) of NVIDIA drivers being installed in a VM. It includes a CUDA example that proves that the device drivers work.
+
+## Known Issues
+
+1. The 1.1.0 version of PCI passthrough matches VMs to devices using `vendorId:deviceId`. This means that if there is more than one device with the same `vendorId:deviceId` pair, then KubeVirt will choose which device to allocate to a VM in a way that is essentially random. This will be addressed in 1.1.2 with the new deviceplugin implementation.
