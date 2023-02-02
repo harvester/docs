@@ -63,6 +63,7 @@ install:
   iso_url: http://myserver/test.iso
   poweroff: true
   no_format: true
+  datadisk: /dev/sdb
   debug: true
   tty: ttyS0
   vip: 10.10.0.19
@@ -487,7 +488,7 @@ However, if you face compatibility issues, the MBR partitioning scheme can be fo
 :::note
 
 Harvester creates an additional partition for storing VM data if
-[`install.data_disk`](#installdata_disk) is configured to use the same
+[`install.datadisk`](#installdatadisk) is configured to use the same
 storage device as the one set for [`install.device`](#installdevice).
 When force using MBR, no additional partition will be created and VM data will be stored in a partition shared with the OS data.
 
@@ -500,7 +501,7 @@ install:
   force_mbr: true
 ```
 
-### `install.data_disk`
+### `install.datadisk`
 
 _Available as of v1.0.1_
 
@@ -514,7 +515,7 @@ Default: Same storage device as the one set for [`install.device`](#installdevic
 
 ```yaml
 install:
-  data_disk: /dev/sdb
+  datadisk: /dev/sdb
 ```
 
 ### `system_settings`
