@@ -57,3 +57,7 @@ _从 v1.1.0 起可用_
 ## 在 VM 内为 PCI 设备安装驱动程序
 
 这里涉及的操作与在主机中安装驱动程序一样。PCI 透传功能将主机设备绑定到 `vfio-pci` 驱动程序，让 VM 能够使用自己的驱动程序。你可以查看安装在 VM 中的 NVIDIA 驱动程序的[屏幕截图](https://tobilehman.com/posts/suse-harvester-pci/#toc)，其中包括证明设备驱动程序可以正常工作的 CUDA 示例。
+
+## 已知问题
+
+1. 1.1.0 版本的 PCI 直通使用 `vendorId:deviceId` 来匹配 VM 与设备。换言之，如果多个设备具有相同的 `vendorId:deviceId` 对，KubeVirt 将随机选择分配给 VM 的设备。1.1.2 版本将使用新的 deviceplugin 实现来解决此问题。
