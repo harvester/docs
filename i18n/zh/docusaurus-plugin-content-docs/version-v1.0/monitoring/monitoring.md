@@ -18,6 +18,9 @@ Harvester 已使用 [Prometheus](https://prometheus.io/) 内置集成监控。�
 
 只有管​​理员用户才能查看集群仪表盘指标。
 
+另外，Grafana 是由 `rancher-monitoring` 提供的，因此默认的管理员密码是 prom-operator。
+
+参考：[values.yaml](https://github.com/rancher/charts/blob/dev-v2.7/charts/rancher-project-monitoring/1.1.0%2Bup0.2.0-rc1/values.yaml#L698)
 :::
 
 
