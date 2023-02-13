@@ -69,6 +69,11 @@ install:
   vip_hw_addr: 52:54:00:ec:0e:0b
   vip_mode: dhcp
   force_mbr: false
+  addons:
+    rancher-monitoring:
+      enabled: true
+    rancher-logging:
+      enabled: false
 system_settings:
   auto-disk-provision-paths: ""
 ```
@@ -513,6 +518,36 @@ Default: Same storage device as the one set for [`install.device`](#installdevic
 ```yaml
 install:
   data_disk: /dev/sdb
+```
+
+### `install.addons`
+
+_Available as of v1.2.0_
+
+#### Definition
+
+Sets the default enabled/disabled status of Harvester addons.
+
+Default: The addons are disabled.
+
+#### Example
+
+```yaml
+install:
+  addons:
+    rancher-monitoring:
+      enabled: true
+    rancher-logging:
+      enabled: false
+```
+
+There are four addons as of Harvester v1.2.0 release:
+
+```
+  harvester-vm-import-controller
+  harvester-pcidevices-controller
+  rancher-monitoring
+  rancher-logging
 ```
 
 ### `system_settings`
