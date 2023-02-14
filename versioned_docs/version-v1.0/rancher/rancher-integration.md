@@ -18,12 +18,7 @@ _Available as of v0.3.0_
 
 ## Rancher & Harvester Support Matrix
 
-| Rancher Version | Harvester Version | Note |
-| :--|:--|:--|
-| v2.6.6 | v1.0.3 - v1.0.1 | |
-| v2.6.5 | v1.0.2 - v1.0.1 | |
-| v2.6.4 | v1.0.1 | |
-| v2.6.3 | v1.0.0 | |
+For the support matrix, please see [Harvester & Rancher Support Matrix](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/harvester-v1-0-3/#anchor-h4-item2).
 
 :::note
 

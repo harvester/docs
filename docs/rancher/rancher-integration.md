@@ -18,13 +18,7 @@ _Available as of v0.3.0_
 
 ## Rancher & Harvester Support Matrix
 
-| Rancher Version | Supported Harvester Version | Note |
-| :--|:--|:--|
-| v2.6.9 | v1.1.0, v1.0.3 |  |
-| v2.6.6 - v2.6.8 | v1.0.3 - v1.0.1 | |
-| v2.6.5 | v1.0.2 - v1.0.1 | |
-| v2.6.4 | v1.0.1 | |
-| v2.6.3 | v1.0.0 | |
+For the support matrix, please see [Harvester & Rancher Support Matrix](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/harvester-v1-1-1/#anchor-h4-item2).
 
 Users can now import and manage multiple Harvester clusters using the Rancher [Virtualization Management](virtualization-management.md) page and leverage the Rancher [authentication](https://ranchermanager.docs.rancher.com/v2.6/pages-for-subheaders/authentication-config) feature and RBAC control for [multi-tenancy](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/) support.
 
