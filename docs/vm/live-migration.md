@@ -16,6 +16,8 @@ Live migration means moving a virtual machine to a different host without downti
 :::note
 
 - Live migration is not allowed when the virtual machine is using a management network of bridge interface type.
+- Live migration is not allowed when the virtual machine has any volume of the `CD-ROM` type. Such volumes should be ejected before live migration.
+- Live migration is not allowed when the virtual machine has any volume of the `Container Disk` type. Such volumes should be removed before live migration.
 - To support live migration, three or more hosts in the Harvester cluster are required due to [a known issue](https://github.com/harvester/harvester/issues/798).
 
 :::
