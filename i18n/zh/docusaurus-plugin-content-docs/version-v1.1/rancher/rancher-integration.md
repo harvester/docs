@@ -18,13 +18,7 @@ _从 v0.3.0 起可用_
 
 ## Rancher 和 Harvester 支持矩阵
 
-| Rancher 版本 | 支持的 Harvester 版本 | 注意 |
-| :--|:--|:--|
-| v2.6.9 | v1.1.0, v1.0.3 |  |
-| v2.6.6 - v2.6.8 | v1.0.3 - v1.0.1 | |
-| v2.6.5 | v1.0.2 - v1.0.1 | |
-| v2.6.4 | v1.0.1 | |
-| v2.6.3 | v1.0.0 | |
+有关支持矩阵，请参阅 [Harvester & Rancher 支持矩阵](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/harvester-v1-1-1/#anchor-h4-item2)。
 
 你现在可以使用 Rancher 的[虚拟化管理](virtualization-management.md)页面导入和管理多个 Harvester 集群，并利用 Rancher 的[认证](https://ranchermanager.docs.rancher.com/v2.6/pages-for-subheaders/authentication-config)功能和 RBAC 控制来实现[多租户](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/)支持。
 

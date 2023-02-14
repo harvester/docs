@@ -18,12 +18,7 @@ _从 v0.3.0 起可用_
 
 ## Rancher 和 Harvester 支持矩阵
 
-| Rancher 版本 | Harvester 版本 | 注意 |
-| :--|:--|:--|
-| v2.6.6 | v1.0.3 - v1.0.1 | |
-| v2.6.5 | v1.0.2 - v1.0.1 | |
-| v2.6.4 | v1.0.1 | |
-| v2.6.3 | v1.0.0 | |
+有关支持矩阵，请参阅 [Harvester & Rancher 支持矩阵](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/harvester-v1-0-3/#anchor-h4-item2)。
 
 :::note
 
