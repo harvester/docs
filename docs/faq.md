@@ -48,3 +48,9 @@ New password for default administrator (user-xxxxx):
 ### I added an additional disk with partitions. Why is it not getting detected?
 
 As of Harvester v1.0.2, we no longer support adding additional partitioned disks, so be sure to delete all partitions first (e.g., using `fdisk`).
+
+### How to add ssh key to the Harvester nodes using a modified config file ?
+
+You can modify /oem/99_custom.yaml (or 90_custom.yaml) to add authorized keys after login harvester through ssh.
+After modification, you can reboot the node to see the difference.
+Please refer https://rancher.github.io/elemental-toolkit/docs/reference/cloud_init/#stagesstage_idstep_nameauthorized_keys .
