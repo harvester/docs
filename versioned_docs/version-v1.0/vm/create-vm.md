@@ -127,16 +127,17 @@ ssh_pwauth: True
 Example of network-data configuration using DHCP:
 
 ```YAML
-version: 1
-config:
-  - type: physical
-    name: eth0
-    subnets:
-      - type: dhcp
-  - type: physical
-    name: eth1
-    subnets:
-      - type: dhcp
+network:
+  version: 1
+  config:
+    - type: physical
+      name: eth0
+      subnets:
+        - type: dhcp
+    - type: physical
+      name: eth1
+      subnets:
+        - type: dhcp
 ```
 
 You can also use the `Advanced > Cloud Config Templates` feature to create a pre-defined cloud-init configuration template for the VM.
