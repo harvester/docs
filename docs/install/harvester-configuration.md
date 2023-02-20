@@ -541,14 +541,12 @@ install:
       enabled: false
 ```
 
-There are four addons as of Harvester v1.2.0 release:
+Harvester v1.2.0 ships with four addons:
 
-```
-  harvester-vm-import-controller
-  harvester-pcidevices-controller
-  rancher-monitoring
-  rancher-logging
-```
+ - harvester-vm-import-controller
+ - harvester-pcidevices-controller
+ - rancher-monitoring
+ - rancher-logging
 
 ### `system_settings`
 
