@@ -16,7 +16,7 @@ Description: 通过 Volume 页面创建卷。
 ### 基本信息选项卡
 
 1. 在 `Source` 中选择 `New`。
-1. 选择现有的 `Storage Class`。
+1. 选择现有的 `StorageClass`。
 1. 配置卷的 `Size`。
 
 ![create-empty-volume](/img/v1.1/volume/create-empty-volume.png)

@@ -48,7 +48,7 @@ Description: 从"虚拟机"页面创建一个或多个虚拟机。
 | disk | disk 磁盘会将卷作为普通磁盘公开给 VM。 |
 | cd-rom | cd-rom 磁盘会将卷作为 CD-ROM 驱动器公开给 VM。默认情况下它是只读的。 |
 
-添加新的空卷时，你可以指定卷的 [Storage Class](../advanced/storageclass.md)。对于其他卷（例如 VM 镜像），你可以在创建镜像时定义 `Storage Class`。
+添加新的空卷时，你可以指定卷的 [StorageClass](../advanced/storageclass.md)。对于其他卷（例如 VM 镜像），你可以在创建镜像时定义 `StorageClass`。
 
 ![create-vm](/img/v1.1/vm/create-vm-volumes.png)
 
@@ -166,7 +166,7 @@ QEMU GuestAgent 是在虚拟机实例上运行的 Daemon 进程，它将有关 V
 1. 点击左侧边栏中的 **Images** 并下载 openSUSE Leap 15.4 ISO 镜像。
 2. 点击左侧边栏中的 **Virtual Machines**，然后创建一个 VM。在此步骤中，你需要填写以下 VM 基本配置。
 3. 点击 **Volumes** 选项卡，在 **Image** 字段中，选择在步骤 1 中下载的镜像并确保 **Type** 设置为 `cd-rom`。
-4. 单击 **Add Volume** 并选择现有的 **Storage Class**。
+4. 单击 **Add Volume** 并选择现有的 **StorageClass**。
 5. 将 **Volume** 拖到 **Image Volume** 的顶部，如下所示。这样，**Volume**  的**bootOrder** 会变成 `1`。
 
 ![one-time-boot-create-vm-bootorder](/img/v1.1/vm/one-time-boot-create-vm-bootorder.png)

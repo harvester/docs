@@ -7,7 +7,7 @@ title: "存储类"
 StorageClass 允许管理员描述存储的**类**。不同的 Longhorn StorageClass 可能会映射到集群管理员配置的不同的副本策略、不同的节点调度策略或不同的磁盘调度策略。这个概念在其他存储系统中也称为 **profiles**。
 
 ## 创建存储类
-你可以从 **Advanced > Storage Classes** 页面创建一个或多个 StorageClass。
+你可以从 **Advanced > StorageClasses** 页面创建一个或多个 StorageClass。
 
 ![](/img/v1.2/storageclass/create_storageclasses_entry.png)
 

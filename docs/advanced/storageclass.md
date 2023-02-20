@@ -1,13 +1,13 @@
 ---
 sidebar_position: 2
-sidebar_label: Storage Class
-title: "Storage Class"
+sidebar_label: StorageClass
+title: "StorageClass"
 ---
 
 A StorageClass allows administrators to describe the **classes** of storage they offer. Different Longhorn StorageClasses might map to replica policies, or to node schedule policies, or disk schedule policies determined by the cluster administrators. This concept is sometimes called **profiles** in other storage systems.
 
-## Creating a Storage Class
-You can create one or more StorageClasses from the **Advanced > Storage Classes** page.
+## Creating a StorageClass
+You can create one or more StorageClasses from the **Advanced > StorageClasses** page.
 
 ![](/img/v1.2/storageclass/create_storageclasses_entry.png)
 

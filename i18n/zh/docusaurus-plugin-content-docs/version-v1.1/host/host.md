@@ -109,7 +109,7 @@ Admin 用户可以点击 **Enable Maintenance Mode** 来自动驱逐节点中所
 1. 点击 `Hosts` > `Edit Config` > `Storage`。
 1. 单击 `Host/Disk Tags` 开始输入标签，然后按回车键来添加新标签。
 1. 点击 `Save` 来更新标签。
-1. 在 [Storage Classes](../advanced/storageclass.md) 页面上，创建一个新的存储类并在 `Node Selector` 和 `Disk Selector` 字段中选择已定义的标签。
+1. 在 [StorageClasses](../advanced/storageclass.md) 页面上，创建一个新的存储类并在 `Node Selector` 和 `Disk Selector` 字段中选择已定义的标签。
 
 节点或磁盘上的所有现有调度卷都不会受到新标签的影响。
 
