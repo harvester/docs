@@ -62,7 +62,7 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 2. **第二个卷**是具有以下值的`卷`：
    1. `Name`：默认设置为 `rootdisk`。你也可以修改它。
    2. `Type`：选择 `disk`。
-   3. `Storage Class`：你可以使用默认的 StorageClass `harvester-longhorn` 或自定义的 StorageClass。
+   3. `StorageClass`：你可以使用默认的 StorageClass `harvester-longhorn` 或自定义的 StorageClass。
    4. `Size`：默认值是 `32`。在更改此值之前，请参见 [Windows Server](https://docs.microsoft.com/en-us/windows-server/get-started/hardware-requirements#storage-controller-and-disk-space-requirements) 和 [Windows 11](https://docs.microsoft.com/en-us/windows/whats-new/windows-11-requirements#hardware-requirements) 的磁盘空间要求。
    5. `Bus`：默认值是 `VirtIO`。你也可以将它修改为其他可用的选项，例如 `SATA` 或 `SCSI`。
 3. **第三个卷**是具有以下值的`容器` ：

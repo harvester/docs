@@ -48,7 +48,7 @@ A disk can be made accessible via the following types:
 | disk   | A disk disk will expose the volume as an ordinary disk to the VM.                              |
 | cd-rom | A cd-rom disk will expose the volume as a cd-rom drive to the VM. It is read-only by default.  |
 
-A volume's [Storage Class](../advanced/storageclass.md) can be specified when adding a new empty volume; for other volumes (such as VM images), the `Storage Class` is defined during image creation.
+A volume's [StorageClass](../advanced/storageclass.md) can be specified when adding a new empty volume; for other volumes (such as VM images), the `StorageClass` is defined during image creation.
 
 ![create-vm](/img/v1.2/vm/create-vm-volumes.png)
 
@@ -166,7 +166,7 @@ The following example describes how to install an ISO image using [openSUSE Leap
 1. Click **Images** in the left sidebar and download the openSUSE Leap 15.4 ISO image.
 2. Click **Virtual Machines** in the left sidebar, then create a VM. You need to fill up those VM basic configurations.
 3. Click the **Volumes** tab, In the **Image** field, select the image downloaded in step 1 and ensure **Type** is `cd-rom`
-4. Click **Add Volume** and select an existing **Storage Class**.
+4. Click **Add Volume** and select an existing **StorageClass**.
 5. Drag **Volume** to the top of **Image Volume** as follows. In this way, the **bootOrder** of **Volume** will become `1`.
 
 ![one-time-boot-create-vm-bootorder](/img/v1.2/vm/one-time-boot-create-vm-bootorder.png)

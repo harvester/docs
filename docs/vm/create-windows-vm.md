@@ -62,7 +62,7 @@ The `bootOrder` values need to be set with the installation image first. If you 
 2. The **second volume** is a `Volume` with the following values:
     1. `Name`: The value `rootdisk` is set by default. You can keep it or change it.
     2. `Type`: Select `disk`.
-    3. `Storage Class`: You can use the default StorageClass `harvester-longhorn` or specify a custom one.
+    3. `StorageClass`: You can use the default StorageClass `harvester-longhorn` or specify a custom one.
     4. `Size`: The value `32` is set by default. See the disk space requirements for [Windows Server](https://docs.microsoft.com/en-us/windows-server/get-started/hardware-requirements#storage-controller-and-disk-space-requirements) and [Windows 11](https://docs.microsoft.com/en-us/windows/whats-new/windows-11-requirements#hardware-requirements) before changing this value.
     5. `Bus`: The value `VirtIO` is set by default. You can keep it or change it to the other available options, `SATA` or `SCSI`.
 3. The **third volume** is a `Container` with the following values:

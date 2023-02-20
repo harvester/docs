@@ -31,7 +31,7 @@ After creating a volume snapshot, you can restore a new volume using the volume 
 1. Go to the `Backup & Snapshot > Volume Snapshots` page or the `Snapshots` tab in each `Volumes` Detail page.
 1. Click the `⋮` button and select the `Restore` option.
 1. Specify the `Name` of the new Volume.
-1. If the source volume is not an image volume, you can also select a different `Storage Class`.
+1. If the source volume is not an image volume, you can also select a different `StorageClass`.
 1. Click `Create`.
 
 ![restore-volume-snapshot-1](/img/v1.2/volume/restore-volume-snapshot-1.png)

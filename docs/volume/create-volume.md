@@ -16,7 +16,7 @@ Description: Create a volume from the Volume page.
 ### Basics Tab
 
 1. Choose `New` in `Source`.
-1. Select an existing `Storage Class`.
+1. Select an existing `StorageClass`.
 1. Configure the `Size` of the volume.
 
 ![create-empty-volume](/img/v1.2/volume/create-empty-volume.png)

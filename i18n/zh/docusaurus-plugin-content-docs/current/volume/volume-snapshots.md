@@ -31,7 +31,7 @@ Description: 通过 Volume 页面获取卷快照。
 1. 转到 `Backup & Snapshot > Volume Snapshots` 页面，或每个 `Volumes` 详细信息页面中的 `Snapshots` 选项卡。
 1. 单击 `⋮` 按钮并选择 `Restore` 选项。
 1. 指定新卷的 `Name`。
-1. 如果源卷不是镜像卷，你也可以选择不同的 `Storage Class`。
+1. 如果源卷不是镜像卷，你也可以选择不同的 `StorageClass`。
 1. 单击 `Create`。
 
 ![restore-volume-snapshot-1](/img/v1.2/volume/restore-volume-snapshot-1.png)

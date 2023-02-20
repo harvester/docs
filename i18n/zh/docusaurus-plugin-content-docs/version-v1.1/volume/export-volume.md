@@ -12,7 +12,7 @@ Description: 通过 Volume 页面将卷导出到镜像。
 1. 单击 `⋮` 按钮并选择 `Export Image` 选项。
 1. 选择新镜像的 `Namespace`。
 1. 配置新镜像的 `Name`。
-1. 选择现有的 `Storage Class`。
+1. 选择现有的 `StorageClass`。
 1. （可选）你可以通过 `Images` 页面下载导出的镜像，方法是单击 `⋮` 按钮并选择 `Download` 选项。
 
 ![export-volume-to-image-1](/img/v1.1/volume/export-volume-to-image-1.png)

@@ -22,7 +22,7 @@ If you specify a size larger than Longhorn's capacity during the expansion, the 
 
 ![cancel-failed-volume-expansion](/img/v1.2/volume/cancel-failed-volume-expansion.png)
 
-## Change the Storage Class of an Existing Volume
+## Change the StorageClass of an Existing Volume
 
 The StorageClass of an existing volume cannot be changed. However, you can change the StorageClass while restoring a new volume from the snapshot by following the steps below:
 
