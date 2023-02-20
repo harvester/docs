@@ -11,6 +11,12 @@ Description: Adding hot-plug volumes to a running VM.
 
 Harvester supports adding hot-plug volumes to a running VM.
 
+:::info
+
+Currently, KubeVirt only supports disk bus `scsi` for hot-plug volumes. For more information, see this [issue](https://github.com/kubevirt/kubevirt/issues/5080#issuecomment-785183128).
+
+:::
+
 ## Adding Hot-Plug Volumes to a Running VM
 
 The following steps assume that you have a running VM and a ready volume:
