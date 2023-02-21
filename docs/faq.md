@@ -51,6 +51,10 @@ As of Harvester v1.0.2, we no longer support adding additional partitioned disks
 
 ### How to add ssh key to the Harvester nodes using a modified config file ?
 
+Option 1. Non Persistent (Temporary)
+If the user just wants it to work in the runtime without rebooting then please add keys to /home/rancher/.ssh/authorized_keys and that can change the runtime setting (but it's not persistent between reboots).
+
+Option 2. Persistent
 You can modify /oem/99_custom.yaml (or 90_custom.yaml) to add authorized keys after login harvester through ssh.
 After modification, you can reboot the node to see the difference.
 Please refer https://rancher.github.io/elemental-toolkit/docs/reference/cloud_init/#stagesstage_idstep_nameauthorized_keys .
