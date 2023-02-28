@@ -107,7 +107,7 @@ This feature supports both disks and nodes.
 The tags can be set up through the Harvester UI on the host page:
 
 1. Click `Hosts` -> `Edit Config` -> `Storage`
-1. Click `Host/Disk Tags` to start typing and hit enter to add new tags.
+1. Click `Add Host/Disk Tags` to start typing and hit enter to add new tags.
 1. Click `Save` to update tags.
 1. On the [Storage Classes](../advanced/storageclass.md) page, create a new storage class and select those defined tags on the `Node Selector` and `Disk Selector` fields.
 
