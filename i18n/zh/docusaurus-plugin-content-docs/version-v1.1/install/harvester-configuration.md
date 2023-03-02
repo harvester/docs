@@ -278,7 +278,19 @@ os:
 #### 定义
 
 默认用户 `rancher` 的密码。默认情况下，`rancher` 用户没有密码。
-如果你在运行时设置密码，密码会在下次启动时重置。密码可以是明文或加密形式。获得这种加密密码最容易的方法，是在 Linux 系统上更改你的密码，并从 `/etc/shadow` 复制第二个字段的值。你也可以使用 `openssl passwd -6` 来加密密码。
+如果你在运行时设置密码，密码会在下次启动时重置。密码可以是明文或加密形式。获得这种加密密码最容易的方法，是在 Linux 系统上更改你的密码，并从 `/etc/shadow` 复制第二个字段的值。你也可以使用 OpenSSL 来加密密码。以下表格是 Harvester 目前支持的加密算法。
+
+| 算法 | 命令 | 是否支持 |
+|:---:|:---:|:---:|
+| SHA-512 | `openssl passwd -6` | 是 |
+| SHA-256 | `openssl passwd -5` | 是 (从 v1.1.2 开始) |
+| MD5 | `openssl passwd -1` | 是 (从 v1.1.2 开始) |
+| MD5, Apache variant | `openssl passwd -apr1` | 是 (从 v1.1.2 开始) |
+| AIX-MD5 | `openssl passwd -aixmd5` | 否 |
+
+:::info
+  在 v1.1.2 前仅支持 SHA-512。
+:::
 
 #### 示例
 
