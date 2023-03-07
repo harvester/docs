@@ -40,13 +40,60 @@ When spinning up a Kubernetes cluster using Rancher RKE2 node driver, the Harves
 
 ![select-harvester-cloud-provider](/img/v1.2/rancher/rke2-cloud-provider.png)
 
+You can also deploy Harvester CSI Driver manually if you have already deployed the Harvester node driver manually. Perform the following steps to manually deploy the Harvester CSI Driver. 
+
+1. Generate the addon config.
+
+:::note
+
+The script uses `kubectl` and `jq` to operate the Harvester cluster. The script needs access to the `Harvester Cluster` kubeconfig to work. The `<serviceaccount name>` is usually your guest cluster name, and the `<namespace>` needs to match the namespace of the guest cluster.
+
+:::
+
+- Install `jq`:
+```
+# apt install jq
+```
+
+- Set up `kubectl` and the kubeconfig file (the kubeconfig should be allow you to access the `Harvester Cluster`):
+```
+# export KUBECONFIG=kubeconfig
+# export PATH="${PATH}:/var/lib/rancher/rke2/bin"
+```
+
+You can generate the kubeconfig file using the [generate_addon_csi.sh](https://raw.githubusercontent.com/harvester/harvester-csi-driver/master/deploy/generate_addon_csi.sh) script. It is available on the [harvester/harvester-csi-driver](https://github.com/harvester/harvester-csi-driver) repo.
+
+```
+# ./generate_addon_csi.sh <serviceaccount name> <namespace>
+```
+Get the `addon` yaml from the output of the script above.
+
+![](/img/v1.2/rancher/csi_addon_yaml.png)
+
+1. Create the addon config file and add the `addon` yaml from the output above.
+
+```
+# mkdir -p /var/lib/rancher/rke2/etc/config-files
+# vim /var/lib/rancher/rke2/etc/config-files/csi_addon.yaml
+```
+
+1. Install Harvester CSI Driver.
+
+Install `Harvester CSI Driver` from the Rancher marketplace.
+![](/img/v1.2/rancher/install_csi_rancher_marketplace.png)
+
+You do not need to change the cloud-config path:
+![](/img/v1.2/rancher/donot_change_cloud_config_path.png)
+
+The Harvester CSI driver should now be deployed successfully.
+
 ### Deploying with Harvester K3s Node Driver
 
-- [Generate addon configuration](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon.sh) and put it in K3s VMs `/etc/kubernetes/cloud-config`.
+- [Generate addon configuration](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon_csi.sh) and put it in K3s VMs `/etc/kubernetes/cloud-config`.
 
 ```
 # depend on kubectl to operate the Harvester cluster
-./deploy/generate_addon.sh <serviceaccount name> <namespace>
+./deploy/generate_addon_csi.sh <serviceaccount name> <namespace>
 ```
 
 - Install `Harvester CSI Driver` from the Rancher marketplace.
