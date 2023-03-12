@@ -33,7 +33,7 @@ title: "创建 RKE1 Kubernetes 集群"
 1. 单击 **Create**。
 1. 单击 **Harvester**。
 1. 输入你的云凭证名称。
-1. 选择 **Imported Harvester** 或 **External Harvester**。
+1. 选择 **Imported Harvester Cluster**。
 1. 单击 **Create**。
 
 ![create-harvester-cloud-credentials](/img/v1.1/rancher/create-cloud-credentials.png)
