@@ -119,6 +119,55 @@ When multiple tags are specified for a volume, the disk and the nodes (that the 
 
 :::
 
+### Remove disks
+
+Before removing a disk, you must first evict Longhorn replicas on the disk.
+
+:::note
+
+The replica data would be rebuilt to another disk automatically to keep the high availability.
+
+:::
+
+#### Identify the disk to remove (Harvester dashboard)
+1. Go to the **Hosts** page.
+2. On the node containing the disk, select the node name and go to the **Storage** tab.
+3. Find the disk you want to remove. Let's assume we want to remove `/dev/sdb`, and the disk's mount point is `/var/lib/harvester/extra-disks/1b805b97eb5aa724e6be30cbdb373d04`.
+
+![Find disk to remove](/img/v1.2/host/remove-disks-harvester-find-disk.png)
+
+#### Evict replicas (Longhorn dashboard)
+1. Please follow [this session](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards) to enable the embedded Longhorn dashboard.
+2. Visit the Longhorn dashboard and go to the **Node** page.
+3. Expand the node containing the disk. Confirm the mount point `/var/lib/harvester/extra-disks/1b805b97eb5aa724e6be30cbdb373d04` is in the disks list. 
+
+![Check the removing disk](/img/v1.2/host/remove-disks-longhorn-nodes.png)
+
+4. Select **Edit node and disks**.
+
+![Edit node and disks](/img/v1.2/host/remove-disks-longhorn-nodes-edit.png)
+
+5. Scroll to the disk you want to remove.
+- Set `Scheduling` to `Disable`.
+- Set `Eviction Requested` to `True`.
+Select **Save**. Do not select the delete icon.
+
+![Evict disk](/img/v1.2/host/remove-disks-longhorn-nodes-evict-disk.png)
+
+6. The disk will be disabled. Please wait until the disk replica count becomes `0` to proceed with removing the disk.
+
+![Wait replicas](/img/v1.2/host/remove-disks-longhorn-wait-replicas.png)
+
+#### Remove the disk (Harvester dashboard)
+1. Go to the **Hosts** page.
+2. On the node containing the disk, select **⋮ > Edit Config**.
+3. Go to the **Storage** tab and select **x**  to remove the disk.
+
+![Remove disk](/img/v1.2/host/remove-disks-harvester-remove.png)
+
+4. Select **Save** to remove the disk.
+
+
 ## Ksmtuned Mode
 
 _Available as of v1.1.0_
