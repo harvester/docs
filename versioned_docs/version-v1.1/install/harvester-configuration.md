@@ -360,9 +360,7 @@ install:
 
 #### Definition
 
-Configure network interfaces for the host machine. Each key-value pair
-represents a network interface. The key name becomes the network name, and
-the values are configurations for each network. Valid configuration fields are:
+Configure network interfaces for the host machine. Valid configuration fields are:
 
 - `method`: Method to assign an IP to this network. The following are supported:
     - `static`: Manually assign an IP and gateway.
@@ -377,7 +375,7 @@ the values are configurations for each network. Valid configuration fields are:
     - `mode: balance-tlb`
     - `miimon: 100`
 - `mtu`: The MTU for the interface.
-- `vlan_id`: The VLAN ID for the interface
+- `vlan_id`: The VLAN ID for the interface.
 
 :::note
 
