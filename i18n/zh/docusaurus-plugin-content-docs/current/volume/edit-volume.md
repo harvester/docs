@@ -21,3 +21,10 @@ Description: 通过 Volume 页面编辑卷。
 如果你在扩容过程中指定的值大于 Longhorn 卷的大小，卷扩容会卡在 `Resizing` 状态。你可以通过单击 `⋮` 按钮并选择 `Cancel Expand` 选项来取消失败的卷扩容。
 
 ![cancel-failed-volume-expansion](/img/v1.2/volume/cancel-failed-volume-expansion.png)
+
+## 更改现有卷的 StorageClass
+
+现有卷的 StorageClass 无法更改。但是，你可以按照以下步骤在使用快照恢复新卷时更改 StorageClass：
+
+1. [创建卷快照](./volume-snapshots.md#创建卷快照)。
+2. [使用快照来恢复卷](./volume-snapshots.md#使用卷快照来还原新卷)时选择 StorageClass。

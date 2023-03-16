@@ -129,16 +129,17 @@ ssh_pwauth: True
 使用 DHCP 的网络数据配置示例：
 
 ```YAML
-version: 1
-config:
-  - type: physical
-    name: eth0
-    subnets:
-      - type: dhcp
-  - type: physical
-    name: eth1
-    subnets:
-      - type: dhcp
+network:
+  version: 1
+  config:
+    - type: physical
+      name: eth0
+      subnets:
+        - type: dhcp
+    - type: physical
+      name: eth1
+      subnets:
+        - type: dhcp
 ```
 
 你还可以使用 `Advanced > Cloud Config Templates` 功能为 VM 创建预定义的 cloud-init 配置模板。
