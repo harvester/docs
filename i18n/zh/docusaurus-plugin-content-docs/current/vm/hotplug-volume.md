@@ -11,6 +11,12 @@ Description: 向运行中的虚拟机添加热插拔卷
 
 Harvester 支持向运行中的虚拟机添加热插拔卷。
 
+:::info
+
+目前，KubeVirt 对热插拔卷仅支持磁盘总线 `scsi`。有关详细信息，请参阅此 [issue](https://github.com/kubevirt/kubevirt/issues/5080#issuecomment-785183128)。
+
+:::
+
 ## 向运行中的虚拟机添加热插拔卷
 
 以下步骤假设你有一个正在运行的虚拟机和一个就绪卷：
