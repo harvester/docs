@@ -42,11 +42,11 @@ When spinning up a Kubernetes cluster using Rancher RKE2 node driver, the Harves
 
 ### Deploying with Harvester K3s Node Driver
 
-- [Generate addon configuration](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon.sh) and put it in K3s VMs `/etc/kubernetes/cloud-config`.
+- [Generate addon configuration](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon_csi.sh) and put it in K3s VMs `/etc/kubernetes/cloud-config`.
 
-```
+```bash
 # depend on kubectl to operate the Harvester cluster
-./deploy/generate_addon.sh <serviceaccount name> <namespace>
+./deploy/generate_addon_csi.sh <serviceaccount name> <namespace>
 ```
 
 - Install `Harvester CSI Driver` from the Rancher marketplace.
