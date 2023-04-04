@@ -28,7 +28,7 @@ Make sure you choose the correct device. The process erases data on the selected
 # sudo dd if=<path_to_iso> of=<path_to_usb_device> bs=64k
 ```
 
-When using a USB to mount the Harvester ISO disk, you may be directed to Grub2. In this case, it helps to know what to set the root partition to and know the location the `grub.cfg`. 
+Sometimes using a USB to mount the Harvester ISO disk directs you to Grub2. In this case, it helps to know what to set the root partition to and the location of `grub.cfg`.
 
 You can see the current root partition in the `grub.cfg`. To view the `grub.cfg` from the ISO, run the command `chainloader /boot/grub2/x86_64-efi/grub.efi`.
 
