@@ -569,10 +569,91 @@ install:
 
 Harvester v1.2.0 ships with four addons:
 
- - harvester-vm-import-controller
- - harvester-pcidevices-controller
- - rancher-monitoring
- - rancher-logging
+- harvester-vm-import-controller
+- harvester-pcidevices-controller
+- rancher-monitoring
+- rancher-logging
+
+### `install.harvester.storageClass.replicaCount`
+
+_Available as of v1.0.2_
+
+#### Definition
+
+Sets the replica count of Harvester's default storage class `harvester-longhorn`.
+
+Default: 3
+
+Supported values: 1, 2, 3. All other values are considered 3.
+
+In edge scenarios where users may deploy single-node Harvester clusters, they can set this value to 1. In most scenarios, it is recommended to keep the default value 3 for system high availability.
+
+Please refer to [longhorn-replica-count](https://longhorn.io/docs/1.4.1/references/settings/#default-replica-count) for more details.
+
+#### Example
+
+```yaml
+install:
+  harvester:
+    storageClass:
+      replicaCount: 1
+```
+
+### `install.harvester.longhorn.defaultSettings.guaranteedEngineManagerCPU`
+
+_Available as of v1.0.2_
+
+#### Definition
+
+Sets the default storage class replica count.
+
+Default: 12
+
+Supported values: 0-12. All other values are considered 12.
+
+This integer value indicates what percentage of the total allocatable CPU on each node will be reserved for each engine manager Pod.
+
+In edge scenarios where users may deploy single-node Harvester clusters, they can set this parameter to a value smaller than 12. In most scenarios, it is recommended to keep the default value for system high availability.
+
+Before setting the value, please refer to [longhorn-guaranteed-engine-manager-cpu](https://longhorn.io/docs/1.4.1/references/settings/#guaranteed-engine-manager-cpu) for more details.
+
+#### Example
+
+```yaml
+install:
+  harvester:
+    longhorn:
+      defaultSettings:
+        guaranteedEngineManagerCPU: 6
+```
+
+### `install.harvester.longhorn.defaultSettings.guaranteedReplicaManagerCPU`
+
+_Available as of v1.0.2_
+
+#### Definition
+
+Sets the default storage class replica count.
+
+Default: 12
+
+Supported values: 0-12. All other values are considered 12.
+
+This integer value indicates what percentage of the total allocatable CPU on each node will be reserved for each replica manager Pod.
+
+In edge scenarios where users may deploy single-node Harvester clusters, can set this parameter to a value smaller than 12. In most scenarios, it is recommended to keep the default value for system high availability.
+
+Before setting the value, please refer to [longhorn-guaranteed-replica-manager-cpu](https://longhorn.io/docs/1.4.1/references/settings/#guaranteed-replica-manager-cpu) for more details.
+
+#### Example
+
+```yaml
+install:
+  harvester:
+    longhorn:
+      defaultSettings:
+        guaranteedReplicaManagerCPU: 6
+```
 
 ### `system_settings`
 
