@@ -62,14 +62,17 @@ A container disk is added when creating a VM by providing a Docker image. When c
 
 1. Go to the **Volumes** tab.
 2. Select **Add Container**.
+
 ![add-container-volume](/img/v1.2/vm/add-container-volume-1.png)
+
 3. Enter a **Name** for the container disk.
 4. Choose a disk **Type**.
 5. Add a **Docker Image**.
-  - Disks must be placed into the `/disk` directory.
-  - Raw and qcow2 formats are supported. Qcow2 is recommended in order to reduce the container image's size.
-  - A contaier disk allows you to also store disk images in any folder in the `/disk` directory by adding a [custom disk image path](https://kubevirt.io/user-guide/virtual_machines/disks_and_volumes/#custom-disk-image-path).
+    - Images must be placed into the `/disk` directory.
+    - Raw and qcow2 formats are supported, but qcow2 is recommended in order to reduce the container image's size. If you use an unsupport image format, the VM will get stuck in a `Running` state. 
+    - A contaier disk also allows you to store disk images in any folder in the `/disk` directory by adding a [custom disk image path](https://kubevirt.io/user-guide/virtual_machines/disks_and_volumes/#custom-disk-image-path).
 6. Choose a **Bus** type.
+
 ![add-container-volume](/img/v1.2/vm/add-container-volume-2.png)
 
 ## Networks
