@@ -105,7 +105,7 @@ The following example adds a line to change the `NETCONFIG_DNS_STATIC_SERVERS` c
         NTP: 0.suse.pool.ntp.org 1.suse.pool.ntp.org
     ```
 
-1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.initramfs[0].systemctl.enable`. The array must have these two services enabled: 
+1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.initramfs[0].systemctl.enable`. The array must have the two services (`systemd-timesyncd` and `systemd-time-wait-sync`) enabled:
 
     ```
     stages:
@@ -208,7 +208,7 @@ You can update the slave interfaces of Harvester's management bonding interface 
     cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
     ```
 
-1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.initramfs[0].files`. More pecifically, update the content of the `/etc/sysconfig/network/ifcfg-mgmt-bo` file and edit the `BONDING_SLAVE_X` and `BONDING_MODULE_OPTS` entries accordingly:
+1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.initramfs[0].files`. More specifically, update the content of the `/etc/sysconfig/network/ifcfg-mgmt-bo` file and edit the `BONDING_SLAVE_X` and `BONDING_MODULE_OPTS` entries accordingly:
 
     ```
     stages:
