@@ -1,4 +1,5 @@
 ---
+id: index
 sidebar_position: 2
 sidebar_label: ISO 安装
 title: "ISO 安装"

@@ -1,4 +1,5 @@
 ---
+id: faq
 sidebar_position: 17
 sidebar_label: 常见问题
 title: "常见问题"
