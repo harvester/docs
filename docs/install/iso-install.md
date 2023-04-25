@@ -1,4 +1,5 @@
 ---
+id: index
 sidebar_position: 2
 sidebar_label: ISO Installation
 title: "ISO Installation"

@@ -1,4 +1,5 @@
 ---
+id: airgap
 sidebar_position: 3
 sidebar_label: 离线环境
 title: "离线环境"
