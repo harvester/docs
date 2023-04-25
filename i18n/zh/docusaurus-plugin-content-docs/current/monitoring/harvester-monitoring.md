@@ -1,4 +1,5 @@
 ---
+id: harvester-monitoring
 sidebar_position: 1
 sidebar_label: 监控
 title: "监控"
