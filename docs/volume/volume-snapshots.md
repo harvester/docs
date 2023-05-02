@@ -47,7 +47,7 @@ You can restore a new volume from an existing volume snapshot by following these
 
 ### View the replication and health status in Longhorn
 
-1. You can view the replication and health status from Longhorn dashboard. The Longhorn dashboard is available directly in the Harvester dashboard, but you must first enable developer tools & features. Go to the **Preference** page.
+1. You can view the replication and health status for your new volume from Longhorn dashboard. The Longhorn dashboard is available directly in the Harvester dashboard, but you must first enable developer tools & features. Go to the **Preference** page.
 ![restore-volume-snapshot-5](/img/v1.2/volume/restore-volume-snapshot-5.png)
 1. Select the **Enable Developer Tools & Features**.
 ![restore-volume-snapshot-6](/img/v1.2/volume/restore-volume-snapshot-6.png)
