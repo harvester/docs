@@ -23,9 +23,7 @@ You can create a volume snapshot from an existing volume by following these step
  ![create-volume-snapshot-2](/img/v1.2/volume/create-volume-snapshot-2.png)
 1. Select  **Create** to finish creating a new volume snapshot.
 
-### View the replication and health status
-
-You can view all VM snapshots and check the status of this operation from the **Backup & Snapshot > VM Snapshots** page. When the **ReadyToUse** status is set to **true**, the snapshot is complete.
+1. You can view all VM snapshots and check the status of this operation from the **Backup & Snapshot > VM Snapshots** page. When the **ReadyToUse** status is set to **true**, the snapshot is complete.
 
 :::note
 
@@ -46,6 +44,9 @@ You can restore a new volume from an existing volume snapshot by following these
 1. If the source volume is not an image volume, you can select a different **StorageClass**. You can not change the **StorageClass** if the source volume is an image volume.
 ![restore-volume-snapshot-4](/img/v1.2/volume/restore-volume-snapshot-4.png)
 1. Select **Create** to finish restoring a new volume.
+
+### View the replication and health status in Longhorn
+
 1. You can view the replication and health status from Longhorn dashboard. The Longhorn dashboard is available directly in the Harvester dashboard, but you must first enable developer tools & features. Go to the **Preference** page.
 ![restore-volume-snapshot-5](/img/v1.2/volume/restore-volume-snapshot-5.png)
 1. Select the **Enable Developer Tools & Features**.
