@@ -19,8 +19,8 @@ function UnreleasedVersionLabel({siteTitle, versionMetadata}) {
       id="theme.docs.versions.unreleasedVersionLabel"
       description="The label used to tell the user that he's browsing an unreleased doc version"
       values={{
-        siteTitle: <b>Harvester</b>,
-        versionLabel: <b>{versionMetadata.label}</b>,
+        siteTitle: <b>Harvester</b>, // Made title bold
+        versionLabel: <b>{versionMetadata.label}</b>, // Made version label bold
       }}>
       {
         'This is unreleased documentation for {siteTitle} {versionLabel} version.'
@@ -28,6 +28,7 @@ function UnreleasedVersionLabel({siteTitle, versionMetadata}) {
     </Translate>
   );
 }
+// Update UnmaintainedVersionLabel function to customize banner
 function UnmaintainedVersionLabel({siteTitle, versionMetadata}) {
   let url = "https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/";
   return (
@@ -36,9 +37,9 @@ function UnmaintainedVersionLabel({siteTitle, versionMetadata}) {
       id="theme.docs.versions.unmaintainedVersionLabel"
       description="The label used to tell the user that he's browsing an unmaintained doc version"
       values={{ 
-        siteTitle: <b>Harvester</b>,
-        versionLabel: <b>{versionMetadata.label}</b>,
-        matrix: <a href={url}><b>SUSE support matrix</b></a>,
+        siteTitle: <b>Harvester</b>, // Made title bold
+        versionLabel: <b>{versionMetadata.label}</b>, // Made version label bold
+        matrix: <a href={url}><b>SUSE support matrix</b></a>, // Add URL and make URL bold
       }}>
       {
         '{siteTitle} {versionLabel} is EOL and this documentation is no longer actively maintained. For more details, refer to the {matrix}.' 
