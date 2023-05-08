@@ -55,7 +55,7 @@ A volume's [StorageClass](../advanced/storageclass.md) can be specified when add
 ### Adding a container disk
 
 A container disk is an ephemeral storage volume that can be assigned to any number of VMs and provides the ability to store and distribute VM disks in the container image registry. A container disk is:
-- An ideal tool for users who want to replicate a large number of VM workloads or inject machine drivers that do not require persistent data. Ephemeral volumes are designed for VMs that need more storage but don't care whether that data is stored persistently across VM restarts or only expect some read-only input data to be present in files, like configuration data or secret keys.
+- An ideal tool if you want to replicate a large number of VM workloads or inject machine drivers that do not require persistent data. Ephemeral volumes are designed for VMs that need more storage but don't care whether that data is stored persistently across VM restarts or only expect some read-only input data to be present in files, like configuration data or secret keys.
 - Not a good solution for any workload that requires persistent root disks across VM restarts.
 
 A container disk is added when creating a VM by providing a Docker image. When creating a VM, follow these steps:
