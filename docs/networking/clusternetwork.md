@@ -31,13 +31,37 @@ Specifications including network devices of the Harvester hosts can be different
 
 Network configuration only works under a certain cluster network. Each network configuration corresponds to a set of hosts with uniform network specifications. Therefore, multiple network configurations are required for a cluster network on non-uniform hosts.
 
-### Network
+### VM Network
 
-A network is an interface in a virtual machine that connects to the host network. As with network configuration, every network except the built-in [management network](./harvester-network.md#management-network) must be under a cluster network.
+A VM network is an interface in a virtual machine that connects to the host network. As with a network configuration, every network except the built-in [management network](./harvester-network.md#management-network) must be under a cluster network.
 
 Harvester supports adding multiple networks to one VM. If a network's cluster network is not enabled on some hosts, the VM that owns this network will not be scheduled to those hosts.
 
 Please refer to [network part](./harvester-network.md) for more details about networks.
+
+### Relationship Between Cluster Network, Network Config, VM Network
+The following diagram shows the relationship between a cluster network, a network config, and a VM network.
+
+![](/img/v1.2/networking/relation.png)
+
+All `Network Configs` and `VM Networks` are grouped under a cluster network. 
+
+- A label can be assigned to each host to categorize hosts based on their network specifications.  
+- A network config can be added for each group of hosts using a node selector. 
+
+For example, in the diagram above, the hosts in `ClusterNetwork-A` are divided into three groups as follows:
+- The first group includes host0 and host2, which correspond to `network-config-A`.
+- The second group includes host1, which corresponds to `network-config-B`.
+- The third group includes the remaining hosts (host3, host4, and host5), which do not have any related network config and therefore do not belong to `ClusterNetwork-A`.
+
+The cluster network is only effective on hosts that are covered by the network configuration. A VM using a `VM network` under a specific cluster network can only be scheduled on a host where the cluster network is active.
+
+ In the diagram above, we can see that:
+- `ClusterNetwork-A` is active on host0, host1, and host2. `VM0` uses `VM-network-A`, so it can be scheduled on any of these hosts.
+- `VM1` uses both `VM-network-B` and `VM-network-C`, so it can only be scheduled on host2 where both `ClusterNetwork-A` and `ClusterNetwork-B` are active.
+- `VM0`, `VM1`, and `VM2` cannot run on host3 where the two cluster networks are inactive.
+
+Overall, this diagram provides a clear visualization of the relationship between cluster networks, network configurations, and VM networks, as well as how they impact VM scheduling on hosts.
 
 ## Cluster Network Details
 
@@ -78,5 +102,11 @@ You are allowed to add the custom cluster network, which will not be available u
 
 - The NICs drop-down list shows all the common NICs on all the selected nodes. The drop-down list will change as you select different nodes.
 - The text `enp7s3 (1/3 Down)` in the NICs drop-down list indicates that the enp7s3 NIC is down in one of the three selected nodes. In this case, you need to find the NIC, set it up, and refresh this page. After this, it should be selectable.
+
+:::
+
+:::note
+
+Starting with Harvester v1.1.2, Harvester supports updating network configs. Make sure to stop all affected VMs before updating network configs.
 
 :::

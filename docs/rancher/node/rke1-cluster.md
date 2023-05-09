@@ -33,7 +33,7 @@ All `cloud credentials` are bound to your user profile and cannot be shared with
 1. Click **Create**.
 1. Click **Harvester**.
 1. Enter your cloud credential name.
-1. Select "Imported Harvester" or "External Harvester".
+1. Select "Imported Harvester Cluster".
 1. Click **Create**.
 
 ![create-harvester-cloud-credentials](/img/v1.2/rancher/create-cloud-credentials.png)

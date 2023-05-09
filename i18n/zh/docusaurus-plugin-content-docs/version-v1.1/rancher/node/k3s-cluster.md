@@ -23,7 +23,7 @@ title: "创建 K3s Kubernetes 集群"
 3. 单击 **Create**。
 4. 单击 **Harvester**。
 5. 输入你的云凭证名称。
-6. 选择 **Imported Harvester** 或 **External Harvester**。
+6. 选择 **Imported Harvester Cluster**。
 7. 单击 **Create**。
 
 ![create-harvester-cloud-credentials](/img/v1.1/rancher/create-cloud-credentials.png)
