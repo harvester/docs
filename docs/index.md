@@ -11,6 +11,37 @@ keywords:
   - Harvester Intro
 Description: Harvester is an open source hyper-converged infrastructure (HCI) software built on Kubernetes. It is an open source alternative to vSphere and Nutanix.
 ---
+Harvester is a modern, open, interoperable, hyper-converged infrastructure (HCI) software built on Kubernetes and runs on bare metal servers. It is an open-source alternative to using a proprietary HCI stack that incorporates the design and ethos of Cloud Native Computing. In addition to traditional virtual machines (VMs), Harvester supports containerized environments automatically through integration with Rancher. It offers a solution that unifies legacy virtualized infrastructure while enabling the adoption of containers from core to edge locations.
+
+## Harvester Architecture
+
+The Harvester architecture consists of cutting-edge open-source technologies:
+- **Linux OS.** Elemental for SLE-Micro 5.3, an immutable Linux distribution designed to remove as much OS maintenance as possible in a Kubernetes cluster, is at the core of Harvester. 
+- **Built on top of Kubernetes.** Kubernetes has quickly become the de facto infrastructure language across all form factors, and Harvester is an HCI solution with Kubernetes under the hood.
+- **Virtualization management with Kubevirt.** Kubevirt provides virtualization management using KVM on top of Kubernetes.
+- **Storage management with Longhorn.** Longhorn provides distributed block storage and tiering. 
+- **Observability with Grafana and Prometheus.** Granfana and Prometheus provide robust monitoring and logging.
+
+![](/img/v1.2/architecture.svg)
+
+## Harvester Features
+
+Harvester is designed to use local, direct attached storage instead of complex external SANs and utilizes the Kubernetes API as a unified automation language across container and VM workloads. The result is an enterprise-ready, simple-to-use infrastructure platform with the following features:
+- **Easy to get started.** Harvester ships as an integrated bootable appliance image that can be installed directly to a bare-metal server with the Harvester ISO image or automatically install Harvester using iPXE scripts.
+- **VM lifecycle management.** Easily create, edit, clone, and delete VMs, including SSH-Key injection, cloud-init, and graphic and serial port console.
+- **VM live migration.** Move a VM to a different host or node with zero downtime.
+- **VM backup, snapshot, and restore.** Back up your VMs in an NFS or S3 server or NAS devices. Use your backup to replace or restore a failed VM or create a new VM on a different cluster.
+- **Storage management.** Supports distributed block storage and tiering. Volumes represent storage; you can easily create, edit, clone, or export a volume.
+- **Network management.** Supports using a virtual IP and multiple NICs. If your VMs need to connect to the external network, create a VLAN network or untagged network.
+- **Integration with Rancher.** Access Harvester directly within Rancher through Rancher’s Virtualization Management page and manage your VM workloads alongside your Kubernetes clusters.
+
+## Harvester Dashboard
+
+Harvester is powerful and easy to use, offering a web-based dashboard for visualizing and managing your infrastructure. Once you install Harvester, you will see the IP address of the Harvester Dashboard in bare metal node’s terminal.
+
+![harvester-ui](/img/v1.2/dashboard.png)
+
+<!-- 
 
 Harvester is an open-source [hyper-converged infrastructure](https://en.wikipedia.org/wiki/Hyper-converged_infrastructure) (HCI) software built on Kubernetes. It is an open alternative to using a proprietary HCI stack that incorporates the design and ethos of [Cloud Native Computing](https://en.wikipedia.org/wiki/Cloud_native_computing).
 
@@ -106,3 +137,4 @@ Harvester can also be installed automatically. Please refer to [PXE Boot Install
 More iPXE usage examples are available at [harvester/ipxe-examples](https://github.com/harvester/ipxe-examples).
 
 :::
+-->
