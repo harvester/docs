@@ -17,7 +17,7 @@ Description: Harvester is an open source hyper-converged infrastructure (HCI) so
 
 The Harvester architecture consists of cutting-edge open-source technologies:
 - **Linux OS.** [Elemental for SLE-Micro 5.3](https://github.com/rancher/elemental-toolkit), an immutable Linux distribution designed to remove as much OS maintenance as possible in a Kubernetes cluster, is at the core of Harvester. 
-- **Built on top of Kubernetes.** [Kubernetes](https://kubernetes.io/) has quickly become the de facto infrastructure language across all form factors, and Harvester is an HCI solution with Kubernetes under the hood.
+- **Built on top of Kubernetes.** [Kubernetes](https://kubernetes.io/) has become the predominant infrastructure language across all form factors, and Harvester is an HCI solution with Kubernetes under the hood.
 - **Virtualization management with Kubevirt.** [Kubevirt](https://kubevirt.io/) provides virtualization management using KVM on top of Kubernetes.
 - **Storage management with Longhorn.** [Longhorn](https://longhorn.io/) provides distributed block storage and tiering.
 - **Observability with Grafana and Prometheus.** [Granfana](https://grafana.com/) and [Prometheus](https://prometheus.io/) provide robust monitoring and logging.
@@ -27,17 +27,17 @@ The Harvester architecture consists of cutting-edge open-source technologies:
 ## Harvester Features
 
 Harvester is designed to use local, direct attached storage instead of complex external SANs and utilizes the Kubernetes API as a unified automation language across container and VM workloads. The result is an enterprise-ready, simple-to-use infrastructure platform with the following features:
-- **Easy to get started.** Harvester ships as a bootable appliance image that can be installed directly on a bare metal server with the [Harvester ISO image](https://github.com/harvester/harvester/releases) or automatically install Harvester using [iPXE](https://docs.harvesterhci.io/dev/install/pxe-boot-install) scripts.
+- **Easy to get started.** Since Harvester ships as a bootable appliance image, you can install it directly on a bare metal server with the [ISO image](https://github.com/harvester/harvester/releases) or automatically install it using [iPXE](https://docs.harvesterhci.io/dev/install/pxe-boot-install) scripts.
 - **VM lifecycle management.** Easily create, edit, clone, and delete VMs, including SSH-Key injection, cloud-init, and graphic and serial port console.
 - **VM live migration.** Move a VM to a different host or node with zero downtime.
-- **VM backup, snapshot, and restore.** Back up your VMs in an NFS or S3 server or NAS devices. Use your backup to replace or restore a failed VM or create a new VM on a different cluster.
-- **Storage management.** Supports distributed block storage and tiering. Volumes represent storage; you can easily create, edit, clone, or export a volume.
-- **Network management.** Supports using a virtual IP (VIP) and multiple Network Interface Cards (NICs). If your VMs need to connect to the external network, create a VLAN network or untagged network.
+- **VM backup, snapshot, and restore.** Back up your VMs in an NFS or on an S3 server or a NAS device. Use your backup to replace or restore a failed VM or create a new VM on a different cluster.
+- **Storage management.** Harvester supports distributed block storage and tiering. Volumes represent storage; you can easily create, edit, clone, or export a volume.
+- **Network management.** Supports using a virtual IP (VIP) and multiple Network Interface Cards (NICs). If your VMs need to connect to the external network, create a VLAN or untagged network.
 - **Integration with Rancher.** Access Harvester directly within Rancher through Rancher’s Virtualization Management page and manage your VM workloads alongside your Kubernetes clusters.
 
 ## Harvester Dashboard
 
-Harvester is powerful and easy to use, offering a web-based dashboard for visualizing and managing your infrastructure. Once you install Harvester, you will see the IP address for the Harvester Dashboard in bare metal node’s terminal.
+Harvester provides a powerful and easy to use web-based dashboard for visualizing and managing your infrastructure. Once you install Harvester, you can access the IP address for the Harvester Dashboard from node’s terminal.
 
 <div class="text-center">
    <iframe width="99%" height="450" src="https://www.youtube.com/embed/Ngsk7m6NYf4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
