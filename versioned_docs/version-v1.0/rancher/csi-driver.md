@@ -28,11 +28,11 @@ Currently, the Harvester CSI driver only supports single-node read-write(RWO) vo
 
 - Select the external cloud provider option.
 
-- [Generate addon configuration](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon.sh) and add it in the RKE config YAML.
+- [Generate addon configuration](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon_csi.sh) and add it in the RKE config YAML.
 
 ```
 # depend on kubectl to operate the Harvester cluster
-./deploy/generate_addon.sh <serviceaccount name> <namespace>
+./deploy/generate_addon_csi.sh <serviceaccount name> <namespace>
 ```
 
 ### Deploying with Harvester RKE2 Node Driver

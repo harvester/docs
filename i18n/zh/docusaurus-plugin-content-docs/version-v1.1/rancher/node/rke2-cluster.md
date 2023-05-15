@@ -22,7 +22,7 @@ title: "创建 RKE2 Kubernetes 集群"
 3. 单击 **Create**。
 4. 单击 **Harvester**。
 5. 输入你的云凭证名称。
-6. 选择 **Imported Harvester** 或 **External Harvester**。
+6. 选择 **Imported Harvester Cluster**。
 7. 单击 **Create**。
 
 ![create-harvester-cloud-credentials](/img/v1.1/rancher/create-cloud-credentials.png)
@@ -59,6 +59,7 @@ Calico 和 Canal 要求在节点上安装 `iptables` 或 `xtables-nft` 包。详
 
 ![create-rke2-harvester-cluster-1](/img/v1.1/rancher/create-rke2-harvester-cluster-1.png)
 ![create-rke2-harvester-cluster-2](/img/v1.1/rancher/create-rke2-harvester-cluster-2.png)
+![create-rke2-harvester-cluster-3](/img/v1.1/rancher/create-rke2-harvester-cluster-3.png)
 
 :::note
 

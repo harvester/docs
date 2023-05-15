@@ -69,3 +69,9 @@ The usage of untagged network is similar to [the VLAN network](./harvester-netwo
 To create a new untagged network, go to the **Networks > Networks** page and click the **Create** button. You have to specify the name, select the type `Untagged Network` and choose the cluster network.
 
 ![](/img/v1.1/networking/create-untagged-network.png)
+
+:::note
+
+Starting with Harvester v1.1.2, Harvester supports updating and deleting VM networks. Make sure to stop all affected VMs before updating or deleting VM networks.
+
+:::
