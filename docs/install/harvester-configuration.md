@@ -283,7 +283,16 @@ The password for the default user, `rancher`. By default, there is no password f
 If you set a password at runtime it will be reset on the next boot. The
 value of the password can be clear text or an encrypted form. The easiest way to get this encrypted
 form is to change your password on a Linux system and copy the value of the second field from
-`/etc/shadow`. You can also encrypt a password using `openssl passwd -6`.
+`/etc/shadow`. You can also encrypt a password using OpenSSL. For the encryption algorithms 
+supported by Harvester, please refer to the table below.
+
+| Algorithm | Command | Support |
+|:---:|:---:|:---:|
+| SHA-512 | `openssl passwd -6` | Yes |
+| SHA-256 | `openssl passwd -5` | Yes |
+| MD5 | `openssl passwd -1` | Yes |
+| MD5, Apache variant | `openssl passwd -apr1` | Yes |
+| AIX-MD5 | `openssl passwd -aixmd5` | No |
 
 #### Example
 

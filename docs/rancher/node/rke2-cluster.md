@@ -22,7 +22,7 @@ Users can now provision RKE2 Kubernetes clusters on top of the Harvester cluster
 3. Click **Create**.
 4. Click **Harvester**.
 5. Enter your cloud credential name
-6. Select "Imported Harvester" or "External Harvester".
+6. Select "Imported Harvester Cluster".
 7. Click **Create**.
 
 ![create-harvester-cloud-credentials](/img/v1.2/rancher/create-cloud-credentials.png)
@@ -59,6 +59,7 @@ Calico and Canal require the `iptables` or `xtables-nft` package to be installed
 
 ![create-rke2-harvester-cluster-1](/img/v1.2/rancher/create-rke2-harvester-cluster-1.png)
 ![create-rke2-harvester-cluster-2](/img/v1.2/rancher/create-rke2-harvester-cluster-2.png)
+![create-rke2-harvester-cluster-3](/img/v1.2/rancher/create-rke2-harvester-cluster-3.png)
 
 :::note
 

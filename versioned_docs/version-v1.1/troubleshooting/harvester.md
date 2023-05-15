@@ -67,7 +67,7 @@ Users can generate a support bundle in the Harvester GUI with the following step
 
 _Available as of v1.1.0_
 
-You can now access the embedded Rancher and Longhorn dashboards directly on the `Support` page, but you must enable the `Developer Tools & Features` first via the Preference page.
+You can now access the embedded Rancher and Longhorn dashboards directly on the `Support` page, but you must first go to the `Preferences` page and check the `Enable Extension developer features` box under `Advanced Features` (in Harvester v1.1.0 and v1.1.1, the option name is `Developer Tools & Features`). 
 
 ![](/img/v1.1/troubleshooting/support-access-embedded-ui.png)
 

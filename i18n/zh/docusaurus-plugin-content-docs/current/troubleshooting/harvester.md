@@ -67,7 +67,7 @@ title: "Harvester"
 
 _从 v1.1.0 起可用_
 
-你现在可以直接在 `Support` 页面上访问嵌入式 Rancher 和 Longhorn 仪表板，但必须先通过 **Preference** 页面启用 `Developer Tools & Features`。
+你现在可以直接在 `Support` 页面上访问嵌入式 Rancher 和 Longhorn 仪表板，但必须先前往 `Preferences` 页面并选中 `Advanced Features` 下的 `Enable Extension developer features`。
 
 ![](/img/v1.2/troubleshooting/support-access-embedded-ui.png)
 

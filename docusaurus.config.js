@@ -60,6 +60,7 @@ const config = {
     ],
   ],
   themeConfig: {
+    zoom: {},
     algolia: {
       appId: 'U7QCSJFCWR',
       apiKey: '954c1b1327687e818ef6930a5e8f8770',
@@ -140,6 +141,7 @@ const config = {
       "An open-source hyperconverged infrastructure (HCI) software for a cloud-native world",
   },
   plugins: [
+    require.resolve('docusaurus-plugin-image-zoom'),
     [
       '@docusaurus/plugin-client-redirects',
       {

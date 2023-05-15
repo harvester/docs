@@ -23,7 +23,7 @@ You can now provision K3s Kubernetes clusters on top of the Harvester cluster in
 3. Click **Create**.
 4. Click **Harvester**.
 5. Enter your cloud credential name
-6. Select "Imported Harvester" or "External Harvester".
+6. Select "Imported Harvester Cluster".
 7. Click **Create**.
 
 ![create-harvester-cloud-credentials](/img/v1.1/rancher/create-cloud-credentials.png)
