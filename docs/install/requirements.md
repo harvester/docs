@@ -24,7 +24,7 @@ Harvester hosts have the following hardware requirements and recommendations for
 | Network Card     | 1 Gbps Ethernet minimum for testing, 10Gbps Ethernet recommended for production                                                                                                                       |
 | Network Switch   | Trunking of ports required for VLAN support                                                                                                                                                           |
 
-## Networking Reuirements
+## Networking Requirements
 
 Harvester hosts have the following network requirements for installation.
 
