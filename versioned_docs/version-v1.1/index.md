@@ -22,7 +22,7 @@ The Harvester architecture consists of cutting-edge open-source technologies:
 - **Storage management with Longhorn.** [Longhorn](https://longhorn.io/) provides distributed block storage and tiering.
 - **Observability with Grafana and Prometheus.** [Granfana](https://grafana.com/) and [Prometheus](https://prometheus.io/) provide robust monitoring and logging.
 
-![](/img/v1.2/architecture.svg)
+![](/img/v1.1/architecture.svg)
 
 ## Harvester Features
 
@@ -34,3 +34,11 @@ Harvester is an enterprise-ready, easy-to-use infrastructure platform that lever
 - **Storage management.** Harvester supports distributed block storage and tiering. Volumes represent storage; you can easily create, edit, clone, or export a volume.
 - **Network management.** Supports using a virtual IP (VIP) and multiple Network Interface Cards (NICs). If your VMs need to connect to the external network, create a VLAN or untagged network.
 - **Integration with Rancher.** Access Harvester directly within Rancher through Rancher’s Virtualization Management page and manage your VM workloads alongside your Kubernetes clusters.
+
+## Harvester Dashboard
+
+Harvester provides a powerful and easy-to-use web-based dashboard for visualizing and managing your infrastructure. Once you install Harvester, you can access the IP address for the Harvester Dashboard from the node's terminal.
+
+<div class="text-center">
+   <iframe width="99%" height="450" src="https://www.youtube.com/embed/Ngsk7m6NYf4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
