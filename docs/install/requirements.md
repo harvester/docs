@@ -6,7 +6,7 @@ keywords:
 - Installation Requirements
 Description: Outline the Harvester installation requirements
 ---
-As an HCI solution on bare metal servers, there are minimum host hardware requirements and network requirements to install and run Harvester. 
+As an HCI solution on bare metal servers, there are minimum node hardware requirements and network requirements to install and run Harvester.
 
 :::note 
 A three-node cluster is required to fully realize the multi-node features of Harvester.
