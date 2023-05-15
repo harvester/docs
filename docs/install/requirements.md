@@ -1,33 +1,37 @@
 ---
 sidebar_position: 1
-sidebar_label: Requirements
-title: "Requirements"
+sidebar_label: Hardware and Networking Requirements
+title: "Hardware and Networking Requirements"
 keywords:
 - Installation Requirements
 Description: Outline the Harvester installation requirements
 ---
-
-As an HCI solution on bare metal servers, Harvester has some minimum requirements as outlined below.
+As an HCI solution on bare metal servers, there are minimum host hardware requirements and network requirements to install and run Harvester. A three-node cluster is required to fully evaluate the multi-node features of Harvester.
+- The first node always defaults to be a management node of the cluster.
+- When there are three or more nodes, the two other nodes that are added first are automatically promoted to management nodes to form a high availability (HA) cluster.
+- We recommend server-class hardware for best results. Laptops and nested virtualization are not officially supported.
 
 ## Hardware Requirements
-To get the Harvester server up and running the following minimum hardware is required:
-  
-| Type             | Requirements                                                                                                                                                                                          |
+
+Harvester hosts have the following hardware requirements and recommendations for installation.
+
+| Type             | Requirements and Recommendations                                                                                                                                                                                        |
 |:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| CPU              | x86_64 only. Hardware-assisted virtualization is required. 8-core processor minimum for testing; 16-core or above preferred for production                                                            |
-| Memory           | 32 GB minimum, 64 GB or above preferred                                                                                                                                                               |
-| Disk Capacity    | 200 GB minimum for testing, 500 GB or above preferred for production                                                                                                                                  |
+| CPU              | x86_64 only. Hardware-assisted virtualization is required. 8-core processor minimum for testing; 16-core or above recommended for production                                                            |
+| Memory           | 32 GB minimum for testing; 64 GB or above recommended for production                                                                                                                                                               |
+| Disk Capacity    | 200 GB minimum for testing; 500 GB or above recommended for production                                                                                                                                  |
 | Disk Performance | 5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be [fast enough for Etcd](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd) |
 | Network Card     | 1 Gbps Ethernet minimum for testing, 10Gbps Ethernet recommended for production                                                                                                                       |
 | Network Switch   | Trunking of ports required for VLAN support                                                                                                                                                           |
-  
-:::info
-  We recommend server-class hardware for best results. Laptops and nested virtualization are not officially supported.
-:::
 
-## Networking
+## Networking Reuirements
 
-### Harvester Hosts Inbound Rules
+Harvester hosts have the following network requirements for installation.
+
+### Inbound Rules for Harvester Hosts
+
+A Harvester host requires certain network inbound rules and port requirements. Typically, all outbound traffic is allowed.
+
 
 | Protocol  |   Port	                 |  Source	                                |   Description                           |
 |:----------|:---------------------------|:-----------------------------------------|:----------------------------------------|
@@ -61,18 +65,15 @@ To get the Harvester server up and running the following minimum hardware is req
 | UDP       | 	68                       | 	Harvester management and compute nodes  | 	Wicked                                |
 | TCP       | 	3260                     | 	Harvester management and compute nodes	|   iscsid                                |
 
-Typically, all outbound traffic will be allowed.
+### Inbound Rules for Integrating Harvester with Rancher
 
-### Integrating Harvester with Rancher
+If you want to [integrate Harvester with Rancher](../rancher/rancher-integration.md), you need to make sure that all Harvester nodes can connect to TCP port **443** of the Rancher load balancer.
 
-If you want to [integrate Harvester with Rancher](../rancher/rancher-integration.md), you need to make sure, that all Harvester nodes can connect to TCP port `443` of the Rancher load balancer.
+The VMs of Kubernetes clusters that are provisioned from Rancher into Harvester also need to be able to connect to TCP port **443** of the Rancher load balancer. Otherwise, the cluster won't be manageable by Rancher. For more information, refer to [Rancher Architecture](https://rancher.com/docs/rancher/v2.6/en/overview/architecture/).
 
-The VMs of Kubernetes clusters, that are provisioned from Rancher into Harvester, also need to be able to connect to TCP port `443` of the Rancher load balancer. Otherwise the cluster won't be manageable by Rancher. For more information see also [Rancher Architecture](https://rancher.com/docs/rancher/v2.6/en/overview/architecture/).
+### Inbound Rules for K3s or RKE/RKE2 clusters
 
-#### Guest clusters
-As for the port requirements for the guest clusters deployed inside Harvester virtual machines, refer to the following links.
-
-- K3s: [https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
-- RKE: [https://rancher.com/docs/rke/latest/en/os/#ports](https://rancher.com/docs/rke/latest/en/os/#ports)
-- RKE2: [https://docs.rke2.io/install/requirements#networking](https://docs.rke2.io/install/requirements#networking)
-
+For the port requirements for guest clusters deployed inside Harvester VMs, refer to the following links.
+- [K3s](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
+- [RKE](https://rancher.com/docs/rke/latest/en/os/#ports)
+- [RKE2](https://docs.rke2.io/install/requirements#networking)
