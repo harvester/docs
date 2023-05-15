@@ -6,14 +6,18 @@ keywords:
 - Installation Requirements
 Description: Outline the Harvester installation requirements
 ---
-As an HCI solution on bare metal servers, there are minimum host hardware requirements and network requirements to install and run Harvester. A three-node cluster is required to fully evaluate the multi-node features of Harvester.
+As an HCI solution on bare metal servers, there are minimum host hardware requirements and network requirements to install and run Harvester. 
+
+:::note 
+A three-node cluster is required to fully realize the multi-node features of Harvester.
 - The first node always defaults to be a management node of the cluster.
 - When there are three or more nodes, the two other nodes that are added first are automatically promoted to management nodes to form a high availability (HA) cluster.
 - We recommend server-class hardware for best results. Laptops and nested virtualization are not officially supported.
+:::
 
 ## Hardware Requirements
 
-Harvester hosts have the following hardware requirements and recommendations for installation.
+Harvester nodes have the following hardware requirements and recommendations for installation.
 
 | Type             | Requirements and Recommendations                                                                                                                                                                                        |
 |:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -26,11 +30,11 @@ Harvester hosts have the following hardware requirements and recommendations for
 
 ## Networking Requirements
 
-Harvester hosts have the following network requirements for installation.
+Harvester nodes have the following network requirements for installation.
 
 ### Inbound Rules for Harvester Hosts
 
-A Harvester host requires certain network inbound rules and port requirements. Typically, all outbound traffic is allowed.
+Harvester nodes require the following port connections and inbound rules. Typically, all outbound traffic is allowed.
 
 
 | Protocol  |   Port	                 |  Source	                                |   Description                           |
