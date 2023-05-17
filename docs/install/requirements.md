@@ -8,16 +8,9 @@ Description: Outline the Harvester installation requirements
 ---
 As an HCI solution on bare metal servers, there are minimum node hardware and network requirements to install and run Harvester.
 
-:::note 
-A three-node cluster is required to realize the multi-node features of Harvester fully.
-- The first node always defaults to be a management node of the cluster.
-- When there are three or more nodes, the two other nodes added first are automatically promoted to management nodes to form a high availability (HA) cluster.
-- We recommend server-class hardware for the best results. Laptops and nested virtualization are not officially supported.
-:::
-
 ## Hardware Requirements
 
-Harvester nodes have the following hardware requirements and recommendations for installation.
+Harvester nodes have the following hardware requirements and recommendations for installation and testing.
 
 | Type             | Requirements and Recommendations                                                                                                                                                                                        |
 |:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -27,6 +20,13 @@ Harvester nodes have the following hardware requirements and recommendations for
 | Disk Performance | 5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be [fast enough for Etcd](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd) |
 | Network Card     | 1 Gbps Ethernet minimum for testing, 10Gbps Ethernet recommended for production                                                                                                                       |
 | Network Switch   | Trunking of ports required for VLAN support                                                                                                                                                           |
+
+:::note
+A three-node cluster is required to realize the multi-node features of Harvester fully.
+- The first node always defaults to be a management node of the cluster.
+- When there are three or more nodes, the two other nodes added first are automatically promoted to management nodes to form a high availability (HA) cluster.
+- We recommend server-class hardware for the best results. Laptops and nested virtualization are not officially supported.
+:::
 
 ## Networking Requirements
 
@@ -72,7 +72,6 @@ Harvester nodes require the following port connections or inbound rules. Typical
 ### Inbound Rules for Integrating Harvester with Rancher
 
 If you want to [integrate Harvester with Rancher](../rancher/rancher-integration.md), you need to make sure that all Harvester nodes can connect to TCP port **443** of the Rancher load balancer.
-
 
 When provisioning VMs with Kubernetes clusters from Rancher into Harvester, you need to be able to connect to TCP port **443** of the Rancher load balancer. Otherwise, the cluster won't be manageable by Rancher. For more information, refer to [Rancher Architecture](https://rancher.com/docs/rancher/v2.6/en/overview/architecture/).
 
