@@ -78,6 +78,6 @@ When provisioning VMs with Kubernetes clusters from Rancher into Harvester, you 
 ### Inbound Rules for K3s or RKE/RKE2 Clusters
 
 For the port requirements for guest clusters deployed inside Harvester VMs, refer to the following links:
-- [K3s](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
-- [RKE](https://rancher.com/docs/rke/latest/en/os/#ports)
-- [RKE2](https://docs.rke2.io/install/requirements#networking)
+- [K3s Networking](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
+- [RKE Ports](https://rancher.com/docs/rke/latest/en/os/#ports)
+- [RKE2 Networking](https://docs.rke2.io/install/requirements#networking)
