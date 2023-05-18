@@ -1,14 +1,14 @@
 ---
 sidebar_position: 1
-sidebar_label: Hardware and Network Requirements
-title: "Hardware and Network Requirements"
+sidebar_label: Hardware and network requirements
+title: "Hardware and network requirements"
 keywords:
 - Installation Requirements
 Description: Outline the Harvester installation requirements
 ---
 As an HCI solution on bare metal servers, there are minimum node hardware and network requirements to install and run Harvester.
 
-## Hardware Requirements
+## Hardware requirements
 
 Harvester nodes have the following hardware requirements and recommendations for installation and testing.
 
@@ -28,11 +28,11 @@ A three-node cluster is required to realize the multi-node features of Harvester
 - We recommend server-class hardware for the best results. Laptops and nested virtualization are not officially supported.
 :::
 
-## Network Requirements
+## Network requirements
 
 Harvester nodes have the following network requirements for installation.
 
-### Inbound Rules for Harvester Nodes
+### Inbound rules for Harvester nodes
 
 Harvester nodes require the following port connections or inbound rules. Typically, all outbound traffic is allowed.
 
@@ -69,13 +69,13 @@ Harvester nodes require the following port connections or inbound rules. Typical
 | UDP       | 	68                       | 	Harvester management and compute nodes  | 	Wicked                                |
 | TCP       | 	3260                     | 	Harvester management and compute nodes	|   iscsid                                |
 
-### Inbound Rules for Integrating Harvester with Rancher
+### Inbound rules for integrating Harvester with Rancher
 
 If you want to [integrate Harvester with Rancher](../rancher/rancher-integration.md), you need to make sure that all Harvester nodes can connect to TCP port **443** of the Rancher load balancer.
 
 When provisioning VMs with Kubernetes clusters from Rancher into Harvester, you need to be able to connect to TCP port **443** of the Rancher load balancer. Otherwise, the cluster won't be manageable by Rancher. For more information, refer to [Rancher Architecture](https://rancher.com/docs/rancher/v2.6/en/overview/architecture/).
 
-### Inbound Rules for K3s or RKE/RKE2 Clusters
+### Inbound rules for K3s or RKE/RKE2 clusters
 
 For the port requirements for guest clusters deployed inside Harvester VMs, refer to the following links:
 - [K3s Networking](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
