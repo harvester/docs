@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
-sidebar_label: Hardware and Networking Requirements
-title: "Hardware and Networking Requirements"
+sidebar_label: Hardware and Network Requirements
+title: "Hardware and Network Requirements"
 keywords:
 - Installation Requirements
 Description: Outline the Harvester installation requirements
