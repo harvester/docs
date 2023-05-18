@@ -28,7 +28,7 @@ A three-node cluster is required to realize the multi-node features of Harvester
 - We recommend server-class hardware for the best results. Laptops and nested virtualization are not officially supported.
 :::
 
-## Networking Requirements
+## Network Requirements
 
 Harvester nodes have the following network requirements for installation.
 
