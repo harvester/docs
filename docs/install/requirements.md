@@ -75,7 +75,7 @@ If you want to [integrate Harvester with Rancher](../rancher/rancher-integration
 
 When provisioning VMs with Kubernetes clusters from Rancher into Harvester, you need to be able to connect to TCP port **443** of the Rancher load balancer. Otherwise, the cluster won't be manageable by Rancher. For more information, refer to [Rancher Architecture](https://rancher.com/docs/rancher/v2.6/en/overview/architecture/).
 
-### Inbound Rules for K3s or RKE/RKE2 clusters
+### Inbound Rules for K3s or RKE/RKE2 Clusters
 
 Refer to the following links for the port requirements for guest clusters deployed inside Harvester VMs.
 - [K3s](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
