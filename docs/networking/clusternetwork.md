@@ -50,8 +50,8 @@ All `Network Configs` and `VM Networks` are grouped under a cluster network.
 - A network config can be added for each group of hosts using a node selector. 
 
 For example, in the diagram above, the hosts in `ClusterNetwork-A` are divided into three groups as follows:
-- The first group includes host0 and host2, which correspond to `network-config-A`.
-- The second group includes host1, which corresponds to `network-config-B`.
+- The first group includes host0, which corresponds to `network-config-A`.
+- The second group includes host1 and host2, which correspond to `network-config-B`.
 - The third group includes the remaining hosts (host3, host4, and host5), which do not have any related network config and therefore do not belong to `ClusterNetwork-A`.
 
 The cluster network is only effective on hosts that are covered by the network configuration. A VM using a `VM network` under a specific cluster network can only be scheduled on a host where the cluster network is active.
