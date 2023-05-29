@@ -48,32 +48,43 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 
   ![](/img/v1.2/rancher/rke2-cloud-provider.png)
 
+### Deploying to the RKE2 Custom Cluster [Experimental]
+
+1. Use `generate_addon.sh` to generate cloud config and place it into directory `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config` on every node.
+
+   ```
+   curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace> 
+   ```
+
+  :::note
+
+  The `generate_addon.sh` script depends on `kubectl` and `jq` to operate the Harvester cluster
+
+  The script needs access to the `Harvester Cluster` kubeconfig to work.
+
+  The namespace needs to be the namespace in which the guest cluster will be created.
+
+  :::
+
+
+2. Select the `Harvester` cloud provider.
+     ![](/img/v1.2/rancher/custom.png)
+     ![](/img/v1.2/rancher/create-custom-rke2.png)
+
 ### Deploying to the K3s Cluster with Harvester Node Driver [Experimental]
 
 When spinning up a K3s cluster using the Harvester node driver, you can perform the following steps to deploy the harvester cloud provider:
 
 1. Generate and inject cloud config for `harvester-cloud-provider`
 
-The cloud provider needs a kubeconfig file to work, a limited scoped one can be generated using the [generate_addon.sh](https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh) script available in the [harvester/cloud-provider-harvester](https://github.com/harvester/cloud-provider-harvester) repo.
-
-:::note
-
-The script depends on `kubectl` and `jq` to operate the Harvester cluster
-
-The script needs access to the `Harvester Cluster` kubeconfig to work.
-
-The namespace needs to be the namespace in which the guest cluster will be created.
-
-:::
-
 ```
-./deploy/generate_addon.sh <serviceaccount name> <namespace>
+curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
 ```
 
 The output will look as follows:
 
 ```
-# ./deploy/generate_addon.sh harvester-cloud-provider default
+# curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s harvester-cloud-provider default
 Creating target directory to hold files in ./tmp/kube...done
 Creating a service account in default namespace: harvester-cloud-provider
 W1104 16:10:21.234417    4319 helpers.go:663] --dry-run is deprecated and can be replaced with --dry-run=client.
@@ -151,7 +162,7 @@ spec:
   bootstrap: true
   repo: https://charts.harvesterhci.io/
   chart: harvester-cloud-provider
-  version: 0.1.13
+  version: 0.2.2
   helmVersion: v3
 ```
 
@@ -183,6 +194,7 @@ spec:
 
 With these settings in place a K3s cluster should provision successfully while using the external cloud provider.
 
+
 ## Upgrade Cloud Provider
 
 ### Upgrade RKE2
@@ -206,13 +218,15 @@ After deploying the `Harvester Cloud provider`, you can use the Kubernetes `Load
   
 
 ### IPAM
-Harvester's built-in load balancer supports both `pool` and `dhcp` modes. You can select the mode in the Rancher UI. Harvester adds the annotation `cloudprovider.harvesterhci.io/ipam` to the service behind.
+Harvester's built-in load balancer supports both **DHCP** and **Pool** modes, and you can select the mode in the Rancher UI. Harvester adds the annotation `cloudprovider.harvesterhci.io/ipam` to the service. Additionally, Harvester cloud provider provides a special **Share IP** mode where a service will share its load balancer IP with other services.
 
-- pool: You should configure an IP address pool in Harvester's `Settings` in advance. The Harvester LoadBalancer controller will allocate an IP address from the IP address pool for the load balancer.
-  
-  ![](/img/v1.2/rancher/vip-pool.png) 
-  
-- dhcp:  A DHCP server is required. The Harvester LoadBalancer controller will request an IP address from the DHCP server.
+- **DCHP:** A DHCP server is required. The Harvester load balancer controller will request an IP address from the DHCP server.
+
+- **Pool:** You need an IP pool configured in the Harvester UI. The Harvester load balancer controller will allocate an IP for the load balancer service following [the IP pool selection policy](/networking/ippool.md/#selection-policy).
+
+- **Share IP:** When creating a new load balancer service, you can re-utilize an existing load balancer service IP. The new service is called a secondary service, while the presently chosen service is considered the primary service. To specify the primary service in the secondary service, you can add the annotation `cloudprovider.harvesterhci.io/primary-service: $primary-service-name`.  However, there are two known limitations
+  - Secondary services cannot share their IP with additional services.
+  - Services sharing the same IP address must not possess duplicated ports.
 
 :::note
 
@@ -221,16 +235,4 @@ It is not allowed to modify the IPAM mode. You need to create a new service if y
 :::
 
 ### Health Checks
-The Harvester load balancer supports TCP health checks. You can specify the parameters in the Rancher UI if you enable the `Health Check` option.
-
-  ![](/img/v1.2/rancher/health-check.png)
-
-Alternatively, you can specify the parameters by adding annotations to the service manually. The following annotations are supported:
-
-| Annotation Key | Value Type | Required | Description |
-|:---|:---|:---|:---|
-| `cloudprovider.harvesterhci.io/healthcheck-port` | string | true | Specifies the port. The prober will access the address composed of the backend server IP and the port.
-| `cloudprovider.harvesterhci.io/healthcheck-success-threshold` | string | false | Specifies the health check success threshold. The default value is 1. The backend server will start forwarding traffic if the number of times the prober continuously detects an address successfully reaches the threshold.
-| `cloudprovider.harvesterhci.io/healthcheck-failure-threshold` | string | false | Specifies the health check failure threshold. The default value is 3. The backend server will stop forwarding traffic if the number of health check failures reaches the threshold.
-| `cloudprovider.harvesterhci.io/healthcheck-periodseconds` | string | false |  Specifies the health check period. The default value is 5 seconds.
-| `cloudprovider.harvesterhci.io/healthcheck-timeoutseconds` | string | false | Specifies the timeout of every health check. The default value is 3 seconds.
+Starting with the Harvester cloud provider 0.2.2, The Harvester cloud provider doesn't provide additional parameters to support health checks because you can configure health checks in the Kubernetes service.
