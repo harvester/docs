@@ -431,6 +431,19 @@ install:
 
 为安装的系统启用日志管理和调试来运行安装。
 
+### `install.persistent_partition_size`
+
+#### 定义
+
+为`COS_PERSISTENT`分区配置大小，单位可以是`Gi`或`Mi`。这个分区用于储存如容器镜像和系统包等数据。默认以及最小值为`150Gi`。
+
+#### 示例
+
+```yaml
+install:
+  persistent_partition_size: 150Gi
+```
+
 ### `install.tty`
 
 #### 定义
