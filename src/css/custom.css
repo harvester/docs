@@ -164,3 +164,11 @@ a.btn.navbar__github::before {
 .navbar__link > svg {
   display: none !important;
 }
+
+/* Add shadows to docs images */ 
+.img_ev3q {
+  box-shadow: 10px 10px 25px rgb(100, 100, 100);
+  -moz-box-shadow: 10px 10px 25px rgb(100, 100, 100);
+  -webkit-box-shadow: 10px 10px 25px rgb(100, 100, 100);
+  -khtml-box-shadow: 10px 10px 25px rgb(100, 100, 100);
+}
