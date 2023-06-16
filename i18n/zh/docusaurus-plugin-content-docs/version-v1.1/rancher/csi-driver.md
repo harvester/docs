@@ -42,7 +42,7 @@ Harvester CSI Driver 提供了一个标准的 CSI 接口，供 Harvester 中所�
 
 ### 使用 Harvester K3s 主机驱动进行部署
 
-- [生成 addon 配置](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon.sh)并放入 K3s 虚拟机 `/etc/kubernetes/cloud-config`。
+- [生成 addon 配置](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon_csi.sh)并放入 K3s 虚拟机 `/etc/kubernetes/cloud-config`。
 
 ```
 # 依赖 kubectl 来操作 Harvester 集群

@@ -28,7 +28,7 @@ Harvester CSI Driver 提供了一个 CSI 接口，供 Harvester 中所创建的 
 
 - 选择外部云提供商的选项。
 
-- [生成 addon 配置](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon.sh)并将它添加到 RKE 配置 YAML 中：
+- [生成 addon 配置](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon_csi.sh)并将它添加到 RKE 配置 YAML 中：
 
 ```
 # 依赖 kubectl 来操作 Harvester 集群
@@ -43,7 +43,7 @@ Harvester CSI Driver 提供了一个 CSI 接口，供 Harvester 中所创建的 
 
 ### 使用 Harvester K3s 主机驱动进行部署
 
-- [生成 addon 配置](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon.sh)并放入 K3s 虚拟机 `/etc/kubernetes/cloud-config`。
+- [生成 addon 配置](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon_csi.sh)并放入 K3s 虚拟机 `/etc/kubernetes/cloud-config`。
 
 ```
 # 依赖 kubectl 来操作 Harvester 集群
