@@ -20,7 +20,7 @@ Only admin users are able to view the cluster dashboard metrics.
 
 Additionally, Grafana is provided by `rancher-monitoring`, so the default admin password is: prom-operator
 
-Reference: [values.yaml](https://github.com/rancher/charts/blob/dev-v2.7/charts/rancher-project-monitoring/1.1.0%2Bup0.2.0-rc1/values.yaml#L698)
+Reference: [values.yaml](https://github.com/rancher/charts/tree/dev-v2.7/charts/rancher-project-monitoring)
 :::
 
 
