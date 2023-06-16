@@ -297,7 +297,7 @@ os:
 :::note
 
 此示例为**基本的操作系统组件**设置 HTTP(S) 代理。
-如果需要为 Harvester 组件（如获取外部镜像和备份到 S3）配置 HTTP(S) 代理，请参见 [Settings/http-proxy](../settings/settings.md#http-代理)。
+如果需要为 Harvester 组件（如获取外部镜像和备份到 S3）配置 HTTP(S) 代理，请参见 [Settings/http-proxy](../settings/settings.md#http-proxy)。
 
 :::
 
@@ -332,7 +332,7 @@ install:
 - `method`：为该网络分配 IP 的方法。支持：
    - `static`：手动分配 IP 和 网关。
    - `dhcp`：向 DHCP 服务器请求一个 IP。
-   - `none`：不进行操作。该配置适用于接口不需要 IP 的情况，例如在 Harvester 中创建 [VLAN 网络](../networking/harvester-network.md#vlan) NIC 时。
+   - `none`：不进行操作。该配置适用于接口不需要 IP 的情况，例如在 Harvester 中创建 [VLAN 网络](../networking/harvester-network.md#vlan-网络) NIC 时。
 - `ip`：此网络的静态 IP。如果选择了 `static` 方法，则必须设置此字段。
 - `subnet_mask`：此网络的子网掩码。如果选择了 `static` 方法，则必须设置此字段。
 - `gateway`：此网络的网关。如果选择了 `static` 方法，则必须设置此字段。

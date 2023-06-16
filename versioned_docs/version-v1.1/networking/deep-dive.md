@@ -12,7 +12,7 @@ The network topology below reveals how we implement the Harvester network.
 
 ![](/img/v1.1/networking/topology.png)
 
-The diagram contains [the built-in cluster network mgmt](./clusternetwork.md/#built-in-cluster-network) and a [custom cluster network](./clusternetwork.md/#custom-cluster-network) called `oob`.
+The diagram contains [the built-in cluster network mgmt](./clusternetwork.md#built-in-cluster-network) and a [custom cluster network](./clusternetwork.md#custom-cluster-network) called `oob`.
 
 As shown above, the Harvester network primarily focuses on OSI model layer 2. We leverage Linux network devices and protocols to construct traffic paths for the communication between VM to VM, VM to host, and VM to external network devices.
 
