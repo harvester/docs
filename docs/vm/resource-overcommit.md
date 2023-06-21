@@ -34,7 +34,7 @@ Users can modify the global `overcommit-config` by following the steps below, an
 
 ## Configure overcommit for a single virtual machine
 
-If you need to configure individual virtual machines without involving global configuration, consider adjusting the ` spec.template.spec.domain.resources.<memory|cpu>` value on the target VirtualMachine resource individually. Note that by modifying these values, you are taking over control of virtual machine resource management from Harvester.
+If you need to configure individual virtual machines without involving global configuration, consider adjusting the `spec.template.spec.domain.resources.<memory|cpu>` value on the target VirtualMachine resource individually. Note that by modifying these values, you are taking over control of virtual machine resource management from Harvester.
 
 ## Reserve more memory for the system overhead
 
@@ -58,3 +58,13 @@ To address the issue, Harvester provides an annotation `harvesterhci.io/reserved
 ## Why my virtual machines are scheduled unevenly?
 
 The scheduling of virtual machines depends on the underlying behavior of the kube-scheduler. We have a dedicated article explaining the details. If you would like to learn more, check out:  [Harvester Knowledge Base: VM Scheduling](https://harvesterhci.io/kb/vm-scheduling/).
+
+## Insufficient resource quota
+
+When creating or starting multiple VMs simultaneoysly, the values configured in `overcommit-config` may cause the `ResourceQuota` to be less than the resources used for the batch of VMs. As a result, you will see the following error message:
+
+![insufficient-resource-quota-error](/img/v1.2/vm/insufficient-resource-quota-error.png)
+
+The annotation `harvesterhci.io/insufficient-resource-quota: xxxxx` has been added to the VirtualMachine custom resource to let you know the VM was shutdown due to insufficient resources.
+
+![insufficient-resource-quota-annotation](/img/v1.2/vm/insufficient-resource-quota-annotation.png)
