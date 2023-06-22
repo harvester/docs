@@ -8,7 +8,7 @@ keywords:
 Description: Take a snapshot for a volume from the Volume page.
 ---
 
-After creating a volume, you can create a volume snapshot and use a volume snapshot to restore a new volume. Volume snapshots allow you to copy or restore a volume's configuraiton without creating a completely new volume.
+A volume snapshot represents a snapshot of a volume on a storage system. After creating a volume, you can create a volume snapshot and restore a volume to the snapshot's state. With volume snapshots, you can easily copy or restore a volume's configuration.
 
 ## Create volume snapshots
 
@@ -23,11 +23,11 @@ You can create a volume snapshot from an existing volume by following these step
  ![create-volume-snapshot-2](/img/v1.2/volume/create-volume-snapshot-2.png)
 1. Select  **Create** to finish creating a new volume snapshot.
 
-1. You can view all VM snapshots and check the status of this operation from the **Backup & Snapshot > VM Snapshots** page. When the **ReadyToUse** status is set to **true**, the snapshot is complete.
+1. You can view all VM snapshots and check the status of this operation from the **Backup & Snapshot > VM Snapshots** page. When the **ReadyToUse** status becomes **true**, the snapshot is created successfully.
 
 :::note
 
-A recurring snapshot is currently not supported and is tracked via [harvester/harvester#572](https://github.com/harvester/harvester/issues/572)
+A recurring snapshot is currently not supported and is tracked via [harvester/harvester#572](https://github.com/harvester/harvester/issues/572).
 
 :::
 
@@ -47,9 +47,9 @@ You can restore a new volume from an existing volume snapshot by following these
 
 ### View the replication and health status in Longhorn
 
-1. You can view the replication and health status for the new volume from Longhorn dashboard. The Longhorn dashboard is available directly in the Harvester dashboard, but you must first enable developer tools & features. Go to the **Preference** page.
+1. You can view the replication and health status for the new volume from the Longhorn dashboard. The Longhorn dashboard is available directly in the Harvester dashboard, but you must first enable developer tools & features. Go to the **Preference** page.
 ![restore-volume-snapshot-5](/img/v1.2/volume/restore-volume-snapshot-5.png)
-1. Select the **Enable Developer Tools & Features**.
+1. Check the **Enable Developer Tools & Features** box.
 ![restore-volume-snapshot-6](/img/v1.2/volume/restore-volume-snapshot-6.png)
 1. Go to the **Support** page to access the embedded Longhorn UI.
 ![restore-volume-snapshot-6](/img/v1.2/volume/restore-volume-snapshot-7.png)
