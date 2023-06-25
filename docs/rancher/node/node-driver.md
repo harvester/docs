@@ -118,7 +118,10 @@ During the cluster installation, the Harvester node driver will automatically he
 
 :::note
 
-Label synchronization will only take effect during guest node initialization. To avoid node drifts to another region or zone, it is recommended to add the [node affinity rules](./rke2-cluster.md#add-node-affinity) during the cluster provisioning, so that the VMs can be scheduled to the same zone even after rebuilding.
+For Harvester CCM versions prior to v0.2.0, label synchronization will only occur during the initialization of guest nodes. To prevent nodes from drifting to different regions or zones, we recommend adding [node affinity rules](./rke2-cluster.md#add-node-affinity) during cluster provisioning. This will allow you to schedule VMs in the same zone even after rebuilding.
+
+With the introduction of Harvester cloud provider v0.2.0, topology labels on the Harvester node will automatically resynchronize when a VM corresponding to the guest node undergoes migration or changes.
+
 
 :::
 
