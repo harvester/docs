@@ -103,7 +103,7 @@ Changing the `Node Scheduling` settings can impact Harvester features, such as d
 2. `Machine Type`: The value `None` is set by default. It's recommended you don't change it. See the [KubeVirt Machine Type](https://kubevirt.io/user-guide/virtual_machines/virtual_hardware/#machine-type) documentation before you change this value.
 3. (Optional) `Hostname`: Set the VM hostname.
 4. (Optional) `Cloud Config`: Both `User Data` and `Network Data` values are set with default values. Currently, these configurations are not applied to Windows-based VMs.
-5. (Optional) `Enable TPM`, `Booting in EFI mode`, `Secure Boot`: Both the TPM device and UEFI firmware with SecureBoot are hard requirements for Windows 11.
+5. (Optional) `Enable TPM`, `Booting in EFI mode`, `Secure Boot`: Both the TPM 2.0 device and UEFI firmware with Secure Boot are hard requirements for Windows 11.
 
 :::note
 

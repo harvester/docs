@@ -163,9 +163,9 @@ _Available as of v1.2.0_
 
 [Trusted Platform Module (TPM)](https://en.wikipedia.org/wiki/Trusted_Platform_Module) is a cryptoprocessor that secures hardware using cryptographic keys.
 
-According to [Windows 11 Requirements](https://learn.microsoft.com/en-us/windows/whats-new/windows-11-requirements), the TPM device is a hard requirement of Windows 11.
+According to [Windows 11 Requirements](https://learn.microsoft.com/en-us/windows/whats-new/windows-11-requirements), the TPM 2.0 device is a hard requirement of Windows 11.
 
-In the Harvester UI, you can add an emulated TPM to a VM by checking the `Enable TPM` box in the **Advanced Options** tab.
+In the Harvester UI, you can add an emulated TPM 2.0 device to a VM by checking the `Enable TPM` box in the **Advanced Options** tab.
 
 :::note
 
