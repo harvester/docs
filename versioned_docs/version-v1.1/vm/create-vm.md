@@ -52,13 +52,25 @@ A volume's [StorageClass](../advanced/storageclass.md) can be specified when add
 
 ![create-vm](/img/v1.1/vm/create-vm-volumes.png)
 
-:::info Container Disk
+### Adding a container disk
 
-`Container disks` are ephemeral storage devices that can be assigned to any number of VMs. This makes them an ideal tool for users who want to replicate a large number of VM workloads or inject machine drivers that do not require persistent data.
+A container disk is an ephemeral storage volume that can be assigned to any number of VMs and provides the ability to store and distribute VM disks in the container image registry. A container disk is:
+- An ideal tool if you want to replicate a large number of VM workloads or inject machine drivers that do not require persistent data. Ephemeral volumes are designed for VMs that need more storage but don't care whether that data is stored persistently across VM restarts or only expect some read-only input data to be present in files, like configuration data or secret keys.
+- Not a good solution for any workload that requires persistent root disks across VM restarts.
 
-Note: Container disks are not a good solution for any workload that requires persistent root disks across VM restarts.
+A container disk is added when creating a VM by providing a Docker image. When creating a VM, follow these steps:
 
-:::
+1. Go to the **Volumes** tab.
+1. Select **Add Container**.
+  ![add-container-volume](/img/v1.1/vm/add-container-volume-1.png)
+1. Enter a **Name** for the container disk.
+1. Choose a disk **Type**.
+1. Add a **Docker Image**.
+    - Images must be placed into the `/disk` directory.
+    - Raw and qcow2 formats are supported, but qcow2 is recommended in order to reduce the container image's size. If you use an unsupported image format, the VM will get stuck in a `Running` state.
+    - A container disk also allows you to store disk images in any folder in the `/disk` directory by adding a [custom disk image path](https://kubevirt.io/user-guide/virtual_machines/disks_and_volumes/#custom-disk-image-path).
+1. Choose a **Bus** type.  
+  ![add-container-volume](/img/v1.1/vm/add-container-volume-2.png)
 
 ## Networks
 
