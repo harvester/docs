@@ -51,7 +51,7 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
 
 1. Edit `/oem/90_custom.yaml` and update the value under the yaml path `stages.initramfs[0].commands`. The `commands` array must contain a line to manipulate the `NETCONFIG_DNS_STATIC_SERVERS` config. Add the line if the line doesn't exist. 
 
-The following example adds a line to change the `NETCONFIG_DNS_STATIC_SERVERS` config:
+    The following example adds a line to change the `NETCONFIG_DNS_STATIC_SERVERS` config:
 
     ```
     stages:

@@ -22,11 +22,13 @@ Harvester nodes have the following hardware requirements and recommendations for
 | Network Switch   | Trunking of ports required for VLAN support                                                                                                                                                           |
 
 :::note
+
 A three-node cluster is required to realize the multi-node features of Harvester fully.
 - The first node always defaults to be a management node of the cluster.
 - When there are three or more nodes, the two other nodes added first are automatically promoted to management nodes to form a high availability (HA) cluster.
 - We recommend server-class hardware for the best results. Laptops and nested virtualization are not officially supported.
 - The `product_uuid` fetched from `/sys/class/dmi/id/product_uuid` in Linux must be unique in each node. Otherwise, features like VM live migration will be affected. For more information, refer to [#4025](https://github.com/harvester/harvester/issues/4025).
+
 :::
 
 ## Network requirements
