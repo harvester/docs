@@ -23,7 +23,7 @@ You can create a volume snapshot from an existing volume by following these step
  ![create-volume-snapshot-2](/img/v1.2/volume/create-volume-snapshot-2.png)
 1. Select  **Create** to finish creating a new volume snapshot.
 
-1. You can view all VM snapshots and check the status of this operation from the **Backup & Snapshot > VM Snapshots** page. When the **ReadyToUse** status becomes **true**, the snapshot is created successfully.
+1. You can check the status of this operation and view all volume snapshots from the **Backup & Snapshot > Volume Snapshots** page. When the **State** becomes **Active**, the volume snapshot is ready to use.
 
 :::note
 
@@ -35,7 +35,7 @@ A recurring snapshot is currently not supported and is tracked via [harvester/ha
 
 You can restore a new volume from an existing volume snapshot by following these steps:
 
-1. Go to the **Backup & Snapshot > Volume Snapshots** page or go to the **Volumes** page and select the **Snapshots** tab.
+1. Go to the **Backup & Snapshot > Volume Snapshots** page or select a **Volume** from the **Volumes** page and go to the **Snapshots** tab.
 1. Select **⋮ > Restore**.
 ![restore-volume-snapshot-1](/img/v1.2/volume/restore-volume-snapshot-1.png)
 ![restore-volume-snapshot-2](/img/v1.2/volume/restore-volume-snapshot-2.png)
