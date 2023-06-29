@@ -52,13 +52,25 @@ Description: 从"虚拟机"页面创建一个或多个虚拟机。
 
 ![create-vm](/img/v1.2/vm/create-vm-volumes.png)
 
-:::info Container Disk
+### 添加容器磁盘
 
-`Container disk` 是可以分配给任意数量 VM 的临时存储设备。因此，对于需要复制大量 VM 工作负载，或注入不需要持久数据的主机驱动的用户而言，Container disk 是非常好用的。
+容器磁盘是一种临时存储卷，可以分配给任意数量的虚拟机，并支持在容器镜像仓库中存储和分发虚拟机磁盘。容器磁盘：
+- 对于需要复制大量虚拟机工作负载，或注入不需要持久数据的机器驱动程序的用户来说，是一个理想的工具。临时卷专为需要更多存储空间但不关心数据是否在虚拟机重启后持久存储，或仅需要文件中存在一些只读输入数据（例如配置数据或密钥）的虚拟机而设计。
+- 对于需要在虚拟机重启时使用持久根磁盘的工作负载来说，不是一个好的解决方案。
 
-注意：如果你的工作负载需要跨 VM 重启的持久根磁盘，则不推荐使用 Container Disk。
+容器磁盘是在通过 Docker 镜像创建虚拟机时添加的。创建虚拟机时，请按以下步骤操作：
 
-:::
+1. 转到 **Volumes** 选项卡。
+1. 选择 **Add Container**。
+   ![add-container-volume](/img/v1.2/vm/add-container-volume-1.png)
+1. 输入容器磁盘的 **Name**。
+1. 选择磁盘 **Type**。
+1. 添加 **Docker Image**。
+   - 格式为 qcow2 或 raw 的磁盘镜像必须放置在 `/disk` 目录中。
+   - 支持 Raw 和 qcow2 格式，但建议使用 qcow2 来减小容器镜像的大小。如果你使用了不受支持的镜像格式，虚拟机将卡在 `Running` 状态。
+   - 容器磁盘还支持将磁盘镜像存储在 `/disk` 目录中。你可以在[此处](https://kubevirt.io/user-guide/virtual_machines/disks_and_volumes/#containerdisk-workflow-example)找到创建此类容器镜像的示例。
+1. 选择 **Bus** 类型。  
+   ![add-container-volume](/img/v1.2/vm/add-container-volume-2.png)
 
 ## 网络
 
@@ -157,6 +169,21 @@ QEMU GuestAgent 是在虚拟机实例上运行的 Daemon 进程，它将有关 V
 
 :::
 
+### TPM 设备
+
+_Available as of v1.2.0_
+
+[可信平台模块 (TPM)](https://en.wikipedia.org/wiki/Trusted_Platform_Module) 是一种使用加密密钥来保护硬件的加密处理器。
+
+根据 [Windows 11 要求](https://learn.microsoft.com/en-us/windows/whats-new/windows-11-requirements)，TPM 2.0 设备是 Windows 11 的硬性要求。
+
+在 Harvester UI 中，你可以通过选中 **Advanced Options** 选项卡中的 `Enable TPM` 来要将仿真 TPM 2.0 设备添加到 VM 中。
+
+:::note
+
+目前仅支持非持久性 vTPM，而且每次关闭虚拟机后其状态都会被清除。因此，请不要启用 [Bitlocker](https://learn.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview)。
+
+:::
 
 ## ISO 安装的一次性引导
 

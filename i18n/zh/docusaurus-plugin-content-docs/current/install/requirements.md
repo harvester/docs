@@ -1,33 +1,44 @@
 ---
 sidebar_position: 1
-sidebar_label: 要求
-title: "要求"
+sidebar_label: 硬件和网络要求
+title: "硬件和网络要求"
 keywords:
 - 安装要求
 Description: Harvester 安装要求概述
 ---
-
-Harvester 是裸机服务器上的 HCI 解决方案，以下是 Harvester 安装的最低要求。
+Harvester 是运行在裸机服务器上的 HCI 解决方案，要正常运行和安装 Harvester，节点硬件和网络需要满足最低要求。
 
 ## 硬件要求
-硬件需要满足以下要求，才可以启动和运行 Harvester：
 
-| 类型 | 要求 |
+要进行安装和测试，Harvester 节点硬件的要求和推荐设置如下：
+
+| 类型 | 要求和推荐 |
 |:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| CPU | 仅支持 x86_64。需要硬件辅助虚拟化。8 核处理器（至少）用于测试，建议在生产环境中使用 16 核处理器。 |
-| 内存 | 32 GB（至少）。建议使用 64 GB 或以上的内存。 |
-| 磁盘容量 | 200 GB（至少）用于测试，建议在生产中使用 500 GB 或以上的磁盘。 |
+| CPU | 仅支持 x86_64。需要硬件辅助虚拟化。8 核（至少）用于测试；生产中推荐使用 16 核或以上 |
+| 内存 | 32 GB（至少）用于测试；生产中推荐使用 64 GB 或以上 |
+| 磁盘容量 | 200 GB（至少）用于测试；生产中推荐使用 500 GB 或以上 |
 | 磁盘性能 | 每个磁盘 5,000+ 随机 IOPS (SSD/NVMe)。管理节点（前 3 个节点）必须[对 etcd 而言足够快](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd)。 |
-| 网卡 | 1 Gbps 以太网（至少）用于测试，建议在生产中使用 10 Gbps 或以上的以太网。 |
+| 网卡 | 1 Gbps 以太网（至少）用于测试；生产中建议使用 10 Gbps 或以上的以太网 |
 | 网络交换机 | VLAN 支持所需的端口中继。 |
 
-:::info
-建议使用服务器级硬件以获得最佳效果。笔记本电脑和嵌套虚拟化不受官方支持。
+:::note
+
+要充分发挥 Harvester 的多节点特性，你需要一个三节点集群。
+- 第一个节点默认为集群的管理节点。
+- 当节点数量大于等于三个时，先添加的另外两个节点会自动升级为管理节点，从而形成一个高可用 (HA) 集群。
+- 建议使用服务器级硬件以获得最佳效果。笔记本电脑和嵌套虚拟化不受官方支持。
+- Linux 中从 `/sys/class/dmi/id/product_uuid` 获取的 `product_uuid` 必须在每个节点中是唯一的。否则，虚拟机热迁移等功能将受到影响。有关详细信息，请参阅 [#4025](https://github.com/harvester/harvester/issues/4025)。
+
 :::
 
-## 网络
+## 网络要求
 
-### Harvester 主机入站规则
+Harvester 节点具有以下网络要求。
+
+### Harvester 节点的入站规则
+
+Harvester 节点需要以下端口连接或入站规则。所有出站流量通常都是允许的。
+
 
 | 协议 | 端口 | 源 | 描述 |
 |:----------|:---------------------------|:-----------------------------------------|:----------------------------------------|
@@ -61,18 +72,16 @@ Harvester 是裸机服务器上的 HCI 解决方案，以下是 Harvester 安装
 | UDP | 68 | Harvester 管理和计算节点 | Wicked |
 | TCP | 3260 | Harvester 管理和计算节点 | iscsid |
 
-所有出站流量通常都是允许的。
+### 将 Harvester 与 Rancher 集成的入站规则
 
-### 将 Harvester 与 Rancher 集成
+如果你想[将 Harvester 与 Rancher 集成](../rancher/rancher-integration.md)，你需要确保所有 Harvester 节点都可以连接到 Rancher 负载均衡器的 TCP 端口 **443**。
 
-如果你想[将 Harvester 与 Rancher 集成](../rancher/rancher-integration.md)，你需要确保所有 Harvester 节点都可以连接到 Rancher 负载均衡器的 TCP 端口 `443`。
+使用 Rancher 将 Kubernetes 集群虚拟机配置到 Harvester 时，你需要能够连接到 Rancher 负载均衡器的 TCP 端口 **443**，否则 Rancher 将无法管理集群。有关更多信息，请参阅 [Rancher 架构](https://rancher.com/docs/rancher/v2.6/en/overview/architecture/)。
 
-从 Rancher 配置到 Harvester 的 Kubernetes 集群的虚拟机也需要能够连接到 Rancher 负载均衡器的 TCP 端口 `443`，否则 Rancher 将无法管理集群。如需更多信息，请参阅 [Rancher 架构](https://rancher.com/docs/rancher/v2.6/en/overview/architecture/)。
+### K3s 或 RKE/RKE2 集群的入站规则
 
-#### Guest 集群
 对于部署在 Harvester 虚拟机中的 Guest 集群的端口要求，请参阅以下链接：
-
-- K3s: [https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
-- RKE: [https://rancher.com/docs/rke/latest/en/os/#ports](https://rancher.com/docs/rke/latest/en/os/#ports)
-- RKE2: [https://docs.rke2.io/install/requirements#networking](https://docs.rke2.io/install/requirements#networking)
+- [K3s 网络](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
+- [RKE 端口](https://rancher.com/docs/rke/latest/en/os/#ports)
+- [RKE2 网络](https://docs.rke2.io/install/requirements#networking)
 
