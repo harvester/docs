@@ -17,3 +17,11 @@ v1.1.0 currently ships with two Addons:
 * [vm-import-controller](./vmimport.md)
 
 ![](/img/v1.2/addons/DefaultAddons.png)
+
+_Available as of v1.2.0_
+
+v1.2.0 ships with two more Addons:
+* [rancher-monitoring](../monitoring/monitoring.md)
+* [rancher-logging](../logging/logging.md)
+
+![](/img/v1.2/addons/AddonsV120.png)
