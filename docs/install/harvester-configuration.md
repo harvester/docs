@@ -443,6 +443,19 @@ Do not partition and format, assume layout exists already.
 
 Run the installation with additional logging and debugging enabled for the installed system.
 
+### `install.persistent_partition_size`
+
+#### Definition
+
+Configure the size of partition `COS_PERSISTENT` in `Gi` or `Mi`. This partition is used to store data like system packages and container images. The default and minimum value is `150Gi`.
+
+#### Example
+
+```yaml
+install:
+  persistent_partition_size: 150Gi
+```
+
 ### `install.tty`
 
 #### Definition
