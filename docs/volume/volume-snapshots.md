@@ -44,12 +44,3 @@ You can restore a new volume from an existing volume snapshot by following these
 1. If the source volume is not an image volume, you can select a different **StorageClass**. You can not change the **StorageClass** if the source volume is an image volume.
 ![restore-volume-snapshot-4](/img/v1.2/volume/restore-volume-snapshot-4.png)
 1. Select **Create** to finish restoring a new volume.
-
-### View the replication and health status in Longhorn
-
-1. You can view the replication and health status for the new volume from the Longhorn dashboard. The Longhorn dashboard is available directly in the Harvester dashboard, but you must first enable developer tools & features. Go to the **Preference** page.
-![restore-volume-snapshot-5](/img/v1.2/volume/restore-volume-snapshot-5.png)
-1. Check the **Enable Developer Tools & Features** box.
-![restore-volume-snapshot-6](/img/v1.2/volume/restore-volume-snapshot-6.png)
-1. Go to the **Support** page to access the embedded Longhorn UI.
-![restore-volume-snapshot-6](/img/v1.2/volume/restore-volume-snapshot-7.png)
