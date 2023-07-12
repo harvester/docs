@@ -8,6 +8,10 @@ keywords:
 Description: Take a snapshot for a volume from the Volume page.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1versioned_/version-v1.1/volume/volume-snapshots"/>
+</head>
+
 ## Create Volume Snapshots
 
 :::note

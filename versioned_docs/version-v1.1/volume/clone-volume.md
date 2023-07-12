@@ -7,6 +7,10 @@ keywords:
 Description: Clone volume from the Volume page.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1versioned_/version-v1.1/volume/clone-volume"/>
+</head>
+
 After creating a volume, you can clone the volume by following the steps below:
 
 1. Click the `⋮` button and select the `Clone` option.

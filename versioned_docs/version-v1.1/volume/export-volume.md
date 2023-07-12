@@ -7,6 +7,10 @@ keywords:
 Description: Export volume to image from the Volume page.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1versioned_/version-v1.1/volume/export-volume"/>
+</head>
+
 You can select and export an existing volume to an image by following the steps below:
 
 1. Click the `⋮` button and select the `Export Image` option.

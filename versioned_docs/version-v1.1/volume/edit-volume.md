@@ -7,6 +7,10 @@ keywords:
 Description: Edit volume from the Volume page.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1versioned_/version-v1.1/volume/edit-volume"/>
+</head>
+
 After creating a volume, you can edit your volume by clicking the `⋮` button and selecting the `Edit Config` option.
 
 ## Expand a Volume
