@@ -9,6 +9,10 @@ keywords:
 Description: Adding hot-plug volumes to a running VM.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1versioned_/version-v1.0/vm/hotplug-volume"/>
+</head>
+
 Harvester supports adding hot-plug volumes to a running VM.
 
 ## Adding Hot-Plug Volumes to a Running VM

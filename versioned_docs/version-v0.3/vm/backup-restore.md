@@ -11,6 +11,10 @@ keywords:
 Description: VM backups are created from the Virtual Machines page. The VM backup volumes will be stored in the Backup Target(an NFS or S3 server) and they can be used to either restore a new VM or replace an existing VM.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1versioned_/version-v0.3/vm/backup-restore"/>
+</head>
+
 _Available as of v0.3.0_
 
 VM backups are created from the **Virtual Machines** page. The VM backup volumes will be stored in the **Backup Target** (an NFS or S3 server), and they can be used to either restore a new VM or replace an existing VM.
