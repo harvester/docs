@@ -15,7 +15,7 @@ title: "安装"
 
 ## 满足硬件要求
 
-- 检查你的硬件是否满足完成安装的[最低要求](../index.md#硬件要求)。
+- 检查你的硬件是否满足完成安装的[最低要求](../install/requirements.md#硬件要求)。
 
 ## 收到提示信息：`"Loading images. This may take a few minutes..."`
 

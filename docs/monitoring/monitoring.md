@@ -6,6 +6,18 @@ title: "Monitoring"
 
 _Available as of v0.3.0_
 
+The monitoring feature is enabled by default.
+
+_Available as of v1.2.0_
+
+The monitoring feature is now implemented with an addon and is disabled by default in new installations.
+
+Users can enable/disable `rancher-monitoring` [addon](../advanced/addons.md) from the Harvester WebUI after installation.
+
+Users can also enable/disable the `rancher-monitoring` addon in their Harvester installation by customizing the [harveter-configuration](../install/harvester-configuration.md#installaddons) file.
+
+For Harvester clusters upgraded from v1.1.*, the monitoring feature is converted to an addon automatically and kept enabled as before.
+
 ## Dashboard Metrics
 Harvester has provided a built-in monitoring integration using [Prometheus](https://prometheus.io/). Monitoring is automatically enabled during the Harvester installations.
 

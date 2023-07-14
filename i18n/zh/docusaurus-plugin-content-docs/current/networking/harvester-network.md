@@ -1,13 +1,13 @@
 ---
 sidebar_position: 2
-sidebar_label: 网络
-title: "网络"
+sidebar_label: 虚拟机网络
+title: "虚拟机网络"
 keywords:
 - Harvester
 - 网络
 ---
 
-Harvester 为虚拟机 (VM) 提供了三种类型的虚拟网络，包括：
+Harvester 为虚拟机提供了三种类型的网络，包括：
 
 - 管理网络
 - VLAN 网络
@@ -69,3 +69,9 @@ Untagged 网络的使用类似于 [VLAN 网络](./harvester-network.md#如何使
 要创建新的 Untagged 网络，请转到 **Networks > Networks** 页面并单击 **Create** 按钮。你需要指定名称，选择类型 `Untagged Network` 并选择集群网络。
 
 ![](/img/v1.2/networking/create-untagged-network.png)
+
+:::note
+
+Harvester v1.1.2 开始，Harvester 支持更新和删除 VM 网络。在更新或删除 VM 网络之前，请停止所有受影响的 VM。
+
+:::
