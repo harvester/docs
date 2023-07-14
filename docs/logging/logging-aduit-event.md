@@ -9,6 +9,10 @@ keywords:
 - Event
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/logging/logging-aduit-event"/>
+</head>
+
 _Available as of v1.1.0_
 
 It is important to know what is happening/has happened in the `Harvester Cluster`.
