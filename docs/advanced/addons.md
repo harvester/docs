@@ -22,6 +22,6 @@ _Available as of v1.2.0_
 
 v1.2.0 ships with two more Addons:
 * [rancher-monitoring](../monitoring/monitoring.md)
-* [rancher-logging](../logging/logging.md)
+* [rancher-logging](../logging/logging-audit-event.md)
 
 ![](/img/v1.2/addons/AddonsV120.png)
