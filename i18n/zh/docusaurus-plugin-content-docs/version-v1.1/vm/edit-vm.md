@@ -49,6 +49,6 @@ Description: 在 Harvester VM 页面编辑虚拟机。
 
 ### 访问凭证
 
-如果你的 Guest 操作系统安装了 QUEMU GuestAgent，访问凭证将允许你在运行时动态注入基本认证或 SSH 密钥。
+如果你的 Guest 操作系统安装了 QEMU GuestAgent，访问凭证将允许你在运行时动态注入基本认证或 SSH 密钥。
 
 有关更多详细信息，请查看参阅[通过 QEMU Guest Agent 进行动态 SSH 密钥注入](./access-to-the-vm.md#通过-qemu-guest-agent-进行动态-ssh-密钥注入)。
