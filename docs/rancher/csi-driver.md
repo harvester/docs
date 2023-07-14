@@ -64,11 +64,11 @@ Perform the following steps to deploy the Harvester CSI Driver manually:
 
     You can generate the `kubeconfig` file using the [generate_addon_csi.sh](https://raw.githubusercontent.com/harvester/harvester-csi-driver/master/deploy/generate_addon_csi.sh) script. It is available on the [harvester/harvester-csi-driver](https://github.com/harvester/harvester-csi-driver) repo. You can follow the steps below to get the `cloud-config` and `cloud-init` data:
     
-The `<serviceaccount name>` usually corresponds to your guest cluster name (the value of "Cluster Name" in the figure below), and `<namespace>` should match the namespace (the value of "Namespace") of the guest cluster.
+    The `<serviceaccount name>` usually corresponds to your guest cluster name (the value of "Cluster Name" in the figure below), and `<namespace>` should match the namespace (the value of "Namespace") of the guest cluster.
 
-   ```
-   # ./generate_addon_csi.sh <serviceaccount name> <namespace> RKE2
-   ```
+    ```
+    # ./generate_addon_csi.sh <serviceaccount name> <namespace> RKE2
+    ```
 
     ```
     ########## cloud-config ############
@@ -104,24 +104,24 @@ The `<serviceaccount name>` usually corresponds to your guest cluster name (the 
 
 2. Set up cloud-provider-config.
 
-  The cloud-provider-config should be created after you apply the above cloud-init user data.
+    The cloud-provider-config should be created after you apply the above cloud-init user data.
 
-  You can check again on the path `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`.
+    You can check again on the path `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`.
 
-:::note
+    :::note
 
-If you want to change the cloud-provider-config path, you should update the cloud-init user data.
+    If you want to change the cloud-provider-config path, you should update the cloud-init user data.
 
-:::
+    :::
 
 3. Install Harvester CSI Driver.
 
     Install the `Harvester CSI Driver` chart from the Rancher marketplace. (Note: by default, you do not need to change the `cloud-config` path).
-  ![](/img/v1.2/rancher/install_csi_rancher_marketplace.png)
+    ![](/img/v1.2/rancher/install_csi_rancher_marketplace.png)
 
-  ![](/img/v1.2/rancher/donot_change_cloud_config_path.png)
+    ![](/img/v1.2/rancher/donot_change_cloud_config_path.png)
 
-By following the above steps, you should be able to see those CSI driver pods are up and running, and you can verify it by provisioning a new PVC using the default storageClass `harvester.`.
+By following the above steps, you should be able to see those CSI driver pods are up and running, and you can verify it by provisioning a new PVC using the default storageClass `harvester`.
 
 ### Deploying with Harvester K3s Node Driver
 
@@ -154,79 +154,83 @@ Please add the following additional perquisites to your Harvester cluster. The H
 Perform the following steps to setup **RBAC** to enable seeing error messages.
 
 1. Create a new `clusterrole` named `harvesterhci.io:csi-driver` with the following manifest.
-```
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  labels:
-    app.kubernetes.io/component: apiserver
-    app.kubernetes.io/name: harvester
-    app.kubernetes.io/part-of: harvester
-  name: harvesterhci.io:csi-driver
-rules:
-- apiGroups:
-  - storage.k8s.io
-  resources:
-  - storageclasses
-  verbs:
-  - get
-  - list
-  - watch
-```
+
+    ```
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRole
+    metadata:
+      labels:
+        app.kubernetes.io/component: apiserver
+        app.kubernetes.io/name: harvester
+        app.kubernetes.io/part-of: harvester
+      name: harvesterhci.io:csi-driver
+    rules:
+    - apiGroups:
+      - storage.k8s.io
+      resources:
+      - storageclasses
+      verbs:
+      - get
+      - list
+      - watch
+    ```
 
 2. Then create the `clusterrolebinding` to associate with  the new `clusterrole` with the following manifest.
-```
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: <namespace>-<serviceaccount name>
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: harvesterhci.io:csi-driver
-subjects:
-- kind: ServiceAccount
-  name: <serviceaccount name>
-  namespace: <namespace>
-```
+
+    ```
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: <namespace>-<serviceaccount name>
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: harvesterhci.io:csi-driver
+    subjects:
+    - kind: ServiceAccount
+      name: <serviceaccount name>
+      namespace: <namespace>
+    ```
 
 Make sure the `serviceaccount name` and `namespace` are the same as your cloud provider. Perform the following steps to see the `serviceaccount name` and `namespace` for your cloud provider.
 
 1. Find the `rolebinding` for your cloud provider .
 
-```
-# kubectl get rolebinding -A |grep harvesterhci.io:cloudprovider
-default                                 default-rke2-guest-01                                ClusterRole/harvesterhci.io:cloudprovider             7d1h
-```
+    ```
+    # kubectl get rolebinding -A |grep harvesterhci.io:cloudprovider
+    default                                 default-rke2-guest-01                                ClusterRole/harvesterhci.io:cloudprovider             7d1h
+    ```
 
 2. Get the `subjects` info on this `rolebinding`.
-```
-kubectl get rolebinding default-rke2-guest-01 -n default -o yaml |yq -e '.subjects'
-```
+
+    ```
+    kubectl get rolebinding default-rke2-guest-01 -n default -o yaml |yq -e '.subjects'
+    ```
 
 3. Find the `ServiceAccount` info as follows:
-```
-- kind: ServiceAccount
-  name: rke2-guest-01
-  namespace: default
-```
+
+    ```
+    - kind: ServiceAccount
+      name: rke2-guest-01
+      namespace: default
+    ```
 
 ### Deploying
 
 1. Create a new StorageClass that you would like to use in your guest k8s cluster. You can refer to the [StorageClasses](https://docs.harvesterhci.io/dev/advanced/storageclass) for more details.
 
-  As show in the following figure, create a new StorageClass named **replica-2**.
+    As show in the following figure, create a new StorageClass named **replica-2**.
 
-  ![](/img/v1.2/rancher/sc-replica-2.png)
+    ![](/img/v1.2/rancher/sc-replica-2.png)
 
-  For example, create a new StorageClass on the downstream cluster as follows associated with the StorageClass created on the Harvester Cluster named **replica-2**.
+    For example, create a new StorageClass on the downstream cluster as follows associated with the StorageClass created on the Harvester Cluster named **replica-2**.
 
-  ![](/img/v1.2/rancher/downstream-cluster-sc-creation.png)
+    ![](/img/v1.2/rancher/downstream-cluster-sc-creation.png)
 
-  :::note
+    :::note
 
-  When choosing a **Provisioner**, select **Harvester (CSI)**. The parameter **Host StorageClass** should be the StorageClass created on the Harvester Cluster.
+    When choosing a **Provisioner**, select **Harvester (CSI)**. The parameter **Host StorageClass** should be the StorageClass created on the Harvester Cluster.
 
-  :::
+    :::
   
 1. You can now create a PVC based on this new **StorageClass**, which uses the **Host StorageClass** to provision volumes on the bare-metal cluster.

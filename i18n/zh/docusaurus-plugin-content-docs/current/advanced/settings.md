@@ -152,7 +152,7 @@ https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhr
 :::note
 
 Harvester 在用户配置的 `no-proxy` 后附加必要的地址，来确保内部流量能正常工作。
-例如：`localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,longhorn-system,cattle-system,cattle-system.svc,.svc,.cluster.local`
+例如：`localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,longhorn-system,cattle-system,cattle-system.svc,harvester-system,.svc,.cluster.local`。v1.1.2 开始将 `harvester-system` 添加到列表。
 
 :::
 
