@@ -4,6 +4,10 @@ sidebar_label: Troubleshooting
 title: "Troubleshooting"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/upgrade/troubleshooting"/>
+</head>
+
 ## Overview
 
 Here are some tips to troubleshoot a failed upgrade:
