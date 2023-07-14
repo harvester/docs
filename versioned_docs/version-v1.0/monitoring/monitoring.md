@@ -4,6 +4,10 @@ sidebar_label: Monitoring
 title: "Monitoring"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/monitoring/monitoring"/>
+</head>
+
 _Available as of v0.3.0_
 
 ## Dashboard Metrics
