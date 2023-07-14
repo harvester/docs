@@ -150,7 +150,7 @@ The replica data would be rebuilt to another disk automatically to keep the high
 5. Scroll to the disk you want to remove.
 - Set `Scheduling` to `Disable`.
 - Set `Eviction Requested` to `True`.
-Select **Save**. Do not select the delete icon.
+- Select **Save**. Do not select the delete icon.
 
 ![Evict disk](/img/v1.1/host/remove-disks-longhorn-nodes-evict-disk.png)
 

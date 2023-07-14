@@ -34,7 +34,7 @@ Note we are still working towards zero-downtime upgrade, due to some known issue
     - Back up your VMs if needed.
 - Do not operate the cluster during an upgrade. For example, creating new VMs, uploading new images, etc.
 - Make sure your hardware meets the **preferred** [hardware requirements](../install/requirements.md#hardware-requirements). This is due to there will be intermediate resources consumed by an upgrade.
-- Make sure each node has at least 25 GB of free space (`df -h /usr/local/`).
+- Make sure each node has at least 30 GiB of free system partition space (`df -h /usr/local/`). If any node in the cluster has less than 30 GiB of free system partition space, the upgrade will be denied. Check [free system partition space requirement](#free-system-partition-space-requirement) for more information.
 
 :::
 
@@ -101,7 +101,7 @@ Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section fir
           name: v1.0.2
           namespace: harvester-system
         spec:
-          isoChecksum: <SHA-512 checksum of the ISO> 
+          isoChecksum: <SHA-512 checksum of the ISO>
           isoURL: http://10.10.0.1/harvester.iso  # change to local ISO URL
           releaseDate: '20220512'
         ```
@@ -117,3 +117,36 @@ Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section fir
     ```
 
 - An upgrade button should show up on the Harvester GUI Dashboard page.
+
+## Free system partition space requirement
+
+_Available as of v1.2.0_
+
+The minimum free system partition space requirement in Harvester v1.2.0 is 30 GiB, which will be revised in each release.
+
+Harvester will check the amount of free system partition space on each node when you select **Upgrade**. If any node does not meet the requirement, the upgrade will be denied as follows
+
+![](/img/v1.2/upgrade/upgrade_free_space_check.png)
+
+If some nodes do not have enough free system partition space, but you still want to try upgrading, you can customize the upgrade by updating the `harvesterhci.io/minFreeDiskSpaceGB` annotation of `Version` object.
+
+```
+apiVersion: harvesterhci.io/v1beta1
+kind: Version
+metadata:
+  annotations:
+    harvesterhci.io/minFreeDiskSpaceGB: "30" # the value is pre-defined and may be customized
+  name: 1.2.0
+  namespace: harvester-system
+spec:
+  isoChecksum: <SHA-512 checksum of the ISO>
+  isoURL: http://192.168.0.181:8000/harvester-master-amd64.iso
+  minUpgradableVersion: 1.1.2
+  releaseDate: "20230609"
+```
+
+:::caution
+
+Setting a smaller value than the pre-defined value may cause the upgrade to fail and is not recommended in a production environment.
+
+:::

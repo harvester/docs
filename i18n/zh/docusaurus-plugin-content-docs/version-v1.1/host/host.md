@@ -119,6 +119,55 @@ Admin 用户可以点击 **Enable Maintenance Mode** 来自动驱逐节点中所
 
 :::
 
+### 移除磁盘
+
+移除磁盘前必须先清除磁盘上的 Longhorn 副本。
+
+:::note
+
+副本数据会自动重建到另一个磁盘来保持高可用性。
+
+:::
+
+#### 确定要移除的磁盘（Harvester 仪表板）
+1. 前往 **Hosts** 页面。
+2. 在包含磁盘的节点上，选择节点名称并转到 **Storage** 选项卡。
+3. 找到要移除的磁盘。假设要移除的是 `/dev/sdb`，磁盘的挂载点是 `/var/lib/harvester/extra-disks/1b805b97eb5aa724e6be30cbdb373d04`。
+
+![Find disk to remove](/img/v1.1/host/remove-disks-harvester-find-disk.png)
+
+#### 驱逐副本（Longhorn 仪表板）
+1. 按照[此文档](../troubleshooting/harvester.md#访问嵌入式-rancher-和-longhorn-仪表板)启用嵌入式 Longhorn 仪表板。
+2. 访问 Longhorn 仪表板并转到 **Node** 页面。
+3. 展开包含磁盘的节点。确认挂载点 `/var/lib/harvester/extra-disks/1b805b97eb5aa724e6be30cbdb373d04` 在磁盘列表中。
+
+![Check the removing disk](/img/v1.1/host/remove-disks-longhorn-nodes.png)
+
+4. 选择 **Edit node and disks**。
+
+![Edit node and disks](/img/v1.1/host/remove-disks-longhorn-nodes-edit.png)
+
+5. 滚动到要移除的磁盘。
+- 将 `Scheduling` 设置为 `Disable`。
+- 将 `Eviction Requested` 设置为 `True`。
+- 选择 **Save**。不要选择删除图标。
+
+![Evict disk](/img/v1.1/host/remove-disks-longhorn-nodes-evict-disk.png)
+
+6. 磁盘将被禁用。等待磁盘副本数变为 `0` 后再继续移除磁盘。
+
+![Wait replicas](/img/v1.1/host/remove-disks-longhorn-wait-replicas.png)
+
+#### 移除磁盘（Harvester 仪表板）
+1. 前往 **Hosts** 页面。
+2. 在包含磁盘的节点上，选择 **⋮ > Edit Config**。
+3. 转到 **Storage** 选项卡并选择 **x** 来移除磁盘。
+
+![Remove disk](/img/v1.1/host/remove-disks-harvester-remove.png)
+
+4. 选择 **Save** 以移除磁盘。
+
+
 ## Ksmtuned 模式
 
 _从 v1.1.0 起可用_

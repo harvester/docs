@@ -18,7 +18,7 @@ Harvester 是裸机服务器上的 HCI 解决方案，以下是 Harvester 安装
 | 内存 | 32 GB（至少）。建议使用 64 GB 或以上的内存。 |
 | 磁盘容量 | 140 GB（至少）用于测试，建议在生产中使用 500 GB 或以上的磁盘。 |
 | 磁盘性能 | 每个磁盘 5,000+ 随机 IOPS (SSD/NVMe)。管理节点（前 3 个节点）必须[对 etcd 而言足够快](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd)。 |
-| 网卡 | 1 Gbps 以太网（至少）用于测试，建议在生产中使用 10 Gbps 或以上的以太网。 |
+| 网卡 | 1 Gbps 以太网（至少）用于测试；生产中建议使用 10 Gbps 或以上的以太网 |
 | 网络交换机 | VLAN 支持所需的端口中继。 |
 
 建议使用服务器级硬件以获得最佳效果。笔记本电脑和嵌套虚拟化不受官方支持。

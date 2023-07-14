@@ -103,6 +103,13 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 2. `Machine Type`：默认设置为 `None`。建议你不要修改该值。在更改此值之前，请参见 [KubeVirt 机器类型](https://kubevirt.io/user-guide/virtual_machines/virtual_hardware/#machine-type)文档。
 3. （可选）`Hostname`：设置虚拟机的主机名。
 4. （可选）`Cloud Config`：`User Data` 和 `Network Data` 均使用为默认值。目前，这些配置不适用于基于 Windows 的虚拟机。
+5. （可选）`Enable TPM`、`Booting in EFI mode`、`Secure Boot`：具有 Secure Boot 功能的 TPM 2.0 设备和 UEFI 固件都是 Windows 11 的硬性要求。
+
+:::note
+
+目前仅支持非持久性 vTPM，而且每次关闭虚拟机后其状态都会被清除。因此，请不要启用 [Bitlocker](https://learn.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview)。
+
+:::
 
 ![create-windows-vm-advanced](/img/v1.2/vm/create-windows-vm-advanced.png)
 
