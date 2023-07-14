@@ -4,6 +4,10 @@ sidebar_label: Harvester Terraform Provider
 title: "Harvester Terraform Provider"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/terraform/terraform-provider"/>
+</head>
+
 ## Support Matrix
 
 | Harvester Version                                                    | Supported Terraform Provider Harvester                                                  | Supported Terraformer Harvester                                                            |
