@@ -151,7 +151,7 @@ const config = {
             from: '/latest/install/pxe-boot-install'
           },
           {
-            to: '/logging/logging-audit-event',
+            to: '/dev/logging/logging-audit-event',
             from: '/logging/logging'
           },
         ],
