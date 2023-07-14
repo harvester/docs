@@ -69,6 +69,11 @@ install:
   vip_hw_addr: 52:54:00:ec:0e:0b
   vip_mode: dhcp
   force_mbr: false
+  addons:
+    rancher-monitoring:
+      enabled: true
+    rancher-logging:
+      enabled: false
 system_settings:
   auto-disk-provision-paths: ""
 ```
@@ -438,6 +443,19 @@ Do not partition and format, assume layout exists already.
 
 Run the installation with additional logging and debugging enabled for the installed system.
 
+### `install.persistent_partition_size`
+
+#### Definition
+
+Configure the size of partition `COS_PERSISTENT` in `Gi` or `Mi`. This partition is used to store data like system packages and container images. The default and minimum value is `150Gi`.
+
+#### Example
+
+```yaml
+install:
+  persistent_partition_size: 150Gi
+```
+
 ### `install.tty`
 
 #### Definition
@@ -523,6 +541,34 @@ Default: Same storage device as the one set for [`install.device`](#installdevic
 install:
   data_disk: /dev/sdb
 ```
+
+### `install.addons`
+
+_Available as of v1.2.0_
+
+#### Definition
+
+Sets the default enabled/disabled status of Harvester addons.
+
+Default: The addons are disabled.
+
+#### Example
+
+```yaml
+install:
+  addons:
+    rancher-monitoring:
+      enabled: true
+    rancher-logging:
+      enabled: false
+```
+
+Harvester v1.2.0 ships with four addons:
+
+ - harvester-vm-import-controller
+ - harvester-pcidevices-controller
+ - rancher-monitoring
+ - rancher-logging
 
 ### `system_settings`
 
