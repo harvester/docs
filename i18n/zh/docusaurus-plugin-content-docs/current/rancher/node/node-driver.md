@@ -31,6 +31,61 @@ Rancher `2.6.3+` 默认启用 Harvester 主机驱动。你可以前往 `Cluster 
 ### 支持矩阵
 参见 [Rancher 下游集群支持矩阵](https://www.suse.com/suse-rancher/support-matrix/all-supported-versions/rancher-v2-6-9)。
 
+## 已知问题
+
+| 摘要 | 状态 | 更新时间 |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|--------------|
+| [由 Harvester CSI Driver 在主机 Harvester 集群中创建的卷将在编辑/删除 Guest 集群后被删除](https://github.com/harvester/harvester/issues/3272) | 已解决 | 2023-05-08 |
+
+### 由 Harvester CSI Driver 在主机 Harvester 集群中创建的卷将在编辑/删除 Guest 集群后被删除
+| 状态 | 更新时间 |
+|-----------|--------------|
+| 已解决 (Rancher >=v2.7.2) | 2023-05-08 |
+
+**解决方法**：在 Rancher UI 中临时将 Harvester 主机驱动版本更改为 [v0.6.3](https://github.com/harvester/docker-machine-driver-harvester/releases/tag/v0.6.3)。
+1. 转到 Rancher UI 并单击 `Cluster Management` > `Drivers` > `Node Drivers`。在 `Node Drivers` 列表中，找到 ` Harvester` 然后点击 `⋮` > `View in API`。
+2. 点击 `Edit`。
+3. 取消选中 `builtin` 复选框。
+4. 将 `*url` 改为 `https://releases.rancher.com/harvester-node-driver/v0.6.3/docker-machine-driver-harvester-amd64.tar.gz`。
+5. 将 `checksum` 改为 `159516f8f438e9b1726418ec8608625384aba1857bc89dff4a6ff16b31357c28`。
+6. 单击 `Show Request` > `Send Request`。
+7. 单击 `Reload`，直到 `status.appliedChecksum` 和 `status.appliedURL` 的值更改为我们设置的值。
+
+:::caution
+
+对主机驱动的更改无法保留。换言之，重启 Rancher 容器后更改将丢失。
+
+:::
+
+:::caution
+
+要使用这个解决方法，请确保与网址的连接是稳定的。
+如果你使用离线环境，请下载文件并将其托管在内网上。
+
+:::
+
+:::caution
+
+从 v0.6.3 开始，Harvester 主机驱动已从后端删除了 `qemu-guest-agent` 自动注入。如果你使用的镜像不包含 `qemu-guest-agent` 包，你可以使用 `userdata` 配置来安装和启动 `qemu-guest-agent`。否则，集群将无法配置成功。
+```yaml
+#cloud-config
+package_update: true
+packages:
+- qemu-guest-agent
+runcmd:
+- - systemctl
+  - enable
+  - '--now'
+  - qemu-guest-agent.service
+```
+
+:::
+
+**解决方法**：针对此问题，Rancher v2.7.2 已使用固定主机驱动版本 v0.6.3。Rancher v2.7.2 UI 将执行 `qemu-guest-agent` 自动注入。
+
+**受影响的版本**：
+- Rancher: v2.6.x,v2.7.0,v2.7.1
+
 ## RKE1 Kubernetes 集群
 了解[如何创建 RKE1 Kubernetes 集群](./rke1-cluster.md)。
 
@@ -38,7 +93,7 @@ Rancher `2.6.3+` 默认启用 Harvester 主机驱动。你可以前往 `Cluster 
 了解[如何创建 RKE2 Kubernetes 集群](./rke2-cluster.md)。
 
 ## K3s Kubernetes 集群
-点击了解[如何创建 K3s Kubernetes 集群](./k3s-cluster.md)。
+了解[如何创建 K3s Kubernetes 集群](./k3s-cluster.md)。
 
 
 ## 拓扑分布约束

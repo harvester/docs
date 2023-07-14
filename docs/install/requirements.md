@@ -16,16 +16,19 @@ Harvester nodes have the following hardware requirements and recommendations for
 |:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | CPU              | x86_64 only. Hardware-assisted virtualization is required. 8-core processor minimum for testing; 16-core or above recommended for production                                                            |
 | Memory           | 32 GB minimum for testing; 64 GB or above recommended for production                                                                                                                                                               |
-| Disk Capacity    | 200 GB minimum for testing; 500 GB or above recommended for production                                                                                                                                  |
+| Disk Capacity    | 250 GB minimum for testing; 500 GB or above recommended for production                                                                                                                                  |
 | Disk Performance | 5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be [fast enough for Etcd](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd) |
 | Network Card     | 1 Gbps Ethernet minimum for testing, 10Gbps Ethernet recommended for production                                                                                                                       |
 | Network Switch   | Trunking of ports required for VLAN support                                                                                                                                                           |
 
 :::note
+
 A three-node cluster is required to realize the multi-node features of Harvester fully.
 - The first node always defaults to be a management node of the cluster.
 - When there are three or more nodes, the two other nodes added first are automatically promoted to management nodes to form a high availability (HA) cluster.
 - We recommend server-class hardware for the best results. Laptops and nested virtualization are not officially supported.
+- The `product_uuid` fetched from `/sys/class/dmi/id/product_uuid` in Linux must be unique in each node. Otherwise, features like VM live migration will be affected. For more information, refer to [#4025](https://github.com/harvester/harvester/issues/4025).
+
 :::
 
 ## Network requirements
@@ -81,3 +84,4 @@ For the port requirements for guest clusters deployed inside Harvester VMs, refe
 - [K3s Networking](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
 - [RKE Ports](https://rancher.com/docs/rke/latest/en/os/#ports)
 - [RKE2 Networking](https://docs.rke2.io/install/requirements#networking)
+
