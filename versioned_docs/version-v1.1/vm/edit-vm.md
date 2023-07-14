@@ -13,6 +13,10 @@ keywords:
 Description: Edit Virtual Machines from the Harvester VM page.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/vm/edit-vm"/>
+</head>
+
 ## How to Edit a VM
 
 After creating a virtual machine, you can edit your virtual machine by clicking the `⋮` button and selecting the `Edit Config` button.

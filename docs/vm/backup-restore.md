@@ -11,6 +11,10 @@ keywords:
 Description: VM backups are created from the Virtual Machines page. The VM backup volumes will be stored in the Backup Target(an NFS or S3 server) and they can be used to either restore a new VM or replace an existing VM. VM Snapshot can work without Backup Target.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/vm/backup-restore"/>
+</head>
+
 ## VM Backup & Restore
 
 _Available as of v0.3.0_

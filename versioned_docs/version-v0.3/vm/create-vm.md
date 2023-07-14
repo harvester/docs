@@ -11,6 +11,10 @@ keywords:
 Description: Create one or more virtual machines from the Virtual Machines page.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/vm/create-vm"/>
+</head>
+
 ## How to Create a VM
 
 Create one or more virtual machines from the **Virtual Machines** page.

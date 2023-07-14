@@ -11,6 +11,10 @@ keywords:
 Description: VM can be cloned with/without data. This function doesn't need to take a VM snapshot or set up a backup target first.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/vm/clone-vm"/>
+</head>
+
 _Available as of v1.1.0_
 
 VM can be cloned with/without data. This function doesn't need to take a VM snapshot or set up a backup target first.
