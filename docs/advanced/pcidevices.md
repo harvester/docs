@@ -4,6 +4,10 @@ sidebar_label: PCI Devices
 title: "PCI Devices (Experimental)"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/advanced/pcidevices"/>
+</head>
+
 _Available as of v1.1.0_
 
 A `PCIDevice` in Harvester represents a host device with a PCI address. 
