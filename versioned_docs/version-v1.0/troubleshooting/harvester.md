@@ -4,6 +4,10 @@ sidebar_label: Harvester
 title: "Harvester"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/troubleshooting/harvester"/>
+</head>
+
 ## Generate a support bundle
 
 Users can generate a support bundle in the Harvester GUI with the following steps:

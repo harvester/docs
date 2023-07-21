@@ -4,6 +4,10 @@ sidebar_label: Monitoring
 title: "Monitoring"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/troubleshooting/monitoring"/>
+</head>
+
 The following sections contain tips to troubleshoot Harvester Monitoring.
 
 ## Monitoring is unusable
