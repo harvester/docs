@@ -13,6 +13,10 @@ keywords:
 Description: The Harvester cloud provider used by the guest cluster in Harvester provides a CSI interface and cloud controller manager (CCM) which implements a built-in load balancer.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/rancher/cloud-provider"/>
+</head>
+
 _Available as of v0.3.0_
 
 Users can now provision both [RKE1](./node/rke1-cluster.md) and [RKE2](./node/rke2-cluster.md) clusters in Rancher 2.6.1, using the built-in Harvester Node Driver. Harvester can now provide [load balancer](#load-balancer-support) support as well as [cluster Persistent Storage](./csi-driver.md) support to the guest Kubernetes cluster.
