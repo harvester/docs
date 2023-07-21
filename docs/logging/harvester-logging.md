@@ -10,7 +10,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/logging/logging-audit-event"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/logging/harvester-logging"/>
 </head>
 
 _Available as of v1.1.0_
