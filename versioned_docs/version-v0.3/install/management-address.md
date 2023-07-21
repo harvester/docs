@@ -7,6 +7,10 @@ keywords:
 Description: The Harvester provides a virtual IP as the management address.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/install/management-address"/>
+</head>
+
 Harvester provides a fixed virtual IP (VIP) as the management address. Users can see the management address on the console dashboard after installation.
 
 ![](./assets/console-dashboard.png)
