@@ -10,6 +10,10 @@ keywords:
 - Network
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/networking/clusternetwork"/>
+</head>
+
 ## Concepts
 
 ### Cluster Network
