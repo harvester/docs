@@ -7,6 +7,10 @@ keywords:
   - Rancher
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/rancher/virtualization-management"/>
+</head>
+
 For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6 and above.
 
 1. As a prerequisite, Harvester `v1.1.0` integration requires Rancher server `v2.6.9` or above. In production, use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:
