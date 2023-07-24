@@ -19,15 +19,18 @@ In this example, we use KVM to provision Harvester and integrate it with Rancher
 ### Setup offline Harvester
 
 1. Clone [harvester/ipxe-examples](https://github.com/harvester/ipxe-examples).
-1. Go to `vagrant-pxe-harvester` folder.
+1. Select the `vagrant-pxe-harvester` folder.
 1. Edit [settings.yml](https://github.com/harvester/ipxe-examples/blob/c8267b6270660255bf71149a1fef3a7a914550de/vagrant-pxe-harvester/settings.yml#L44) and set `offline: true`.
-1. Execute [setup_harvester.sh](https://github.com/harvester/ipxe-examples/blob/main/vagrant-pxe-harvester/setup_harvester.sh) script.
+1. Execute the [setup_harvester.sh](https://github.com/harvester/ipxe-examples/blob/main/vagrant-pxe-harvester/setup_harvester.sh) script.
 
-### Deploy Rancher on k3s and setup private registry in another VM.
+### Deploy Rancher on K3s and setup private registry in another VM
 
-1. Create another KVM with two network interfaces `harvester` and `vagrant-libvirt`. `harvester` network interface is for intranet and `vagrant-libvirt` is for internet. We need `vagrant-libvirt` to download all required resources. We will remove it before we start Rancher. Also, please give this VM at least 300GB to save all required images.
+1. Create another KVM with two network interfaces, `harvester` and `vagrant-libvirt`. 
+- `harvester` is for intranet and `vagrant-libvirt` is for internet. 
+- We need `vagrant-libvirt` to download all required resources. We will remove it before we start Rancher. 
+- Configure this VM with at least 300GB to save all required images.
 1. Install [Docker](https://www.docker.com/) and [Helm](https://helm.sh/).
-1. Create `certs` folder.
+1. Create a `certs` folder.
 ```
 mkdir -p certs
 ```
@@ -43,7 +46,7 @@ openssl req \
 sudo mkdir -p /etc/docker/certs.d/myregistry.local:5000
 sudo cp certs/domain.crt /etc/docker/certs.d/myregistry.local:5000/domain.crt
 ```
-1. Start private registry.
+1. Start the private registry.
 ```
 docker run -d \
   -p 5000:5000 \
@@ -55,12 +58,12 @@ docker run -d \
   -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
   registry:2
 ```
-1. Add `myregistry.local` to `/etc/hosts`. Remember to change `192.168.0.50` to your private ip.
+1. Add `myregistry.local` to `/etc/hosts`. Remember to change `192.168.0.50` to your private IP.
 ```
 # vim /etc/hosts
 192.168.0.50 myregistry.local
 ```
-1. Create `get-rancher` script.
+1. Create a `get-rancher` script.
 ```
 # vim get-rancher
 #!/bin/bash
@@ -93,7 +96,7 @@ helm template ./cert-manager-v1.7.1.tgz | awk '$1 ~ /image:/ {print $2}' | sed s
 ```
 sort -u rancher-images.txt -o rancher-images.txt
 ```
-1. Get images. This step may take 1 to 2 hours. It depends on your network speed.
+1. Get images. This step may take 1 to 2 hours depending on your network speed.
 ```
 ./rancher-save-images.sh --image-list ./rancher-images.txt
 ```
@@ -101,7 +104,7 @@ sort -u rancher-images.txt -o rancher-images.txt
 ```
 ./rancher-load-images.sh --image-list ./rancher-images.txt --registry myregistry.local:5000
 ```
-1. Create `get-k3s` script.
+1. Create a `get-k3s` script.
 ```
 # vim get-k3s
 #!/bin/bash
@@ -115,7 +118,7 @@ wget https://get.k3s.io/ -O install.sh
 chmod +x ./k3s
 chmod +x ./install.sh
 ```
-1. Make `get-k3s` be excutable.
+1. Make `get-k3s` excuteable.
 ```
 chmod +x get-k3s
 ```
@@ -133,13 +136,13 @@ helm fetch rancher-latest/rancher --version=v2.6.4
 mkdir cert-manager
 curl -L -o cert-manager/cert-manager-crd.yaml https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.crds.yaml
 ```
-1. Remove `vagrant-libvirt` network interface. We've downloaded all required resources. We can cut network from this step.
+1. Remove the `vagrant-libvirt` network interface. Once the required resources download, you can remove the network.
 1. Move `k3s-airgap-images-amd64.tar` to `/var/lib/rancher/k3s/agent/images/`.
 ```
 sudo mkdir -p /var/lib/rancher/k3s/agent/images/
 sudo cp k3s-airgap-images-amd64.tar /var/lib/rancher/k3s/agent/images/
 ```
-1. Create `/etc/rancher/k3s` folder.
+1. Create a `/etc/rancher/k3s` folder.
 ```
 mkdir -p /etc/rancher/k3s
 ```
@@ -155,7 +158,7 @@ configs:
     tls:
       insecure_skip_verify: true
 ```
-1. Install k3s.
+1. Install K3s.
 ```
 INSTALL_K3S_SKIP_DOWNLOAD=true ./install.sh
 ```
@@ -181,12 +184,12 @@ kubectl create namespace cert-manager
 kubectl apply -f cert-manager/cert-manager-crd.yaml
 kubectl apply -R -f ./cert-manager
 ```
-1. Create CA private key and certifacate file.
+1. Create a CA private key and a certificate file.
 ```
 openssl genrsa -out cakey.pem 2048
 openssl req -x509 -sha256 -new -nodes -key cakey.pem -days 3650 -out cacerts.pem -subj "/CN=cattle-ca"
 ```
-1. Create `openssl.cnf`. Remember to change `192.168.0.50` to your private ip.
+1. Create `openssl.cnf`. Remember to change `192.168.0.50` to your private IP
 ```
 [req]
 req_extensions = v3_req
@@ -201,7 +204,7 @@ subjectAltName = @alt_names
 DNS.1 = myrancher.local
 IP.1 = 192.168.0.50
 ```
-1. Generate private key and certificate file for `myrancher.local`.
+1. Generate s private key and a certificate file for `myrancher.local`.
 ```
 openssl genrsa -out tls.key 2048
 openssl req -sha256 -new -key tls.key -out tls.csr -subj "/CN=myrancher.local" -config openssl.cnf
@@ -210,16 +213,16 @@ openssl x509 -sha256 -req -in tls.csr -CA cacerts.pem \
     -days 3650 -extensions v3_req \
     -extfile openssl.cnf
 ```
-1. Create `cattle-system` namespace.
+1. Create a `cattle-system` namespace.
 ```
 kubectl create ns cattle-system
 ```
-1. Create `tls.sa` secret.
+1. Create a `tls.sa` secret.
 ```
 kubectl -n cattle-system create secret generic tls-ca \
   --from-file=cacerts.pem=./cacerts.pem
 ```
-1. Create `tls-rancher-ingress` secret.
+1. Create a `tls-rancher-ingress` secret.
 ```
 kubectl -n cattle-system create secret tls tls-rancher-ingress \
   --cert=tls.crt \
@@ -242,7 +245,7 @@ helm template rancher ./rancher-2.6.4.tgz --output-dir . \
 ```
 kubectl -n cattle-system apply -R -f ./rancher
 ```
-1. Add `myrancher.local` to `/etc/hosts`. Remember to change `192.168.0.50` to your private ip.
+1. Add `myrancher.local` to `/etc/hosts`. Remember to change `192.168.0.50` to your private IP.
 ```
 # vim /etc/hosts
 192.168.0.50 myregistry.local myrancher.local
@@ -250,7 +253,7 @@ kubectl -n cattle-system apply -R -f ./rancher
 
 ### Integrate Harvester with Rancher in air-gapped environment
 
-1. (Harvester VM) Add `myregistry.local` to `/etc/hosts`. Remember to change `192.168.0.50` to your private ip.
+1. (Harvester VM) Add `myregistry.local` to `/etc/hosts`. Remember to change `192.168.0.50` to your private IP.
 ```
 # vim /etc/hosts
 192.168.0.50 myregistry.local
@@ -271,7 +274,7 @@ configs:
 ```
 systemctl restart rke2-server.service
 ```
-1. (Harvester VM) Update `rke2-coredns-rke2-coredns` ConfigMap. Remember to change `192.168.0.50` to your private ip.
+1. (Harvester VM) Update the `rke2-coredns-rke2-coredns` ConfigMap. Remember to change `192.168.0.50` to your private IP.
 ```
 # replace data like following
 data:
@@ -284,7 +287,7 @@ data:
   customdomains.db: |
     192.168.0.50 myrancher.local
 ```
-1. (Harvester VM) Update `rke2-coredns-rke2-coredns` Deployment.
+1. (Harvester VM) Update the `rke2-coredns-rke2-coredns` deployment.
 ```
 # Add customdomains.db to volumes
 - key: customdomains.db
