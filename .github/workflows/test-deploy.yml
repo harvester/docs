@@ -19,6 +19,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Check links
-        run: yarn run remark --quiet --use remark-validate-links ./docs ./versioned_docs ./i18n
+        run: yarn run remark --quiet --frail --use remark-validate-links --use remark-lint-no-dead-urls ./docs ./versioned_docs ./i18n
       - name: Test build website
         run: yarn build

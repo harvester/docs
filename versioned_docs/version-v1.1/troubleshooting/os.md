@@ -25,7 +25,11 @@ node1:~ # blkid
 ```
 ## How can I install packages? Why are some paths read-only?
 
-The OS file system, like a container image, is image-based and immutable except in some directories. To temporarily enable the read-write mode, please use the following steps:
+The OS file system, like a container image, is image-based and immutable except in some directories.
+
+We recommend using a **toolbox container** to run programs not packaged in the Harvester OS for debugging purposes. Please see [this article](https://harvesterhci.io/kb/package_your_own_toolbox_image/) to learn how to build and run a toolbox container.
+
+The Harvester OS also provides a way to enable the read-write mode temporarily. Please follow the following steps:
 
 :::caution
 

@@ -14,6 +14,10 @@ keywords:
 Description: Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do an automatic installation with PXE boot.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/install/pxe-boot-install"/>
+</head>
+
 Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do an automatic installation with PXE boot.
 
 We recommend using [iPXE](https://ipxe.org/) to perform the network boot. It has more features than the traditional PXE Boot program and is likely available in modern NIC cards. If the iPXE firmware is not available for your NIC card, the iPXE firmware images can be loaded from the TFTP server first.

@@ -4,6 +4,10 @@ sidebar_label: Addons
 title: "Addons"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/advanced/addons"/>
+</head>
+
 _Available as of v1.1.0_
 
 Beginning with v1.1.0, Harvester will make optional functionality available as Addons.
