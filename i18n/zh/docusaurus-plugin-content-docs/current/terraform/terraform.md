@@ -15,7 +15,7 @@ title: "Harvester Terraform Provider"
 ## 要求
 
 - [Terraform](https://www.terraform.io/downloads.html) 版本大于等于 0.13.x
-- [Go](https://golang.org/doc/install) 1.18，用来构建 provider 插件
+- [Go](https://go.dev/doc/install) 1.18，用来构建 provider 插件
 
 ## 安装 Provider
 
