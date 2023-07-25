@@ -331,6 +331,18 @@ Default: `https://releases.rancher.com/harvester-ui/dashboard/latest/index.html`
 https://your.static.dashboard-ui/index.html
 ```
 
+## `ui-plugin-index`
+
+This setting allows you to configure the JS address for the Harvester plugin (when accessing Harvester from Rancher).
+
+Default: `https://releases.rancher.com/harvester-ui/plugin/harvester-latest/harvester-latest.umd.min.js`
+
+#### Example
+
+```
+https://your.static.dashboard-ui/*.umd.min.js
+```
+
 ## `ui-source`
 
 This setting allows you to configure how to load the UI source.
