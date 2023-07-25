@@ -27,9 +27,9 @@ node1:~ # blkid
 
 The OS file system, like a container image, is image-based and immutable except in some directories.
 
-We recommend using a **toolbox container** to run programs not packaged in Harvester OS for debugging purposes. Please see [this article](https://harvesterhci.io/kb/package_your_own_toolbox_image/) to learn how to build and run a toolbox container.
+We recommend using a **toolbox container** to run programs not packaged in the Harvester OS for debugging purposes. Please see [this article](https://harvesterhci.io/kb/package_your_own_toolbox_image/) to learn how to build and run a toolbox container.
 
-The Harvester OS also provides a way to enable the read-write mode temporarily. Please use the following steps:
+The Harvester OS also provides a way to enable the read-write mode temporarily. Please follow the following steps:
 
 :::caution
 
