@@ -1,0 +1,29 @@
+#!/bin/sh
+
+BEFORE_COMMIT_ID=${DRONE_COMMIT_BEFORE}
+AFTER_COMMIT_ID=${DRONE_COMMIT}
+
+FILES=$(git --no-pager diff --name-only ${BEFORE_COMMIT_ID}...${AFTER_COMMIT_ID})
+
+# if the api/swaggers.json has changed
+if echo "$FILES" | grep -q "api/swagger.json"; then
+    # perform re-generate and check for dirty files
+    yarn clean-api-docs all
+    yarn gen-api-docs all
+    if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+        echo "Error: Found dirty files. Please resolve the issues before continuing."
+        exit 1
+    fi
+    exit 0
+fi
+
+# if the files in the docs/api have changed
+if echo "$FILES" | grep -q "docs/api/"; then
+    exit 0
+fi
+
+# if no any change then don't build the openapi documents.
+rm -rf docs/api/*.mdx
+cat << EOF > docs/api/sidebar.js
+module.exports = [];
+EOF
