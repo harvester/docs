@@ -11,6 +11,10 @@ keywords:
 Description: Harvester configuration file can be provided during manual or automatic installation to configure various settings.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/install/harvester-configuration"/>
+</head>
+
 ## Configuration Example
 
 Harvester configuration file can be provided during manual or automatic installation to configure various settings. The following is a configuration example:
