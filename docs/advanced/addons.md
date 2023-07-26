@@ -25,7 +25,8 @@ v1.1.0 currently ships with two Addons:
 _Available as of v1.2.0_
 
 v1.2.0 ships with two more Addons:
-* [rancher-monitoring](../monitoring/monitoring.md)
+
+* [rancher-monitoring](../monitoring/harvester-monitoring.md)
 * [rancher-logging](../logging/harvester-logging.md)
 
 ![](/img/v1.2/addons/AddonsV120.png)
