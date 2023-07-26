@@ -38,3 +38,27 @@ Description: Create a volume from the Volume page.
 1. Configure the `Size` of the volume.
 
 ![create-image-volume](/img/v1.1/volume/create-image-volume.png)
+
+## Known Issues
+
+| Summary                                                                                                                                                                                   | Status    | Last Updated |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|--------------|
+| [The Volumes page does not show the created volume](https://github.com/harvester/harvester/issues/3874) | Resolved | 2023-07-28   |
+
+### The Volumes page does not show the created volume
+
+**Summary**: After creating a volume when using Harvester from Rancher, users with the project role **Project Member** cannot find the newly created volume on the **Volumes** page.
+
+**Affected versions**:
+- Harvester: v1.1.2
+
+| Status    | Last updated |
+|-----------|--------------|
+| Resolved (Harvester > v1.1.2)  | 2023-07-28   |
+
+**Workaround**: You can temporarily change the Harvester plugin version to [v1.2.1-pitch1](https://github.com/harvester/dashboard/releases/tag/v1.1.2-patch1) from the Harvester UI.
+1. Go to the **Advanced** > **Settings** page. Find  the **ui-plugin-index** amd select **⋮**  > **Edit Setting**.
+2. Change the **Value** to **https://releases.rancher.com/harvester-ui/plugin/harvester-release-harvester-v1.1.2-patch1/harvester-release-harvester-v1.1.2-patch1.umd.min.js**.
+3. On the **Settings** page, find **ui-source** and select **⋮**  > **Edit Setting**.
+4. Change the **Value** to **External** to use an external UI source.
+5. Log in again as a **Project Member** user in Rancher to view the newly created volume for your Harvester cluster.
