@@ -140,6 +140,7 @@ The following options and values can be set:
 :::caution
 
 If you configure `httpProxy` and `httpsProxy`, you must also put Harvester node's CIDR into `noProxy`, otherwise the Harvester cluster will be broken.
+If you also configure `cluster-registration-url`, you usually need to add the host of `cluster-registration-url` to `noProxy` as well, otherwise you cannot access the Harvester cluster from Rancher.
 
 :::
 
