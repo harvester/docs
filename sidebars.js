@@ -96,12 +96,12 @@ const sidebars = {
     },
     {
       type: 'doc',
-      id: 'logging/index',
+      id: 'logging/harvester-logging',
       label: 'Logging',
     },
     {
       type: 'doc',
-      id: 'monitoring/index',
+      id: 'monitoring/harvester-monitoring',
       label: 'Monitoring',
     },
     {
@@ -128,7 +128,7 @@ const sidebars = {
     },
     {
       type: 'doc',
-      id: 'terraform/index',
+      id: 'terraform/terraform-provider',
       label: 'Terraform',
     },
     {

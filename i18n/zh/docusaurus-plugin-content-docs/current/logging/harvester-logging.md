@@ -1,5 +1,5 @@
 ---
-id: index
+id: harvester-logging
 sidebar_position: 1
 sidebar_label: 日志审计事件
 title: "日志审计事件"
