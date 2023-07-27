@@ -17,7 +17,7 @@ The Harvester ISO image contains all the packages to make it work in an air gapp
 
 In this example, we use KVM to provision Harvester and integrate it with Rancher.
 
-### Setup offline Harvester
+### Setup Harvester offline
 
 1. Clone [harvester/ipxe-examples](https://github.com/harvester/ipxe-examples).
 1. Select the `vagrant-pxe-harvester` folder.
