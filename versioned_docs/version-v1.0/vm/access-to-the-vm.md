@@ -11,6 +11,10 @@ keywords:
 Description: Once the VM is up and running, it can be accessed using either VNC or the serial console from the Harvester UI.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/vm/access-to-the-vm"/>
+</head>
+
 
 Once the VM is up and running, you can access it using either the Virtual Network Computing (VNC) client or the serial console from the Harvester UI.
 
