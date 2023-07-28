@@ -4,6 +4,10 @@ sidebar_label: Addons
 title: "Addons"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/advanced/addons"/>
+</head>
+
 _Available as of v1.1.0_
 
 Beginning with v1.1.0, Harvester will make optional functionality available as Addons.
@@ -17,3 +21,12 @@ v1.1.0 currently ships with two Addons:
 * [vm-import-controller](./vmimport.md)
 
 ![](/img/v1.2/addons/DefaultAddons.png)
+
+_Available as of v1.2.0_
+
+v1.2.0 ships with two more Addons:
+
+* [rancher-monitoring](../monitoring/harvester-monitoring.md)
+* [rancher-logging](../logging/harvester-logging.md)
+
+![](/img/v1.2/addons/AddonsV120.png)

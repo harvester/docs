@@ -11,6 +11,10 @@ keywords:
 Description: Harvester configuration file can be provided during manual or automatic installation to configure various settings.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/install/harvester-configuration"/>
+</head>
+
 ## Configuration Example
 
 Harvester configuration file can be provided during manual or automatic installation to configure various settings. The following is a configuration example:
@@ -340,7 +344,7 @@ the values are configurations for each network. Valid configuration fields are:
 - `method`: Method to assign an IP to this network. The following are supported:
     - `static`: Manually assign an IP and gateway.
     - `dhcp`: Request an IP from the DHCP server.
-    - `none`: Do nothing. Useful when the interface does not need an IP, such as when creating [VLAN network](../networking/harvester-network.md#vlan) NIC in Harvester.
+    - `none`: Do nothing. Useful when the interface does not need an IP, such as when creating [VLAN network](../networking/harvester-network.md#vlan-network) NIC in Harvester.
 - `ip`: Static IP for this network. Required if `static` method is chosen.
 - `subnet_mask`: Subnet mask for this network. Required if `static` method is chosen.
 - `gateway`: Gateway for this network. Required if `static` method is chosen.

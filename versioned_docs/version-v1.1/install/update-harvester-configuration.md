@@ -8,6 +8,10 @@ keywords:
 Description: How to update Harvester configuration after installation
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/install/update-harvester-configuration"/>
+</head>
+
 Harvester's OS has an immutable design, which means most files in the  OS revert to their pre-configured state after a reboot. The Harvester OS loads the pre-configured values of system components from configuration files during the boot time. 
 
 This page describes how to edit some of the most-requested Harvester configurations. To update a configuration, you must first update the runtime value in the system and then update configuration files to make the changes persistent between reboots. 
@@ -51,7 +55,7 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
 
 1. Edit `/oem/90_custom.yaml` and update the value under the yaml path `stages.initramfs[0].commands`. The `commands` array must contain a line to manipulate the `NETCONFIG_DNS_STATIC_SERVERS` config. Add the line if the line doesn't exist. 
 
-The following example adds a line to change the `NETCONFIG_DNS_STATIC_SERVERS` config:
+    The following example adds a line to change the `NETCONFIG_DNS_STATIC_SERVERS` config:
 
     ```
     stages:

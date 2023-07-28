@@ -41,7 +41,7 @@ Rancher `2.6.3+` 默认启用 Harvester 主机驱动。你可以前往 `Cluster 
 了解[如何创建 RKE2 Kubernetes 集群](./rke2-cluster.md)。
 
 ## K3s Kubernetes 集群
-点击了解[如何创建 K3s Kubernetes 集群](./k3s-cluster.md)。
+了解[如何创建 K3s Kubernetes 集群](./k3s-cluster.md)。
 
 
 ## 拓扑分布约束

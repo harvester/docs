@@ -1,8 +1,4 @@
 {
-  "item.label.Docs": {
-    "message": "文档",
-    "description": "Navbar item with label Docs"
-  },
   "item.label.Blog": {
     "message": "博文",
     "description": "Navbar item with label Blog"
@@ -14,5 +10,13 @@
   "item.label.GitHub": {
     "message": "GitHub",
     "description": "Navbar item with label GitHub"
+  },
+  "logo.alt": {
+    "message": "Harvester Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Rancher Home": {
+    "message": "Rancher 主页",
+    "description": "Navbar item with label Rancher Home"
   }
 }

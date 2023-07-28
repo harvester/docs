@@ -8,6 +8,10 @@ keywords:
   - Rancher Integration
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/rancher/csi-driver"/>
+</head>
+
 
 The Harvester Container Storage Interface (CSI) Driver provides a CSI interface used by guest Kubernetes clusters in Harvester. It connects to the host cluster and hot-plugs host volumes to the virtual machines (VMs) to provide native storage performance.
 
@@ -41,15 +45,95 @@ When spinning up a Kubernetes cluster using Rancher RKE2 node driver, the Harves
 
 ![select-harvester-cloud-provider](/img/v1.0/rancher/select-harvester-cloud-provider.png)
 
+#### Install CSI Driver Manually in the RKE2 Cluster
+
+If you prefer to deploy the Harvester CSI driver without enabling the Harvester cloud provider, you can choose either `Default - RKE2 Embedded` or `External` in the `Cloud Provider` field. If you are using Rancher v2.6, select `None` instead.
+
+![](/img/v1.0/rancher/non-harvester-cloud-provider.png)
+
+#### Prerequisites
+
+Ensure that you have the following prerequisites in place:
+- You have `kubectl` and `jq` installed on your system.
+- You have the `kubeconfig` file for your bare-metal Harvester cluster. 
+    ```
+    export KUBECONFIG=/path/to/your/harvester-kubeconfig
+    ```
+
+![](/img/v1.0/rancher/creating_guest_cluster.png)
+
+Perform the following steps to deploy the Harvester CSI Driver manually:
+#### Deploy Harvester CSI Driver
+
+1. Generate cloud-config.
+
+    You can generate the `kubeconfig` file using the [generate_addon_csi.sh](https://raw.githubusercontent.com/harvester/harvester-csi-driver/master/deploy/generate_addon_csi.sh) script. It is available on the [harvester/harvester-csi-driver](https://github.com/harvester/harvester-csi-driver) repo. You can follow the steps below to get the `cloud-config` and `cloud-init` data:
+    
+The `<serviceaccount name>` usually corresponds to your guest cluster name (the value of "Cluster Name" in the figure below), and `<namespace>` should match the namespace (the value of "Namespace") of the guest cluster.
+
+  ```
+  # ./generate_addon_csi.sh <serviceaccount name> <namespace> RKE2
+  ```
+
+  ```
+  ########## cloud-config ############
+  apiVersion: v1
+  clusters:
+  - cluster: <token>
+      server: https://<YOUR HOST HARVESTER VIP>:6443
+    name: default
+  contexts:
+  - context:
+      cluster: default
+      namespace: default
+      user: rke2-guest-01-default-default
+    name: rke2-guest-01-default-default
+  current-context: rke2-guest-01-default-default
+  kind: Config
+  preferences: {}
+  users:
+  - name: rke2-guest-01-default-default
+    user:
+      token: <token>
+  
+  ########## cloud-init user data ############
+  write_files:
+    - encoding: b64
+      content: YXBpVmVyc2lvbjogdjEKY2x1c3RlcnM6Ci0gY2x1c3RlcjoKICAgIGNlcnRpZmljYXRlLWF1dGhvcml0eS1kYXRhOiBMUzB0TFMxQ1JVZEpUaUJEUlZKVVNVWkpRMEZVUlMwdExTMHRDazFKU1VKbFZFTkRRVklyWjBGM1NVSkJaMGxDUVVSQlMwSm5aM0ZvYTJwUFVGRlJSRUZxUVd0TlUwbDNTVUZaUkZaUlVVUkVRbXg1WVRKVmVVeFlUbXdLWTI1YWJHTnBNV3BaVlVGNFRtcG5NVTE2VlhoT1JGRjNUVUkwV0VSVVNYcE5SRlY1VDFSQk5VMVVRVEJOUm05WVJGUk5lazFFVlhsT2FrRTFUVlJCTUFwTlJtOTNTa1JGYVUxRFFVZEJNVlZGUVhkM1dtTnRkR3hOYVRGNldsaEtNbHBZU1hSWk1rWkJUVlJaTkU1VVRURk5WRkV3VFVSQ1drMUNUVWRDZVhGSENsTk5ORGxCWjBWSFEwTnhSMU5OTkRsQmQwVklRVEJKUVVKSmQzRmFZMDVTVjBWU2FsQlVkalJsTUhFMk0ySmxTSEZEZDFWelducGtRa3BsU0VWbFpHTUtOVEJaUTNKTFNISklhbWdyTDJab2VXUklNME5ZVURNeFZXMWxTM1ZaVDBsVGRIVnZVbGx4YVdJMGFFZE5aekpxVVdwQ1FVMUJORWRCTVZWa1JIZEZRZ292ZDFGRlFYZEpRM0JFUVZCQ1owNVdTRkpOUWtGbU9FVkNWRUZFUVZGSUwwMUNNRWRCTVZWa1JHZFJWMEpDVWpaRGEzbEJOSEZqYldKSlVESlFWVW81Q2xacWJWVTNVV2R2WjJwQlMwSm5aM0ZvYTJwUFVGRlJSRUZuVGtsQlJFSkdRV2xCZUZKNU4xUTNRMVpEYVZWTVdFMDRZazVaVWtWek1HSnBZbWxVSzJzS1kwRnhlVmt5Tm5CaGMwcHpMM2RKYUVGTVNsQnFVVzVxZEcwMVptNTZWR3AxUVVsblRuTkdibFozWkZRMldXWXpieTg0ZFRsS05tMWhSR2RXQ2kwdExTMHRSVTVFSUVORlVsUkpSa2xEUVZSRkxTMHRMUzBLCiAgICBzZXJ2ZXI6IGh0dHBzOi8vMTkyLjE2OC4wLjEzMTo2NDQzCiAgbmFtZTogZGVmYXVsdApjb250ZXh0czoKLSBjb250ZXh0OgogICAgY2x1c3RlcjogZGVmYXVsdAogICAgbmFtZXNwYWNlOiBkZWZhdWx0CiAgICB1c2VyOiBya2UyLWd1ZXN0LTAxLWRlZmF1bHQtZGVmYXVsdAogIG5hbWU6IHJrZTItZ3Vlc3QtMDEtZGVmYXVsdC1kZWZhdWx0CmN1cnJlbnQtY29udGV4dDogcmtlMi1ndWVzdC0wMS1kZWZhdWx0LWRlZmF1bHQKa2luZDogQ29uZmlnCnByZWZlcmVuY2VzOiB7fQp1c2VyczoKLSBuYW1lOiBya2UyLWd1ZXN0LTAxLWRlZmF1bHQtZGVmYXVsdAogIHVzZXI6CiAgICB0b2tlbjogZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNklreGhUazQxUTBsMWFsTnRORE5TVFZKS00waE9UbGszTkV0amNVeEtjM1JSV1RoYVpUbGZVazA0YW1zaWZRLmV5SnBjM01pT2lKcmRXSmxjbTVsZEdWekwzTmxjblpwWTJWaFkyTnZkVzUwSWl3aWEzVmlaWEp1WlhSbGN5NXBieTl6WlhKMmFXTmxZV05qYjNWdWRDOXVZVzFsYzNCaFkyVWlPaUprWldaaGRXeDBJaXdpYTNWaVpYSnVaWFJsY3k1cGJ5OXpaWEoyYVdObFlXTmpiM1Z1ZEM5elpXTnlaWFF1Ym1GdFpTSTZJbkpyWlRJdFozVmxjM1F0TURFdGRHOXJaVzRpTENKcmRXSmxjbTVsZEdWekxtbHZMM05sY25acFkyVmhZMk52ZFc1MEwzTmxjblpwWTJVdFlXTmpiM1Z1ZEM1dVlXMWxJam9pY210bE1pMW5kV1Z6ZEMwd01TSXNJbXQxWW1WeWJtVjBaWE11YVc4dmMyVnlkbWxqWldGalkyOTFiblF2YzJWeWRtbGpaUzFoWTJOdmRXNTBMblZwWkNJNkltTXlZak5sTldGaExUWTBNMlF0TkRkbU1pMDROemt3TFRjeU5qWXpNbVl4Wm1aaU5pSXNJbk4xWWlJNkluTjVjM1JsYlRwelpYSjJhV05sWVdOamIzVnVkRHBrWldaaGRXeDBPbkpyWlRJdFozVmxjM1F0TURFaWZRLmFRZmU1d19ERFRsSWJMYnUzWUVFY3hmR29INGY1VnhVdmpaajJDaWlhcXB6VWI0dUYwLUR0cnRsa3JUM19ZemdXbENRVVVUNzNja1BuQmdTZ2FWNDhhdmlfSjJvdUFVZC04djN5d3M0eXpjLVFsTVV0MV9ScGJkUURzXzd6SDVYeUVIREJ1dVNkaTVrRWMweHk0X0tDQ2IwRHQ0OGFoSVhnNlMwRDdJUzFfVkR3MmdEa24wcDVXUnFFd0xmSjdEbHJDOFEzRkNUdGhpUkVHZkUzcmJGYUdOMjdfamR2cUo4WXlJQVd4RHAtVHVNT1pKZUNObXRtUzVvQXpIN3hOZlhRTlZ2ZU05X29tX3FaVnhuTzFEanllbWdvNG9OSEpzekp1VWliRGxxTVZiMS1oQUxYSjZXR1Z2RURxSTlna1JlSWtkX3JqS2tyY3lYaGhaN3lTZ3o3QQo=
+      owner: root:root
+      path: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
+      permissions: '0644'
+  ```
+  
+  Copy and paste the output below `cloud-init user data` to **Machine Pools >Show Advanced > User Data**.
+
+2. Set up cloud-provider-config.
+
+  The cloud-provider-config should be created after you apply the above cloud-init user data.
+
+  You can check again on the path `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`.
+
+:::note
+
+If you want to change the cloud-provider-config path, you should update the cloud-init user data.
+
+:::
+
+3. Install Harvester CSI Driver.
+
+    Install the `Harvester CSI Driver` chart from the Rancher marketplace. (Note: by default, you do not need to change the `cloud-config` path).
+  ![](/img/v1.0/rancher/install_csi_rancher_marketplace.png)
+
+  ![](/img/v1.0/rancher/donot_change_cloud_config_path.png)
+
+By following the above steps, you should be able to see those CSI driver pods are up and running, and you can verify it by provisioning a new PVC using the default storageClass `harvester.`.
+
 ### Deploying with Harvester K3s Node Driver
 
-- [Generate addon configuration](https://github.com/harvester/harvester-csi-driver/blob/master/deploy/generate_addon.sh) and put it in K3s VMs `/etc/kubernetes/cloud-config`.
+You can follow the [Deploy Harvester CSI Driver](./csi-driver.md#deploy-harvester-csi-driver) steps described in the RKE2 section for **Prerequisites** 
+
+The only difference is that you need to change the script command as follows:
 
 ```
-# depend on kubectl to operate the Harvester cluster
-./deploy/generate_addon.sh <serviceaccount name> <namespace>
+# ./generate_addon_csi.sh <serviceaccount name> <namespace> k3s
 ```
-
-- Install `Harvester CSI Driver` from the Rancher marketplace.
-
-  ![](/img/v1.0/rancher/install-harvester-csi-driver-in-k3s.png)

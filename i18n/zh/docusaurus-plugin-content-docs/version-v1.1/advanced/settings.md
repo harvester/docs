@@ -152,7 +152,7 @@ https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhr
 :::note
 
 Harvester 在用户配置的 `no-proxy` 后附加必要的地址，来确保内部流量能正常工作。
-例如：`localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,longhorn-system,cattle-system,cattle-system.svc,.svc,.cluster.local`
+例如：`localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,longhorn-system,cattle-system,cattle-system.svc,harvester-system,.svc,.cluster.local`。v1.1.2 开始将 `harvester-system` 添加到列表。
 
 :::
 
@@ -271,7 +271,7 @@ v1.0.0-abcdef-head
 
 :::note
 
-如果你进行了错误配置，导致无法访问 Harvester GUI 和 API，请参见[故障排查](../troubleshooting/harvester.md#修改-ssl/tls-启用的协议和密码后无法访问-harvester)。
+如果你进行了错误配置，导致无法访问 Harvester GUI 和 API，请参见[故障排查](../troubleshooting/harvester.md#修改-ssltls-启用的协议和密码后无法访问-harvester)。
 
 :::
 

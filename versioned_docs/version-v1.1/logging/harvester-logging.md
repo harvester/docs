@@ -1,13 +1,17 @@
 ---
 sidebar_position: 1
-sidebar_label: Logging Audit Event
-title: "Logging Audit Event"
+sidebar_label: Logging
+title: "Logging"
 keywords:
 - Harvester
 - Logging
 - Audit
 - Event
 ---
+
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/logging/harvester-logging"/>
+</head>
 
 _Available as of v1.1.0_
 

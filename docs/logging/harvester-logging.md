@@ -1,13 +1,17 @@
 ---
 sidebar_position: 1
-sidebar_label: Logging Audit Event
-title: "Logging Audit Event"
+sidebar_label: Logging
+title: "Logging"
 keywords:
 - Harvester
 - Logging
 - Audit
 - Event
 ---
+
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/logging/harvester-logging"/>
+</head>
 
 _Available as of v1.1.0_
 
@@ -20,6 +24,16 @@ It is important to know what is happening/has happened in the `Harvester Cluster
 :::note
 The size of logging data is related to the cluster scale, workload and other factors. `Harvester` does not use persistent storage to store log data inside the cluster. Users need to set up a log server to receive logs accordingly.
 :::
+
+_Available as of v1.2.0_
+
+The logging feature is now implemented with an addon and is disabled by default in new installations.
+
+Users can enable/disable the `rancher-logging` [addon](../advanced/addons.md) from the Harvester WebUI after installation.
+
+Users can also enable/disable the `rancher-logging` addon in their Harvester installation by customizing the [harveter-configuration](../install/harvester-configuration.md#installaddons) file.
+
+For Harvester clusters upgraded from v1.1.*, the logging feature is converted to an addon automatically and kept enabled as before.
 
 ## High-level Architecture
 

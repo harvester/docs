@@ -1,253 +1,253 @@
 ---
 sidebar_position: 6
-sidebar_label: Update Harvester Configuration
-title: "Update Harvester Configuration After Installation"
+sidebar_label: 更新 Harvester 配置
+title: "安装后更新 Harvester 配置"
 keywords:
-  - Harvester configuration
-  - Configuration
-Description: How to update Harvester configuration after installation
+  - Harvester 配置
+  - 配置
+Description: 如何在安装完成后更新 Harvester 配置
 ---
 
-Harvester's OS has an immutable design, which means most files in the  OS revert to their pre-configured state after a reboot. The Harvester OS loads the pre-configured values of system components from configuration files during the boot time. 
+Harvester 的操作系统采用了不可变设计，换言之，操作系统中的大多数文件在重启后会恢复到其预先配置的状态。Harvester OS 会在引导期间从配置文件加载系统组件的预配置值。
 
-This page describes how to edit some of the most-requested Harvester configurations. To update a configuration, you must first update the runtime value in the system and then update configuration files to make the changes persistent between reboots. 
+本文介绍了如何编辑一些最需要的 Harvester 配置。要更新配置，你必须先更新系统中的运行时值，然后更新配置文件来让更改在重启时保留。
 
 :::note
 
-If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples will be `/oem/99_custom.yaml`. Please substitute the value if needed.
+如果你升级自 `v1.1.2` 之前的版本，示例中的 `cloud-init` 文件为 `/oem/99_custom.yaml`。如果需要，请替换该值。
 
 :::
 
-## DNS servers
+## DNS 服务器
 
-### Runtime change
+### 运行时更改
 
-1. Log in to a Harvester node and become root. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-into-a-harvester-node) for more details.
-1. Edit `/etc/sysconfig/network/config` and update the following line. Use a space to separate DNS server addresses if there are multiple servers.
+1. 登录到 Harvester 节点并成为 root。有关详细信息，请参阅[如何登录到 Harvester 节点](../troubleshooting/os.md#如何登录到-harvester-节点)。
+1. 编辑 `/etc/sysconfig/network/config` 并更新以下行。如果有多个服务器，请使用空格分隔 DNS 服务器地址。
 
-    ```
-    NETCONFIG_DNS_STATIC_SERVERS="8.8.8.8 1.1.1.1"
-    ```
+   ```
+   NETCONFIG_DNS_STATIC_SERVERS="8.8.8.8 1.1.1.1"
+   ```
 
-1. Update and reload the configuration with the following command:
+1. 使用以下命令更新并重新加载配置：
 
-    ```
-    netconfig update
-    ```
+   ```
+   netconfig update
+   ```
 
-1. Confirm the file `/etc/resolv.conf` contains the correct DNS servers with the `cat` command:
+1. 使用 `cat` 命令确认文件 `/etc/resolv.conf` 包含正确的 DNS 服务器：
 
-    ```
-    cat /etc/resolv.conf
-    ```
+   ```
+   cat /etc/resolv.conf
+   ```
 
-### Configuration persistence
+### 持久化配置
 
-1. Backup the elemental `cloud-init` file `/oem/90_custom.yaml` as follows:
+1. 备份 elemental `cloud-init` 文件 `/oem/90_custom.yaml`，如下：
 
-    ```
-    cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
-    ```
+   ```
+   cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
+   ```
 
-1. Edit `/oem/90_custom.yaml` and update the value under the yaml path `stages.initramfs[0].commands`. The `commands` array must contain a line to manipulate the `NETCONFIG_DNS_STATIC_SERVERS` config. Add the line if the line doesn't exist. 
+1. 编辑 `/oem/90_custom.yaml` 并更新 yaml 路径 `stages.initramfs[0].commands` 下的值。`commands` 数组必须包含操作 `NETCONFIG_DNS_STATIC_SERVERS` 配置的行。如果该行不存在，则添加该行。
 
-The following example adds a line to change the `NETCONFIG_DNS_STATIC_SERVERS` config:
+   以下示例添加了更改 `NETCONFIG_DNS_STATIC_SERVERS` 配置的行：
 
-    ```
-    stages:
-      initramfs:
-        - commands:
-            - sed -i 's/^NETCONFIG_DNS_STATIC_SERVERS.*/NETCONFIG_DNS_STATIC_SERVERS="8.8.8.8 1.1.1.1"/' /etc/sysconfig/network/config
-    ```
+   ```
+   stages:
+     initramfs:
+       - commands:
+           - sed -i 's/^NETCONFIG_DNS_STATIC_SERVERS.*/NETCONFIG_DNS_STATIC_SERVERS="8.8.8.8 1.1.1.1"/' /etc/sysconfig/network/config
+   ```
 
-    Replace the DNS server addresses and save the file. Harvester sets up new servers after rebooting.
+   替换 DNS 服务器地址并保存文件。Harvester 将在重启后设置新的服务器。
 
 
-## NTP servers
+## NTP 服务器
 
-### Runtime change
+### 运行时更改
 
-1. Log in to a Harvester node and become root. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-into-a-harvester-node) for more details.
-1. Edit `/etc/systemd/timesyncd.conf` and specify NTP servers in the `NTP=` setting:
+1. 登录到 Harvester 节点并成为 root。有关详细信息，请参阅[如何登录到 Harvester 节点](../troubleshooting/os.md#如何登录到-harvester-节点)。
+1. 编辑 `/etc/systemd/timesyncd.conf` 并在 `NTP=` 设置中指定 NTP 服务器：
 
-    ```
-    [Time]
-    NTP = 0.suse.pool.ntp.org 1.suse.pool.ntp.org
-    ```
+   ```
+   [Time]
+   NTP = 0.suse.pool.ntp.org 1.suse.pool.ntp.org
+   ```
 
-1. Restart the `systemd-timesyncd.service` service:
+1. 重启 `systemd-timesyncd.service` 服务：
 
-    ```
-    systemctl restart systemd-timesyncd.service
-    ```
+   ```
+   systemctl restart systemd-timesyncd.service
+   ```
 
-1. Display the timesync status:
+1. 显示时间同步状态：
 
-    ```
-    timedatectl timesync-status
-    ```
+   ```
+   timedatectl timesync-status
+   ```
 
-### Configuration persistence
+### 持久化配置
 
-1. Backup the elemental `cloud-init` file `/oem/90_custom.yaml` as follows:
+1. 备份 elemental `cloud-init` 文件 `/oem/90_custom.yaml`，如下：
 
-    ```
-    cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
-    ```
+   ```
+   cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
+   ```
 
-1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.initramfs[0].timesyncd`. The `timesyncd` map must be in the following format:
+1. 编辑 `/oem/90_custom.yaml` 并更新 yaml 路径 `stages.initramfs[0].timesyncd`。`timesyncd` 映射必须采用以下格式：
 
-    ```
-    stages:
-      initramfs:
-      - ...
-        timesyncd:
-        NTP: 0.suse.pool.ntp.org 1.suse.pool.ntp.org
-    ```
+   ```
+   stages:
+     initramfs:
+     - ...
+       timesyncd:
+       NTP: 0.suse.pool.ntp.org 1.suse.pool.ntp.org
+   ```
 
-1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.initramfs[0].systemctl.enable`. The array must have these two services enabled: 
+1. 编辑 `/oem/90_custom.yaml` 并更新 yaml 路径 `stages.initramfs[0].systemctl.enable`。该数组必须启用两项服务（`systemd-timesyncd` 和 `systemd-time-wait-sync`）：
 
-    ```
-    stages:
-      initramfs:
-      - ...
-        systemctl:
-        enable:
-            systemd-timesyncd
-            systemd-time-wait-sync
-        disable: []
-        start: []
-        mask: []
-    ```
+   ```
+   stages:
+     initramfs:
+     - ...
+       systemctl:
+       enable:
+           systemd-timesyncd
+           systemd-time-wait-sync
+       disable: []
+       start: []
+       mask: []
+   ```
 
-## SSH keys of user `rancher`
+## `rancher` 用户的 SSH 密钥
 
-### Runtime change
+### 运行时更改
 
-1. Log in to a Harvester node as user `rancher`. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-into-a-harvester-node) for more details.
-1. Edit `/home/rancher/.ssh/authorized_keys` to add or remove keys.
+1. 以 `rancher` 用户身份登录到 Harvester 节点。有关详细信息，请参阅[如何登录到 Harvester 节点](../troubleshooting/os.md#如何登录到-harvester-节点)。
+1. 编辑 `/home/rancher/.ssh/authorized_keys` 以添加或删除密钥。
 
-### Configuration persistence
+### 持久化配置
 
-1. Backup the elemental `cloud-init` file `/oem/90_custom.yaml` as follows:
+1. 备份 elemental `cloud-init` 文件 `/oem/90_custom.yaml`，如下：
 
-    ```
-    cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
-    ```
+   ```
+   cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
+   ```
 
-1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.network[0].authorized_keys.rancher`. Add or remove keys in the `rancher` array:
+1. 编辑 `/oem/90_custom.yaml` 并更新 yaml 路径 `stages.network[0].authorized_keys.rancher`。添加或删除 `rancher` 数组中的键：
 
-    ```
-    stages:
-      network:
-      - ...
-        authorized_keys:
-          rancher:
-          - key1
-          - key2
-    ```
+   ```
+   stages:
+     network:
+     - ...
+       authorized_keys:
+         rancher:
+         - key1
+         - key2
+   ```
 
 
-## Password of user `rancher`
+## `rancher` 用户的密码
 
-### Runtime change
+### 运行时更改
 
-1. Log in to a Harvester node as user `rancher`. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-into-a-harvester-node) for more details.
-1. To reset the password for the user `rancher`, run the command `passwd`. 
+1. 以 `rancher` 用户身份登录到 Harvester 节点。有关详细信息，请参阅[如何登录到 Harvester 节点](../troubleshooting/os.md#如何登录到-harvester-节点)。
+1. 要重置 `rancher` 用户的密码，请运行命令 `passwd`。
 
-### Configuration persistence
+### 持久化配置
 
-1. Backup the elemental `cloud-init` file `/oem/90_custom.yaml` as follows:
+1. 备份 elemental `cloud-init` 文件 `/oem/90_custom.yaml`，如下：
 
-    ```
-    cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
-    ```
+   ```
+   cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
+   ```
 
-1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.initramfs[0].users.rancher.passwd`. Refer to the configuration [`os.password`](./harvester-configuration.md#ospassword) for details on how to specify the password in an encrypted form.
+1. 编辑 `/oem/90_custom.yaml` 并更新 yaml 路径 `stages.initramfs[0].users.rancher.passwd`。有关以加密形式指定密码的详细信息，请参阅 [`os.password`](./harvester-configuration.md#ospassword) 配置。
 
 
-## Bonding slaves
+## Bonding slave
 
-You can update the slave interfaces of Harvester's management bonding interface `mgmt-bo`.
+你可以更新 Harvester 的管理 bonding 接口 `mgmt-bo` 的 slave 接口。
 
-### Runtime change
+### 运行时更改
 
-1. Log in to a Harvester node and become root. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-into-a-harvester-node) for more details.
-1. Identify the interface names with the following command:
+1. 登录到 Harvester 节点并成为 root。有关详细信息，请参阅[如何登录到 Harvester 节点](../troubleshooting/os.md#如何登录到-harvester-节点)。
+1. 使用以下命令识别接口名称：
 
-    ```
-    ip a
-    ```
+   ```
+   ip a
+   ```
 
-1. Edit `/etc/sysconfig/network/ifcfg-mgmt-bo` and update the lines associated with bonding slaves and bonding mode:
+1. 编辑 `/etc/sysconfig/network/ifcfg-mgmt-bo` 并更新与 bonding slave 和 bonding 模式相关的行：
 
-    ```
-    BONDING_SLAVE_0='ens5'
-    BONDING_SLAVE_1='ens6'
-    BONDING_MODULE_OPTS='miimon=100 mode=balance-tlb '
-    ```
+   ```
+   BONDING_SLAVE_0='ens5'
+   BONDING_SLAVE_1='ens6'
+   BONDING_MODULE_OPTS='miimon=100 mode=balance-tlb '
+   ```
 
-1. Restart the network with the `wicked ifreload` command:
+1. 使用 `wicked ifreload` 命令重启网络：
 
-    ```
-    wicked ifreload mgmt-bo
-    ```
+   ```
+   wicked ifreload mgmt-bo
+   ```
 
-    :::caution
+   :::caution
 
-    A mistake in the configuration may disrupt the SSH session.
+   配置错误可能会中断 SSH 会话。
 
-    :::
+   :::
 
-### Configuration persistence
+### 持久化配置
 
 
-1. Backup the elemental cloud-init file `/oem/90_custom.yaml` as follows:
+1. 备份 elemental cloud-init 文件 `/oem/90_custom.yaml`，如下：
 
-    ```
-    cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
-    ```
+   ```
+   cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
+   ```
 
-1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.initramfs[0].files`. More pecifically, update the content of the `/etc/sysconfig/network/ifcfg-mgmt-bo` file and edit the `BONDING_SLAVE_X` and `BONDING_MODULE_OPTS` entries accordingly:
+1. 编辑 `/oem/90_custom.yaml` 并更新 yaml 路径 `stages.initramfs[0].files`。具体来说，更新 `/etc/sysconfig/network/ifcfg-mgmt-bo` 文件的内容，并相应编辑 `BONDING_SLAVE_X` 和 `BONDING_MODULE_OPTS` 条目：
 
-    ```
-    stages:
-      initramfs:
-      - ...
-        files:
-        - path: /etc/sysconfig/network/ifcfg-mgmt-bo
-          permissions: 384
-          owner: 0
-          group: 0
-          content: |+
-              STARTMODE='onboot'
-              BONDING_MASTER='yes'
-              BOOTPROTO='none'
-              POST_UP_SCRIPT="wicked:setup_bond.sh"
-    
-    
-              BONDING_SLAVE_0='ens5'
-              BONDING_SLAVE_1='ens6'
-    
-              BONDING_MODULE_OPTS='miimon=100 mode=balance-tlb '
-    
-              DHCLIENT_SET_DEFAULT_ROUTE='no'
-    
-          encoding: ""
-          ownerstring: ""
-        - path: /etc/sysconfig/network/ifcfg-ens6
-          permissions: 384
-          owner: 0
-          group: 0
-          content: |
-            STARTMODE='hotplug'
-            BOOTPROTO='none'
-          encoding: ""
-          ownerstring: ""
-    ```
+   ```
+   stages:
+     initramfs:
+     - ...
+       files:
+       - path: /etc/sysconfig/network/ifcfg-mgmt-bo
+         permissions: 384
+         owner: 0
+         group: 0
+         content: |+
+             STARTMODE='onboot'
+             BONDING_MASTER='yes'
+             BOOTPROTO='none'
+             POST_UP_SCRIPT="wicked:setup_bond.sh"
+  
+  
+             BONDING_SLAVE_0='ens5'
+             BONDING_SLAVE_1='ens6'
+  
+             BONDING_MODULE_OPTS='miimon=100 mode=balance-tlb '
+  
+             DHCLIENT_SET_DEFAULT_ROUTE='no'
+  
+         encoding: ""
+         ownerstring: ""
+       - path: /etc/sysconfig/network/ifcfg-ens6
+         permissions: 384
+         owner: 0
+         group: 0
+         content: |
+           STARTMODE='hotplug'
+           BOOTPROTO='none'
+         encoding: ""
+         ownerstring: ""
+   ```
 
-    :::note
+   :::note
 
-    If you didn't select an interface during installation, you must add an entry to initialize the interface. Please check the `/etc/sysconfig/network/ifcfg-ens6` file creation in the above example. The file name should be `/etc/sysconfig/network/ifcfg-<interface-name>`.
+   如果在安装过程中没有选择接口，则必须添加一个条目来初始化接口。请检查上面示例中的 `/etc/sysconfig/network/ifcfg-ens6` 文件创建。文件名应为 `/etc/sysconfig/network/ifcfg-<interface-name>`。
 
-    :::
+   :::

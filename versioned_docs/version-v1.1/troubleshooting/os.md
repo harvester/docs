@@ -4,6 +4,10 @@ sidebar_label: Operating System
 title: "Operating System"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/troubleshooting/os"/>
+</head>
+
 Harvester runs on an OpenSUSE-based OS. The OS is an artifact produced by the [cOS toolkit](https://github.com/rancher-sandbox/cOS-toolkit). The following sections contain information and tips to help users troubleshoot OS-related issues.
 
 ## How to log into a Harvester node
@@ -21,7 +25,11 @@ node1:~ # blkid
 ```
 ## How can I install packages? Why are some paths read-only?
 
-The OS file system, like a container image, is image-based and immutable except in some directories. To temporarily enable the read-write mode, please use the following steps:
+The OS file system, like a container image, is image-based and immutable except in some directories.
+
+We recommend using a **toolbox container** to run programs not packaged in the Harvester OS for debugging purposes. Please see [this article](https://harvesterhci.io/kb/package_your_own_toolbox_image/) to learn how to build and run a toolbox container.
+
+The Harvester OS also provides a way to enable the read-write mode temporarily. Please follow the following steps:
 
 :::caution
 

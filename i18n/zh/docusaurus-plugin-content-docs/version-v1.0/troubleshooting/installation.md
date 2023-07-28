@@ -95,7 +95,7 @@ $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
 - 系统信息和日志。
    - 从 v1.0.2 开始可用
 
-   请按照[登录 Harvester 安装程序（实时操作系统）](#登录到-harvester-安装程序（实时操作系统）)中的说明进行登录。然后，运行以下命令生成包含故障排除信息的 tarball：
+   请按照[登录 Harvester 安装程序（实时操作系统）](#登录到-harvester-安装程序实时操作系统)中的说明进行登录。然后，运行以下命令生成包含故障排除信息的 tarball：
 
    ```
    supportconfig -k -c
