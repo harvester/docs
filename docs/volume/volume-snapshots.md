@@ -23,7 +23,7 @@ You can create a volume snapshot from an existing volume by following these step
  ![create-volume-snapshot-2](/img/v1.2/volume/create-volume-snapshot-2.png)
 1. Select  **Create** to finish creating a new volume snapshot.
 
-1. You can check the status of this operation and view all volume snapshots from the **Backup & Snapshot > Volume Snapshots** page. When the **State** becomes **Active**, the volume snapshot is ready to use.
+1. Check the status of this operation and view all volume snapshots by going to the **Volumes** page and selecting the **Snapshots** tab. When the **Ready To Use** becomes **√**, the volume snapshot is ready to use.
 
 :::note
 
