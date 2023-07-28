@@ -3,44 +3,532 @@
     "message": "v1.2-dev",
     "description": "The label for version current"
   },
-  "sidebar.tutorialSidebar.category.Installation": {
+  "sidebar.sidebar.category.Installation": {
     "message": "安装",
-    "description": "The label for category Installation in sidebar tutorialSidebar"
+    "description": "The label for category Installation in sidebar sidebar"
   },
-  "sidebar.tutorialSidebar.category.Upgrade": {
+  "sidebar.sidebar.category.Upgrade": {
     "message": "升级",
-    "description": "The label for category Upgrade in sidebar tutorialSidebar"
+    "description": "The label for category Upgrade in sidebar sidebar"
   },
-  "sidebar.tutorialSidebar.category.Previous Releases": {
+  "sidebar.sidebar.category.Previous Releases": {
     "message": "以前的版本",
-    "description": "The label for category Previous Releases in sidebar tutorialSidebar"
+    "description": "The label for category Previous Releases in sidebar sidebar"
   },
-  "sidebar.tutorialSidebar.category.VM Management": {
+  "sidebar.sidebar.category.VM Management": {
     "message": "VM 管理",
-    "description": "The label for category VM Management in sidebar tutorialSidebar"
+    "description": "The label for category VM Management in sidebar sidebar"
   },
-  "sidebar.tutorialSidebar.category.Networking": {
-    "message": "网络",
-    "description": "The label for category Networking in sidebar tutorialSidebar"
-  },
-  "sidebar.tutorialSidebar.category.Rancher Integration": {
-    "message": "Rancher 集成",
-    "description": "The label for category Rancher Integration in sidebar tutorialSidebar"
-  },
-  "sidebar.tutorialSidebar.category.Harvester Node Driver": {
-    "message": "Harvester Node Driver",
-    "description": "The label for category Harvester Node Driver in sidebar tutorialSidebar"
-  },
-  "sidebar.tutorialSidebar.category.Troubleshooting": {
-    "message": "故障排除",
-    "description": "The label for category Troubleshooting in sidebar tutorialSidebar"
-  },
-  "sidebar.tutorialSidebar.category.Advanced": {
-    "message": "高级设置",
-    "description": "The label for category Advanced in sidebar tutorialSidebar"
-  },
-  "sidebar.tutorialSidebar.category.Volume Management": {
+  "sidebar.sidebar.category.Volume Management": {
     "message": "卷管理",
-    "description": "The label for category Volume Management in sidebar tutorialSidebar"
+    "description": "The label for category Volume Management in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Networking": {
+    "message": "网络",
+    "description": "The label for category Networking in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Advanced": {
+    "message": "高级设置",
+    "description": "The label for category Advanced in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Rancher Integration": {
+    "message": "Rancher 集成",
+    "description": "The label for category Rancher Integration in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Harvester Node Driver": {
+    "message": "Harvester Node Driver",
+    "description": "The label for category Harvester Node Driver in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Troubleshooting": {
+    "message": "故障排除",
+    "description": "The label for category Troubleshooting in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.API": {
+    "message": "API",
+    "description": "The label for category API in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.API.link.generated-index.title": {
+    "message": "Harvester API",
+    "description": "The generated-index page title for category API in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.API.link.generated-index.description": {
+    "message": "This is the API doc of the Harvester server. The APIs are broken down into the categories below:",
+    "description": "The generated-index page description for category API in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Volumes": {
+    "message": "Volumes",
+    "description": "The label for category Volumes in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.SSH Keys": {
+    "message": "SSH Keys",
+    "description": "The label for category SSH Keys in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Support Bundles": {
+    "message": "Support Bundles",
+    "description": "The label for category Support Bundles in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Upgrades": {
+    "message": "Upgrades",
+    "description": "The label for category Upgrades in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Backups": {
+    "message": "Backups",
+    "description": "The label for category Backups in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Images": {
+    "message": "Images",
+    "description": "The label for category Images in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Restores": {
+    "message": "Restores",
+    "description": "The label for category Restores in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Virtual Machine Templates": {
+    "message": "Virtual Machine Templates",
+    "description": "The label for category Virtual Machine Templates in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Networks": {
+    "message": "Networks",
+    "description": "The label for category Networks in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Migrations": {
+    "message": "Migrations",
+    "description": "The label for category Migrations in sidebar sidebar"
+  },
+  "sidebar.sidebar.category.Virtual Machines": {
+    "message": "Virtual Machines",
+    "description": "The label for category Virtual Machines in sidebar sidebar"
+  },
+  "sidebar.sidebar.doc.Overview": {
+    "message": "Overview",
+    "description": "The label for the doc item Overview in sidebar sidebar, linking to the doc overview"
+  },
+  "sidebar.sidebar.doc.AirGap": {
+    "message": "AirGap",
+    "description": "The label for the doc item AirGap in sidebar sidebar, linking to the doc airgap"
+  },
+  "sidebar.sidebar.doc.Authentication": {
+    "message": "Authentication",
+    "description": "The label for the doc item Authentication in sidebar sidebar, linking to the doc authentication"
+  },
+  "sidebar.sidebar.doc.Upload Image": {
+    "message": "Upload Image",
+    "description": "The label for the doc item Upload Image in sidebar sidebar, linking to the doc upload-image"
+  },
+  "sidebar.sidebar.doc.Host Management": {
+    "message": "Host Management",
+    "description": "The label for the doc item Host Management in sidebar sidebar, linking to the doc host/host-management"
+  },
+  "sidebar.sidebar.doc.Logging": {
+    "message": "Logging",
+    "description": "The label for the doc item Logging in sidebar sidebar, linking to the doc logging/harvester-logging"
+  },
+  "sidebar.sidebar.doc.Monitoring": {
+    "message": "Monitoring",
+    "description": "The label for the doc item Monitoring in sidebar sidebar, linking to the doc monitoring/harvester-monitoring"
+  },
+  "sidebar.sidebar.doc.Terraform": {
+    "message": "Terraform",
+    "description": "The label for the doc item Terraform in sidebar sidebar, linking to the doc terraform/terraform-provider"
+  },
+  "sidebar.sidebar.doc.FAQ": {
+    "message": "FAQ",
+    "description": "The label for the doc item FAQ in sidebar sidebar, linking to the doc faq"
+  },
+  "sidebar.sidebar.doc.List Persistent Volume Claims": {
+    "message": "List Persistent Volume Claims",
+    "description": "The label for the doc item List Persistent Volume Claims in sidebar sidebar, linking to the doc api/list-namespaced-persistent-volume-claim"
+  },
+  "sidebar.sidebar.doc.Create a Persistent Volume Claim": {
+    "message": "Create a Persistent Volume Claim",
+    "description": "The label for the doc item Create a Persistent Volume Claim in sidebar sidebar, linking to the doc api/create-namespaced-persistent-volume-claim"
+  },
+  "sidebar.sidebar.doc.Read a Persistent Volume Claim": {
+    "message": "Read a Persistent Volume Claim",
+    "description": "The label for the doc item Read a Persistent Volume Claim in sidebar sidebar, linking to the doc api/read-namespaced-persistent-volume-claim"
+  },
+  "sidebar.sidebar.doc.Replace a Persistent Volume Claim": {
+    "message": "Replace a Persistent Volume Claim",
+    "description": "The label for the doc item Replace a Persistent Volume Claim in sidebar sidebar, linking to the doc api/replace-namespaced-persistent-volume-claim"
+  },
+  "sidebar.sidebar.doc.Delete a Persistent Volume Claim": {
+    "message": "Delete a Persistent Volume Claim",
+    "description": "The label for the doc item Delete a Persistent Volume Claim in sidebar sidebar, linking to the doc api/delete-namespaced-persistent-volume-claim"
+  },
+  "sidebar.sidebar.doc.Patch a Persistent Volume Claim": {
+    "message": "Patch a Persistent Volume Claim",
+    "description": "The label for the doc item Patch a Persistent Volume Claim in sidebar sidebar, linking to the doc api/patch-namespaced-persistent-volume-claim"
+  },
+  "sidebar.sidebar.doc.List Persistent Volume Claims in all Namespaces": {
+    "message": "List Persistent Volume Claims in all Namespaces",
+    "description": "The label for the doc item List Persistent Volume Claims in all Namespaces in sidebar sidebar, linking to the doc api/list-persistent-volume-claim-for-all-namespaces"
+  },
+  "sidebar.sidebar.doc.List Key Pairs in all Namespaces": {
+    "message": "List Key Pairs in all Namespaces",
+    "description": "The label for the doc item List Key Pairs in all Namespaces in sidebar sidebar, linking to the doc api/list-key-pair-for-all-namespaces"
+  },
+  "sidebar.sidebar.doc.List Key Pairs": {
+    "message": "List Key Pairs",
+    "description": "The label for the doc item List Key Pairs in sidebar sidebar, linking to the doc api/list-namespaced-key-pair"
+  },
+  "sidebar.sidebar.doc.Create a Key Pair": {
+    "message": "Create a Key Pair",
+    "description": "The label for the doc item Create a Key Pair in sidebar sidebar, linking to the doc api/create-namespaced-key-pair"
+  },
+  "sidebar.sidebar.doc.Read a Key Pair": {
+    "message": "Read a Key Pair",
+    "description": "The label for the doc item Read a Key Pair in sidebar sidebar, linking to the doc api/read-namespaced-key-pair"
+  },
+  "sidebar.sidebar.doc.Replace a Key Pair": {
+    "message": "Replace a Key Pair",
+    "description": "The label for the doc item Replace a Key Pair in sidebar sidebar, linking to the doc api/replace-namespaced-key-pair"
+  },
+  "sidebar.sidebar.doc.Delete a Key Pair": {
+    "message": "Delete a Key Pair",
+    "description": "The label for the doc item Delete a Key Pair in sidebar sidebar, linking to the doc api/delete-namespaced-key-pair"
+  },
+  "sidebar.sidebar.doc.Patch a Key Pair": {
+    "message": "Patch a Key Pair",
+    "description": "The label for the doc item Patch a Key Pair in sidebar sidebar, linking to the doc api/patch-namespaced-key-pair"
+  },
+  "sidebar.sidebar.doc.List Support Bundles": {
+    "message": "List Support Bundles",
+    "description": "The label for the doc item List Support Bundles in sidebar sidebar, linking to the doc api/list-namespaced-support-bundle"
+  },
+  "sidebar.sidebar.doc.Create a Support Bundle": {
+    "message": "Create a Support Bundle",
+    "description": "The label for the doc item Create a Support Bundle in sidebar sidebar, linking to the doc api/create-namespaced-support-bundle"
+  },
+  "sidebar.sidebar.doc.Read a Support Bundle": {
+    "message": "Read a Support Bundle",
+    "description": "The label for the doc item Read a Support Bundle in sidebar sidebar, linking to the doc api/read-namespaced-support-bundle"
+  },
+  "sidebar.sidebar.doc.Replace a Support Bundle": {
+    "message": "Replace a Support Bundle",
+    "description": "The label for the doc item Replace a Support Bundle in sidebar sidebar, linking to the doc api/replace-namespaced-support-bundle"
+  },
+  "sidebar.sidebar.doc.Delete a Support Bundle": {
+    "message": "Delete a Support Bundle",
+    "description": "The label for the doc item Delete a Support Bundle in sidebar sidebar, linking to the doc api/delete-namespaced-support-bundle"
+  },
+  "sidebar.sidebar.doc.Patch a Support Bundle": {
+    "message": "Patch a Support Bundle",
+    "description": "The label for the doc item Patch a Support Bundle in sidebar sidebar, linking to the doc api/patch-namespaced-support-bundle"
+  },
+  "sidebar.sidebar.doc.List Support Bundles in all Namespaces": {
+    "message": "List Support Bundles in all Namespaces",
+    "description": "The label for the doc item List Support Bundles in all Namespaces in sidebar sidebar, linking to the doc api/list-support-bundle-for-all-namespaces"
+  },
+  "sidebar.sidebar.doc.List Upgrades": {
+    "message": "List Upgrades",
+    "description": "The label for the doc item List Upgrades in sidebar sidebar, linking to the doc api/list-namespaced-upgrade"
+  },
+  "sidebar.sidebar.doc.Create an Upgrade": {
+    "message": "Create an Upgrade",
+    "description": "The label for the doc item Create an Upgrade in sidebar sidebar, linking to the doc api/create-namespaced-upgrade"
+  },
+  "sidebar.sidebar.doc.Read an Upgrade": {
+    "message": "Read an Upgrade",
+    "description": "The label for the doc item Read an Upgrade in sidebar sidebar, linking to the doc api/read-namespaced-upgrade"
+  },
+  "sidebar.sidebar.doc.Replace an Upgrade": {
+    "message": "Replace an Upgrade",
+    "description": "The label for the doc item Replace an Upgrade in sidebar sidebar, linking to the doc api/replace-namespaced-upgrade"
+  },
+  "sidebar.sidebar.doc.Delete an Upgrade": {
+    "message": "Delete an Upgrade",
+    "description": "The label for the doc item Delete an Upgrade in sidebar sidebar, linking to the doc api/delete-namespaced-upgrade"
+  },
+  "sidebar.sidebar.doc.Patch an Upgrade": {
+    "message": "Patch an Upgrade",
+    "description": "The label for the doc item Patch an Upgrade in sidebar sidebar, linking to the doc api/patch-namespaced-upgrade"
+  },
+  "sidebar.sidebar.doc.List Upgrades in all Namespaces": {
+    "message": "List Upgrades in all Namespaces",
+    "description": "The label for the doc item List Upgrades in all Namespaces in sidebar sidebar, linking to the doc api/list-upgrade-for-all-namespaces"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Backups": {
+    "message": "List Virtual Machine Backups",
+    "description": "The label for the doc item List Virtual Machine Backups in sidebar sidebar, linking to the doc api/list-namespaced-virtual-machine-backup"
+  },
+  "sidebar.sidebar.doc.Create a Virtual Machine Backup": {
+    "message": "Create a Virtual Machine Backup",
+    "description": "The label for the doc item Create a Virtual Machine Backup in sidebar sidebar, linking to the doc api/create-namespaced-virtual-machine-backup"
+  },
+  "sidebar.sidebar.doc.Read a Virtual Machine Backup": {
+    "message": "Read a Virtual Machine Backup",
+    "description": "The label for the doc item Read a Virtual Machine Backup in sidebar sidebar, linking to the doc api/read-namespaced-virtual-machine-backup"
+  },
+  "sidebar.sidebar.doc.Replace a Virtual Machine Backup": {
+    "message": "Replace a Virtual Machine Backup",
+    "description": "The label for the doc item Replace a Virtual Machine Backup in sidebar sidebar, linking to the doc api/replace-namespaced-virtual-machine-backup"
+  },
+  "sidebar.sidebar.doc.Delete a Virtual Machine Backup": {
+    "message": "Delete a Virtual Machine Backup",
+    "description": "The label for the doc item Delete a Virtual Machine Backup in sidebar sidebar, linking to the doc api/delete-namespaced-virtual-machine-backup"
+  },
+  "sidebar.sidebar.doc.Patch a Virtual Machine Backup": {
+    "message": "Patch a Virtual Machine Backup",
+    "description": "The label for the doc item Patch a Virtual Machine Backup in sidebar sidebar, linking to the doc api/patch-namespaced-virtual-machine-backup"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Backups in all Namespaces": {
+    "message": "List Virtual Machine Backups in all Namespaces",
+    "description": "The label for the doc item List Virtual Machine Backups in all Namespaces in sidebar sidebar, linking to the doc api/list-virtual-machine-backup-for-all-namespaces"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Images": {
+    "message": "List Virtual Machine Images",
+    "description": "The label for the doc item List Virtual Machine Images in sidebar sidebar, linking to the doc api/list-namespaced-virtual-machine-image"
+  },
+  "sidebar.sidebar.doc.Create a Virtual Machine Image": {
+    "message": "Create a Virtual Machine Image",
+    "description": "The label for the doc item Create a Virtual Machine Image in sidebar sidebar, linking to the doc api/create-namespaced-virtual-machine-image"
+  },
+  "sidebar.sidebar.doc.Read a Virtual Machine Image": {
+    "message": "Read a Virtual Machine Image",
+    "description": "The label for the doc item Read a Virtual Machine Image in sidebar sidebar, linking to the doc api/read-namespaced-virtual-machine-image"
+  },
+  "sidebar.sidebar.doc.Replace a Virtual Machine Image": {
+    "message": "Replace a Virtual Machine Image",
+    "description": "The label for the doc item Replace a Virtual Machine Image in sidebar sidebar, linking to the doc api/replace-namespaced-virtual-machine-image"
+  },
+  "sidebar.sidebar.doc.Delete a Virtual Machine Image": {
+    "message": "Delete a Virtual Machine Image",
+    "description": "The label for the doc item Delete a Virtual Machine Image in sidebar sidebar, linking to the doc api/delete-namespaced-virtual-machine-image"
+  },
+  "sidebar.sidebar.doc.Patch a Virtual Machine Image": {
+    "message": "Patch a Virtual Machine Image",
+    "description": "The label for the doc item Patch a Virtual Machine Image in sidebar sidebar, linking to the doc api/patch-namespaced-virtual-machine-image"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Images in all Namespaces": {
+    "message": "List Virtual Machine Images in all Namespaces",
+    "description": "The label for the doc item List Virtual Machine Images in all Namespaces in sidebar sidebar, linking to the doc api/list-virtual-machine-image-for-all-namespaces"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Restores": {
+    "message": "List Virtual Machine Restores",
+    "description": "The label for the doc item List Virtual Machine Restores in sidebar sidebar, linking to the doc api/list-namespaced-virtual-machine-restore"
+  },
+  "sidebar.sidebar.doc.Create a Virtual Machine Restore": {
+    "message": "Create a Virtual Machine Restore",
+    "description": "The label for the doc item Create a Virtual Machine Restore in sidebar sidebar, linking to the doc api/create-namespaced-virtual-machine-restore"
+  },
+  "sidebar.sidebar.doc.Read a Virtual Machine Restore": {
+    "message": "Read a Virtual Machine Restore",
+    "description": "The label for the doc item Read a Virtual Machine Restore in sidebar sidebar, linking to the doc api/read-namespaced-virtual-machine-restore"
+  },
+  "sidebar.sidebar.doc.Replace a Virtual Machine Restore": {
+    "message": "Replace a Virtual Machine Restore",
+    "description": "The label for the doc item Replace a Virtual Machine Restore in sidebar sidebar, linking to the doc api/replace-namespaced-virtual-machine-restore"
+  },
+  "sidebar.sidebar.doc.Delete a Virtual Machine Restore": {
+    "message": "Delete a Virtual Machine Restore",
+    "description": "The label for the doc item Delete a Virtual Machine Restore in sidebar sidebar, linking to the doc api/delete-namespaced-virtual-machine-restore"
+  },
+  "sidebar.sidebar.doc.Patch a Virtual Machine Restore": {
+    "message": "Patch a Virtual Machine Restore",
+    "description": "The label for the doc item Patch a Virtual Machine Restore in sidebar sidebar, linking to the doc api/patch-namespaced-virtual-machine-restore"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Restores in all Namespaces": {
+    "message": "List Virtual Machine Restores in all Namespaces",
+    "description": "The label for the doc item List Virtual Machine Restores in all Namespaces in sidebar sidebar, linking to the doc api/list-virtual-machine-restore-for-all-namespaces"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Templates": {
+    "message": "List Virtual Machine Templates",
+    "description": "The label for the doc item List Virtual Machine Templates in sidebar sidebar, linking to the doc api/list-namespaced-virtual-machine-template"
+  },
+  "sidebar.sidebar.doc.Create a Virtual Machine Template": {
+    "message": "Create a Virtual Machine Template",
+    "description": "The label for the doc item Create a Virtual Machine Template in sidebar sidebar, linking to the doc api/create-namespaced-virtual-machine-template"
+  },
+  "sidebar.sidebar.doc.Read a Virtual Machine Template": {
+    "message": "Read a Virtual Machine Template",
+    "description": "The label for the doc item Read a Virtual Machine Template in sidebar sidebar, linking to the doc api/read-namespaced-virtual-machine-template"
+  },
+  "sidebar.sidebar.doc.Replace a Virtual Machine Template": {
+    "message": "Replace a Virtual Machine Template",
+    "description": "The label for the doc item Replace a Virtual Machine Template in sidebar sidebar, linking to the doc api/replace-namespaced-virtual-machine-template"
+  },
+  "sidebar.sidebar.doc.Delete a Virtual Machine Template": {
+    "message": "Delete a Virtual Machine Template",
+    "description": "The label for the doc item Delete a Virtual Machine Template in sidebar sidebar, linking to the doc api/delete-namespaced-virtual-machine-template"
+  },
+  "sidebar.sidebar.doc.Patch a Virtual Machine Template": {
+    "message": "Patch a Virtual Machine Template",
+    "description": "The label for the doc item Patch a Virtual Machine Template in sidebar sidebar, linking to the doc api/patch-namespaced-virtual-machine-template"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Template Versions": {
+    "message": "List Virtual Machine Template Versions",
+    "description": "The label for the doc item List Virtual Machine Template Versions in sidebar sidebar, linking to the doc api/list-namespaced-virtual-machine-template-version"
+  },
+  "sidebar.sidebar.doc.Create a Virtual Machine Template Version": {
+    "message": "Create a Virtual Machine Template Version",
+    "description": "The label for the doc item Create a Virtual Machine Template Version in sidebar sidebar, linking to the doc api/create-namespaced-virtual-machine-template-version"
+  },
+  "sidebar.sidebar.doc.Read a Virtual Machine Template Version": {
+    "message": "Read a Virtual Machine Template Version",
+    "description": "The label for the doc item Read a Virtual Machine Template Version in sidebar sidebar, linking to the doc api/read-namespaced-virtual-machine-template-version"
+  },
+  "sidebar.sidebar.doc.Replace a Virtual Machine Template Version": {
+    "message": "Replace a Virtual Machine Template Version",
+    "description": "The label for the doc item Replace a Virtual Machine Template Version in sidebar sidebar, linking to the doc api/replace-namespaced-virtual-machine-template-version"
+  },
+  "sidebar.sidebar.doc.Delete a Virtual Machine Template Version": {
+    "message": "Delete a Virtual Machine Template Version",
+    "description": "The label for the doc item Delete a Virtual Machine Template Version in sidebar sidebar, linking to the doc api/delete-namespaced-virtual-machine-template-version"
+  },
+  "sidebar.sidebar.doc.Patch a Virtual Machine Template Version": {
+    "message": "Patch a Virtual Machine Template Version",
+    "description": "The label for the doc item Patch a Virtual Machine Template Version in sidebar sidebar, linking to the doc api/patch-namespaced-virtual-machine-template-version"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Templates in all Namespaces": {
+    "message": "List Virtual Machine Templates in all Namespaces",
+    "description": "The label for the doc item List Virtual Machine Templates in all Namespaces in sidebar sidebar, linking to the doc api/list-virtual-machine-template-for-all-namespaces"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Template Versions in all Namespaces": {
+    "message": "List Virtual Machine Template Versions in all Namespaces",
+    "description": "The label for the doc item List Virtual Machine Template Versions in all Namespaces in sidebar sidebar, linking to the doc api/list-virtual-machine-template-version-for-all-namespaces"
+  },
+  "sidebar.sidebar.doc.List Network Attachment Definitions": {
+    "message": "List Network Attachment Definitions",
+    "description": "The label for the doc item List Network Attachment Definitions in sidebar sidebar, linking to the doc api/list-namespaced-network-attachment-definition"
+  },
+  "sidebar.sidebar.doc.Create a Network Attachment Definition": {
+    "message": "Create a Network Attachment Definition",
+    "description": "The label for the doc item Create a Network Attachment Definition in sidebar sidebar, linking to the doc api/create-namespaced-network-attachment-definition"
+  },
+  "sidebar.sidebar.doc.Read a Network Attachment Definition": {
+    "message": "Read a Network Attachment Definition",
+    "description": "The label for the doc item Read a Network Attachment Definition in sidebar sidebar, linking to the doc api/read-namespaced-network-attachment-definition"
+  },
+  "sidebar.sidebar.doc.Replace a Network Attachment Definition": {
+    "message": "Replace a Network Attachment Definition",
+    "description": "The label for the doc item Replace a Network Attachment Definition in sidebar sidebar, linking to the doc api/replace-namespaced-network-attachment-definition"
+  },
+  "sidebar.sidebar.doc.Delete a Network Attachment Definition": {
+    "message": "Delete a Network Attachment Definition",
+    "description": "The label for the doc item Delete a Network Attachment Definition in sidebar sidebar, linking to the doc api/delete-namespaced-network-attachment-definition"
+  },
+  "sidebar.sidebar.doc.Patch a Network Attachment Definition": {
+    "message": "Patch a Network Attachment Definition",
+    "description": "The label for the doc item Patch a Network Attachment Definition in sidebar sidebar, linking to the doc api/patch-namespaced-network-attachment-definition"
+  },
+  "sidebar.sidebar.doc.List Network Attachment Definitions in all Namespaces": {
+    "message": "List Network Attachment Definitions in all Namespaces",
+    "description": "The label for the doc item List Network Attachment Definitions in all Namespaces in sidebar sidebar, linking to the doc api/list-network-attachment-definition-for-all-namespaces"
+  },
+  "sidebar.sidebar.doc.List Cluster Networks": {
+    "message": "List Cluster Networks",
+    "description": "The label for the doc item List Cluster Networks in sidebar sidebar, linking to the doc api/list-namespaced-cluster-network"
+  },
+  "sidebar.sidebar.doc.Create a Cluster Network": {
+    "message": "Create a Cluster Network",
+    "description": "The label for the doc item Create a Cluster Network in sidebar sidebar, linking to the doc api/create-namespaced-cluster-network"
+  },
+  "sidebar.sidebar.doc.Read a Cluster Network": {
+    "message": "Read a Cluster Network",
+    "description": "The label for the doc item Read a Cluster Network in sidebar sidebar, linking to the doc api/read-namespaced-cluster-network"
+  },
+  "sidebar.sidebar.doc.Replace a Cluster Network": {
+    "message": "Replace a Cluster Network",
+    "description": "The label for the doc item Replace a Cluster Network in sidebar sidebar, linking to the doc api/replace-namespaced-cluster-network"
+  },
+  "sidebar.sidebar.doc.Delete a Cluster Network": {
+    "message": "Delete a Cluster Network",
+    "description": "The label for the doc item Delete a Cluster Network in sidebar sidebar, linking to the doc api/delete-namespaced-cluster-network"
+  },
+  "sidebar.sidebar.doc.Patch a Cluster Network": {
+    "message": "Patch a Cluster Network",
+    "description": "The label for the doc item Patch a Cluster Network in sidebar sidebar, linking to the doc api/patch-namespaced-cluster-network"
+  },
+  "sidebar.sidebar.doc.List Node Networks": {
+    "message": "List Node Networks",
+    "description": "The label for the doc item List Node Networks in sidebar sidebar, linking to the doc api/list-namespaced-node-network"
+  },
+  "sidebar.sidebar.doc.Create a Node Network": {
+    "message": "Create a Node Network",
+    "description": "The label for the doc item Create a Node Network in sidebar sidebar, linking to the doc api/create-namespaced-node-network"
+  },
+  "sidebar.sidebar.doc.Read a Node Network": {
+    "message": "Read a Node Network",
+    "description": "The label for the doc item Read a Node Network in sidebar sidebar, linking to the doc api/read-namespaced-node-network"
+  },
+  "sidebar.sidebar.doc.Replace a Node Network": {
+    "message": "Replace a Node Network",
+    "description": "The label for the doc item Replace a Node Network in sidebar sidebar, linking to the doc api/replace-namespaced-node-network"
+  },
+  "sidebar.sidebar.doc.Delete a Node Network": {
+    "message": "Delete a Node Network",
+    "description": "The label for the doc item Delete a Node Network in sidebar sidebar, linking to the doc api/delete-namespaced-node-network"
+  },
+  "sidebar.sidebar.doc.Patch a Node Network": {
+    "message": "Patch a Node Network",
+    "description": "The label for the doc item Patch a Node Network in sidebar sidebar, linking to the doc api/patch-namespaced-node-network"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Instance Migrations": {
+    "message": "List Virtual Machine Instance Migrations",
+    "description": "The label for the doc item List Virtual Machine Instance Migrations in sidebar sidebar, linking to the doc api/list-namespaced-virtual-machine-instance-migration"
+  },
+  "sidebar.sidebar.doc.Create a Virtual Machine Instance Migration": {
+    "message": "Create a Virtual Machine Instance Migration",
+    "description": "The label for the doc item Create a Virtual Machine Instance Migration in sidebar sidebar, linking to the doc api/create-namespaced-virtual-machine-instance-migration"
+  },
+  "sidebar.sidebar.doc.Read a Virtual Machine Instance Migration": {
+    "message": "Read a Virtual Machine Instance Migration",
+    "description": "The label for the doc item Read a Virtual Machine Instance Migration in sidebar sidebar, linking to the doc api/read-namespaced-virtual-machine-instance-migration"
+  },
+  "sidebar.sidebar.doc.Replace a Virtual Machine Instance Migration": {
+    "message": "Replace a Virtual Machine Instance Migration",
+    "description": "The label for the doc item Replace a Virtual Machine Instance Migration in sidebar sidebar, linking to the doc api/replace-namespaced-virtual-machine-instance-migration"
+  },
+  "sidebar.sidebar.doc.Delete a Virtual Machine Instance Migration": {
+    "message": "Delete a Virtual Machine Instance Migration",
+    "description": "The label for the doc item Delete a Virtual Machine Instance Migration in sidebar sidebar, linking to the doc api/delete-namespaced-virtual-machine-instance-migration"
+  },
+  "sidebar.sidebar.doc.Patch a Virtual Machine Instance Migration": {
+    "message": "Patch a Virtual Machine Instance Migration",
+    "description": "The label for the doc item Patch a Virtual Machine Instance Migration in sidebar sidebar, linking to the doc api/patch-namespaced-virtual-machine-instance-migration"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Instance Migrations in all Namespaces": {
+    "message": "List Virtual Machine Instance Migrations in all Namespaces",
+    "description": "The label for the doc item List Virtual Machine Instance Migrations in all Namespaces in sidebar sidebar, linking to the doc api/list-virtual-machine-instance-migration-for-all-namespaces"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Instances": {
+    "message": "List Virtual Machine Instances",
+    "description": "The label for the doc item List Virtual Machine Instances in sidebar sidebar, linking to the doc api/list-namespaced-virtual-machine-instance"
+  },
+  "sidebar.sidebar.doc.Read a Virtual Machine Instance": {
+    "message": "Read a Virtual Machine Instance",
+    "description": "The label for the doc item Read a Virtual Machine Instance in sidebar sidebar, linking to the doc api/read-namespaced-virtual-machine-instance"
+  },
+  "sidebar.sidebar.doc.List Virtual Machines": {
+    "message": "List Virtual Machines",
+    "description": "The label for the doc item List Virtual Machines in sidebar sidebar, linking to the doc api/list-namespaced-virtual-machine"
+  },
+  "sidebar.sidebar.doc.Create a Virtual Machine": {
+    "message": "Create a Virtual Machine",
+    "description": "The label for the doc item Create a Virtual Machine in sidebar sidebar, linking to the doc api/create-namespaced-virtual-machine"
+  },
+  "sidebar.sidebar.doc.Read a Virtual Machine": {
+    "message": "Read a Virtual Machine",
+    "description": "The label for the doc item Read a Virtual Machine in sidebar sidebar, linking to the doc api/read-namespaced-virtual-machine"
+  },
+  "sidebar.sidebar.doc.Replace a Virtual Machine": {
+    "message": "Replace a Virtual Machine",
+    "description": "The label for the doc item Replace a Virtual Machine in sidebar sidebar, linking to the doc api/replace-namespaced-virtual-machine"
+  },
+  "sidebar.sidebar.doc.Delete a Virtual Machine": {
+    "message": "Delete a Virtual Machine",
+    "description": "The label for the doc item Delete a Virtual Machine in sidebar sidebar, linking to the doc api/delete-namespaced-virtual-machine"
+  },
+  "sidebar.sidebar.doc.Patch a Virtual Machine": {
+    "message": "Patch a Virtual Machine",
+    "description": "The label for the doc item Patch a Virtual Machine in sidebar sidebar, linking to the doc api/patch-namespaced-virtual-machine"
+  },
+  "sidebar.sidebar.doc.List Virtual Machine Instances in all Namespaces": {
+    "message": "List Virtual Machine Instances in all Namespaces",
+    "description": "The label for the doc item List Virtual Machine Instances in all Namespaces in sidebar sidebar, linking to the doc api/list-virtual-machine-instance-for-all-namespaces"
+  },
+  "sidebar.sidebar.doc.List Virtual Machines in all Namespaces": {
+    "message": "List Virtual Machines in all Namespaces",
+    "description": "The label for the doc item List Virtual Machines in all Namespaces in sidebar sidebar, linking to the doc api/list-virtual-machine-for-all-namespaces"
   }
 }
