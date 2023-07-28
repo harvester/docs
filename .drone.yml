@@ -42,7 +42,7 @@ steps:
         path: /var/run/docker.sock
 
   - name: preview
-    image: chhooo/drone-netlify:v0.1.1
+    image: ghcr.io/harvester/drone-netlify:master
     environment:
       BUILD_ZIP_FILE: "build.zip"
       NETLIFY_AUTH_TOKEN:

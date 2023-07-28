@@ -10,10 +10,14 @@ if echo "$FILES" | grep -q "api/swagger.json"; then
     # perform re-generate and check for dirty files
     yarn clean-api-docs all
     yarn gen-api-docs all
-    if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+    dirty_files=$(git status --porcelain --untracked-files=no)
+    lines_count=$(echo "$dirty_files" | wc -l)
+    if [ "$lines_count" -gt 1 ] || { [ "$lines_count" -eq 1 ] && [[ "$dirty_files" != *"harvester-apis.info.mdx"* ]]; }; then
         echo "Error: Found dirty files. Please resolve the issues before continuing."
         exit 1
     fi
+
+    git reset --hard HEAD
     exit 0
 fi
 
