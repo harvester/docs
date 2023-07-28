@@ -111,7 +111,7 @@ You must first manually install your CSI driver. Then create a new StorageClass 
 
 ### Parameters
 
-Edit the `csi-driver-config` setting to add the provisioner for the newly added CSI driver.
+Edit the [`csi-driver-config`](docs/advanced/settings.md#csi-driver-config) setting to add the provisioner for the newly added CSI driver.
 
 ## Appendix - Use Case
 
