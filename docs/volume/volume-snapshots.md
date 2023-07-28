@@ -23,22 +23,30 @@ A recurring snapshot is currently not supported and is tracked via [harvester/ha
 After creating a volume, you can create volume snapshots by following the steps below:
 
 1. Click the `⋮` button and select the `Take Snapshot` option.
+
+    ![create-volume-snapshot-1](/img/v1.2/volume/create-volume-snapshot-1.png)
+
 1. Configure the `Name` of the new image and click `Create`.
 
-![create-volume-snapshot-1](/img/v1.2/volume/create-volume-snapshot-1.png)
-![create-volume-snapshot-2](/img/v1.2/volume/create-volume-snapshot-2.png)
+    ![create-volume-snapshot-2](/img/v1.2/volume/create-volume-snapshot-2.png)
 
 ## Restore a New Volume using Volume Snapshot
 
 After creating a volume snapshot, you can restore a new volume using the volume snapshot by following the steps below:
 
 1. Go to the `Backup & Snapshot > Volume Snapshots` page or the `Snapshots` tab in each `Volumes` Detail page.
-1. Click the `⋮` button and select the `Restore` option.
-1. Specify the `Name` of the new Volume.
-1. If the source volume is not an image volume, you can also select a different `StorageClass`.
-1. Click `Create`.
 
-![restore-volume-snapshot-1](/img/v1.2/volume/restore-volume-snapshot-1.png)
-![restore-volume-snapshot-2](/img/v1.2/volume/restore-volume-snapshot-2.png)
-![restore-volume-snapshot-3](/img/v1.2/volume/restore-volume-snapshot-3.png)
-![restore-volume-snapshot-4](/img/v1.2/volume/restore-volume-snapshot-4.png)
+    ![restore-volume-snapshot-1](/img/v1.2/volume/restore-volume-snapshot-1.png)
+
+1. Click the `⋮` button and select the `Restore` option.
+
+    ![restore-volume-snapshot-2](/img/v1.2/volume/restore-volume-snapshot-2.png)
+
+1. Specify the `Name` of the new Volume.
+    ![restore-volume-snapshot-3](/img/v1.2/volume/restore-volume-snapshot-3.png)
+
+1. If the source volume is not an image volume, you can also select a different `StorageClass`.
+
+    ![restore-volume-snapshot-4](/img/v1.2/volume/restore-volume-snapshot-4.png)
+
+1. Click `Create`.
