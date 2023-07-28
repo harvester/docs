@@ -85,7 +85,7 @@ _从 v1.1.0 起可用_
 
 ## 修改 SSL/TLS 启用的协议和密码后无法访问 Harvester
 
-如果你修改了 [SSL/TLS 启用的协议和密码设置](../advanced/settings.md#ssl-参数)后无法访问 Harvester GUI 和 API，很有可能是由于错误配置的 SSL/TLS 协议和密码导致 NGINX Ingress Controller 停止运行。
+如果你修改了 [SSL/TLS 启用的协议和密码设置](../advanced/settings.md#ssl-parameters)后无法访问 Harvester GUI 和 API，很有可能是由于错误配置的 SSL/TLS 协议和密码导致 NGINX Ingress Controller 停止运行。
 请按照以下步骤来进行重置：
 
 1. 按照[常见问题](../faq.md)的描述 SSH 到 Harvester 节点，并切换成 `root` 用户：

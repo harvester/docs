@@ -11,6 +11,10 @@ keywords:
 Description: Live migration means moving a virtual machine to a different host without downtime.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/vm/live-migration"/>
+</head>
+
 Live migration means moving a virtual machine to a different host without downtime.
 
 :::note
@@ -29,6 +33,10 @@ Live migration means moving a virtual machine to a different host without downti
 1. Choose the node to which you want to migrate the virtual machine. Click **Apply**.
 
 ![](/img/v1.2/vm/migrate-action.png)
+
+When you have [node scheduling rules](https://docs.harvesterhci.io/v1.1/vm/create-windows-vm/#node-scheduling-tab) configured for a VM, you must ensure that the target nodes you are migrating to meet the VM's runtime requirements. The list of nodes you get to search and select from will be generated based on:
+- VM scheduling rules.
+- Possibly node rules from the network configuration.
 
 ![](/img/v1.2/vm/migrate.png)
 

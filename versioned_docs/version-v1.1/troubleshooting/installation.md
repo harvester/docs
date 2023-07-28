@@ -4,6 +4,10 @@ sidebar_label: Installation
 title: "Installation"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/troubleshooting/installation"/>
+</head>
+
 The following sections contain tips to troubleshoot or get assistance with failed installations.
 
 ## Logging into the Harvester Installer (a live OS)
@@ -15,7 +19,7 @@ Users can press the key combination `CTRL + ALT + F2` to switch to another TTY a
 
 ## Meeting hardware requirements
 
-- Check that your hardware meets the [minimum requirements](../index.md#hardware-requirements) to complete installation.
+- Check that your hardware meets the [minimum requirements](../install/requirements.md#hardware-requirements) to complete installation.
 
 ## Receiving the message `"Loading images. This may take a few minutes..."`
 

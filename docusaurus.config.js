@@ -83,19 +83,12 @@ const config = {
       items: [
         {
           type: 'docsVersionDropdown',
-          position: 'right',
+          position: 'left',
           dropdownActiveClassDisabled: true,
         },
         {
           type: "localeDropdown",
           position: "right",
-        },
-        {
-          type: 'doc',
-          docId: 'index',
-          position: "right",
-          label: "Docs",
-          className: "navbar__docs",
         },
         {
           href: "https://www.suse.com/c/?s=harvester",
@@ -108,6 +101,11 @@ const config = {
           position: "right",
           label: "Knowledge Base",
           className: "navbar__kb",
+        },
+        {
+          href: 'https://www.rancher.com',
+          label: 'Rancher Home',
+          position: 'right',
         },
         {
           href: "https://github.com/harvester/harvester",

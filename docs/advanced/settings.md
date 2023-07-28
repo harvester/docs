@@ -4,6 +4,10 @@ sidebar_label: Settings
 title: "Settings"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/advanced/settings"/>
+</head>
+
 This page contains a list of advanced settings which can be used in Harvester.
 You can modify the custom resource `settings.harvesterhci.io` from the Dashboard UI or with the `kubectl` command.
 
@@ -136,6 +140,7 @@ The following options and values can be set:
 :::caution
 
 If you configure `httpProxy` and `httpsProxy`, you must also put Harvester node's CIDR into `noProxy`, otherwise the Harvester cluster will be broken.
+If you also configure `cluster-registration-url`, you usually need to add the host of `cluster-registration-url` to `noProxy` as well, otherwise you cannot access the Harvester cluster from Rancher.
 
 :::
 

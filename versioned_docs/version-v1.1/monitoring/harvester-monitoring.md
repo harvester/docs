@@ -4,6 +4,10 @@ sidebar_label: Monitoring
 title: "Monitoring"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/monitoring/harvester-monitoring"/>
+</head>
+
 _Available as of v0.3.0_
 
 ## Dashboard Metrics
@@ -12,7 +16,7 @@ Harvester has provided a built-in monitoring integration using [Prometheus](http
 From the `Dashboard` page, users can view the cluster metrics and top 10 most used VM metrics respectively.
 Also, users can click the [Grafana](http://grafana.com/) dashboard link to view more dashboards on the Grafana UI.
 
-![](/img/v1.2/monitoring/monitoring-dashboard.png)
+![](/img/v1.1/monitoring/monitoring-dashboard.png)
 
 :::note
 
@@ -20,7 +24,7 @@ Only admin users are able to view the cluster dashboard metrics.
 
 Additionally, Grafana is provided by `rancher-monitoring`, so the default admin password is: prom-operator
 
-Reference: [values.yaml](https://github.com/rancher/charts/blob/dev-v2.7/charts/rancher-project-monitoring/1.1.0%2Bup0.2.0-rc1/values.yaml#L698)
+Reference: [values.yaml](https://github.com/rancher/charts/tree/dev-v2.7/charts/rancher-project-monitoring)
 :::
 
 
@@ -28,7 +32,7 @@ Reference: [values.yaml](https://github.com/rancher/charts/blob/dev-v2.7/charts/
 
 For VMs, you can view VM metrics by clicking on the `VM details page > VM Metrics`.
 
-![](/img/v1.2/monitoring/vm-metrics.png)
+![](/img/v1.1/monitoring/vm-metrics.png)
 
 :::note
 
@@ -64,7 +68,7 @@ Currently, `Resources Settings` can be configured for the following components:
 On the `Monitoring & Logging` page, you can view and change the resource settings as follows:
 
 1. Navigate to the `Monitoring > Configuration` page.
-![](/img/v1.2/monitoring/monitoring-config.png)
+![](/img/v1.1/monitoring/monitoring-config.png)
 
 1. Click `Save` and the `Monitoring` resource will be restarted within a few seconds. Please be aware that the reboot can take some time to reload previous data.
 
@@ -122,7 +126,7 @@ _Available as of v1.1.0_
 
 `Alertmanager` is enabled by default. You may disable it from the following config path.
 
-![](/img/v1.2/monitoring/alertmanager-config-enable-and-resource.png)
+![](/img/v1.1/monitoring/alertmanager-config-enable-and-resource.png)
 
 #### Change Resource Setting
 
@@ -136,23 +140,23 @@ On the WebUI, navigate to `Monitoring & Logging` -> `Monitoring` -> `Alertmanage
 
 On the `Alertmanager Config: Create` page, click `Namespace` to select the target namespace from the drop-down list and set the `Name`. After this, click `Create` in the lower right corner.
 
-![](/img/v1.2/monitoring/alertmanager-config-create-1.png)
+![](/img/v1.1/monitoring/alertmanager-config-create-1.png)
 
 Click the `Alertmanager Configs` you just created to continue the configuration.
 
-![](/img/v1.2/monitoring/view-alertmanager-config.png)
+![](/img/v1.1/monitoring/view-alertmanager-config.png)
 
 Click `Add Receiver`.
 
-![](/img/v1.2/monitoring/prepare-to-add-receiver.png)
+![](/img/v1.1/monitoring/prepare-to-add-receiver.png)
 
 Set the `Name` for the receiver. After this, select the receiver type, for example, `Webhook`, and click `Add Webhook`.
 
-![](/img/v1.2/monitoring/webhook-receiver-1.png)
+![](/img/v1.1/monitoring/webhook-receiver-1.png)
 
 Fill in the required parameters and click `Create`.
 
-![](/img/v1.2/monitoring/webhook-receiver-2.png)
+![](/img/v1.1/monitoring/webhook-receiver-2.png)
 
 #### Configure AlertmanagerConfig from CLI
 
@@ -236,11 +240,11 @@ You can visit the original dashboard of `Alertmanager` from the link below. Note
 
 The overall view of the `Alertmanager` dashboard is as follows.
 
-![](/img/v1.2/monitoring/alertmanager-dashboard.png)
+![](/img/v1.1/monitoring/alertmanager-dashboard.png)
 
 You can view the details of an alert:
 
-![](/img/v1.2/monitoring/alert-view-detail.png)
+![](/img/v1.1/monitoring/alert-view-detail.png)
 
 #### From Prometheus Dashboard
 
@@ -250,7 +254,7 @@ You can visit the original dashboard of `Prometheus` from the link below. Note t
 
 The `Alerts` menu in the top navigation bar shows all defined rules in Prometheus. You can use the filters `Inactive`, `Pending`, and `Firing` to quickly find the information that you need.
 
-![](/img/v1.2/monitoring/prometheus-original-alerts.png)
+![](/img/v1.1/monitoring/prometheus-original-alerts.png)
 
 
 ## Troubleshooting

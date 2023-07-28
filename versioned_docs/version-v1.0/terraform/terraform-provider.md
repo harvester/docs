@@ -4,10 +4,14 @@ sidebar_label: Harvester Terraform Provider
 title: "Harvester Terraform Provider"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/terraform/terraform-provider"/>
+</head>
+
 ## Requirements
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 0.13.x
-- [Go](https://golang.org/doc/install) 1.18 to build the provider plugin
+- [Go](https://go.dev/doc/install) 1.18 to build the provider plugin
 
 ## Install The Provider
 

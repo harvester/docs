@@ -15,7 +15,7 @@ title: "安装"
 
 ## 满足硬件要求
 
-- 检查你的硬件是否满足完成安装的[最低要求](../index.md#硬件要求)。
+- 检查你的硬件是否满足完成安装的[最低要求](../install/requirements.md#硬件要求)。
 
 ## 收到提示信息：`"Loading images. This may take a few minutes..."`
 
@@ -95,7 +95,7 @@ $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
 - 系统信息和日志。
    - 从 v1.0.2 开始可用
 
-   请按照[登录 Harvester 安装程序（实时操作系统）](#登录到-harvester-安装程序（实时操作系统）)中的说明进行登录。然后，运行以下命令生成包含故障排除信息的 tarball：
+   请按照[登录 Harvester 安装程序（实时操作系统）](#登录到-harvester-安装程序实时操作系统)中的说明进行登录。然后，运行以下命令生成包含故障排除信息的 tarball：
 
    ```
    supportconfig -k -c

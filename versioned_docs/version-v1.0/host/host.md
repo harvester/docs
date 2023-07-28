@@ -40,7 +40,7 @@ Deleting a node is done in two phases:
 
 :::caution
 
-You will lose all data of the control plane node after deleing the RKE2 service.
+You will lose all data of the control plane node after deleting the RKE2 service.
 
 :::
 

@@ -4,6 +4,10 @@ sidebar_label: USB Installation
 title: "USB Installation"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/install/usb-install"/>
+</head>
+
 ## Create a bootable USB flash drive
 
 There are a couple of ways to create a USB installation flash drive.

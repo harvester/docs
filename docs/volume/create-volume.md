@@ -7,6 +7,10 @@ keywords:
 Description: Create a volume from the Volume page.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/volume/create-volume"/>
+</head>
+
 ## Create an Empty Volume
 
 ### Header Section
