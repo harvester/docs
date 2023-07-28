@@ -31,4 +31,4 @@ If you specify a size larger than Longhorn's capacity during the expansion, the 
 The StorageClass of an existing volume cannot be changed. However, you can change the StorageClass while restoring a new volume from the snapshot by following the steps below:
 
 1. [Take a volume snapshot](./volume-snapshots.md#create-volume-snapshots).
-2. Select StorageClass when [restoring the volume using snapshot](./volume-snapshots.md#restore-a-new-volume-using-volume-snapshot).
+2. Select StorageClass when [restoring the volume using snapshot](./volume-snapshots.md#restore-a-new-volume-from-a-volume-snapshot).
