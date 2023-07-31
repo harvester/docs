@@ -62,7 +62,8 @@ install:
       hwAddr: "B8:CA:3A:6A:64:7C"
     method: dhcp
   force_efi: true
-  device: /dev/vda
+  device: /dev/sda
+  data_disk: /dev/sdb
   silent: true
   iso_url: http://myserver/test.iso
   poweroff: true
@@ -426,6 +427,8 @@ Force EFI installation even when EFI is not detected. Default: `false`.
 
 The device to install the OS.
 
+Prefer to use `/dev/disk/by-id/$id` or `/dev/disk/by-path/$path` to specify the storage device if your machine contains multiple physical volumes via pxe installation.
+
 ### `install.silent`
 
 Reserved.
@@ -523,6 +526,8 @@ _Available as of v1.0.1_
 
 Sets the default storage device to store the VM data.
 
+Prefer to use `/dev/disk/by-id/$id` or `/dev/disk/by-path/$path` to specify the storage device if your machine contains multiple physical volumes via pxe installation.
+
 Default: Same storage device as the one set for [`install.device`](#installdevice)
 
 #### Example
@@ -530,6 +535,31 @@ Default: Same storage device as the one set for [`install.device`](#installdevic
 ```yaml
 install:
   data_disk: /dev/sdb
+```
+
+### `install.harvester.storage_class.replica_count`
+
+_Available as of v1.1.2_
+
+#### Definition
+
+Sets the replica count of Harvester's default storage class `harvester-longhorn`.
+
+Default: 3
+
+Supported values: 1, 2, 3. All other values are considered 3.
+
+In edge scenarios where users may deploy single-node Harvester clusters, they can set this value to 1. In most scenarios, it is recommended to keep the default value 3 for storage high availability.
+
+Please refer to [longhorn-replica-count](https://longhorn.io/docs/1.4.1/references/settings/#default-replica-count) for more details.
+
+#### Example
+
+```yaml
+install:
+  harvester:
+    storage_class:
+      replica_count: 1
 ```
 
 ### `system_settings`
