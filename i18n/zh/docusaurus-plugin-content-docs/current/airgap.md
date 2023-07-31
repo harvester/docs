@@ -42,13 +42,13 @@ Harvester 在用户配置的 `no-proxy` 后附加必要的地址，来确保内�
 
 :::
 
-## 来宾集群镜像
+## Guest 集群镜像
 
 安装和运行 Harvester 所需的所有镜像都打包在 ISO 中，因此你无需在裸机节点上预加载镜像。Harvester 集群在后台独立且高效地管理它们。
 
-但是，由 [Harvester 主机驱动](./rancher/node/node-driver.md)创建的来宾 K8s 集群（例如 RKE2 集群）是与 Harvester 集群不同的实体。来宾集群在虚拟机内运行，需要从互联网或[私有镜像仓库](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/global-default-private-registry#configure-a-private-registry-with-credentials-when-creating-a-cluster)拉取镜像。
+但是，由 [Harvester 主机驱动](./rancher/node/node-driver.md)创建的 Guest K8s 集群（例如 RKE2 集群）是与 Harvester 集群不同的实体。Guest 集群在虚拟机内运行，需要从互联网或[私有镜像仓库](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/global-default-private-registry#configure-a-private-registry-with-credentials-when-creating-a-cluster)拉取镜像。
 
-如果在来宾 K8s 集群中将 **Cloud Provider** 选项配置为 **Harvester**，则会部署 Harvester Cloud Provider 和 Container Storage Interface (CSI) 驱动程序。
+如果在 Guest K8s 集群中将 **Cloud Provider** 选项配置为 **Harvester**，则会部署 Harvester Cloud Provider 和 Container Storage Interface (CSI) 驱动程序。
 
 ![cluster-registry](/img/v1.2/cluster-registry.png)
 

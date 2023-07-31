@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
-sidebar_label: 日志审计事件
-title: "日志审计事件"
+sidebar_label: 日志
+title: "日志"
 keywords:
 - Harvester
-- Logging
+- 日志
 - 审计
 - 事件
 ---
@@ -21,6 +21,16 @@ _从 v1.1.0 起可用_
 日志数据的大小与集群规模、工作负载等因素有关。`Harvester` 不使用持久存储在集群内存储日志数据。用户需要设置一个日志服务器来接收相应的日志。
 :::
 
+_从 v1.2.0 起可用_
+
+现在的日志功能通过插件实现，并且在新安装中默认禁用。
+
+安装后，你可以从 Harvester WebUI 启用/禁用 `rancher-logging` [插件](../advanced/addons.md)。
+
+你还可以通过自定义 [harvester-configuration](../install/harvester-configuration.md#installaddons) 文件在 Harvester 中启用/禁用 `rancher-logging` 插件。
+
+对于从 v1.1.* 升级的 Harvester 集群，日志功能会自动转换为插件并像以前一样保持启用状态。
+
 ## 上层架构
 
 [Banzai Cloud Logging Operator](https://banzaicloud.com/docs/one-eye/logging-operator/) 现在支持使用 `Harvester` 和 `Rancher` 作为内部日志解决方案。
@@ -29,7 +39,7 @@ _从 v1.1.0 起可用_
 
 在 Harvester 的实践中，`Logging`、`Audit` 和 `Event` 共享一个架构，`Logging` 是基础架构，而 `Audit` 和 `Event` 在它之上。
 
-## Logging
+## 日志
 
 Harvester 日志基础架构支持将 Harvester 日志聚合到外部服务中，例如 [Graylog](https://www.graylog.org)、[Elasticsearch](https://www.elastic.co/elasticsearch/)、[Splunk](https://www.splunk.com/)、[Grafana Loki](https://grafana.com/oss/loki/) 等。
 
