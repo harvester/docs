@@ -69,6 +69,11 @@ install:
   vip_hw_addr: 52:54:00:ec:0e:0b
   vip_mode: dhcp
   force_mbr: false
+  addons:
+    rancher-monitoring:
+      enabled: true
+    rancher-logging:
+      enabled: false
 system_settings:
   auto-disk-provision-paths: ""
 ```
@@ -435,7 +440,7 @@ install:
 
 #### 定义
 
-为`COS_PERSISTENT`分区配置大小，单位可以是`Gi`或`Mi`。这个分区用于储存如容器镜像和系统包等数据。默认以及最小值为`150Gi`。
+为 `COS_PERSISTENT` 分区配置大小，单位可以是 `Gi` 或 `Mi`。该分区用于存储系统包、容器镜像等数据。默认及最小值为 `150Gi`。
 
 #### 示例
 
@@ -527,6 +532,34 @@ _从 v1.0.1 起可用_
 install:
   data_disk: /dev/sdb
 ```
+
+### `install.addons`
+
+_从 v1.2.0 起可用_
+
+#### 定义
+
+设置 Harvester 插件的默认启用/禁用状态。
+
+默认：禁用插件。
+
+#### 示例
+
+```yaml
+install:
+  addons:
+    rancher-monitoring:
+      enabled: true
+    rancher-logging:
+      enabled: false
+```
+
+Harvester v1.2.0 附带了四个插件：
+
+- harvester-vm-import-controller
+- harvester-pcidevices-controller
+- rancher-monitoring
+- rancher-logging
 
 ### `system_settings`
 

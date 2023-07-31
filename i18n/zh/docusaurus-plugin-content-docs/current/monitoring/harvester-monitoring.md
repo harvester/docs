@@ -6,6 +6,18 @@ title: "监控"
 
 _从 v0.3.0 起可用_
 
+监控功能默认开启。
+
+_从 v1.2.0 起可用_
+
+现在的监控功能通过插件实现，并且在新安装中默认禁用。
+
+安装后，你可以从 Harvester WebUI 启用/禁用 `rancher-monitoring` [插件](../advanced/addons.md)。
+
+你还可以通过自定义 [harvester-configuration](../install/harvester-configuration.md#installaddons) 文件在 Harvester 中启用/禁用 `rancher-monitoring` 插件。
+
+对于从 v1.1.* 升级的 Harvester 集群，监控功能会自动转换为插件并像以前一样保持启用状态。
+
 ## 仪表盘指标
 Harvester 已使用 [Prometheus](https://prometheus.io/) 内置集成监控。监控会在 Harvester 安装期间自动启用。
 

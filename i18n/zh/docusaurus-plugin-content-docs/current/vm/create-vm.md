@@ -171,7 +171,7 @@ QEMU GuestAgent 是在虚拟机实例上运行的 Daemon 进程，它将有关 V
 
 ### TPM 设备
 
-_Available as of v1.2.0_
+_从 v1.2.0 起可用_
 
 [可信平台模块 (TPM)](https://en.wikipedia.org/wiki/Trusted_Platform_Module) 是一种使用加密密钥来保护硬件的加密处理器。
 
