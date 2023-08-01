@@ -211,6 +211,42 @@ os:
     path: /etc/crontab
 ```
 
+### `os.persistent_state_paths`
+
+#### Definition
+
+The `os.persistent_state_paths` option allows you to configure custom paths where modifications made to files will persist across reboots. Any changes to files in these paths will not be lost after a reboot.
+
+#### Example
+
+Refer to the following example config for installing `rook-ceph` in Harvester:
+
+```yaml
+os:
+  persistent_state_paths:
+    - /var/lib/rook
+  modules:
+    - rbd
+    - nbd
+```
+
+### `os.after_install_chroot_commands`
+
+#### Definition
+
+You can add additonal software packages with `after_install_chroot_commands`. The `after-install-chroot` stage, provided by [elemental-toolkit](https://rancher.github.io/elemental-toolkit/docs/), allows you to execute commands not restricted by file system write issues, ensuring the persistence of user-defined commands even after a system reboot.
+
+#### Example
+
+Refer to the following example config for installing an RPM package in Harvester:
+
+```yaml
+os:
+  after_install_chroot_commands:
+    - rpm -ivh <the url of rpm package>
+  
+```
+
 ### `os.hostname`
 
 #### Definition
