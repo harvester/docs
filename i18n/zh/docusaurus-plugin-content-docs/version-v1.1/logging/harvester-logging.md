@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
-sidebar_label: 日志审计事件
-title: "日志审计事件"
+sidebar_label: 日志
+title: "日志"
 keywords:
 - Harvester
-- Logging
+- 日志
 - 审计
 - 事件
 ---
@@ -29,7 +29,7 @@ _从 v1.1.0 起可用_
 
 在 Harvester 的实践中，`Logging`、`Audit` 和 `Event` 共享一个架构，`Logging` 是基础架构，而 `Audit` 和 `Event` 在它之上。
 
-## Logging
+## 日志
 
 Harvester 日志基础架构支持将 Harvester 日志聚合到外部服务中，例如 [Graylog](https://www.graylog.org)、[Elasticsearch](https://www.elastic.co/elasticsearch/)、[Splunk](https://www.splunk.com/)、[Grafana Loki](https://grafana.com/oss/loki/) 等。
 

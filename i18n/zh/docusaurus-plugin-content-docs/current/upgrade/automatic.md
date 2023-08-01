@@ -34,7 +34,7 @@ Description: 升级 Harvester 有两种方法。你可以使用 ISO 镜像或通
    - 如果需要，备份虚拟机。
 - 不要在升级期间操作集群，例如，创建新的虚拟机、上传新的镜像等。
 - 确保你的硬件符合**首选**[硬件要求](../install/requirements.md#硬件要求)。这是因为升级会消耗中间资源。
-- 确保每个节点至少有 25 GB 的可用空间 (`df -h /usr/local/`)。
+- 确保每个节点至少有 30 GiB 的可用系统分区空间 (`df -h /usr/local/`)。如果集群中任何节点的可用系统分区空间少于 30 GiB，升级将被拒绝。有关更多信息，请参阅[空闲系统分区空间要求](#空闲系统分区空间要求)。
 
 :::
 
@@ -117,3 +117,36 @@ Description: 升级 Harvester 有两种方法。你可以使用 ISO 镜像或通
    ```
 
 - Harvester GUI Dashboard 页面上应显示升级按钮。
+
+## 空闲系统分区空间要求
+
+_从 v1.2.0 起可用_
+
+Harvester v1.2.0 要求的最小空闲系统分区空间为 30 GiB，每个版本都会对此进行修改。
+
+选择 **Upgrade** 时，Harvester 将检查每个节点上的可用系统分区空间量。如果任何节点不满足要求，升级将被拒绝，如下：
+
+![](/img/v1.2/upgrade/upgrade_free_space_check.png)
+
+如果某些节点没有足够的可用系统分区空间，但你仍想尝试升级，你可以通过更新 `Version` 对象的 `harvesterhci.io/minFreeDiskSpaceGB` 注释来自定义升级。
+
+```
+apiVersion: harvesterhci.io/v1beta1
+kind: Version
+metadata:
+  annotations:
+    harvesterhci.io/minFreeDiskSpaceGB: "30" # the value is pre-defined and may be customized
+  name: 1.2.0
+  namespace: harvester-system
+spec:
+  isoChecksum: <SHA-512 checksum of the ISO>
+  isoURL: http://192.168.0.181:8000/harvester-master-amd64.iso
+  minUpgradableVersion: 1.1.2
+  releaseDate: "20230609"
+```
+
+:::caution
+
+如果你设置的值小于预定义的值，升级可能会失败，不建议在生产环境中使用。
+
+:::

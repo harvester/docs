@@ -64,7 +64,7 @@ Harvester CSI Driver 提供了一个标准的 CSI 接口，供 Harvester 中所�
 
    你可以使用 [generate_addon_csi.sh](https://raw.githubusercontent.com/harvester/harvester-csi-driver/master/deploy/generate_addon_csi.sh) 脚本生成 `kubeconfig` 文件。你可以在 [harvester/harvester-csi-driver](https://github.com/harvester/harvester-csi-driver) 仓库中找到该文件。按照以下步骤获取 `cloud-config` 和 `cloud-init` 数据：
 
-   `<serviceaccount name>` 通常对应来宾集群的名称（下图中 **Cluster Name** 的值），`<namespace>` 需要匹配来宾集群的命名空间（**Namespace** 的值）。
+   `<serviceaccount name>` 通常对应 Guest 集群的名称（下图中 **Cluster Name** 的值），`<namespace>` 需要匹配 Guest 集群的命名空间（**Namespace** 的值）。
 
    ```
    # ./generate_addon_csi.sh <serviceaccount name> <namespace> RKE2
@@ -217,7 +217,7 @@ Harvester CSI Driver 提供了一个标准的 CSI 接口，供 Harvester 中所�
 
 ### 部署
 
-1. 创建一个要在来宾 K8s 集群中使用的新 StorageClass。你可以参考 [StorageClasses](https://docs.harvesterhci.io/dev/advanced/storageclass) 了解更多详情。
+1. 创建一个要在 Guest K8s 集群中使用的新 StorageClass。你可以参考 [StorageClasses](https://docs.harvesterhci.io/dev/advanced/storageclass) 了解更多详情。
 
    如下图所示，新建一个名为 **replica-2** 的 StorageClass。
 

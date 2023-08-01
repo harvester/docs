@@ -62,7 +62,8 @@ install:
       hwAddr: "B8:CA:3A:6A:64:7C"
     method: dhcp
   force_efi: true
-  device: /dev/vda
+  device: /dev/sda
+  data_disk: /dev/sdb
   silent: true
   iso_url: http://myserver/test.iso
   poweroff: true
@@ -427,6 +428,8 @@ Force EFI installation even when EFI is not detected. Default: `false`.
 
 The device to install the OS.
 
+Prefer to use `/dev/disk/by-id/$id` or `/dev/disk/by-path/$path` to specify the storage device if your machine contains multiple physical volumes via pxe installation.
+
 ### `install.silent`
 
 Reserved.
@@ -537,6 +540,8 @@ _Available as of v1.0.1_
 
 Sets the default storage device to store the VM data.
 
+Prefer to use `/dev/disk/by-id/$id` or `/dev/disk/by-path/$path` to specify the storage device if your machine contains multiple physical volumes via pxe installation.
+
 Default: Same storage device as the one set for [`install.device`](#installdevice)
 
 #### Example
@@ -569,10 +574,91 @@ install:
 
 Harvester v1.2.0 ships with four addons:
 
- - harvester-vm-import-controller
- - harvester-pcidevices-controller
- - rancher-monitoring
- - rancher-logging
+- harvester-vm-import-controller
+- harvester-pcidevices-controller
+- rancher-monitoring
+- rancher-logging
+
+### `install.harvester.storage_class.replica_count`
+
+_Available as of v1.1.2_
+
+#### Definition
+
+Sets the replica count of Harvester's default storage class `harvester-longhorn`.
+
+Default: 3
+
+Supported values: 1, 2, 3. All other values are considered 3.
+
+In edge scenarios where users may deploy single-node Harvester clusters, they can set this value to 1. In most scenarios, it is recommended to keep the default value 3 for storage high availability.
+
+Please refer to [longhorn-replica-count](https://longhorn.io/docs/1.4.1/references/settings/#default-replica-count) for more details.
+
+#### Example
+
+```yaml
+install:
+  harvester:
+    storage_class:
+      replica_count: 1
+```
+
+### `install.harvester.longhorn.default_settings.guaranteedEngineManagerCPU`
+
+_Available as of v1.2.0_
+
+#### Definition
+
+Sets the default percentage of the total allocatable CPU on each node will be reserved for each Longhorn engine manager Pod.
+
+Default: 12
+
+Supported values: 0-12. All other values are considered 12.
+
+This integer value indicates what percentage of the total allocatable CPU on each node will be reserved for each engine manager Pod.
+
+In edge scenarios where users may deploy single-node Harvester clusters, they can set this parameter to a value smaller than 12. In most scenarios, it is recommended to keep the default value for system high availability.
+
+Before setting the value, please refer to [longhorn-guaranteed-engine-manager-cpu](https://longhorn.io/docs/1.4.1/references/settings/#guaranteed-engine-manager-cpu) for more details.
+
+#### Example
+
+```yaml
+install:
+  harvester:
+    longhorn:
+      default_settings:
+        guaranteedEngineManagerCPU: 6
+```
+
+### `install.harvester.longhorn.default_settings.guaranteedReplicaManagerCPU`
+
+_Available as of v1.2.0_
+
+#### Definition
+
+Sets the default percentage of the total allocatable CPU on each node will be reserved for each Longhorn replica manager Pod.
+
+Default: 12
+
+Supported values: 0-12. All other values are considered 12.
+
+This integer value indicates what percentage of the total allocatable CPU on each node will be reserved for each replica manager Pod.
+
+In edge scenarios where users may deploy single-node Harvester clusters, can set this parameter to a value smaller than 12. In most scenarios, it is recommended to keep the default value for system high availability.
+
+Before setting the value, please refer to [longhorn-guaranteed-replica-manager-cpu](https://longhorn.io/docs/1.4.1/references/settings/#guaranteed-replica-manager-cpu) for more details.
+
+#### Example
+
+```yaml
+install:
+  harvester:
+    longhorn:
+      default_settings:
+        guaranteedReplicaManagerCPU: 6
+```
 
 ### `system_settings`
 
