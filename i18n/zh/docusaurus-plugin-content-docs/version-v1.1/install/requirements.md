@@ -6,6 +6,7 @@ keywords:
 - 安装要求
 Description: Harvester 安装要求概述
 ---
+
 Harvester 是运行在裸机服务器上的 HCI 解决方案，要正常运行和安装 Harvester，节点硬件和网络需要满足最低要求。
 
 ## 硬件要求
