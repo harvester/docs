@@ -11,4 +11,5 @@ gh-pages -d build \
         -o origin \
         -m "deploy: ${DRONE_COMMIT}" \
         -u "${AUTHOR_USER} <${AUTHOR_EMAIL}>" \
-        -r ${GITHUB_REPO_WITH_TOKEN}
+        -r ${GITHUB_REPO_WITH_TOKEN} \
+        -b gh-pages-test

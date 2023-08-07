@@ -106,6 +106,6 @@ volumes:
 
 trigger:
   branch:
-    - main
+    - test-ci
   event:
     - push
