@@ -37,5 +37,5 @@ Example of output:
 The management address has two usages.
 
 - Allows the access to the Harvester API/UI via `HTTPS` protocol.
-- Is the address the other nodes use to join the cluster.
+- Allows other nodes to join the cluster.
   ![](/img/v1.2/install/configure-management-address.png)

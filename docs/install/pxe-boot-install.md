@@ -28,7 +28,7 @@ To see sample iPXE scripts, please visit [Harvester iPXE Examples](https://githu
 
 :::info
 
-Nodes need to have at least **8G** of RAM because the installer loads the full ISO file into tmpfs.
+Nodes need to have at least **8 GB** of RAM because the installer loads the full ISO file into tmpfs.
 
 :::
 
