@@ -15,7 +15,7 @@ Before you contribute, please read the table below first to ensure that you are 
 
 ## Installation
 
-```console
+```console 
 yarn install
 ```
 
