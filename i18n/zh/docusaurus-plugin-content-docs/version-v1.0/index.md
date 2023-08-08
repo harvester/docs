@@ -51,7 +51,7 @@ Harvester 支持在裸机服务器上实施 HCI。Harvester 使用本地、直�
 | CPU | 仅支持 x86_64。需要硬件辅助虚拟化。最少需要 8 核处理器，建议使用 16 核处理器。 |
 | 内存 | 32 GB（至少），建议使用 64 GB 或以上的内存。 |
 | 磁盘容量 | 140 GB（至少）用于测试，建议在生产中使用 500 GB 或以上的磁盘。 |
-| 磁盘性能 | 每个磁盘 5,000+ 随机 IOPS (SSD/NVMe)。管理节点（前三个节点）必须[对 etcd 而言足够快](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd)。 |
+| 磁盘性能 | 每个磁盘 5,000+ 随机 IOPS (SSD/NVMe)。管理节点（前三个节点）必须[对 etcd 而言足够快](https://www.suse.com/support/kb/doc/?id=000020100)。 |
 | 网卡 | 1 Gbps 以太网（至少）用于测试，建议在生产中使用 10 Gbps 或以上的以太网。 |
 | 网络交换机 | VLAN 支持所需的端口中继。 |
 
