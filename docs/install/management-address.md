@@ -34,7 +34,7 @@ Example of output:
 ```
 
 ## Usages
-The management address has two usages.
+The management address:
 
 - Allows the access to the Harvester API/UI via `HTTPS` protocol.
 - Allows other nodes to join the cluster.

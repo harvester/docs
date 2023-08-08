@@ -13,15 +13,20 @@ title: "USB Installation"
 There are a couple of ways to create a USB installation flash drive.
 :::caution
 
-Your USB device will be erased after creating bootable device, no matter which tool you use. Please make sure all data on your USB device is backed up before creating bootable device.
+Your USB device will be erased after creating a bootable device, no matter which tool you use. Please make sure all data on your USB device is backed up before creating a bootable device.
 
 :::
 
 ### rufus
 
-[rufus](https://rufus.ie/) supports creating bootable devices using bootable images under Windows.
+[rufus](https://rufus.ie/) supports creating bootable devices using bootable images in Windows.
 ![rufus.png](/img/v1.2/install/rufus.png)
-  - Note: Both `DD mode` and `ISO mode` works. `DD mode` works just like `dd` command under Linux, and you can't browse partitions after you created bootable device. `ISO mode` creates partitions on your device automatically and copies files to these partitions and you can browse these partitions even after you created bootable device.
+
+:::info
+
+Both `DD mode` and `ISO mode` works. `DD mode` works just like the `dd` command in Linux, and you can't browse partitions after you created a bootable device. `ISO mode` creates partitions on your device automatically and copies files to these partitions and you can browse these partitions even after you created a bootable device.
+
+:::
 
 ### balenaEtcher
 

@@ -29,20 +29,22 @@ Note: This [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of the I
 1. Mount the Harvester ISO disk and boot the server by selecting the `Harvester Installer` option.
    ![iso-install.png](/img/v1.2/install/iso-install.png)
 
-1. Choose installation mode: 
-   - Create a new Harvester cluster;
+1. Choose an installation mode: 
+   - Create a new Harvester cluster.
       - Note: By default, the first node will be the management node of the cluster. When there are 3 nodes, the other 2 nodes added first are automatically promoted to management nodes to form an HA cluster.
 
       If you want to promote management nodes from different zones, you can add the node label `topology.kubernetes.io/zone` in the [os.labels](./harvester-configuration.md#oslabels) config by providing a URL of [Harvester configuration](./harvester-configuration.md) on the customize the host step. In this case, at least three different zones are required.
-   - Join an existing Harvester cluster;
-   - Install Harvester binaries only;
-      - Note: When choosing `Install Harvester binaries only`, additional setup is required after first boot up.      
+
+   - Join an existing Harvester cluster.
+
+   - Install Harvester binaries only.
+      - Note: If you choose `Install Harvester binaries only`, additional setup is required after the first bootup.      
 
 1. Choose the installation device on which the Harvester cluster will be installed.
    ![select-disk.png](/img/v1.2/install/select-disk.png)
       - Note: By default, Harvester uses [GPT](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [MBR](https://en.wikipedia.org/wiki/Master_boot_record).
 
-      When you have only one disk, or using the same disk for both OS and VM data, you will need to configure persistent partition size, which is used to store system packages and container images, the default and minimum value is 150 GB.
+      If you only have one disk, or have to use the same disk for both OS and VM data, you need to configure persistent partition size, which is used to store system packages and container images (the default and minimum value is 150 GB).
    
    :::info
 
@@ -53,14 +55,14 @@ Note: This [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of the I
 1. Configure the hostname of this node.
    ![config-hostname.png](/img/v1.2/install/config-hostname.png)
 
-1. Configure network interface(s) for the management network. By default, Harvester will create a bonded NIC named `mgmt-bo`, and the IP address can be configured via DHCP or a statically assigned one.
+1. Configure network interface(s) for the management network. By default, Harvester will create a bonded NIC named `mgmt-bo`, and the IP address can be configured via DHCP or statically assigned.
    ![config-network.png](/img/v1.2/install/config-network.png)
-      - Note: The Node IP can not change at the lifecycle of a Harvester cluster. If DHCP is used, users must make sure the DHCP server always offers the same IP for the same Node. If Node IP is changed, the related Node cannot join the cluster and might even break the cluster.
+      - Note: The node IP cannot be changed throughout the lifecycle of a Harvester cluster. If DHCP is used, you must make sure the DHCP server always offers the same IP for the same node. If the node IP is changed, the related node cannot join the cluster and might even break the cluster.
 
 1. (Optional) Configure the DNS servers. Use commas as a delimiter.
 
-1. Configure the `Virtual IP` which you can use to access the cluster or join other nodes to the cluster.
-   - Note: If your IP address is configured via DHCP, you will need to configure static MAC-to-IP address mapping on your DHCP server in order to have a persistent Virtual IP, VIP must be different than any Node IP.
+1. Configure the `Virtual IP` which can be used to access the cluster or for other nodes to join the cluster.
+   - Note: If your IP address is configured via DHCP, you need to configure a static MAC-to-IP address mapping on your DHCP server in order to have a persistent virtual IP (VIP), and the VIP must be unique.
 
 1. Configure the `cluster token`. This token will be used for adding other nodes to the cluster.
 
@@ -77,7 +79,7 @@ Note: This [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of the I
 1. After confirming the installation options, Harvester will be installed to your host. The installation may take a few minutes to be complete.
 
 1. Once the installation is complete, your node will be restarted. After the restart, the Harvester console containing the management URL and status will be displayed. You can use `F12` to switch from the Harvester console to the Shell and type `exit` to go back to the Harvester console.
-   - Note: If you choose `Install Harvester binaries only` at the first page, additional setup is required after first boot up.
+   - Note: If you choose `Install Harvester binaries only` on the first page, additional setup is required after the first bootup.
 
 1. The default URL of the web interface is `https://your-virtual-ip`.
    ![iso-installed.png](/img/v1.2/install/iso-installed.png)
@@ -105,9 +107,9 @@ This is a known issue we are working on, and will be fixed in future releases. Y
 If you are using a version earlier than v1.1.1, please try the following workaround:
 
 1. Boot up with the ISO, and press `E` to edit the first menu entry:
-   ![grub-menu.png](/img/v1.1/install/grub-menu.png)
+   ![grub-menu.png](/img/v1.2/install/grub-menu.png)
 
 2. Append `vga=792` to the line started with `$linux`:
-   ![edit-menu-entry.png](/img/v1.1/install/edit-menu-entry.png)
+   ![edit-menu-entry.png](/img/v1.2/install/edit-menu-entry.png)
 
 3. Press `Ctrl+X` or `F10` to boot up.

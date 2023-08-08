@@ -26,12 +26,14 @@ Description: 如果需要获取 Harvester ISO，访问 GitHub 上的发行版本
    ![iso-install.png](/img/v1.2/install/iso-install.png)
 
 1. 选择一个安装模式：
-   - 创建一个新的Harvester集群；
+   - 创建一个新的 Harvester 集群。
       - 注意：默认情况下，第一个节点将是集群的管理节点。当有 3 个节点时，首先添加的另外 2 个节点会自动提升为管理节点，从而形成 HA 集群。
 
       如果你想提升其它地区的管理节点，你可以在执行自定义主机的步骤时提供一个 [Harvester 配置](./harvester-configuration.md)的 URL，在 [os.labels](./harvester-configuration.md#oslabels) 中添加节点标签 `topology.kubernetes.io/zone`。在这种情况下，至少需要三个不同的地区。
-   - 加入一个现有的Harvester集群；
-   - 仅安装Harvester系统文件；
+
+   - 加入一个现有的 Harvester 集群。
+
+   - 仅安装 Harvester 系统文件。
       - 注意：如果选择 `Install Harvester binaries only` ，则需要在首次启动后进行额外的设置。
    
 1. 选择要安装 Harvester 集群的设备。
