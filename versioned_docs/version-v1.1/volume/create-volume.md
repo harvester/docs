@@ -41,19 +41,15 @@ Description: Create a volume from the Volume page.
 
 ## Known Issues
 
-| Summary                                                                                                                                                                                   | Status    | Last Updated |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|--------------|
-| [The Volumes page does not show the created volume](https://github.com/harvester/harvester/issues/3874) | Resolved | 2023-07-28   |
-
 ### The Volumes page does not show the created volume
+
+| Issue | Affected versions | Status | Last updated |
+|-----------|-----------|-----------|--------------|
+|[The Volumes page does not show the created volume](https://github.com/harvester/harvester/issues/3874)|Harvester v1.1.2| Resolved (Harvester > v1.1.2)  | 2023-07-28 |
 
 #### Summary
 
 After creating a volume when using Harvester from Rancher, users with the project role **Project Member** cannot find the newly created volume on the **Volumes** page.
-
-|Affected versions| Status    | Last updated |
-|-----------|-----------|--------------|
-|Harvester v1.1.2| Resolved (Harvester > v1.1.2)  | 2023-07-28 |
 
 #### Workaround
 
