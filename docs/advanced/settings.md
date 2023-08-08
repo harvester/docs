@@ -431,6 +431,10 @@ This setting allows you to force reschedule VMs when a node is unavailable. When
 
 Default: `{"enable":true, "period":300}`
 
+:::note
+When a host is unavailable or is powered off, the VM only reboots and does not migrate.
+:::
+
 #### Example
 
 ```json
