@@ -13,7 +13,7 @@ keywords:
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/logging/harvester-logging"/>
 </head>
 
-_Available as of v1.1.0_
+_Available as of v1.2.0_
 
 It is important to know what is happening/has happened in the `Harvester Cluster`.
 
@@ -25,15 +25,13 @@ It is important to know what is happening/has happened in the `Harvester Cluster
 The size of logging data is related to the cluster scale, workload and other factors. `Harvester` does not use persistent storage to store log data inside the cluster. Users need to set up a log server to receive logs accordingly.
 :::
 
-_Available as of v1.2.0_
-
 The logging feature is now implemented with an addon and is disabled by default in new installations.
 
-Users can enable/disable the `rancher-logging` [addon](../advanced/addons.md) from the Harvester WebUI after installation.
+Users can enable/disable the `rancher-logging` [addon](../advanced/addons.md) from the Harvester UI after installation.
 
 Users can also enable/disable the `rancher-logging` addon in their Harvester installation by customizing the [harvester-configuration](../install/harvester-configuration.md#installaddons) file.
 
-For Harvester clusters upgraded from v1.1.*, the logging feature is converted to an addon automatically and kept enabled as before.
+For Harvester clusters upgraded from version v1.1.x, the logging feature is converted to an addon automatically and kept enabled as before.
 
 ## High-level Architecture
 
@@ -70,32 +68,56 @@ If desired, you can modify how many resources are dedicated to those components.
 
 #### From UI
 
- 1. Navigate to the `Configuration` page under `Monitoring & Logging > Logging`.
- 2. Under the `Fluentbit` tab, change the resource requests and limits.
- 3. Under the `Fluentd` tab, change the resource requests and limits.
- 4. Click `Save` on the bottom right of the screen.
+ 1. Go to the **Advanced** > **Addons** page and select the **rancher-logging** addon.
+ 2. From the **Fluentbit** tab, change the resource requests and limits.
+ 3. From the **Fluentd** tab, change the resource requests and limits.
+ 4. Select **Save** when finished configuring the settings for the **rancher-logging** addon. 
 
-![](/img/v1.2/logging/modify-logging-fluent-resources.png)
+![](/img/v1.2/logging/modify-logging-resources-from-addon.png)
+
+:::note
+
+The UI configuration is only visible when the **rancher-logging** addon is enabled.
+
+:::
 
 #### From CLI
 
-You can also change the resource configurations from the command line using `kubectl edit managedchart -n fleet-local rancher-logging` and modifying the relevant files.
+You can use the following `kubectl` command to change resource configurations for the `rancher-logging` addon: `kubectl edit addons.harvesterhci.io -n cattle-logging-system rancher-logging`.
 
-For harvester version `>= v1.1.0`, the related paths and default values are:
+The resource path and default values are as follows.
 
-```yaml
-# fluentbit
-values.fluentbit.resources.limits.cpu: 200m
-values.fluentbit.resources.limits.memory: 200mi
-values.fluentbit.resources.requests.cpu: 50m
-values.fluentbit.resources.requests.memory: 50mi
----
-#fluentd
-values.fluentbit.resources.limits.cpu: 200m
-values.fluentbit.resources.limits.memory: 200mi
-values.fluentbit.resources.requests.cpu: 50m
-values.fluentbit.resources.requests.memory: 50mi
 ```
+apiVersion: harvesterhci.io/v1beta1
+kind: Addon
+metadata:
+  name: rancher-logging
+  namespace: cattle-logging-system
+spec:
+  valuesContent: |
+    fluentbit:
+      resources:
+        limits:
+          cpu: 200m
+          memory: 200Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+    fluentd:
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 800Mi
+        requests:
+          cpu: 100m
+          memory: 200Mi
+```
+
+:::note
+
+You can still make configuration adjustments when the addon is disabled. However, these changes only take effect when you re-enable the addon.
+
+:::
 
 ### Configuring Log Destinations
 
