@@ -75,10 +75,21 @@ install:
   vip_mode: dhcp
   force_mbr: false
   addons:
-    rancher-monitoring:
-      enabled: true
-    rancher-logging:
+    harvester_vm_import_controller:
       enabled: false
+      values_content: ""
+    harvester_pcidevices_controller:
+      enabled: false
+      values_content: ""
+    rancher_monitoring:
+      enabled: true
+      values_content: ""
+    rancher_logging:
+      enabled: false
+      values_content: ""
+    harvester_seeder:
+      enabled: false
+      values_content: ""
 system_settings:
   auto-disk-provision-paths: ""
 ```
@@ -344,7 +355,7 @@ The password for the default user, `rancher`. By default, there is no password f
 If you set a password at runtime it will be reset on the next boot. The
 value of the password can be clear text or an encrypted form. The easiest way to get this encrypted
 form is to change your password on a Linux system and copy the value of the second field from
-`/etc/shadow`. You can also encrypt a password using OpenSSL. For the encryption algorithms 
+`/etc/shadow`. You can also encrypt a password using OpenSSL. For the encryption algorithms
 supported by Harvester, please refer to the table below.
 
 | Algorithm | Command | Support |
@@ -617,18 +628,19 @@ Default: The addons are disabled.
 ```yaml
 install:
   addons:
-    rancher-monitoring:
+    rancher_monitoring:
       enabled: true
-    rancher-logging:
+    rancher_logging:
       enabled: false
 ```
 
-Harvester v1.2.0 ships with four addons:
+Harvester v1.2.0 ships with five addons:
 
-- harvester-vm-import-controller
-- harvester-pcidevices-controller
+- vm-import-controller (chartName: `harvester-vm-import-controller`)
+- pcidevices-controller (chartName: `harvester-pcidevices-controller`)
 - rancher-monitoring
 - rancher-logging
+- harvester-seeder (experimental)
 
 ### `install.harvester.storage_class.replica_count`
 
