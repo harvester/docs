@@ -94,8 +94,30 @@ Node affinity can be added to the machine pools during the cluster creation:
    values: us-east-1a
    ```
    ![affinity-add-rules](/img/v1.2/rancher/affinity-rke2-add-rules.png)
-4. Click `Create` to save the node template. After the cluster is installed, you can check whether its machine nodes are scheduled accordingly to the affinity rules.
 
+#### Add Workload Affinity
+
+_Available as of v1.2.0 + Rancher v2.7.6_
+
+The workload affinity rules allow you to constrain which nodes your machines can be scheduled on based on the labels of workloads (VMs and Pods) already running on these nodes, instead of the node labels.
+
+Workload affinity rules can be added to the machine pools during the cluster creation:
+
+1. Select **Show Advanced** and choose **Add Workload Selector**.
+   ![affinity-add-workload-selector](/img/v1.2/rancher/affinity-rke2-add-workload-selector.png)
+2. Select **Type**, **Affinity** or **Anti-Affinity**.
+3. Select **Priority**. **Prefered** means it's an optional rule, and **Required** means a mandatory rule.
+4. Select the namespaces for the target workloads.
+5. Select **Add Rule** to specify the workload affinity rules.
+6. Set **Topology Key** to specify the label key that divides Harvester hosts into different topologies.
+
+See the [Kubernetes Pod Affinity and Anti-Affinity Documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity) for more details.
+
+###  Update RKE2 Kubernetes Cluster
+
+The fields highlighted below of the RKE2 machine pool represent the Harvester VM configurations. Any modifications to these fields will trigger node reprovisioning.
+
+![rke2-harvester-fields](/img/v1.2/rancher/rke2-harvester-fields.png)
 
 ### Using Harvester RKE2 Node Driver in Air Gapped Environment
 
