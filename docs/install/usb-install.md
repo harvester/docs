@@ -13,8 +13,7 @@ title: "USB Installation"
 There are a couple of ways to create a USB installation flash drive.
 :::caution
 
-Your USB device will be erased after creating a bootable device, no matter which tool you use. Please make sure all data on your USB device is backed up before creating a bootable device.
-
+No matter which tool you use, your USB device data is erased after creating a bootable device. Please back up all data on your USB device before creating a bootable device.
 :::
 
 ### rufus
@@ -24,7 +23,7 @@ Your USB device will be erased after creating a bootable device, no matter which
 
 :::info
 
-Both `DD mode` and `ISO mode` works. `DD mode` works just like the `dd` command in Linux, and you can't browse partitions after you created a bootable device. `ISO mode` creates partitions on your device automatically and copies files to these partitions and you can browse these partitions even after you created a bootable device.
+Both `DD mode` and `ISO mode` works. `DD mode` works just like the `dd` command in Linux, and you can't browse partitions after you create a bootable device. `ISO mode` creates partitions on your device automatically and copies files to these partitions, and you can browse these partitions even after you create a bootable device.
 
 :::
 
