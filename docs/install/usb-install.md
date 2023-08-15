@@ -11,12 +11,26 @@ title: "USB Installation"
 ## Create a bootable USB flash drive
 
 There are a couple of ways to create a USB installation flash drive.
+:::caution
 
+No matter which tool you use, your USB device data is erased after creating a bootable device. Please back up all data on your USB device before creating a bootable device.
+:::
+
+### rufus
+
+[rufus](https://rufus.ie/) supports creating bootable devices using bootable images in Windows.
+![rufus.png](/img/v1.2/install/rufus.png)
+
+:::info
+
+Both `DD mode` and `ISO mode` works. `DD mode` works just like the `dd` command in Linux, and you can't browse partitions after you create a bootable device. `ISO mode` creates partitions on your device automatically and copies files to these partitions, and you can browse these partitions even after you create a bootable device.
+
+:::
 
 ### balenaEtcher
 
 [balenaEtcher](https://www.balena.io/etcher/) supports writing images to USB flash drives. It has a GUI and is easy to use. Select the Harvester installation ISO and the target USB device to create a USB installation flash drive.
-
+![balena-etcher.png](/img/v1.2/install/balena-etcher.png)
 
 ### `dd` command
 

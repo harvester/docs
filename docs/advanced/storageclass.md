@@ -91,6 +91,27 @@ The `volumeBindingMode` field controls when volume binding and dynamic provision
 
 ![](/img/v1.2/storageclass/customize_tab_vol_binding_mode.png)
 
+## Multi Container Storage Interface support
+
+Harvester now supports installing a Container Storage Interface (CSI) in your Harvester cluster to support and use external storage as the VM's non-system data partition. For example, choose an existing storage provider (e.g., Dell PowerFlex) to create a data volume in Harvester. Leverage different drivers for specific purposes, such as performance optimization or integration with existing internal storage providers.
+
+:::note
+
+The system partition of the VM can still use Longhorn. Before v1.2.0, Harvester only supports the use of Longhorn to store virtual machine data, and does not support the use of external storage to store VM data.
+
+:::
+
+You must first manually install your CSI driver. Then create a new StorageClass and edit the `csi-driver-config` setting.
+
+### Header Section
+
+- **Name**: Name of the StorageClass
+- **Description** (optional): Description of the StorageClass.
+- **Provisioner**: Select a provisioner.
+
+### Parameters
+
+Edit the [`csi-driver-config`](../advanced/settings.md#csi-driver-config) setting to add the provisioner for the newly added CSI driver.
 
 ## Appendix - Use Case
 

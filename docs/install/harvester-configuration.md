@@ -75,10 +75,21 @@ install:
   vip_mode: dhcp
   force_mbr: false
   addons:
-    rancher-monitoring:
-      enabled: true
-    rancher-logging:
+    harvester_vm_import_controller:
       enabled: false
+      values_content: ""
+    harvester_pcidevices_controller:
+      enabled: false
+      values_content: ""
+    rancher_monitoring:
+      enabled: true
+      values_content: ""
+    rancher_logging:
+      enabled: false
+      values_content: ""
+    harvester_seeder:
+      enabled: false
+      values_content: ""
 system_settings:
   auto-disk-provision-paths: ""
 ```
@@ -211,6 +222,57 @@ os:
     path: /etc/crontab
 ```
 
+### `os.persistent_state_paths`
+
+#### Definition
+
+The `os.persistent_state_paths` option allows you to configure custom paths where modifications made to files will persist across reboots. Any changes to files in these paths will not be lost after a reboot.
+
+#### Example
+
+Refer to the following example config for installing `rook-ceph` in Harvester:
+
+```yaml
+os:
+  persistent_state_paths:
+    - /var/lib/rook
+  modules:
+    - rbd
+    - nbd
+```
+
+### `os.after_install_chroot_commands`
+
+#### Definition
+
+You can add additional software packages with `after_install_chroot_commands`. The `after-install-chroot` stage, provided by [elemental-toolkit](https://rancher.github.io/elemental-toolkit/docs/), allows you to execute commands not restricted by file system write issues, ensuring the persistence of user-defined commands even after a system reboot. This functionality is accessible through the Harvester Configuration or the `/oem/90_custom.yaml` file.
+
+#### Example
+
+Refer to the following example config for installing an RPM package in Harvester:
+
+```yaml
+os:
+  after_install_chroot_commands:
+    - rpm -ivh <the url of rpm package>
+  
+```
+
+:::note
+Upgrading Harvester causes the changes to the OS in the `after-install-chroot` stage to be lost. You must also configure the `after-upgrade-chroot` to make your changes persistent across an upgrade. Refer to [Runtime persistent changes](https://rancher.github.io/elemental-toolkit/docs/customizing/runtime_persistent_changes/) before upgrading Harvester.
+:::
+
+DNS resolution is unavailable in the `after-install-chroot stage`, and the `nameserver` might not be available. If you need to access a domain name to install a package using an URL, create a temporary `/etc/resolv.conf` file first. For example:
+
+```yaml
+os:
+  after_install_chroot_commands:
+    - "rm -f /etc/resolv.conf && echo 'nameserver 8.8.8.8' | sudo tee /etc/resolv.conf"
+    - "mkdir /usr/local/bin"
+    - "curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && chmod 700 get_helm.sh && ./get_helm.sh"
+    - "rm -f /etc/resolv.conf && ln -s /var/run/netconfig/resolv.conf /etc/resolv.conf"
+```
+
 ### `os.hostname`
 
 #### Definition
@@ -293,7 +355,7 @@ The password for the default user, `rancher`. By default, there is no password f
 If you set a password at runtime it will be reset on the next boot. The
 value of the password can be clear text or an encrypted form. The easiest way to get this encrypted
 form is to change your password on a Linux system and copy the value of the second field from
-`/etc/shadow`. You can also encrypt a password using OpenSSL. For the encryption algorithms 
+`/etc/shadow`. You can also encrypt a password using OpenSSL. For the encryption algorithms
 supported by Harvester, please refer to the table below.
 
 | Algorithm | Command | Support |
@@ -566,18 +628,19 @@ Default: The addons are disabled.
 ```yaml
 install:
   addons:
-    rancher-monitoring:
+    rancher_monitoring:
       enabled: true
-    rancher-logging:
+    rancher_logging:
       enabled: false
 ```
 
-Harvester v1.2.0 ships with four addons:
+Harvester v1.2.0 ships with five addons:
 
-- harvester-vm-import-controller
-- harvester-pcidevices-controller
+- vm-import-controller (chartName: `harvester-vm-import-controller`)
+- pcidevices-controller (chartName: `harvester-pcidevices-controller`)
 - rancher-monitoring
 - rancher-logging
+- harvester-seeder (experimental)
 
 ### `install.harvester.storage_class.replica_count`
 

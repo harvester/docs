@@ -16,13 +16,13 @@ As an HCI solution on bare metal servers, there are minimum node hardware and ne
 
 Harvester nodes have the following hardware requirements and recommendations for installation and testing.
 
-| Type             | Requirements and Recommendations                                                                                                                                                                                        |
-|:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| CPU              | x86_64 only. Hardware-assisted virtualization is required. 8-core processor minimum for testing; 16-core or above recommended for production                                                            |
-| Memory           | 32 GB minimum for testing; 64 GB or above recommended for production                                                                                                                                                               |
-| Disk Capacity    | 250 GB minimum for testing; 500 GB or above recommended for production                                                                                                                                  |
-| Disk Performance | 5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be [fast enough for Etcd](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd) |
-| Network Card     | 1 Gbps Ethernet minimum for testing, 10Gbps Ethernet recommended for production                                                                                                                       |
+| Type             | Requirements and Recommendations                                                                                                          |
+|:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------|
+| CPU              | x86_64 only. Hardware-assisted virtualization is required. 8-core processor minimum for testing; 16-core or above required for production                                                            |
+| Memory           | 32 GB minimum for testing; 64 GB or above required for production                                                                                                                                                               |
+| Disk Capacity    | 250 GB minimum for testing (180 GB minimum when using multiple disks); 500 GB or above required for production                                                                                                                                  |
+| Disk Performance | 5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be [fast enough for Etcd](https://www.suse.com/support/kb/doc/?id=000020100) |
+| Network Card     | 1 Gbps Ethernet minimum for testing, 10Gbps Ethernet required for production                                                                                                                       |
 | Network Switch   | Trunking of ports required for VLAN support                                                                                                                                                           |
 
 :::note
