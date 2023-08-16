@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
 sidebar_label: PCI Devices
-title: "PCI Devices (Experimental)"
+title: "PCI Devices"
 ---
 
 <head>
@@ -22,6 +22,8 @@ To use the PCI devices feature, users need to enable the `pcidevices-controller`
 
 ![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
+Once addon is deployed successfully, it can take a few minutes for the controller to scan and PCIDevice crd's to be available.
+![](/img/v1.2/pcidevices/PcideviceEnabled.png)
 ## Enabling Passthrough on a PCI Device
 
 1. Now go to the `Advanced -> PCI Devices` page:
@@ -64,3 +66,32 @@ Boot the VM up, and run `lspci` inside the VM, the attached PCI devices will sho
 ## Installing drivers for your PCI device inside the VM
 
 This is just like installing drivers in the host. The PCI passthrough feature will bind the host device to the `vfio-pci` driver, which gives VMs the ability to use their own drivers. [Here is a screenshot](https://tobilehman.com/posts/suse-harvester-pci/#toc) of NVIDIA drivers being installed in a VM. It includes a CUDA example that proves that the device drivers work.
+
+## SRIOV Network Devices
+_Available as of v1.2.0_
+
+![](/img/v1.2/pcidevices/SriovNetworkDevicesLink.png)
+
+The PCIDevices controller can now scan network interfaces on the underlying hosts and check if they support SRIOV Virtual Functions (VF's). If a valid device is found, the PCIDevices controller, will generate a new `SRIOVNetworkDevice` object.
+
+![](/img/v1.2/pcidevices/SriovNetworkDevicesList.png)
+
+A user can create Virtual Functions on a SriovNetworkDevice by choosing `Enable` and defining the `Number of Virtual Functions`
+![](/img/v1.2/pcidevices/SriovNetworkDeviceEnable.png)
+
+![](/img/v1.2/pcidevices/SriovNetworkVFDefinition.png)
+
+The PCIDevices controller will define the Virtual Functions on the Network Interface, and report the new PCIDevice status for the newly created Virtual Functions
+
+![](/img/v1.2/pcidevices/SriovNetworkDevicesVFStatus.png)
+
+On the new re-scan by the PCIDevices controller, new PCIDevices for Virtual Functions. This can take upto 1 minute.
+
+Users can now navigate to the `PCI Devices` page, and view the new devices.
+
+A new filter has been introduced to assist users in filtering PCIDevices related to the underlying Network Interface.
+
+![](/img/v1.2/pcidevices/SriovNetworkDevicesFilter.png)
+
+The newly created PCIDevices can be passed through to Virtual Machines like any other PCIDevice.
+![](/img/v1.2/pcidevices/SriovNetworkDevicesFilterResult.png)
