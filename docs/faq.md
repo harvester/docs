@@ -47,14 +47,14 @@ New password for default administrator (user-xxxxx):
 
 ### I added an additional disk with partitions. Why is it not getting detected?
 
-As of Harvester v1.0.2, we no longer support adding additional partitioned disks, so be sure to delete all partitions first (e.g., using `fdisk`).
+As of Harvester v1.0.2, adding additional partitioned disks is no longer supported, be sure to delete all partitions first (e.g., using `fdisk`).
 
-### How to add ssh key to the Harvester nodes using a modified config file ?
+### How to add ssh authorized keys to a Harvester node using a modified config file?
 
 Option 1. Non Persistent (Temporary)
-If the user just wants it to work in the runtime without rebooting then please add keys to /home/rancher/.ssh/authorized_keys and that can change the runtime setting (but it's not persistent between reboots).
+To dynamically add users in the runtime without rebooting, add ssh authorized keys to /home/rancher/.ssh/authorized_keys. These changes are not persistent between reboots.
 
 Option 2. Persistent
-You can modify /oem/99_custom.yaml (or 90_custom.yaml) to add authorized keys after login harvester through ssh.
-After modification, you can reboot the node to see the difference.
-Please refer https://rancher.github.io/elemental-toolkit/docs/reference/cloud_init/#stagesstage_idstep_nameauthorized_keys .
+After you ssh login to Harvester, add ssh authorized keys to your /oem/99_custom.yaml or 90_custom.yaml. These changes are persistent between reboots.
+After you modify your cloud-init script, reboot the node to see the changes take effect. 
+See [Cloud-init support - stages.STAGE_ID.STEP_NAME.authorized_keys](https://rancher.github.io/elemental-toolkit/docs/reference/cloud_init/#stagesstage_idstep_nameauthorized_keys) for details on adding ssh authorized keys to a config file.
