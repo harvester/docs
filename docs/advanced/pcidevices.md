@@ -85,7 +85,7 @@ The `pcidevices-controller` will define the VFs on the network interface and rep
 
 ![](/img/v1.2/pcidevices/SriovNetworkDevicesVFStatus.png)
 
-On the new re-scan by the PCIDevices controller, new PCIDevices for Virtual Functions. This can take upto 1 minute.
+On the next re-scan, the `pcidevices-controller` will create the PCIDevices for VFs. This can take up to 1 minute.
 
 You can now navigate to the **PCI Devices** page to view the new devices.
 
