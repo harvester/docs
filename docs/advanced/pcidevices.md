@@ -22,7 +22,7 @@ To use the PCI devices feature, users need to enable the `pcidevices-controller`
 
 ![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
-Once addon is deployed successfully, it can take a few minutes for the controller to scan and PCIDevice crd's to be available.
+Once the `pcidevices-controller` addon is deployed successfully, it can take a few minutes for it to scan and the PCIDevice CRDs to become available.
 ![](/img/v1.2/pcidevices/PcideviceEnabled.png)
 ## Enabling Passthrough on a PCI Device
 
@@ -72,26 +72,26 @@ _Available as of v1.2.0_
 
 ![](/img/v1.2/pcidevices/SriovNetworkDevicesLink.png)
 
-The PCIDevices controller can now scan network interfaces on the underlying hosts and check if they support SRIOV Virtual Functions (VF's). If a valid device is found, the PCIDevices controller, will generate a new `SRIOVNetworkDevice` object.
+The `pcidevices-controller` addon can now scan network interfaces on the underlying hosts and check if they support SRIOV Virtual Functions (VFs). If a valid device is found, `pcidevices-controller` will generate a new `SRIOVNetworkDevice` object.
 
 ![](/img/v1.2/pcidevices/SriovNetworkDevicesList.png)
 
-A user can create Virtual Functions on a SriovNetworkDevice by choosing `Enable` and defining the `Number of Virtual Functions`
+To create VFs on a SriovNetworkDevice, you can click **⋮ > Enable** and then define the **Number of Virtual Functions**.
 ![](/img/v1.2/pcidevices/SriovNetworkDeviceEnable.png)
 
 ![](/img/v1.2/pcidevices/SriovNetworkVFDefinition.png)
 
-The PCIDevices controller will define the Virtual Functions on the Network Interface, and report the new PCIDevice status for the newly created Virtual Functions
+The `pcidevices-controller` will define the VFs on the network interface and report the new PCI device status for the newly created VFs.
 
 ![](/img/v1.2/pcidevices/SriovNetworkDevicesVFStatus.png)
 
 On the new re-scan by the PCIDevices controller, new PCIDevices for Virtual Functions. This can take upto 1 minute.
 
-Users can now navigate to the `PCI Devices` page, and view the new devices.
+You can now navigate to the **PCI Devices** page to view the new devices.
 
-A new filter has been introduced to assist users in filtering PCIDevices related to the underlying Network Interface.
+We have also introduced a new filter to help you filter PCI devices by the underlying network interface.
 
 ![](/img/v1.2/pcidevices/SriovNetworkDevicesFilter.png)
 
-The newly created PCIDevices can be passed through to Virtual Machines like any other PCIDevice.
+The newly created PCI device can be passed through to virtual machines like any other PCI device.
 ![](/img/v1.2/pcidevices/SriovNetworkDevicesFilterResult.png)
