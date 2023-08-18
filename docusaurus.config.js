@@ -134,6 +134,30 @@ const config = {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
+    languageTabs: [
+      {
+        highlight: "bash",
+        language: "curl",
+        logoClass: "bash",
+      },
+      {
+        highlight: "python",
+        language: "python",
+        logoClass: "python",
+        variant: "requests",
+      },
+      {
+        highlight: "go",
+        language: "go",
+        logoClass: "go",
+      },
+      {
+        highlight: "javascript",
+        language: "nodejs",
+        logoClass: "nodejs",
+        variant: "axios",
+      }
+    ]
   },
   customFields: {
     title: "Harvester - Open-source hyperconverged infrastructure",
@@ -166,6 +190,7 @@ const config = {
               groupPathsBy: "tag", // generate a sidebar.js slice that groups operations by tag
               categoryLinkSource: "tag",
             },
+            hideSendButton: true,
           },
         }
       },

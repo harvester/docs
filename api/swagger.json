@@ -1,5 +1,6 @@
 {
   "swagger": "2.0",
+  "host": "harvester.api.server",
   "info": {
     "title": "Harvester APIs",
     "version": "v1beta1"
@@ -16,7 +17,6 @@
         "tags": [
           "Volumes"
         ],
-        "summary": "List Persistent Volume Claims",
         "operationId": "listNamespacedPersistentVolumeClaim",
         "parameters": [
           {
@@ -104,7 +104,6 @@
         "tags": [
           "Volumes"
         ],
-        "summary": "Create a Persistent Volume Claim",
         "operationId": "createNamespacedPersistentVolumeClaim",
         "parameters": [
           {
@@ -165,7 +164,6 @@
         "tags": [
           "Volumes"
         ],
-        "summary": "Read a Persistent Volume Claim",
         "operationId": "readNamespacedPersistentVolumeClaim",
         "parameters": [
           {
@@ -211,7 +209,6 @@
         "tags": [
           "Volumes"
         ],
-        "summary": "Replace a Persistent Volume Claim",
         "operationId": "replaceNamespacedPersistentVolumeClaim",
         "parameters": [
           {
@@ -257,7 +254,6 @@
         "tags": [
           "Volumes"
         ],
-        "summary": "Delete a Persistent Volume Claim",
         "operationId": "deleteNamespacedPersistentVolumeClaim",
         "parameters": [
           {
@@ -317,7 +313,6 @@
         "tags": [
           "Volumes"
         ],
-        "summary": "Patch a Persistent Volume Claim",
         "operationId": "patchNamespacedPersistentVolumeClaim",
         "parameters": [
           {
@@ -374,7 +369,6 @@
         "tags": [
           "Volumes"
         ],
-        "summary": "List Persistent Volume Claims in all Namespaces",
         "operationId": "listPersistentVolumeClaimForAllNamespaces",
         "responses": {
           "200": {
@@ -461,7 +455,6 @@
         "tags": [
           "SSH Keys"
         ],
-        "summary": "List Key Pairs in all Namespaces",
         "operationId": "listKeyPairForAllNamespaces",
         "responses": {
           "200": {
@@ -548,7 +541,6 @@
         "tags": [
           "SSH Keys"
         ],
-        "summary": "List Key Pairs",
         "operationId": "listNamespacedKeyPair",
         "parameters": [
           {
@@ -636,7 +628,6 @@
         "tags": [
           "SSH Keys"
         ],
-        "summary": "Create a Key Pair",
         "operationId": "createNamespacedKeyPair",
         "parameters": [
           {
@@ -697,7 +688,6 @@
         "tags": [
           "SSH Keys"
         ],
-        "summary": "Read a Key Pair",
         "operationId": "readNamespacedKeyPair",
         "parameters": [
           {
@@ -743,7 +733,6 @@
         "tags": [
           "SSH Keys"
         ],
-        "summary": "Replace a Key Pair",
         "operationId": "replaceNamespacedKeyPair",
         "parameters": [
           {
@@ -789,7 +778,6 @@
         "tags": [
           "SSH Keys"
         ],
-        "summary": "Delete a Key Pair",
         "operationId": "deleteNamespacedKeyPair",
         "parameters": [
           {
@@ -849,7 +837,6 @@
         "tags": [
           "SSH Keys"
         ],
-        "summary": "Patch a Key Pair",
         "operationId": "patchNamespacedKeyPair",
         "parameters": [
           {
@@ -906,7 +893,6 @@
         "tags": [
           "Support Bundles"
         ],
-        "summary": "List Support Bundles",
         "operationId": "listNamespacedSupportBundle",
         "parameters": [
           {
@@ -994,7 +980,6 @@
         "tags": [
           "Support Bundles"
         ],
-        "summary": "Create a Support Bundle",
         "operationId": "createNamespacedSupportBundle",
         "parameters": [
           {
@@ -1055,7 +1040,6 @@
         "tags": [
           "Support Bundles"
         ],
-        "summary": "Read a Support Bundle",
         "operationId": "readNamespacedSupportBundle",
         "parameters": [
           {
@@ -1101,7 +1085,6 @@
         "tags": [
           "Support Bundles"
         ],
-        "summary": "Replace a Support Bundle",
         "operationId": "replaceNamespacedSupportBundle",
         "parameters": [
           {
@@ -1147,7 +1130,6 @@
         "tags": [
           "Support Bundles"
         ],
-        "summary": "Delete a Support Bundle",
         "operationId": "deleteNamespacedSupportBundle",
         "parameters": [
           {
@@ -1207,7 +1189,6 @@
         "tags": [
           "Support Bundles"
         ],
-        "summary": "Patch a Support Bundle",
         "operationId": "patchNamespacedSupportBundle",
         "parameters": [
           {
@@ -1264,7 +1245,6 @@
         "tags": [
           "Upgrades"
         ],
-        "summary": "List Upgrades",
         "operationId": "listNamespacedUpgrade",
         "parameters": [
           {
@@ -1340,7 +1320,7 @@
         }
       },
       "post": {
-        "description": "Create an Upgrade object.",
+        "description": "Create a Upgrade object.",
         "consumes": [
           "application/json",
           "application/yaml"
@@ -1352,7 +1332,6 @@
         "tags": [
           "Upgrades"
         ],
-        "summary": "Create an Upgrade",
         "operationId": "createNamespacedUpgrade",
         "parameters": [
           {
@@ -1404,7 +1383,7 @@
     },
     "/apis/harvesterhci.io/v1beta1/namespaces/{namespace:[a-z0-9][a-z0-9\\-]*}/upgrades/{name:[a-z0-9][a-z0-9\\-]*}": {
       "get": {
-        "description": "Get an Upgrade object.",
+        "description": "Get a Upgrade object.",
         "produces": [
           "application/json",
           "application/yaml",
@@ -1413,7 +1392,6 @@
         "tags": [
           "Upgrades"
         ],
-        "summary": "Read an Upgrade",
         "operationId": "readNamespacedUpgrade",
         "parameters": [
           {
@@ -1447,7 +1425,7 @@
         }
       },
       "put": {
-        "description": "Update an Upgrade object.",
+        "description": "Update a Upgrade object.",
         "consumes": [
           "application/json",
           "application/yaml"
@@ -1459,7 +1437,6 @@
         "tags": [
           "Upgrades"
         ],
-        "summary": "Replace an Upgrade",
         "operationId": "replaceNamespacedUpgrade",
         "parameters": [
           {
@@ -1493,7 +1470,7 @@
         }
       },
       "delete": {
-        "description": "Delete an Upgrade object.",
+        "description": "Delete a Upgrade object.",
         "consumes": [
           "application/json",
           "application/yaml"
@@ -1505,7 +1482,6 @@
         "tags": [
           "Upgrades"
         ],
-        "summary": "Delete an Upgrade",
         "operationId": "deleteNamespacedUpgrade",
         "parameters": [
           {
@@ -1554,7 +1530,7 @@
         }
       },
       "patch": {
-        "description": "Patch an Upgrade object.",
+        "description": "Patch a Upgrade object.",
         "consumes": [
           "application/json-patch+json",
           "application/merge-patch+json"
@@ -1565,7 +1541,6 @@
         "tags": [
           "Upgrades"
         ],
-        "summary": "Patch an Upgrade",
         "operationId": "patchNamespacedUpgrade",
         "parameters": [
           {
@@ -1622,7 +1597,6 @@
         "tags": [
           "Backups"
         ],
-        "summary": "List Virtual Machine Backups",
         "operationId": "listNamespacedVirtualMachineBackup",
         "parameters": [
           {
@@ -1710,7 +1684,6 @@
         "tags": [
           "Backups"
         ],
-        "summary": "Create a Virtual Machine Backup",
         "operationId": "createNamespacedVirtualMachineBackup",
         "parameters": [
           {
@@ -1771,7 +1744,6 @@
         "tags": [
           "Backups"
         ],
-        "summary": "Read a Virtual Machine Backup",
         "operationId": "readNamespacedVirtualMachineBackup",
         "parameters": [
           {
@@ -1817,7 +1789,6 @@
         "tags": [
           "Backups"
         ],
-        "summary": "Replace a Virtual Machine Backup",
         "operationId": "replaceNamespacedVirtualMachineBackup",
         "parameters": [
           {
@@ -1863,7 +1834,6 @@
         "tags": [
           "Backups"
         ],
-        "summary": "Delete a Virtual Machine Backup",
         "operationId": "deleteNamespacedVirtualMachineBackup",
         "parameters": [
           {
@@ -1923,7 +1893,6 @@
         "tags": [
           "Backups"
         ],
-        "summary": "Patch a Virtual Machine Backup",
         "operationId": "patchNamespacedVirtualMachineBackup",
         "parameters": [
           {
@@ -1980,7 +1949,6 @@
         "tags": [
           "Images"
         ],
-        "summary": "List Virtual Machine Images",
         "operationId": "listNamespacedVirtualMachineImage",
         "parameters": [
           {
@@ -2068,7 +2036,6 @@
         "tags": [
           "Images"
         ],
-        "summary": "Create a Virtual Machine Image",
         "operationId": "createNamespacedVirtualMachineImage",
         "parameters": [
           {
@@ -2129,7 +2096,6 @@
         "tags": [
           "Images"
         ],
-        "summary": "Read a Virtual Machine Image",
         "operationId": "readNamespacedVirtualMachineImage",
         "parameters": [
           {
@@ -2175,7 +2141,6 @@
         "tags": [
           "Images"
         ],
-        "summary": "Replace a Virtual Machine Image",
         "operationId": "replaceNamespacedVirtualMachineImage",
         "parameters": [
           {
@@ -2221,7 +2186,6 @@
         "tags": [
           "Images"
         ],
-        "summary": "Delete a Virtual Machine Image",
         "operationId": "deleteNamespacedVirtualMachineImage",
         "parameters": [
           {
@@ -2281,7 +2245,6 @@
         "tags": [
           "Images"
         ],
-        "summary": "Patch a Virtual Machine Image",
         "operationId": "patchNamespacedVirtualMachineImage",
         "parameters": [
           {
@@ -2338,7 +2301,6 @@
         "tags": [
           "Restores"
         ],
-        "summary": "List Virtual Machine Restores",
         "operationId": "listNamespacedVirtualMachineRestore",
         "parameters": [
           {
@@ -2426,7 +2388,6 @@
         "tags": [
           "Restores"
         ],
-        "summary": "Create a Virtual Machine Restore",
         "operationId": "createNamespacedVirtualMachineRestore",
         "parameters": [
           {
@@ -2487,7 +2448,6 @@
         "tags": [
           "Restores"
         ],
-        "summary": "Read a Virtual Machine Restore",
         "operationId": "readNamespacedVirtualMachineRestore",
         "parameters": [
           {
@@ -2533,7 +2493,6 @@
         "tags": [
           "Restores"
         ],
-        "summary": "Replace a Virtual Machine Restore",
         "operationId": "replaceNamespacedVirtualMachineRestore",
         "parameters": [
           {
@@ -2579,7 +2538,6 @@
         "tags": [
           "Restores"
         ],
-        "summary": "Delete a Virtual Machine Restore",
         "operationId": "deleteNamespacedVirtualMachineRestore",
         "parameters": [
           {
@@ -2639,7 +2597,6 @@
         "tags": [
           "Restores"
         ],
-        "summary": "Patch a Virtual Machine Restore",
         "operationId": "patchNamespacedVirtualMachineRestore",
         "parameters": [
           {
@@ -2696,7 +2653,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "List Virtual Machine Templates",
         "operationId": "listNamespacedVirtualMachineTemplate",
         "parameters": [
           {
@@ -2784,7 +2740,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "Create a Virtual Machine Template",
         "operationId": "createNamespacedVirtualMachineTemplate",
         "parameters": [
           {
@@ -2845,7 +2800,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "Read a Virtual Machine Template",
         "operationId": "readNamespacedVirtualMachineTemplate",
         "parameters": [
           {
@@ -2891,7 +2845,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "Replace a Virtual Machine Template",
         "operationId": "replaceNamespacedVirtualMachineTemplate",
         "parameters": [
           {
@@ -2937,7 +2890,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "Delete a Virtual Machine Template",
         "operationId": "deleteNamespacedVirtualMachineTemplate",
         "parameters": [
           {
@@ -2997,7 +2949,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "Patch a Virtual Machine Template",
         "operationId": "patchNamespacedVirtualMachineTemplate",
         "parameters": [
           {
@@ -3054,7 +3005,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "List Virtual Machine Template Versions",
         "operationId": "listNamespacedVirtualMachineTemplateVersion",
         "parameters": [
           {
@@ -3142,7 +3092,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "Create a Virtual Machine Template Version",
         "operationId": "createNamespacedVirtualMachineTemplateVersion",
         "parameters": [
           {
@@ -3203,7 +3152,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "Read a Virtual Machine Template Version",
         "operationId": "readNamespacedVirtualMachineTemplateVersion",
         "parameters": [
           {
@@ -3249,7 +3197,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "Replace a Virtual Machine Template Version",
         "operationId": "replaceNamespacedVirtualMachineTemplateVersion",
         "parameters": [
           {
@@ -3295,7 +3242,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "Delete a Virtual Machine Template Version",
         "operationId": "deleteNamespacedVirtualMachineTemplateVersion",
         "parameters": [
           {
@@ -3355,7 +3301,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "Patch a Virtual Machine Template Version",
         "operationId": "patchNamespacedVirtualMachineTemplateVersion",
         "parameters": [
           {
@@ -3412,7 +3357,6 @@
         "tags": [
           "Support Bundles"
         ],
-        "summary": "List Support Bundles in all Namespaces",
         "operationId": "listSupportBundleForAllNamespaces",
         "responses": {
           "200": {
@@ -3499,7 +3443,6 @@
         "tags": [
           "Upgrades"
         ],
-        "summary": "List Upgrades in all Namespaces",
         "operationId": "listUpgradeForAllNamespaces",
         "responses": {
           "200": {
@@ -3586,7 +3529,6 @@
         "tags": [
           "Backups"
         ],
-        "summary": "List Virtual Machine Backups in all Namespaces",
         "operationId": "listVirtualMachineBackupForAllNamespaces",
         "responses": {
           "200": {
@@ -3673,7 +3615,6 @@
         "tags": [
           "Images"
         ],
-        "summary": "List Virtual Machine Images in all Namespaces",
         "operationId": "listVirtualMachineImageForAllNamespaces",
         "responses": {
           "200": {
@@ -3760,7 +3701,6 @@
         "tags": [
           "Restores"
         ],
-        "summary": "List Virtual Machine Restores in all Namespaces",
         "operationId": "listVirtualMachineRestoreForAllNamespaces",
         "responses": {
           "200": {
@@ -3847,7 +3787,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "List Virtual Machine Templates in all Namespaces",
         "operationId": "listVirtualMachineTemplateForAllNamespaces",
         "responses": {
           "200": {
@@ -3934,7 +3873,6 @@
         "tags": [
           "Virtual Machine Templates"
         ],
-        "summary": "List Virtual Machine Template Versions in all Namespaces",
         "operationId": "listVirtualMachineTemplateVersionForAllNamespaces",
         "responses": {
           "200": {
@@ -4021,7 +3959,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "List Network Attachment Definitions",
         "operationId": "listNamespacedNetworkAttachmentDefinition",
         "parameters": [
           {
@@ -4109,7 +4046,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Create a Network Attachment Definition",
         "operationId": "createNamespacedNetworkAttachmentDefinition",
         "parameters": [
           {
@@ -4170,7 +4106,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Read a Network Attachment Definition",
         "operationId": "readNamespacedNetworkAttachmentDefinition",
         "parameters": [
           {
@@ -4216,7 +4151,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Replace a Network Attachment Definition",
         "operationId": "replaceNamespacedNetworkAttachmentDefinition",
         "parameters": [
           {
@@ -4262,7 +4196,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Delete a Network Attachment Definition",
         "operationId": "deleteNamespacedNetworkAttachmentDefinition",
         "parameters": [
           {
@@ -4322,7 +4255,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Patch a Network Attachment Definition",
         "operationId": "patchNamespacedNetworkAttachmentDefinition",
         "parameters": [
           {
@@ -4379,7 +4311,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "List Network Attachment Definitions in all Namespaces",
         "operationId": "listNetworkAttachmentDefinitionForAllNamespaces",
         "responses": {
           "200": {
@@ -4466,7 +4397,6 @@
         "tags": [
           "Migrations"
         ],
-        "summary": "List Virtual Machine Instance Migrations",
         "operationId": "listNamespacedVirtualMachineInstanceMigration",
         "parameters": [
           {
@@ -4554,7 +4484,6 @@
         "tags": [
           "Migrations"
         ],
-        "summary": "Create a Virtual Machine Instance Migration",
         "operationId": "createNamespacedVirtualMachineInstanceMigration",
         "parameters": [
           {
@@ -4615,7 +4544,6 @@
         "tags": [
           "Migrations"
         ],
-        "summary": "Read a Virtual Machine Instance Migration",
         "operationId": "readNamespacedVirtualMachineInstanceMigration",
         "parameters": [
           {
@@ -4661,7 +4589,6 @@
         "tags": [
           "Migrations"
         ],
-        "summary": "Replace a Virtual Machine Instance Migration",
         "operationId": "replaceNamespacedVirtualMachineInstanceMigration",
         "parameters": [
           {
@@ -4707,7 +4634,6 @@
         "tags": [
           "Migrations"
         ],
-        "summary": "Delete a Virtual Machine Instance Migration",
         "operationId": "deleteNamespacedVirtualMachineInstanceMigration",
         "parameters": [
           {
@@ -4767,7 +4693,6 @@
         "tags": [
           "Migrations"
         ],
-        "summary": "Patch a Virtual Machine Instance Migration",
         "operationId": "patchNamespacedVirtualMachineInstanceMigration",
         "parameters": [
           {
@@ -4824,7 +4749,6 @@
         "tags": [
           "Virtual Machines"
         ],
-        "summary": "List Virtual Machine Instances",
         "operationId": "listNamespacedVirtualMachineInstance",
         "responses": {
           "200": {
@@ -4919,7 +4843,6 @@
         "tags": [
           "Virtual Machines"
         ],
-        "summary": "Read a Virtual Machine Instance",
         "operationId": "readNamespacedVirtualMachineInstance",
         "responses": {
           "200": {
@@ -4980,7 +4903,6 @@
         "tags": [
           "Virtual Machines"
         ],
-        "summary": "List Virtual Machines",
         "operationId": "listNamespacedVirtualMachine",
         "parameters": [
           {
@@ -5068,7 +4990,6 @@
         "tags": [
           "Virtual Machines"
         ],
-        "summary": "Create a Virtual Machine",
         "operationId": "createNamespacedVirtualMachine",
         "parameters": [
           {
@@ -5129,7 +5050,6 @@
         "tags": [
           "Virtual Machines"
         ],
-        "summary": "Read a Virtual Machine",
         "operationId": "readNamespacedVirtualMachine",
         "parameters": [
           {
@@ -5175,7 +5095,6 @@
         "tags": [
           "Virtual Machines"
         ],
-        "summary": "Replace a Virtual Machine",
         "operationId": "replaceNamespacedVirtualMachine",
         "parameters": [
           {
@@ -5221,7 +5140,6 @@
         "tags": [
           "Virtual Machines"
         ],
-        "summary": "Delete a Virtual Machine",
         "operationId": "deleteNamespacedVirtualMachine",
         "parameters": [
           {
@@ -5281,7 +5199,6 @@
         "tags": [
           "Virtual Machines"
         ],
-        "summary": "Patch a Virtual Machine",
         "operationId": "patchNamespacedVirtualMachine",
         "parameters": [
           {
@@ -5338,7 +5255,6 @@
         "tags": [
           "Migrations"
         ],
-        "summary": "List Virtual Machine Instance Migrations in all Namespaces",
         "operationId": "listVirtualMachineInstanceMigrationForAllNamespaces",
         "responses": {
           "200": {
@@ -5425,7 +5341,6 @@
         "tags": [
           "Virtual Machines"
         ],
-        "summary": "List Virtual Machine Instances in all Namespaces",
         "operationId": "listVirtualMachineInstanceForAllNamespaces",
         "responses": {
           "200": {
@@ -5512,7 +5427,6 @@
         "tags": [
           "Virtual Machines"
         ],
-        "summary": "List Virtual Machines in all Namespaces",
         "operationId": "listVirtualMachineForAllNamespaces",
         "responses": {
           "200": {
@@ -5599,7 +5513,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "List Cluster Networks",
         "operationId": "listNamespacedClusterNetwork",
         "parameters": [
           {
@@ -5695,7 +5608,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Create a Cluster Network",
         "operationId": "createNamespacedClusterNetwork",
         "parameters": [
           {
@@ -5754,7 +5666,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Read a Cluster Network",
         "operationId": "readNamespacedClusterNetwork",
         "parameters": [
           {
@@ -5800,7 +5711,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Replace a Cluster Network",
         "operationId": "replaceNamespacedClusterNetwork",
         "parameters": [
           {
@@ -5846,7 +5756,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Delete a Cluster Network",
         "operationId": "deleteNamespacedClusterNetwork",
         "parameters": [
           {
@@ -5906,7 +5815,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Patch a Cluster Network",
         "operationId": "patchNamespacedClusterNetwork",
         "parameters": [
           {
@@ -5963,7 +5871,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "List Node Networks",
         "operationId": "listNamespacedNodeNetwork",
         "parameters": [
           {
@@ -6059,7 +5966,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Create a Node Network",
         "operationId": "createNamespacedNodeNetwork",
         "parameters": [
           {
@@ -6118,7 +6024,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Read a Node Network",
         "operationId": "readNamespacedNodeNetwork",
         "parameters": [
           {
@@ -6164,7 +6069,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Replace a Node Network",
         "operationId": "replaceNamespacedNodeNetwork",
         "parameters": [
           {
@@ -6210,7 +6114,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Delete a Node Network",
         "operationId": "deleteNamespacedNodeNetwork",
         "parameters": [
           {
@@ -6270,7 +6173,6 @@
         "tags": [
           "Networks"
         ],
-        "summary": "Patch a Node Network",
         "operationId": "patchNamespacedNodeNetwork",
         "parameters": [
           {
@@ -7864,94 +7766,12 @@
         "name"
       ],
       "properties": {
-        "annotations": {
-          "description": "Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations",
-          "type": "object",
-          "additionalProperties": {
-            "type": "string",
-            "default": ""
-          }
-        },
-        "clusterName": {
-          "description": "Deprecated: ClusterName is a legacy field that was always cleared by the system and never used; it will be removed completely in 1.25.\n\nThe name in the go struct is changed to help clients detect accidental use.",
-          "type": "string"
-        },
-        "creationTimestamp": {
-          "description": "CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.\n\nPopulated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
-          "default": {},
-          "$ref": "#/definitions/k8s.io.v1.Time"
-        },
-        "deletionGracePeriodSeconds": {
-          "description": "Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only.",
-          "type": "integer",
-          "format": "int64"
-        },
-        "deletionTimestamp": {
-          "description": "DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.\n\nPopulated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
-          "$ref": "#/definitions/k8s.io.v1.Time"
-        },
-        "finalizers": {
-          "description": "Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed. Finalizers may be processed and removed in any order.  Order is NOT enforced because it introduces significant risk of stuck finalizers. finalizers is a shared field, any actor with permission can reorder it. If the finalizer list is processed in order, then this can lead to a situation in which the component responsible for the first finalizer in the list is waiting for a signal (field value, external system, or other) produced by a component responsible for a finalizer later in the list, resulting in a deadlock. Without enforced ordering finalizers are free to order amongst themselves and are not vulnerable to ordering changes in the list.",
-          "type": "array",
-          "items": {
-            "type": "string",
-            "default": ""
-          },
-          "x-kubernetes-patch-strategy": "merge"
-        },
-        "generateName": {
-          "description": "GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.\n\nIf this field is specified and the generated name exists, the server will return a 409.\n\nApplied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency",
-          "type": "string"
-        },
-        "generation": {
-          "description": "A sequence number representing a specific generation of the desired state. Populated by the system. Read-only.",
-          "type": "integer",
-          "format": "int64"
-        },
-        "labels": {
-          "description": "Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels",
-          "type": "object",
-          "additionalProperties": {
-            "type": "string",
-            "default": ""
-          }
-        },
-        "managedFields": {
-          "description": "ManagedFields maps workflow-id and version to the set of fields that are managed by that workflow. This is mostly for internal housekeeping, and users typically shouldn't need to set or understand this field. A workflow can be the user's name, a controller's name, or the name of a specific apply path like \"ci-cd\". The set of fields is always in the version that the workflow used when modifying the object.",
-          "type": "array",
-          "items": {
-            "default": {},
-            "$ref": "#/definitions/k8s.io.v1.ManagedFieldsEntry"
-          }
-        },
         "name": {
           "description": "Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names",
           "type": "string"
         },
         "namespace": {
           "description": "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces",
-          "type": "string"
-        },
-        "ownerReferences": {
-          "description": "List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller.",
-          "type": "array",
-          "items": {
-            "default": {},
-            "$ref": "#/definitions/k8s.io.v1.OwnerReference"
-          },
-          "x-kubernetes-patch-merge-key": "uid",
-          "x-kubernetes-patch-strategy": "merge"
-        },
-        "resourceVersion": {
-          "description": "An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.\n\nPopulated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency",
-          "type": "string"
-        },
-        "selfLink": {
-          "description": "Deprecated: selfLink is a legacy read-only field that is no longer populated by the system.",
-          "type": "string"
-        },
-        "uid": {
-          "description": "UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.\n\nPopulated by the system. Read-only. More info: http://kubernetes.io/docs/user-guide/identifiers#uids",
           "type": "string"
         }
       }
@@ -8534,8 +8354,7 @@
     "k8s.io.v1.Time": {
       "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
       "type": "string",
-      "format": "",
-      "default": "2023-04-26T08:35:46.609Z"
+      "format": "date-time"
     },
     "k8s.io.v1.Toleration": {
       "description": "The pod this Toleration is attached to tolerates any taint that matches the triple \u003ckey,value,effect\u003e using the matching operator \u003coperator\u003e.",
