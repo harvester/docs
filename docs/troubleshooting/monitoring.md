@@ -85,9 +85,7 @@ Based on the `Longhorn` `Volume` expansion guide, `Harvester` illustrates how to
 
 Access the embedded Longhorn WebUI according to [this document](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards).
 
-![](/img/v1.2/troubleshooting/1-access-embedded-longhorn.png)
-
-The default view.
+The Longhorn dashboard default view.
 
 ![](/img/v1.2/troubleshooting/2-longhorn-dashboard.png)
 

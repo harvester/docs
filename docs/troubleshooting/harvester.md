@@ -75,11 +75,6 @@ You can now access the embedded Rancher and Longhorn dashboards directly on the 
 
 ![](/img/v1.2/troubleshooting/support-access-embedded-ui.png)
 
-For previous versions, you can access them manually through:
-- `https://{{HARVESTER_IP}}/dashboard/c/local/explorer` (Embedded Rancher)
-- `https://{{HARVESTER_IP}}/dashboard/c/local/longhorn` (Embedded Longhorn)
-
-
 :::note
 
 We only support using the embedded Rancher and Longhorn dashboards for debugging and validation purposes.
