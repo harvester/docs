@@ -8,11 +8,11 @@ title: "Operating System"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/troubleshooting/os"/>
 </head>
 
-Harvester runs on an OpenSUSE-based OS. The OS is an artifact produced by the [cOS toolkit](https://github.com/rancher-sandbox/cOS-toolkit). The following sections contain information and tips to help users troubleshoot OS-related issues.
+Harvester runs on an OpenSUSE-based OS. The OS is an artifact produced by the [elemental-toolkit](https://github.com/rancher/elemental-toolkit). The following sections contain information and tips to help users troubleshoot OS-related issues.
 
-## How to log into a Harvester node
+## How to log in to a Harvester node
 
-Users can log into a Harvester node with the username `rancher` and the password or SSH keypair provided during installation.
+Users can log in to a Harvester node with the username `rancher` and the password or SSH keypair provided during installation.
 The user `rancher` can execute privileged commands without entering a password:
 
 ```
@@ -44,7 +44,7 @@ Enabling read-write mode might break your system if files are modified. Please u
     name: "Rootfs Layout Settings for debugrw"
     stages:
       rootfs:
-        - if: 'grep -q root=LABEL=COS_ACTIVE /proc/cmdline && grep -q rd.cos.debugrw /proc/cmdline'
+        - if: 'grep -q root=LABEL=COS_STATE /proc/cmdline && grep -q rd.cos.debugrw /proc/cmdline'
           name: "Layout configuration for debugrw"
           environment_file: /run/cos/cos-layout.env
           environment:
@@ -54,11 +54,11 @@ Enabling read-write mode might break your system if files are modified. Please u
 
 - Reboot the system to GRUB menu. Press ESC to stay on the menu.
 
-    ![](/img/v1.2/troubleshooting/os-stop-on-first-menuentry.png)
+    ![](/img/v1.2/troubleshooting/grub-menu.png)
 
 - Press `e` on first menuentry. Append `rd.cos.debugrw` to the `linux (loop0)$kernel $kernelcmd` line. Press `Ctrl + x` to boot the system.
 
-    ![](/img/v1.2/troubleshooting/os-edit-first-menuentry-add-debugrw.png)
+    ![](/img/v1.2/troubleshooting/edit-boot-parameter.png)
 
 ## How to permanently edit kernel parameters
 
@@ -77,15 +77,14 @@ The following steps are a workaround. Harvester will inform the community once a
 - Edit the grub config file and append parameters to the `linux (loop0)$kernel $kernelcmd` line. The following example adds a `nomodeset` parameter:
     ```
     # vim /run/initramfs/cos-state/grub2/grub.cfg
-    menuentry "Harvester ea6e7f5-dirty" --id cos {
-      search.fs_label COS_STATE root
+    menuentry "${display_name}" --id cos {
+      # label is kept around for backward compatibility
+      set label=${active_label}
       set img=/cOS/active.img
-      set label=COS_ACTIVE
-      loopback loop0 /$img
-      set root=($root)
-      source (loop0)/etc/cos/bootargs.cfg
-      linux (loop0)$kernel $kernelcmd nomodeset
-      initrd (loop0)$initramfs
+      loopback $loopdev /$img
+      source ($loopdev)/etc/cos/bootargs.cfg
+      linux ($loopdev)$kernel $kernelcmd ${extra_cmdline} ${extra_active_cmdline} nomodeset
+      initrd ($loopdev)$initramfs
     }
     ```
 - Reboot for changes to take effect.
@@ -97,11 +96,16 @@ To change the default entry, first check the `--id` attribute of a menu entry, a
 # cat /run/initramfs/cos-state/grub2/grub.cfg
 
 <...>
-menuentry "Harvester ea6e7f5-dirty (debug)" --id cos-debug {
-  search.fs_label COS_STATE root
+menuentry "${display_name} (debug)" --id cos-debug {
+  search --no-floppy --set=root --label COS_STATE
   set img=/cOS/active.img
   set label=COS_ACTIVE
   loopback loop0 /$img
+  set root=($root)
+  source (loop0)/etc/cos/bootargs.cfg
+  linux (loop0)$kernel $kernelcmd ${extra_cmdline} ${extra_passive_cmdline} ${crash_kernel_params}
+  initrd (loop0)$initramfs
+}
 ```
 
 The id of the above entry is `cos-debug`. We can then set the default entry by:
@@ -118,10 +122,10 @@ If kernel panic traces are not recorded in the system log when a system crashes,
 To enable outputting of kernel messages to a serial console, please use the following steps:
 
 - Boot the system to GRUB menu. Press ESC to stay on the menu.
-    ![](/img/v1.2/troubleshooting/os-stop-on-first-menuentry.png)
+    ![](/img/v1.2/troubleshooting/grub-menu.png)
 - Press `e` on first menuentry. Append `console=ttyS0,115200n8` to the `linux (loop0)$kernel $kernelcmd` line. Press `Ctrl + x` to boot the system.
 
-    ![](/img/v1.2/troubleshooting/os-edit-first-menuentry-add-console.png)
+    ![](/img/v1.2/troubleshooting/edit-boot-parameter-serial.png)
 
 :::note
 
@@ -135,6 +139,6 @@ For kernel panic crashes, you can use kdump to collect crash dumps.
 
 By default, the OS is booted without the kdump feature enabled. Users can enable the feature by selecting the `debug` menuentry when booting, as in the following example:
 
-![](/img/v1.2/troubleshooting/os-enable-kdump.png)
+![](/img/v1.2/troubleshooting/grub-menu-debug.png)
 
 When a system crashes, a crash dump will be stored in the `/var/crash/<time>` directory. Providing the crash dump to developers helps them to troubleshoot and resolve issues.
