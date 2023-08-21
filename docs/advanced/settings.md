@@ -135,7 +135,7 @@ If you set a username and password for a private registry, the system will autom
 
 _Available as of v1.2.0_
 
-This setting allows you to install a Container Storage Interface (CSI) in your Harvester cluster to support and use external storage as the VM's non-system data partition and leverage different drivers.
+If you install third-party CSI drivers in the Harvester cluster, you must configure some necessary information through this setting before using **Backup/Snapshot** related features.
 
 Default:
 ```
@@ -150,8 +150,6 @@ Default:
 1. Add the provisioner for the newly added CSI driver.
 1. Configure **Volume Snapshot Class Name**, which refers to the name of the `VolumeSnapshotClass` used to create volume snapshots or VM snapshots.
 1. Configure **Backup Volume Snapshot Class Name**, which refers to the name of the `VolumeSnapshotClass` used to create VM backups.
-
-Select the desired StorageClass when creating an empty volume or adding a new empty volume to a virtual machine.
 
 ## `default-vm-termination-grace-period-seconds`
 
