@@ -93,25 +93,21 @@ The `volumeBindingMode` field controls when volume binding and dynamic provision
 
 ## Multi Container Storage Interface support
 
-Harvester now supports installing a Container Storage Interface (CSI) in your Harvester cluster to support and use external storage as the VM's non-system data partition. For example, choose an existing storage provider (e.g., Dell PowerFlex) to create a data volume in Harvester. Leverage different drivers for specific purposes, such as performance optimization or integration with existing internal storage providers.
+Harvester now supports installing a Container Storage Interface (CSI) in your Harvester cluster to support and use external storage as the VM's non-system data disks. Leverage different drivers for specific purposes, such as performance optimization or integration with existing in-house storage providers.
 
 :::note
 
-The system partition of the VM can still use Longhorn. Before v1.2.0, Harvester only supports the use of Longhorn to store virtual machine data, and does not support the use of external storage to store VM data.
+The provisioner of the VM image still uses Longhorn. Before v1.2.0, Harvester only supports using Longhorn to store virtual machine data and does not support using external storage to store VM data.
 
 :::
 
-You must first manually install your CSI driver. Then create a new StorageClass and edit the `csi-driver-config` setting.
+Administrators can enable this feature through the following steps:
+1. Set the [`os.persistent_state_paths`](../install/harvester-configuration.md#ospersistent_state_paths) and [`os.after_install_chroot_commands`](../install/harvester-configuration.md#osafter_install_chroot_commands) settings before creating the Harvester cluster for the specific CSI driver needs.
+2. Install the CSI driver to the Harvester cluster manually after creating the Harvester cluster.
+3. Edit the [`csi-driver-config`](../advanced/settings.md#csi-driver-config) setting.
+4. Create a new StorageClass that uses the CSI driver.
 
-### Header Section
-
-- **Name**: Name of the StorageClass
-- **Description** (optional): Description of the StorageClass.
-- **Provisioner**: Select a provisioner.
-
-### Parameters
-
-Edit the [`csi-driver-config`](../advanced/settings.md#csi-driver-config) setting to add the provisioner for the newly added CSI driver.
+After performing these steps, you must select the desired StorageClass when creating an empty volume or adding a new empty volume to a virtual machine.
 
 ## Appendix - Use Case
 
