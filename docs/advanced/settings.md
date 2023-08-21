@@ -36,6 +36,12 @@ Changing this setting might cause a short downtime for single-node clusters.
 This setting allows Harvester to automatically add disks that match the given glob pattern as VM storage.
 It's possible to provide multiple patterns by separating them with a comma.
 
+:::note
+
+It will only add formatted disks that are not mounted to the system.
+
+:::
+
 :::caution
 
 - This setting is applied to **every Node** in the cluster.
@@ -143,9 +149,17 @@ Default:
 
 1. Add the provisioner for the newly added CSI driver.
 1. Configure **Volume Snapshot Class Name**, which refers to the name of the `VolumeSnapshotClass` used to create volume snapshots or VM snapshots.
-1. Cofigure **Backup Volume Snapshot Class Name**, which refers to the name of the `VolumeSnapshotClass` used to create VM backups.
+1. Configure **Backup Volume Snapshot Class Name**, which refers to the name of the `VolumeSnapshotClass` used to create VM backups.
 
 Select the desired StorageClass when creating an empty volume or adding a new empty volume to a virtual machine.
+
+## `default-vm-termination-grace-period-seconds`
+
+_Available as of v1.2.0_
+
+This setting allows you to specify a default termination grace period for stopping a virtual machine in seconds.
+
+Default: `120`
 
 ## `http-proxy`
 
@@ -209,6 +223,33 @@ The following values can be set. The list goes from the least to most verbose lo
 
 ```
 debug
+```
+
+## `ntp-servers`
+
+_Available as of v1.2.0_
+
+This setting allows you to configure NTP servers for time synchronization on the Harvester nodes.
+
+You can define NTP servers during [installation](../install/harvester-configuration#osntp_servers) or update them later using this setting. 
+
+:::caution
+
+Modifying the NTP servers will replace the previous values for all nodes.
+
+:::
+
+Default: ""
+
+#### Example
+
+```
+{
+  "ntpServers": [
+    "0.suse.pool.ntp.org",
+    "1.suse.pool.ntp.org"
+  ]
+}
 ```
 
 ## `overcommit-config`
@@ -342,45 +383,36 @@ Default: ""
 }
 ```
 
-## `ui-index`
+## `support-bundle-image`
 
-This setting allows you to configure HTML index location for the UI.
+_Available as of v1.2.0_
 
-Default: `https://releases.rancher.com/harvester-ui/dashboard/latest/index.html`
+This setting allows you to configure the support bundle image, with various versions available in [rancher/support-bundle-kit](https://hub.docker.com/r/rancher/support-bundle-kit/tags).
 
-#### Example
-
+Default:
 ```
-https://your.static.dashboard-ui/index.html
-```
-
-## `ui-plugin-index`
-
-This setting allows you to configure the JS address for the Harvester plugin (when accessing Harvester from Rancher).
-
-Default: `https://releases.rancher.com/harvester-ui/plugin/harvester-latest/harvester-latest.umd.min.js`
-
-#### Example
-
-```
-https://your.static.dashboard-ui/*.umd.min.js
+{
+  "repository": "rancher/support-bundle-kit",
+  "tag": "v0.0.25",
+  "imagePullPolicy": "IfNotPresent"
+}
 ```
 
-## `ui-source`
+## `support-bundle-namespaces`
 
-This setting allows you to configure how to load the UI source.
+_Available as of v1.2.0_
 
-The following values can be set:
+This setting allows you to specify additional namespaces when collecting a support bundle. If set to "none," the support bundle will only capture resources from default system namespaces.
 
-- `auto`: The default. Auto-detect whether to use bundled UI or not.
-- `external`: Use external UI source.
-- `bundled`: Use the bundled UI source.
+Default: ""
 
-#### Example
+## `support-bundle-timeout`
 
-```
-external
-```
+_Available as of v1.2.0_
+
+This setting lets you define the support bundle's default timeout duration in minutes. Use `0` to disable the timeout feature.
+
+Default: `10`
 
 ## `upgrade-checker-enabled`
 
@@ -407,6 +439,8 @@ https://your.upgrade.checker-url/v99/checkupgrade
 ```
 
 ## `vip-pools`
+
+_Deprecated as of v1.2.0, use [IP Pool](../networking/ippool.md) instead_
 
 This setting allows you to configure the global or namespace IP address pools of the VIP by CIDR or IP range.
 
@@ -442,4 +476,64 @@ When a host is unavailable or is powered off, the VM only reboots and does not m
   "enable": "true",
   "period": 300
 }
+```
+
+## UI Settings
+
+### `branding`
+
+_Available as of v1.2.0_
+
+This setting allows you to globally re-brand the UI by customizing the Harvester product name, logos, and color scheme. This setting allows you to globally re-brand the UI by customizing the Harvester product name, logos, and color scheme.
+
+Default: **Harvester**
+
+![containerd-registry](/img/v1.2/advanced/branding.png)
+
+You can set the following options and values:
+
+- **Private Label:** This option replaces "Harvester" with the value you provide in most places.
+- **Logo:** Upload light and dark logos to replace the Harvester logo in the top-level navigation header.
+- **Favicon:** Upload an icon to replace the Harvester favicon in the browser tab.
+- **Primary Color:** You can override the primary color used throughout the UI with a custom color of your choice.
+- **Link Color:** You can override the link color used throughout the UI with a custom color of your choice.
+
+### `ui-index`
+
+This setting allows you to configure the HTML index location for the UI.
+
+Default: `https://releases.rancher.com/harvester-ui/dashboard/latest/index.html`
+
+#### Example
+
+```
+https://your.static.dashboard-ui/index.html
+```
+
+### `ui-plugin-index`
+
+This setting allows you to configure the JS address for the Harvester plugin (when accessing Harvester from Rancher).
+
+Default: `https://releases.rancher.com/harvester-ui/plugin/harvester-latest/harvester-latest.umd.min.js`
+
+#### Example
+
+```
+https://your.static.dashboard-ui/*.umd.min.js
+```
+
+### `ui-source`
+
+This setting allows you to configure how to load the UI source.
+
+You can set the following values:
+
+- `auto`: The default. Auto-detect whether to use bundled UI or not.
+- `external`: Use external UI source.
+- `bundled`: Use the bundled UI source.
+
+#### Example
+
+```
+external
 ```
