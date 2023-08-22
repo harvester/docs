@@ -38,7 +38,7 @@ It's possible to provide multiple patterns by separating them with a comma.
 
 :::note
 
-It will only add formatted disks that are not mounted to the system.
+This setting only adds formatted disks mounted to the system.
 
 :::
 
@@ -231,7 +231,7 @@ _Available as of v1.2.0_
 
 This setting allows you to configure NTP servers for time synchronization on the Harvester nodes.
 
-You can define NTP servers during [installation](../install/harvester-configuration#osntp_servers) or update them later using this setting. 
+Using this setting, you can define NTP servers during [installation](../install/harvester-configuration#osntp_servers) or update NTP servers after installation.
 
 :::caution
 
@@ -484,7 +484,7 @@ When a host is unavailable or is powered off, the VM only reboots and does not m
 
 _Available as of v1.2.0_
 
-This setting allows you to globally re-brand the UI by customizing the Harvester product name, logos, and color scheme. This setting allows you to globally re-brand the UI by customizing the Harvester product name, logos, and color scheme.
+This setting allows you to globally re-brand the UI by customizing the Harvester product name, logos, and color scheme.
 
 Default: **Harvester**
 
