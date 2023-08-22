@@ -20,7 +20,7 @@ No matter which tool you use, creating a bootable device erases your USB device 
 
 [Rufus](https://rufus.ie/) allows you to create an ISO image on your USB flash drive on a Windows computer.
 1. Open Rufus and insert a clean USB stick into your computer.
-2. Rufus automatically detects your USB. Select the USB Device you want to use from the **Device** drop-down menu.
+2. Rufus automatically detects your USB. Select the USB device you want to use from the **Device** drop-down menu.
 3. For **Boot Selection**, choose **Select** and find the Harvester installation ISO image you want to burn onto the USB.
 
 	![rufus.png](/img/v1.2/install/rufus.png)
@@ -42,7 +42,7 @@ No matter which tool you use, creating a bootable device erases your USB device 
 
 ### `dd` command
 
-You can use the 'dd' command on Linux or other platforms with the `dd` command to create a USB installation flash drive. Ensure you choose the correct device; the following command erases data on the selected device.
+You can use the 'dd' command on Linux or other platforms to create a USB installation flash drive. Ensure you choose the correct device; the following command erases data on the selected device.
 
 ```
 # sudo dd if=<path_to_iso> of=<path_to_usb_device> bs=64k
