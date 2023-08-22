@@ -402,9 +402,23 @@ Default:
 
 _Available as of v1.2.0_
 
-This setting allows you to specify additional namespaces when collecting a support bundle. If set to "none," the support bundle will only capture resources from default system namespaces.
+This setting allows you to specify additional namespaces when collecting a support bundle. The support bundle will only capture resources from pre-defined namespaces by default.
 
-Default: ""
+Here is the pre-defined namespaces list:
+- cattle-dashboards
+- cattle-fleet-local-system
+- cattle-fleet-system
+- cattle-fleet-clusters-system
+- cattle-monitoring-system
+- fleet-local
+- harvester-system
+- local
+- longhorn-system
+- cattle-logging-system
+
+If you select more namespaces, it will append to the pre-defined namespaces list.
+
+Default: none
 
 ## `support-bundle-timeout`
 
