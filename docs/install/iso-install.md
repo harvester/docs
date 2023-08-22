@@ -17,7 +17,7 @@ Description: To get the Harvester ISO, download it from the Github releases. Dur
 
 Harvester ships as a bootable appliance image, you can install it directly on a bare metal server with the ISO image. To get the ISO image, download **💿 harvester-v1.x.x-amd64.iso** from the [Harvester releases](https://github.com/harvester/harvester/releases) page.
 
-During the installation you can either choose to **create a new Harvester cluster** or **join the node to an existing Harvester cluster**.
+During the installation, you can either choose to **create a new Harvester cluster** or **join the node to an existing Harvester cluster**.
 
 The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an ISO installation.
 
@@ -35,9 +35,9 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
 	![choose-installation-mode.png](/img/v1.2/install/choose-installation-mode.png)
 
-	- `Create a new Harvester cluster`: Select this option to create an entirely new Harvester cluster.
+	- `Create a new Harvester cluster`: creates an entirely new Harvester cluster.
 		
-	- `Join an existing Harvester cluster`: Select this option to join an existing Harvester cluster. You need the VIP and cluster token of the cluster you want to join.
+	- `Join an existing Harvester cluster`: joins an existing Harvester cluster. You need the VIP and cluster token of the cluster you want to join.
 
 	- `Install Harvester binaries only`: If you choose this option, additional setup is required after the first bootup.
 
@@ -65,7 +65,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
    ![config-network.png](/img/v1.2/install/config-network.png)
 
-1. (Optional) Configure the `DNS Servers`. Use commas as a delimiter to add more DNS servers. Leave blank to use the default DNS server.
+1. (Optional) Configure the `DNS Servers`. Use commas as a delimiter to add more DNS servers. Leave it blank to use the default DNS server.
 
 	![config-dns-server.png](/img/v1.2/install/config-dns-server.png)
 
