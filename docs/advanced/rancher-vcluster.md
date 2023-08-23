@@ -46,3 +46,13 @@ Once the addon is deployed, it can take a few minutes for Rancher to become avai
 You can then access Rancher via the hostname DNS record that you provided.
 
 Rancher can now be used to manage the underlying Harvester cluster. For more information, see [Rancher Integration](../rancher/virtualization-management).
+
+** Note: Disabling rancher-vcluster **
+
+The `rancher-vcluster` addon is deployed on a `vcluster` statefulset. The `vcluster` statefulset uses a longhorn PVC.
+
+When `rancher-vcluster` is disabled, the pvc `data-rancher-vcluster-0` is left behind in the `rancher-vcluster` namespace.
+
+On a subsequent re-enable, the pvc is re-used, and Rancher will have the old state available.
+
+Users wishing to wipe this data, should ensure that the pvc is deleted.
