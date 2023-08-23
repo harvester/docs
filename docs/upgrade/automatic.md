@@ -28,6 +28,19 @@ The following table shows the upgrade path of all supported versions.
 | [v1.0.1](./previous-releases/v1-0-1-to-v1-0-2.md) | v1.0.2        |
 | [v1.0.0](./previous-releases/v1-0-0-to-v1-0-1.md) | v1.0.1        |
 
+## Rancher upgrade
+
+If you are using Rancher to manage your Harvester cluster, we recommend upgrading your Rancher server first. For more information, please refer to the [Rancher upgrade guide](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/upgrades).
+
+For the Harvester & Rancher support matrix, please visit our website [here](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/).
+
+:::note
+
+  - Upgrading Rancher will not automatically upgrade your Harvester cluster. You still need to upgrade your Harvester cluster after upgrading Rancher.
+  - Upgrading Rancher will not bring your Harvester cluster down. You can still access your Harvester cluster using its virtual IP.
+
+:::
+
 ## Start an upgrade
 
 :::caution
