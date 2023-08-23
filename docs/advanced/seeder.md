@@ -5,44 +5,43 @@ title: "Seeder"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/advanced/seeder"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/dev/advanced/seeder"/>
 </head>
-
 _Available as of v1.2.0_
 
-The `harvester-seeder` addon, allows users to perform out-of-band operations on underlying nodes. 
+The `harvester-seeder` addon allows you to perform out-of-band operations on underlying nodes. 
 
-Baremetal nodes that support redfish based access, the addon can also perform hardware discover, hardware events and correlate these with corresponding harvester nodes.
+For bare-metal nodes that support redfish-based access, this addon can also discover hardware and hardware events, and then associate the hardware with the corresponding Harvester nodes.
 
-To get start the user needs to enable `harvester-seeder` addon from the Addons page
+To get started, you need to enable the `harvester-seeder` addon from the **Addons** page.
 
 ![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
-Once he addon is enabled, users can `Edit Config` for a specific host, to access `Out-Of-Band` definition page
+Once the addon is enabled, find the desired host and click **Edit Config**, and then click the `Out-Of-Band Access` tab.
 
 ![](/img/v1.2/seeder/EditConfig.png)
 
 ![](/img/v1.2/seeder/OutOfBandAccess.png)
 
-`seeder` leverages `ipmi` for performing management operations on the underlying node hardware.
+`seeder` leverages `ipmi` to manage the underlying node hardware.
 
-`redfish` support is needed for optional hardware discovery and event detection capability.
+Hardware discovery and event detection require `redfish` support.
 
-## Performing power operations
+## Power operations
 
-Once an out-of-band config is defined for a node. Placing the node successfully into `Maintenance Mode`, allows users to Shutdown or Reboot the node.
+Once you've defined the out-of-band config for a node, you can put the node into `Maintenance` mode, which allows you to shut down or reboot the node as needed.
 
 ![](/img/v1.2/seeder/ShutdownReboot.png)
 
-A node once Shutdown, allows users to subsequently power it on.
+If a node is shut down, you can also click **Power On** to power it on again:
 
 ![](/img/v1.2/seeder/PowerOn.png)
 
 
 ## Hardware event aggregation
 
-If `Event` collection is enabled in `Out-of-Band Access`, then `seeder` leverages `redfish` to query the underlying hardware for information about component failures and fan temperatures.
+If you've enabled **Event** in **Out-of-Band Access**, `seeder` will leverage `redfish` to query the underlying hardware for information about component failures and fan temperatures.
 
-This information is correlated with Harvester nodes, and made available as kubernetes events
+This information is associated with Harvester nodes and can be used as Kubernetes events.
 
 ![](/img/v1.2/seeder/HardwareEvents.png)
