@@ -45,3 +45,10 @@ If you've enabled **Event** in **Out-of-Band Access**, `seeder` will leverage `r
 This information is associated with Harvester nodes and can be used as Kubernetes events.
 
 ![](/img/v1.2/seeder/HardwareEvents.png)
+
+
+:::info
+
+Sometimes, the `Out-Of-Band Access` section may be stuck with the message `Waiting for "inventories.metal.harvesterhci.io" to be ready`. In this case, you need to refresh the page. For more information, see [this issue](https://github.com/harvester/harvester/issues/4412).
+
+:::
