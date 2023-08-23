@@ -5,43 +5,44 @@ title: "Rancher Vcluster (Experimental)"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/advanced/rancher-vcluster"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/dev/advanced/rancher-vcluster"/>
 </head>
 
 _Available as of v1.2.0_
 
-The `rancher-vcluster` addon allows users to run `rancher` as workload on the underlying harvester cluster using [vcluster](https://www.vcluster.com/).
+The `rancher-vcluster` addon allows you to run Rancher as a workload on the underlying Harvester cluster using [vcluster](https://www.vcluster.com/).
 
 ![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
-The addon runs a nested k3s cluster in the `rancher-vcluster` namespace, and deploys `rancher` to this cluster.
+The addon runs a nested K3s cluster in the `rancher-vcluster` namespace and deploys Rancher to this cluster.
 
-As part of the install the ingress for rancher is sync'd to the harvester cluster. This allows end users to access this `rancher`
+During the installation, the ingress for Rancher is synced to the Harvester cluster, allowing end users to access Rancher.
 
-## Installing rancher-vcluster addon
+## Installing rancher-vcluster
 
-The `rancher-vcluster` addon is not package with harvester. It is available in the [expreimental-addon repo](https://github.com/harvester/experimental-addons)
+The `rancher-vcluster` addon is not packaged with Harvester, but you can find it in the [expreimental-addon repo](https://github.com/harvester/experimental-addons).
 
-To install the addon users need to perform the following steps:
+Assuming you are using the Harvester kubeconfig, you can run the following commands to install the addon:
 
-_This assumes user is using the harvester kubeconfig_
 ```
 git clone https://github.com/harvester/experimental-addons
 kubectl apply -f experimental-addons/rancher-vcluster/rancher-vcluster.yaml
 ```
 
-## Configuring rancher-vcluster addon
+## Configuring rancher-vcluster
 
-To enable the `rancher-vcluster` some mandatory items are need for the addon config:
+After installing the addon, you need to configure it from the Harvester UI as follows:
+
+1. Click **Advanced** > **Addons**.
+1. Find the `rancher-vcluster` addon and click **⋮ > Edit Config**.
 
 ![](/img/v1.2/rancher-vcluster/VclusterConfig.png)
 
-The addon config requires the following input:
-* Hostname: A valid dns record pointing to the harvester vip. This is essential as the vcluster ingress is synced to the parent harvester cluster. A valid hostname is used to filter traffic by ingress to the vcluster workload.
-* Bootstrap Password: The bootstrap password for the new rancher deploy on vcluster.
+1. In the **Hostname** field, enter a valid DNS record pointing to the Harvester VIP. This is essential as the vcluster ingress is synced to the parent Harvester cluster. A valid hostname is used to filter ingress traffic to the vcluster workload.
+1. In the **Bootstrap Password** field, enter the bootstrap password for the new Rancher deployed on the vcluster.
 
-Once the addon is deployed, it can take a few minutes for rancher to be available. 
+Once the addon is deployed, it can take a few minutes for Rancher to become available. 
 
-Users can then access this rancher via the Hostname dns record supplied during install.
+You can then access Rancher via the hostname DNS record that you provided.
 
-The new rancher can then be used to manage the underlying harvester cluster using the [rancher integration](../rancher/virtualization-management)
+Rancher can now be used to manage the underlying Harvester cluster. For more information, see [Rancher Integration](../rancher/virtualization-management).
