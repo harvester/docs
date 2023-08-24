@@ -10,6 +10,7 @@ Description: Outline the Harvester installation requirements
 <head>
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/install/requirements"/>
 </head>
+
 As an HCI solution on bare metal servers, there are minimum node hardware and network requirements to install and run Harvester.
 
 ## Hardware requirements
@@ -25,7 +26,7 @@ Harvester nodes have the following hardware requirements and recommendations for
 | Network Card     | 1 Gbps Ethernet minimum for testing, 10Gbps Ethernet required for production                                                                                                                       |
 | Network Switch   | Trunking of ports required for VLAN support                                                                                                                                                           |
 
-:::note
+:::info
 
 A three-node cluster is required to realize the multi-node features of Harvester fully.
 - The first node always defaults to be a management node of the cluster.
