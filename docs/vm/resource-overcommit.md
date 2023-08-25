@@ -33,12 +33,19 @@ Classic memory overcommitment or memory ballooning is not yet supported by this 
 Users can modify the global `overcommit-config` by following the steps below, and it will be applied to each newly created virtual machine after the change.
 
 1. Go to the **Advanced > Settings** page.
+
+  ![overcommit page](/img/v1.2/vm/overcommit-page.png)
+
 1. Find the `overcommit-config` setting.
 1. Configure the desired CPU, Memory, and Storage ratio.
 
+  ![overcommit panel](/img/v1.2/vm/overcommit-panel.png)
+
 ## Configure overcommit for a single virtual machine
 
-If you need to configure individual virtual machines without involving global configuration, consider adjusting the ` spec.template.spec.domain.resources.<memory|cpu>` value on the target VirtualMachine resource individually. Note that by modifying these values, you are taking over control of virtual machine resource management from Harvester.
+In situations where you require specific configurations for individual virtual machines without affecting the global settings, you can easily achieve this by modifying the `spec.template.spec.domain.resources.limits.<memory|cpu>` value on the corresponding virtual machine spec directly.
+
+![vm overcommit config](/img/v1.2/vm/vm-overcommit-config.png)
 
 ## Reserve more memory for the system overhead
 
