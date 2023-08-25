@@ -114,7 +114,7 @@ Each IP pool will have a specific range, and you can specify the corresponding r
 
 ## Allocation policy
 - The IP pool prioritizes the allocation of previously assigned IP addresses based on their allocation history.
-- IP address allocation adheres to the round-robin policy.
+- IP addresses are assigned in ascending order.
 
 :::note
 

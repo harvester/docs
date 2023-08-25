@@ -219,8 +219,6 @@ Harvester 的内置负载均衡器同时支持 `pool` 和 `dhcp` 模式。你可
 ### 健康检查
 Harvester 负载均衡器支持 TCP 健康检查。如果启用了`健康检查`选项，你可以在 Rancher UI 中指定参数。
 
-![](/img/v1.2/rancher/health-check.png)
-
 你也可以手动将注释添加到服务来指定参数。支持以下注释：
 
 | 注释键 | 值类型 | 是否必须 | 描述 |

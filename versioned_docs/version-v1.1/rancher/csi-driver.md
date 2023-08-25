@@ -21,11 +21,7 @@ The Harvester Container Storage Interface (CSI) Driver provides a standard CSI i
 - The Kubernetes cluster is built on top of Harvester virtual machines.
 - The Harvester virtual machines that run the guest Kubernetes nodes are
   all in the same Harvester namespace.
-- The Harvester virtual machine guests' hostnames match their corresponding Harvester
-  virtual machine names. Guest cluster Harvester VMs can't have different hostnames
-  than their Harvester VM names when using the Harvester CSI driver. We hope
-  [to remove this limitation](https://github.com/harvester/harvester/issues/4396) in
-  a future release of Harvester.
+- The Harvester virtual machine guests' hostnames match their corresponding Harvester virtual machine names. Guest cluster Harvester VMs can't have different hostnames than their Harvester VM names when using the Harvester CSI driver. We hope [to remove this limitation](https://github.com/harvester/harvester/issues/4396) in a future release of Harvester.
 
 :::note
 
