@@ -45,9 +45,22 @@ To create a new Harvester VM load balancer:
    ![](/img/v1.2/networking/create-lb-02.png)
 1. Go to the **Backend Server Selector** tab to add label selectors. To add the VM to the LB, go to the **Virtual Machine > Instance Labels** tab to add the corresponding labels to the VM.
    ![](/img/v1.2/networking/create-lb-03.png)
-1. Go to the **Health Check** tab to enable health check and specify the parameters, including the **Port**, **Success Threshold**, **Failure Threshold**, **Interval**, and **Timeout** if the backend service supports health check.
+1. Go to the **Health Check** tab to enable health check and specify the parameters, including the **Port**, **Success Threshold**, **Failure Threshold**, **Interval**, and **Timeout** if the backend service supports health check. Refer to [Health Checks](#health-checks) for more details.
    ![](/img/v1.2/networking/create-lb-04.png)
- 
+
+### Health Checks
+The Harvester load balancer supports TCP health checks. You can specify the parameters in the Harvester UI if you've enabled the `Health Check` option.
+
+![](/img/v1.2/networking/health-check.png)
+
+| Name                           | Value Type | Required | Default | Description |
+|:-------------------------------|:-----------|:---|:--------|:---|
+| Health Check Port              | int        | true | N/A     | Specifies the port. The prober will access the address composed of the backend server IP and the port.
+| Health Check Success Threshold | int     | false | 1       | Specifies the health check success threshold. Disabled by default. The backend server will start forwarding traffic if the number of times the prober continuously detects an address successfully reaches the threshold.
+| Health Check Failure Threshold | int     | false | 3       | Specifies the health check failure threshold. Disabled by default. The backend server will stop forwarding traffic if the number of health check failures reaches the threshold.
+| Health Check Period            | int     | false | 5       |  Specifies the health check period in seconds. Disabled by default.
+| Health Check Timeout           | int     | false | 3       | Specifies the timeout of every health check in seconds. Disabled by default.
+
 ## Guest Kubernetes cluster load balancer
 In conjunction with Harvester Cloud Provider, the Harvester load balancer provides load balancing for LB services in the guest cluster.
    ![](/img/v1.2/networking/guest-kubernetes-cluster-lb.png)

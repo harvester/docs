@@ -8,7 +8,9 @@ title: "Creating an RKE1 Kubernetes Cluster"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/rancher/node/rke1-cluster"/>
 </head>
 
-You can now provision RKE1 Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.3+` with the built-in Harvester node driver.
+You can now provision RKE1 Kubernetes clusters on top of the Harvester cluster in Rancher using the built-in Harvester node driver.
+
+RKE1 and RKE2 have several slight behavioral differences. Refer to the [differences between RKE1 and RKE2](https://ranchermanager.docs.rancher.com/v2.7/how-to-guides/new-user-guides/launch-kubernetes-with-rancher/rke1-vs-rke2-differences) to get some high-level insights.
 
 ![rke1-cluster](/img/v1.2/rancher/rke1-node-driver.png)
 
@@ -16,6 +18,7 @@ You can now provision RKE1 Kubernetes clusters on top of the Harvester cluster i
 
 - VLAN network is required for Harvester node driver.
 - Harvester node driver only supports cloud images.
+- For port requirements of guest clusters deployed within Harvester, please refer to the [port requirements for guest clusters](install/requirements.md#inbound-rules-for-k3s-or-rkerke2-clusters).
 
 :::
 
@@ -30,7 +33,7 @@ You can create `cloud credentials` in two contexts:
 
 All `cloud credentials` are bound to your user profile and cannot be shared with other users.
 
-### Create Your Cloud Credentials
+### Create your cloud credentials
 
 1. Click **☰ > Cluster Management**.
 1. Click **Cloud Credentials**.
@@ -42,7 +45,7 @@ All `cloud credentials` are bound to your user profile and cannot be shared with
 
 ![create-harvester-cloud-credentials](/img/v1.2/rancher/create-cloud-credentials.png)
 
-### Create Node Template 
+### Create node templates 
 
 You can use the Harvester node driver to create node templates and eventually node pools for your Kubernetes cluster.
 
@@ -59,7 +62,7 @@ You can use the Harvester node driver to create node templates and eventually no
 
 See [nodes hosted by an infrastructure provider](https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/) for more information.
 
-#### Add Node Affinity
+#### Add node affinity
 
 _Available as of v1.0.3 + Rancher v2.6.7_
 
@@ -84,7 +87,7 @@ Node affinity can be added to the node template during the cluster creation, cli
 1. Click `Create` to save the node template. After the cluster is installed, you can check whether its machine nodes are scheduled accordingly to the affinity rules.
 
 
-### Create RKE1 Kubernetes Cluster
+### Create an RKE1 Kubernetes cluster
 
 Users can create an RKE1 Kubernetes cluster from the **Cluster Management** page via the Harvester RKE1 node driver.
 
@@ -102,15 +105,14 @@ Users can create an RKE1 Kubernetes cluster from the **Cluster Management** page
 
 ![create-rke-harvester-cluster](/img/v1.2/rancher/create-rke-harvester-cluster.png)
 
-### Using Harvester RKE1 Node Driver in Air Gapped Environment
+### Using Harvester RKE1 node driver in air-gapped environments
 
 RKE1 provisioning relies on the `qemu-guest-agent` to get the IP of the virtual machine, and `docker` to set up the RKE cluster. However, It may not be feasible to install `qemu-guest-agent` and `docker` in an air gapped environment.
 
 You can address the installation constraints with the following options:
 
-Option 1. Use a VM image with `qemu-guest-agent` and `docker` installed.
-
-Option 2. Configure the `cloud init` user data to enable the VMs to install `qemu-guest-agent` and `docker` via an HTTP(S) proxy.
+- Option 1. Use a VM image preconfigured with both `qemu-guest-agent` and `docker`.
+- Option 2. Configure the `cloud-init` user data to enable the VMs to install `qemu-guest-agent` and `docker` via an HTTP(S) proxy.
 
 Example user data in Harvester node template:
 ```

@@ -18,10 +18,10 @@ In Harvester, ResourceQuota can define usage limits for the following resources:
 - **Memory:** Limits the usage of memory resources in bytes or other recognizable memory units.
 
 ## Set ResourceQuota via Rancher
-In the multi-cluster management UI, administrators can configure resource quotas for namespaces through the following steps:
+In the Rancher UI, administrators can configure resource quotas for namespaces through the following steps:
 
-1. (Optional) In the Rancher UI, go to the hamburger menu, and then select **Virtualization Management** > **Import Cluster** to import a Harvester cluster. See [Import Cluster](https://docs.harvesterhci.io/v1.1/rancher/virtualization-management).
-1. Locate the desired cluster, and go to **Projects/Namespaces** > **Create Project**.
+1. Click the hamburger menu and choose the **Virtualization Management** tab.
+1. Choose one of the clusters and go to **Projects/Namespaces** > **Create Project**.
 1. Specify the desired project **Name**. Next, go to the **Resource Quotas** tab and select the **Add Resource** option. Within the **Resource Type** field, select either **CPU Limit** or **Memory Limit** and define the **Project Limit** and **Namespace Default Limit** values.
   ![](/img/v1.2/rancher/create-project.png)
 
@@ -32,7 +32,7 @@ You can configure the **Namespace** limits as follows:
 1. Complete the process by selecting **Create**.
   ![](/img/v1.2/rancher/create-namespace.png)
 
-## Overhead Memory of Virtual Machine
+## Overhead memory of virtual machine
 Upon creating a virtual machine (VM), the VM controller seamlessly incorporates overhead resources into the VM's configuration. These additional resources intend to guarantee the consistent and uninterrupted functioning of the VM. It's important to note that configuring memory limits requires a higher memory reservation due to the inclusion of these overhead resources.
 
 For example, consider the creation of a new VM with the following configuration:
@@ -60,16 +60,16 @@ For more information, see [Memory Overhead](https://kubevirt.io/user-guide/virtu
 
 For more information on how the memory overhead is calculated in Kubevirt, refer to [kubevirt/pkg/virt-controller/services/template.go](https://github.com/kubevirt/kubevirt/blob/v0.54.0/pkg/virt-controller/services/template.go#L1804).
 
-## Adjust ResourceQuota Automatically during the Migration
+## Automatic adjustment of ResourceQuota during migration
 When the allocated resource quota controlled by the `ResourceQuota` object reaches its limit, migrating a VM becomes unfeasible. The migration process automatically creates a new pod mirroring the resource requirements of the source VM. If these pod creation prerequisites surpass the defined quota, the migration operation cannot proceed.
 
 _Available as of v1.2.0_
 
-In Harvester, the `ResourceQuota` values dynamically expand ahead of migration to accommodate the resource needs of the target virtual machine. After migration, the ResourceQuotas are reinstated to their prior configurations.
+In Harvester, the `ResourceQuota` values will dynamically expand ahead of migration to accommodate the resource needs of the target virtual machine. After migration, the ResourceQuotas will be reinstated to their prior configurations.
 
-Please be aware of the following considerations of the automatic resizing of `ResourceQuota`:
-- When raising the `ResourceQuota` value, if you create, start, or restore other VMs, Harvester will verify if the resources are sufficient based on the original `ResourceQuota`. If the conditions are not met, the system will alert that the migration process is not feasible.
+Please be aware of the following constrains of the automatic resizing of `ResourceQuota`:
 - `ResourceQuota` cannot be changed during VM migration.
-- After expanding `ResourceQuota`, potential resource contention may emerge between non-VM pods and VM pods, leading to migration failures. Consequently, deploying non-VM pods to the same namespace is not recommended.
-- Due to the concurrent limitation of the webhook validator, the VM controller will execute a secondary validation to confirm resource sufficiency. If the resources are insufficient, it will auto config the VM's`RunStrategy` to **Halted**, and a new annotation `harvesterhci.io/insufficient-resource-quota: xxxxx` will be added to the VM object, informing you that the VM was shut down due to insufficient resources.
+- When raising the `ResourceQuota` value, if you create, start, or restore other VMs, Harvester will verify if the resources are sufficient based on the original `ResourceQuota`. If the conditions are not met, the system will alert that the migration process is not feasible.
+- After expanding `ResourceQuota`, potential resource contention may occur between non-VM pods and VM pods, leading to migration failures. Therefore, deploying custom container workloads and VMs to the same namespace is not recommended.
+- Due to the concurrent limitation of the webhook validator, the VM controller will execute a secondary validation to confirm resource sufficiency. If the resource is insufficient, it will auto config the VM's `RunStrategy` to `Halted`, and a new annotation `harvesterhci.io/insufficient-resource-quota` will be added to the VM object, informing you that the VM was shut down due to insufficient resources.
   ![](/img/v1.2/rancher/vm-annotation-insufficient-resource-quota.png)

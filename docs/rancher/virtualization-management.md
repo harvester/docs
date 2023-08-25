@@ -11,39 +11,22 @@ keywords:
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/rancher/virtualization-management"/>
 </head>
 
-For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6 and above.
+With Rancher's virtualization management capabilities, you can import and manage multiple Harvester clusters. It provides a solution that unifies virtualization and container management from a single pane of glass.
 
-1. As a prerequisite, Harvester `v1.1.0` integration requires Rancher server `v2.6.9` or above. In production, use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:
-    - [AWS](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/amazon-aws-qs/) (uses Terraform)
-    - [AWS Marketplace](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/amazon-aws-marketplace-qs/) (uses Amazon EKS)
-    - [Azure](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/microsoft-azure-qs/) (uses Terraform)
-    - [DigitalOcean](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/digital-ocean-qs/) (uses Terraform)
-    - [GCP](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/google-gcp-qs/) (uses Terraform)
-    - [Hetzner Cloud](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/hetzner-cloud-qs/) (uses Terraform)
-    - [Vagrant](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/quickstart-vagrant/)
-    - [Equinix Metal](https://rancher.com/docs/rancher/v2.6/en/quick-start-guide/deployment/equinix-metal-qs/)
+Additionally, Harvester leverages Rancher's existing capabilities, such as [authentication](https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/authentication-config) and [RBAC control](https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/manage-role-based-access-control-rbac), to provide full multi-tenancy support.
 
-    :::caution
-
-    **Do not install Rancher with Docker in production**. Otherwise, your environment may be damaged and your cluster may not be recovered. Installing Rancher in Docker should only be used for quick evaluation and testing purposes.
-
-    To install Rancher with Docker:
-
-    1. Begin creation of a custom cluster by provisioning a Linux host. Your host can be any of the following:
-        - A cloud-hosted virtual machine (VM)
-        - An on-premises VM
-        - A bare-metal server
-    1. Log into your Linux host using your preferred shell, such as PuTTy or a remote terminal connection.
-    1. From your shell, enter the following command:
-
-    ```shell
-    # for a quick evaluation, you can run the Rancher server with the following command
-    $ sudo docker run -d --restart=unless-stopped -v /opt/rancher:/var/lib/rancher -p 80:80 -p 443:443 --privileged rancher/rancher:v2.6.9
-    ```
-
-    :::
-
-    
+## Importing Harvester cluster
+1. Please refer to the [Harvester & Rancher Support Matrix](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/) to find a desired Rancher version. You can use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:
+    - [AWS](https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/deploy-rancher-manager) (uses Terraform)
+    - [AWS Marketplace](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/aws-marketplace) (uses Amazon EKS)
+    - [Azure](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/azure) (uses Terraform)
+    - [DigitalOcean](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/digitalocean) (uses Terraform)
+    - [GCP](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/gcp) (uses Terraform)
+    - [Hetzner Cloud](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/hetzner-cloud) (uses Terraform)
+    - [Vagrant](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/vagrant)
+    - [Equinix Metal](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/equinix-metal)
+    - [Outscale](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/outscale-qs) (uses Terraform)
+    - [Manual Install](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli)
 1. Once the Rancher server is up and running, log in and click the hamburger menu and choose the **Virtualization Management** tab. Select **Import Existing** to import the downstream Harvester cluster into the Rancher server.
 ![](/img/v1.2/rancher/vm-menu.png)
 1. Specify the `Cluster Name` and click **Create**. You will then see the registration guide; please open the dashboard of the target Harvester cluster and follow the guide accordingly.
@@ -55,15 +38,15 @@ For Harvester v0.3.0 and above, virtualization management with the multi-cluster
 
 ## Multi-Tenancy
 
-In Harvester, we have leveraged the existing Rancher [RBAC authorization](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/) such that users can view and manage a set of resources based on their cluster and project role permissions.
+In Harvester, we have leveraged the existing Rancher [RBAC authorization](https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/manage-role-based-access-control-rbac) such that users can view and manage a set of resources based on their cluster and project role permissions.
 
-Within Rancher, each person authenticates as a user, which is a login that grants a user access to Rancher. As mentioned in [Authentication](https://ranchermanager.docs.rancher.com/v2.6/pages-for-subheaders/authentication-config), users can either be local or external.
+Within Rancher, each person authenticates as a user, which is a login that grants a user access to Rancher. As mentioned in [Authentication](https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/authentication-config), users can either be local or external.
 
 Once the user logs into Rancher, their authorization, also known as access rights, is determined by global permissions and cluster and project roles.
 
-- [**Global Permissions**](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/global-permissions/):
+- [**Global Permissions**](https://ranchermanager.docs.rancher.com/v2.7/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/manage-role-based-access-control-rbac/global-permissions):
     - Define user authorization outside the scope of any particular cluster.
-- [**Cluster and Project Roles**](https://rancher.com/docs/rancher/v2.6/en/admin-settings/rbac/cluster-project-roles/):
+- [**Cluster and Project Roles**](https://ranchermanager.docs.rancher.com/v2.7/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/manage-role-based-access-control-rbac/cluster-and-project-roles):
     - Define user authorization inside the specific cluster or project where users are assigned the role.
 
 Both global permissions and cluster and project roles are implemented on top of [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/). Therefore, enforcement of permissions and roles is performed by Kubernetes.
@@ -86,13 +69,21 @@ The following example provides a good explanation of how the multi-tenant featur
 1. Continue to add the `project-readonly` user to the same project with read-only permissions and click **Save**.
    ![](/img/v1.2/rancher/added-user.png)
 1. Open an incognito browser and log in as `project-owner`.
-1. After logging in as the `project-owner` user, click the **Virtualization Management** tab. There you should be able to view the cluster to which you have been assigned.
-1. Click the **Images** tab to view a list of images previously uploaded to the harvester-public namespace. You can also upload your own image if needed.
+1. After logging in as the `project-owner` user, click the **Virtualization Management** tab. There you should be able to view the cluster and project to which you have been assigned.
+1. Click the **Images** tab to view a list of images previously uploaded to the `harvester-public` namespace. You can also upload your own image if needed.
 1. Create a VM with one of the images that you have uploaded.
-1. Log in with another user, e.g., `project-readonly`, and this user will only have the read permission of this project.
+1. Log in with another user, e.g., `project-readonly`, and this user will only have the read permission of the assigned project.
+
+:::note
+
+The `harvester-public` namespace is a predefined namespace accessible to all users assigned to this cluster.
+
+:::
 
 ## Delete Imported Harvester Cluster
 Users can delete the imported Harvester cluster from the Rancher UI via **Virtualization Management > Harvester Clusters**. Select the cluster you want to remove and click the **Delete** button to delete the imported Harvester cluster.
+
+You will also need to reset the `cluster-registration-url` setting on the associated Harvester cluster to clean up the Rancher cluster agent.
 
 ![delete-cluster](/img/v1.2/rancher/delete-harvester-cluster.png)
 

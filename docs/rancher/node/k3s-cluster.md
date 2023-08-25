@@ -8,7 +8,7 @@ title: "Creating an K3s Kubernetes Cluster"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/rancher/node/k3s-cluster"/>
 </head>
 
-You can now provision K3s Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.3+` using the built-in Harvester node driver.
+You can now provision K3s Kubernetes clusters on top of the Harvester cluster in Rancher using the built-in Harvester node driver.
 
 ![k3s-cluster](/img/v1.2/rancher/rke2-k3s-node-driver.png)
 
@@ -17,10 +17,11 @@ You can now provision K3s Kubernetes clusters on top of the Harvester cluster in
 - Harvester K3s node driver is in **Tech Preview**.
 - [VLAN network](../../networking/harvester-network.md#vlan-network) is required for Harvester node driver.
 - Harvester node driver only supports cloud images.
+- For the port requirements of the guest clusters deployed within Harvester, please refer to the [port requirements for guest clusters](install/requirements.md#inbound-rules-for-k3s-or-rkerke2-clusters).
 
 :::
 
-### Create Your Cloud Credentials
+### Create your cloud credentials
 
 1. Click **☰ > Cluster Management**.
 2. Click **Cloud Credentials**.
@@ -32,7 +33,7 @@ You can now provision K3s Kubernetes clusters on top of the Harvester cluster in
 
 ![create-harvester-cloud-credentials](/img/v1.2/rancher/create-cloud-credentials.png)
 
-###  Create K3s Kubernetes Cluster
+###  Create K3s Kubernetes cluster
 
 You can create a K3s Kubernetes cluster from the **Cluster Management** page via the K3s node driver.
 
@@ -50,7 +51,7 @@ You can create a K3s Kubernetes cluster from the **Cluster Management** page via
 
 ![create-k3s-harvester-cluster](/img/v1.2/rancher/create-k3s-harvester-cluster.png)
 
-#### Add Node Affinity
+#### Add node affinity
 
 _Available as of v1.0.3 + Rancher v2.6.7_
 
@@ -75,7 +76,7 @@ Node affinity can be added to the machine pools during the cluster creation:
 4. Click `Create` to save the node template. After the cluster is installed, you can check whether its machine nodes are scheduled according to the affinity rules.
 
 
-### Using Harvester K3s Node Driver in Air Gapped Environment
+### Using Harvester K3s node driver in air gapped environment
 
 K3s provisioning relies on the `qemu-guest-agent` package to get the IP of the virtual machine.
 
@@ -83,9 +84,8 @@ However, it may not be feasible to install packages in an air gapped environment
 
 You can address the installation constraints with the following options:
 
-Option 1. Use a VM image with required packages installed.
-
-Option 2. Configure the **Show Advanced > User Data** to enable the VMs to install required packages via an HTTP(S) proxy.
+- Option 1. Use a VM image preconfigured with the required packages (e.g., `iptables`, `qemu-guest-agent`).
+- Option 2. Go to **Show Advanced** > **User Data** to allow VMs to install the required packages via an HTTP(S) proxy.
 
 Example of `user data` in Harvester node template:
 ```
