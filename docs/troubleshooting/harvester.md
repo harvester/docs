@@ -115,3 +115,48 @@ setting.harvesterhci.io/ssl-parameters edited
 ```
 
 You can further check the logs of Pod `rke2-ingress-nginx-controller` to see if NGINX Ingress Controller is working correctly.
+
+
+## Network interfaces are not showing up
+
+You might have experienced some troubles in finding the right interface which has the 10G uplink. Sometimes, the interface doesn’t show up. This is because the ixgbe module failed to load because an unsupported SFP+ module type was detected.
+
+#### How to identify the issue with the unsupported SFP?
+
+Executing the command `lspci | grep -i net`, you can see the number of NIC ports connected on the motherboard. By running the command `ip a`, you can gather information about the detected interfaces. If the number of detected interfaces is less than the number of identified NIC ports, then it's likely that the problem is arising from the use of an unsupported SFP+ module.
+
+##### Testing
+
+You can perform a simple test to verify whether the unsupported SFP+ is the cause. Follow these steps on a running node:
+
+Create the file `/etc/modprobe.d/ixgbe.conf` manually with the content:
+
+```
+options ixgbe allow_unsupported_sfp=1
+```
+
+Then run:
+
+```
+rmmod ixgbe && modprobe ixgbe
+```
+
+If the above steps are successful and the missing interface is showing, then we can confirm that the issue is unsupported SFP+. However, the above test is not permanent and will be flushed out once rebooted.
+
+#### Solution
+Due to support issues, Intel is restricting the types of SFPs that can be used on their NICs. To make the above changes persistent, it is recommended to add the following content to a [config.yaml](/install/harvester-configuration.md) during installation.
+
+```YAML
+os:
+  write_files:
+  - content: |
+     options ixgbe allow_unsupported_sfp=1
+    path: /etc/modprobe.d/ixgbe.conf
+  - content: |
+      name: "reload ixgbe module"
+      stages:
+        boot:
+          - commands:
+            - rmmod ixgbe && modprobe ixgbe
+    path: /oem/99_ixgbe.yaml
+```
