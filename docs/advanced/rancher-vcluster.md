@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
-sidebar_label: Rancher Vcluster
-title: "Rancher Vcluster (Experimental)"
+sidebar_label: Rancher vcluster
+title: "Rancher vcluster (Experimental)"
 ---
 
 <head>
@@ -25,33 +25,32 @@ The `rancher-vcluster` addon is not packaged with Harvester, but you can find it
 Assuming you are using the Harvester kubeconfig, you can run the following commands to install the addon:
 
 ```
-git clone https://github.com/harvester/experimental-addons
-kubectl apply -f experimental-addons/rancher-vcluster/rancher-vcluster.yaml
+kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/main/rancher-vcluster/rancher-vcluster.yaml
 ```
 
 ## Configuring rancher-vcluster
 
 After installing the addon, you need to configure it from the Harvester UI as follows:
 
-1. Click **Advanced** > **Addons**.
-1. Find the `rancher-vcluster` addon and click **⋮ > Edit Config**.
+1. Select **Advanced** > **Addons**.
+1. Find the `rancher-vcluster` addon and select **⋮** > **Edit Config**.
 
 ![](/img/v1.2/rancher-vcluster/VclusterConfig.png)
 
 1. In the **Hostname** field, enter a valid DNS record pointing to the Harvester VIP. This is essential as the vcluster ingress is synced to the parent Harvester cluster. A valid hostname is used to filter ingress traffic to the vcluster workload.
 1. In the **Bootstrap Password** field, enter the bootstrap password for the new Rancher deployed on the vcluster.
 
-Once the addon is deployed, it can take a few minutes for Rancher to become available. 
+Once the addon is deployed, Rancher can take a few minutes to become available. 
 
 You can then access Rancher via the hostname DNS record that you provided.
 
-Rancher can now be used to manage the underlying Harvester cluster. For more information, see [Rancher Integration](../rancher/virtualization-management).
+See [Rancher Integration](../rancher/virtualization-management) for more information.
 
 :::note Disabling rancher-vcluster
 
 The `rancher-vcluster` addon is deployed on a `vcluster` Statefulset that uses a Longhorn PVC.
 
-When `rancher-vcluster` is disabled, the PVC `data-rancher-vcluster-0` will still be in the `rancher-vcluster` namespace.
+When `rancher-vcluster` is disabled, the PVC `data-rancher-vcluster-0` will remain in the `rancher-vcluster` namespace.
 
 If you enable the addon again, the PVC is re-used, and Rancher will have the old state available again.
 
