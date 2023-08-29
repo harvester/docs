@@ -115,3 +115,49 @@ setting.harvesterhci.io/ssl-parameters edited
 ```
 
 You can further check the logs of Pod `rke2-ingress-nginx-controller` to see if NGINX Ingress Controller is working correctly.
+
+
+## Network interfaces are not showing up
+
+You may need help finding the correct interface with a 10G uplink since the interface is not showing up. The uplink doesn't show up when the ixgbe module fails to load because an unsupported SFP+ module type is detected.
+
+#### How to identify the issue with the unsupported SFP?
+
+Execute the command `lspci | grep -i net` to see the number of NIC ports connected to the motherboard. By running the command `ip a`, you can gather information about the detected interfaces. If the number of detected interfaces is less than the number of identified NIC ports, then it's likely that the problem arises from using an unsupported SFP+ module.
+
+##### Testing
+
+You can perform a simple test to verify whether the unsupported SFP+ is the cause. Follow these steps on a running node:
+
+1. Create the file `/etc/modprobe.d/ixgbe.conf` manually with the content:
+
+```
+options ixgbe allow_unsupported_sfp=1
+```
+
+1. Then run following command:
+
+```
+rmmod ixgbe && modprobe ixgbe
+```
+
+If the above steps are successful and the missing interface shows, we can confirm that the issue is an unsupported SFP+. However, the above test is not permanent and will be flushed out once rebooted.
+
+#### Solution
+
+Due to support issues, Intel restricts the types of SFPs used on their NICs. To make the above changes persistent, adding the following content to a [config.yaml](/install/harvester-configuration.md) during installation is recommended.
+
+```YAML
+os:
+  write_files:
+  - content: |
+     options ixgbe allow_unsupported_sfp=1
+    path: /etc/modprobe.d/ixgbe.conf
+  - content: |
+      name: "reload ixgbe module"
+      stages:
+        boot:
+          - commands:
+            - rmmod ixgbe && modprobe ixgbe
+    path: /oem/99_ixgbe.yaml
+```
