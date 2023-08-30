@@ -9,15 +9,15 @@ title: "Seeder"
 </head>
 _Available as of v1.2.0_
 
-The `harvester-seeder` addon allows you to perform out-of-band operations on underlying nodes. 
+The `harvester-seeder` addon lets you perform out-of-band operations on underlying nodes. 
 
-For bare-metal nodes that support redfish-based access, this addon can also discover hardware and hardware events, and then associate the hardware with the corresponding Harvester nodes.
+This addon can also discover hardware and hardware events for bare-metal nodes that support redfish-based access and then associate the hardware with the corresponding Harvester nodes.
 
-To get started, you need to enable the `harvester-seeder` addon from the **Addons** page.
+You must enable the `harvester-seeder` addon from the **Addons** page to get started.
 
 ![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
-Once the addon is enabled, find the desired host and click **Edit Config**, and then click the `Out-Of-Band Access` tab.
+Once the addon is enabled, find the desired host and select **Edit Config** and go to the **Out-Of-Band Access** tab.
 
 ![](/img/v1.2/seeder/EditConfig.png)
 
@@ -33,7 +33,7 @@ Once you've defined the out-of-band config for a node, you can put the node into
 
 ![](/img/v1.2/seeder/ShutdownReboot.png)
 
-If a node is shut down, you can also click **Power On** to power it on again:
+If a node is shut down, you can also select **Power On** to power it on again:
 
 ![](/img/v1.2/seeder/PowerOn.png)
 
