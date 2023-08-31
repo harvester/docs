@@ -1,4 +1,5 @@
 ---
+id: upload-image
 sidebar_position: 6
 sidebar_label: 上传镜像
 title: "上传镜像"

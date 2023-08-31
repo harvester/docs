@@ -1,4 +1,5 @@
 ---
+id: index
 sidebar_position: 1
 sidebar_label: 创建虚拟机
 title: "创建虚拟机"
