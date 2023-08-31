@@ -1,4 +1,5 @@
 ---
+id: requirements
 sidebar_position: 1
 sidebar_label: Hardware and network requirements
 title: "Hardware and network requirements"

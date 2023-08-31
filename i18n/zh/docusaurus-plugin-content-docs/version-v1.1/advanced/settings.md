@@ -1,4 +1,5 @@
 ---
+id: index
 sidebar_position: 1
 sidebar_label: 设置
 title: "设置"

@@ -1,4 +1,5 @@
 ---
+id: index
 sidebar_position: 1
 sidebar_label: 集群网络
 title: "集群网络"

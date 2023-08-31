@@ -1,4 +1,5 @@
 ---
+id: authentication
 sidebar_position: 5
 sidebar_label: Authentication
 title: "Authentication"
