@@ -140,6 +140,9 @@ a.btn.navbar__github::before {
   top: 10px;
 }
 
+.sidebar-apis {
+  display: none !important;
+}
 
 .icon-github.navbar__github {
   margin-left: 20px;
@@ -171,4 +174,17 @@ a.btn.navbar__github::before {
   -moz-box-shadow: 10px 10px 25px rgb(100, 100, 100);
   -webkit-box-shadow: 10px 10px 25px rgb(100, 100, 100);
   -khtml-box-shadow: 10px 10px 25px rgb(100, 100, 100);
+}
+
+.openapi-right-panel__container {
+  display: none !important;
+  --ifm-col-width: 0 !important;
+}
+
+.col--7 {
+  --ifm-col-width: 100% !important;
+}
+
+.openapi-left-panel__container{
+  border-right: 0px !important;
 }
