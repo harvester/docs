@@ -117,7 +117,6 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
    ![first-login.png](/img/v1.2/install/first-time-login.png)
 
-
 <!-- :::note
 In some cases, if you are using an older VGA connector, you may encounter an `panic: invalid dimensions` error with ISO installation. See issue [#2937](https://github.com/harvester/harvester/issues/2937#issuecomment-1278545927) for a workaround.
 ::: -->
