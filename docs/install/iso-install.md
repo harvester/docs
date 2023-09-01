@@ -139,8 +139,8 @@ If you are using a version earlier than v1.1.1, please try the following workaro
 
    ![grub-menu.png](/img/v1.2/install/grub-menu.png)
 
-2. Append `vga=792` to the line started with `$linux`:
+1. Append `vga=792` to the line started with `$linux`:
 
    ![edit-menu-entry.png](/img/v1.2/install/edit-menu-entry.png)
 
-3. Press `Ctrl+X` or `F10` to boot up.
+1. Press `Ctrl+X` or `F10` to boot up.
