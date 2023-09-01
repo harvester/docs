@@ -36,7 +36,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 	![choose-installation-mode.png](/img/v1.2/install/choose-installation-mode.png)
 
 	- `Create a new Harvester cluster`: creates an entirely new Harvester cluster.
-		
+
 	- `Join an existing Harvester cluster`: joins an existing Harvester cluster. You need the VIP and cluster token of the cluster you want to join.
 
 	- `Install Harvester binaries only`: If you choose this option, additional setup is required after the first bootup.
@@ -114,6 +114,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
    ![iso-installed.png](/img/v1.2/install/iso-installed.png)
 
 1. You will be prompted to set the password for the default `admin` user when logging in for the first time.
+
    ![first-login.png](/img/v1.2/install/first-time-login.png)
 
 
