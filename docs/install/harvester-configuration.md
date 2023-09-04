@@ -236,6 +236,7 @@ Refer to the following example config for installing `rook-ceph` in Harvester:
 os:
   persistent_state_paths:
     - /var/lib/rook
+    - /var/lib/ceph
   modules:
     - rbd
     - nbd
@@ -245,7 +246,7 @@ os:
 
 #### Definition
 
-You can add additional software packages with `after_install_chroot_commands`. The `after-install-chroot` stage, provided by [elemental-toolkit](https://rancher.github.io/elemental-toolkit/docs/), allows you to execute commands not restricted by file system write issues, ensuring the persistence of user-defined commands even after a system reboot. This functionality is accessible through the Harvester Configuration or the `/oem/90_custom.yaml` file.
+You can add additional software packages with `after_install_chroot_commands`. The `after-install-chroot` stage, provided by [elemental-toolkit](https://rancher.github.io/elemental-toolkit/docs/), allows you to execute commands not restricted by file system write issues, ensuring the persistence of user-defined commands even after a system reboot.
 
 #### Example
 
@@ -258,10 +259,6 @@ os:
   
 ```
 
-:::note
-Upgrading Harvester causes the changes to the OS in the `after-install-chroot` stage to be lost. You must also configure the `after-upgrade-chroot` to make your changes persistent across an upgrade. Refer to [Runtime persistent changes](https://rancher.github.io/elemental-toolkit/docs/customizing/runtime_persistent_changes/) before upgrading Harvester.
-:::
-
 DNS resolution is unavailable in the `after-install-chroot stage`, and the `nameserver` might not be available. If you need to access a domain name to install a package using an URL, create a temporary `/etc/resolv.conf` file first. For example:
 
 ```yaml
@@ -272,6 +269,13 @@ os:
     - "curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && chmod 700 get_helm.sh && ./get_helm.sh"
     - "rm -f /etc/resolv.conf && ln -s /var/run/netconfig/resolv.conf /etc/resolv.conf"
 ```
+
+
+:::note
+
+Upgrading Harvester causes the changes to the OS in the `after-install-chroot` stage to be lost. You must also configure the `after-upgrade-chroot` to make your changes persistent across an upgrade. Refer to [Runtime persistent changes](https://rancher.github.io/elemental-toolkit/docs/customizing/runtime_persistent_changes/) before upgrading Harvester.
+
+:::
 
 ### `os.hostname`
 

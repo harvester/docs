@@ -10,6 +10,12 @@ title: "StorageClass"
 
 A StorageClass allows administrators to describe the **classes** of storage they offer. Different Longhorn StorageClasses might map to replica policies, or to node schedule policies, or disk schedule policies determined by the cluster administrators. This concept is sometimes called **profiles** in other storage systems.
 
+:::note
+
+For support with other storage, please refer to [Third-Party Storage Support](../advanced/csidriver.md)
+
+:::
+
 ## Creating a StorageClass
 You can create one or more StorageClasses from the **Advanced > StorageClasses** page.
 
@@ -91,24 +97,6 @@ The `volumeBindingMode` field controls when volume binding and dynamic provision
 
 ![](/img/v1.2/storageclass/customize_tab_vol_binding_mode.png)
 
-## Multi Container Storage Interface support
-
-Harvester now supports installing a Container Storage Interface (CSI) in your Harvester cluster to support and use external storage as the VM's non-system data disks. Leverage different drivers for specific purposes, such as performance optimization or integration with existing in-house storage providers.
-
-:::note
-
-The provisioner of the VM image still uses Longhorn. Before v1.2.0, Harvester only supports using Longhorn to store virtual machine data and does not support using external storage to store VM data.
-
-:::
-
-Administrators can enable this feature through the following steps:
-1. Set the [`os.persistent_state_paths`](../install/harvester-configuration.md#ospersistent_state_paths) and [`os.after_install_chroot_commands`](../install/harvester-configuration.md#osafter_install_chroot_commands) settings before creating the Harvester cluster for the specific CSI driver needs.
-2. Install the CSI driver to the Harvester cluster manually after creating the Harvester cluster.
-3. Edit the [`csi-driver-config`](../advanced/settings.md#csi-driver-config) setting.
-4. Create a new StorageClass that uses the CSI driver.
-
-After performing these steps, you must select the desired StorageClass when creating an empty volume or adding a new empty volume to a virtual machine.
-
 ## Appendix - Use Case
 
 ### HDD Scenario
@@ -123,13 +111,13 @@ HDD is not recommended for guest RKE2 clusters or VMs with good performance disk
 
 #### Recommended Practice
 
-First, add your HDD on the `Host` page and specify the disk tags as needed, such as`HDD` or `ColdStorage`. For more information on how to add extra disks and disk tags, see [Multi-disk Management](https://docs.harvesterhci.io/v1.1/host/#multi-disk-management) for details.
+First, add your HDD on the `Host` page and specify the disk tags as needed, such as`HDD` or `ColdStorage`. For more information on how to add extra disks and disk tags, see [Multi-disk Management](../host/host.md#multi-disk-management) for details.
 
 ![](/img/v1.2/storageclass/add_hdd_on_host_page.png)
 
 ![](/img/v1.2/storageclass/add_tags.png)
 
-Then, create a new `StorageClass` for the HDD (use the above disk tags). For hard drives with large capacity but slow performance, the number of replicas can be reduced to improve performance. For details, see [storageclass](https://docs.harvesterhci.io/v1.1/advanced/storageclass) for details.
+Then, create a new `StorageClass` for the HDD (use the above disk tags). For hard drives with large capacity but slow performance, the number of replicas can be reduced to improve performance.
 
 ![](/img/v1.2/storageclass/create_hdd_storageclass.png)
 
