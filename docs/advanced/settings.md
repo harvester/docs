@@ -136,7 +136,7 @@ If you set a username and password for a private registry, the system will autom
 
 _Available as of v1.2.0_
 
-If you install third-party CSI drivers in the Harvester cluster, you must configure some necessary information through this setting before using **Backup/Snapshot** related features.
+If you install third-party CSI drivers in the Harvester cluster, you must configure some necessary information through this setting before using **Backup & Snapshot** related features.
 
 Default:
 ```
