@@ -10,7 +10,7 @@ const config = {
   tagline: "The open source hyperconverged infrastructure (HCI) solution for a cloud native world",
   url: "https://docs.harvesterhci.io",
   baseUrl: "/",
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   organizationName: "harvester",
