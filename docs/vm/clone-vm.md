@@ -27,6 +27,8 @@ VM can be cloned with/without data. This function doesn't need to take a VM snap
 
 ## Clone VM without volume data
 
+Cloning a VM without volume data creates a new VM with the same configuration as the source VM.
+
 1. On the `Virtual Machines` page, click `Clone` of the VM actions.
 1. Unclick the `clone volume data` checkbox.
 1. Set a new VM name and click `Create` to create a new VM.

@@ -1,4 +1,5 @@
 ---
+id: harvester-monitoring
 sidebar_position: 1
 sidebar_label: Monitoring
 title: "Monitoring"
@@ -8,10 +9,6 @@ title: "Monitoring"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/monitoring/harvester-monitoring"/>
 </head>
 
-_Available as of v0.3.0_
-
-The monitoring feature is enabled by default.
-
 _Available as of v1.2.0_
 
 The monitoring feature is now implemented with an addon and is disabled by default in new installations.
@@ -20,7 +17,7 @@ Users can enable/disable `rancher-monitoring` [addon](../advanced/addons.md) fro
 
 Users can also enable/disable the `rancher-monitoring` addon in their Harvester installation by customizing the [harvester-configuration](../install/harvester-configuration.md#installaddons) file.
 
-For Harvester clusters upgraded from v1.1.*, the monitoring feature is converted to an addon automatically and kept enabled as before.
+For Harvester clusters upgraded from version v1.1.x, the monitoring feature is converted to an addon automatically and kept enabled as before.
 
 ## Dashboard Metrics
 Harvester has provided a built-in monitoring integration using [Prometheus](https://prometheus.io/). Monitoring is automatically enabled during the Harvester installations.
@@ -66,23 +63,30 @@ The corresponding `Memory Usage` is `(1 - 4.6/7.7) * 100%`, roughly `40%`.
 
 ## How to Configure Monitoring Settings
 
-_Available as of v1.0.1_
+_Available as of v1.0.2_
 
 Monitoring has several components that help to collect and aggregate metric data from all Nodes/Pods/VMs. The resources required for monitoring depend on your workloads and hardware resources. Harvester sets defaults based on general use cases, and you can change them accordingly.
 
 Currently, `Resources Settings` can be configured for the following components:
 
 - Prometheus
-- Prometheus Node Exporter(_UI configurable as of v1.0.2_)
+- Prometheus Node Exporter
 
-### From WebUI
+### From UI
 
-On the `Monitoring & Logging` page, you can view and change the resource settings as follows:
+On the **Advanced** page, you can view and change the resource settings as follows:
 
-1. Navigate to the `Monitoring > Configuration` page.
-![](/img/v1.2/monitoring/monitoring-config.png)
+ 1. Go to the **Advanced** > **Addons** page and select the **rancher-monitoring** page.
+ 2. From the **Prometheus** tab, change the resource requests and limits.
+ 3. Select **Save** when finished configuring the settings for the **rancher-monitoring** addon. The **Monitoring** deployments restart within a few seconds. Please be aware that the reboot can take time to reload previous data.
 
-1. Click `Save` and the `Monitoring` resource will be restarted within a few seconds. Please be aware that the reboot can take some time to reload previous data.
+![](/img/v1.2/monitoring/modify-prometheus-settings-from-addon.png)
+
+:::note
+
+The UI configuration is only visible when the **rancher-monitoring** addon is enabled.
+
+:::
 
 **The most frequently used option is the memory setting:**
 
@@ -106,29 +110,36 @@ When an increasing number of VMs get deployed on one node, the `prometheus-node-
 
 ### From CLI
 
-To update those values, you can also use the CLI command with: `$kubectl edit managedchart rancher-monitoring -n fleet-local`.
+You can use the following `kubectl` command to change resource configurations for the `rancher-monitoring` addon: `kubectl edit addons.harvesterhci.io -n cattle-monitoring-system rancher-monitoring`.
 
-For Harvester version `>= v1.0.1`, the related path and default value are:
+The resource path and default values are as follows:
 
-```yaml
-# Prometheus configs
-spec.values.prometheus.prometheusSpec.resources.limits.cpu: 1000m
-spec.values.prometheus.prometheusSpec.resources.limits.memory: 2500Mi
-spec.values.prometheus.prometheusSpec.resources.requests.cpu: 750m
-spec.values.prometheus.prometheusSpec.resources.requests.memory: 1750Mi
----
-# node exporter configs
-spec.values.prometheus-node-exporter.resources.limits.cpu: 200m
-spec.values.prometheus-node-exporter.resources.limits.memory: 180Mi
-spec.values.prometheus-node-exporter.resources.requests.cpu: 100m
-spec.values.prometheus-node-exporter.resources.requests.memory: 30Mi
+```
+apiVersion: harvesterhci.io/v1beta1
+kind: Addon
+metadata:
+  name: rancher-monitoring
+  namespace: cattle-monitoring-system
+spec:
+  valuesContent: |
+    prometheus:
+      prometheusSpec:
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 2500Mi
+          requests:
+            cpu: 850m
+            memory: 1750Mi
 ```
 
-For versions `<= v1.0.0`, the related path and default value are not specified in the `managedchart rancher-monitoring`, you need to add them accordingly.
+:::note
+
+You can still make configuration adjustments when the addon is disabled. However, these changes only take effect when you re-enable the addon.
+
+:::
 
 ## Alertmanager
-
-_Available as of v1.1.0_
 
 `Harvester` uses `Alertmanager` to collect and manage all the alerts that happened/happening in the cluster.
 
@@ -138,7 +149,7 @@ _Available as of v1.1.0_
 
 `Alertmanager` is enabled by default. You may disable it from the following config path.
 
-![](/img/v1.2/monitoring/alertmanager-config-enable-and-resource.png)
+![](/img/v1.2/monitoring/modify-alertmanager-from-addon.png)
 
 #### Change Resource Setting
 

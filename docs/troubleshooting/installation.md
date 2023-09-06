@@ -1,4 +1,5 @@
 ---
+id: index
 sidebar_position: 1
 sidebar_label: Installation
 title: "Installation"
@@ -21,7 +22,7 @@ Users can press the key combination `CTRL + ALT + F2` to switch to another TTY a
 
 - Check that your hardware meets the [minimum requirements](../install/requirements.md#hardware-requirements) to complete installation.
 
-## Receiving the message `"Loading images. This may take a few minutes..."`
+## Stuck in `Loading images. This may take a few minutes...`
 
 - Because the system doesn't have a default route, your installer may become "stuck" in this state. You can check your route status by executing the following command:
 
@@ -45,9 +46,11 @@ $ sudo journalctl -b -u rancherd
 If the cluster token setup in the agent node is not matching the server node token, you will find several entries of the following message:
 
 ```shell
-msg="Bootstrapping Rancher (master-head/v1.21.5+rke2r1)"
-msg="failed to bootstrap system, will retry: generating plan: insecure cacerts download from https://192.168.122.115:443/cacerts: Get \"https://192.168.122.115:443/cacerts\": EOF"
+msg="Bootstrapping Rancher (v2.7.5/v1.25.9+rke2r1)"
+msg="failed to bootstrap system, will retry: generating plan: response 502: 502  Bad Gateway getting cacerts: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
 ```
+
+Note that the Rancher version and IP address depend on your environment and might differ from the message above.
 
 To fix the issue, you need to update the token value in the `rancherd` configuration file `/etc/rancher/rancherd/config.yaml`.
 
@@ -57,7 +60,7 @@ For example, if the cluster token setup in the server node is `ThisIsTheCorrectO
 token: 'ThisIsTheCorrectOne'
 ```
 
-To ensure the change is persistent across reboots, update the `token` value of the OS configuration file `/oem/99_custom.yaml`:
+To ensure the change is persistent across reboots, update the `token` value of the OS configuration file `/oem/90_custom.yaml`:
 
 ```yaml
 name: Harvester Configuration
@@ -72,11 +75,19 @@ stages:
       owner: 0
       group: 0
       content: |
-        role: cluster-init
-        token: 'ThisIsTheCorrectOne' # <- Update this value
-        kubernetesVersion: v1.21.5+rke2r1
+        server: https://$cluster-vip:443
+        role: agent
+        token: "ThisIsTheCorrectOne"
+        kubernetesVersion: v1.25.9+rke2r1
+        rancherVersion: v2.7.5
+        rancherInstallerImage: rancher/system-agent-installer-rancher:v2.7.5
         labels:
          - harvesterhci.io/managed=true
+        extraConfig:
+          disable:
+          - rke2-snapshot-controller
+          - rke2-snapshot-controller-crd
+          - rke2-snapshot-validation-webhook
       encoding: ""
       ownerstring: ""
 ```
@@ -115,22 +126,4 @@ Please include the following information in a bug report when reporting a failed
 
     A failure PXE Boot installation automatically generates a tarball if the [`install.debug`](../install/harvester-configuration.md#installdebug) field is set to `true` in the Harvester configuration file.
 
-    :::
-
-    - Before v1.0.2
-
-    Please help capture the content of these files:
-
-    ```
-    /var/log/console.log
-    /run/cos/target/rke2.log
-    /tmp/harvester.*
-    /tmp/cos.*
-    ```
-
-    And output of these commands:
-
-    ```
-    blkid
-    dmesg
-    ```
+    ::: 

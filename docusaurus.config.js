@@ -27,6 +27,7 @@ const config = {
       },
     },
   },
+  themes: ["docusaurus-theme-openapi-docs"],
   presets: [
     [
       'classic',
@@ -36,6 +37,7 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           showLastUpdateTime: true,
           editUrl: "https://github.com/harvester/docs/edit/main/",
+          docItemComponent: "@theme/ApiItem", 
           lastVersion: 'v1.1',
           versions: {
             current: {
@@ -87,6 +89,12 @@ const config = {
           dropdownActiveClassDisabled: true,
         },
         {
+          type: 'docSidebar',
+          label: 'API',
+          position: 'left',
+          sidebarId: 'api',
+        },
+        {
           type: "localeDropdown",
           position: "right",
         },
@@ -132,6 +140,30 @@ const config = {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
+    languageTabs: [
+      {
+        highlight: "bash",
+        language: "curl",
+        logoClass: "bash",
+      },
+      {
+        highlight: "python",
+        language: "python",
+        logoClass: "python",
+        variant: "requests",
+      },
+      {
+        highlight: "go",
+        language: "go",
+        logoClass: "go",
+      },
+      {
+        highlight: "javascript",
+        language: "nodejs",
+        logoClass: "nodejs",
+        variant: "axios",
+      }
+    ]
   },
   customFields: {
     title: "Harvester - Open-source hyperconverged infrastructure",
@@ -149,6 +181,34 @@ const config = {
             from: '/latest/install/pxe-boot-install'
           },
         ],
+      },
+    ],
+    [
+      "docusaurus-plugin-openapi-docs",
+      {
+        id: "api",
+        docsPluginId: "classic", // e.g. "classic" or the plugin-content-docs id
+        config: {
+          api: { // "api" is considered the <id> that you will reference in the CLI
+            specPath: "api/v1.2-swagger.json", // path or URL to the OpenAPI spec
+            outputDir: "docs/api", // output directory for generated *.mdx and sidebar.js files
+            sidebarOptions: {
+              groupPathsBy: "tag", // generate a sidebar.js slice that groups operations by tag
+              categoryLinkSource: "tag",
+            },
+            version: "v1.2", // Current version
+            label: "v1.2", // Current version label
+            baseUrl: "/dev/api", // Leading slash is important
+            versions: {
+              "v1.1": {
+                specPath: "api/v1.1-swagger.json",
+                outputDir: "versioned_docs/version-v1.1/api", // No trailing slash
+                label: "v1.1",
+                baseUrl: "/v1.1/api", // Leading slash is important
+              },
+            },
+          },
+        },
       },
     ],
   ],

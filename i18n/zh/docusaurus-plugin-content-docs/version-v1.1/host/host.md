@@ -1,4 +1,5 @@
 ---
+id: host-management
 sidebar_position: 1
 sidebar_label: 主机管理
 title: "主机管理"

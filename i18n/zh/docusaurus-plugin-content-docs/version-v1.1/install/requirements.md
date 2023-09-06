@@ -1,4 +1,5 @@
 ---
+id: requirements
 sidebar_position: 1
 sidebar_label: 硬件和网络要求
 title: "硬件和网络要求"
@@ -18,7 +19,7 @@ Harvester 是运行在裸机服务器上的 HCI 解决方案，要正常运行�
 | CPU | 仅支持 x86_64。需要硬件辅助虚拟化。8 核（至少）用于测试；生产中推荐使用 16 核或以上 |
 | 内存 | 32 GB（至少）用于测试；生产中推荐使用 64 GB 或以上 |
 | 磁盘容量 | 200 GB（至少）用于测试；生产中推荐使用 500 GB 或以上 |
-| 磁盘性能 | 每个磁盘 5,000+ 随机 IOPS (SSD/NVMe)。管理节点（前 3 个节点）必须[对 etcd 而言足够快](https://www.ibm.com/cloud/blog/using-fio-to-tell-whether-your-storage-is-fast-enough-for-etcd)。 |
+| 磁盘性能 | 每个磁盘 5,000+ 随机 IOPS (SSD/NVMe)。管理节点（前 3 个节点）必须[对 etcd 而言足够快](https://www.suse.com/support/kb/doc/?id=000020100)。 |
 | 网卡 | 1 Gbps 以太网（至少）用于测试；生产中建议使用 10 Gbps 或以上的以太网 |
 | 网络交换机 | VLAN 支持所需的端口中继。 |
 

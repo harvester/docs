@@ -1,4 +1,5 @@
 ---
+id: index
 sidebar_position: 1
 sidebar_label: Create a Virtual Machine
 title: "Create a Virtual Machine"
@@ -37,6 +38,8 @@ Please refer to [this page](./create-windows-vm.md) for creating Windows virtual
 1. To configure networks, go to the **Networks** tab. 
     1. The **Management Network** is added by default, you can remove it if the VLAN network is configured.
     1. You can also add additional networks to the VMs using VLAN networks. You may configure the VLAN networks on **Advanced > Networks** first.
+1. (Optional) Set node affinity rules on the **Node Scheduling** tab.
+1. (Optional) Set workload affinity rules on the **VM Scheduling** tab.
 1. Advanced options such as run strategy, os type and cloud-init data are optional. You may configure these in the **Advanced Options** section when applicable.
 
 ![create-vm](/img/v1.2/vm/create-vm.png)
@@ -98,6 +101,19 @@ By default, VMs are accessible through the management network within the cluster
 It is also possible to connect VMs using additional networks with Harvester's built-in [VLAN networks](../networking/harvester-network.md).
 
 In bridge VLAN, virtual machines are connected to the host network through a linux `bridge`. The network IPv4 address is delegated to the virtual machine via DHCPv4. The virtual machine should be configured to use DHCP to acquire IPv4 addresses.
+
+## Node Scheduling
+`Node Scheduling` allows you to constrain which nodes your VMs can be scheduled on based on node labels.
+
+See the [Kubernetes Node Affinity Documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity) for more details.
+
+## VM Scheduling
+
+`VM Scheduling` allows you to constrain which nodes your VMs can be scheduled on based on the labels of workloads (VMs and Pods) already running on these nodes, instead of the node labels.
+
+For instance, you can combine `Required` with `Affinity` to instruct the scheduler to place VMs from two services in the same zone, enhancing communication efficiency. Likewise, the use of `Preferred` with `Anti-Affinity` can help distribute VMs of a particular service across multiple zones for increased availability.
+
+See the [Kubernetes Pod Affinity and Anti-Affinity Documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity) for more details.
 
 ## Advanced Options
 

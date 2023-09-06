@@ -1,4 +1,5 @@
 ---
+id: airgap
 sidebar_position: 3
 sidebar_label: Air Gapped Environment
 title: "Air Gapped Environment"

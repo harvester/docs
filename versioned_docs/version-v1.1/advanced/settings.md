@@ -1,4 +1,5 @@
 ---
+id: index
 sidebar_position: 1
 sidebar_label: Settings
 title: "Settings"
@@ -396,6 +397,10 @@ Configuring multi-CIDR or IP range from UI is only available from Harvester v1.1
 This setting allows you to force reschedule VMs when a node is unavailable. When a node turns to be `Not Ready`, it will force delete the VM on that node and reschedule it to another available node after a period of seconds.
 
 Default: `{"enable":true, "period":300}`
+
+:::note
+When a host is unavailable or is powered off, the VM only reboots and does not migrate.
+:::
 
 #### Example
 

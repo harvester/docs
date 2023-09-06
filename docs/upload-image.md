@@ -1,4 +1,5 @@
 ---
+id: upload-image
 sidebar_position: 6
 sidebar_label: Upload Images
 title: "Upload Images"

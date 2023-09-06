@@ -21,7 +21,7 @@ Description: The Harvester cloud provider used by the guest cluster in Harvester
 
 In this page we will learn:
 
-- How to deploy the Harvester cloud provider in both RKE1 and RKE2.
+- How to deploy the Harvester cloud provider in both RKE1 and RKE2 cluster.
 - How to use the [Harvester load balancer](#load-balancer-support).
 
 ## Deploying
@@ -29,6 +29,7 @@ In this page we will learn:
 ### Prerequisites
 - The Kubernetes cluster is built on top of Harvester virtual machines.
 - The Harvester virtual machines run as guest Kubernetes nodes are in the same namespace.
+- The Harvester virtual machine guests' hostnames match their corresponding Harvester virtual machine names. Guest cluster Harvester VMs can't have different hostnames than their Harvester VM names when using the Harvester CSI driver. We hope [to remove this limitation](https://github.com/harvester/harvester/issues/4396) in a future release of Harvester.
 
 ### Deploying to the RKE1 Cluster with Harvester Node Driver
 When spinning up an RKE cluster using the Harvester node driver, you can perform two steps to deploy the `Harvester` cloud provider:
@@ -48,140 +49,121 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 
   ![](/img/v1.2/rancher/rke2-cloud-provider.png)
 
-### Deploying to the K3s Cluster with Harvester Node Driver [Experimental]
+### Deploying to the RKE2 custom cluster (experimental)
+
+![](/img/v1.2/rancher/custom.png)
+1. Use `generate_addon.sh` to generate a cloud-config and place it into the directory `/etc/kubernetes/cloud-config` on every custom node.
+
+   ```
+   curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace> 
+   ```
+
+  :::note
+
+  The `generate_addon.sh` script depends on `kubectl` and `jq` to operate the Harvester cluster.
+
+  The script needs access to the `Harvester Cluster` kubeconfig to work. You can find the `kubeconfig` file from one of the Harvester management nodes in the `/etc/rancher/rke2/rke2.yaml` path.
+
+  The namespace needs to be the namespace in which the guest cluster will be created.
+
+  :::
+
+
+2. Configure the **Cloud Provider** to `Harvester` and select **Create** to spin up the cluster.
+     ![](/img/v1.2/rancher/create-custom-rke2.png)
+
+### Deploying to the K3s cluster with Harvester node driver (experimental)
 
 When spinning up a K3s cluster using the Harvester node driver, you can perform the following steps to deploy the harvester cloud provider:
 
-1. Generate and inject cloud config for `harvester-cloud-provider`
+1. Use `generate_addon.sh` to generate cloud config.
 
-The cloud provider needs a kubeconfig file to work, a limited scoped one can be generated using the [generate_addon.sh](https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh) script available in the [harvester/cloud-provider-harvester](https://github.com/harvester/cloud-provider-harvester) repo.
+    ```
+    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
+    ```
 
-:::note
+    The output will look as follows:
 
-The script depends on `kubectl` and `jq` to operate the Harvester cluster
+    ```
+    ########## cloud config ############
+    apiVersion: v1
+    clusters:
+    - cluster:
+        certificate-authority-data: <CACERT>
+        server: https://HARVESTER-ENDPOINT/k8s/clusters/local
+      name: local
+    contexts:
+    - context:
+        cluster: local
+        namespace: default
+        user: harvester-cloud-provider-default-local
+      name: harvester-cloud-provider-default-local
+    current-context: harvester-cloud-provider-default-local
+    kind: Config
+    preferences: {}
+    users:
+    - name: harvester-cloud-provider-default-local
+      user:
+        token: <TOKEN>
+        
+        
+    ########## cloud-init user data ############
+    write_files:
+    - encoding: b64
+      content: <CONTENT>
+      owner: root:root
+      path: /etc/kubernetes/cloud-config
+      permissions: '0644'
+    ```
 
-The script needs access to the `Harvester Cluster` kubeconfig to work.
+2. Copy and paste the `cloud-init user data` content to **Machine Pools >Show Advanced > User Data**.
+   ![](/img/v1.2/rancher/cloud-config-userdata.png)
 
-The namespace needs to be the namespace in which the guest cluster will be created.
+3. Add the following `HelmChart` yaml of `harvester-cloud-provider` to **Cluster Configuration > Add-On Config > Additional Manifest**.
 
-:::
+    ```
+    apiVersion: helm.cattle.io/v1
+    kind: HelmChart
+    metadata:
+      name: harvester-cloud-provider
+      namespace: kube-system
+    spec:
+      targetNamespace: kube-system
+      bootstrap: true
+      repo: https://charts.harvesterhci.io/
+      chart: harvester-cloud-provider
+      version: 0.2.2
+      helmVersion: v3
+    ```
 
-```
-./deploy/generate_addon.sh <serviceaccount name> <namespace>
-```
+    ![](/img/v1.2/rancher/external-cloud-provider-addon.png)
 
-The output will look as follows:
+4. Disable the `in-tree` cloud provider in the following ways:
 
-```
-# ./deploy/generate_addon.sh harvester-cloud-provider default
-Creating target directory to hold files in ./tmp/kube...done
-Creating a service account in default namespace: harvester-cloud-provider
-W1104 16:10:21.234417    4319 helpers.go:663] --dry-run is deprecated and can be replaced with --dry-run=client.
-serviceaccount/harvester-cloud-provider configured
+    - Click the `Edit as YAML` button.
 
-Creating a role in default namespace: harvester-cloud-provider
-role.rbac.authorization.k8s.io/harvester-cloud-provider unchanged
+    ![](/img/v1.2/rancher/edit-k3s-cluster-yaml.png)
+    - Disable `servicelb` and set `disable-cloud-controller: true` to disable the default K3s cloud controller.
+    ```yaml
+        machineGlobalConfig:
+          disable:
+            - servicelb
+          disable-cloud-controller: true
+    ```
 
-Creating a rolebinding in default namespace: harvester-cloud-provider
-W1104 16:10:21.986771    4369 helpers.go:663] --dry-run is deprecated and can be replaced with --dry-run=client.
-rolebinding.rbac.authorization.k8s.io/harvester-cloud-provider configured
+    - Add `cloud-provider=external` to use the Harvester cloud provider.
+    ```yaml
+        machineSelectorConfig:
+          - config:
+              kubelet-arg:
+              - cloud-provider=external
+              protect-kernel-defaults: false
+    ```
 
-Getting uid of service account harvester-cloud-provider on default
-Service Account uid: ea951643-53d2-4ea8-a4aa-e1e72a9edc91
-
-Creating a user token secret in default namespace: harvester-cloud-provider-token
-Secret name: harvester-cloud-provider-token
-
-Extracting ca.crt from secret...done
-Getting user token from secret...done
-Setting current context to: local
-Cluster name: local
-Endpoint: https://HARVESTER_ENDPOINT/k8s/clusters/local
-
-Preparing k8s-harvester-cloud-provider-default-conf
-Setting a cluster entry in kubeconfig...Cluster "local" set.
-Setting token credentials entry in kubeconfig...User "harvester-cloud-provider-default-local" set.
-Setting a context entry in kubeconfig...Context "harvester-cloud-provider-default-local" created.
-Setting the current-context in the kubeconfig file...Switched to context "harvester-cloud-provider-default-local".
-########## cloud config ############
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority-data: <CACERT>
-    server: https://HARVESTER-ENDPOINT/k8s/clusters/local
-  name: local
-contexts:
-- context:
-    cluster: local
-    namespace: default
-    user: harvester-cloud-provider-default-local
-  name: harvester-cloud-provider-default-local
-current-context: harvester-cloud-provider-default-local
-kind: Config
-preferences: {}
-users:
-- name: harvester-cloud-provider-default-local
-  user:
-    token: <TOKEN>
-    
-    
-########## cloud-init user data ############
-write_files:
-- encoding: b64
-  content: <CONTENT>
-  owner: root:root
-  path: /etc/kubernetes/cloud-config
-  permissions: '0644'
-```
-
-Copy and paste the output below `cloud-init user data` to **Machine Pools >Show Advanced > User Data**.
-
-![](/img/v1.2/rancher/cloud-config-userdata.png)
-
-3. Add the following `HelmChart` yaml of `harvester-cloud-provider` to **Cluster Configuration > Add-On Config > Additional Manifest**
-
-```
-apiVersion: helm.cattle.io/v1
-kind: HelmChart
-metadata:
-  name: harvester-cloud-provider
-  namespace: kube-system
-spec:
-  targetNamespace: kube-system
-  bootstrap: true
-  repo: https://charts.harvesterhci.io/
-  chart: harvester-cloud-provider
-  version: 0.1.13
-  helmVersion: v3
-```
-
-![](/img/v1.2/rancher/external-cloud-provider-addon.png)
-
-4. Disable the in-tree cloud provider by
-
-- Click the `Edit as YAML` button
-
-![](/img/v1.2/rancher/edit-k3s-cluster-yaml.png)
-- Disable `servicelb` and Set `disable-cloud-controller: true` to disable default k3s cloud controller.
-```yaml
-    machineGlobalConfig:
-      disable:
-        - servicelb
-      disable-cloud-controller: true
-```
-
-- Add `cloud-provider=external` to use harvester cloud provider.
-```yaml
-    machineSelectorConfig:
-      - config:
-          kubelet-arg:
-          - cloud-provider=external
-          protect-kernel-defaults: false
-```
-
-![](/img/v1.2/rancher/k3s-cluster-yaml-content-for-harvester-cloud-provider.png)
+    ![](/img/v1.2/rancher/k3s-cluster-yaml-content-for-harvester-cloud-provider.png)
 
 With these settings in place a K3s cluster should provision successfully while using the external cloud provider.
+
 
 ## Upgrade Cloud Provider
 
@@ -200,37 +182,28 @@ RKE/K3s upgrade cloud provider via the Rancher UI, as follows:
 4. Click **Next > Update**.
 
 ## Load Balancer Support
-After deploying the `Harvester Cloud provider`, you can use the Kubernetes `LoadBalancer` service to expose a microservice inside the guest cluster to the external world. When you create a Kubernetes `LoadBalancer` service, a Harvester load balancer is assigned to the service and you can edit it through the `Add-on Config` in the Rancher UI.
+Once you've deployed the Harvester cloud provider, you can leverage the Kubernetes `LoadBalancer` service to expose a microservice within the guest cluster to the external world. Creating a Kubernetes `LoadBalancer` service assigns a dedicated Harvester load balancer to the service, and you can make adjustments through the `Add-on Config` within the Rancher UI.
 
-  ![](/img/v1.2/rancher/lb-svc.png)
+![](/img/v1.2/rancher/lb-svc.png)
   
 
 ### IPAM
-Harvester's built-in load balancer supports both `pool` and `dhcp` modes. You can select the mode in the Rancher UI. Harvester adds the annotation `cloudprovider.harvesterhci.io/ipam` to the service behind.
+Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and you can configure it by adding the annotation `cloudprovider.harvesterhci.io/ipam: $mode` to its corresponding service. Starting from Harvester cloud provider >= v0.2.0, it also introduces a unique **Share IP** mode. A service shares its load balancer IP with other services in this mode.
 
-- pool: You should configure an IP address pool in Harvester's `Settings` in advance. The Harvester LoadBalancer controller will allocate an IP address from the IP address pool for the load balancer.
-  
-  ![](/img/v1.2/rancher/vip-pool.png) 
-  
-- dhcp:  A DHCP server is required. The Harvester LoadBalancer controller will request an IP address from the DHCP server.
+- **DCHP:** A DHCP server is required. The Harvester load balancer will request an IP address from the DHCP server.
+
+- **Pool:** An [IP pool](/networking/ippool.md) must be configured first. The Harvester load balancer controller will allocate an IP for the load balancer service following [the IP pool selection policy](/networking/ippool.md/#selection-policy).
+
+- **Share IP:** When creating a new load balancer service, you can re-utilize an existing load balancer service IP. The new service is referred to as a secondary service, while the currently chosen service is the primary one. To specify the primary service in the secondary service, you can add the annotation `cloudprovider.harvesterhci.io/primary-service: $primary-service-name`.  However, there are two known limitations:
+  - Services that share the same IP address can't use the same port.
+  - Secondary services cannot share their IP with additional services.
 
 :::note
 
-It is not allowed to modify the IPAM mode. You need to create a new service if you want to modify the IPAM mode.
+Modifying the `IPAM` mode isn't allowed. You must create a new service if you intend to change the `IPAM` mode.
 
 :::
 
-### Health Checks
-The Harvester load balancer supports TCP health checks. You can specify the parameters in the Rancher UI if you enable the `Health Check` option.
+## Health checks
 
-  ![](/img/v1.2/rancher/health-check.png)
-
-Alternatively, you can specify the parameters by adding annotations to the service manually. The following annotations are supported:
-
-| Annotation Key | Value Type | Required | Description |
-|:---|:---|:---|:---|
-| `cloudprovider.harvesterhci.io/healthcheck-port` | string | true | Specifies the port. The prober will access the address composed of the backend server IP and the port.
-| `cloudprovider.harvesterhci.io/healthcheck-success-threshold` | string | false | Specifies the health check success threshold. The default value is 1. The backend server will start forwarding traffic if the number of times the prober continuously detects an address successfully reaches the threshold.
-| `cloudprovider.harvesterhci.io/healthcheck-failure-threshold` | string | false | Specifies the health check failure threshold. The default value is 3. The backend server will stop forwarding traffic if the number of health check failures reaches the threshold.
-| `cloudprovider.harvesterhci.io/healthcheck-periodseconds` | string | false |  Specifies the health check period. The default value is 5 seconds.
-| `cloudprovider.harvesterhci.io/healthcheck-timeoutseconds` | string | false | Specifies the timeout of every health check. The default value is 3 seconds.
+Beginning with Harvester cloud provider v0.2.0, additional health checks of the `LoadBalancer` service within the guest Kubernetes cluster are no longer necessary. Instead, you can configure [liveness](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-tcp-liveness-probe) and [readiness](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-readiness-probes) probes for your workloads. Consequently, any unavailable pods will be automatically removed from the load balancer endpoints to achieve the same desired outcome.
