@@ -27,7 +27,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
 ## Installation Steps
 
-1. Mount the Harvester ISO disk and boot the server by selecting the `Harvester Installer` option.
+1. Mount the Harvester ISO file and boot the server by selecting the `Harvester Installer` option.
 
    ![iso-install.png](/img/v1.1/install/iso-install.png)
 
