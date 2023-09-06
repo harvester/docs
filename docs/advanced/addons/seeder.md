@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 4
 sidebar_label: Seeder
 title: "Seeder"
 ---
@@ -7,6 +7,7 @@ title: "Seeder"
 <head>
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/advanced/seeder"/>
 </head>
+
 _Available as of v1.2.0_
 
 The `harvester-seeder` addon lets you perform out-of-band operations on underlying nodes. 
