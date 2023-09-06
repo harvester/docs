@@ -1,7 +1,7 @@
 ---
-sidebar_position: 8
-sidebar_label: Rancher vcluster
-title: "Rancher vcluster (Experimental)"
+sidebar_position: 5
+sidebar_label: Rancher Manager
+title: "Rancher Manager (Experimental)"
 ---
 
 <head>
@@ -10,7 +10,7 @@ title: "Rancher vcluster (Experimental)"
 
 _Available as of v1.2.0_
 
-The `rancher-vcluster` addon allows you to run Rancher as a workload on the underlying Harvester cluster using [vcluster](https://www.vcluster.com/).
+The `rancher-vcluster` addon allows you to run Rancher Manager as a workload on the underlying Harvester cluster and is implemented using [vcluster](https://www.vcluster.com/).
 
 ![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
@@ -44,7 +44,7 @@ Once the addon is deployed, Rancher can take a few minutes to become available.
 
 You can then access Rancher via the hostname DNS record that you provided.
 
-See [Rancher Integration](../rancher/virtualization-management.md) for more information.
+See [Rancher Integration](../../rancher/virtualization-management.md) for more information.
 
 :::note Disabling rancher-vcluster
 

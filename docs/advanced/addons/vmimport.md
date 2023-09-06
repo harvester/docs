@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 3
 sidebar_label: VM Import
 title: "VM Import"
 ---

@@ -14,14 +14,14 @@ One of the key reasons for the same is to ensure that Harvester installation foo
 
 Some level of customization is allowed for each addon, which depends on the underlying addon.
 
-_Available as of v1.2.0_
+_Available as of v1.1.0_
 
 Harvester v1.2.0 ships with five Addons:
-* [pcidevices-controller](./pcidevices.md)
-* [vm-import-controller](./vmimport.md)
+* [pcidevices-controller](./addons/pcidevices.md)
+* [vm-import-controller](./addons/vmimport.md)
 * [rancher-monitoring](../monitoring/harvester-monitoring.md)
 * [rancher-logging](../logging/harvester-logging.md)
-* [harvester-seeder](https://github.com/harvester/seeder)
+* [harvester-seeder](./addons/seeder.md)
 
 ![](/img/v1.2/addons/AddonsV120.png)
 
