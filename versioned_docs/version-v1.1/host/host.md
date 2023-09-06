@@ -1,4 +1,5 @@
 ---
+id: host-management
 sidebar_position: 1
 sidebar_label: Host Management
 title: "Host Management"

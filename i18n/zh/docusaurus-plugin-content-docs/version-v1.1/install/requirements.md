@@ -1,4 +1,5 @@
 ---
+id: requirements
 sidebar_position: 1
 sidebar_label: 硬件和网络要求
 title: "硬件和网络要求"

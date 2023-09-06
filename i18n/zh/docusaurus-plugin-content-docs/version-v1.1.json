@@ -3,44 +3,108 @@
     "message": "v1.1",
     "description": "The label for version v1.1"
   },
-  "sidebar.tutorialSidebar.category.Installation": {
+  "sidebar.docs.category.Installation": {
     "message": "安装",
-    "description": "The label for category Installation in sidebar tutorialSidebar"
+    "description": "The label for category Installation in sidebar docs"
   },
-  "sidebar.tutorialSidebar.category.Upgrade": {
+  "sidebar.docs.category.Upgrade": {
     "message": "升级",
-    "description": "The label for category Upgrade in sidebar tutorialSidebar"
+    "description": "The label for category Upgrade in sidebar docs"
   },
-  "sidebar.tutorialSidebar.category.Previous Releases": {
+  "sidebar.docs.category.Previous Releases": {
     "message": "以前的版本",
-    "description": "The label for category Previous Releases in sidebar tutorialSidebar"
+    "description": "The label for category Previous Releases in sidebar docs"
   },
-  "sidebar.tutorialSidebar.category.VM Management": {
+  "sidebar.docs.category.VM Management": {
     "message": "VM 管理",
-    "description": "The label for category VM Management in sidebar tutorialSidebar"
+    "description": "The label for category VM Management in sidebar docs"
   },
-  "sidebar.tutorialSidebar.category.Volume Management": {
+  "sidebar.docs.category.Volume Management": {
     "message": "卷管理",
-    "description": "The label for category Volume Management in sidebar tutorialSidebar"
+    "description": "The label for category Volume Management in sidebar docs"
   },
-  "sidebar.tutorialSidebar.category.Networking": {
+  "sidebar.docs.category.Networking": {
     "message": "网络",
-    "description": "The label for category Networking in sidebar tutorialSidebar"
+    "description": "The label for category Networking in sidebar docs"
   },
-  "sidebar.tutorialSidebar.category.Advanced": {
+  "sidebar.docs.category.Advanced": {
     "message": "高级设置",
-    "description": "The label for category Advanced in sidebar tutorialSidebar"
+    "description": "The label for category Advanced in sidebar docs"
   },
-  "sidebar.tutorialSidebar.category.Rancher Integration": {
+  "sidebar.docs.category.Rancher Integration": {
     "message": "Rancher 集成",
-    "description": "The label for category Rancher Integration in sidebar tutorialSidebar"
+    "description": "The label for category Rancher Integration in sidebar docs"
   },
-  "sidebar.tutorialSidebar.category.Harvester Node Driver": {
+  "sidebar.docs.category.Harvester Node Driver": {
     "message": "Harvester Node Driver",
-    "description": "The label for category Harvester Node Driver in sidebar tutorialSidebar"
+    "description": "The label for category Harvester Node Driver in sidebar docs"
   },
-  "sidebar.tutorialSidebar.category.Troubleshooting": {
+  "sidebar.docs.category.Troubleshooting": {
     "message": "故障排除",
-    "description": "The label for category Troubleshooting in sidebar tutorialSidebar"
+    "description": "The label for category Troubleshooting in sidebar docs"
+  },
+  "sidebar.docs.category.API": {
+    "message": "API",
+    "description": "The label for category API in sidebar docs"
+  },
+  "sidebar.api.category.API": {
+    "message": "API",
+    "description": "The label for category API in sidebar api"
+  },
+  "sidebar.api.category.API.link.generated-index.title": {
+    "message": "Harvester API",
+    "description": "The generated-index page title for category API in sidebar api"
+  },
+  "sidebar.api.category.API.link.generated-index.description": {
+    "message": "This is the API doc of the Harvester server. The APIs are broken down into the categories below:",
+    "description": "The generated-index page description for category API in sidebar api"
+  },
+  "sidebar.api.category.Volumes": {
+    "message": "Volumes",
+    "description": "The label for category Volumes in sidebar api"
+  },
+  "sidebar.api.category.SSH Keys": {
+    "message": "SSH Keys",
+    "description": "The label for category SSH Keys in sidebar api"
+  },
+  "sidebar.api.category.Support Bundles": {
+    "message": "Support Bundles",
+    "description": "The label for category Support Bundles in sidebar api"
+  },
+  "sidebar.api.category.Upgrades": {
+    "message": "Upgrades",
+    "description": "The label for category Upgrades in sidebar api"
+  },
+  "sidebar.api.category.Backups": {
+    "message": "Backups",
+    "description": "The label for category Backups in sidebar api"
+  },
+  "sidebar.api.category.Images": {
+    "message": "Images",
+    "description": "The label for category Images in sidebar api"
+  },
+  "sidebar.api.category.Restores": {
+    "message": "Restores",
+    "description": "The label for category Restores in sidebar api"
+  },
+  "sidebar.api.category.Virtual Machine Templates": {
+    "message": "Virtual Machine Templates",
+    "description": "The label for category Virtual Machine Templates in sidebar api"
+  },
+  "sidebar.api.category.Networks": {
+    "message": "Networks",
+    "description": "The label for category Networks in sidebar api"
+  },
+  "sidebar.api.category.Migrations": {
+    "message": "Migrations",
+    "description": "The label for category Migrations in sidebar api"
+  },
+  "sidebar.api.category.Virtual Machines": {
+    "message": "Virtual Machines",
+    "description": "The label for category Virtual Machines in sidebar api"
+  },
+  "sidebar.api.doc.Introduction": {
+    "message": "Introduction",
+    "description": "The label for the doc item Introduction in sidebar api, linking to the doc api/harvester-apis"
   }
 }
