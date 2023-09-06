@@ -18,7 +18,7 @@ RKE1 and RKE2 have several slight behavioral differences. Refer to the [differen
 
 - VLAN network is required for Harvester node driver.
 - Harvester node driver only supports cloud images.
-- For port requirements of guest clusters deployed within Harvester, please refer to the [port requirements for guest clusters](install/requirements.md#inbound-rules-for-k3s-or-rkerke2-clusters).
+- For port requirements of guest clusters deployed within Harvester, please refer to the [port requirements for guest clusters](../../install/requirements.md#port-requirements-for-k3s-or-rkerke2-clusters).
 
 :::
 

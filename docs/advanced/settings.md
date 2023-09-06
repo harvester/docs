@@ -230,7 +230,7 @@ _Available as of v1.2.0_
 
 This setting allows you to configure NTP servers for time synchronization on the Harvester nodes.
 
-Using this setting, you can define NTP servers during [installation](../install/harvester-configuration#osntp_servers) or update NTP servers after installation.
+Using this setting, you can define NTP servers during [installation](../install/harvester-configuration.md#osntp_servers) or update NTP servers after installation.
 
 :::caution
 

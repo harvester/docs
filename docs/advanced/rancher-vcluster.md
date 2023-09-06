@@ -44,7 +44,7 @@ Once the addon is deployed, Rancher can take a few minutes to become available.
 
 You can then access Rancher via the hostname DNS record that you provided.
 
-See [Rancher Integration](../rancher/virtualization-management) for more information.
+See [Rancher Integration](../rancher/virtualization-management.md) for more information.
 
 :::note Disabling rancher-vcluster
 
