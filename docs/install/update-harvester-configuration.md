@@ -26,7 +26,7 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
 
 ### Runtime change
 
-1. Log in to a Harvester node and become root. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-into-a-harvester-node) for more details.
+1. Log in to a Harvester node and become root. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-in-to-a-harvester-node) for more details.
 1. Edit `/etc/sysconfig/network/config` and update the following line. Use a space to separate DNS server addresses if there are multiple servers.
 
     ```
@@ -71,7 +71,7 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
 
 ### Runtime change
 
-1. Log in to a Harvester node and become root. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-into-a-harvester-node) for more details.
+1. Log in to a Harvester node and become root. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-in-to-a-harvester-node) for more details.
 1. Edit `/etc/systemd/timesyncd.conf` and specify NTP servers in the `NTP=` setting:
 
     ```
@@ -128,7 +128,7 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
 
 ### Runtime change
 
-1. Log in to a Harvester node as user `rancher`. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-into-a-harvester-node) for more details.
+1. Log in to a Harvester node as user `rancher`. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-in-to-a-harvester-node) for more details.
 1. Edit `/home/rancher/.ssh/authorized_keys` to add or remove keys.
 
 ### Configuration persistence
@@ -156,7 +156,7 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
 
 ### Runtime change
 
-1. Log in to a Harvester node as user `rancher`. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-into-a-harvester-node) for more details.
+1. Log in to a Harvester node as user `rancher`. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-in-to-a-harvester-node) for more details.
 1. To reset the password for the user `rancher`, run the command `passwd`. 
 
 ### Configuration persistence
@@ -176,7 +176,7 @@ You can update the slave interfaces of Harvester's management bonding interface 
 
 ### Runtime change
 
-1. Log in to a Harvester node and become root. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-into-a-harvester-node) for more details.
+1. Log in to a Harvester node and become root. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-in-to-a-harvester-node) for more details.
 1. Identify the interface names with the following command:
 
     ```

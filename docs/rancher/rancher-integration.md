@@ -22,7 +22,7 @@ Users can import and manage multiple Harvester clusters using the Rancher [Virtu
 
 For a comprehensive overview of the support matrix, please refer to the [Harvester & Rancher Support Matrix](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/).
 
-For the network requirements, please refer to the doc [here](install/requirements.md#network-requirements).
+For the network requirements, please refer to the doc [here](../install/requirements.md#network-requirements).
 
 <div class="text-center">
 <iframe width="950" height="475" src="https://www.youtube.com/embed/fyxDm3HVwWI" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
