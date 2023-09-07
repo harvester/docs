@@ -37,7 +37,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 	![choose-installation-mode.png](/img/v1.2/install/choose-installation-mode.png)
 
 	- `Create a new Harvester cluster`: creates an entirely new Harvester cluster.
-		
+
 	- `Join an existing Harvester cluster`: joins an existing Harvester cluster. You need the VIP and cluster token of the cluster you want to join.
 
 	- `Install Harvester binaries only`: If you choose this option, additional setup is required after the first bootup.
@@ -115,8 +115,8 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
    ![iso-installed.png](/img/v1.2/install/iso-installed.png)
 
 1. You will be prompted to set the password for the default `admin` user when logging in for the first time.
-   ![first-login.png](/img/v1.2/install/first-time-login.png)
 
+   ![first-login.png](/img/v1.2/install/first-time-login.png)
 
 <!-- :::note
 In some cases, if you are using an older VGA connector, you may encounter an `panic: invalid dimensions` error with ISO installation. See issue [#2937](https://github.com/harvester/harvester/issues/2937#issuecomment-1278545927) for a workaround.
@@ -140,8 +140,8 @@ If you are using a version earlier than v1.1.1, please try the following workaro
 
    ![grub-menu.png](/img/v1.2/install/grub-menu.png)
 
-2. Append `vga=792` to the line started with `$linux`:
+1. Append `vga=792` to the line started with `$linux`:
 
    ![edit-menu-entry.png](/img/v1.2/install/edit-menu-entry.png)
 
-3. Press `Ctrl+X` or `F10` to boot up.
+1. Press `Ctrl+X` or `F10` to boot up.
