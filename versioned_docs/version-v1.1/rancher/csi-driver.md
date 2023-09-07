@@ -223,7 +223,7 @@ Make sure the `serviceaccount name` and `namespace` are the same as your cloud p
 
 ### Deploying
 
-1. Create a new StorageClass that you would like to use in your guest k8s cluster. You can refer to the [StorageClasses](https://docs.harvesterhci.io/dev/advanced/storageclass) for more details.
+1. Create a new StorageClass that you would like to use in your guest k8s cluster. You can refer to the [StorageClasses](../advanced/storageclass.md) for more details.
 
     As show in the following figure, create a new StorageClass named **replica-2**.
 

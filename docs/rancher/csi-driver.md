@@ -221,7 +221,7 @@ Follow these steps to set up **RBAC** for error message visibility:
 ### Deploying
 Now you can create a new StorageClass that you intend to use in your guest Kubernetes cluster.
 
-1. For administrators, you can create a desired [StorageClass](https://docs.harvesterhci.io/dev/advanced/storageclass) (e.g., named **replica-2**) in your bare-metal Harvester cluster.
+1. For administrators, you can create a desired [StorageClass](../advanced/storageclass.md) (e.g., named **replica-2**) in your bare-metal Harvester cluster.
 
     ![](/img/v1.2/rancher/sc-replica-2.png)
 

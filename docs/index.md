@@ -28,7 +28,7 @@ The Harvester architecture consists of cutting-edge open-source technologies:
 ## Harvester Features
 
 Harvester is an enterprise-ready, easy-to-use infrastructure platform that leverages local, direct attached storage instead of complex external SANs. It utilizes Kubernetes API as a unified automation language across container and VM workloads. Some key features of Harvester include:
-- **Easy to get started.** Since Harvester ships as a bootable appliance image, you can install it directly on a bare metal server with the [ISO image](https://github.com/harvester/harvester/releases) or automatically install it using [iPXE](https://docs.harvesterhci.io/dev/install/pxe-boot-install) scripts.
+- **Easy to get started.** Since Harvester ships as a bootable appliance image, you can install it directly on a bare metal server with the [ISO image](https://github.com/harvester/harvester/releases) or automatically install it using [iPXE](./install/pxe-boot-install.md) scripts.
 - **VM lifecycle management.** Easily create, edit, clone, and delete VMs, including SSH-Key injection, cloud-init, and graphic and serial port console.
 - **VM live migration.** Move a VM to a different host or node with zero downtime.
 - **VM backup, snapshot, and restore.** Back up your VMs from NFS, S3 servers, or NAS devices. Use your backup to restore a failed VM or create a new VM on a different cluster.

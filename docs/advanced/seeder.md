@@ -5,7 +5,7 @@ title: "Seeder"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/dev/advanced/seeder"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/advanced/seeder"/>
 </head>
 _Available as of v1.2.0_
 
