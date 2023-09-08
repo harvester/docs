@@ -85,31 +85,33 @@ Starting with Rancher v2.7.6, Harvester introduces a new feature that enables yo
 
 This guide will walk you through enabling and using this experimental feature, highlighting its capabilities and best practices.
 
-To enable this new feature flag, you can:
+To enable this new feature flag, follow these steps:
+
 1. Click the hamburger menu and choose the **Global Settings** tab.
 1. Click **Feature Flags** and locate the new feature flag `harvester-baremetal-container-workload`.
 1. Click the drop-down menu and select **Activate** to enable this feature.
-1. If the feature state turns into `Active`, the feature is successfully enabled.
+1. If the feature state changes to **Active**, the feature is successfully enabled.
 
 ![harvester-baremetal-container-workload-feature](/img/v1.2/rancher/harvester-baremetal-container-workload-feature.png)
 
 ### Key Features
+
 **Unified Dashboard View:**
 Once you've enabled the feature, you can explore the dashboard view of the Harvester cluster, just like you would with other standard Kubernetes clusters. This unified experience simplifies the management and monitoring of both your virtual machines and container workloads from a single, user-friendly interface.
 
 **Deploy Custom Workloads:**
-This feature allows you to deploy custom container workloads directly to the bare-metal Harvester cluster. While this functionality is experimental, it introduces exciting possibilities for optimizing your infrastructure. However, we recommend deploying container and VM workloads in separate namespaces to ensure clarity and separation.
+This feature lets you deploy custom container workloads directly to the bare-metal Harvester cluster. While this functionality is experimental, it introduces exciting possibilities for optimizing your infrastructure. However, we recommend deploying container and VM workloads in separate namespaces to ensure clarity and separation.
 
 :::note
 
-- Critical system components such as monitoring, logging, Rancher, KubeVirt, and Longhorn are all managed by the Harvester cluster itself. Users do not have the ability to upgrade or modify these components. Therefore, exercise caution and avoid making changes to these critical system components.
-- It is essential not to deploy any workloads to the system namespaces `cattle-system`, `harvester-system`, or `longhorn-system`.  Keeping your workloads in separate namespaces is crucial to maintaining clarity and preserving the integrity of the system components.
+- Critical system components such as monitoring, logging, Rancher, KubeVirt, and Longhorn are all managed by the Harvester cluster itself. You can't upgrade or modify these components. Therefore, exercise caution and avoid making changes to these critical system components.
+- It is essential not to deploy any workloads to the system namespaces `cattle-system`, `harvester-system`, or `longhorn-system`. Keeping your workloads in separate namespaces is crucial to maintaining clarity and preserving the integrity of the system components.
 - For best practices, we recommend deploying container and VM workloads in separate namespaces.
 
 :::
 
 :::note
 
-Harvester cluster is not supported in the **Continues Delivery** page, please check the issue [#4482](https://github.com/harvester/harvester/issues/4482) for further updates.
+With this feature enabled, your Harvester cluster does not appear on the **Continuous Delivery** page in the Rancher UI. Please check the issue [#4482](https://github.com/harvester/harvester/issues/4482) for further updates.
 
 :::
