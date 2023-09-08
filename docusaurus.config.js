@@ -46,9 +46,11 @@ const config = {
             },
             "v1.1": {
               path: "v1.1",
+              banner: `none`
             },
             "v1.0": {
               path: "v1.0",
+              banner: `unmaintained`
             }
           }
         },
