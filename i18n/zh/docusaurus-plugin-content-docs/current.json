@@ -1,6 +1,6 @@
 {
   "version.label": {
-    "message": "v1.2-dev",
+    "message": "v1.2",
     "description": "The label for version current"
   },
   "sidebar.docs.category.Installation": {
@@ -127,13 +127,13 @@
     "message": "Patch a Persistent Volume Claim",
     "description": "The label for the doc item Patch a Persistent Volume Claim in sidebar api, linking to the doc api/patch-namespaced-persistent-volume-claim"
   },
-  "sidebar.api.doc.List Persistent Volume Claims in all Namespaces": {
-    "message": "List Persistent Volume Claims in all Namespaces",
-    "description": "The label for the doc item List Persistent Volume Claims in all Namespaces in sidebar api, linking to the doc api/list-persistent-volume-claim-for-all-namespaces"
+  "sidebar.api.doc.List Persistent Volume Claims For All Namespaces": {
+    "message": "List Persistent Volume Claims For All Namespaces",
+    "description": "The label for the doc item List Persistent Volume Claims For All Namespaces in sidebar api, linking to the doc api/list-persistent-volume-claim-for-all-namespaces"
   },
-  "sidebar.api.doc.List Key Pairs in all Namespaces": {
-    "message": "List Key Pairs in all Namespaces",
-    "description": "The label for the doc item List Key Pairs in all Namespaces in sidebar api, linking to the doc api/list-key-pair-for-all-namespaces"
+  "sidebar.api.doc.List Key Pairs For All Namespaces": {
+    "message": "List Key Pairs For All Namespaces",
+    "description": "The label for the doc item List Key Pairs For All Namespaces in sidebar api, linking to the doc api/list-key-pair-for-all-namespaces"
   },
   "sidebar.api.doc.List Key Pairs": {
     "message": "List Key Pairs",
@@ -183,9 +183,9 @@
     "message": "Patch a Support Bundle",
     "description": "The label for the doc item Patch a Support Bundle in sidebar api, linking to the doc api/patch-namespaced-support-bundle"
   },
-  "sidebar.api.doc.List Support Bundles in all Namespaces": {
-    "message": "List Support Bundles in all Namespaces",
-    "description": "The label for the doc item List Support Bundles in all Namespaces in sidebar api, linking to the doc api/list-support-bundle-for-all-namespaces"
+  "sidebar.api.doc.List Support Bundles For All Namespaces": {
+    "message": "List Support Bundles For All Namespaces",
+    "description": "The label for the doc item List Support Bundles For All Namespaces in sidebar api, linking to the doc api/list-support-bundle-for-all-namespaces"
   },
   "sidebar.api.doc.List Upgrades": {
     "message": "List Upgrades",
@@ -211,9 +211,9 @@
     "message": "Patch an Upgrade",
     "description": "The label for the doc item Patch an Upgrade in sidebar api, linking to the doc api/patch-namespaced-upgrade"
   },
-  "sidebar.api.doc.List Upgrades in all Namespaces": {
-    "message": "List Upgrades in all Namespaces",
-    "description": "The label for the doc item List Upgrades in all Namespaces in sidebar api, linking to the doc api/list-upgrade-for-all-namespaces"
+  "sidebar.api.doc.List Upgrades For All Namespaces": {
+    "message": "List Upgrades For All Namespaces",
+    "description": "The label for the doc item List Upgrades For All Namespaces in sidebar api, linking to the doc api/list-upgrade-for-all-namespaces"
   },
   "sidebar.api.doc.List Virtual Machine Backups": {
     "message": "List Virtual Machine Backups",
@@ -239,9 +239,9 @@
     "message": "Patch a Virtual Machine Backup",
     "description": "The label for the doc item Patch a Virtual Machine Backup in sidebar api, linking to the doc api/patch-namespaced-virtual-machine-backup"
   },
-  "sidebar.api.doc.List Virtual Machine Backups in all Namespaces": {
-    "message": "List Virtual Machine Backups in all Namespaces",
-    "description": "The label for the doc item List Virtual Machine Backups in all Namespaces in sidebar api, linking to the doc api/list-virtual-machine-backup-for-all-namespaces"
+  "sidebar.api.doc.List Virtual Machine Backups For All Namespaces": {
+    "message": "List Virtual Machine Backups For All Namespaces",
+    "description": "The label for the doc item List Virtual Machine Backups For All Namespaces in sidebar api, linking to the doc api/list-virtual-machine-backup-for-all-namespaces"
   },
   "sidebar.api.doc.List Virtual Machine Images": {
     "message": "List Virtual Machine Images",
@@ -267,9 +267,9 @@
     "message": "Patch a Virtual Machine Image",
     "description": "The label for the doc item Patch a Virtual Machine Image in sidebar api, linking to the doc api/patch-namespaced-virtual-machine-image"
   },
-  "sidebar.api.doc.List Virtual Machine Images in all Namespaces": {
-    "message": "List Virtual Machine Images in all Namespaces",
-    "description": "The label for the doc item List Virtual Machine Images in all Namespaces in sidebar api, linking to the doc api/list-virtual-machine-image-for-all-namespaces"
+  "sidebar.api.doc.List Virtual Machine Images For All Namespaces": {
+    "message": "List Virtual Machine Images For All Namespaces",
+    "description": "The label for the doc item List Virtual Machine Images For All Namespaces in sidebar api, linking to the doc api/list-virtual-machine-image-for-all-namespaces"
   },
   "sidebar.api.doc.List Virtual Machine Restores": {
     "message": "List Virtual Machine Restores",
@@ -295,9 +295,9 @@
     "message": "Patch a Virtual Machine Restore",
     "description": "The label for the doc item Patch a Virtual Machine Restore in sidebar api, linking to the doc api/patch-namespaced-virtual-machine-restore"
   },
-  "sidebar.api.doc.List Virtual Machine Restores in all Namespaces": {
-    "message": "List Virtual Machine Restores in all Namespaces",
-    "description": "The label for the doc item List Virtual Machine Restores in all Namespaces in sidebar api, linking to the doc api/list-virtual-machine-restore-for-all-namespaces"
+  "sidebar.api.doc.List Virtual Machine Restores For All Namespaces": {
+    "message": "List Virtual Machine Restores For All Namespaces",
+    "description": "The label for the doc item List Virtual Machine Restores For All Namespaces in sidebar api, linking to the doc api/list-virtual-machine-restore-for-all-namespaces"
   },
   "sidebar.api.doc.List Virtual Machine Templates": {
     "message": "List Virtual Machine Templates",
@@ -347,13 +347,13 @@
     "message": "Patch a Virtual Machine Template Version",
     "description": "The label for the doc item Patch a Virtual Machine Template Version in sidebar api, linking to the doc api/patch-namespaced-virtual-machine-template-version"
   },
-  "sidebar.api.doc.List Virtual Machine Templates in all Namespaces": {
-    "message": "List Virtual Machine Templates in all Namespaces",
-    "description": "The label for the doc item List Virtual Machine Templates in all Namespaces in sidebar api, linking to the doc api/list-virtual-machine-template-for-all-namespaces"
+  "sidebar.api.doc.List Virtual Machine Templates For All Namespaces": {
+    "message": "List Virtual Machine Templates For All Namespaces",
+    "description": "The label for the doc item List Virtual Machine Templates For All Namespaces in sidebar api, linking to the doc api/list-virtual-machine-template-for-all-namespaces"
   },
-  "sidebar.api.doc.List Virtual Machine Template Versions in all Namespaces": {
-    "message": "List Virtual Machine Template Versions in all Namespaces",
-    "description": "The label for the doc item List Virtual Machine Template Versions in all Namespaces in sidebar api, linking to the doc api/list-virtual-machine-template-version-for-all-namespaces"
+  "sidebar.api.doc.List Virtual Machine Template Versions For All Namespaces": {
+    "message": "List Virtual Machine Template Versions For All Namespaces",
+    "description": "The label for the doc item List Virtual Machine Template Versions For All Namespaces in sidebar api, linking to the doc api/list-virtual-machine-template-version-for-all-namespaces"
   },
   "sidebar.api.doc.List Network Attachment Definitions": {
     "message": "List Network Attachment Definitions",
@@ -379,9 +379,9 @@
     "message": "Patch a Network Attachment Definition",
     "description": "The label for the doc item Patch a Network Attachment Definition in sidebar api, linking to the doc api/patch-namespaced-network-attachment-definition"
   },
-  "sidebar.api.doc.List Network Attachment Definitions in all Namespaces": {
-    "message": "List Network Attachment Definitions in all Namespaces",
-    "description": "The label for the doc item List Network Attachment Definitions in all Namespaces in sidebar api, linking to the doc api/list-network-attachment-definition-for-all-namespaces"
+  "sidebar.api.doc.List Network Attachment Definitions For All Namespaces": {
+    "message": "List Network Attachment Definitions For All Namespaces",
+    "description": "The label for the doc item List Network Attachment Definitions For All Namespaces in sidebar api, linking to the doc api/list-network-attachment-definition-for-all-namespaces"
   },
   "sidebar.api.doc.List Cluster Networks": {
     "message": "List Cluster Networks",
@@ -455,9 +455,9 @@
     "message": "Patch a Virtual Machine Instance Migration",
     "description": "The label for the doc item Patch a Virtual Machine Instance Migration in sidebar api, linking to the doc api/patch-namespaced-virtual-machine-instance-migration"
   },
-  "sidebar.api.doc.List Virtual Machine Instance Migrations in all Namespaces": {
-    "message": "List Virtual Machine Instance Migrations in all Namespaces",
-    "description": "The label for the doc item List Virtual Machine Instance Migrations in all Namespaces in sidebar api, linking to the doc api/list-virtual-machine-instance-migration-for-all-namespaces"
+  "sidebar.api.doc.List Virtual Machine Instance Migrations For All Namespaces": {
+    "message": "List Virtual Machine Instance Migrations For All Namespaces",
+    "description": "The label for the doc item List Virtual Machine Instance Migrations For All Namespaces in sidebar api, linking to the doc api/list-virtual-machine-instance-migration-for-all-namespaces"
   },
   "sidebar.api.doc.List Virtual Machine Instances": {
     "message": "List Virtual Machine Instances",
@@ -491,12 +491,12 @@
     "message": "Patch a Virtual Machine",
     "description": "The label for the doc item Patch a Virtual Machine in sidebar api, linking to the doc api/patch-namespaced-virtual-machine"
   },
-  "sidebar.api.doc.List Virtual Machine Instances in all Namespaces": {
-    "message": "List Virtual Machine Instances in all Namespaces",
-    "description": "The label for the doc item List Virtual Machine Instances in all Namespaces in sidebar api, linking to the doc api/list-virtual-machine-instance-for-all-namespaces"
+  "sidebar.api.doc.List Virtual Machine Instances For All Namespaces": {
+    "message": "List Virtual Machine Instances For All Namespaces",
+    "description": "The label for the doc item List Virtual Machine Instances For All Namespaces in sidebar api, linking to the doc api/list-virtual-machine-instance-for-all-namespaces"
   },
-  "sidebar.api.doc.List Virtual Machines in all Namespaces": {
-    "message": "List Virtual Machines in all Namespaces",
-    "description": "The label for the doc item List Virtual Machines in all Namespaces in sidebar api, linking to the doc api/list-virtual-machine-for-all-namespaces"
+  "sidebar.api.doc.List Virtual Machines For All Namespaces": {
+    "message": "List Virtual Machines For All Namespaces",
+    "description": "The label for the doc item List Virtual Machines For All Namespaces in sidebar api, linking to the doc api/list-virtual-machine-for-all-namespaces"
   }
 }
