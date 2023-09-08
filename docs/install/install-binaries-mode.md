@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
-sidebar_label: Install Binaries Only
-title: "Install Binaries Only Mode"
+sidebar_label: Install Harvester Binaries Only
+title: "Install Harvester Binaries Only"
 keywords:
   - Harvester
   - harvester
