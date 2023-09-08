@@ -8,7 +8,7 @@ Before you contribute, please read the table below first to ensure that you are 
 
 | Path                                 | Version                | URL         |
 | ------------------------------------ | ---------------------- | ----------- |
-| docs/hello.md                        | v1.2 (current, stable) | /v1.2/hello |
+| docs/hello.md                        | v1.2 (current, latest) | /v1.2/hello |
 | versioned_docs/version-v1.1/hello.md | v1.1                   | /v1.1/hello |
 | versioned_docs/version-v1.0/hello.md | v1.0                   | /v1.0/hello |
 | versioned_docs/version-v0.3/hello.md | v0.3                   | /v0.3/hello |
