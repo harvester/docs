@@ -106,13 +106,13 @@ HDD is not recommended for guest RKE2 clusters or VMs with good performance disk
 
 #### Recommended Practice
 
-First, add your HDD on the `Host` page and specify the disk tags as needed, such as`HDD` or `ColdStorage`. For more information on how to add extra disks and disk tags, see [Multi-disk Management](https://docs.harvesterhci.io/v1.1/host/#multi-disk-management) for details.
+First, add your HDD on the `Host` page and specify the disk tags as needed, such as`HDD` or `ColdStorage`. For more information on how to add extra disks and disk tags, see [Multi-disk Management](../host/host.md#multi-disk-management) for details.
 
 ![](/img/v1.1/storageclass/add_hdd_on_host_page.png)
 
 ![](/img/v1.1/storageclass/add_tags.png)
 
-Then, create a new `StorageClass` for the HDD (use the above disk tags). For hard drives with large capacity but slow performance, the number of replicas can be reduced to improve performance. For details, see [storageclass](https://docs.harvesterhci.io/v1.1/advanced/storageclass) for details.
+Then, create a new `StorageClass` for the HDD (use the above disk tags). For hard drives with large capacity but slow performance, the number of replicas can be reduced to improve performance.
 
 ![](/img/v1.1/storageclass/create_hdd_storageclass.png)
 

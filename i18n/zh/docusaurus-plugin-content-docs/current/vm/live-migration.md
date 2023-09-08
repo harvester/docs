@@ -30,7 +30,7 @@ Description: 热迁移（也称为实时迁移，动态迁移）指的是在不�
 
 ![](/img/v1.2/vm/migrate-action.png)
 
-为虚拟机配置[节点调度规则](https://docs.harvesterhci.io/v1.1/vm/create-windows-vm/#node-scheduling-tab)时，你必须确保要迁移的目标节点满足虚拟机的运行时要求。可以搜索和选择的节点是基于以下内容生成的：
+为虚拟机配置[节点调度规则](./create-windows-vm.md#节点调度选项卡)时，你必须确保要迁移的目标节点满足虚拟机的运行时要求。可以搜索和选择的节点是基于以下内容生成的：
 - 虚拟机调度规则。
 - 可能来自网络配置的节点规则。
 
