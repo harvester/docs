@@ -113,6 +113,23 @@ External network devices typically refer to switches and DHCP servers. With a cl
     | mode 5(balance-tlb) | none |
     | mode 6(balance-alb) | none |
 
+For example, if the bond mode is 802.3ad, you need to configure LACP on the switch. The following is an example of LACP configuration on Cisco switch:
+```
+interface port-channel1
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+
+interface g0/25
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  channel-group 1 mode active
+
+interface g0/27 
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  channel-group 1 mode active
+```
+
 - If you want VMs in a VLAN to be able to obtain IP addresses through the DHCP protocol, configure an IP pool for that VLAN in the DHCP server.
 
 
