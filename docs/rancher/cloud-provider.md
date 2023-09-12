@@ -24,6 +24,16 @@ In this page we will learn:
 - How to deploy the Harvester cloud provider in both RKE1 and RKE2 cluster.
 - How to use the [Harvester load balancer](#load-balancer-support).
 
+### Backward Compatibility Notice
+
+:::note
+
+Please note a known backward compatibility issue if you're using the Harvester cloud provider version **v0.2.2** or higher. If your Harvester version is below **v1.2.0** and you intend to use newer RKE2 versions (i.e., >= `v1.26.6+rke2r1`, `v1.25.11+rke2r1`, `v1.24.15+rke2r1`), it is essential to upgrade your Harvester cluster to v1.2.0 or a higher version before proceeding with the upgrade of the guest Kubernetes cluster or Harvester cloud provider.
+
+For a detailed support matrix, please refer to the **Harvester CCM & CSI Driver with RKE2 Releases** section of the official [website](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/).
+
+:::
+
 ## Deploying
 
 ### Prerequisites
