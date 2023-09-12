@@ -34,7 +34,7 @@ Currently, the Harvester CSI driver only supports single-node read-write(RWO) vo
 
 ### Deploying with Harvester RKE1 node driver
 
-- Select the `Harvester(Out-of-tree)` option.
+- Select the `Harvester (Out-of-tree)` option.
 
     ![](/img/v1.2/rancher/rke-cloud-provider.png)
 

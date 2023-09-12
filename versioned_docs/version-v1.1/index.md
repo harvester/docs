@@ -1,5 +1,4 @@
 ---
-id: overview
 sidebar_position: 1
 sidebar_label: Harvester Overview
 slug: /

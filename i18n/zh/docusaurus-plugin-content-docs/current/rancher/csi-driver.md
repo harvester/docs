@@ -16,6 +16,7 @@ Harvester CSI Driver 提供了一个标准的 CSI 接口，供 Harvester 中所�
 
 - Kubernetes 集群是在 Harvester 虚拟机之上构建的。
 - 作为 Kubernetes 节点运行的 Harvester 虚拟机位于相同的命名空间中。
+- Harvester 虚拟机 Guest 的主机名与其​​相应的 Harvester 虚拟机名称匹配。使用 Harvester CSI Driver 时，Guest 集群 Harvester VM 的主机名必须与其 Harvester VM 名称相同。我们希望在后续 Harvester 版本中[消除此限制](https://github.com/harvester/harvester/issues/4396)。
 
 :::note
 
@@ -25,7 +26,7 @@ Harvester CSI Driver 提供了一个标准的 CSI 接口，供 Harvester 中所�
 
 ### 使用 Harvester RKE1 主机驱动进行部署
 
-- 选择 `Harvester(Out-of-tree)` 选项（可选，如不需要同时使用 Cloud Provider 功能可以选择 `None` 选项）。
+- 选择 `Harvester (Out-of-tree)` 选项。
 
    ![](/img/v1.2/rancher/rke-cloud-provider.png)
 
@@ -36,41 +37,37 @@ Harvester CSI Driver 提供了一个标准的 CSI 接口，供 Harvester 中所�
 
 ### 使用 Harvester RKE2 主机驱动进行部署
 
-当使用 Rancher RKE2 主机驱动启动 Kubernetes 集群时，Harvester CSI Driver 会在选中 Harvester 云提供商后被自动部署。
+使用 Rancher RKE2 主机驱动启动 Kubernetes 集群时，Harvester CSI Driver 会在选中 Harvester Cloud Provider 后被自动部署。
 
 ![select-harvester-cloud-provider](/img/v1.2/rancher/rke2-cloud-provider.png)
 
-#### 在 RKE2 集群中手动安装 CSI Driver
+### 在 RKE2 集群中手动安装 CSI Driver
 
-如果你想在不启用 Harvester 云提供商的情况下部署 Harvester CSI Driver，在 `Cloud Provider` 字段中选择 `Default - RKE2 Embedded` 或 `External`。如果你使用的是 Rancher v2.6，请选择 `None`。
+如果你希望在不启用 Harvester Cloud Provider 的情况下安装 Harvester CSI Driver，可以参考以下步骤：
 
-![](/img/v1.2/rancher/non-harvester-cloud-provider.png)
-
-#### 前提
+#### 手动安装的先决条件
 
 确保你满足以下前提条件：
 - 系统上安装了 `kubectl` 和 `jq`。
-- 你拥有裸机 Harvester 集群的 `kubeconfig` 文件。
-   ```
+- 你拥有裸机 Harvester 集群的 `kubeconfig` 文件。你可以在其中一个 Harvester 管理节点的 `/etc/rancher/rke2/rke2.yaml` 路径中找到 `kubeconfig` 文件。
+   ```shell
    export KUBECONFIG=/path/to/your/harvester-kubeconfig
    ```
-
-![](/img/v1.2/rancher/creating_guest_cluster.png)
 
 执行以下步骤手动部署 Harvester CSI Driver：
 #### 部署 Harvester CSI Driver
 
-1. 生成 cloud-config。
+1. 生成 `cloud-config`。你可以使用 [generate_addon_csi.sh](https://raw.githubusercontent.com/harvester/harvester-csi-driver/master/deploy/generate_addon_csi.sh) 脚本生成 `cloud-config` 文件。你可以在 [harvester/harvester-csi-driver](https://github.com/harvester/harvester-csi-driver) 仓库中找到该文件。
 
-   你可以使用 [generate_addon_csi.sh](https://raw.githubusercontent.com/harvester/harvester-csi-driver/master/deploy/generate_addon_csi.sh) 脚本生成 `kubeconfig` 文件。你可以在 [harvester/harvester-csi-driver](https://github.com/harvester/harvester-csi-driver) 仓库中找到该文件。按照以下步骤获取 `cloud-config` 和 `cloud-init` 数据：
+   `<serviceaccount name>` 通常对应于你的 Guest 集群名称，而 `<namespace>` 应与计算机池的命名空间匹配。
 
-   `<serviceaccount name>` 通常对应 Guest 集群的名称（下图中 **Cluster Name** 的值），`<namespace>` 需要匹配 Guest 集群的命名空间（**Namespace** 的值）。
-
+   ```shell
+   ./generate_addon_csi.sh <serviceaccount name> <namespace> RKE2
    ```
-   # ./generate_addon_csi.sh <serviceaccount name> <namespace> RKE2
-   ```
+   ![](/img/v1.1/rancher/creating_guest_cluster.png)
 
-   ```
+   生成的输出类似以下内容：
+   ```shell
    ########## cloud-config ############
    apiVersion: v1
    clusters:
@@ -100,58 +97,56 @@ Harvester CSI Driver 提供了一个标准的 CSI 接口，供 Harvester 中所�
        permissions: '0644'
    ```
 
-   将 `cloud-init user data` 下的输出复制并粘贴到 **Machine Pools >Show Advanced > User Data**。
+1. 将 `cloud-init user data` 的内容复制并粘贴到 **Machine Pools** > **Show Advanced** > **User Data**。
+   ![](/img/v1.2/rancher/cloud-config-userdata.png)
 
-2. 设置 cloud-provider-config。
+   应用上述 cloud-init 用户数据后将创建 `cloud-provider-config` 文件。你可以在 Guest Kubernetes 节点上的路径 `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config` 中找到它。
 
-   应用上述 cloud-init 用户数据后，你需要创建 cloud-provider-config。
+1. 将 **Cloud Provider** 配置为 **Default - RKE2 Embedded** 或 **External**。
 
-   你可以再次检查路径 `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`。
+   ![](/img/v1.2/rancher/non-harvester-cloud-provider.png)
 
-   :::note
+1. 选择 **Create** 来创建 RKE2 集群。
+1. RKE2 集群准备就绪后，从 Rancher 市场安装 **Harvester CSI Driver** Chart。默认情况下，你不需要更改 **cloud-config** 路径。
 
-   要更改 cloud-provider-config 路径，你需要更新 cloud-init 用户数据。
-
-   :::
-
-3. 安装 Harvester CSI Driver。
-
-   从 Rancher 应用市场安装 `Harvester CSI Driver` chart（请注意，默认情况下不需要更改 `cloud-config` 路径）。
    ![](/img/v1.2/rancher/install_csi_rancher_marketplace.png)
 
    ![](/img/v1.2/rancher/donot_change_cloud_config_path.png)
 
-执行上述步骤后，你应该能够看些 CSI Driver pod 已启动并运行，要进行验证，你可以使用默认 storageClass `harvester` 来配置新的 PVC。
+通过执行上述步骤，你应该能看到这些 CSI Driver Pod 已在 `kube-system` 命名空间上运行，并且你可以通过在 RKE2 集群上使用默认 StorageClass `harvester` 配置新的 PVC 来验证它。
 
 ### 使用 Harvester K3s 主机驱动进行部署
 
-你可以按照**前提**中 RKE2 部分描述的[部署 Harvester CSI Driver](./csi-driver.md#部署-harvester-csi-driver) 步骤进行操作。
+你可以按照 RKE2 部分描述的[部署 Harvester CSI Driver](./csi-driver.md#部署-harvester-csi-driver) 步骤进行操作。
 
-唯一的区别是你需要如下更改脚本命令：
+唯一的区别是生成 `cloud-init` 配置的部分，你需要将 provider 类型指定为 `k3s`：
 
-```
-# ./generate_addon_csi.sh <serviceaccount name> <namespace> k3s
+```shell
+./generate_addon_csi.sh <serviceaccount name> <namespace> k3s
 ```
 
 ## 直通自定义存储类
 
-从 Harvester CSI Driver v0.1.15 开始，你可以基于不同的 StorageClass 创建 PersistentVolumeClaim (PVC)。
+从 Harvester CSI Driver v0.1.15 开始，你可以在 Kubernetes 集群上使用不同的 Harvester StorageClass 来创建 PersistentVolumeClaim (PVC)。
 
-从以下 RKE2 版本开始，我们开箱即用地支持 Harvester CSI Driver v0.1.15。如果你是用的是 RKE1，则需要手动安装 CSI Driver Chart：
+:::note
+
+以下 RKE2 版本开始开箱即用地支持 Harvester CSI Driver v0.1.15。对于 RKE1，你需要手动安装 CSI Driver Chart：
 - v1.23.16+rke2r1 and later
 - v1.24.10+rke2r1 and later
 - v1.25.6+rke2r1 and later
 - v1.26.1+rke2r1 and later
 - v1.27.1+rke2r1 and later
 
+:::
+
 ### 前提
 
-请将以下内容添加到你的 Harvester 集群中。Harvester CSI Driver 需要适当的 **RBAC** 才能显示错误消息。这对于在使用不存在的 StorageClass 创建 PVC 时显示错误消息很重要，如下图所示。
+将以下先决条件添加到 Harvester 集群，确保 Harvester CSI Driver 能正确显示错误消息。正确设置 RBAC 对于显示错误消息至关重要，尤其是在创建使用不存在的 StorageClass 的 PVC 时，如下图所示：
 
 ![](/img/v1.2/rancher/error_event_csi_driver.png)
 
-
-执行以下步骤来设置 **RBAC** 以启用错误消息查看。
+请按照以下步骤设置 **RBAC** 以显示错误消息：
 
 1. 使用以下清单创建一个名为 `harvesterhci.io:csi-driver` 的新 `clusterrole`。
 
@@ -175,7 +170,7 @@ Harvester CSI Driver 提供了一个标准的 CSI 接口，供 Harvester 中所�
      - watch
    ```
 
-2. 然后，使用以下清单创建 `clusterrolebinding` 以关联新的 `clusterrole`。
+1. 使用以下清单通过相关的 `serviceaccount` 创建一个与上面的 `clusterrole` 关联的 `clusterrolebinding`。
 
    ```
    apiVersion: rbac.authorization.k8s.io/v1
@@ -192,45 +187,46 @@ Harvester CSI Driver 提供了一个标准的 CSI 接口，供 Harvester 中所�
      namespace: <namespace>
    ```
 
-确保 `serviceaccount name` 和 `namespace` 与你的云提供商匹配。执行以下步骤来查看你云提供商的 `serviceaccount name` 和 `namespace`。
+   确保 `serviceaccount name` 和 `namespace` 与你的云提供商设置匹配。执行以下步骤来检索详细信息。
 
-1. 找到你的云提供商的 `rolebinding`。
+   1. 找到与你的云提供商关联的 `rolebinding`：
 
-   ```
-   # kubectl get rolebinding -A |grep harvesterhci.io:cloudprovider
-   default                                 default-rke2-guest-01                                ClusterRole/harvesterhci.io:cloudprovider             7d1h
-   ```
+      ```
+      $ kubectl get rolebinding -A |grep harvesterhci.io:cloudprovider
+      default                                 default-rke2-guest-01                                ClusterRole/harvesterhci.io:cloudprovider             7d1h
+      ```
 
-2. 获取此 `rolebinding` 的 `subjects` 信息。
+   1. 从此 `rolebinding` 中提取 `subjects` 信息：
 
-   ```
-   kubectl get rolebinding default-rke2-guest-01 -n default -o yaml |yq -e '.subjects'
-   ```
+      ```
+      $ kubectl get rolebinding default-rke2-guest-01 -n default -o yaml |yq -e '.subjects'
+      ```
 
-3. 找到如下 `ServiceAccount` 信息：
+   1. 识别 `ServiceAccount` 信息：
 
-   ```
-   - kind: ServiceAccount
-     name: rke2-guest-01
-     namespace: default
-   ```
+      ```
+      - kind: ServiceAccount
+        name: rke2-guest-01
+        namespace: default
+      ```
 
 ### 部署
+现在，你可以创建一个要在 Kubernetes 集群中使用的新 StorageClass。
 
-1. 创建一个要在 Guest K8s 集群中使用的新 StorageClass。你可以参考 [StorageClasses](../advanced/storageclass.md) 了解更多详情。
-
-   如下图所示，新建一个名为 **replica-2** 的 StorageClass。
+1. 管理员可以在裸机 Harvester 集群中创建所需的 [StorageClass](../advanced/storageclass.md)（例如 **replica-2**）。
 
    ![](/img/v1.2/rancher/sc-replica-2.png)
 
-   例如，如下所示在下游集群上创建一个名为 **replica-2** 的新 StorageClass，与在 Harvester 集群上创建的 StorageClass 相关联。
+1. 然后，在 Kubernetes 集群上，创建一个与 Harvester 集群中名为 **replica-2** 的 StorageClass 关联的新 StorageClass：
 
    ![](/img/v1.2/rancher/downstream-cluster-sc-creation.png)
 
    :::note
 
-   在 **Provisioner** 中选择 **Harvester (CSI)**。**Host StorageClass** 是在 Harvester 集群上创建的 StorageClass。
+   - 在 **Provisioner** 中选择 **Harvester (CSI)**。**Host StorageClass** 参数需要匹配在 Harvester 集群上创建的 StorageClass 名称。
+   - Kubernetes 集群所有者可以请求 Harvester 集群管理员创建一个新的 StorageClass。
+   - 如果将 `Host StorageClass` 字段留空，则将使用 Harvester 集群的默认 StorageClass。
 
    :::
 
-1. 你现在可以基于这个新的 **StorageClass** 创建 PVC，它使用 **Host StorageClass** 在裸机集群上配置卷。
+1. 你现在可以基于这个新的 **StorageClass** 创建 PVC，它使用 **Host StorageClass** 在裸机 Harvester 集群上配置卷。

@@ -1,5 +1,4 @@
 ---
-id: index
 sidebar_position: 1
 sidebar_label: Rancher Integration
 title: "Rancher Integration"

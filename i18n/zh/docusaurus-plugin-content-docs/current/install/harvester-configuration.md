@@ -58,7 +58,8 @@ install:
       hwAddr: "B8:CA:3A:6A:64:7C"
     method: dhcp
   force_efi: true
-  device: /dev/vda
+  device: /dev/sda
+  data_disk: /dev/sdb
   silent: true
   iso_url: http://myserver/test.iso
   poweroff: true
@@ -70,10 +71,21 @@ install:
   vip_mode: dhcp
   force_mbr: false
   addons:
-    rancher-monitoring:
-      enabled: true
-    rancher-logging:
+    harvester_vm_import_controller:
       enabled: false
+      values_content: ""
+    harvester_pcidevices_controller:
+      enabled: false
+      values_content: ""
+    rancher_monitoring:
+      enabled: true
+      values_content: ""
+    rancher_logging:
+      enabled: false
+      values_content: ""
+    harvester_seeder:
+      enabled: false
+      values_content: ""
 system_settings:
   auto-disk-provision-paths: ""
 ```
@@ -203,6 +215,61 @@ os:
       15 * * * * root ship_logs
     path: /etc/crontab
 ```
+
+### `os.persistent_state_paths`
+
+#### 定义
+
+`os.persistent_state_paths` 选项用于配置自定义路径，对文件所做的修改将在重启后保留。对这些路径中的文件所做的任何更改都不会在重启后丢失。
+
+#### 示例
+
+请参阅以下示例配置在 Harvester 中安装 `rook-ceph`：
+
+```yaml
+os:
+  persistent_state_paths:
+    - /var/lib/rook
+    - /var/lib/ceph
+  modules:
+    - rbd
+    - nbd
+```
+
+### `os.after_install_chroot_commands`
+
+#### 定义
+
+你可以使用 `after_install_chroot_commands` 添加其他软件包。[elemental-toolkit](https://rancher.github.io/elemental-toolkit/docs/) 提供的 `after-install-chroot` 阶段允许你执行不受文件系统写入限制的命令，确保系统重启后用户定义的命令能够保留。
+
+#### 示例
+
+请参阅以下示例配置，在 Harvester 中安装 RPM 包：
+
+```yaml
+os:
+  after_install_chroot_commands:
+    - rpm -ivh <the url of rpm package>
+
+```
+
+DNS 解析在 `after-install-chroot 阶段`不可用，并且 `nameserver` 可能不可用。如果需要通过 URL 访问域名来安装包，请先创建一个临时的 `/etc/resolv.conf` 文件。例如：
+
+```yaml
+os:
+  after_install_chroot_commands:
+    - "rm -f /etc/resolv.conf && echo 'nameserver 8.8.8.8' | sudo tee /etc/resolv.conf"
+    - "mkdir /usr/local/bin"
+    - "curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && chmod 700 get_helm.sh && ./get_helm.sh"
+    - "rm -f /etc/resolv.conf && ln -s /var/run/netconfig/resolv.conf /etc/resolv.conf"
+```
+
+
+:::note
+
+升级 Harvester 会导致 `after-install-chroot` 对操作系统所做的更改丢失。你还必须配置 `after-upgrade-chroot` 以使你的更改在升级过程中保留。升级 Harvester 之前，请参阅[运行时持久性更改](https://rancher.github.io/elemental-toolkit/docs/customizing/runtime_persistent_changes/)。
+
+:::
 
 ### `os.hostname`
 
@@ -416,6 +483,8 @@ install:
 
 用于安装操作系统的设备。
 
+如果你的机器通过 PXE 安装包含了多个物理存储设备，最好使用 `/dev/disk/by-id/$id` 或 `/dev/disk/by-path/$path` 来指定存储设备。
+
 ### `install.silent`
 
 保留。
@@ -524,6 +593,8 @@ _从 v1.0.1 起可用_
 
 设置默认存储设备来存储 VM 数据。
 
+如果你的机器通过 PXE 安装包含了多个物理存储设备，最好使用 `/dev/disk/by-id/$id` 或 `/dev/disk/by-path/$path` 来指定存储设备。
+
 默认值：与 [`install.device`](#installdevice) 设置的存储设备相同
 
 #### 示例
@@ -548,18 +619,100 @@ _从 v1.2.0 起可用_
 ```yaml
 install:
   addons:
-    rancher-monitoring:
+    rancher_monitoring:
       enabled: true
-    rancher-logging:
+    rancher_logging:
       enabled: false
 ```
 
-Harvester v1.2.0 附带了四个插件：
+Harvester v1.2.0 附带了五个插件：
 
-- harvester-vm-import-controller
-- harvester-pcidevices-controller
+- vm-import-controller (chartName: `harvester-vm-import-controller`)
+- pcidevices-controller (chartName: `harvester-pcidevices-controller`)
 - rancher-monitoring
 - rancher-logging
+- harvester-seeder (experimental)
+
+### `install.harvester.storage_class.replica_count`
+
+_从 v1.1.2 起可用_
+
+#### 定义
+
+设置 Harvester 默认存储类 `harvester-longhorn` 的副本数。
+
+默认值：3
+
+支持值：1、2、3。所有其他值均视为 3。
+
+在边缘场景中，用户可能部署单节点 Harvester 集群，因此可以将该值设置为 1。在大多数场景下，为了实现存储高可用，建议你保留默认值 3。
+
+有关更多信息，请参阅 [longhorn-replica-count](https://longhorn.io/docs/1.4.1/references/settings/#default-replica-count)。
+
+#### 示例
+
+```yaml
+install:
+  harvester:
+    storage_class:
+      replica_count: 1
+```
+
+### `install.harvester.longhorn.default_settings.guaranteedEngineManagerCPU`
+
+_从 v1.2.0 起可用_
+
+#### 定义
+
+在每个节点上为每个 Longhorn engine manager Pod 预留的可分配 CPU 总量默认百分比。
+
+默认值：12
+
+支持值：0-12。所有其他值均视为 12。
+
+该整数值表示要在各个节点上为每个 engine manager Pod 保留的可分配 CPU 总数百分比。
+
+在边缘场景中，用户可能部署单节点 Harvester 集群，因此可以将该参数设置为小于 12 的值。在大多数场景下，为了实现系统高可用，建议保留默认值。
+
+在设置该值之前，请参阅 [longhorn-guaranteed-engine-manager-cpu](https://longhorn.io/docs/1.4.1/references/settings/#guaranteed-engine-manager-cpu) 了解更多详细信息。
+
+#### 示例
+
+```yaml
+install:
+  harvester:
+    longhorn:
+      default_settings:
+        guaranteedEngineManagerCPU: 6
+```
+
+### `install.harvester.longhorn.default_settings.guaranteedReplicaManagerCPU`
+
+_从 v1.2.0 起可用_
+
+#### 定义
+
+在每个节点上为每个 Longhorn replica manager Pod 预留的可分配 CPU 总量默认百分比。
+
+默认值：12
+
+支持值：0-12。所有其他值均视为 12。
+
+该整数值表示要在各个节点上为每个 replica manager Pod 保留的可分配 CPU 总数百分比。
+
+在边缘场景中，用户可能部署单节点 Harvester 集群，在这种情况下可以将该参数设置为小于 12 的值。在大多数场景下，为了实现系统高可用，建议保留默认值。
+
+在设置该值之前，请参阅 [longhorn-guaranteed-replica-manager-cpu](https://longhorn.io/docs/1.4.1/references/settings/#guaranteed-replica-manager-cpu) 了解更多详细信息。
+
+#### 示例
+
+```yaml
+install:
+  harvester:
+    longhorn:
+      default_settings:
+        guaranteedReplicaManagerCPU: 6
+```
 
 ### `system_settings`
 

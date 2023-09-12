@@ -1,7 +1,7 @@
 ---
-sidebar_position: 6
+sidebar_position: 2
 sidebar_label: PCI 设备
-title: "PCI 设备（实验功能）"
+title: "PCI 设备"
 ---
 
 _从 v1.1.0 起可用_
@@ -15,6 +15,8 @@ _从 v1.1.0 起可用_
 
 ![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
+成功部署 `pcidevices-controller` 插件后，可能需要几分钟时间进行扫描并使 PCIDevice CRD 变得可用。
+![](/img/v1.2/pcidevices/PcideviceEnabled.png)
 ## 在 PCI 设备上启用直通
 
 1. 前往 `Advanced > PCI Devices` 页面：
@@ -57,3 +59,32 @@ _从 v1.1.0 起可用_
 ## 在 VM 内为 PCI 设备安装驱动程序
 
 这里涉及的操作与在主机中安装驱动程序一样。PCI 透传功能将主机设备绑定到 `vfio-pci` 驱动程序，让 VM 能够使用自己的驱动程序。你可以查看安装在 VM 中的 NVIDIA 驱动程序的[屏幕截图](https://tobilehman.com/posts/suse-harvester-pci/#toc)，其中包括证明设备驱动程序可以正常工作的 CUDA 示例。
+
+## SRIOV 网络设备
+_从 v1.2.0 起可用_
+
+![](/img/v1.2/pcidevices/SriovNetworkDevicesLink.png)
+
+`pcidevices-controller` 插件现在可以扫描底层主机上的网络接口并检查它们是否支持 SRIOV Virtual Function (VF)。如果找到有效的设备，`pcidevices-controller` 将生成一个新的`SRIOVNetworkDevice` 对象。
+
+![](/img/v1.2/pcidevices/SriovNetworkDevicesList.png)
+
+要在 SriovNetworkDevice 上创建 VF，你可以单击 **⋮ > Enable**，然后定义 **Number of Virtual Functions**。
+![](/img/v1.2/pcidevices/SriovNetworkDeviceEnable.png)
+
+![](/img/v1.2/pcidevices/SriovNetworkVFDefinition.png)
+
+`pcidevices-controller` 将定义网络接口上的 VF，并为新创建的 VF 报告新的 PCI 设备状态。
+
+![](/img/v1.2/pcidevices/SriovNetworkDevicesVFStatus.png)
+
+下次重新扫描时，`pcidevices-controller` 将为 VF 创建 PCIDevices。这可能需要 1 分钟的时间。
+
+你现在可以导航到 **PCI Devices** 页面来查看新设备。
+
+我们还引入了一个新的过滤器来帮助你通过底层网络接口来过滤 PCI 设备。
+
+![](/img/v1.2/pcidevices/SriovNetworkDevicesFilter.png)
+
+新创建的 PCI 设备可以像其他 PCI 设备一样直通到虚拟机。
+![](/img/v1.2/pcidevices/SriovNetworkDevicesFilterResult.png)

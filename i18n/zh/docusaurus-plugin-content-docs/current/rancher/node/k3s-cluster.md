@@ -4,7 +4,7 @@ sidebar_label: 创建 K3s Kubernetes 集群
 title: "创建 K3s Kubernetes 集群"
 ---
 
-在 Rancher `2.6.3` 或以上的版本，你可以使用内置的 Harvester 主机驱动创建基于 Harvester 集群之上的 K3s Kubernetes 集群。
+现在，你可以使用内置的 Harvester 主机驱动在 Rancher 中的 Harvester 集群上配置 K3s Kubernetes 集群。
 
 ![k3s-cluster](/img/v1.2/rancher/rke2-k3s-node-driver.png)
 
@@ -13,10 +13,11 @@ title: "创建 K3s Kubernetes 集群"
 - Harvester K3s 主机驱动处于**技术预览**阶段。
 - Harvester 主机驱动需要 [VLAN 网络](../../networking/harvester-network.md#vlan-网络)。
 - Harvester 主机驱动仅支持云服务镜像（Cloud Image）。
+- 有关 Harvester 中部署的 Guest 集群端口要求，请参阅 [Guest 集群的端口要求](../../install/requirements.md#k3s-或-rkerke2-集群的端口要求)。
 
 :::
 
-### 创建你的云凭证
+### 创建云凭证
 
 1. 单击 **☰ > Cluster Management**。
 2. 单击 **Cloud Credentials**。
@@ -79,9 +80,8 @@ K3s 配置依赖 `qemu-guest-agent` 包来获取虚拟机的 IP。
 
 你可以使用以下选项解决安装限制：
 
-选项 1：使用安装了所需软件包的 VM 镜像。
-
-选项 2：配置 **Show Advanced > User Data**，使 VM 能够通过 HTTP(S) 代理安装所需的包。
+- 选项 1：使用预先配置了所需软件包（例如 `iptables`、`qemu-guest-agent`）的 VM 镜像。
+- 选项 2：转到 **Show Advanced** > **User Data** 来允许虚拟机通过 HTTP(S) 代理安装所需的软件包。
 
 Harvester 节点模板中的`用户数据`示例：
 ```

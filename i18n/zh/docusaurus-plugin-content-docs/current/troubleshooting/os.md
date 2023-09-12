@@ -4,7 +4,7 @@ sidebar_label: 操作系统
 title: "操作系统"
 ---
 
-Harvester 在基于 OpenSUSE 的操作系统上运行。这个操作系统是 [cOS toolkit](https://github.com/rancher-sandbox/cOS-toolkit) 的项目。本文介绍如何对操作系统相关问题进行故障排除。
+Harvester 在基于 OpenSUSE 的操作系统上运行。这个操作系统是 [elemental-toolkit](https://github.com/rancher/elemental-toolkit) 的项目。本文介绍如何对操作系统相关问题进行故障排除。
 
 ## 如何登录到 Harvester 节点
 
@@ -40,7 +40,7 @@ Harvester OS 还提供了一种临时启用读写模式的方法。请按照以�
    name: "Rootfs Layout Settings for debugrw"
    stages:
      rootfs:
-       - if: 'grep -q root=LABEL=COS_ACTIVE /proc/cmdline && grep -q rd.cos.debugrw /proc/cmdline'
+       - if: 'grep -q root=LABEL=COS_STATE /proc/cmdline && grep -q rd.cos.debugrw /proc/cmdline'
          name: "Layout configuration for debugrw"
          environment_file: /run/cos/cos-layout.env
          environment:
@@ -50,11 +50,11 @@ Harvester OS 还提供了一种临时启用读写模式的方法。请按照以�
 
 - 重新启动系统到 GRUB 菜单。按 ESC 停留在菜单上。
 
-   ![](/img/v1.2/troubleshooting/os-stop-on-first-menuentry.png)
+   ![](/img/v1.2/troubleshooting/grub-menu.png)
 
 - 在第一个菜单项上按 `e`。将 `rd.cos.debugrw` 尾附到 `linux (loop0)$kernel $kernelcmd` 行。按 `Ctrl + x` 启动系统。
 
-   ![](/img/v1.2/troubleshooting/os-edit-first-menuentry-add-debugrw.png)
+   ![](/img/v1.2/troubleshooting/edit-boot-parameter.png)
 
 ## 如何永久编辑内核参数
 
@@ -73,15 +73,14 @@ Harvester OS 还提供了一种临时启用读写模式的方法。请按照以�
 - 编辑 grub 配置文件并将参数尾附到 `linux (loop0)$kernel $kernelcmd` 行。以下示例添加一个 `nomodeset` 参数：
    ```
    # vim /run/initramfs/cos-state/grub2/grub.cfg
-   menuentry "Harvester ea6e7f5-dirty" --id cos {
-     search.fs_label COS_STATE root
+   menuentry "${display_name}" --id cos {
+     # label is kept around for backward compatibility
+     set label=${active_label}
      set img=/cOS/active.img
-     set label=COS_ACTIVE
-     loopback loop0 /$img
-     set root=($root)
-     source (loop0)/etc/cos/bootargs.cfg
-     linux (loop0)$kernel $kernelcmd nomodeset
-     initrd (loop0)$initramfs
+     loopback $loopdev /$img
+     source ($loopdev)/etc/cos/bootargs.cfg
+     linux ($loopdev)$kernel $kernelcmd ${extra_cmdline} ${extra_active_cmdline} nomodeset
+     initrd ($loopdev)$initramfs
    }
    ```
 - 重新启动以使更改生效。
@@ -93,11 +92,16 @@ Harvester OS 还提供了一种临时启用读写模式的方法。请按照以�
 # cat /run/initramfs/cos-state/grub2/grub.cfg
 
 <...>
-menuentry "Harvester ea6e7f5-dirty (debug)" --id cos-debug {
-  search.fs_label COS_STATE root
+menuentry "${display_name} (debug)" --id cos-debug {
+  search --no-floppy --set=root --label COS_STATE
   set img=/cOS/active.img
   set label=COS_ACTIVE
   loopback loop0 /$img
+  set root=($root)
+  source (loop0)/etc/cos/bootargs.cfg
+  linux (loop0)$kernel $kernelcmd ${extra_cmdline} ${extra_passive_cmdline} ${crash_kernel_params}
+  initrd (loop0)$initramfs
+}
 ```
 
 以上入口的 id 是 `cos-debug`。然后通过以下方式设置默认入口：
@@ -114,10 +118,10 @@ menuentry "Harvester ea6e7f5-dirty (debug)" --id cos-debug {
 要将内核消息输出到串行控制台，请按照以下步骤操作：
 
 - 将系统启动到 GRUB 菜单。按 ESC 停留在菜单上。
-   ![](/img/v1.2/troubleshooting/os-stop-on-first-menuentry.png)
+   ![](/img/v1.2/troubleshooting/grub-menu.png)
 - 在第一个菜单项上按 `e`。将 `console=ttyS0,115200n8` 尾附到 `linux (loop0)$kernel $kernelcmd` 行。按 `Ctrl + x` 启动系统。
 
-   ![](/img/v1.2/troubleshooting/os-edit-first-menuentry-add-console.png)
+   ![](/img/v1.2/troubleshooting/edit-boot-parameter-serial.png)
 
 :::note
 
@@ -131,6 +135,6 @@ menuentry "Harvester ea6e7f5-dirty (debug)" --id cos-debug {
 
 默认情况下，操作系统会在未启用 kdump 功能的情况下启动。你可以通过在启动时选择 `debug` 菜单项来启用该功能，如下例所示：
 
-![](/img/v1.2/troubleshooting/os-enable-kdump.png)
+![](/img/v1.2/troubleshooting/grub-menu-debug.png)
 
 系统崩溃时，崩溃转储将存储在 `/var/crash/<time>` 目录中。你可以将崩溃转储提供给开发人员，从而帮助他们排查故障和解决问题。

@@ -1,5 +1,4 @@
 ---
-id: overview
 sidebar_position: 1
 sidebar_label: Harvester Overview
 slug: /
@@ -21,7 +20,7 @@ The Harvester architecture consists of cutting-edge open-source technologies:
 - **Built on top of Kubernetes.** [Kubernetes](https://kubernetes.io/) has become the predominant infrastructure language across all form factors, and Harvester is an HCI solution with Kubernetes under the hood.
 - **Virtualization management with Kubevirt.** [Kubevirt](https://kubevirt.io/) provides virtualization management using KVM on top of Kubernetes.
 - **Storage management with Longhorn.** [Longhorn](https://longhorn.io/) provides distributed block storage and tiering.
-- **Observability with Grafana and Prometheus.** [Granfana](https://grafana.com/) and [Prometheus](https://prometheus.io/) provide robust monitoring and logging.
+- **Observability with Grafana and Prometheus.** [Grafana](https://grafana.com/) and [Prometheus](https://prometheus.io/) provide robust monitoring and logging.
 
 ![](/img/v1.2/architecture.svg)
 

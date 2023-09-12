@@ -1,5 +1,4 @@
 ---
-id: index
 sidebar_position: 1
 sidebar_label: 升级 Harvester
 title: "升级 Harvester"
@@ -18,16 +17,27 @@ Description: 升级 Harvester 有两种方法。你可以使用 ISO 镜像或通
 
 | 原版本 | 支持的新版本 |
 |----------------------|--------------------------|
-| [v1.1.2](./v1-1-2-to-v1-2-0.md) | v1.2.0        |
+| [v1.1.2](./v1-1-2-to-v1-2-0.md) | v1.2.0 |
 | [v1.1.0, v1.1.1](./v1-1-to-v1-1-2.md) | v1.1.2 |
 | [v1.0.3](./v1-0-3-to-v1-1-1.md) | v1.1.0, v1.1.1（建议使用 v1.1.1） |
 | [v1.0.2](./previous-releases/v1-0-2-to-v1-0-3.md) | v1.0.3 |
 | [v1.0.1](./previous-releases/v1-0-1-to-v1-0-2.md) | v1.0.2 |
 | [v1.0.0](./previous-releases/v1-0-0-to-v1-0-1.md) | v1.0.1 |
 
-## 开始升级
+## Rancher 升级
 
-我们仍在努力实现零停机升级。请在升级 Harvester 集群之前按照以下步骤操作：
+如果你使用 Rancher 来管理 Harvester 集群，建议你先升级 Rancher Server 。有关更多信息，请参阅 [Rancher 升级指南](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/upgrades)。
+
+有关 Harvester & Rancher 支持矩阵，请访问[此页面](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/)。
+
+:::note
+
+- 升级 Rancher 不会自动升级你的 Harvester 集群。升级 Rancher 后，你仍然需要升级 Harvester 集群。
+- 升级 Rancher 不会降低你的 Harvester 集群的性能。你仍然可以使用 Harvester 集群的虚拟 IP 来访问它。
+
+:::
+
+## 开始升级
 
 :::caution
 
@@ -37,6 +47,7 @@ Description: 升级 Harvester 有两种方法。你可以使用 ISO 镜像或通
 - 不要在升级期间操作集群，例如，创建新的虚拟机、上传新的镜像等。
 - 确保你的硬件符合**首选**[硬件要求](../install/requirements.md#硬件要求)。这是因为升级会消耗中间资源。
 - 确保每个节点至少有 30 GiB 的可用系统分区空间 (`df -h /usr/local/`)。如果集群中任何节点的可用系统分区空间少于 30 GiB，升级将被拒绝。有关更多信息，请参阅[空闲系统分区空间要求](#空闲系统分区空间要求)。
+- 在 Harvester Control Plane 节点上运行预检查脚本。请根据你的集群版本选择脚本：https://github.com/harvester/upgrade-helpers/tree/main/pre-check。
 
 :::
 

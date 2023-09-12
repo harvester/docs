@@ -1,5 +1,4 @@
 ---
-id: index
 sidebar_position: 1
 sidebar_label: 安装
 title: "安装"
@@ -18,7 +17,7 @@ title: "安装"
 
 - 检查你的硬件是否满足完成安装的[最低要求](../install/requirements.md#硬件要求)。
 
-## 收到提示信息：`"Loading images. This may take a few minutes..."`
+## 卡在 `>Loading images. This may take a few minutes...`
 
 - 这是因为系统没有默认路由，导致安装程序卡在当前状态。你可以执行以下命令来检查路由状态：
 
@@ -42,9 +41,11 @@ $ sudo journalctl -b -u rancherd
 如果 Agent 节点中设置的集群 Token 与服务器节点 Token 不匹配，你会发现以下信息中的几个条目：
 
 ```shell
-msg="Bootstrapping Rancher (master-head/v1.21.5+rke2r1)"
-msg="failed to bootstrap system, will retry: generating plan: insecure cacerts download from https://192.168.122.115:443/cacerts: Get \"https://192.168.122.115:443/cacerts\": EOF"
+msg="Bootstrapping Rancher (v2.7.5/v1.25.9+rke2r1)"
+msg="failed to bootstrap system, will retry: generating plan: response 502: 502  Bad Gateway getting cacerts: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
 ```
+
+请注意，Rancher 版本和 IP 地址取决于你的环境，可能与上面的消息不同。
 
 要解决这个问题，你需要在 `rancherd` 配置文件 `/etc/rancher/rancherd/config.yaml` 中更新 Token 的值。
 
@@ -54,7 +55,7 @@ msg="failed to bootstrap system, will retry: generating plan: insecure cacerts d
 token: 'ThisIsTheCorrectOne'
 ```
 
-为了确保在重启后仍能维持更改，更新操作系统配置文件 `/oem/99_custom.yaml` 的 `token` 的值：
+为了确保在重启后仍能维持更改，更新操作系统配置文件 `/oem/90_custom.yaml` 的 `token` 的值：
 
 ```yaml
 name: Harvester Configuration
@@ -69,11 +70,19 @@ stages:
       owner: 0
       group: 0
       content: |
-        role: cluster-init
-        token: 'ThisIsTheCorrectOne' # <- Update this value
-        kubernetesVersion: v1.21.5+rke2r1
+        server: https://$cluster-vip:443
+        role: agent
+        token: "ThisIsTheCorrectOne"
+        kubernetesVersion: v1.25.9+rke2r1
+        rancherVersion: v2.7.5
+        rancherInstallerImage: rancher/system-agent-installer-rancher:v2.7.5
         labels:
          - harvesterhci.io/managed=true
+        extraConfig:
+          disable:
+          - rke2-snapshot-controller
+          - rke2-snapshot-controller-crd
+          - rke2-snapshot-validation-webhook
       encoding: ""
       ownerstring: ""
 ```
@@ -111,21 +120,3 @@ $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
    如果在 Harvester 配置文件中将 [`install.debug`](../install/harvester-configuration.md#installdebug) 字段设置为 `true`，则 PXE 引导安装失败会自动生成一个 tarball。
 
    :::
-
-   - v1.0.2 之前的版本
-
-   请获取以下文件的内容：
-
-   ```
-   /var/log/console.log
-   /run/cos/target/rke2.log
-   /tmp/harvester.*
-   /tmp/cos.*
-   ```
-
-   以及以下命令的输出：
-
-   ```
-   blkid
-   dmesg
-   ```

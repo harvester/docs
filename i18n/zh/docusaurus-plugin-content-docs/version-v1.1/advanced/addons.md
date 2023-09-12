@@ -12,7 +12,7 @@ _从 v1.1.0 起可用_
 
 不同的底层插件支持不同程度的定制。
 
-v1.1.0 目前附带两个插件：
+v1.1.0 目前附带了两个插件：
 * [pcidevices-controller](./pcidevices.md)
 * [vm-import-controller](./vmimport.md)
 

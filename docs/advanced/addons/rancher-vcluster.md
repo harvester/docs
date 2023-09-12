@@ -35,7 +35,7 @@ After installing the addon, you need to configure it from the Harvester UI as fo
 1. Select **Advanced** > **Addons**.
 1. Find the `rancher-vcluster` addon and select **⋮** > **Edit Config**.
 
-![](/img/v1.2/rancher-vcluster/VclusterConfig.png)
+    ![](/img/v1.2/rancher-vcluster/VclusterConfig.png)
 
 1. In the **Hostname** field, enter a valid DNS record pointing to the Harvester VIP. This is essential as the vcluster ingress is synced to the parent Harvester cluster. A valid hostname is used to filter ingress traffic to the vcluster workload.
 1. In the **Bootstrap Password** field, enter the bootstrap password for the new Rancher deployed on the vcluster.

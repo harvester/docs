@@ -1,5 +1,4 @@
 ---
-id: overview
 sidebar_position: 1
 sidebar_label: Harvester 介绍
 slug: /
@@ -25,7 +24,7 @@ Harvester 架构由尖端的开源技术组成：
 - **建立在 Kubernetes 之上**。[Kubernetes](https://kubernetes.io/) 已成为主流的基础架构语言，而 Harvester 是包含 Kubernetes 的 HCI 解决方案。
 - **使用 Kubevirt 进行虚拟化管理**。[Kubevirt](https://kubevirt.io/) 在 Kubernetes 之上使用 KVM 来提供虚拟化管理。
 - **使用 Longhorn 进行存储管理**。[Longhorn](https://longhorn.io/) 提供分布式块存储和分层。
-- **通过 Grafana 和 Prometheus 进行观察**。[Granfana](https://grafana.com/) 和 [Prometheus](https://prometheus.io/) 提供强大的监控和记录功能。作为可启动的设备镜像提供，
+- **通过 Grafana 和 Prometheus 进行观察**。[Grafana](https://grafana.com/) 和 [Prometheus](https://prometheus.io/) 提供强大的监控和记录功能。作为可启动的设备镜像提供，
 
 ![](/img/v1.2/architecture.svg)
 

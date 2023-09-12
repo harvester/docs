@@ -114,7 +114,7 @@ _从 v1.0.3 起可用_
 
 ### 将拓扑标签同步到 Guest 集群节点
 
-在集群安装期间，Harvester 主机驱动将自动将拓扑标签从 VM 节点同步到 Guest 集群节点。目前，仅支持 `region` 和 `zone` 拓扑标签。
+在集群安装期间，Harvester 主机驱动将自动将拓扑标签从 VM 节点同步到 Guest 集群节点。目前仅支持 `region` 和 `zone` 拓扑标签。
 
 :::note
 

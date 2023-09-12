@@ -8,7 +8,6 @@ keywords:
   - Rancher 集成
 ---
 
-
 Harvester CSI Driver 提供了一个 CSI 接口，供 Harvester 中所创建的 Kubernetes 集群使用。这个 CIS 接口连接到主机集群，并将主机卷热插拔到虚拟机来提供裸金属集群磁盘的存储性能。
 
 ## 部署
@@ -65,7 +64,7 @@ Harvester CSI Driver 提供了一个 CSI 接口，供 Harvester 中所创建的 
 
    你可以使用 [generate_addon_csi.sh](https://raw.githubusercontent.com/harvester/harvester-csi-driver/master/deploy/generate_addon_csi.sh) 脚本生成 `kubeconfig` 文件。你可以在 [harvester/harvester-csi-driver](https://github.com/harvester/harvester-csi-driver) 仓库中找到该文件。按照以下步骤获取 `cloud-config` 和 `cloud-init` 数据：
 
-`<serviceaccount name>` 通常对应来宾集群的名称（下图中 **Cluster Name** 的值），`<namespace>` 需要匹配来宾集群的命名空间（**Namespace** 的值）。
+`<serviceaccount name>` 通常对应 Guest 集群的名称（下图中 **Cluster Name** 的值），`<namespace>` 需要匹配 Guest 集群的命名空间（**Namespace** 的值）。
 
 ```
 # ./generate_addon_csi.sh <serviceaccount name> <namespace> RKE2

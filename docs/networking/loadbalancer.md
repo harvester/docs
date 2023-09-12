@@ -39,7 +39,7 @@ Harvester VM load balancer doesn't support Windows VMs because the guest agent i
 To create a new Harvester VM load balancer:
 1. Go to the **Networks > Load Balancer** page and select **Create**.
 1. Select the **Namespace** and specify the **Name**.
-1. Go to the **Basic** tab to choose the IPAM mode, which can be **DHCP** or **IP Pool**. If you select **IP Pool**, prepare an IP pool first, specify the IP pool name, or choose **auto**. If you choose **auto**, the LB automatically selects an IP pool according to [the IP pool selection policy](/networking/ippool.md/#selection-policy).
+1. Go to the **Basic** tab to choose the IPAM mode, which can be **DHCP** or **IP Pool**. If you select **IP Pool**, prepare an IP pool first, specify the IP pool name, or choose **auto**. If you choose **auto**, the LB automatically selects an IP pool according to [the IP pool selection policy](./ippool.md#selection-policy).
    ![](/img/v1.2/networking/create-lb-01.png)
 1. Go to the **Listeners** tab to add listeners. You must specify the **Port**, **Protocol**, and **Backend Port** for each listener.
    ![](/img/v1.2/networking/create-lb-02.png)
@@ -66,4 +66,4 @@ In conjunction with Harvester Cloud Provider, the Harvester load balancer provid
    ![](/img/v1.2/networking/guest-kubernetes-cluster-lb.png)
 When you create, update, or delete an LB service on a guest cluster with Harvester Cloud Provider, the Harvester Cloud Provider will create a Harvester LB automatically.
 
-For more details, refer to [Harvester Cloud Provider](/rancher/cloud-provider.md).
+For more details, refer to [Harvester Cloud Provider](../rancher/cloud-provider.md).

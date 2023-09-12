@@ -11,7 +11,6 @@ keywords:
 Description: 虚拟机运行后，你可以在 Harvester UI 通过 VNC 客户端或串行控制台访问虚拟机。
 ---
 
-
 虚拟机运行后，你可以在 Harvester UI 通过 `VNC` 客户端或串行控制台访问虚拟机。
 
 在使用 VLAN 网络的情况下，你也可以直接从本地电脑远程 SSH 到客户端进行连接。

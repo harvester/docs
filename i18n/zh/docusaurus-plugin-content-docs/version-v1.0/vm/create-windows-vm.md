@@ -15,7 +15,6 @@ keywords:
 Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 ---
 
-
 你可以从 **Virtual Machines** 页面创建一个或多个虚拟机。
 
 :::note

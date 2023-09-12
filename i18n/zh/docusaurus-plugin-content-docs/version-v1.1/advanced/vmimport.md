@@ -6,15 +6,15 @@ title: "VM 导入"
 
 _从 v1.1.0 起可用_
 
-从 v1.1.0 开始，用户可以将他们的 VMWare 和 OpenStack 虚拟机导入到 Harvester。
+从 v1.1.0 开始，你可以将 VMWare 和 OpenStack 虚拟机导入到 Harvester。
 
 这是通过 vm-import-controller 插件来实现的。
 
-要使用 VM 导入功能，用户需要启用 vm-import-controller 插件。
+要使用 VM 导入功能，你需要启用 vm-import-controller 插件。
 
 ![](/img/v1.1/vm-import-controller/EnableAddon.png)
 
-默认情况下，vm-import-controller 使用 /var/lib/kubelet 挂载的临时存储。
+默认情况下，vm-import-controller 使用从 /var/lib/kubelet 挂载的临时存储。
 
 在迁移过程中，大型 VM 的节点可能会用尽挂载点上的空间，进而导致后续调度失败。
 
@@ -65,7 +65,7 @@ stringData:
 
 作为调协过程的一部分，控制器将登录到 vCenter 并验证源的 `spec` 中指定的 `dc` 是否有效。
 
-通过此检查后，源将被标记为 Ready，可用于 VM 迁移：
+通过此检查后，源将被标记为 Ready 并可用于虚拟机迁移：
 
 ```shell
 $ kubectl get vmwaresource.migration

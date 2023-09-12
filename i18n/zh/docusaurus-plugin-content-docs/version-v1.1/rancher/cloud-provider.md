@@ -29,7 +29,7 @@ Description: Harvester 中的 k8s 集群使用的 Harvester Cloud Provider 提�
 ### 使用 Harvester 主机驱动部署到 RKE1 集群
 使用 Harvester 主机驱动启动 RKE 集群时，你可以执行两个步骤来部署 `Harvester` 云提供商：
 
-1. 选择 `Harvester(Out-of-tree)` 选项。
+1. 选择 `Harvester (Out-of-tree)` 选项。
 
    ![](/img/v1.1/rancher/rke-cloud-provider.png)
 
@@ -46,7 +46,7 @@ Description: Harvester 中的 k8s 集群使用的 Harvester Cloud Provider 提�
 
 ### 使用 Harvester 主机驱动部署到 K3s 集群[实验性]
 
-使用 Harvester 主机驱动启动 K3s 集群时，你可以执行以下步骤来部署 Harvester 云提供商：
+使用 Harvester 主机驱动启动 K3s 集群时，你可以执行以下步骤来部署 Harvester Cloud Provider：
 
 1. 为 `harvester-cloud-provider` 生成并注入 Cloud Config。
 
@@ -58,7 +58,7 @@ Description: Harvester 中的 k8s 集群使用的 Harvester Cloud Provider 提�
 
 该脚本需要访问 `Harvester 集群` kubeconfig 才能工作。
 
-命名空间需要是将在其中创建 guest 集群的命名空间。
+命名空间必须是要在其中创建 Guest 集群的命名空间。
 
 :::
 
@@ -166,7 +166,7 @@ spec:
       disable-cloud-controller: true
 ```
 
-- 添加 `cloud-provider=external` 以使用 Harvester 云提供商。
+- 添加 `cloud-provider=external` 以使用 Harvester Cloud Provider。
 ```yaml
     machineSelectorConfig:
       - config:
@@ -212,7 +212,7 @@ Harvester 的内置负载均衡器同时支持 `pool` 和 `dhcp` 模式。你可
 
 :::note
 
-不允许修改 IPAM 模式。如果需要修改 IPAM 模式，你需要创建一个新服务。
+不允许修改 IPAM 模式。如果需要修改 IPAM 模式，你需要创建一个新 service。
 
 :::
 
