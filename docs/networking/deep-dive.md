@@ -113,7 +113,7 @@ External network devices typically refer to switches and DHCP servers. With a cl
     | mode 5(balance-tlb) | none |
     | mode 6(balance-alb) | none |
 
-For example, if the bond mode is 802.3ad, you need to configure LACP on the switch. The following is an example of LACP configuration on Cisco switch:
+For example, if the bond mode is `802.3ad`, you need to configure LACP on the switch. The following is an example of LACP configuration on a Cisco switch:
 ```
 interface port-channel1
   switchport trunk encapsulation dot1q

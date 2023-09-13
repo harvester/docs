@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
-sidebar_label: Best Practice
-title: "Harvester Network Best Practice"
+sidebar_label: Best Practices
+title: "Harvester Network Best Practices"
 keywords:
 - Harvester
 - Networking
@@ -12,38 +12,39 @@ keywords:
 </head>
 
 ## Overview
-This best practice guide introduces how to configure Harvester and the external network to achieve the following goals:
-- Traffic isolation between the management plane and the data plane
-- General external switch and router configurations
-- Network access to VMs from different VLANs
-- Access Harvester load balancers from different VLANs
 
-We will use the following diagram as an example to illustrate the best practice.
+This best practice guide introduces how to configure Harvester and the external network to achieve the following goals:
+- Traffic isolation between the management plane and the data plane.
+- General external switch and router configurations.
+- Network access to VMs from different VLANs.
+- Access Harvester load balancers from different VLANs.
+
+We will use the following diagram to illustrate an example and the best practices.
 
 ![](/img/v1.2/networking/best-practice.png)
 
 The diagram shows a Harvester cluster composed of two hosts. It contains:
-- Hardware:
+- **Hardware**:
   - Two Harvester servers with dual-port network cards.
   - One non-VLAN-aware switch and one VLAN-aware switch. We will use the Cisco-like configuration as an example. 
   - One router. We will use the Cisco-like configuration as an example.
 
-- Cabling:
+- **Cabling**:
   - The NIC eth0 of the node1 is connected to the port `ethernet1/1` of the switch1, while the NIC eth0 of the node2 is connected to the port `ethernet1/2` of the switch1.
   - The NIC eth1 of the node1 is connected to the port `ethernet1/1` of the switch2, while the NIC eth1 of the node2 is connected to the port `ethernet1/2` of the switch2.
   - The port `ethernet1/3` of the switch1 is connected to the port `ethernet0/1` of the router.
   - The port `ethernet1/3` of the switch2 is connected to the port `ethernet0/2` of the router.
   
-- Network specification:
+- **Network specification**:
   - The subnet of the Harvester hosts is in the VLAN untagged network.
   - All hosts are in the IPv4 subnet `10.10.0.0/24`, and the gateway IP address is `10.10.0.254`.
   - The VM network allows VLAN 100-200.
   - The IPv4 subnets of the VM network are:
-    - untagged network: `192.168.0.0/24`, and the gateway IP address is `192.168.0.254`.
+    - Untagged network: `192.168.0.0/24`, and the gateway IP address is `192.168.0.254`.
     - VLAN 100: `192.168.100.0/24`, and the gateway IP address is `192.168.100.254`.
     - VLAN 200: `192.168.200.0/24`, and the gateway IP address is `192.168.200.254`.
 
-- Harvester configuration:
+- **Harvester configuration**:
   - Two cluster networks: `mgmt` and `vm`.
   - Three VM networks under the cluster network `vm`: `vlan100`, `vlan200`, and `untagged`.
   - Six VMs, from `VM1` to `VM6`.
@@ -51,16 +52,19 @@ The diagram shows a Harvester cluster composed of two hosts. It contains:
   - Two VM load balancers and one guest Kubernetes cluster load balancer.
 
 ## Multiple Cluster Networks for Traffic Isolation 
-The two Harvester hosts are equipped with two NICs. Specifically, NIC `eth0` is used for the management network (mapped to the cluster network `mgmt`), while NIC `eth1` is used for the VM network (mapped to the cluster network `vm`). 
+
+The two Harvester hosts have two NICs. Specifically, NIC `eth0` is used for the management network (mapped to the cluster network `mgmt`), while NIC `eth1` is used for the VM network (mapped to the cluster network `vm`). 
 
 It's beneficial to use two cluster networks to achieve traffic isolation between the management plane and the data plane. If there is an issue with the VM network, you can still use the management network for emergency handling to ensure business continuity. Similarly, if there is a failure in the management network, VM traffic is not affected.
 
-If your hardware is equipped with more NICs, it's recommended that you use at least two NICs for one cluster network. For example, you can use NIC `eth0` and `eth1` for the management network, and use NIC `eth2` and `eth3` for the VM network.
+If your hardware has more NICs, we recommend using at least two NICs for one cluster network. For example, you can use NIC `eth0` and `eth1` for the management network and NIC `eth2` and `eth3` for the VM network.
 
 ## External Switch and Router Configuration
+
 1. ** Switch1 configuration**:
 
-Since the management network is under the untagged network, switch1 can be a non-VLAN-aware switch. Typically, a non-VLAN-aware switch cannot be configured. 
+
+Since the management network is under the untagged network, `switch1` can be a non-VLAN-aware switch. Typically, you can't configure a non-VLAN-aware switch.
 
 2. ** Switch2 configuration**:
 
@@ -136,11 +140,11 @@ Set the ports `ethernet1/1`, `ethernet1/2`, and `ethernet1/3` as trunk ports, an
 
 1. **Network connection between VM networks**:
 
-  The router configuration above uses the [`A router on a stick`](https://www.grandmetric.com/knowledge-base/design_and_configure/router-on-a-stick-approach-cisco-configuration/) technology to allow VMs among untagged network, VLAN 100, and VLAN 200 to communicate with each other. Thus, it's not required to add any more configurations to the router.
+  The router configuration above uses the [`A router on a stick`](https://www.grandmetric.com/knowledge-base/design_and_configure/router-on-a-stick-approach-cisco-configuration/) technology to allow VMs among untagged network, `vlan100` and `vlan200`, to communicate with each other. Thus, adding more configurations to the router is not required.
 
-2. **Network connection between VM networks and the management network**:
+1. **Network connection between VM networks and the management network**:
 
-  A feasible method to ensure network connectivity between VM networks and the management network is to manually add static routes. The following commands add static routes on the router to allow VMs in the untagged network, VLAN 100, and VLAN 200 to access the management network.
+  A feasible method to ensure network connectivity between VM networks and the management network is manually adding static routes. The following commands add static routes on the router to allow VMs in the untagged network, `vlan100` and `vlan200`, to access the management network.
 
   ```
   router(config)# config terminal
@@ -151,7 +155,7 @@ Set the ports `ethernet1/1`, `ethernet1/2`, and `ethernet1/3` as trunk ports, an
   router(config)# end
   ```
 
-  The route table would be like this:
+  The route table would look like this:
 
   ```
   Router#show ip route
@@ -182,10 +186,10 @@ The Harvester load balancer is divided into two types: VM load balancer and gues
   router(config)# ip route 192.168.0.0 255.255.255.0 ethernet0/2
   ```
 
-2. The load balancer IP of the guest Kubernetes cluster load balancer is exposed within the VM network. In the diagram above, the guest cluster `demo` is within the VM network `vlan200` because the VMs consisting of the guest cluster are in the `vlan200`. Thus, the guest Kubernetes cluster load balancer `lb2` is exposed within the VM network `vlan200`. There are three scenarios to explain how to access `lb2` if it has obtained the load balancer IP via DHCP:
+1. The load balancer IP of the guest Kubernetes cluster load balancer is exposed within the VM network. In the diagram above, the guest cluster `demo` is within the VM network `vlan200` because the VMs consisting of the guest cluster are in the `vlan200`. Thus, the guest Kubernetes cluster load balancer `lb2` is exposed within the VM network `vlan200`. There are three scenarios to explain how to access `lb2` if it has obtained the load balancer IP via DHCP:
    - You can access it from the VM `VM3` and `VM4` directly because they are in the `vlan200`. 
-   - You can also access it from the VMs in other VM network directly because of the `A router on a stick` configuration.
-   - You can access it from the Harvester hosts, or in other words, the management network by adding the following static routes on the router. 
+   - You can also access it directly from the VMs in other VM networks because of the `A router on a stick` configuration.
+   - You can access it from the Harvester hosts, or in other words, the management network, by adding the following static routes on the router.  
 
      ```
      router(config)# ip route 10.10.0.0 255.255.255.0 ethernet0/1
@@ -195,6 +199,6 @@ The Harvester load balancer is divided into two types: VM load balancer and gues
 
 :::note
 
-Except for the static routes above, you can also use dynamic routing protocols such as RIP, BGP, OSPF, and ISIS according to your network planning and requirements.
+Except for the static routes above, you can use dynamic routing protocols such as RIP, BGP, OSPF, and ISIS according to your network planning and requirements.
 
 :::
