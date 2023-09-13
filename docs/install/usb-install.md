@@ -13,6 +13,10 @@ title: "USB Installation"
 There are a couple of ways to create a USB installation flash drive.
 
 :::caution
+**Known Issue:** For the v1.2.0 ISO image, there is a known [issue](https://github.com/harvester/harvester/issues/4510) where the interactive ISO installation will get stuck using the USB method.
+
+Refer to the [Harvester interactive ISO hangs with the USB installation method](#harvester-interactive-iso-hangs-with-the-usb-installation-method) for details and a workaround.
+
 No matter which tool you use, creating a bootable device erases your USB device data. Please back up all data on your USB device before making a bootable device.
 :::
 
@@ -70,3 +74,31 @@ If a USB flash driver boots, but you can't see the harvester installer, try one 
 
 - Plug the USB flash drive into a USB 2.0 slot.
 - For version `v0.3.0` or above, remove the `console=ttyS0` parameter when booting. Press `e` to edit the GRUB menu entry and remove the `console=ttyS0` parameter.
+
+### Harvester interactive ISO hangs with the USB installation method
+
+During installation from a USB flash drive with v1.2.0 ISO image (created by tools like `balenaEtcher`, `dd`, etc.), the installation process may get stuck on the initial image loading process because a required label is missing on the boot partition. Therefore, the installation cannot mount the data partition correctly, causing some checks in `dracut` to be blocked.
+
+If you encounter this issue, you'll observe the following similar output, and the process will hang for at least 50 minutes (the default timeout value from `dracut`).
+
+![](/img/v1.2/install/usb-install-hang.png)
+
+#### Workaround
+
+To address this problem, you can manually modify the root partition as follows:
+```text
+# Replace the `CDLABEL=COS_LIVE` with your USB data partition. Usually, your USB data partition is the first partition with the device name `sdx` that hangs on your screen.
+# Original
+$linux ($root)/boot/kernel cdroot root=live:CDLABEL=COS_LIVE rd.live.dir=/ rd.live.squashimg=rootfs.squashfs console=tty1 console=ttyS0 rd.cos.disable net.ifnames=1
+# Modified 
+$linux ($root)/boot/kernel cdroot root=live:/dev/sda1 rd.live.dir=/ rd.live.squashimg=rootfs.squashfs console=tty1 console=ttyS0 rd.cos.disable net.ifnames=1
+``` 
+
+The modified parameter should look like the following:
+
+![](/img/v1.2/install/grub-parameter-modified.png)
+
+After making this adjustment, press `Ctrl + x` to initiate booting. You should now enter the installer as usual.
+
+- Related issue:
+  - [[BUG] v1.2.0 Interactive ISO Fails to Install On Some Bare-Metal Devices](https://github.com/harvester/harvester/issues/4510) 
