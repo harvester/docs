@@ -1,4 +1,5 @@
 ---
+id: upgrading-harvester
 sidebar_position: 4
 sidebar_label: Upgrading Harvester
 title: "Upgrading Harvester"
@@ -10,6 +11,10 @@ keywords:
   - Harvester Upgrade
 Description: Harvester provides two ways to upgrade. Users can either upgrade using the ISO image or upgrade through the UI.
 ---
+
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/upgrade/upgrading-harvester"/>
+</head>
 
 :::note
 
