@@ -9,7 +9,7 @@ Description: How to update Harvester configuration after installation
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/install/update-harvester-configuration"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/install/update-harvester-configuration"/>
 </head>
 
 Harvester's OS has an immutable design, which means most files in the  OS revert to their pre-configured state after a reboot. The Harvester OS loads the pre-configured values of system components from configuration files during the boot time. 

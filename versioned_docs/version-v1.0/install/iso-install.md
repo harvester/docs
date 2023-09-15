@@ -12,7 +12,7 @@ Description: To get the Harvester ISO, download it from the Github releases. Dur
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/install/iso-install"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/install/iso-install"/>
 </head>
 
 To get the Harvester ISO image, download it from the [Github releases](https://github.com/harvester/harvester/releases) page.
