@@ -12,6 +12,10 @@ keywords:
 Description: With ISO installation mode, user will be prompted to set the password for the default `admin` user on the first-time login.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/authentication"/>
+</head>
+
 After installation, user will be prompted to set the password for the default `admin` user on the first-time login.
 
 ![auth](/img/v1.2/install/first-time-login.png)
