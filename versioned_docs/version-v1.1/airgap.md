@@ -10,6 +10,10 @@ keywords:
 - HTTP proxy
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/airgap"/>
+</head>
+
 This section describes how to use Harvester in an air gapped environment. Some use cases could be where Harvester will be installed offline, behind a firewall, or behind a proxy.
 
 The Harvester ISO image contains all the packages to make it work in an air gapped environment.
