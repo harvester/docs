@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://docs.harvesterhci.io/sitemap.xml
