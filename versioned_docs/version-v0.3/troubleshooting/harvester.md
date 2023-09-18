@@ -5,7 +5,7 @@ title: "Harvester"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/troubleshooting/harvester"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/troubleshooting/harvester"/>
 </head>
 
 ## Generate a Support Bundle
