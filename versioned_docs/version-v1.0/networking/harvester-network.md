@@ -12,7 +12,7 @@ Description: Harvester is built on Kubernetes, which uses CNI as an interface be
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/networking/harvester-network"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/networking/harvester-network"/>
 </head>
 
 Harvester is built on top of [Kubernetes](https://kubernetes.io/) and leverages its built-in [CNI](https://github.com/containernetworking/cni) mechanism to provide the interface between network providers and its VM networks. 

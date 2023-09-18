@@ -5,6 +5,11 @@ title: "Load Balancer"
 keywords:
 - Load Balancer
 ---
+
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/networking/loadbalancer"/>
+</head>
+
 _Available as of v1.2.0_
 
 The Harvester load balancer (LB) is a built-in Layer 4 load balancer that distributes incoming traffic across workloads deployed on Harvester virtual machines (VMs) or guest Kubernetes clusters.
