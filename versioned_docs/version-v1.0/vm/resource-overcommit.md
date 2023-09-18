@@ -11,7 +11,7 @@ Description: Overcommit resources to a VM.
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/vm/resource-overcommit"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/vm/resource-overcommit"/>
 </head>
 
 Harvester supports global configuration of resource overload percentages on CPU, memory, and storage. By setting [`overcommit-config`](../settings/settings.md#overcommit-config), this will allow scheduling of additional virtual machines even when physical resources are fully utilized.
