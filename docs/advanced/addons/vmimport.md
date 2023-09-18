@@ -5,7 +5,7 @@ title: "VM Import"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/advanced/vmimport"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/advanced/vmimport"/>
 </head>
 
 _Available as of v1.1.0_
