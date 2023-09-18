@@ -1,12 +1,11 @@
 ---
-id: index
 sidebar_position: 1
 sidebar_label: Settings
 title: "Settings"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/advanced/settings"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/advanced/settings"/>
 </head>
 
 This page contains a list of advanced settings which can be used in Harvester.
