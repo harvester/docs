@@ -8,7 +8,7 @@ Description: Clone volume from the Volume page.
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/volume/clone-volume"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/volume/clone-volume"/>
 </head>
 
 ## How to Clone a Volume
