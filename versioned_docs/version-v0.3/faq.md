@@ -4,6 +4,10 @@ sidebar_label: FAQ
 title: "FAQ"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/faq"/>
+</head>
+
 This FAQ is a work in progress designed to answer the questions our users most frequently ask about Harvester.
 
 1. How can I ssh login to the Harvester node?
