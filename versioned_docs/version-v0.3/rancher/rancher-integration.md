@@ -12,7 +12,7 @@ Description: Rancher is an open source multi-cluster management platform. Harves
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/rancher/rancher-integration"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/rancher/rancher-integration"/>
 </head>
 
 _Available as of v0.3.0_

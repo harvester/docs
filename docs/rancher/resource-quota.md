@@ -11,6 +11,10 @@ keywords:
 Description: ResourceQuota allows administrators to set resource limits per namespace, preventing excessive resource usage and ensuring the smooth operation of other namespaces when the quota is reached.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/rancher/resource-quota"/>
+</head>
+
 [ResourceQuota](https://kubernetes.io/docs/concepts/policy/resource-quotas/) is used to limit the usage of resources within a namespace. It helps administrators control and restrict the allocation of cluster resources to ensure fairness and controlled resource distribution among namespaces.
 
 In Harvester, ResourceQuota can define usage limits for the following resources:
