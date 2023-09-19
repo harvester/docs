@@ -15,7 +15,7 @@ There are a couple of ways to create a USB installation flash drive.
 :::caution
 **Known Issue:** For the v1.2.0 ISO image, there is a known [issue](https://github.com/harvester/harvester/issues/4510) where the interactive ISO installation will get stuck using the USB method.
 
-To resolve this, you can use the patched [ISO](https://releases.rancher.com/harvester/v1.2.0/harvester-v1.2.0-patch1-amd64.iso). This patched version only corrects the label; no other changes have been made. You can also use the related sha512 [file](https://releases.rancher.com/harvester/v1.2.0/harvester-v1.2.0-patch1-amd64.iso.sha512sum) to verify the ISO.
+To resolve this, you can use the patched [ISO](https://releases.rancher.com/harvester/v1.2.0/harvester-v1.2.0-patch1-amd64.iso). This patched version only corrects the partition label, and there are no other changes. You can also use the related sha512 [file](https://releases.rancher.com/harvester/v1.2.0/harvester-v1.2.0-patch1-amd64.iso.sha512sum) to verify the ISO.
 
 Refer to the [Harvester interactive ISO hangs with the USB installation method](#harvester-interactive-iso-hangs-with-the-usb-installation-method) for details and a workaround.
 
