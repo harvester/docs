@@ -73,4 +73,5 @@ With these configurations in place, your Harvester cluster is ready to make the 
 
 ## References
 
-- [Using Rook Ceph Storage in Harvester](https://harvesterhci.io/kb/using_rook_ceph_storage)
+- [Use Rook Ceph External Storage with Harvester](https://harvesterhci.io/kb/use_rook_ceph_external_storage)
+- [Using NetApp Storage on Harvester](https://harvesterhci.io/kb/install_netapp_trident_csi)
