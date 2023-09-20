@@ -20,7 +20,7 @@ During the installation, the ingress for Rancher is synced to the Harvester clus
 
 ## Installing rancher-vcluster
 
-The `rancher-vcluster` addon is not packaged with Harvester, but you can find it in the [expreimental-addon repo](https://github.com/harvester/experimental-addons).
+The `rancher-vcluster` addon is not packaged with Harvester, but you can find it in the [experimental-addons repo](https://github.com/harvester/experimental-addons).
 
 Assuming you are using the Harvester kubeconfig, you can run the following commands to install the addon:
 

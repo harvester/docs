@@ -19,9 +19,9 @@ Description: Harvester is an open source hyper-converged infrastructure (HCI) so
 The Harvester architecture consists of cutting-edge open-source technologies:
 - **Linux OS.** [Elemental for SLE-Micro 5.3](https://github.com/rancher/elemental-toolkit) is at the core of Harvester and is an immutable Linux distribution designed to remove as much OS maintenance as possible in a Kubernetes cluster. 
 - **Built on top of Kubernetes.** [Kubernetes](https://kubernetes.io/) has become the predominant infrastructure language across all form factors, and Harvester is an HCI solution with Kubernetes under the hood.
-- **Virtualization management with Kubevirt.** [Kubevirt](https://kubevirt.io/) provides virtualization management using KVM on top of Kubernetes.
+- **Virtualization management with KubeVirt.** [KubeVirt](https://kubevirt.io/) provides virtualization management using KVM on top of Kubernetes.
 - **Storage management with Longhorn.** [Longhorn](https://longhorn.io/) provides distributed block storage and tiering.
-- **Observability with Grafana and Prometheus.** [Granfana](https://grafana.com/) and [Prometheus](https://prometheus.io/) provide robust monitoring and logging.
+- **Observability with Grafana and Prometheus.** [Grafana](https://grafana.com/) and [Prometheus](https://prometheus.io/) provide robust monitoring and logging.
 
 ![](/img/v1.2/architecture.svg)
 
