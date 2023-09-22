@@ -38,11 +38,16 @@ const config = {
           showLastUpdateTime: true,
           editUrl: "https://github.com/harvester/docs/edit/main/",
           docItemComponent: "@theme/ApiItem", 
-          lastVersion: 'current',
+          lastVersion: 'v1.2',
           versions: {
             current: {
+              label: 'v1.3 (dev)',
+              path: 'v1.3',
+            },
+            "v1.2": {
               label: 'v1.2 (latest)',
               path: 'v1.2',
+              banner: `none`
             },
             "v1.1": {
               path: "v1.1",
