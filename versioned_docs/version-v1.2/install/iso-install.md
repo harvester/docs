@@ -145,3 +145,80 @@ If you are using a version earlier than v1.1.1, please try the following workaro
    ![edit-menu-entry.png](/img/v1.2/install/edit-menu-entry.png)
 
 1. Press `Ctrl+X` or `F10` to boot up.
+
+### Fail to join nodes using FQDN to a cluster which has custom SSL certificate configured
+
+You may encounter that newly joined nodes stay in the **Not Ready** state indefinitely. This is likely the outcome if you already have a set of **custom SSL certificates** configured on the to-be-joined Harvester cluster and provide an **FQDN** instead of a VIP address for the management address during the Harvester installation.
+
+![Joining nodes stuck at the "NotReady" state](/img/v1.2/install/join-node-not-ready.png)
+
+You can check the "SSL certificates" on the Harvester dashboard's setting page or using the command line tool `kubectl get settings.harvesterhci.io ssl-certificates` to see if there is any custom SSL certificate configured (by default, it is empty).
+
+![The SSL certificate setting](/img/v1.2/install/ssl-certificates-setting.png)
+
+The second thing to look at is on the joining nodes. Try to get access to the nodes via consoles or SSH sessions and then check the log of `rancherd`:
+
+```sh
+$ journalctl -u rancherd.service
+Oct 02 08:04:43 node-0 systemd[1]: Starting Rancher Bootstrap...
+Oct 02 08:04:43 node-0 rancherd[2017]: time="2023-10-02T08:04:43Z" level=info msg="Loading config file [/usr/share/rancher/rancherd/config.yaml.d/50-defaults.yaml]"
+Oct 02 08:04:43 node-0 rancherd[2017]: time="2023-10-02T08:04:43Z" level=info msg="Loading config file [/usr/share/rancher/rancherd/config.yaml.d/91-harvester-bootstrap-repo.yaml]"
+Oct 02 08:04:43 node-0 rancherd[2017]: time="2023-10-02T08:04:43Z" level=info msg="Loading config file [/etc/rancher/rancherd/config.yaml]"
+Oct 02 08:04:43 node-0 rancherd[2017]: time="2023-10-02T08:04:43Z" level=info msg="Bootstrapping Rancher (v2.7.5/v1.25.9+rke2r1)"
+Oct 02 08:04:44 node-0 rancherd[2017]: time="2023-10-02T08:04:44Z" level=info msg="Writing plan file to /var/lib/rancher/rancherd/plan/plan.json"
+Oct 02 08:04:44 node-0 rancherd[2017]: time="2023-10-02T08:04:44Z" level=info msg="Applying plan with checksum "
+Oct 02 08:04:44 node-0 rancherd[2017]: time="2023-10-02T08:04:44Z" level=info msg="No image provided, creating empty working directory /var/lib/rancher/rancherd/plan/work/20231002-080444-applied.plan/_0"
+Oct 02 08:04:44 node-0 rancherd[2017]: time="2023-10-02T08:04:44Z" level=info msg="Running command: /usr/bin/env [sh /var/lib/rancher/rancherd/install.sh]"
+Oct 02 08:04:44 node-0 rancherd[2017]: time="2023-10-02T08:04:44Z" level=info msg="[stdout]: [INFO]  Using default agent configuration directory /etc/rancher/agent"
+Oct 02 08:04:44 node-0 rancherd[2017]: time="2023-10-02T08:04:44Z" level=info msg="[stdout]: [INFO]  Using default agent var directory /var/lib/rancher/agent"
+Oct 02 08:04:44 node-0 rancherd[2017]: time="2023-10-02T08:04:44Z" level=info msg="[stderr]: [WARN]  /usr/local is read-only or a mount point; installing to /opt/rancher-system-agent"
+Oct 02 08:04:45 node-0 rancherd[2017]: time="2023-10-02T08:04:45Z" level=info msg="[stdout]: [INFO]  Determined CA is necessary to connect to Rancher"
+Oct 02 08:04:45 node-0 rancherd[2017]: time="2023-10-02T08:04:45Z" level=info msg="[stdout]: [INFO]  Successfully downloaded CA certificate"
+Oct 02 08:04:45 node-0 rancherd[2017]: time="2023-10-02T08:04:45Z" level=info msg="[stdout]: [INFO]  Value from https://192.168.48.240/cacerts is an x509 certificate"
+Oct 02 08:04:45 node-0 rancherd[2017]: time="2023-10-02T08:04:45Z" level=info msg="[stderr]: curl: (60) SSL: no alternative certificate subject name matches target host name '192.168.48.240'"
+Oct 02 08:04:45 node-0 rancherd[2017]: time="2023-10-02T08:04:45Z" level=info msg="[stderr]: More details here: https://curl.se/docs/sslcerts.html"
+Oct 02 08:04:45 node-0 rancherd[2017]: time="2023-10-02T08:04:45Z" level=info msg="[stderr]: "
+Oct 02 08:04:45 node-0 rancherd[2017]: time="2023-10-02T08:04:45Z" level=info msg="[stderr]: curl failed to verify the legitimacy of the server and therefore could not"
+Oct 02 08:04:45 node-0 rancherd[2017]: time="2023-10-02T08:04:45Z" level=info msg="[stderr]: establish a secure connection to it. To learn more about this situation and"
+Oct 02 08:04:45 node-0 rancherd[2017]: time="2023-10-02T08:04:45Z" level=info msg="[stderr]: how to fix it, please visit the web page mentioned above."
+Oct 02 08:04:45 node-0 rancherd[2017]: time="2023-10-02T08:04:45Z" level=info msg="[stderr]: [ERROR]  000 received while testing Rancher connection. Sleeping for 5 seconds and trying again"
+```
+
+This is because `rancherd` will try to download the CA using the provided FQDN in the insecure mode from the embedded Rancher Manager on the Harvester cluster when bootstrapping, and then use that CA to verify the received certificates for the following communications. However, the bootstraping script `/var/lib/rancher/rancherd/install.sh`, which is also downloaded from the embedded Rancher Manager, has the VIP address configured:
+
+```sh
+#!/usr/bin/env sh
+
+CATTLE_AGENT_BINARY_BASE_URL="https://192.168.48.240/assets"
+CATTLE_SERVER=https://192.168.48.240
+CATTLE_CA_CHECKSUM="be59358f796b09615b3f980cfe28ff96cae42a141289900bae494d869f363a67"
+...
+```
+
+So the nodes will query the embedded Rancher Manager via the VIP address instead of the FQDN provided during the Harvester installation. If the custom SSL certificate you configured doesn't contain a valid IP SAN extension, `rancherd` will fail at the exact point we showed above.
+
+To work around this, you need to configure the cluster with a valid IP SAN extension, i.e., include the VIP address in the IP SAN extension when generating the CSR or signing the certificate. After applying the new certificate on the cluster, `rancherd` is then able to proceed and finish its job. But soon `rancher-system-agent` will complain about it cannot verify the certificate received from the embedded Rancher Manager:
+
+```sh
+$ journalctl -u rancher-system-agent.service
+Oct 02 10:18:44 node-0 systemd[1]: rancher-system-agent.service: Scheduled restart job, restart counter is at 91.
+Oct 02 10:18:44 node-0 systemd[1]: Stopped Rancher System Agent.
+Oct 02 10:18:44 node-0 systemd[1]: Started Rancher System Agent.
+Oct 02 10:18:44 node-0 rancher-system-agent[9620]: time="2023-10-02T10:18:44Z" level=info msg="Rancher System Agent version v0.3.3 (9e827a5) is starting"
+Oct 02 10:18:44 node-0 rancher-system-agent[9620]: time="2023-10-02T10:18:44Z" level=info msg="Using directory /var/lib/rancher/agent/work for work"
+Oct 02 10:18:44 node-0 rancher-system-agent[9620]: time="2023-10-02T10:18:44Z" level=info msg="Starting remote watch of plans"
+Oct 02 10:18:44 node-0 rancher-system-agent[9620]: time="2023-10-02T10:18:44Z" level=info msg="Initial connection to Kubernetes cluster failed with error Get \"https://192.168.48.240/version\": x509: certificate signed by unknown authority, removing CA data and trying again"
+Oct 02 10:18:44 node-0 rancher-system-agent[9620]: time="2023-10-02T10:18:44Z" level=fatal msg="error while connecting to Kubernetes cluster with nullified CA data: Get \"https://192.168.48.240/version\": x509: certificate signed by unknown authority"
+Oct 02 10:18:44 node-0 systemd[1]: rancher-system-agent.service: Main process exited, code=exited, status=1/FAILURE
+Oct 02 10:18:44 node-0 systemd[1]: rancher-system-agent.service: Failed with result 'exit-code'.
+```
+
+For such cases, you will need to manually add the CA into the trust list on each joining node:
+
+```sh
+# prepare the CA as additional-ca.pem on the nodes
+$ sudo cp additional-ca.pem /etc/pki/trust/anchors/
+$ sudo update-ca-certificates
+```
+
+After that, the nodes can join into the cluster successfully.
