@@ -72,8 +72,8 @@ The `bootOrder` values need to be set with the installation image first. If you 
 3. The **third volume** is a `Container` with the following values:
     1. `Name`: The value `virtio-container-disk` is set by default. You can keep it or change it.
     2. `Type`: Select `cd-rom`.
-    3. `Docker Image`: The value `registry.suse.com/suse/vmdp/vmdp:2.5.3` is set by default. It's recommended you don't change it.
-    4. `Bus`: The value `SATA` is set by default. It's recommended you don't change it.
+    3. `Docker Image`: The value `registry.suse.com/suse/vmdp/vmdp:2.5.4.2` is set by default. We recommend not changing this value. 
+    4. `Bus`: The value `SATA` is set by default. We recommend not changing this value. 
 4. You can add additional disks using the buttons `Add Volume`, `Add Existing Volume`, `Add VM Image`, or `Add Container`.
 
 ![create-windows-vm-volumes](/img/v1.2/vm/create-windows-vm-volumes.png)

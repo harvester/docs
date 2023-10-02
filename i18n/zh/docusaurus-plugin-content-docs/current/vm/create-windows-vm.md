@@ -68,7 +68,7 @@ Description: 从"虚拟机"页面创建一个或多个 Windows 虚拟机。
 3. **第三个卷**是具有以下值的`容器` ：
    1. `Name`：默认设置为 `virtio-container-disk`。你也可以修改它。
    2. `Type`：选择 `cd-rom`。
-   3. `Docker Image`：默认设置为 `registry.suse.com/suse/vmdp/vmdp:2.5.3`。建议你不要修改该值。
+   3. `Docker Image`：默认设置为 `registry.suse.com/suse/vmdp/vmdp:2.5.4.2`。建议你不要修改该值。
    4. `Bus`：默认值是 `SATA`。建议你不要修改该值。
 4. 你可以使用 `Add Volume`、`Add Existing Volume`、`Add VM Image` 或 `Add Container` 按钮来添加其他磁盘：
 
