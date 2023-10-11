@@ -103,31 +103,92 @@ const config = {
         },
         {
           type: "localeDropdown",
-          position: "right",
+          position: "left",
         },
         {
-          href: "https://www.suse.com/c/?s=harvester",
-          position: "right",
-          label: "Blog",
-          className: "navbar__blog",
+          type: 'search',
+          position: 'left',
         },
         {
-          href: "https://harvesterhci.io/kb",
-          position: "right",
-          label: "Knowledge Base",
-          className: "navbar__kb",
+          type: `dropdown`,
+          label: `Quick Links`,
+          position: `right`,
+          items: [
+            {
+              href: "https://harvesterhci.io/",
+              label: "Harvester Home",
+              target: '_self',
+            },
+            {
+              href: 'https://github.com/harvester/docs',
+              label: 'GitHub',
+            },
+            {
+              href: 'https://github.com/harvester/harvester',
+              label: 'Docs GitHub',
+            },
+            {
+              href: "https://harvesterhci.io/kb",
+              label: "Knowledge Base",
+              target: '_self',
+            },
+            {
+              href: "https://www.suse.com/c/?s=harvester",
+              label: "Blog",
+              target: '_self',
+            },
+          ],
         },
         {
-          href: 'https://www.rancher.com',
-          label: 'Rancher Home',
-          position: 'right',
-        },
-        {
-          href: "https://github.com/harvester/harvester",
-          label: "GitHub",
-          position: "right",
-          className: "navbar__github btn btn-secondary icon-github",
-        },
+          type: `dropdown`,
+          label: `More from SUSE`,
+          position: `right`,
+        items: [
+          {
+            href: 'https://www.rancher.com',
+            label: 'Rancher',
+            target: '_self',
+          },
+          {
+            type: 'html',
+            value: '<hr style="margin: 0.3rem 0;">',
+          },
+          {
+            href: 'https://longhorn.io/',
+            label: 'Longhorn',
+            target: '_self',
+          },
+          {
+            href: 'https://docs.rancherdesktop.io/',
+            label: 'Rancher Desktop',
+            target: '_self',
+          },
+          {
+            href: 'https://epinio.io/',
+            label: 'Epinio',
+            target: '_self',
+          },
+          {
+            href: 'https://www.kubewarden.io/',
+            label: 'Kubewarden',
+            target: '_self',
+          },
+          {
+            href: 'https://opni.io/',
+            label: 'Opni',
+            target: '_self',
+          },
+          {
+            type: 'html',
+            value: '<hr style="margin: 0.3rem 0;">',
+          },
+          {
+            href: 'https://opensource.suse.com/',
+            label: 'More Projects...',
+            target: '_self',
+          },
+        ],
+      },
       ],
     },
     colorMode: {
@@ -141,7 +202,7 @@ const config = {
     footer: {
       style: "dark",
       links: [],
-      copyright: `Copyright © ${new Date().getFullYear()} harvesterhci.io`,
+      copyright: `Copyright © ${new Date().getFullYear()} SUSE Rancher. All Rights Reserved.`,
     },
     prism: {
       theme: lightCodeTheme,
