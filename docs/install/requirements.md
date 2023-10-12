@@ -42,6 +42,16 @@ A three-node cluster is required to realize the multi-node features of Harvester
 
 Harvester nodes have the following network requirements for installation.
 
+### IP Address Requirements for Harvester Nodes
+
+Harvester is built on top of Kubernetes, and each node needs an independent IP address. Harvester uses this IP address to identify a node identity, and it cannot change during the lifecycle of a Harvester cluster.
+
+### IP Address Requirements for Harvester Cluster
+
+The Harvester cluster needs an additional IP address called Virtual IP (VIP). It uses it as the management IP for the whole cluster.
+
+Please refer to [Management Address](./management-address.md) for more details.
+
 ### Port Requirements for Harvester Nodes
 
 Harvester nodes require the following port connections or inbound rules. Typically, all outbound traffic is allowed.
