@@ -213,8 +213,8 @@ Oct 06 03:43:51 node-0 systemd[1]: rancher-system-agent.service: Failed with res
 If you see a similar log output, you need to manually add the CA to the trust list on each joining node with the following commands:
 
 ```sh
-# prepare the CA as additional-ca.pem on the nodes
-$ sudo cp additional-ca.pem /etc/pki/trust/anchors/
+# prepare the CA as embedded-rancher-ca.pem on the nodes
+$ sudo cp embedded-rancher-ca.pem /etc/pki/trust/anchors/
 $ sudo update-ca-certificates
 ```
 
