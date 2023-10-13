@@ -141,11 +141,11 @@ You may encounter that newly joined nodes stay in the **Not Ready** state indefi
 
 ![Joining nodes stuck at the "NotReady" state](/img/v1.1/install/join-node-not-ready.png)
 
-You can check the "SSL certificates" on the Harvester dashboard's setting page or using the command line tool `kubectl get settings.harvesterhci.io ssl-certificates` to see if there is any custom SSL certificate configured (by default, it is empty).
+You can check the **SSL certificates** on the Harvester dashboard's setting page or using the command line tool `kubectl get settings.harvesterhci.io ssl-certificates` to see if there is any custom SSL certificate configured (by default, it is empty).
 
 ![The SSL certificate setting](/img/v1.1/install/ssl-certificates-setting.png)
 
-The second thing to look at is on the joining nodes. Try to get access to the nodes via consoles or SSH sessions and then check the log of `rancherd`:
+The second thing to look at is the joining nodes. Try to get access to the nodes via consoles or SSH sessions and then check the log of `rancherd`:
 
 ```sh
 $ journalctl -u rancherd.service
@@ -182,7 +182,7 @@ Oct 03 08:58:55 node-0 rancherd[2013]: time="2023-10-03T08:58:55Z" level=info ms
 Oct 03 08:58:56 node-0 rancherd[2013]: time="2023-10-03T08:58:56Z" level=info msg="[stderr]: time=\"2023-10-03T08:58:56Z\" level=info msg=\"Probe [kubelet] is unhealthy\""
 ```
 
-The above log shows that `rancherd` is waiting for `kubelet` to become healthy. There is nothing `rancherd` do wrong. So, the next part to check is `rancher-system-agent`:
+The above log shows that `rancherd` is waiting for `kubelet` to become healthy. `rancherd` is doing nothing wrong and is working as expected. The next step is to check the `rancher-system-agent`:
 
 ```sh
 $ journalctl -u rancher-system-agent.service
@@ -203,7 +203,7 @@ Oct 03 09:12:18 node-0 systemd[1]: rancher-system-agent.service: Main process ex
 Oct 03 09:12:18 node-0 systemd[1]: rancher-system-agent.service: Failed with result 'exit-code'.
 ```
 
-For such cases, you will need to manually add the CA into the trust list on each joining node:
+If you see a similar log output, you need to manually add the CA to the trust list on each joining node with the following commands:
 
 ```sh
 # prepare the CA as additional-ca.pem on the nodes
@@ -211,4 +211,4 @@ $ sudo cp additional-ca.pem /etc/pki/trust/anchors/
 $ sudo update-ca-certificates
 ```
 
-After that, the nodes can join into the cluster successfully.
+After adding the CA to the trust list, the nodes can join to the cluster successfully.

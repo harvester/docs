@@ -152,11 +152,11 @@ You may encounter that newly joined nodes stay in the **Not Ready** state indefi
 
 ![Joining nodes stuck at the "NotReady" state](/img/v1.2/install/join-node-not-ready.png)
 
-You can check the "SSL certificates" on the Harvester dashboard's setting page or using the command line tool `kubectl get settings.harvesterhci.io ssl-certificates` to see if there is any custom SSL certificate configured (by default, it is empty).
+You can check the **SSL certificates** on the Harvester dashboard's setting page or using the command line tool `kubectl get settings.harvesterhci.io ssl-certificates` to see if there is any custom SSL certificate configured (by default, it is empty).
 
 ![The SSL certificate setting](/img/v1.2/install/ssl-certificates-setting.png)
 
-The second thing to look at is on the joining nodes. Try to get access to the nodes via consoles or SSH sessions and then check the log of `rancherd`:
+The second thing to look at is the joining nodes. Try to get access to the nodes via consoles or SSH sessions and then check the log of `rancherd`:
 
 ```sh
 $ journalctl -u rancherd.service
@@ -184,7 +184,7 @@ Oct 02 08:04:45 node-0 rancherd[2017]: time="2023-10-02T08:04:45Z" level=info ms
 Oct 02 08:04:45 node-0 rancherd[2017]: time="2023-10-02T08:04:45Z" level=info msg="[stderr]: [ERROR]  000 received while testing Rancher connection. Sleeping for 5 seconds and trying again"
 ```
 
-This is because `rancherd` will try to download the CA using the provided FQDN in the insecure mode from the embedded Rancher Manager on the Harvester cluster when bootstrapping, and then use that CA to verify the received certificates for the following communications. However, the bootstraping script `/var/lib/rancher/rancherd/install.sh`, which is also downloaded from the embedded Rancher Manager, has the VIP address configured:
+This is because `rancherd` will try to download the CA using the provided FQDN in the insecure mode from the embedded Rancher Manager on the Harvester cluster when bootstrapping and then use that CA to verify the received certificates for the following communications. However, the bootstrapping script `/var/lib/rancher/rancherd/install.sh`, which is also downloaded from the embedded Rancher Manager, has the VIP address configured:
 
 ```sh
 #!/usr/bin/env sh
@@ -195,9 +195,9 @@ CATTLE_CA_CHECKSUM="be59358f796b09615b3f980cfe28ff96cae42a141289900bae494d869f36
 ...
 ```
 
-So the nodes will query the embedded Rancher Manager via the VIP address instead of the FQDN provided during the Harvester installation. If the custom SSL certificate you configured doesn't contain a valid IP SAN extension, `rancherd` will fail at the exact point we showed above.
+The nodes will query the embedded Rancher Manager via the VIP address instead of the FQDN provided during the Harvester installation. If the custom SSL certificate you configured doesn't contain a valid IP SAN extension, `rancherd` will fail at the exact point shown above.
 
-To work around this, you need to configure the cluster with a valid IP SAN extension, i.e., include the VIP address in the IP SAN extension when generating the CSR or signing the certificate. After applying the new certificate on the cluster, `rancherd` is then able to proceed and finish its job. But soon `rancher-system-agent` will complain about it cannot verify the certificate received from the embedded Rancher Manager:
+To work around this, you need to configure the cluster with a valid IP SAN extension, i.e., include the VIP address in the IP SAN extension when generating the CSR or signing the certificate. After applying the new certificate on the cluster, `rancherd` can then proceed and finish its job. However, soon `rancher-system-agent` will complain that it cannot verify the certificate received from the embedded Rancher Manager:
 
 ```sh
 $ journalctl -u rancher-system-agent.service
@@ -213,7 +213,7 @@ Oct 02 10:18:44 node-0 systemd[1]: rancher-system-agent.service: Main process ex
 Oct 02 10:18:44 node-0 systemd[1]: rancher-system-agent.service: Failed with result 'exit-code'.
 ```
 
-For such cases, you will need to manually add the CA into the trust list on each joining node:
+If you see a similar log output, you need to manually add the CA to the trust list on each joining node with the following commands:
 
 ```sh
 # prepare the CA as additional-ca.pem on the nodes
@@ -221,4 +221,4 @@ $ sudo cp additional-ca.pem /etc/pki/trust/anchors/
 $ sudo update-ca-certificates
 ```
 
-After that, the nodes can join into the cluster successfully.
+After adding the CA to the trust list, the nodes can join to the cluster successfully.
