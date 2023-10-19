@@ -120,11 +120,11 @@ const config = {
               target: '_self',
             },
             {
-              href: 'https://github.com/harvester/docs',
+              href: 'https://github.com/harvester/harvester',
               label: 'GitHub',
             },
             {
-              href: 'https://github.com/harvester/harvester',
+              href: 'https://github.com/harvester/docs',
               label: 'Docs GitHub',
             },
             {
@@ -135,7 +135,6 @@ const config = {
             {
               href: "https://www.suse.com/c/?s=harvester",
               label: "Blog",
-              target: '_self',
             },
           ],
         },
@@ -143,51 +142,48 @@ const config = {
           type: `dropdown`,
           label: `More from SUSE`,
           position: `right`,
-        items: [
-          {
-            href: 'https://www.rancher.com',
-            label: 'Rancher',
-            target: '_self',
-          },
-          {
-            type: 'html',
-            value: '<hr style="margin: 0.3rem 0;">',
-          },
-          {
-            href: 'https://longhorn.io/',
-            label: 'Longhorn',
-            target: '_self',
-          },
-          {
-            href: 'https://docs.rancherdesktop.io/',
-            label: 'Rancher Desktop',
-            target: '_self',
-          },
-          {
-            href: 'https://epinio.io/',
-            label: 'Epinio',
-            target: '_self',
-          },
-          {
-            href: 'https://www.kubewarden.io/',
-            label: 'Kubewarden',
-            target: '_self',
-          },
-          {
-            href: 'https://opni.io/',
-            label: 'Opni',
-            target: '_self',
-          },
-          {
-            type: 'html',
-            value: '<hr style="margin: 0.3rem 0;">',
-          },
-          {
-            href: 'https://opensource.suse.com/',
-            label: 'More Projects...',
-            target: '_self',
-          },
-        ],
+          items: [
+            {
+              href: 'https://www.rancher.com',
+              label: 'Rancher',
+            },
+            {
+              type: 'html',
+              value: '<hr style="margin: 0.3rem 0;">',
+            },
+            {
+              href: 'https://elemental.docs.rancher.com/',
+              label: 'Elemental',
+            },
+            {
+              href: 'https://epinio.io/',
+              label: 'Epinio',
+            },
+            {
+              href: 'https://fleet.rancher.io/',
+              label: 'Fleet',
+            },
+            {
+              href: 'https://www.kubewarden.io/',
+              label: 'Kubewarden',
+            },
+            {
+              href: 'https://opni.io/',
+              label: 'Opni',
+            },
+            {
+              href: 'https://rancherdesktop.io/',
+              label: 'Rancher Desktop',
+            },
+            {
+              type: 'html',
+              value: '<hr style="margin: 0.3rem 0;">',
+            },
+            {
+              href: 'https://opensource.suse.com/',
+              label: 'More Projects...',
+            },
+          ],
       },
       ],
     },
