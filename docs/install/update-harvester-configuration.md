@@ -69,88 +69,9 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
 
 ## NTP servers
 
-### Runtime change
+We introduce the new mechanism for the NTP configuration in Harvester v1.2.0.
 
-1. Log in to a Harvester node and become root. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-in-to-a-harvester-node) for more details.
-1. Edit `/etc/systemd/timesyncd.conf` and specify NTP servers in the `NTP=` setting:
-
-    ```
-    [Time]
-    NTP = 0.suse.pool.ntp.org 1.suse.pool.ntp.org
-    ```
-
-1. Restart the `systemd-timesyncd.service` service:
-
-    ```
-    systemctl restart systemd-timesyncd.service
-    ```
-
-1. Display the timesync status:
-
-    ```
-    timedatectl timesync-status
-    ```
-
-### Configuration persistence
-
-1. Backup the elemental `cloud-init` file `/oem/90_custom.yaml` as follows:
-
-    ```
-    cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
-    ```
-
-1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.initramfs[0].timesyncd`. The `timesyncd` map must be in the following format:
-
-    ```
-    stages:
-      initramfs:
-      - ...
-        timesyncd:
-        NTP: 0.suse.pool.ntp.org 1.suse.pool.ntp.org
-    ```
-
-1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.initramfs[0].systemctl.enable`. The array must have the two services (`systemd-timesyncd` and `systemd-time-wait-sync`) enabled:
-
-    ```
-    stages:
-      initramfs:
-      - ...
-        systemctl:
-        enable:
-            systemd-timesyncd
-            systemd-time-wait-sync
-        disable: []
-        start: []
-        mask: []
-    ```
-
-## SSH keys of user `rancher`
-
-### Runtime change
-
-1. Log in to a Harvester node as user `rancher`. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-in-to-a-harvester-node) for more details.
-1. Edit `/home/rancher/.ssh/authorized_keys` to add or remove keys.
-
-### Configuration persistence
-
-1. Backup the elemental `cloud-init` file `/oem/90_custom.yaml` as follows:
-
-    ```
-    cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
-    ```
-
-1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.network[0].authorized_keys.rancher`. Add or remove keys in the `rancher` array:
-
-    ```
-    stages:
-      network:
-      - ...
-        authorized_keys:
-          rancher:
-          - key1
-          - key2
-    ```
-
+For more information about NTP settings in Harvester v1.2.0 and later versions, see the [NTP servers](../host/host.md#ntp-configuration).
 
 ## Password of user `rancher`
 
