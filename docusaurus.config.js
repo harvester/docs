@@ -110,14 +110,13 @@ const config = {
           position: 'left',
         },
         {
-          type: `dropdown`,
-          label: `Quick Links`,
-          position: `right`,
+          type: 'dropdown',
+          label: 'Quick Links',
+          position: 'right',
           items: [
             {
               href: "https://harvesterhci.io/",
               label: "Harvester Home",
-              target: '_self',
             },
             {
               href: 'https://github.com/harvester/harvester',
@@ -130,7 +129,6 @@ const config = {
             {
               href: "https://harvesterhci.io/kb",
               label: "Knowledge Base",
-              target: '_self',
             },
             {
               href: "https://www.suse.com/c/?s=harvester",
@@ -139,9 +137,9 @@ const config = {
           ],
         },
         {
-          type: `dropdown`,
-          label: `More from SUSE`,
-          position: `right`,
+          type: 'dropdown',
+          label: 'More from SUSE',
+          position: 'right',
           items: [
             {
               href: 'https://www.rancher.com',
