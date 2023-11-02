@@ -251,3 +251,33 @@ When Ksmtuned starts, initialize `pages_to_scan` in KSM to 1000 (**Minimum Pages
 KSM starts when the available memory falls below the **Threshold Coefficient**. If it detects that it is running, `pages_to_scan` increments by 300 (**Boost**) every minute until it reaches 5000 (**Maximum Pages**).
 
 KSM will stop when the available memory is above the **Threshold Coefficient**. If it detects that it is stopped, `pages_to_scan` decrements by 100 (**Decay**) every minute until it reaches 1000 (**Minimum Pages**).
+
+## NTP Configuration
+
+Time synchronization is an important aspect of distributed cluster architecture. Because of this, Harvester now provides a simpler way for configuring NTP settings.
+
+In previous Harvester versions, NTP settings were mainly configurable [during the installation process](https://docs.harvesterhci.io/v1.2/install/harvester-configuration#osntp_servers). To modify the settings, you needed to manually update the configuration file on each node.
+
+Beginning with version v1.2.0, Harvester is supporting NTP configuration on the Harvester UI Settings screen (**Advanced** > **Settings**). You can configure NTP settings for the entire Harvester cluster at any time, and the settings are applied to all nodes in the cluster.
+
+![](/img/v1.2/host/harvester-ntp-settings.png)
+
+You can set up multiple NTP servers at once.
+
+![](/img/v1.2/host/harvester-ntp-settings-multiple.png)
+
+You can check the settings in the `node.harvesterhci.io/ntp-service` annotation in Kubernetes nodes: 
+- `ntpSyncStatus`: Status of the connection to NTP servers (possible values: `disabled`, `synced` and `unsynced`)
+- `currentNtpServers`: List of existing NTP servers
+
+```
+$ kubectl get nodes harvester-node-0 -o yaml |yq -e '.metadata.annotations.["node.harvesterhci.io/ntp-service"]'
+{"ntpSyncStatus":"synced","currentNtpServers":"0.suse.pool.ntp.org 1.suse.pool.ntp.org"}
+```
+
+> **Note:**
+>
+> 1. Do not modify the NTP configuration file on each node. Harvester will automatically sync the settings that you configured on the Harvester UI to the nodes.
+> 1. If you upgraded Harvester from an earlier version, the **ntp-servers** list on the Settings screen will be empty (see screenshot). You must manually configure the NTP settings because Harvester is unaware of the previous settings and is unable to detect conflicts.
+
+![](/img/v1.2/host/harvester-ntp-settings-empty.png)
