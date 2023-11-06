@@ -127,6 +127,16 @@ Perform the following steps to deploy the Harvester CSI Driver manually:
 
     ![](/img/v1.1/rancher/donot_change_cloud_config_path.png)
 
+:::note
+
+If you prefer not to install the Harvester CSI driver using Rancher
+(**Apps** > **Charts**), you can use [Helm](https://helm.sh) instead.
+The Harvester CSI driver is [packaged as a Helm chart](
+https://github.com/harvester/charts/tree/master/charts/harvester-csi-driver).
+For more information, see https://charts.harvesterhci.io.
+
+:::
+
 By following the above steps, you should be able to see those CSI driver pods are up and running, and you can verify it by provisioning a new PVC using the default storageClass `harvester.`.
 
 ### Deploying with Harvester K3s Node Driver
