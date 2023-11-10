@@ -20,7 +20,6 @@ Live migration means moving a virtual machine to a different host without downti
 :::note
 
 - Live migration is not allowed when the virtual machine is using a management network of bridge interface type.
-- To support live migration, three or more hosts in the Harvester cluster are required due to [a known issue](https://github.com/harvester/harvester/issues/798).
 
 :::
 
