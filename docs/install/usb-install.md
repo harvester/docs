@@ -58,7 +58,7 @@ You can use the 'dd' command on Linux or other platforms to create a USB install
 
 ###
 
-Sometimes using a USB to mount the Harvester ISO disk directs you to Grub2. In this case, it helps to know how to set the root partition and where to locate `grub.cfg`.
+Sometimes using a USB to mount the Harvester ISO disk directs you to GRUB2. In this case, it helps to know how to set the root partition and where to locate `grub.cfg`.
 
 You can see the current root partition in the `grub.cfg`, once you've set the root to be within where the ISO lives on the USB. To view the `grub.cfg` from the ISO, run the command `cat /boot/grub2/grub.cfg`.
 
