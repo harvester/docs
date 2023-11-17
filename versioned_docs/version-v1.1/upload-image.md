@@ -65,3 +65,46 @@ You can add labels to the image, which will help identify the OS type more accur
 If your image name or URL contains any valid information, the UI will automatically recognize the OS type and image category for you. If not, you can also manually specify those corresponding labels on the UI.
 
 ![](/img/v1.1/image-labels.png)
+
+### Known Issues
+
+If you remove an image before the upload process is completed, the related Longhorn backing image may become stuck in the deletion state.
+
+To determine if the issue has occurred, locate the backing image on the Dashboard screen of the [Longhorn UI](./troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards). If the deletion state has lasted for more than 5 minutes, perform the following steps:
+
+![](/img/v1.1/delete-image-stuck.png)
+
+1. Verify that the deletion state has lasted for more than 5 minutes.
+
+    ```
+    $ kubectl get backingimagedatasources.longhorn.io -A -o json | jq -r '.items[] | select(.metadata.deletionTimestamp != null) | .metadata.name + " deleted at: " + .metadata.deletionTimestamp '
+    ```
+
+    Example:
+    ![](/img/v1.1/check-image-stuck.png)
+
+2. Edit the affected backing image data source.
+
+    ```
+    $ kubectl -n longhorn-system edit backingimagedatasources.longhorn.io <backingimagedatasource name>
+    ```
+
+    Example:
+
+    ```
+    $ kubectl -n longhorn-system edit backingimagedatasources.longhorn.io default-ubuntu-bionic
+    ```
+
+3. Delete the `finalizers` metadata of the affected backing image data source.
+
+   Example:
+   ![](/img/v1.1/delete-stuck-image-finalizer.png)
+   You must delete `finalizers:` and `- longhorn.io`.
+
+4. The backing image should no longer be stuck in the deletion state.
+
+
+- Related issue:
+  - [[BUG] Backing Image deletion stuck if it's deleted during uploading process and bids is ready-for-transfer state](https://github.com/longhorn/longhorn/issues/6086)
+- Workaround:
+  - https://github.com/harvester/harvester/issues/4155#issuecomment-1738348596
