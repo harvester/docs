@@ -10,7 +10,7 @@ title: "Storage Network"
 
 Harvester uses Longhorn as its built-in storage system to provide block device volumes for VMs and Pods. If the user wishes to isolate Longhorn replication traffic from the Kubernetes cluster network (i.e. the management network) or other cluster-wide workloads. Users can allocate a dedicated storage network for Longhorn replication traffic to get better network bandwidth and performance.
 
-For more informations, please refer [Longhorn Storage Network](https://longhorn.io/docs/1.3.2/advanced-resources/deploy/storage-network/)
+For more information, please see [Longhorn Storage Network](https://longhorn.io/docs/1.3.2/advanced-resources/deploy/storage-network/)
 
 :::note
 
@@ -29,6 +29,7 @@ There are some prerequisites before configuring the Harvester Storage Network se
     - `kubectl get -A vmi`
 - All pods that are attached to Longhorn Volumes should be stopped.
     - Users could skip this step with the Harvester Storage Network setting. Harvester will stop Longhorn-related pods automatically.
+- All ongoing image uploads or downloads should be either completed or deleted.
 
 :::caution
 
@@ -52,8 +53,12 @@ kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/de
 	- Please refer Networking page for more details and configure `Cluster Network` and `VLAN Config` but not `Networks`.
 - IP range for Storage Network
 	- IP range should not conflict or overlap with Kubernetes cluster networks(`10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16` and `10.53.0.0/16` are reserved).
-	- IP range should be IPv4 CIDR format and 4 times the number of your cluster nodes. Longhorn will use 2 IPs per node, and the upgrade process will run two versions of Longhorn simultaneously. It will consume 4 IPs per node in the upgrade process.
-	- If your cluster has 250 nodes, the IP range should be larger than `/22`.
+	- IP range should be in IPv4 CIDR format and Longhorn pods use Storage Network as follows:
+    - `instance-manger-e` and `instance-manager-r` pods: These require 2 IPs per node. During an upgrade, two versions of these pods will exist (old and new), and the old version will be deleted once the upgrade is successful.
+    - `backing-image-ds` pods: These are employed to process on-the-fly uploads and downloads of backing image data sources. These pods will be removed once the image uploads or downloads are completed.
+    - `backing-image-manager` pods: 1 IP per disk, similar to the instance manager pods. Two versions of these will coexist during an upgrade, and the old ones will be removed after the upgrade is completed.
+    - The required number of IPs is calculated using a simple formula: `Required Number of IPs = Number of Nodes * 4 + Number of Disks * 2 + Number of Images to Download/Upload`
+	- For example, if your cluster has five nodes, each node has two disks, and ten images will be uploaded simultaneously, the IP range should be greater than or equal to `/26` (`5 * 4 + 5 * 2 * 2 + 10 = 50`).
 
 
 We will take the following configuration as an example to explain the details of the Storage Network
@@ -146,7 +151,7 @@ After applying Harvester's Storage Network setting, Harvester will stop all pods
 
 Harvester will also create a new NetworkAttachmentDefinition and update the Longhorn Storage Network setting.
 
-Once Longhorn setting is updated, Longhorn will restart all `instance-manager-r` and `instance-manager-e` to apply the new network configuration, and Harvester will restart pods.
+Once the Longhorn setting is updated, Longhorn will restart all `instance-manager-r`, `instance-manager-e`, and `backing-image-manager` pods to apply the new network configuration, and Harvester will restart the pods.
 
 :::note
 
@@ -189,8 +194,42 @@ status:
 
 #### Step 2
 
-- Check if all Longhorn `instance-manager-e` and `instance-manager-r` are ready and networks are correct.
-- Check if Annotations `k8s.v1.cni.cncf.io/network-status` has an interface named `lhnet1` and the IP address is in the IP range.
+Verify the readiness of all Longhorn `instance-manager-e`, `instance-manager-r`, and `backing-image-manager` pods, and confirm that their networks are correctly configured.
+
+Execute the following command to inspect a pod's details:
+
+```bash
+kubectl -n longhorn-system describe pod <pod-name>
+```
+
+If you encounter an event resembling the following one, the Storage Network might have run out of its available IPs:
+
+```bash
+Events:
+  Type     Reason                  Age                    From     Message
+  ----     ------                  ----                   ----     -------
+  ....
+
+  Warning  FailedCreatePodSandBox  2m58s                  kubelet  Failed to create pod sandbox: rpc error: code = Unknown desc = failed to setup network for
+ sandbox "04e9bc160c4f1da612e2bb52dadc86702817ac557e641a3b07b7c4a340c9fc48": plugin type="multus" name="multus-cni-network" failed (add): [longhorn-system/ba
+cking-image-ds-default-image-lxq7r/7d6995ee-60a6-4f67-b9ea-246a73a4df54:storagenetwork-sdfg8]: error adding container to network "storagenetwork-sdfg8": erro
+r at storage engine: Could not allocate IP in range: ip: 172.16.0.1 / - 172.16.0.6 / range: net.IPNet{IP:net.IP{0xac, 0x10, 0x0, 0x0}, Mask:net.IPMask{0xff,
+0xff, 0xff, 0xf8}}
+
+  ....
+```
+
+Please reconfigure the Storage Network with a sufficient IP range.
+
+:::note
+
+If the Storage Network has run out of IPs, you might encounter the same error when you upload/download images. Please delete the related images and reconfigure the Storage Network with a sufficient IP range.
+
+:::
+
+#### Step 3
+
+Check the `k8s.v1.cni.cncf.io/network-status` annotations and ensure that an interface named `lhnet1` exists, with an IP address within the designated IP range.
 
 Users could use the following command to show all Longhorn Instance Manager to verify.
 

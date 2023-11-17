@@ -1,4 +1,5 @@
 ---
+id: authentication
 sidebar_position: 5
 sidebar_label: 身份验证
 title: "身份验证"

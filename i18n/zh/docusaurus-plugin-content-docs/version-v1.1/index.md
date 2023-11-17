@@ -1,4 +1,5 @@
 ---
+id: overview
 sidebar_position: 1
 sidebar_label: Harvester 介绍
 slug: /
@@ -31,7 +32,7 @@ Harvester 架构由尖端的开源技术组成：
 ## Harvester 功能
 
 Harvester 是一个企业就绪、易于使用的基础设施平台，它使用本地、直接连接的存储而不是复杂的外部 SAN。它使用 Kubernetes API 作为跨容器和虚拟机工作负载的统一自动化语言。Harvester 的一些主要功能包括：
-- **易于上手**。由于 Harvester 作为可启动的设备镜像提供，因此你可以使用 [ISO 镜像](https://github.com/harvester/harvester/releases)将其直接安装在裸机服务器上，也可以使用 [iPXE](https://docs.harvesterhci.io/dev/install/pxe-boot-install) 脚本进行自动安装。
+- **易于上手**。由于 Harvester 作为可启动的设备镜像提供，因此你可以使用 [ISO 镜像](https://github.com/harvester/harvester/releases)将其直接安装在裸机服务器上，也可以使用 [iPXE](./install/pxe-boot-install.md) 脚本进行自动安装。
 - **虚拟机生命周期管理**。轻松创建、编辑、克隆和删除虚拟机，包括 SSH-Key 注入、cloud-init 配置、以及图形和串行端口控制台。
 - **VM 热迁移**。将虚拟机迁移到不同的主机或节点，没有停机时间。
 - **虚拟机备份、快照和恢复**。从 NFS、S3 服务器或 NAS 设备备份你的虚拟机，然后使用备份来恢复故障的虚拟机，或在其他集群上创建新的虚拟机。

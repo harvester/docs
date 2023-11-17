@@ -18,7 +18,6 @@ Description: 热迁移（也称为实时迁移，动态迁移）指的是在不�
 - 当虚拟机使用桥接口类型的管理网络时，不允许进行热迁移。
 - 虚拟机有 `CD-ROM` 类型的卷时不支持实时迁移。你需要在实时迁移之前弹出此类卷。
 - 虚拟机有 `Container Disk` 类型的卷时不支持实时迁移。你需要在实时迁移之前移除此类卷。
-- 要使用热迁移，由于[已知问题](https://github.com/harvester/harvester/issues/798)，需要 Harvester 集群中的 3 台或以上的主机。
 
 :::
 
@@ -30,7 +29,7 @@ Description: 热迁移（也称为实时迁移，动态迁移）指的是在不�
 
 ![](/img/v1.2/vm/migrate-action.png)
 
-为虚拟机配置[节点调度规则](https://docs.harvesterhci.io/v1.1/vm/create-windows-vm/#node-scheduling-tab)时，你必须确保要迁移的目标节点满足虚拟机的运行时要求。可以搜索和选择的节点是基于以下内容生成的：
+为虚拟机配置[节点调度规则](./create-windows-vm.md#节点调度选项卡)时，你必须确保要迁移的目标节点满足虚拟机的运行时要求。可以搜索和选择的节点是基于以下内容生成的：
 - 虚拟机调度规则。
 - 可能来自网络配置的节点规则。
 

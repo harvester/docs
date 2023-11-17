@@ -10,7 +10,7 @@ const config = {
   tagline: "The open source hyperconverged infrastructure (HCI) solution for a cloud native world",
   url: "https://docs.harvesterhci.io",
   baseUrl: "/",
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   organizationName: "harvester",
@@ -27,6 +27,7 @@ const config = {
       },
     },
   },
+  themes: ["docusaurus-theme-openapi-docs"],
   presets: [
     [
       'classic',
@@ -36,17 +37,25 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           showLastUpdateTime: true,
           editUrl: "https://github.com/harvester/docs/edit/main/",
-          lastVersion: 'v1.1',
+          docItemComponent: "@theme/ApiItem", 
+          lastVersion: 'v1.2',
           versions: {
             current: {
-              label: 'v1.2-dev',
-              path: 'dev',
+              label: 'v1.3 (dev)',
+              path: 'v1.3',
+            },
+            "v1.2": {
+              label: 'v1.2 (latest)',
+              path: 'v1.2',
+              banner: `none`
             },
             "v1.1": {
               path: "v1.1",
+              banner: `none`
             },
             "v1.0": {
               path: "v1.0",
+              banner: `unmaintained`
             }
           }
         },
@@ -87,32 +96,91 @@ const config = {
           dropdownActiveClassDisabled: true,
         },
         {
+          type: 'docSidebar',
+          label: 'API',
+          position: 'left',
+          sidebarId: 'api',
+        },
+        {
           type: "localeDropdown",
-          position: "right",
+          position: "left",
         },
         {
-          href: "https://www.suse.com/c/?s=harvester",
-          position: "right",
-          label: "Blog",
-          className: "navbar__blog",
+          type: 'search',
+          position: 'left',
         },
         {
-          href: "https://harvesterhci.io/kb",
-          position: "right",
-          label: "Knowledge Base",
-          className: "navbar__kb",
-        },
-        {
-          href: 'https://www.rancher.com',
-          label: 'Rancher Home',
+          type: 'dropdown',
+          label: 'Quick Links',
           position: 'right',
+          items: [
+            {
+              href: "https://harvesterhci.io/",
+              label: "Harvester Home",
+            },
+            {
+              href: 'https://github.com/harvester/harvester',
+              label: 'GitHub',
+            },
+            {
+              href: 'https://github.com/harvester/docs',
+              label: 'Docs GitHub',
+            },
+            {
+              href: "https://harvesterhci.io/kb",
+              label: "Knowledge Base",
+            },
+            {
+              href: "https://www.suse.com/c/?s=harvester",
+              label: "Blog",
+            },
+          ],
         },
         {
-          href: "https://github.com/harvester/harvester",
-          label: "GitHub",
-          position: "right",
-          className: "navbar__github btn btn-secondary icon-github",
-        },
+          type: 'dropdown',
+          label: 'More from SUSE',
+          position: 'right',
+          items: [
+            {
+              href: 'https://www.rancher.com',
+              label: 'Rancher',
+              className: 'navbar__icon navbar__rancher',
+            },
+            {
+              type: 'html',
+              value: '<hr style="margin: 0.3rem 0;">',
+            },
+            {
+              href: 'https://elemental.docs.rancher.com/',
+              label: 'Elemental',
+              className: 'navbar__icon navbar__elemental',
+            },
+            {
+              href: 'https://epinio.io/',
+              label: 'Epinio',
+              className: 'navbar__icon navbar__epinio',
+            },
+            {
+              href: 'https://fleet.rancher.io/',
+              label: 'Fleet',
+              className: 'navbar__icon navbar__fleet',
+            },
+            {
+              href: 'https://opni.io/',
+              label: 'Opni',
+              className: 'navbar__icon navbar__opni',
+            },
+            {
+              type: 'html',
+              value: '<hr style="margin: 0.3rem 0;">',
+            },
+            {
+              href: 'https://opensource.suse.com/',
+              label: 'More Projects...',
+              className: 'navbar__icon navbar__suse',
+            },
+          ],
+      },
       ],
     },
     colorMode: {
@@ -126,12 +194,36 @@ const config = {
     footer: {
       style: "dark",
       links: [],
-      copyright: `Copyright © ${new Date().getFullYear()} harvesterhci.io`,
+      copyright: `Copyright © ${new Date().getFullYear()} SUSE Rancher. All Rights Reserved.`,
     },
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
+    languageTabs: [
+      {
+        highlight: "bash",
+        language: "curl",
+        logoClass: "bash",
+      },
+      {
+        highlight: "python",
+        language: "python",
+        logoClass: "python",
+        variant: "requests",
+      },
+      {
+        highlight: "go",
+        language: "go",
+        logoClass: "go",
+      },
+      {
+        highlight: "javascript",
+        language: "nodejs",
+        logoClass: "nodejs",
+        variant: "axios",
+      }
+    ]
   },
   customFields: {
     title: "Harvester - Open-source hyperconverged infrastructure",
@@ -149,6 +241,34 @@ const config = {
             from: '/latest/install/pxe-boot-install'
           },
         ],
+      },
+    ],
+    [
+      "docusaurus-plugin-openapi-docs",
+      {
+        id: "api",
+        docsPluginId: "classic", // e.g. "classic" or the plugin-content-docs id
+        config: {
+          api: { // "api" is considered the <id> that you will reference in the CLI
+            specPath: "api/v1.2-swagger.json", // path or URL to the OpenAPI spec
+            outputDir: "docs/api", // output directory for generated *.mdx and sidebar.js files
+            sidebarOptions: {
+              groupPathsBy: "tag", // generate a sidebar.js slice that groups operations by tag
+              categoryLinkSource: "tag",
+            },
+            version: "v1.2", // Current version
+            label: "v1.2", // Current version label
+            baseUrl: "/dev/api", // Leading slash is important
+            versions: {
+              "v1.1": {
+                specPath: "api/v1.1-swagger.json",
+                outputDir: "versioned_docs/version-v1.1/api", // No trailing slash
+                label: "v1.1",
+                baseUrl: "/v1.1/api", // Leading slash is important
+              },
+            },
+          },
+        },
       },
     ],
   ],

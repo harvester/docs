@@ -1,4 +1,5 @@
 ---
+id: overview
 sidebar_position: 1
 sidebar_label: Harvester 介绍
 slug: /
@@ -24,14 +25,14 @@ Harvester 架构由尖端的开源技术组成：
 - **建立在 Kubernetes 之上**。[Kubernetes](https://kubernetes.io/) 已成为主流的基础架构语言，而 Harvester 是包含 Kubernetes 的 HCI 解决方案。
 - **使用 Kubevirt 进行虚拟化管理**。[Kubevirt](https://kubevirt.io/) 在 Kubernetes 之上使用 KVM 来提供虚拟化管理。
 - **使用 Longhorn 进行存储管理**。[Longhorn](https://longhorn.io/) 提供分布式块存储和分层。
-- **通过 Grafana 和 Prometheus 进行观察**。[Granfana](https://grafana.com/) 和 [Prometheus](https://prometheus.io/) 提供强大的监控和记录功能。作为可启动的设备镜像提供，
+- **通过 Grafana 和 Prometheus 进行观察**。[Grafana](https://grafana.com/) 和 [Prometheus](https://prometheus.io/) 提供强大的监控和记录功能。作为可启动的设备镜像提供，
 
 ![](/img/v1.2/architecture.svg)
 
 ## Harvester 功能
 
 Harvester 是一个企业就绪、易于使用的基础设施平台，它使用本地、直接连接的存储而不是复杂的外部 SAN。它使用 Kubernetes API 作为跨容器和虚拟机工作负载的统一自动化语言。Harvester 的一些主要功能包括：
-- **易于上手**。由于 Harvester 作为可启动的设备镜像提供，因此你可以使用 [ISO 镜像](https://github.com/harvester/harvester/releases)将其直接安装在裸机服务器上，也可以使用 [iPXE](https://docs.harvesterhci.io/dev/install/pxe-boot-install) 脚本进行自动安装。
+- **易于上手**。由于 Harvester 作为可启动的设备镜像提供，因此你可以使用 [ISO 镜像](https://github.com/harvester/harvester/releases)将其直接安装在裸机服务器上，也可以使用 [iPXE](./install/pxe-boot-install.md) 脚本进行自动安装。
 - **虚拟机生命周期管理**。轻松创建、编辑、克隆和删除虚拟机，包括 SSH-Key 注入、cloud-init 配置、以及图形和串行端口控制台。
 - **VM 热迁移**。将虚拟机迁移到不同的主机或节点，没有停机时间。
 - **虚拟机备份、快照和恢复**。从 NFS、S3 服务器或 NAS 设备备份你的虚拟机，然后使用备份来恢复故障的虚拟机，或在其他集群上创建新的虚拟机。

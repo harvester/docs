@@ -1,4 +1,5 @@
 ---
+id: overview
 sidebar_position: 1
 sidebar_label: Harvester Overview
 slug: /
@@ -18,16 +19,16 @@ Description: Harvester is an open source hyper-converged infrastructure (HCI) so
 The Harvester architecture consists of cutting-edge open-source technologies:
 - **Linux OS.** [Elemental for SLE-Micro 5.3](https://github.com/rancher/elemental-toolkit) is at the core of Harvester and is an immutable Linux distribution designed to remove as much OS maintenance as possible in a Kubernetes cluster. 
 - **Built on top of Kubernetes.** [Kubernetes](https://kubernetes.io/) has become the predominant infrastructure language across all form factors, and Harvester is an HCI solution with Kubernetes under the hood.
-- **Virtualization management with Kubevirt.** [Kubevirt](https://kubevirt.io/) provides virtualization management using KVM on top of Kubernetes.
+- **Virtualization management with KubeVirt.** [KubeVirt](https://kubevirt.io/) provides virtualization management using KVM on top of Kubernetes.
 - **Storage management with Longhorn.** [Longhorn](https://longhorn.io/) provides distributed block storage and tiering.
-- **Observability with Grafana and Prometheus.** [Granfana](https://grafana.com/) and [Prometheus](https://prometheus.io/) provide robust monitoring and logging.
+- **Observability with Grafana and Prometheus.** [Grafana](https://grafana.com/) and [Prometheus](https://prometheus.io/) provide robust monitoring and logging.
 
 ![](/img/v1.2/architecture.svg)
 
 ## Harvester Features
 
 Harvester is an enterprise-ready, easy-to-use infrastructure platform that leverages local, direct attached storage instead of complex external SANs. It utilizes Kubernetes API as a unified automation language across container and VM workloads. Some key features of Harvester include:
-- **Easy to get started.** Since Harvester ships as a bootable appliance image, you can install it directly on a bare metal server with the [ISO image](https://github.com/harvester/harvester/releases) or automatically install it using [iPXE](https://docs.harvesterhci.io/dev/install/pxe-boot-install) scripts.
+- **Easy to get started.** Since Harvester ships as a bootable appliance image, you can install it directly on a bare metal server with the [ISO image](https://github.com/harvester/harvester/releases) or automatically install it using [iPXE](./install/pxe-boot-install.md) scripts.
 - **VM lifecycle management.** Easily create, edit, clone, and delete VMs, including SSH-Key injection, cloud-init, and graphic and serial port console.
 - **VM live migration.** Move a VM to a different host or node with zero downtime.
 - **VM backup, snapshot, and restore.** Back up your VMs from NFS, S3 servers, or NAS devices. Use your backup to restore a failed VM or create a new VM on a different cluster.

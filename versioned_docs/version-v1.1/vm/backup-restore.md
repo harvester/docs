@@ -52,7 +52,9 @@ A backup target is an endpoint used to access a backup store in Harvester. A bac
 
 **Result:** The backup is created. You will receive a notification message, and you can also go to the `Backup & Snapshot > VM Backups` page to view all VM backups.
 
-The `ReadyToUse` status will be set to `true` once the backup is complete.
+The `State` will be set to `Ready` once the backup is complete.
+
+![vm-backup-results.png](/img/v1.1/vm/vm-backup-results.png)
 
 Users can either restore a new VM or replace an existing VM using this backup.
 
@@ -75,8 +77,8 @@ You can choose to either delete or retain the previous volumes. By default, all 
 
 1. Go to the `VM Backups` page.
 1. Click `Replace Existing`.
-
-The restore process can be viewed from the `Virtual Machines` page.
+1. You can view the restore process from the `Virtual Machines` page.
+![vm-restore-existing.png](/img/v1.1/vm/vm-restore-existing.png)
 
 ### Restore a new VM on another Harvester cluster
 
@@ -140,7 +142,9 @@ VM snapshots are created from the **Virtual Machines** page. The VM snapshot vol
 
 **Result:** The snapshot is created. You can also go to the `Backup & Snapshot > VM Snapshots` page to view all VM snapshots.
 
-The `ReadyToUse` status will be set to `true` once the snapshot is complete.
+The `State` will be set to `Ready` once the snapshot is complete.
+
+![vm-snapshot-results.png](/img/v1.1/vm/vm-snapshot-results.png)
 
 Users can either restore a new VM or replace an existing VM using this snapshot.
 
@@ -165,5 +169,5 @@ You can only choose to retain the previous volumes.
 
 1. Go to the `VM Snapshots` page.
 1. Click `Replace Existing`.
-
-The restore process can be viewed from the `Virtual Machines` page.
+1. You can view the restore process from the `Virtual Machines` page.
+![restore-vm-snapshot-existing.png](/img/v1.1/vm/restore-vm-snapshot-existing.png)

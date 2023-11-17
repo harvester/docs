@@ -102,13 +102,13 @@ StorageClass 动态创建的卷将具有在类的 `reclaimPolicy` 字段中指�
 
 #### 推荐做法
 
-首先，在 `Host` 页面添加你的 HDD，然后根据需要添加磁盘标签，例如 `HDD` 或 `ColdStorage`。有关如何添加其他磁盘和磁盘标签的更多信息，请参阅[多磁盘管理](https://docs.harvesterhci.io/v1.1/host/#multi-disk-management)。
+首先，在 `Host` 页面添加你的 HDD，然后根据需要添加磁盘标签，例如 `HDD` 或 `ColdStorage`。有关如何添加其他磁盘和磁盘标签的更多信息，请参阅[多磁盘管理](../host/host.md#多磁盘管理)。
 
 ![](/img/v1.2/storageclass/add_hdd_on_host_page.png)
 
 ![](/img/v1.2/storageclass/add_tags.png)
 
-然后，为 HDD 创建一个新的 `StorageClass`（使用上面的磁盘标签）。对于容量大但性能慢的硬盘，你可以减少副本数量来提高性能。有关详细信息，请参阅 [storageclass](https://docs.harvesterhci.io/v1.1/advanced/storageclass)。
+然后，为 HDD 创建一个新的 `StorageClass`（使用上面的磁盘标签）。对于容量大但性能慢的硬盘，你可以减少副本数量来提高性能。
 
 ![](/img/v1.2/storageclass/create_hdd_storageclass.png)
 

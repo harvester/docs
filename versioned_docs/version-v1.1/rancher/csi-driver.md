@@ -19,7 +19,9 @@ The Harvester Container Storage Interface (CSI) Driver provides a standard CSI i
 ### Prerequisites
 
 - The Kubernetes cluster is built on top of Harvester virtual machines.
-- The Harvester virtual machines run as guest Kubernetes nodes are in the same namespace.
+- The Harvester virtual machines that run the guest Kubernetes nodes are
+  all in the same Harvester namespace.
+- The Harvester virtual machine guests' hostnames match their corresponding Harvester virtual machine names. Guest cluster Harvester VMs can't have different hostnames than their Harvester VM names when using the Harvester CSI driver. We hope [to remove this limitation](https://github.com/harvester/harvester/issues/4396) in a future release of Harvester.
 
 :::note
 
@@ -125,6 +127,16 @@ Perform the following steps to deploy the Harvester CSI Driver manually:
 
     ![](/img/v1.1/rancher/donot_change_cloud_config_path.png)
 
+:::note
+
+If you prefer not to install the Harvester CSI driver using Rancher
+(**Apps** > **Charts**), you can use [Helm](https://helm.sh) instead.
+The Harvester CSI driver is [packaged as a Helm chart](
+https://github.com/harvester/charts/tree/master/charts/harvester-csi-driver).
+For more information, see https://charts.harvesterhci.io.
+
+:::
+
 By following the above steps, you should be able to see those CSI driver pods are up and running, and you can verify it by provisioning a new PVC using the default storageClass `harvester.`.
 
 ### Deploying with Harvester K3s Node Driver
@@ -221,7 +233,7 @@ Make sure the `serviceaccount name` and `namespace` are the same as your cloud p
 
 ### Deploying
 
-1. Create a new StorageClass that you would like to use in your guest k8s cluster. You can refer to the [StorageClasses](https://docs.harvesterhci.io/dev/advanced/storageclass) for more details.
+1. Create a new StorageClass that you would like to use in your guest k8s cluster. You can refer to the [StorageClasses](../advanced/storageclass.md) for more details.
 
     As show in the following figure, create a new StorageClass named **replica-2**.
 
