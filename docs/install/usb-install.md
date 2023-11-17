@@ -58,13 +58,13 @@ You can use the 'dd' command on Linux or other platforms to create a USB install
 
 ###
 
-Sometimes using a USB to mount the Harvester ISO disk directs you to GRUB2. In this case, it helps to know how to set the root partition and where to locate `grub.cfg`.
+Sometimes when using a USB to mount the Harvester ISO disk, it drops you in the GRUB2 shell while booting. In this case, it helps to know how to locate `grub.cfg`  and set the root partition to proceed with the installation.
 
-You can see the current root partition in the `grub.cfg`, once you've set the root to be within where the ISO lives on the USB. To view the `grub.cfg` from the ISO, run the command `cat /boot/grub2/grub.cfg`.
+To view the `grub.cfg` from the ISO, run the command `cat /boot/grub2/grub.cfg`. You can see the current root partition in the `grub.cfg`.
 
 To set a new root partition, run the command `set root=(hdN,msdos1)`, where N denotes N numbers of possible drives. N should be the drive your USB is mounted to.
 
-To launch into the GNU GRUB2 Boot Menu from the ISO, once the root has been set to where the ISO is located at the partition of `msdos1` - you can run `chainloader /boot/grub2/x86_64-efi/grub.efi` to get loaded into the GRUB2 Boot Menu for the Harvester Installer.
+Once the root partition has been set, where the ISO is located in the `msdos1` partition, run the command `chainloader /boot/grub2/x86_64-efi/grub.efi` to get dropped into the GRUB2 Boot Menu for the Harvester Installer.
 ### When booting from a USB installation flash drive, a `GRUB _` text is displayed, but nothing happens
 
 If you use the UEFI mode, try to boot from the UEFI boot partition on the USB device rather than the USB device itself. For example, select the `UEFI: USB disk 3.0 PMAP, Partition 1` to boot. The representation varies from system to system.
