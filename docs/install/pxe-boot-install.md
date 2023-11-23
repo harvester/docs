@@ -179,8 +179,24 @@ boot
 
 This assumes the iPXE script is stored in `/usr/share/nginx/html/harvester/ipxe-join`.
 
-
 ## DHCP Server Configuration
+
+:::note
+
+In the PXE installation scenario, you are required to add the *routers* option (`option routers`) when configuring the DHCP server. This option is used to add the default route on the Harvester host. Without the default route, the node will fail to start.
+
+In the ISO installation scenario, when the management network interface is in DHCP mode, you are also required to add the *routers* option (`option routers`) when configuring the DHCP server.
+
+For example:
+
+```
+	Harvester Host:~ # ip route
+	default via 192.168.122.1 dev mgmt-br proto dhcp
+```
+
+For more information, see [ISC DHCPv4 Option Configuration](http://www.ipamworldwide.com/ipam/isc-dhcpv4-options.html).
+
+:::
 
 The following is an example of how to configure the ISC DHCP server to offer iPXE scripts:
 
@@ -215,7 +231,6 @@ group {
 
   host node1 { hardware ethernet 52:54:00:6b:13:e2; }
 }
-
 
 group {
   # join group
