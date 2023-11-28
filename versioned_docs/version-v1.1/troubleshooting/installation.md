@@ -24,7 +24,7 @@ Users can press the key combination `CTRL + ALT + F2` to switch to another TTY a
 
 ## Receiving the message `"Loading images. This may take a few minutes..."`
 
-- Because the system doesn't have a default route, your installer may become "stuck" in this state. You can check your route status by executing the following command:
+Because the system doesn't have a default route, your installer may become "stuck" in this state. You can check your route status by executing the following command:
 
 ```shell
 $ ip route
@@ -32,7 +32,9 @@ default via 10.10.0.10 dev mgmt-br proto dhcp        <-- Does a default route ex
 10.10.0.0/24 dev mgmt-br proto kernel scope link src 10.10.0.15
 ```
 
-- Check that your DHCP server offers a default route option. Attaching content from `/run/cos/target/rke2.log` is helpful too.
+Check that your DHCP server offers a default route option. Attaching content from `/run/cos/target/rke2.log` is helpful too.
+
+For more information, see [DHCP Server Configuration](../install/pxe-boot-install.md#dhcp-server-configuration).
 
 ## Modifying cluster token on agent nodes
 

@@ -49,7 +49,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
 1. Choose the data disk you want to store VM data on. We recommend choosing a separate disk to store VM data.
 
-   ![iso-install-disk.png](/img/v1.1/install/iso-select-data-disk.png )
+   ![iso-select-data-disk.png](/img/v1.1/install/iso-select-data-disk.png)
 
 1. Configure the `HostName` of the node.
 
@@ -57,11 +57,19 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
 1. Configure network interface(s) for the management network. By default, Harvester creates a bonded NIC named `mgmt-bo`, and the IP address can be configured via DHCP or statically assigned.
 
+   ![iso-nic-config.png](/img/v1.1/install/iso-nic-config.png)
+
 	:::note
 	It is not possible to change the node IP throughout the lifecycle of a Harvester cluster. If using DHCP, you must ensure the DHCP server always offers the same IP for the same node. If the node IP is changed, the related node cannot join the cluster and might even break the cluster.
-	:::
 
-   ![iso-installed.png](/img/v1.1/install/iso-nic-config.png)
+	In addition, you are required to add the *routers* option (`option routers`) when configuring the DHCP server. This option is used to add the default route on the Harvester host. Without the default route, the node will fail to start.
+	For example:
+	```
+	Linux~ # ip route
+	default via 192.168.122.1 dev mgmt-br proto dhcp
+	```
+	For more information, see [DHCP Server Configuration](./pxe-boot-install.md#dhcp-server-configuration).
+	:::
 
 1. (Optional) Configure the `DNS Servers`. Use commas as a delimiter to add more DNS servers. Leave it blank to use the default DNS server.
 
