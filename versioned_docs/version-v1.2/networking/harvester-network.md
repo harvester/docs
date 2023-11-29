@@ -39,22 +39,39 @@ Since the management network is built-in and doesn't require extra operations, y
 
 The [Harvester network-controller](https://github.com/harvester/harvester-network-controller) leverages the [multus](https://github.com/k8snetworkplumbingwg/multus-cni) and [bridge](https://www.cni.dev/plugins/current/main/bridge/) CNI plugins to implement its customized L2 bridge VLAN network. It helps to connect your VMs to the host network interface and can be accessed from internal and external networks using the physical switch.
 
-### How to use VLAN network
+### Create a VM Network
 
-To create a new VLAN network, go to the **Networks > VM Networks** page and click the **Create** button.
+1. Go to **Networks** > **VM Networks**. 
 
-1. Specify the name, select the type `L2VlanNetwork`, input the VLAN ID and select the cluster network.
+1. Select **Create**. 
+
+1. Configure the following settings: 
+
+    - Namespace 
+    - Name 
+    - Description (optional) 
+
+1. On the **Basics** tab, configure the following settings: 
+
+    - Type: Select **L2VlanNetwork**.
+    - Vlan ID 
+    - Cluster Network 
 
     ![](/img/v1.2/networking/create-vlan-network.png)
 
-1. Configure a route to allow the hosts to connect to the VLAN network using IPv4 addresses. The CIDR and gateway of the VLAN network are mandatory parameters for the route configuration.  You can configure the route by choosing one of the following options:
-    - Auto(DHCP): the Harvester network controller will get the CIDR and gateway values from the DHCP server using the DHCP protocol. Optionally, you can specify the DHCP server address.
+1. On the Route tab, select an option and then specify the related IPv4 addresses.
+
+    - Auto(DHCP): The Harvester network controller retrieves the CIDR and gateway addresses from the DHCP server. You can specify the DHCP server address. 
 
     ![](/img/v1.2/networking/create-network-auto.png)
 
-    - Manual: You need to specify the CIDR and gateway values manually.
+    - Manual: Specify the CIDR and gateway addresses. 
 
     ![](/img/v1.2/networking/create-network-manual.png)
+
+    :::important
+    Harvester uses the information to verify that all nodes can access the VM network you are creating. If that is the case, the *Network connectivity* column on the **VM Networks** screen indicates that the network is active. Otherwise, the screen indicates that an error has occurred.
+    :::
 
 ### Create a VM with VLAN Network
 You can now create a new VM using the VLAN network configured above:
