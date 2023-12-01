@@ -73,9 +73,9 @@ Each IP pool will have a specific range, and you can specify the corresponding r
     selector:
       network: default/vlan1
       scope:
-        project: product
+      - project: product
         namespace: default
-        cluster: rke2
+        guestCluster: rke2
   ```
 
 - **Example 3:** If you have specified the IP pool `default-ip-pool` for the `default` namespace, you want to migrate the IP pool `default-ip-pool` to a different IP pool `default-ip-pool-2` with range `192.168.200.0/24`. It's not allowed to specify over one IP pool for the same scope, but you can give the IP pool `default-ip-pool-2` a higher priority than `default-ip-pool`. Refer to the following `YAML` config:
@@ -107,9 +107,9 @@ Each IP pool will have a specific range, and you can specify the corresponding r
     - subnet: 192.168.20.0/24
     selector:
       scope:
-        project: "*"
+      - project: "*"
         namespace: "*"
-        cluster: "*"
+        guestCluster: "*"
   ```
 
 ## Allocation policy
