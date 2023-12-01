@@ -35,6 +35,16 @@ Since the management network is built-in and doesn't require extra operations, y
 
 ![](/img/v1.1/networking/management-network.png)
 
+:::info important
+
+Network interfaces of VMs connected to the management network have an [MTU value of `1450`](https://docs.tigera.io/calico/latest/networking/configuring/mtu#determine-mtu-size). This is because a VXLAN overlay network typically has a slightly higher per-packet overhead.
+
+![](/img/v1.1/networking/management-network-mtu.png)
+
+If any of your workloads involve transmission of network traffic, you must specify the appropriate MTU value for the affected VM network interfaces and bridges.
+
+:::
+
 ## VLAN Network
 
 The [Harvester network-controller](https://github.com/harvester/harvester-network-controller) leverages the [multus](https://github.com/k8snetworkplumbingwg/multus-cni) and [bridge](https://www.cni.dev/plugins/current/main/bridge/) CNI plugins to implement its customized L2 bridge VLAN network. It helps to connect your VMs to the host network interface and can be accessed from internal and external networks using the physical switch.
