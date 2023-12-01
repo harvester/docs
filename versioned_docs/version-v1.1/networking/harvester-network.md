@@ -69,7 +69,7 @@ The [Harvester network-controller](https://github.com/harvester/harvester-networ
 
     ![](/img/v1.2/networking/create-network-manual.png)
 
-    :::important
+    :::info important
     Harvester uses the information to verify that all nodes can access the VM network you are creating. If that is the case, the *Network connectivity* column on the **VM Networks** screen indicates that the network is active. Otherwise, the screen indicates that an error has occurred.
     :::
 
