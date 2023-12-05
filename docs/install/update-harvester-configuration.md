@@ -47,6 +47,10 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
 
 ### Configuration persistence
 
+Beginning with v1.1.2, the persistent name of the cloud-init file is `/oem/90_custom.yaml`. Harvester now uses a newer version of Elemental, which creates the file during installation.
+
+When upgrading from an earlier version to `v1.1.2` or later, Harvester retains the old file name (`/oem/99_custom.yaml`) to avoid confusion. You can manually rename the file to `/oem/90_custom.yaml` if necessary.
+
 1. Backup the elemental `cloud-init` file `/oem/90_custom.yaml` as follows:
 
     ```
