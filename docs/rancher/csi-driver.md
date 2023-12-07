@@ -143,6 +143,39 @@ The only difference is in generating the `cloud-init` config where you need to s
 ./generate_addon_csi.sh <serviceaccount name> <namespace> k3s
 ```
 
+## Customize the Default StorageClass
+
+The Harvester CSI driver provides the interface for defining the default StorageClass. If the default StorageClass in unspecified, the Harvester CSI driver uses the default StorageClass of the host Harvester cluster.
+
+You can use the parameter `host-storage-class` to customize the default StorageClass.
+
+1. Create a StorageClass for the host Harvester cluster.
+
+    Example:
+    ![](/img/v1.3/rancher/create-new-sc.png)
+
+1. Deploy the CSI driver with the parameter `host-storage-class`.
+
+    Example:
+    ![](/img/v1.3/rancher/deploy-csi-driver-with-host-storage-class.png)
+
+1. Verify that the Harvester CSI driver is ready.
+
+    1. On the **PersistentVolumeClaims** screen, create a PVC. Select **Use a Storage Class to provision a new Persistent Volume** and specify the StorageClass you created.
+        
+        Example:
+        ![](/img/v1.3/rancher/create-volume-with-harvester-csi-driver.png)
+
+    2. Once the PVC is created, note the name of the provisioned volume and verify that the status is **Bound**.
+
+        Example:
+        ![](/img/v1.3/rancher/check-volume-and-pvc-name.png)
+
+    3. On the **Volumes** screen, verify that the volume was provisioned using the StorageClass that you created.
+    
+        Example:
+        ![](/img/v1.3/rancher/check-pvc-name-on-host-harvester-volume-page.png)
+
 ## Passthrough Custom StorageClass
 
 Beginning with Harvester CSI driver v0.1.15, it's possible to create a PersistentVolumeClaim (PVC) using a different Harvester StorageClass on the guest Kubernetes Cluster.
