@@ -9,7 +9,7 @@ Description: Support for deployment of single-node clusters
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/advanced/singlenodeclusters">
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/advanced/singlenodeclusters">
 </head>
 
 Beginning with v1.2.0, Harvester is supporting single-node clusters for implementations that require minimal initial deployment resources and/or that can tolerate lower resiliency. You can create single-node clusters using the standard installation methods ([ISO](https://docs.harvesterhci.io/v1.3/install/index), [USB](https://docs.harvesterhci.io/v1.3/install/usb-install), and [PXE boot](https://docs.harvesterhci.io/v1.3/install/pxe-boot-install)).
