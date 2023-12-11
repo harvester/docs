@@ -12,7 +12,11 @@ Description: Outline the Harvester installation requirements
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/install/requirements"/>
 </head>
 
-As an HCI solution on bare metal servers, there are minimum node hardware and network requirements to install and run Harvester.
+As an HCI solution on bare metal servers, there are minimum node hardware and network requirements for installing and running Harvester.
+
+A three-node cluster is required to fully realize the multi-node features of Harvester. The first node that is added to the cluster is by default the management node. When the cluster has three or more nodes, the two nodes added after the first are automatically promoted to management nodes to form a high availability (HA) cluster.
+
+Certain versions of Harvester support the deployment of [single-node clusters](https://docs.harvesterhci.io/v1.2/advanced/singlenodeclusters). Such clusters do not support high availability, multiple replicas, and live migration.
 
 ## Hardware Requirements
 
@@ -27,15 +31,9 @@ Harvester nodes have the following hardware requirements and recommendations for
 | Network Card     | 1 Gbps Ethernet minimum for testing; 10Gbps Ethernet required for production                                                                                                                       |
 | Network Switch   | Trunking of ports required for VLAN support                                                                                                                                                           |
 
-:::info
-
-A three-node cluster is required to realize the multi-node features of Harvester fully.
-
-- The first node always defaults to be a management node of the cluster.
-- When there are three or more nodes, the two other nodes added first are automatically promoted to management nodes to form a high availability (HA) cluster.
-- We recommend server-class hardware for the best results. Laptops and nested virtualization are not officially supported.
-- The `product_uuid` fetched from `/sys/class/dmi/id/product_uuid` in Linux must be unique in each node. Otherwise, features like VM live migration will be affected. For more information, refer to [#4025](https://github.com/harvester/harvester/issues/4025).
-
+:::info important
+- Use server-class hardware to achieve the best results. Laptops and nested virtualization are not supported.
+- Each node must have a unique `product_uuid` (fetched from `/sys/class/dmi/id/product_uuid`) to prevent errors from occurring during VM live migration and other operations. For more information, see [Issue #4025](https://github.com/harvester/harvester/issues/4025).
 :::
 
 ## Network Requirements
