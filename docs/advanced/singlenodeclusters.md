@@ -22,7 +22,7 @@ Single-node clusters support most Harvester features, including the creation of 
 
 ## Prerequisites/Requirements
 
-Before you begin deploying your single-node cluster, ensure that the following requirements are fulfilled/addressed.
+Before you begin deploying your single-node cluster, ensure that the following requirements are addressed.
 
 - Hardware: [Use server-class hardware](https://docs.harvesterhci.io/v1.3/install/requirements#hardware-requirements) with sufficient resources to run Harvester and a production workload. Laptops and nested virtualization are not supported.
 - Network: [Configure ports](https://docs.harvesterhci.io/v1.3/install/requirements#port-requirements-for-harvester-nodes) based on the type of traffic to be transmitted among VMs.
