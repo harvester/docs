@@ -18,7 +18,7 @@ Single-node clusters support most Harvester features, including the creation of 
 
 - No high availability: Errors and updates that require rebooting of the node cause downtime to running VMs.
 - No multi-replica support: Only one replica is created for each volume in Longhorn.
-- No live migration and zero-downtime support during upgrades
+- No live migration and zero-downtime support during upgrades.
 
 ## Prerequisites/Requirements
 
