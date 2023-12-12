@@ -20,7 +20,7 @@ Single-node clusters support most Harvester features, including the creation of 
 - No multi-replica support: Only one replica is created for each volume in Longhorn.
 - No live migration and zero-downtime support during upgrades.
 
-## Prerequisites/Requirements
+## Prerequisites
 
 Before you begin deploying your single-node cluster, ensure that the following requirements are addressed.
 
@@ -29,5 +29,5 @@ Before you begin deploying your single-node cluster, ensure that the following r
 - StorageClass: [Create a new default StorageClass](https://docs.harvesterhci.io/v1.3/advanced/storageclass#creating-a-storageclass) with the **Number of Replicas** parameter set to "1". This ensures that only one replica is created for each volume in Longhorn.
 
     :::info important
-    The default StorageClass "harvester-longhorn" has a replica count value of "3" for high availability. If you use this StorageClass to create volumes for your single-node cluster, Longhorn is unable to create the configured number of replicas. This results in volumes being marked as "Degraded" on the Longhorn UI.
+    The default StorageClass `harvester-longhorn` has a replica count value of `3` for high availability. If you use this StorageClass to create volumes for your single-node cluster, Longhorn is unable to create the configured number of replicas. This results in volumes being marked as "Degraded" on the Longhorn UI.
     :::
