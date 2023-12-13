@@ -9,7 +9,7 @@ keywords:
   - Rancher
   - rancher
   - Authentication
-Description: With ISO installation mode, user will be prompted to set the password for the default `admin` user on the first-time login.
+description: With ISO installation mode, user will be prompted to set the password for the default `admin` user on the first-time login.
 ---
 
 After installation, user will be prompted to set the password for the default `admin` user on the first-time login.

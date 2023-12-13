@@ -8,7 +8,7 @@ keywords:
   - Rancher
   - rancher
   - Clone VM
-Description: VM can be cloned with/without data. This function doesn't need to take a VM snapshot or set up a backup target first.
+description: VM can be cloned with/without data. This function doesn't need to take a VM snapshot or set up a backup target first.
 ---
 
 <head>

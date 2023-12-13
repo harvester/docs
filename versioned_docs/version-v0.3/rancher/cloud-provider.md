@@ -10,7 +10,7 @@ keywords:
   - RKE2
   - rke2
   - Harvester Cloud Provider
-Description: The Harvester cloud provider used by the guest cluster in Harvester provides a CSI interface and cloud controller manager (CCM) which implements a built-in load balancer.
+description: The Harvester cloud provider used by the guest cluster in Harvester provides a CSI interface and cloud controller manager (CCM) which implements a built-in load balancer.
 ---
 
 <head>

@@ -8,7 +8,7 @@ keywords:
   - Rancher
   - rancher
   - Create a VM
-Description: Create one or more virtual machines from the Virtual Machines page.
+description: Create one or more virtual machines from the Virtual Machines page.
 ---
 
 <head>

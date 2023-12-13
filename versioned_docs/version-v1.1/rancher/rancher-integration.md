@@ -9,7 +9,7 @@ keywords:
   - Rancher
   - rancher
   - Rancher Integration
-Description: Rancher is an open source multi-cluster management platform. Harvester has integrated Rancher by default starting with Rancher v2.6.1.
+description: Rancher is an open source multi-cluster management platform. Harvester has integrated Rancher by default starting with Rancher v2.6.1.
 ---
 
 <head>

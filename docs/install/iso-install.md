@@ -9,7 +9,7 @@ keywords:
   - Rancher
   - rancher
   - ISO Installation
-Description: To get the Harvester ISO, download it from the Github releases. During the installation you can either choose to form a new cluster, or join the node to an existing cluster.
+description: To get the Harvester ISO, download it from the Github releases. During the installation you can either choose to form a new cluster, or join the node to an existing cluster.
 ---
 
 <head>

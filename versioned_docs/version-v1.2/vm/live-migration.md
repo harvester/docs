@@ -8,7 +8,7 @@ keywords:
   - Rancher
   - rancher
   - Live Migration
-Description: Live migration means moving a virtual machine to a different host without downtime.
+description: Live migration means moving a virtual machine to a different host without downtime.
 ---
 
 <head>

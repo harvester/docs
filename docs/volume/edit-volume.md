@@ -4,7 +4,7 @@ sidebar_label: Edit a Volume
 title: "Edit a Volume"
 keywords:
 - Volume
-Description: Edit volume from the Volume page.
+description: Edit volume from the Volume page.
 ---
 
 <head>

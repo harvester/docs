@@ -5,7 +5,7 @@ title: "Update Harvester Configuration After Installation"
 keywords:
   - Harvester configuration
   - Configuration
-Description: How to update Harvester configuration after installation
+description: How to update Harvester configuration after installation
 ---
 
 <head>

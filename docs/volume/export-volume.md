@@ -4,7 +4,7 @@ sidebar_label: Export a Volume to Image
 title: "Export a Volume to Image"
 keywords:
 - Volume
-Description: Export volume to image from the Volume page.
+description: Export volume to image from the Volume page.
 ---
 
 <head>
