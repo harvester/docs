@@ -13,7 +13,7 @@ Description: Harvester provides two ways to upgrade. Users can either upgrade us
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/upgrade/automatic"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/upgrade/automatic"/>
 </head>
 
 ## Upgrade support matrix
@@ -23,11 +23,8 @@ The following table shows the upgrade path of all supported versions.
 | Upgrade from version | Supported new version(s) |
 |----------------------|--------------------------|
 | [v1.1.2/v1.2.0](./v1-2-0-to-v1-2-1.md) | v1.2.1              |
-| [v1.1.0, v1.1.1](./v1-1-to-v1-1-2.md) | v1.1.2        |
-| [v1.0.3](./v1-0-3-to-v1-1-1.md) | v1.1.0, v1.1.1 (v1.1.1 is recommended)        |
-| [v1.0.2](./previous-releases/v1-0-2-to-v1-0-3.md) | v1.0.3        |
-| [v1.0.1](./previous-releases/v1-0-1-to-v1-0-2.md) | v1.0.2        |
-| [v1.0.0](./previous-releases/v1-0-0-to-v1-0-1.md) | v1.0.1        |
+| [v1.1.1/v1.1.2](./v1-1-1-to-v1-1-3.md) | v1.1.3        |
+| [v1.1.0/v1.1.1](./v1-1-to-v1-1-2.md) | v1.1.2        |
 
 ## Rancher upgrade
 
@@ -47,7 +44,6 @@ For the Harvester & Rancher support matrix, please visit our website [here](http
 :::caution
 
 - Before you upgrade your Harvester cluster, we highly recommend:
-    - For upgrading from v1.0.3 to v1.1.0/v1.1.1, please shut down all your VMs first (Harvester GUI -> Virtual Machines -> Select VMs -> Actions -> Stop). Check the [link](./v1-0-3-to-v1-1-1.md#general-information) for more information.
     - Back up your VMs if needed.
 - Do not operate the cluster during an upgrade. For example, creating new VMs, uploading new images, etc.
 - Make sure your hardware meets the **preferred** [hardware requirements](../install/requirements.md#hardware-requirements). This is due to there will be intermediate resources consumed by an upgrade.
