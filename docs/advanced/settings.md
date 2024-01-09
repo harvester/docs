@@ -427,6 +427,14 @@ This setting lets you define the support bundle's default timeout duration in mi
 
 Default: `10`
 
+## `support-bundle-expiration`
+
+_Available as of v1.3.0_
+
+This setting lets you define the support bundle's default expiration duration in minutes. The minimum value is `30` minutes. It deletes unused support bundle if support bundle finished packaging, but no one downloads.
+
+Default: `30`
+
 ## `upgrade-checker-enabled`
 
 This setting allows you to automatically check if there's an upgrade available for Harvester.
