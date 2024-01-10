@@ -431,7 +431,7 @@ Default: `10`
 
 _Available as of v1.3.0_
 
-This setting lets you define the support bundle's default expiration duration in minutes. The minimum value is `30` minutes. It deletes unused support bundle if support bundle finished packaging, but no one downloads.
+This setting allows you to define the number of minutes Harvester waits before deleting a support bundle that has been packaged but not downloaded. The minimum value is `30`.
 
 Default: `30`
 
