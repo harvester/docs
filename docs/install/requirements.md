@@ -64,7 +64,6 @@ Harvester nodes require the following port connections or inbound rules. Typical
 | UDP       | 8472                     | Harvester management and compute nodes  | Canal CNI with VxLAN                  |
 | TCP       | 2112                     | Harvester management nodes              | Kube-vip                              |
 | TCP       | 6444                     | Harvester management and compute nodes  | RKE2 agent                            |
-| TCP       | 6060                     | Harvester management and compute nodes  | Node-disk-manager                     |
 | TCP       | 10246/10247/10248/10249 |  Harvester management and compute nodes |   Nginx worker process                  |
 | TCP       | 8181                     | Harvester management and compute nodes  | Nginx-ingress-controller              |
 | TCP       | 8444                     | Harvester management and compute nodes  | Nginx-ingress-controller              |
