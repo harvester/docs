@@ -72,7 +72,7 @@ Overall, this diagram provides a clear visualization of the relationship between
 
 ### Built-in Cluster Network
 
-Harvester provides a built-in cluster network called `mgmt`. It's different from the custom cluster network. The mgmt cluster network:
+Harvester provides a built-in cluster network called `mgmt`. It's different from the custom cluster network. The `mgmt` cluster network:
 
 - Cannot be deleted.
 - Does not need any network configuration.

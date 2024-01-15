@@ -104,7 +104,7 @@ If you have multiple management nodes with different hardware resources, please 
 
 :::caution
 
-When an increasing number of VMs get deployed on one node, the `prometheus-node-exporter` pod might get killed due to OOM(out of memory). In that case, you should increase the value of `limits.memory`.
+When an increasing number of VMs get deployed on one node, the `prometheus-node-exporter` pod might get killed due to OOM (out of memory). In that case, you should increase the value of `limits.memory`.
 
 :::
 

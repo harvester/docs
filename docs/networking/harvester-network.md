@@ -97,7 +97,7 @@ As is known, the traffic under a VLAN network has a VLAN ID tag and we can use t
 ### How to use untagged network
 The usage of untagged network is similar to [the VLAN network](./harvester-network.md#how-to-use-vlan-network).
 
-To create a new untagged network, go to the **Networks > Networks** page and click the **Create** button. You have to specify the name, select the type `Untagged Network` and choose the cluster network.
+To create a new untagged network, go to the **Networks > VM Networks** page and click the **Create** button. You have to specify the name, select the type `Untagged Network` and choose the cluster network.
 
 ![](/img/v1.2/networking/create-untagged-network.png)
 

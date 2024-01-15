@@ -52,8 +52,8 @@ A disk can be made accessible via the following types:
 
 | type   | description                                                                                    |
 |:--------|:-----------------------------------------------------------------------------------------------|
-| disk   | A disk disk will expose the volume as an ordinary disk to the VM.                              |
-| cd-rom | A cd-rom disk will expose the volume as a cd-rom drive to the VM. It is read-only by default.  |
+| disk   | This type will expose the volume as an ordinary disk to the VM.                           |
+| cd-rom | This type will expose the volume as a cd-rom drive to the VM. It is read-only by default. |
 
 A volume's [StorageClass](../advanced/storageclass.md) can be specified when adding a new empty volume; for other volumes (such as VM images), the `StorageClass` is defined during image creation.
 
