@@ -96,6 +96,20 @@ Default: none
 https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhrc7c_c-m-zxbbbck9.yaml
 ```
 
+:::note
+
+When you configure this setting, a new pod called `cattle-cluster-agent-*` is created in the namespace `cattle-system` for registration purposes. This pod uses the container image `rancher/rancher-agent:related-version`, which is not packed into the Harvester ISO and is instead determined by Rancher. The `related-version` is usually the same as the Rancher version. For example, when you register Harvester to Rancher v2.7.9, the image is `rancher/rancher-agent:v2.7.9`. For more information, see [Find the required assets for your Rancher version](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/other-installation-methods/air-gapped-helm-cli-install/publish-images#1-find-the-required-assets-for-your-rancher-version) in the Rancher documentation.
+
+Depending on your Harvester settings, the image is downloaded from either of the following locations:
+
+ - Harvester containerd-registry: You can configure a [private registry for the Harvester cluster](#containerd-registry).
+
+ - Docker Hub (docker.io): This is the default option when you do not configure a private registry in Rancher.
+
+Alternatively, you can obtain a copy of the image and manually upload it to all Harvester nodes.
+
+:::
+
 ## `containerd-registry`
 
 This setting allows you to configure a private registry for the Harvester cluster. The value will be set in `/etc/rancher/rke2/registries.yaml` of each node. You can read [RKE2 - Containerd Registry Configuration](https://docs.rke2.io/install/containerd_registry_configuration) for more information.
