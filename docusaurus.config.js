@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 const config = {
   title: "Harvester",
-  tagline: "The open source hyperconverged infrastructure (HCI) solution for a cloud native world",
+  tagline: "The open-source hyperconverged infrastructure solution for a cloud-native world",
   url: "https://docs.harvesterhci.io",
   baseUrl: "/",
   onBrokenLinks: "warn",
@@ -223,7 +223,7 @@ const config = {
   customFields: {
     title: "Harvester - Open-source hyperconverged infrastructure",
     description:
-      "An open-source hyperconverged infrastructure (HCI) software for a cloud-native world",
+      "An open-source hyperconverged infrastructure software for a cloud-native world",
   },
   plugins: [
     require.resolve('docusaurus-plugin-image-zoom'),
