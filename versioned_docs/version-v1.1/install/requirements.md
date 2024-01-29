@@ -5,7 +5,7 @@ sidebar_label: Hardware and Network Requirements
 title: "Hardware and Network Requirements"
 keywords:
 - Installation Requirements
-Description: Outline the Harvester installation requirements
+description: Outline the Harvester installation requirements
 ---
 
 <head>

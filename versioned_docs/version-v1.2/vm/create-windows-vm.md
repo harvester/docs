@@ -12,7 +12,7 @@ keywords:
   - Virtual Machine
   - virtual machine
   - Create a Windows VM
-Description: Create one or more Windows virtual machines from the Virtual Machines page.
+description: Create one or more Windows virtual machines from the Virtual Machines page.
 ---
 
 <head>

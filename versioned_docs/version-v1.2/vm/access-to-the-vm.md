@@ -8,7 +8,7 @@ keywords:
   - Rancher
   - rancher
   - Access to the VM
-Description: Once the VM is up and running, it can be accessed using either VNC or the serial console from the Harvester UI.
+description: Once the VM is up and running, it can be accessed using either VNC or the serial console from the Harvester UI.
 ---
 
 <head>

@@ -4,7 +4,7 @@ sidebar_label: Requirements
 title: "Requirements"
 keywords:
 - Installation Requirements
-Description: Outline the Harvester installation requirements
+description: Outline the Harvester installation requirements
 ---
 
 <head>

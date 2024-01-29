@@ -10,7 +10,7 @@ keywords:
   - Virtual Machine
   - virtual machine
   - Edit a VM
-Description: Edit Virtual Machines from the Harvester VM page.
+description: Edit Virtual Machines from the Harvester VM page.
 ---
 
 <head>

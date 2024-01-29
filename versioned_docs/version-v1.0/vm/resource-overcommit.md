@@ -7,7 +7,7 @@ keywords:
   - Overcommit
   - Overprovision
   - ballooning
-Description: Overcommit resources to a VM.
+description: Overcommit resources to a VM.
 ---
 
 <head>

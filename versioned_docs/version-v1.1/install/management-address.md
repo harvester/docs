@@ -4,7 +4,7 @@ sidebar_label: Management Address
 title: "Management Address"
 keywords:
   - VIP
-Description: The Harvester provides a virtual IP as the management address.
+description: The Harvester provides a virtual IP as the management address.
 ---
 
 <head>

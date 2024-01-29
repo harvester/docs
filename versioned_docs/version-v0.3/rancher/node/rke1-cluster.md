@@ -9,7 +9,7 @@ keywords:
   - rancher
   - Rancher Integration
   - RKE1
-Description: Users can now provision RKE1 Kubernetes clusters on top of the Harvester cluster in Rancher v2.6.1+ using the built-in Harvester node driver.
+description: Users can now provision RKE1 Kubernetes clusters on top of the Harvester cluster in Rancher v2.6.1+ using the built-in Harvester node driver.
 ---
 
 <head>

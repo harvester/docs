@@ -6,7 +6,7 @@ keywords:
   - Harvester
   - Hot-plug
   - Volume
-Description: Adding hot-plug volumes to a running VM.
+description: Adding hot-plug volumes to a running VM.
 ---
 
 <head>

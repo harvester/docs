@@ -8,7 +8,7 @@ keywords:
   - Rancher
   - rancher
   - Harvester Upgrade
-Description: Harvester provides two ways to upgrade. Users can either upgrade using the ISO image or upgrade through the UI.
+description: Harvester provides two ways to upgrade. Users can either upgrade using the ISO image or upgrade through the UI.
 ---
 
 :::note

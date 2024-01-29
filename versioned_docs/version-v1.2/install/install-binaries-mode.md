@@ -8,7 +8,7 @@ keywords:
   - Rancher
   - rancher
   - ISO Installation
-Description: To get the Harvester ISO, download it from the GitHub releases. During the installation, you can choose to install the binaries only.
+description: To get the Harvester ISO, download it from the GitHub releases. During the installation, you can choose to install the binaries only.
 ---
 
 <head>

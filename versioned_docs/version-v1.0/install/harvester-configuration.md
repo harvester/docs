@@ -8,7 +8,7 @@ keywords:
   - Rancher
   - rancher
   - Harvester Configuration
-Description: Harvester configuration file can be provided during manual or automatic installation to configure various settings.
+description: Harvester configuration file can be provided during manual or automatic installation to configure various settings.
 ---
 
 <head>

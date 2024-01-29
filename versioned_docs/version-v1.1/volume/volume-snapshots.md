@@ -5,7 +5,7 @@ title: "Volume Snapshots"
 keywords:
 - Volume Snapshot
 - Volume Snapshots
-Description: Take a snapshot for a volume from the Volume page.
+description: Take a snapshot for a volume from the Volume page.
 ---
 
 <head>
