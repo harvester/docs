@@ -29,15 +29,6 @@ navbar__icon {
     background-color: #7100D4;
   }
 
-  .navbar__epinio:before {
-    mask: url(/static/img/icon-epinio-mask.png) no-repeat 100% 100%;
-    mask-size: cover;
-    width: 35px;
-    height: 22px;
-    padding-bottom: 7px;
-    background-color: #004d93;
-  }
-
   .navbar__fleet:before {
     mask: url(/static/img/icon-fleet-mask.png) no-repeat 100% 100%;
     mask-size: cover;
@@ -47,13 +38,13 @@ navbar__icon {
     background-color: #00b056;
   }
 
-  .navbar__opni:before {
-    mask: url(/static/img/icon-opni-mask.png) no-repeat 100% 100%;
+  .navbar__rancherdesktop:before {
+    mask: url(/static/img/icon-rd-mask.png) no-repeat 100% 100%;
     mask-size: cover;
     width: 35px;
     height: 22px;
     padding-bottom: 7px;
-    background-color: #a453b9;
+    background-color: #0081BE;
   }
   
   .navbar__suse:before {

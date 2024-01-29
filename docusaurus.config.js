@@ -156,19 +156,14 @@ const config = {
               className: 'navbar__icon navbar__elemental',
             },
             {
-              href: 'https://epinio.io/',
-              label: 'Epinio',
-              className: 'navbar__icon navbar__epinio',
-            },
-            {
               href: 'https://fleet.rancher.io/',
               label: 'Fleet',
               className: 'navbar__icon navbar__fleet',
             },
             {
-              href: 'https://opni.io/',
-              label: 'Opni',
-              className: 'navbar__icon navbar__opni',
+              href: 'https://rancherdesktop.io/',
+              label: 'Rancher Desktop',
+              className: 'navbar__icon navbar__rancherdesktop',
             },
             {
               type: 'html',
