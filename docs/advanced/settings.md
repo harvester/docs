@@ -5,7 +5,7 @@ title: "Settings"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/advanced/settings"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/advanced/index"/>
 </head>
 
 This page contains a list of advanced settings which can be used in Harvester.
