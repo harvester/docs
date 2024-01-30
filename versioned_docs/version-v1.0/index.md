@@ -12,6 +12,10 @@ keywords:
 description: Harvester is an open source hyper-converged infrastructure (HCI) software built on Kubernetes. It is an open source alternative to vSphere and Nutanix.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2"/>
+</head>
+
 Harvester is an open-source [hyper-converged infrastructure](https://en.wikipedia.org/wiki/Hyper-converged_infrastructure) (HCI) software built on Kubernetes. It is an open alternative to using a proprietary HCI stack that incorporates the design and ethos of [Cloud Native Computing](https://en.wikipedia.org/wiki/Cloud_native_computing).
 
 ![harvester-ui](/img/v1.0/dashboard.png)
