@@ -97,6 +97,31 @@ The `volumeBindingMode` field controls when volume binding and dynamic provision
 
 ![](/img/v1.2/storageclass/customize_tab_vol_binding_mode.png)
 
+## Data Locality Settings
+
+You can use the `dataLocality` parameter when at least one replica of a Longhorn volume must be scheduled on the same node as the pod that uses the volume (whenever possible).
+
+Harvester officially supports data locality as of **v1.3.0**. This applies even to volumes created from [images](../upload-image.md). To configure data locality, create a new StorageClass on the Harvester UI (**Storage Classess** > **Create** > **Parameters**) and then add the following parameter:
+
+- **Key**: `dataLocality`
+- **Value**: `disabled` or `best-effort`
+
+![](/img/v1.3/storageclass/data-locality.png)
+
+### Data Locality Options
+
+Harvester currently supports the following options:
+
+- `disabled`: When applied, Longhorn may or may not schedule a replica on the same node as the pod that uses the volume. This is the default option. 
+
+- `best-effort`: When applied, Longhorn always attempts to schedule a replica on the same node as the pod that uses the volume. Longhorn does not stop the volume even when a local replica is unavailable because of an environmental limitation (for example, insufficient disk space or incompatible disk tags).
+
+:::note
+Longhorn provides a third option called `strict-local`, which forces Longhorn to keep only one replica on the same node as the pod that uses the volume. Harvester does not support this option because it can affect certain operations such as [VM Live Migration](../vm/live-migration.md)
+:::
+
+For more information, see [Data Locality](https://longhorn.io/docs/1.6.0/high-availability/data-locality/) in the Longhorn documentation.
+
 ## Appendix - Use Case
 
 ### HDD Scenario
