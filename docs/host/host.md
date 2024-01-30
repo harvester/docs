@@ -33,30 +33,102 @@ Cordoning a node marks it as unschedulable. This feature is useful for performin
 
 ## Deleting a Node
 
-Deleting a node is done in two phases:
-
-1. Delete the node from Harvester
-    - Go to the **Hosts** page
-    - On the node you want to modify, click **⋮ > Delete**
-
-2. Uninstall RKE2 from the node
-    - Login to the node as root
-    - Run `rke2-uninstall.sh` to delete the whole RKE2 service.
-
 :::caution
 
-You will lose all data of the control plane node after deleting the RKE2 service.
+To delete a node from a Harvester cluster, it's very important to consider where the remaining nodes in the cluster have enough computing resources and storage capacity to accept the workload from the deleting node. If the remaining nodes don't have enough resources, removing a node might cause some VMs to fail to start or some volumes to degrade. You can check the **Hosts** page for the current resource usage in the cluster, and check if the remaining nodes in the cluster can maintain enough replica counts for all volumes.
 
 :::
+
+### 1. Check if the node can be removed from the cluster
+
+If you plan to remove a control plane node, you must consider the availability of the remaining control plane nodes. We'll discuss this topic in two cases:
+
+- There are 3 control plane nodes in the cluster
+
+    You can remove a control plane node in this case, but you need to ensure there are worker nodes in the cluster. A worker node will be promoted to a control plane node after you delete the control plane node. Note, that the worker node to promote is selected randomly before Harvester v1.3.0. Starting from Harvester v1.3.0, Harvester supports specifying a role for a new-added node. If you prefer a node to be promoted into a control plane node, you can refer to the [document](https://fix.me) for how to do that.
+
+    If you don't have worker nodes in the cluster, you need to add a new node to the cluster as soon as possible. This ensures the number of control plane nodes is 3 and the control plane quorum can be formed if one of the control plane nodes fails.
+
+- There are only 2 control plane nodes in the cluster and there are no worker nodes
+
+    Removing a control plane node in this situation is not recommended because etcd data is not replicated in a single-node cluster and any failing node brings down the Harvester cluster because etcd loses quorum.
+
+
+### 2. Check volume status
+
+- Go to the `Volume` page of Longhorn GUI.
+- Check all volumes are healthy.
+
+### 3. Evict replicas from the deleting node
+
+- Go to the **Node** page of the Longhorn GUI.
+- Select the deleting node, click the icon on the right side, and click **Edit node and disks**.
+- Set **Node Scheduling** to `Disable` and **Evict Requested** to `True`. Click the **Save** button.
+- Wait until replicas on the node become 0. You can go to the **Node** page of the Longhorn GUI, and check the **Replicas** count of the deleting node becomes `0`.
+
+:::note
+
+Note if there are not enough nodes in the cluster to accept the replicas from the deleting node, the eviction can never finish. In this case, you need to consider taking the risk to let some volumes stay degraded until you add more nodes to the cluster.
+
+:::
+
+### 4. Deal with non-migratable VMs
+
+Some VMs can't live-migrate. You need to handle them accordingly:
+
+- VMs with PCI passthrough devices or vGPU devices
+    
+    A PCI device is bound to a node, you need to remove the PCI device from the VM, or delete the VM and recreate a new VM from a backup/snapshot.
+
+- VMs with a node selector or affinity rules that bind the VMs to the deleting node
+
+    You need to edit the VM and update the node selector or affinity rules.
+
+- VMs with a VLAN network that binds the VMs to the deleting node
+
+    You need to edit the VM and change the VLAN network.
+
+In general, for a non-migratable VM, it's recommended to have a backup first and you can restore the backup to new VMs in the future.
+
+### 5. Evict workloads out of the deleting node
+
+You can manually live-migrate VMs (see [Live Migration](../vm/live-migration.md)) on the deleting node to other nodes.
+
+If your cluster runs a Harvester version newer than `v1.1.2` (inclusive), you can also set the deleting node to maintenance mode (see [Node Maintenance](./host.md#node-maintenance)) to automatically live-migrate VMs and workload out of the node. You can confirm all workloads on the deleting node are evicted successfully by checking a node's state is set to `Maintenance`:
+
+![node-maintain-completed.png](/img/v1.3/host/node-maintain-completed.png)
+
+:::note
+
+If there are only two control plane nodes left in the cluster, Harvester doesn't allow setting a node to maintenance mode. You need to manually drain the node with the command:
+
+```
+kubectl drain <node_name> --force --ignore-daemonsets --delete-local-data --pod-selector='app!=csi-attacher,app!=csi-provisioner'
+```
+
+Please replace `node_name` with the deleting node. Again, removing a control plane node when there are only two control plane nodes left in the cluster is **not recommended**. Please use it at your own risk.
+
+:::
+
+### 6. Delete the node.
+
+- Go to the **Hosts** page
+- On the node you want to modify, click **⋮ > Delete**
+
+![delete.png](/img/v1.2/host/delete-node.png)
+
+### 7. Delete RKE2 services on the node
+
+- Login to the node as root
+- Run the `/opt/rke2/bin/rke2-uninstall.sh` script to delete the RKE2 service.
 
 :::note
 
 There's a [known issue](https://github.com/harvester/harvester/issues/1497) about node hard delete.
-Once resolved, the last step can be skipped.
+Once resolved, you can skip this step.
 
 :::
 
-![delete.png](/img/v1.2/host/delete-node.png)
 
 ## Role Management
 
