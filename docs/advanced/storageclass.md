@@ -5,7 +5,7 @@ title: "StorageClass"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/advanced/storageclass"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/advanced/storageclass"/>
 </head>
 
 A StorageClass allows administrators to describe the **classes** of storage they offer. Different Longhorn StorageClasses might map to replica policies, or to node schedule policies, or disk schedule policies determined by the cluster administrators. This concept is sometimes called **profiles** in other storage systems.

@@ -5,7 +5,7 @@ title: "Addons"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/advanced/addons"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/advanced/addons"/>
 </head>
 
 _Available as of v1.1.0_
