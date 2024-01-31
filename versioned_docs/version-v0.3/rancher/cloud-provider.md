@@ -14,7 +14,7 @@ description: The Harvester cloud provider used by the guest cluster in Harvester
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/rancher/cloud-provider"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/rancher/cloud-provider"/>
 </head>
 
 _Available as of v0.3.0_

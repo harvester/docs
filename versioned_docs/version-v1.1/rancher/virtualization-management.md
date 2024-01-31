@@ -8,7 +8,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/rancher/virtualization-management"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/rancher/virtualization-management"/>
 </head>
 
 For Harvester v0.3.0 and above, virtualization management with the multi-cluster management feature will be supported using Rancher v2.6 and above.
