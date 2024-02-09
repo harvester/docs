@@ -90,13 +90,16 @@ The following steps are a workaround. Harvester will inform the community once a
 - Reboot for changes to take effect.
 ## How to change the default GRUB boot menu entry
 
-To change the default entry, first check the `--id` attribute of a menu entry, as in the following example:
+To change the default entry, first check the `--id` attribute of a menu entry, as in the following example. Note that grub menu entries are split across two files, with the regular default, fallback and recovery entries in `/run/initramfs/cos-state/grub2/grub.cfg`, plus an additional debug entry in `/run/initramfs/cos-state/grubcustom`:
+
 
 ```
-# cat /run/initramfs/cos-state/grub2/grub.cfg
+# cat \
+    /run/initramfs/cos-state/grub2/grub.cfg \
+    /run/initramfs/cos-state/grubcustom
 
 <...>
-menuentry "${display_name} (debug)" --id cos-debug {
+menuentry "${display_name} (debug)" --id debug {
   search --no-floppy --set=root --label COS_STATE
   set img=/cOS/active.img
   set label=COS_ACTIVE
@@ -108,11 +111,15 @@ menuentry "${display_name} (debug)" --id cos-debug {
 }
 ```
 
-The id of the above entry is `cos-debug`. We can then set the default entry by:
+The id of the above entry is `debug`. We can then set the default entry by running:
 
 ```
-# grub2-editenv /oem/grubenv set saved_entry=cos-debug
+# mount -o remount,rw /run/initramfs/cos-state
+# grub2-editenv /run/initramfs/cos-state/grub_oem_env set saved_entry=debug
 ```
+
+This change can be reverted later if necessary by running `grub2-editenv /run/initramfs/cos-state/grub_oem_env unset saved_entry`
+
 ## How to debug a system crash or hang
 
 ### Collect crash log
