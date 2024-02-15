@@ -123,7 +123,7 @@ You can configure the default entry by running the following commands:
 # grub2-editenv /run/initramfs/cos-state/grub_oem_env set saved_entry=debug
 ```
 
-This change can be reverted later if necessary by running `grub2-editenv /run/initramfs/cos-state/grub_oem_env unset saved_entry`
+If necessary, you can undo the change by running the command `grub2-editenv /run/initramfs/cos-state/grub_oem_env unset saved_entry`.  
 
 ## How to debug a system crash or hang
 
