@@ -90,7 +90,12 @@ The following steps are a workaround. Harvester will inform the community once a
 - Reboot for changes to take effect.
 ## How to change the default GRUB boot menu entry
 
-To change the default entry, first check the `--id` attribute of a menu entry, as in the following example. Note that grub menu entries are split across two files, with the regular default, fallback and recovery entries in `/run/initramfs/cos-state/grub2/grub.cfg`, plus an additional debug entry in `/run/initramfs/cos-state/grubcustom`:
+To change the default entry, first check the `--id` attribute of a menu entry. Grub menu entries are located in the following files:  
+
+- `/run/initramfs/cos-state/grub2/grub.cfg`: Contains the default, fallback, and recovery entries   
+- `/run/initramfs/cos-state/grubcustom`: Contains the debug entry  
+
+In the following example, the id of the entry is `debug`.  
 
 
 ```
