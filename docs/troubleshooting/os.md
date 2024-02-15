@@ -116,7 +116,7 @@ menuentry "${display_name} (debug)" --id debug {
 }
 ```
 
-The id of the above entry is `debug`. We can then set the default entry by running:
+You can configure the default entry by running the following commands:  
 
 ```
 # mount -o remount,rw /run/initramfs/cos-state
