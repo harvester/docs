@@ -187,3 +187,132 @@ The `Volume` is attached to the new POD.
 
 To now, the `Volume` is expanded to the new size and the POD is using it smoothly.
 
+## Fail to Enable `rancher-monitoring` Addon
+
+You may encounter this when you install the Harvester v1.3.0 or higher version cluster with the minimal 250 GB disk per [hardware requirements](../install/requirements.md#hardware-requirements).
+
+### Reproduce Steps
+
+1. Install the Harvester v1.3.0 cluster.
+
+1. Enable the `rancher-monitoring` [addon](../advanced/addons.md), you will observe:
+
+- The POD `prometheus-rancher-monitoring-prometheus-0` in `cattle-monitoring-system` namespace fails to start due to PVC attached failed.
+
+    ```
+    $ kubectl get pods -n cattle-monitoring-system
+    NAME                                                     READY   STATUS      RESTARTS   AGE
+    alertmanager-rancher-monitoring-alertmanager-0           2/2     Running     0          3m22s
+    helm-install-rancher-monitoring-4b5mx                    0/1     Completed   0          3m41s
+    prometheus-rancher-monitoring-prometheus-0               0/3     Init:0/1    0          3m21s // stuck in this status
+    rancher-monitoring-grafana-d6f466988-hgpkb               4/4     Running     0          3m26s
+    rancher-monitoring-kube-state-metrics-7659b76cc4-66sr7   1/1     Running     0          3m26s
+    rancher-monitoring-operator-595476bc84-7hdxj             1/1     Running     0          3m25s
+    rancher-monitoring-prometheus-adapter-55dc9ccd5d-pcrpk   1/1     Running     0          3m26s
+    rancher-monitoring-prometheus-node-exporter-pbzv4        1/1     Running     0          3m26s
+
+    $ kubectl describe pod -n cattle-monitoring-system prometheus-rancher-monitoring-prometheus-0
+    Name:             prometheus-rancher-monitoring-prometheus-0
+    Namespace:        cattle-monitoring-system
+    Priority:         0
+    Service Account:  rancher-monitoring-prometheus
+    ...
+    Events:
+      Type     Reason              Age                    From                     Message
+      ----     ------              ----                   ----                     -------
+      Warning  FailedScheduling    3m48s (x3 over 4m15s)  default-scheduler        0/1 nodes are available: pod has unbound immediate PersistentVolumeClaims. preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling..
+      Normal   Scheduled           3m44s                  default-scheduler        Successfully assigned cattle-monitoring-system/prometheus-rancher-monitoring-prometheus-0 to harv41
+      Warning  FailedMount         101s                   kubelet                  Unable to attach or mount volumes: unmounted volumes=[prometheus-rancher-monitoring-prometheus-db], unattached volumes=[prometheus-rancher-monitoring-prometheus-db], failed to process volumes=[]: timed out waiting for the condition
+      Warning  FailedAttachVolume  90s (x9 over 3m42s)    attachdetach-controller  AttachVolume.Attach failed for volume "pvc-bbe8760d-926c-484a-851c-b8ec29ae05c0" : rpc error: code = Aborted desc = volume pvc-bbe8760d-926c-484a-851c-b8ec29ae05c0 is not ready for workloads
+
+    $ kubectl get pvc -A
+    NAMESPACE                  NAME                                                                                             STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS           AGE
+    cattle-monitoring-system   prometheus-rancher-monitoring-prometheus-db-prometheus-rancher-monitoring-prometheus-0           Bound    pvc-bbe8760d-926c-484a-851c-b8ec29ae05c0   50Gi       RWO            harvester-longhorn     7m12s
+
+    $ kubectl get volume -A
+    NAMESPACE         NAME                                       DATA ENGINE   STATE      ROBUSTNESS   SCHEDULED   SIZE          NODE     AGE
+    longhorn-system   pvc-bbe8760d-926c-484a-851c-b8ec29ae05c0   v1            detached   unknown                  53687091200            6m55s
+
+    ```
+
+- The Longhorn manager is unable to schedule the replica.
+
+    ```
+    $ kubectl logs -n longhorn-system longhorn-manager-bf65b | grep "pvc-bbe8760d-926c-484a-851c-b8ec29ae05c0"
+
+    time="2024-02-19T10:12:56Z" level=error msg="There's no available disk for replica pvc-bbe8760d-926c-484a-851c-b8ec29ae05c0-r-dcb129fd, size 53687091200" func="schedule
+    r.(*ReplicaScheduler).ScheduleReplica" file="replica_scheduler.go:95"
+    time="2024-02-19T10:12:56Z" level=warning msg="Failed to schedule replica" func="controller.(*VolumeController).reconcileVolumeCondition" file="volume_controller.go:169
+    4" accessMode=rwo controller=longhorn-volume frontend=blockdev migratable=false node=harv41 owner=harv41 replica=pvc-bbe8760d-926c-484a-851c-b8ec29ae05c0-r-dcb129fd sta
+    te= volume=pvc-bbe8760d-926c-484a-851c-b8ec29ae05c0
+    ...
+    ```
+
+### Workaround
+
+1. Disable the `rancher-monitoring` addon if you have alreay enabled it.
+
+    All pods in `cattle-monitoring-system` are deleted but the PVCs are retained. For more information, see [Addons].
+
+    ```
+    $ kubectl get pods -n cattle-monitoring-system
+    No resources found in cattle-monitoring-system namespace.
+
+    $ kubectl get pvc -n cattle-monitoring-system
+    NAME                                                                                             STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS         AGE
+    alertmanager-rancher-monitoring-alertmanager-db-alertmanager-rancher-monitoring-alertmanager-0   Bound    pvc-cea6316e-f74f-4771-870b-49edb5442819   5Gi        RWO            harvester-longhorn   14m
+    prometheus-rancher-monitoring-prometheus-db-prometheus-rancher-monitoring-prometheus-0           Bound    pvc-bbe8760d-926c-484a-851c-b8ec29ae05c0   50Gi       RWO            harvester-longhorn   14m
+    ```
+
+1. Delete the PVC named `prometheus`, but retain the PVC named `alertmanager`.
+
+    ```
+    $ kubectl delete pvc -n cattle-monitoring-system prometheus-rancher-monitoring-prometheus-db-prometheus-rancher-monitoring-prometheus-0
+    persistentvolumeclaim "prometheus-rancher-monitoring-prometheus-db-prometheus-rancher-monitoring-prometheus-0" deleted
+
+    $ kubectl get pvc -n cattle-monitoring-system
+    NAME                                                                                             STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS         AGE
+    alertmanager-rancher-monitoring-alertmanager-db-alertmanager-rancher-monitoring-alertmanager-0   Bound    pvc-cea6316e-f74f-4771-870b-49edb5442819   5Gi        RWO            harvester-longhorn   16m
+    ```
+
+1. On the **Addons** screen of the Harvester UI, select **⋮** (menu icon) and then select **Edit YAML**.
+
+    ![](/img/v1.3/troubleshooting/edit-rancher-monitoring.png)
+
+1. As indicated below, change the two occurrences of the number `50` to `30` under prometheusSpec, and then save. The `prometheus` feature will use a 30GiB disk to store data.
+
+    ![](/img/v1.3/troubleshooting/edit-rancher-monitoring-yaml.png)
+
+    Alternatively, you can use `kubectl` to edit the object.
+
+    `kubectl edit addons.harvesterhci.io -n cattle-monitoring-system rancher-monitoring`
+
+    ```
+            retentionSize: 50GiB // Change 50 to 30
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  accessModes:
+                    - ReadWriteOnce
+                  resources:
+                    requests:
+                      storage: 50Gi // Change 50 to 30
+                  storageClassName: harvester-longhorn
+    ```
+
+1. Enable the `rancher-monitoring` addon and wait for a few minutes..
+
+1. All pods are successfully deployed, and the `rancher-monitoring` feature is available.
+
+    ```
+    $ kubectl get pods -n cattle-monitoring-system
+    NAME                                                     READY   STATUS      RESTARTS   AGE
+    alertmanager-rancher-monitoring-alertmanager-0           2/2     Running     0          3m52s
+    helm-install-rancher-monitoring-s55tq                    0/1     Completed   0          4m17s
+    prometheus-rancher-monitoring-prometheus-0               3/3     Running     0          3m51s
+    rancher-monitoring-grafana-d6f466988-hkv6f               4/4     Running     0          3m55s
+    rancher-monitoring-kube-state-metrics-7659b76cc4-ght8x   1/1     Running     0          3m55s
+    rancher-monitoring-operator-595476bc84-r96bp             1/1     Running     0          3m55s
+    rancher-monitoring-prometheus-adapter-55dc9ccd5d-vtssc   1/1     Running     0          3m55s
+    rancher-monitoring-prometheus-node-exporter-lgb88        1/1     Running     0          3m55s
+    ```
