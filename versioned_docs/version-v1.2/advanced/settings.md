@@ -437,7 +437,7 @@ Default: none
 
 _Available as of v1.2.0_
 
-This setting lets you define the support bundle's default timeout duration in minutes. Use `0` to disable the timeout feature.
+This setting allows you to define the number of minutes Harvester allows for the completion of the support bundle generation process. The process is considered to have failed when the data collection and file packing tasks are not completed within the configured number of minutes. Harvester will not continue or retry support bundle generation processes that have timed out. When the value is "0", the timeout feature is disabled.
 
 Default: `10`
 
