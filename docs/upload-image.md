@@ -29,6 +29,7 @@ The image name will be auto-filled using the URL address's filename. You can cus
 
 ![](/img/v1.2/upload-image.png)
 
+
 ### Upload Images via Local File
 
 Currently, qcow2, raw, and ISO images are supported.
@@ -40,6 +41,32 @@ Currently, qcow2, raw, and ISO images are supported.
 :::
 
 ![](/img/v1.2/upload-image-local.png)
+
+
+#### HTTP 413 Error in Rancher Multi-Cluster Management
+
+You can upload images from the [**Multi-Cluster Management**](./rancher/virtualization-management.md#importing-harvester-cluster) screen on the **Rancher UI**. When the status of an image is *Uploading* but the progress indicator displays *0%* for an extended period, check the HTTP response status code. *413* indicates that the size of the request body exceeds the limit.
+
+![](/img/v1.3/img-413-code.png)
+
+The maximum request body size should be specific to the cluster that is hosting Rancher (for example, RKE2 clusters have a default limit of 1 MB but no such limit exists in K3s clusters).
+
+The current workaround is to upload images from the **Harvester UI**. If you choose to upload images from the Rancher UI, you may need to configure related settings on the ingress server (for example, [`proxy-body-size`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#custom-max-body-size) in NGINX).
+
+If Rancher is deployed on an RKE2 cluster, perform the following steps:
+
+1. Edit the Rancher ingress.
+
+    ```
+    $ kubectl -n cattle-system edit ingress rancher
+    ```
+
+2. Specify a value for `nginx.ingress.kubernetes.io/proxy-body-size`.
+
+  Example:
+  ![](/img/v1.3/img-ingress-client-body.png)
+
+3. Delete the stuck image, and then restart the upload process.
 
 
 ### Create Images via Volumes
