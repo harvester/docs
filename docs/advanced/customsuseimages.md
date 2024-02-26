@@ -42,7 +42,7 @@ OBS automatically builds the image. By default, the interface shows the **Overvi
 
 1. Go to the **Software** tab.
 
-1. Select the image profiles that you want OBS to build.
+2. Select the image profiles that you want OBS to build.
 
   :::info
   For most cases, you can use the *Minimal VM Cloud* qcow2 images because these include the cloud-init tool necessary for automatic VM configuration. Other image variants require you to log onto the VM console and then perform initial configuration.
@@ -50,7 +50,7 @@ OBS automatically builds the image. By default, the interface shows the **Overvi
 
 ![](/img/v1.3/advanced/custom-vm-03-image-software.png)
 
-1. (Optional) Add and remove packages.
+3. (Optional) Add and remove packages.
 
 ![](/img/v1.3/advanced/custom-vm-04-image-software-packages.png)
 
