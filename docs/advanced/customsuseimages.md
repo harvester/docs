@@ -22,7 +22,7 @@ The *Minimal VM Cloud* images were named *Minimal VM OpenStack Cloud* in release
 
 ## Using the openSUSE Build Service (OBS)
 
-You can create custom images based on what SUSE provides using OBS [image templates](https://build.opensuse.org/image_templates), which are pre-configured Kiwi image configurations. For example, if you want use other packages with SLE 15 SPS, you can create an image using the *SLE 15 SP5 Minimal* template. OBS provides an interface for adding packages and automatically builds the image, which you can download and then upload to Harvester. For more information, see the [OBS User Guide](https://openbuildservice.org/help/manuals/obs-user-guide/).
+You can create custom images based on what SUSE provides using OBS [image templates](https://build.opensuse.org/image_templates), which are pre-configured Kiwi image configurations. For example, if you want use other packages with SLE 15 SP5, you can create an image using the *SLE 15 SP5 Minimal* template. OBS provides an interface for adding packages and automatically builds the image, which you can download and then upload to Harvester. For more information, see the [OBS User Guide](https://openbuildservice.org/help/manuals/obs-user-guide/).
 
 ### 1. Create a custom image based on an existing template.
 
