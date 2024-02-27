@@ -32,29 +32,29 @@ You can create custom images based on what SUSE provides using OBS [image templa
 
 1. Specify a name for the image, and then select **Create appliance**.
 
-![](/img/v1.3/advanced/custom-vm-01-select-template.png)
+   ![](/img/v1.3/advanced/custom-vm-01-select-template.png)
 
-OBS automatically builds the image. By default, the interface shows the **Overview** tab, which contains information such as the number of included packages and the build status.
+   OBS automatically builds the image. By default, the interface shows the **Overview** tab, which contains information such as the number of included packages and the build status.
 
-![](/img/v1.3/advanced/custom-vm-02-image-overview.png)
+   ![](/img/v1.3/advanced/custom-vm-02-image-overview.png)
 
 ### 2. Select image profiles and add packages.
 
 1. Go to the **Software** tab.
 
-2. Select the image profiles that you want OBS to build.
+1. Select the image profiles that you want OBS to build.
 
   :::info
   For most cases, you can use the *Minimal VM Cloud* qcow2 images because these include the cloud-init tool necessary for automatic VM configuration. Other image variants require you to log onto the VM console and then perform initial configuration.
   :::
 
-![](/img/v1.3/advanced/custom-vm-03-image-software.png)
+   ![](/img/v1.3/advanced/custom-vm-03-image-software.png)
 
-3. (Optional) Add and remove packages.
+1. (Optional) Add and remove packages.
 
-![](/img/v1.3/advanced/custom-vm-04-image-software-packages.png)
+   ![](/img/v1.3/advanced/custom-vm-04-image-software-packages.png)
 
-![](/img/v1.3/advanced/custom-vm-05-image-software-add-package.png)
+   ![](/img/v1.3/advanced/custom-vm-05-image-software-add-package.png)
 
 ### 3. (Optional) Switch to *View Package* mode.
 
