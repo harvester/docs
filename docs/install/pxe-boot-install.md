@@ -34,10 +34,10 @@ Nodes need to have at least **8 GiB** of RAM because the installer loads the ful
 
 :::info
 
-During automated installation, Harvester will perform the same initial checks as when booting via ISO, to ensure the system meets minimum hardware requirements for production use (i.e. bare metal with 16 CPU cores, 64GiB RAM and 10Gbps ethernet). If any of these checks fail, installation will abort and warnings will be printed to the system console and saved to `/var/log/console.log` in the installation environment.
+:::info
+The installer automatically checks if the hardware meets the [minimum requirements](https://docs.harvesterhci.io/v1.3/install/requirements/#hardware-requirements) for production use. If any of the checks fail, installation is stopped, and warnings are printed to the system console and saved to `/var/log/console.log` in the installation environment.
 
-If you need to override this behavior, set the `harvester.install.skipchecks=true` kernel parameter. In this case, any warning messages will still be logged to `/var/log/console.log`, but the installation will proceed regardless of whether production hardware requirements are met.
-
+To override this behavior, set the kernel parameter `harvester.install.skipchecks=true`. When set to `true`, warning messages are still saved to `/var/log/console.log`, but the installation proceeds even if hardware requirements for production use are not met.
 :::
 
 ## Preparing HTTP Servers
