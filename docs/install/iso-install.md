@@ -32,7 +32,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
    ![iso-install.png](/img/v1.2/install/iso-install.png)
 
-1. Checks will be run automatically to ensure the system meets minimum hardware requirements. Warning messages will be displayed if any requirements are not met. If all requirements are met, this screen will be skipped.
+The installer automatically checks the hardware and displays warning messages if the minimum requirements are not met. The **Hardware Checks** screen is not displayed if all checks are passed.
 
    ![hardware-checks.png](/img/v1.3/install/hardware-checks.png)
 
