@@ -26,13 +26,7 @@ To see sample iPXE scripts, please visit [Harvester iPXE Examples](https://githu
 
 ## Prerequisite
 
-:::info
-
 Nodes need to have at least **8 GiB** of RAM because the installer loads the full ISO file into tmpfs.
-
-:::
-
-:::info
 
 :::info
 The installer automatically checks if the hardware meets the [minimum requirements](https://docs.harvesterhci.io/v1.3/install/requirements/#hardware-requirements) for production use. If any of the checks fail, installation is stopped, and warnings are printed to the system console and saved to `/var/log/console.log` in the installation environment.
