@@ -355,4 +355,4 @@ to retry DHCP request for `<cnt>` times.
 
 ### `harvester.install.skipchecks=true`
 
-If Harvester's initial checks fail because the system does not meet the minimum hardware requirements for production use, installation will abort. To override this behaviour, set the `harvester.install.skipchecks=true` kernel parameter. In this case, any warning messages will be logged to `/var/log/console.log`, and the installation will proceed regardless of whether production hardware requirements are met.
+Installation is stopped if the hardware checks fail (because the minimum requirements for production use are not met). To override this behavior, set the kernel parameter `harvester.install.skipchecks=true`. When set to `true`, warning messages are still saved to `/var/log/console.log`, but the installation proceeds even if hardware requirements for production use are not met.
