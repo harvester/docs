@@ -26,10 +26,12 @@ To see sample iPXE scripts, please visit [Harvester iPXE Examples](https://githu
 
 ## Prerequisite
 
+Nodes need to have at least **8 GiB** of RAM because the installer loads the full ISO file into tmpfs.
+
 :::info
+The installer automatically checks if the hardware meets the [minimum requirements](https://docs.harvesterhci.io/v1.3/install/requirements/#hardware-requirements) for production use. If any of the checks fail, installation is stopped, and warnings are printed to the system console and saved to `/var/log/console.log` in the installation environment.
 
-Nodes need to have at least **8 GB** of RAM because the installer loads the full ISO file into tmpfs.
-
+To override this behavior, set the kernel parameter `harvester.install.skipchecks=true`. When set to `true`, warning messages are still saved to `/var/log/console.log`, but the installation proceeds even if hardware requirements for production use are not met.
 :::
 
 ## Preparing HTTP Servers
@@ -344,3 +346,7 @@ If you have multiple network interfaces, you could add the `ip=dhcp` parameter t
 
 Failing to get IP from the DHCP server would cause iPXE booting to fail. You can add parameter `rd.net.dhcp.retry=<cnt>`
 to retry DHCP request for `<cnt>` times.
+
+### `harvester.install.skipchecks=true`
+
+Installation is stopped if the hardware checks fail (because the minimum requirements for production use are not met). To override this behavior, set the kernel parameter `harvester.install.skipchecks=true`. When set to `true`, warning messages are still saved to `/var/log/console.log`, but the installation proceeds even if hardware requirements for production use are not met.
