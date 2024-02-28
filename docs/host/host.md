@@ -285,3 +285,135 @@ $ kubectl get nodes harvester-node-0 -o yaml |yq -e '.metadata.annotations.["nod
 > 1. If you upgraded Harvester from an earlier version, the **ntp-servers** list on the Settings screen will be empty (see screenshot). You must manually configure the NTP settings because Harvester is unaware of the previous settings and is unable to detect conflicts.
 
 ![](/img/v1.3/host/harvester-ntp-settings-empty.png)
+
+## Cloud-Native Node Configuration
+
+You may need to customize one or more nodes after installing Harvester. This process usually entails updating the [runtime configuration](/v1.3/install/update-harvester-configuration/) and modifying files in the `/oem` directory of each node to make changes persist after rebooting.
+
+In Harvester v1.3.0, these customizations can be described in a Kubernetes manifest and then applied to the underlying cluster using kubectl or other GitOps-centric tools such as [Fleet](https://fleet.rancher.io/).
+
+:::danger
+Misconfigurations might compromise the ability of a Harvester node to boot up, or even damage the overall stability of the cluster. You can prevent such issues by reading the Elemental toolkit documentation to learn how to [correctly customize Elemental](https://rancher.github.io/elemental-toolkit/docs/customizing/).
+:::
+
+### Creating a CloudInit Resource
+
+Harvester node customization is bounded only by your creativity and by what the Elemental toolkit markup can syntactically express. The documentation, therefore, cannot provide an exhaustive list of possible customizations and use cases.
+
+**Example: You want to add an SSH authorized key for the default `rancher` user on all nodes.**
+
+Start by creating a Kubernetes manifest for a CloudInit resource.
+
+```
+file: ssh_access.yaml
+```
+
+```yaml
+apiVersion: node.harvesterhci.io/v1beta1
+kind: CloudInit
+metadata:
+  name: ssh-access
+spec:
+  matchSelector: {}
+  filename: 99_ssh.yaml
+  contents: |
+    stages:
+      network:
+        - authorized_keys:
+            rancher:
+              - ssh-ed25519 AAAA...
+```
+
+This manifest describes an Elemental cloud-init document that will be applied to *all nodes* (because the empty `matchSelector: {}` field matches everything). The YAML document in the `.spec.contents` field will be rendered to `/oem/99_ssh.yaml` (because of the `.spec.filename` field.)
+
+Apply this example using the command `kubectl apply -f ssh_access.yaml`.
+
+:::tip
+Reboot the relevant Harvester nodes so that the Elemental toolkit executor can apply the new configuration at boot.
+:::
+
+#### CloudInit Resource Spec
+
+| Field | Required | Description |
+| - | - | - |
+| matchSelector | Yes | Setting that allows you to specify the nodes that will receive the configuration changes. |
+| filename | Yes | Name of the file that appears in `/oem`. |
+| contents | Yes | Elemental toolkit cloud-init-style file that will be rendered to a file in `/oem`. |
+| paused | No | When set to `true`, the file will not be updated on nodes as it changes. |
+
+The `matchSelector` field can be used to target specific nodes or groups of nodes based on their labels.
+
+Example:
+```yaml
+matchSelector:
+  kubernetes.io/hostname: "harvester-node-1"
+```
+
+:::note
+All label key-value pairs listed in the `matchSelector` field must match the labels of the intended nodes. 
+
+In the following example, `matchSelector` will match `harvester-node-1` only if that node also has the `example.com/role` label with the value `role-a`.
+
+```yaml
+matchSelector:
+  kubernetes.io/hostname: "harvester-node-1"
+  example.com/role: "role-a"
+```
+:::
+
+### Updating a CloudInit Resource
+
+You can use the command `kubectl edit` to update a CloudInit resource. However, there is a caveat if the `matchSelector` field is updated to exclude one or more nodes from the customization. See the note in the [Deleting a CloudInit Resource](#deleting-a-cloudinit-resource) section regarding rolling back customizations.
+
+```console
+# kubectl edit cloudinit CLOUDINIT_NAME
+```
+
+### Deleting a CloudInit Resource
+
+You can use the command `kubectl delete` to remove a CloudInit resource from the Harvester cluster.
+
+```console
+# kubectl delete cloudinit CLOUDINIT_NAME
+```
+
+:::note
+Harvester is unable to "roll back" previously described customizations because the CloudInit resource can describe anything that can be expressed as an Elemental toolkit customization, including arbitrary shell commands.
+
+In the [Creating a CloudInit Resource](#creating-a-cloudinit-resource) example, the YAML file contains the `authorized_keys` stanza. This is an append-only action in the Elemental toolkit. When the resource is changed or deleted, the `authorized_keys` file in Rancher will still contain the old public key.
+
+**You are responsible for amending or creating a CloudInit resource that rolls the changes back (if necessary) before you reboot the node.**
+:::
+
+### Troubleshooting CloudInit Rollouts
+
+If an Elemental toolkit cloud-init document does not appear in `/oem` or does not contain the expected contents, the status block of the CloudInit resource might contain useful hints.
+
+```console
+# kubectl get cloudinit CLOUDINIT_NAME -o yaml
+```
+
+```yaml
+status:
+  rollouts:
+    harvester-dngmf:
+      conditions:
+      - lastTransitionTime: "2024-02-28T22:31:23Z"
+        message: ""
+        reason: CloudInitApplicable
+        status: "True"
+        type: Applicable
+      - lastTransitionTime: "2024-02-28T22:31:23Z"
+        message: Local file checksum is the same as the CloudInit checksum
+        reason: CloudInitChecksumMatch
+        status: "False"
+        type: OutOfSync
+      - lastTransitionTime: "2024-02-28T22:31:23Z"
+        message: 99_ssh.yaml is present under /oem
+        reason: CloudInitPresentOnDisk
+        status: "True"
+        type: Present
+```
+
+The `harvester-node-manager` pod(s) in the `harvester-system` namespace may also contain some hints as to why it is not rendering a file to a node.
+This pod is part of a daemonset, so it may be worth checking the pod that is running on the node of interest.
