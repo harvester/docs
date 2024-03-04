@@ -24,7 +24,7 @@ A user can use Net Install ISO in these situations:
 
 :::caution
 
-**A user should always uses the ordinary ISO to bootstrap a Harvester cluster if possible** (e.g., using the ISO without the `-net-install` suffix). The ordinary ISO contains all required images, and the installer preloads all images during the installation. It's easy for a user to reach [Docker Hub's rate limit](https://docs.docker.com/docker-hub/download-rate-limit/) when using a Net Install ISO to bootstrap the Harvester cluster.
+**A user should always use the ordinary ISO to bootstrap a Harvester cluster if possible** (e.g., using the ISO without the `-net-install` suffix). The ordinary ISO contains all required images, and the installer preloads all images during the installation. It's easy for a user to reach [Docker Hub's rate limit](https://docs.docker.com/docker-hub/download-rate-limit/) when using a Net Install ISO to bootstrap the Harvester cluster.
 
 :::
 
