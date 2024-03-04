@@ -7,7 +7,7 @@ keywords:
   - Net ISO Installation
   - BMC ISO Redirection
   - BMC Virtual Media
-description: Harvester Net Install ISO is a minimum ISO that contains only the OS binary. It's useful for some situations.
+description: Harvester Net Install ISO is a minimal ISO that contains only the OS binaries. It's useful for some situations.
 ---
 
 
@@ -16,10 +16,10 @@ description: Harvester Net Install ISO is a minimum ISO that contains only the O
 </head>
 
 
-Harvester Net Install ISO is a minimum ISO that contains only the OS binary. It allows booting the Harvester installer to install Harvester OS on a disk. After the OS boots, the Harvester system bootstraps by pulling all required container images from the internet (most from Dockerhub).
+Harvester Net Install ISO is a minimal ISO that contains only the OS binaries. It allows booting the Harvester installer to install Harvester OS on a disk. After the OS boots, the Harvester system bootstraps by pulling all required container images from the internet (most from Dockerhub).
 
 A user can use Net Install ISO in these situations:
-- A server has a buggy or slow virtaul media implementation. There are [reports](https://github.com/harvester/harvester/issues/2651) from the community that ISO redirection is too slow to preload all images into a system.
+- A server has a buggy or slow virtual media implementation. There are [reports](https://github.com/harvester/harvester/issues/2651) from the community that ISO redirection is too slow to preload all images into a system.
 - A user has a private registry containing all Harvester images and has the experience and knowledge to configure image mirrors for containerd.
 
 :::caution
@@ -30,7 +30,7 @@ A user can use Net Install ISO in these situations:
 
 ## Usage
 
-Download the Net Install ISO from the GitHub release page and boot the ISO to install Harvester. A Net Install ISO has the suffix `net-install` in its name. e.g., https://releases.rancher.com/harvester/v1.3.0/harvester-v1.3.0-amd64-net-install.iso
+Download the Net Install ISO from the [GitHub release page](https://github.com/harvester/harvester/releases) and boot the ISO to install Harvester. A Net Install ISO has the suffix `net-install` in its name. e.g., https://releases.rancher.com/harvester/v1.3.0/harvester-v1.3.0-amd64-net-install.iso
 
 ## PXE Installation
 
