@@ -350,3 +350,7 @@ to retry DHCP request for `<cnt>` times.
 ### `harvester.install.skipchecks=true`
 
 Installation is stopped if the hardware checks fail (because the minimum requirements for production use are not met). To override this behavior, set the kernel parameter `harvester.install.skipchecks=true`. When set to `true`, warning messages are still saved to `/var/log/console.log`, but the installation proceeds even if hardware requirements for production use are not met.
+
+### `harvester.install.with_net_images=true`
+
+The installer does not preload images during installation and instead pulls all required images from the internet after installation is completed. Usage of this parameter is not recommended in most cases. For more information, see [Net Install ISO](./net-install.md).
