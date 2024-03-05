@@ -34,7 +34,7 @@ Download the Net Install ISO from the [GitHub release page](https://github.com/h
 
 ## PXE Installation
 
-When using the Net Install ISO as the PXE Installation source, please add this kernel parameter when booting the kernel:
+If you decide to use the net install ISO as the PXE installation source, add the following parameter when booting the kernel:
 
 ```
 harvester.install.with_net_images=true
