@@ -211,26 +211,26 @@ It is notable that the [source code](https://github.com/harvester/harvester/blob
 
 ```
 func (vf *vmformatter) canStart(vm *kubevirtv1.VirtualMachine, vmi *kubevirtv1.VirtualMachineInstance) bool {
-	if vf.isVMStarting(vm) {
-		return false
-	}
+  if vf.isVMStarting(vm) {
+    return false
+  }
 ..
 }
 
 func (vf *vmformatter) canRestart(vm *kubevirtv1.VirtualMachine, vmi *kubevirtv1.VirtualMachineInstance) bool {
-	if vf.isVMStarting(vm) {
-		return false
-	}
+  if vf.isVMStarting(vm) {
+    return false
+  }
 ...
 }
 
 func (vf *vmformatter) isVMStarting(vm *kubevirtv1.VirtualMachine) bool {
-	for _, req := range vm.Status.StateChangeRequests {
-		if req.Action == kubevirtv1.StartRequest {
-			return true
-		}
-	}
-	return false
+  for _, req := range vm.Status.StateChangeRequests {
+    if req.Action == kubevirtv1.StartRequest {
+      return true
+    }
+  }
+  return false
 }
 ```
 
@@ -243,3 +243,174 @@ After the pod is successfully deleted, the `Start` button becomes visible again 
 ### Related Issue
 
 https://github.com/harvester/harvester/issues/4659
+
+## VM Stuck in Starting State with Error Messsage `not a device node`
+
+*Impacted versions: v1.3.0*
+
+### Issue Description
+
+Some VMs may fail to start and then become unresponsive after the cluster or some nodes are restarted. On the **Dashboard** screen of the Harvester UI, the status of the affected VMs is stuck at *Starting*.
+
+![](/img/v1.3/troubleshooting/vm-stuck-at-starting.png)
+
+### Issue Analysis
+
+The status of the pod related to the affected VM is `CreateContainerError`.
+
+```
+$ kubectl get pods
+NAME                      READY   STATUS                 RESTARTS   AGE
+virt-launcher-vm1-w9bqs   0/2     CreateContainerError   0          9m39s
+```
+
+The phrase `failed to generate spec: not a device node` can be found in the following:
+
+```
+$kubectl get pods -oyaml
+apiVersion: v1
+items:
+  apiVersion: v1
+  kind: Pod
+  metadata:
+...
+    containerStatuses:
+    - image: registry.suse.com/suse/sles/15.5/virt-launcher:1.1.0-150500.8.6.1
+      imageID: ""
+      lastState: {}
+      name: compute
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        waiting:
+          message: 'failed to generate container "50f0ec402f6e266870eafb06611850a5a03b2a0a86fdd6e562959719ccc003b5"
+            spec: failed to generate spec: not a device node'
+          reason: CreateContainerError
+```
+
+`kubelet.log` file:
+
+```
+file path: /var/lib/rancher/rke2/agent/logs/kubelet.log
+
+E0205 20:44:31.683371    2837 pod_workers.go:1294] "Error syncing pod, skipping" err="failed to \"StartContainer\" for \"compute\" with CreateContainerError: \"failed t
+o generate container \\\"255d42ec2e01d45b4e2480d538ecc21865cf461dc7056bc159a80ee68c411349\\\" spec: failed to generate spec: not a device node\"" pod="default/virt-laun
+cher-caddytest-9tjzj" podUID=d512bf3e-f215-4128-960a-0658f7e63c7c
+```
+
+`containerd.log` file:
+
+```
+file path: /var/lib/rancher/rke2/agent/containerd/containerd.log
+
+time="2024-02-21T11:24:00.140298800Z" level=error msg="CreateContainer within sandbox \"850958f388e63f14a683380b3c52e57db35f21c059c0d93666f4fdaafe337e56\" for &ContainerMetadata{Name:compute,Attempt:0,} failed" error="failed to generate container \"5ddad240be2731d5ea5210565729cca20e20694e364e72ba14b58127e231bc79\" spec: failed to generate spec: not a device node"
+
+```
+
+After adding debug information to `containerd`, it identifies the error message `not a device node` is upon the file `pvc-3c1b28fb-*`.
+
+```
+time="2024-02-22T15:15:08.557487376Z" level=error msg="CreateContainer within sandbox \"d23af3219cb27228623cf8168ec27e64e836ed44f2b2f9cf784f0529a7f92e1e\" for &ContainerMetadata{Name:compute,Attempt:0,} failed" error="failed to generate container \"e4ed94fb5e9145e8716bcb87aae448300799f345197d52a617918d634d9ca3e1\" spec: failed to generate spec: get device path: /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/publish/pvc-3c1b28fb-683e-4bf5-9869-c9107a0f1732/20291c6b-62c3-4456-be8a-fbeac118ec19 containerPath: /dev/disk-0 error: not a device node"
+```
+
+This is a CSI related file, but it is an empty file instead of the expected device file. Then the containerd denied the `CreateContainer` request.
+
+```
+$ ls /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/publish/pvc-3c1b28fb-683e-4bf5-9869-c9107a0f1732/ -alth
+total 8.0K
+drwxr-x--- 2 root root 4.0K Feb 22 15:10 .
+-rw-r--r-- 1 root root    0 Feb 22 14:28 aa851da3-cee1-45be-a585-26ae766c16ca
+-rw-r--r-- 1 root root    0 Feb 22 14:07 20291c6b-62c3-4456-be8a-fbeac118ec19
+drwxr-x--- 4 root root 4.0K Feb 22 14:06 ..
+-rw-r--r-- 1 root root    0 Feb 21 15:48 4333c9fd-c2c8-4da2-9b5a-1a310f80d9fd
+-rw-r--r-- 1 root root    0 Feb 21 09:18 becc0687-b6f5-433e-bfb7-756b00deb61b
+
+$file /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/publish/pvc-3c1b28fb-683e-4bf5-9869-c9107a0f1732/20291c6b-62c3-4456-be8a-fbeac118ec19
+: empty
+```
+
+The output listed above directly contrasts with the following example, which shows the expected device file of a running VM.
+
+```
+$ ls  /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/publish/pvc-732f8496-103b-4a08-83af-8325e1c314b7/ -alth
+total 8.0K
+drwxr-x--- 2 root root  4.0K Feb 21 10:53 .
+drwxr-x--- 4 root root  4.0K Feb 21 10:53 ..
+brw-rw---- 1 root root 8, 16 Feb 21 10:53 4883af80-c202-4529-a2c6-4e7f15fe5a9b
+```
+
+#### Root Cause
+
+After the cluster or specific nodes are rebooted, the kubelet calls `NodePublishVolume` for the new pod without first calling `NodeStageVolume`. Moreover, the Longhorn CSI plugin bind mounts the regular file at the staging target path (previously used by the deleted pod) to the target path, and the operation is considered successful.
+
+### Workaround
+
+Cluster level operation:
+
+1. Find the backing pods of the affected VMs and the related Longhorn volumes.
+
+    ```
+    $ kubectl get pods
+    NAME                      READY   STATUS                 RESTARTS   AGE
+    virt-launcher-vm1-nxfm4   0/2     CreateContainerError   0          7m11s
+
+    $ kubectl get pvc -A
+    NAMESPACE                  NAME                       STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS           AGE
+    default                    vm1-disk-0-9gc6h           Bound    pvc-f1798969-5b72-4d76-9f0e-64854af7b59c   1Gi        RWX            longhorn-image-fxsqr   7d22h
+    ```
+
+1. [Stop](#vm-general-operations) the affected VMs from Harvester UI.
+
+   The VM may stuck in `Stopping`, continue the next step.
+
+1. Delete the backing pods forcely.
+
+    ```
+    $ kubectl delete pod virt-launcher-vm1-nxfm4 --force
+    Warning: Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
+    pod "virt-launcher-vm1-nxfm4" force deleted
+    ```
+
+    The VM is off now.
+
+    ![](/img/v1.3/troubleshooting/vm-is-off.png)
+
+Node level operation, node by node:
+
+1. [Cordon](../host/host.md#cordoning-a-node) a node.
+
+1. Unmout all the affected Longhorn volumes in this node.
+
+    You need to ssh to this node and execute the `sudo -i umount path` command.
+    
+    ```
+    $ umount /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/pvc-f1798969-5b72-4d76-9f0e-64854af7b59c/dev/*
+    umount: /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/pvc-f1798969-5b72-4d76-9f0e-64854af7b59c/dev/4b2ab666-27bd-4e3c-a218-fb3d48a72e69: not mounted.
+    umount: /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/pvc-f1798969-5b72-4d76-9f0e-64854af7b59c/dev/6aaf2bbe-f688-4dcd-855a-f9e2afa18862: not mounted.
+    umount: /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/pvc-f1798969-5b72-4d76-9f0e-64854af7b59c/dev/91488f09-ff22-45f4-afc0-ca97f67555e7: not mounted.
+    umount: /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/pvc-f1798969-5b72-4d76-9f0e-64854af7b59c/dev/bb4d0a15-737d-41c0-946c-85f4a56f072f: not mounted.
+    umount: /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/pvc-f1798969-5b72-4d76-9f0e-64854af7b59c/dev/d2a54e32-4edc-4ad8-a748-f7ef7a2cacab: not mounted.
+    ```
+
+1. [Uncordon](../host/host.md#cordoning-a-node) this node.
+
+1. [Start](#vm-general-operations) the affected VMs from harvester UI.
+
+    Wait some time, the VM will run successfully.
+
+    ![](/img/v1.3/troubleshooting/start-vm-and-run.png)
+
+    The newly generated csi file is an expected device file.
+
+    ```
+    $ ls /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/publish/pvc-f1798969-5b72-4d76-9f0e-64854af7b59c/ -alth
+    ...
+    brw-rw---- 1 root root 8, 64 Mar  6 11:47 7beb531d-a781-4775-ba5e-8773773d77f1
+    ```
+
+### Related Issue
+
+https://github.com/harvester/harvester/issues/5109
+
+https://github.com/longhorn/longhorn/issues/8009
