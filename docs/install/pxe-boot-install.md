@@ -353,4 +353,4 @@ Installation is stopped if the hardware checks fail (because the minimum require
 
 ### `harvester.install.with_net_images=true`
 
-Skip preloading images during the installation and pull all images from the internet. This is not recommended in most cases, please see [Net Install ISO](./net-install.md) for more information.
+The installer does not preload images during installation and instead pulls all required images from the internet after installation is completed. Usage of this parameter is not recommended in most cases. For more information, see [Net Install ISO](./net-install.md).
