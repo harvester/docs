@@ -58,6 +58,20 @@ Once resolved, the last step can be skipped.
 
 ![delete.png](/img/v1.2/host/delete-node.png)
 
+## Role Management
+
+Hardware issues may force you to replace the management node. In earlier Harvester versions, accurately promoting a specific worker node to a management node was not easy. Harvester v1.3.0 improves the process by introducing the following roles:
+
+- **Management**: Allows a node to be prioritized when Harvester promotes nodes to management nodes.
+- **Witness**: Restricts a node to being a witness node (only functions as an etcd node) in a specific cluster.
+- **Worker**: Restricts a node to being a worker node (never promoted to management node) in a specific cluster.
+
+:::caution
+Harvester currently allows only one witness node in the cluster.
+:::
+
+For more information about assigning roles to nodes, see [ISO Installation](/v1.3/install/index).
+
 ## Multi-disk Management
 
 ### Add Additional Disks

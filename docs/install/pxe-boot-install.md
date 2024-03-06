@@ -66,6 +66,7 @@ When performing an automatic installation, there are two modes:
 - `CREATE`: we are installing a node to construct an initial Harvester cluster.
 - `JOIN`: we are installing a node to join an existing Harvester cluster.
 
+Harvester v1.3.0 introduces roles that you can assign to nodes to support different scenarios. For more information, see [Harvester Configuration](harvester-configuration#installrole).
 
 ### CREATE Mode
 
