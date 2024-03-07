@@ -191,19 +191,141 @@ Before any action is taken, it is important to collect the current network infor
 
     - The VM has special hardwares like pci-passthrough or vgpu and fails to migrate
 
+### (Optional) Update the VM Network
+
+:::note
+When the new Nics will be placed in different physical slots or those nics will have different uplink parameters, this step is mandatory.
+:::
+
+1. Check the node.
+
+    For a Harvester cluster node, when it is belonging to a VM Network (VlanConfig), the node object has a label with key `network.harvesterhci.io/vlanconfig`.
+
+    Example:
+
+    ```
+    apiVersion: v1
+    kind: Node
+    metadata:
+      labels:
+        ...
+        network.harvesterhci.io/vlanconfig: vlan123
+    ```
+
+1. Remove this node from the VM network.
+
+    When the new Nics are placed in different slots, you need to change the VM Network (VlanConfig) to exclude this Node.
+    If the VM Network object selects only this node from `nodeSelector`, you can also delete the VlanConfig.
+
+    Example:
+
+    ```
+    apiVersion: network.harvesterhci.io/v1beta1
+    kind: VlanConfig
+    spec:
+      clusterNetwork: data
+      nodeSelector:
+        kubernetes.io/hostname: node123  // select one or more nodes
+      uplink:
+        bondOptions:
+          miimon: 100
+          mode: 802.3ad
+        linkAttributes:
+          mtu: 1500
+          txQLen: -1
+        nics:
+        - enp0s1
+        - enp0s2
+    ```
+
+    If any affected node (e.g., happened to exclude 2 nodes) has running VMs, the network webhook will report error.
+
+1. Wait the node.
+
+    Wait and check the `Node` object, until it's label `network.harvesterhci.io/vlanconfig` is changed or gone.
+
+1. Wait the VlanStatus.
+
+    Wait and check the related VlanStatus object until its `ready` condition is "True" or this object is deleted.
+
+    Example:
+
+    ```
+    apiVersion: network.harvesterhci.io/v1beta1
+    kind: VlanStatus
+    metadata:
+    ...
+    status:
+      clusterNetwork: data
+      conditions:
+      - lastUpdateTime: "2024-02-03T18:32:41Z"
+        status: "True"
+        type: ready
+      linkMonitor: public
+      localAreas:
+      - cidr: 10.190.186.0/24
+        vlanID: 2013
+      node: node123
+      vlanConfig: vlan123
+    ```
+
+### (Optional) Drain the Node
+
+You may find that some of Longhorn replicas are still active on this node after all above operations.
+
+1. Drain the node.
+
+    This is optional in Harvester by default. Suppose the numReplicas of all volumes are 3, there are three active replicas for each Longhorn volume. None of the replicas holds any special significance to Longhorn. This is what Longhorn is designed for. The engine will recognize that it can no longer communicate with a replica when the node is down, mark it as failed, and stop trying. It will not care as long as it has at least one replica to communicate with.
+
+    However, if you have some volumes which have less than the default 3 replicas; or you have manually attached volumes using the Harvester/Longhorn UI, you need to refer the following document to manually move the replicas to other nodes/detach them, and drain the node until it finishs successfully.
+
+    You need to use `kubectl drain --ignore-daemonsets <node name>` with option --ignore-daemonsets to [drain this node](https://longhorn.io/docs/1.4.3/volumes-and-nodes/maintenance/#updating-the-node-os-or-container-runtime). The --ignore-daemonsets is needed because Longhorn deployed some daemonsets such as Longhorn manager, Longhorn CSI plugin, engine image.
+
+    The running replicas on the node will be stopped at this stage. They will be shown as Failed.
+
+    The engine processes on the node will be migrated with the Pod to other nodes.
+
+    After the drain is completed, there should be no engine or replica process running on this node.
+
+1. Replenish replicas.
+
+    After a node is shutdown, Longhorn will not start rebuilding the replicas on other nodes until `replica-replenishment-wait-interval` (default 600 s) is exceeded. When the node comes back online before the wait-interval, Longhorn can reuse the replicas. If not, Longhorn will rebuild the replicas on another node.
+
+    In a system maintenance, you may already know the node will be down for long time, then you can adjust the [replica-replenishment-wait-interval](https://longhorn.io/docs/1.4.3/references/settings/#replica-replenishment-wait-interval) from the from the [embedded Longhorn dashboard](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards) to guide Longhorn to rebuild the replicas quickly.
+
+    Harvester v1.3.0 has Longhorn v1.6.0 embedded. Harvester v1.2.1 has Longhorn v1.4.3 embedded.
+
 ### Replace the Nics
 
-1. Shutdown the node
+1. Shutdown the node.
 
-1. Replace the NICs
+1. Replace the NICs.
 
-1. Restart the node
+1. Restart the node.
 
 ### Check the new Nics Information
 
 Repeat the operations in [collect information](#collect-information) and check them.
 
 If anything is abnormal, please hold on to this step and double-check with Harvester. Generate a [support bundle](../troubleshooting/harvester.md#generate-a-support-bundle) for troubleshooting.
+
+### (Optional) Re-update the VM Network
+
+:::note
+When the new Nics are placed in different slots, this step is a must.
+:::
+
+1. Add this node to the VM network.
+
+    You need to create a new VM Network (VlanConfig) or change the existing VM Network (VlanConfig) to include this Node.
+
+1. Wait the node.
+
+    Wait and check the `Node` object, until it's label `network.harvesterhci.io/vlanconfig` has this VlanConfig.
+
+1. Wait the VlanStatus.
+
+    Wait and check the related `VlanStatus` object until its `ready` condition is "True".
 
 ### Disable the Maintenance Mode
 
