@@ -171,3 +171,19 @@ You can only choose to retain the previous volumes.
 1. Click `Replace Existing`.
 1. You can view the restore process from the `Virtual Machines` page.
 ![restore-vm-snapshot-existing.png](/img/v1.2/vm/restore-vm-snapshot-existing.png)
+
+## Known issues
+
+### VM Backup Metadata File Naming Conflicts
+
+Whenever you create a VM backup, Harvester generates a metadata file in the [backup target](../advanced/settings.md#backup-target). The metadata file, which is found in `<storage-path>/harvester/vmbackups/<vmbackup-namespace>-<vmbackup-name>.cfg`, contains VM backup data in JSON format.
+
+The naming convention for these metadata files can introduce conflicts. Specifically, files generated for VM backups that were created in different namespaces can have the exact same file name.
+
+Example:
+| VM backup name | Namespace | Metadata file name |
+| --- | --- | --- |
+| `c` | `a-b` | `a-b-c.cfg` |
+| `b-c` | `a` | `a-b-c.cfg` |
+
+Harvester v1.3.0 fixes this issue by changing the metadata file path to `<storage-path>/harvester/vmbackups/<vmbackup-namespace>/<vmbackup-name>.cfg`. If you are using an earlier version, however, ensure that VM backup names do not cause the described file naming conflicts.
