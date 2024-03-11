@@ -23,6 +23,17 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 For admin users, you can click **Enable Maintenance Mode** to evict all VMs from a node automatically. It will leverage the `VM live migration` feature to migrate all VMs to other nodes automatically. Note that at least two active nodes are required to use this feature.
 
+If you want to force individual VMs to shut down instead of migrating to other nodes, add the label `harvesterhci.io/maintain-mode-strategy` and one of the following values to those VMs:
+
+- `Migrate`: Live-migrates the VM to another node in the cluster. This is the default behavior if the label `harvesterhci.io/maintain-mode-strategy` is not set.
+- `ShutdownAndRestartAfterEnable`: Restarts the VM after the node switches to maintenance mode. The VM is scheduled on a different node.
+- `ShutdownAndRestartAfterDisable`: Shuts down the VM when maintenance mode is enabled, and restarts the VM when maintenance mode is disabled. The VM stays on the same node.
+- `Shutdown`: Shuts down the VM when maintenance mode is enabled. The VM remains powered off instead of restarting.
+
+You can force a collective shutdown of all VMs on a node on the **Enable Maintenance Mode** screen. This disables individual settings using the `harvesterhci.io/maintain-mode-strategy` label.
+
+If you want to execute a special command before shutting down a VM, consider using the [container lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks) `PreStop`.
+
 ![node-maintenance.png](/img/v1.2/host/node-maintenance.png)
 
 ## Cordoning a Node
