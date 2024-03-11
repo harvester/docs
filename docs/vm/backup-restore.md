@@ -63,6 +63,7 @@ Users can either restore a new VM or replace an existing VM using this backup.
 To restore a new VM from a backup, follow these steps:
 
 1. Go to the `VM Backups` page.
+1. Click the `Restore Backup` button at the top right.
 1. Specify the new VM name and click `Create`.
 1. A new VM will be restored using the backup volumes and metadata, and you can access it from the `Virtual Machines` page.
 ![restore-vm.png](/img/v1.2/vm/restore-vm.png)
@@ -76,6 +77,7 @@ You can choose to either delete or retain the previous volumes. By default, all 
 **Requirements:** The VM must exist and is required to be in the powered-off status.
 
 1. Go to the `VM Backups` page.
+1. Click the `Restore Backup` button at the top right.
 1. Click `Replace Existing`.
 1. You can view the restore process from the `Virtual Machines` page.
 ![vm-restore-existing.png](/img/v1.2/vm/vm-restore-existing.png)
@@ -153,6 +155,7 @@ Users can either restore a new VM or replace an existing VM using this snapshot.
 To restore a new VM from a snapshot, follow these steps:
 
 1. Go to the `VM Snapshots` page.
+1. Click the `Restore Snapshot` button at the top right.
 1. Specify the new VM name and click `Create`.
 1. A new VM will be restored using the snapshot volumes and metadata, and you can access it from the `Virtual Machines` page.
 ![restore-vm-snapshot.png](/img/v1.2/vm/restore-vm-snapshot.png)
@@ -168,6 +171,7 @@ You can only choose to retain the previous volumes.
 :::
 
 1. Go to the `VM Snapshots` page.
+1. Click the `Restore Snapshot` button at the top right.
 1. Click `Replace Existing`.
 1. You can view the restore process from the `Virtual Machines` page.
 ![restore-vm-snapshot-existing.png](/img/v1.2/vm/restore-vm-snapshot-existing.png)

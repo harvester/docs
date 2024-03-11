@@ -26,7 +26,7 @@ The Harvester network is composed of three layers, including:
 
 - Harvester networking layer
 
-- external networking layer
+- External networking layer
 
 ## KubeVirt Networking
 
