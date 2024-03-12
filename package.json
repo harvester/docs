@@ -17,6 +17,7 @@
     "clean-api-docs": "docusaurus clean-api-docs all && docusaurus clean-api-docs:version api:all"
   },
   "dependencies": {
+    "@cmfcmf/docusaurus-search-local": "^1.1.0",
     "@docusaurus/core": "^2.4.1",
     "@docusaurus/plugin-client-redirects": "^2.4.1",
     "@docusaurus/plugin-content-blog": "^2.4.1",
