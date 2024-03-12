@@ -50,6 +50,15 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 	When there are 3 nodes, the other 2 nodes added first are automatically promoted to management nodes to form an HA cluster. If you want to promote management nodes from different zones, you can add the node label `topology.kubernetes.io/zone` in the [os.labels](./harvester-configuration.md#oslabels) config by providing a URL of [Harvester configuration](./harvester-configuration.md) on the customize the host step. In this case, at least three different zones are required.
 	:::
 
+1. Choose a role for the node. You are required to perform this step if you selected the installation mode `Join an existing Harvester cluster`.
+
+  ![choose-node-role.png](/img/v1.3/install/select-role.png)
+
+  - `Default Role`: Allows a node to function as a management node or a worker node. This role does not have any specific privileges or restrictions.
+  - `Management Role`: Allows a node to be prioritized when Harvester promotes nodes to management nodes.
+  - `Witness Role`: Restricts a node to being a witness node (only functions as an etcd node) in a specific cluster.
+  - `Worker Role`: Restricts a node to being a worker node (never promoted to management node) in a specific cluster.
+
 1. Choose the installation disk you want to install the Harvester cluster on and the data disk you want to store VM data on. By default, Harvester uses [GUID Partition Table (GPT)](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [Master boot record (MBR)](https://en.wikipedia.org/wiki/Master_boot_record).
 
 	![choose-installation-target-data-disk.png](/img/v1.2/install/choose-installation-target-data-disk.png)

@@ -441,6 +441,17 @@ install:
   mode: create
 ```
 
+### `install.role`
+
+#### Definition
+
+Role assigned to a node at the time of installation. When unspecified, Harvester assigns the `default` role.
+
+- `default`: Allows a node to function as a management node or a worker node.
+- `management`: Allows a node to be prioritized when Harvester promotes nodes to management nodes.
+- `worker`: Restricts a node to being a worker node (never promoted to management node) in a specific cluster.
+- `witness`: Restricts a node to being a witness node (only functions as an etcd node) in a specific cluster.
+
 ### `install.management_interface`
 
 #### Definition
