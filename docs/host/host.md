@@ -63,7 +63,7 @@ You can safely remove a control plane node depending on the quantity and availab
 
 ### 2. Check the status of volumes.
 
-1. Access the [embedded Longhorn UI](./troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards). 
+1. Access the [embedded Longhorn UI](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards).
 
 1. Go to the **Volume** screen.
 
@@ -71,7 +71,7 @@ You can safely remove a control plane node depending on the quantity and availab
 
 ### 3. Evict replicas from the node to be removed.
 
-1. Access the [embedded Longhorn UI](./troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards).
+1. Access the [embedded Longhorn UI](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards).
 
 1. Go to the **Node** screen.
 1. Select the node that you want to remove, click the icon in the **Operation** column, and then select **Edit node and disks**.
@@ -81,7 +81,7 @@ You can safely remove a control plane node depending on the quantity and availab
   - **Node Scheduling**: Select **Disable**.
   - **Evict Requested**" Select **True**.
 
-1. Click **Save**. Wait until the replica count is **0**.
+1. Click **Save**.
 
 1. Go back to the **Node** screen and verify that **Replicas** value for the node to be removed is **0**.
 
@@ -92,7 +92,7 @@ Eviction cannot be completed if the remaining nodes cannot accept replicas from 
 
 ### 4. Manage non-migratable VMs.
 
-[Live migration](./vm/live-migration.md) cannot be performed for VMs with certain properties.
+[Live migration](../vm/live-migration.md) cannot be performed for VMs with certain properties.
 
 - The VM has PCI passthrough devices or vGPU devices.
 
@@ -102,9 +102,9 @@ Eviction cannot be completed if the remaining nodes cannot accept replicas from 
 
   You must change the node selector or affinity rules.
 
-- The VM has a VLAN that binds it to the node to be removed.
+- The VM is on a VM network that binds it to the node to be removed.
 
-  You must select a different VLAN.
+  You must select a different VM network.
 
 :::tip
 Create a backup for each non-migratable VM before modifying the settings that bind it to the node that you want to remove.
