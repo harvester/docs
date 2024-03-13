@@ -52,12 +52,12 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
 1. Choose a role for the node. You are required to perform this step if you selected the installation mode `Join an existing Harvester cluster`.
 
-  ![choose-node-role.png](/img/v1.3/install/select-role.png)
+	![choose-node-role.png](/img/v1.3/install/select-role.png)
 
-  - `Default Role`: Allows a node to function as a management node or a worker node. This role does not have any specific privileges or restrictions.
-  - `Management Role`: Allows a node to be prioritized when Harvester promotes nodes to management nodes.
-  - `Witness Role`: Restricts a node to being a witness node (only functions as an etcd node) in a specific cluster.
-  - `Worker Role`: Restricts a node to being a worker node (never promoted to management node) in a specific cluster.
+	- `Default Role`: Allows a node to function as a management node or a worker node. This role does not have any specific privileges or restrictions.
+	- `Management Role`: Allows a node to be prioritized when Harvester promotes nodes to management nodes.
+	- `Witness Role`: Restricts a node to being a witness node (only functions as an etcd node) in a specific cluster.
+	- `Worker Role`: Restricts a node to being a worker node (never promoted to management node) in a specific cluster.
 
 1. Choose the installation disk you want to install the Harvester cluster on and the data disk you want to store VM data on. By default, Harvester uses [GUID Partition Table (GPT)](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [Master boot record (MBR)](https://en.wikipedia.org/wiki/Master_boot_record).
 
