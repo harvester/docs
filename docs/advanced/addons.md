@@ -16,12 +16,13 @@ Some level of customization is allowed for each addon, which depends on the unde
 
 _Available as of v1.1.0_
 
-Harvester v1.2.0 ships with five Addons:
+Harvester v1.3.0 ships with six Addons:
 * [pcidevices-controller](./addons/pcidevices.md)
 * [vm-import-controller](./addons/vmimport.md)
 * [rancher-monitoring](../monitoring/harvester-monitoring.md)
 * [rancher-logging](../logging/harvester-logging.md)
 * [harvester-seeder](./addons/seeder.md)
+* [nvidia-driver-toolkit](./addons/nvidiadrivertoolkit)
 
 ![](/img/v1.2/addons/AddonsV120.png)
 
