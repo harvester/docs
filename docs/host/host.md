@@ -78,8 +78,8 @@ You can safely remove a control plane node depending on the quantity and availab
 
 1. Configure the following settings:
 
-  - **Node Scheduling**: Select **Disable**.
-  - **Evict Requested**" Select **True**.
+    - **Node Scheduling**: Select **Disable**.
+    - **Evict Requested**" Select **True**.
 
 1. Click **Save**.
 
