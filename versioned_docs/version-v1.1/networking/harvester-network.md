@@ -8,7 +8,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/networking/harvester-network"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/networking/harvester-network"/>
 </head>
 
 Harvester provides three types of virtual networks for virtual machines (VMs), including:
