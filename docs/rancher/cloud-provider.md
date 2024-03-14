@@ -59,7 +59,7 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 
   ![](/img/v1.2/rancher/rke2-cloud-provider.png)
 
-### Deploying to the RKE2 custom cluster with Harvester Cloud Provider (experimental)
+### Deploying to the Custom RKE2 Cluster with Harvester Cloud Provider (Experimental)
 
 ![](/img/v1.2/rancher/custom.png)
 1. Use `generate_addon.sh` to generate a cloud-config and place it into the directory `/etc/kubernetes/cloud-config` on every custom node.
