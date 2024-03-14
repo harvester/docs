@@ -40,7 +40,7 @@ Before removing a node from a Harvester cluster, determine if the remaining node
 - Current resource usage in the cluster (on the **Hosts** screen of the Harvester UI)
 - Ability of the remaining nodes to maintain enough replicas for all volumes
 
-If the remaining nodes do not have enough resources, VMs might fail to start and volumes might degrade when you remove a node.
+If the remaining nodes do not have enough resources, VMs might fail to migrate and volumes might degrade when you remove a node.
 
 :::
 
@@ -107,7 +107,7 @@ Eviction cannot be completed if the remaining nodes cannot accept replicas from 
   You must select a different VM network.
 
 :::tip
-Create a backup for each non-migratable VM before modifying the settings that bind it to the node that you want to remove.
+Create a backup or snapshot for each non-migratable VM before modifying the settings that bind it to the node that you want to remove.
 :::
 
 ### 5. Evict workloads from the node to be removed.
