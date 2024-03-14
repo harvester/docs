@@ -1,12 +1,17 @@
 [
   {
+    "version": "v1.3",
+    "label": "v1.3",
+    "baseUrl": "/category/api"
+  },
+  {
     "version": "v1.2",
     "label": "v1.2",
-    "baseUrl": "/dev/api"
+    "baseUrl": "/v1.2/category/api"
   },
   {
     "version": "v1.1",
     "label": "v1.1",
-    "baseUrl": "/v1.1/api"
+    "baseUrl": "/v1.1/category/api"
   }
 ]
