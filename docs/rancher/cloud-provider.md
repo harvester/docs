@@ -111,7 +111,7 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 
     :::
 
-2. Create a VM in the Harvester cluster.
+1. Create a VM in the Harvester cluster with the following settings:
 
   2-1. The VM minimum requirements are 2 vCPUs and 4GB of RAM. Disk space depends on different VMImage.
 
