@@ -15,12 +15,11 @@ Harvester now offers the capability to share NVIDIA GPU's supporting SRIOV based
 The additional capability is provided by the `pcidevices-controller` addon, and leverages `sriov-manage` to manage the gpu. Please refer the [Nvidia Documentation](https://docs.nvidia.com/grid/15.0/grid-vgpu-user-guide/index.html#creating-sriov-vgpu-device-red-hat-el-kvm) and your GPU documentation to identify if the GPU is supported.
 
 
-The [nvidia-driver-toolkit](https://docs.harvesterhci.io/v1.3/advanced/nvidia-driver-toolkit) addon needs to be enabled for users to be able to manage the lifecycle of vGPU's on GPU devices.
+The [nvidia-driver-toolkit](./addons/nvidiadrivertoolkit.md) addon needs to be enabled for users to be able to manage the lifecycle of vGPU's on GPU devices.
 
 ## Usage
 
 1. On the **Dashboard** screen of Harvester UI, navigate to `SR-IOV GPU Devices` and check if GPU devices have been scanned and an associated `sriovgpudevices.devices.harvesterhci.io` object has been created. Once device is found it can be enabled by the users
-
 ![](/img/v1.3/advanced/sriovgpudevices-disabled.png)
 
 2. Once enabled, the associated vGPU device details will be available on the **Dashboard**
@@ -56,7 +55,7 @@ Once a vGPU has been assigned to a VM, it may not be possible to disable the sam
 Known issue: https://github.com/harvester/harvester/issues/5289
 Attaching multiple vGPU's to a VM may fail for 2 possible reasons:
 
-1. Not all vGPU profiles support attachment of multiple vGPU's. Please refer to the [NVIDIA documentation](https://docs.nvidia.com/grid/16.0/grid-vgpu-release-notes-generic-linux-kvm/index.html) to identify the correct vGPU profile that supports the same. For example, we use NVIDIA A2/A16 GPU's and only Q-series vGPU's support attaching multiple vGPUs
+1. Not all vGPU profiles support attachment of multiple vGPU's. Please refer to the [NVIDIA documentation](https://docs.nvidia.com/grid/16.0/grid-vgpu-release-notes-generic-linux-kvm/index.html#multiple-vgpu-support)  to identify the correct vGPU profile that supports the same. For example, we use NVIDIA A2/A16 GPU's and only Q-series vGPU's support attaching multiple vGPUs
 ![](/img/v1.3/advanced/multiplevgpu.png)
 
 2. Once the correct profile is selected, only 1 GPU device in the VM definition can have `ramFB` enabled, and user needs to edit their VM as yaml and add the `virtualGPUOptions` to all non primary vGPU devices:
@@ -74,7 +73,7 @@ By default when vGPU support is enabled on a GPU, the NVIDIA driver creates 16 v
 
 The profile used also dictates the maximum number of vGPUs available per GPU. Once the max count is exhausted then the remaining vGPU devices will have no profile available in their drop down menu and cannot be configured.
 
-For example, on our NVIDIA A2 GPU, using the `NVIDIA A2-4Q` profile means we can only have 4 vGPUs setup.
+For example, on our [NVIDIA A2 GPU](https://docs.nvidia.com/grid/15.0/grid-vgpu-user-guide/index.html#vgpu-types-nvidia-a2), using the `NVIDIA A2-4Q` profile means we can only have 4 vGPUs setup.
 ![](/img/v1.3/advanced/nvidia-a2-example.png)
 
 Once 4 vGPU devices are setup, the remaining vGPU devices can no longer be configured.
