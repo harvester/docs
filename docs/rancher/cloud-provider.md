@@ -125,8 +125,9 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 
     ![](/img/v1.3/rancher/custom-cluster-vm-user-data.png)
 
-3. Configure the **Cloud Provider** to `Harvester` and select **Create** to spin up the cluster.
-     ![](/img/v1.2/rancher/create-custom-rke2.png)
+1. On the **Basics** tab of the **Cluster Configuration** screen, select **Harvester** as the **Cloud Provider** and then select **Create** to spin up the cluster.
+
+  ![](/img/v1.2/rancher/create-custom-rke2.png)
 
 4. Follow the steps in Registration tab to run RKE2 installation command on the VM.
 
