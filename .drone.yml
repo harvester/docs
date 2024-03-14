@@ -12,12 +12,6 @@ steps:
     commands:
       - yarn install --frozen-lockfile
 
-  - name: ignore-openapi
-    image: node:18-alpine
-    commands:
-      - apk add git
-      - ./scripts/ignore-openapi
-
   - name: build
     image: node:18-alpine
     env:
