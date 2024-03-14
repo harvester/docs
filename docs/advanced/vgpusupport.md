@@ -19,73 +19,84 @@ The [nvidia-driver-toolkit](./addons/nvidiadrivertoolkit.md) addon needs to be e
 
 ## Usage
 
-1. On the **Dashboard** screen of Harvester UI, navigate to `SR-IOV GPU Devices` and check if GPU devices have been scanned and an associated `sriovgpudevices.devices.harvesterhci.io` object has been created. Once device is found it can be enabled by the users
-![](/img/v1.3/advanced/sriovgpudevices-disabled.png)
+1. On the Harvester UI, go to **Advanced** > **SR-IOV GPU Devices** and verify the following:
 
-2. Once enabled, the associated vGPU device details will be available on the **Dashboard**
-![](/img/v1.3/advanced/sriovgpudevices-enabled.png)
+  - GPU devices have been scanned. 
+  - An associated `sriovgpudevices.devices.harvesterhci.io` object has been created. 
 
-3. Users can now navigate to the `vGPU Devices` page and view the associated `vgpudevices.devices.harvesterhci.io` objects.
-:::note
-It can take upto a few minutes for the vGPU Devices to be scanned by the pcidevices controller and be available in the UI
+  ![](/img/v1.3/advanced/sriovgpudevices-disabled.png)
+
+1. Locate the device that you want to enable, and then select **:** > **Enable**. 
+
+  ![](/img/v1.3/advanced/sriovgpudevices-enabled.png)
+
+1. Go to the **vGPU Devices** screen and check the associated `vgpudevices.devices.harvesterhci.io` objects.
+
+  Allow some time for the pcidevices-controller to scan the vGPU devices and for the Harvester UI to display the device information.
+
+  ![](/img/v1.3/advanced/vgpudevicelist.png)
+
+1. Select a vGPU and configure a profile.
+
+  ![](/img/v1.3/advanced/vgpuprofiles.png)
+
+  :::note
+  The list of profiles depends on the GPU and the underlying /sys tree of the host. For more information about the available profiles and their capabilities, see the [NVIDIA documentation](https://docs.nvidia.com/grid/15.0/grid-vgpu-user-guide/index.html#supported-gpus-grid-vgpu).
+
+  After you select the first profile, the NVIDIA driver automatically configures the profiles available for the remaining vGPUs.
+  :::
 :::
-![](/img/v1.3/advanced/vgpudevicelist.png)
 
-4. Users can now select a vGPU and configure an available profile from list of support profiles from the drop-down menu
-![](/img/v1.3/advanced/vgpuprofiles.png)
-:::note
-The list of available profiles is dependent on GPU and is read from the underlying /sys tree of the host. Please refer to the [NVIDIA documentation](https://docs.nvidia.com/grid/15.0/grid-vgpu-user-guide/index.html#supported-gpus-grid-vgpu) to view the various profiles and associated capabilities available.
-Once the first vGPU profile is selected, the NVIDIA driver automatically reconfigures the remaining vGPU's with the list of vGPU profiles available.
-:::
+1. Attach the vGPU to a new or existing VM.
 
-5. Once a vGPU device has been setup, it can be attached to a new or existing VM
-![](/img/v1.3/advanced/vgpuattachment.png)
+  ![](/img/v1.3/advanced/vgpuattachment.png)
 
-Once the VM boots up, the vGPU will be available in the guest for usage by the workload. Additional vGPU drivers may be needed for your guest.
-
-:::note
-Once a vGPU has been assigned to a VM, it may not be possible to disable the same until the vGPU is removed from the VM.
-:::
-
+  :::info important
+  Once a vGPU has been assigned to a VM, it may not be possible to disable the VM until the vGPU is removed.
+  :::
 
 ### Limitations
 
 #### Attaching multiple vGPU's:
 
-Known issue: https://github.com/harvester/harvester/issues/5289
-Attaching multiple vGPU's to a VM may fail for 2 possible reasons:
+Attaching multiple vGPUs to a VM may fail for the following reasons:
 
-1. Not all vGPU profiles support attachment of multiple vGPU's. Please refer to the [NVIDIA documentation](https://docs.nvidia.com/grid/16.0/grid-vgpu-release-notes-generic-linux-kvm/index.html#multiple-vgpu-support)  to identify the correct vGPU profile that supports the same. For example, we use NVIDIA A2/A16 GPU's and only Q-series vGPU's support attaching multiple vGPUs
-![](/img/v1.3/advanced/multiplevgpu.png)
+- Not all vGPU profiles support attachment of multiple vGPUs. The [NVIDIA documentation](https://docs.nvidia.com/grid/16.0/grid-vgpu-release-notes-generic-linux-kvm/index.html#multiple-vgpu-support) lists the vGPU profiles that support this feature. For example, if you use NVIDIA A2 or A16 GPUs, note that only Q-series vGPUs allow you to attach multiple vGPUs.
 
-2. Once the correct profile is selected, only 1 GPU device in the VM definition can have `ramFB` enabled, and user needs to edit their VM as yaml and add the `virtualGPUOptions` to all non primary vGPU devices:
+  ![](/img/v1.3/advanced/multiplevgpu.png)
+
+- Only 1 GPU device in the VM definition can have `ramFB` enabled. To attach multiple vGPUs, you must edit the VM configuration (in YAML) and add `virtualGPUOptions` to all non-primary vGPU devices.
 ```
 virtualGPUOptions:
   display:
      ramFB:
        enabled: false 
 ```
-Post this change the guest should be able to use the multiple vGPU's 
+Related issue: https://github.com/harvester/harvester/issues/5289
 
 
-#### Unable to use all vGPUs
-By default when vGPU support is enabled on a GPU, the NVIDIA driver creates 16 vGPU devices. Based on the first profile selected, the NVIDIA driver automatically configures the profiles available for remaining vGPUs.
+#### Cap on Usable vGPUs
 
-The profile used also dictates the maximum number of vGPUs available per GPU. Once the max count is exhausted then the remaining vGPU devices will have no profile available in their drop down menu and cannot be configured.
+When vGPU support is enabled on a GPU, the NVIDIA driver creates 16 vGPU devices by default. After you select the first profile, the NVIDIA driver automatically configures the profiles available for the remaining vGPUs.
 
-For example, on our [NVIDIA A2 GPU](https://docs.nvidia.com/grid/15.0/grid-vgpu-user-guide/index.html#vgpu-types-nvidia-a2), using the `NVIDIA A2-4Q` profile means we can only have 4 vGPUs setup.
+The profile used also dictates the maximum number of vGPUs available for each GPU. Once the maximum is exhausted, no profiles can be selected for the remaining vGPUs and those devices cannot be configured.
+
+Example ([NVIDIA A2 GPU](https://docs.nvidia.com/grid/15.0/grid-vgpu-user-guide/index.html#vgpu-types-nvidia-a2)):
+
+If you select the `NVIDIA A2-4Q` profile, you can only configure 4 vGPU devices. Once those devices are configured, you cannot select any profiles for the remaining vGPUs.
+
 ![](/img/v1.3/advanced/nvidia-a2-example.png)
-
-Once 4 vGPU devices are setup, the remaining vGPU devices can no longer be configured.
-
 
 ### Technical Deep dive
 
-The pcidevices controller introduces to new CRD's
-* sriovgpudevices.devices.harvesterhci.io
-* vgpudevices.devices.harvesterhci.io
+pcidevices-controller introduces the following CRDs:
 
-On boot the pcidevices controller scans the host for NVIDIA GPU's which support SRIOV vGPU devices. When such devices are found they are represented as a CRD as shown below.
+- sriovgpudevices.devices.harvesterhci.io  
+- vgpudevices.devices.harvesterhci.io  
+
+On boot, pcidevices-controller scans the host for NVIDIA GPUs that support SR-IOV vGPU devices. When such devices are found, they are represented as a CRD.
+
+Example:
 
 ```
 apiVersion: devices.harvesterhci.io/v1beta1
