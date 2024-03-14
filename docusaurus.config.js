@@ -38,14 +38,18 @@ const config = {
           showLastUpdateTime: true,
           editUrl: "https://github.com/harvester/docs/edit/main/",
           docItemComponent: "@theme/ApiItem", 
-          lastVersion: 'v1.2',
+          lastVersion: 'v1.3',
           versions: {
             current: {
-              label: 'v1.3 (dev)',
+              label: 'v1.4 (dev)',
+              path: 'v1.4',
+            },
+            "v1.3": {
+              label: 'v1.3 (latest)',
               path: 'v1.3',
+              banner: `none`
             },
             "v1.2": {
-              label: 'v1.2 (latest)',
               path: 'v1.2',
               banner: `none`
             },
@@ -246,21 +250,27 @@ const config = {
         docsPluginId: "classic", // e.g. "classic" or the plugin-content-docs id
         config: {
           api: { // "api" is considered the <id> that you will reference in the CLI
-            specPath: "api/v1.2-swagger.json", // path or URL to the OpenAPI spec
+            specPath: "api/v1.3-swagger.json", // path or URL to the OpenAPI spec
             outputDir: "docs/api", // output directory for generated *.mdx and sidebar.js files
             sidebarOptions: {
               groupPathsBy: "tag", // generate a sidebar.js slice that groups operations by tag
               categoryLinkSource: "tag",
             },
-            version: "v1.2", // Current version
-            label: "v1.2", // Current version label
-            baseUrl: "/dev/api", // Leading slash is important
+            version: "v1.3", // Current version
+            label: "v1.3", // Current version label
+            baseUrl: "/category/api", // Leading slash is important
             versions: {
+              "v1.2": {
+                specPath: "api/v1.2-swagger.json",
+                outputDir: "versioned_docs/version-v1.2/api", // No trailing slash
+                label: "v1.2",
+                baseUrl: "/v1.2/category/api", // Leading slash is important
+              },
               "v1.1": {
                 specPath: "api/v1.1-swagger.json",
                 outputDir: "versioned_docs/version-v1.1/api", // No trailing slash
                 label: "v1.1",
-                baseUrl: "/v1.1/api", // Leading slash is important
+                baseUrl: "/v1.1/category/api", // Leading slash is important
               },
             },
           },
