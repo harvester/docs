@@ -129,7 +129,7 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 
   ![](/img/v1.2/rancher/create-custom-rke2.png)
 
-4. Follow the steps in Registration tab to run RKE2 installation command on the VM.
+1. On the **Registration** tab, perform the steps required to run the RKE2 registration command on the VM.
 
     ![](/img/v1.3/rancher/custom-cluster-registration.png)
 
