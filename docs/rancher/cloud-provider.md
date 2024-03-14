@@ -62,7 +62,7 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 ### Deploying to the Custom RKE2 Cluster with Harvester Cloud Provider (Experimental)
 
 ![](/img/v1.2/rancher/custom.png)
-1. Use `generate_addon.sh` to generate a cloud-config and place it into the directory `/etc/kubernetes/cloud-config` on every custom node.
+1. Generate cloud config data using the script `generate_addon.sh`, and then place the data on every custom node (directory: `/etc/kubernetes/cloud-config`).
 
     ```
     curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
