@@ -46,7 +46,7 @@ You can safely remove a control plane node depending on the quantity and availab
 
 - The cluster has three control plane nodes and one or more worker nodes.
 
-  When you remove a control plane node, a worker node will be promoted to control plane node. Harvester v1.3.0 allows you to assign a role to each node that joins a cluster. In earlier Harvester versions, worker nodes were randomly selected for promotion. If you prefer to promote specific nodes, please see [Role Management](./host.md#role-management) and [Harvester Configuration](../install/harvester-configuration.md#installrole) for more information.
+  When you remove a control plane node, a worker node will be promoted to control plane node randomly.
 
 - The cluster has three control plane nodes and no worker nodes.
 
