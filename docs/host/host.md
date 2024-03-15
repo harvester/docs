@@ -33,30 +33,122 @@ Cordoning a node marks it as unschedulable. This feature is useful for performin
 
 ## Deleting a Node
 
-Deleting a node is done in two phases:
-
-1. Delete the node from Harvester
-    - Go to the **Hosts** page
-    - On the node you want to modify, click **⋮ > Delete**
-
-2. Uninstall RKE2 from the node
-    - Login to the node as root
-    - Run `rke2-uninstall.sh` to delete the whole RKE2 service.
-
 :::caution
 
-You will lose all data of the control plane node after deleting the RKE2 service.
+Before removing a node from a Harvester cluster, determine if the remaining nodes have enough computing and storage resources to take on the workload from the node to be removed. Check the following:
+
+- Current resource usage in the cluster (on the **Hosts** screen of the Harvester UI)
+- Ability of the remaining nodes to maintain enough replicas for all volumes
+
+If the remaining nodes do not have enough resources, VMs might fail to migrate and volumes might degrade when you remove a node.
 
 :::
+
+### 1. Check if the node can be removed from the cluster.
+
+You can safely remove a control plane node depending on the quantity and availability of other nodes in the cluster.
+
+- The cluster has three control plane nodes and one or more worker nodes.
+
+  When you remove a control plane node, a worker node will be promoted to control plane node. Harvester v1.3.0 allows you to assign a role to each node that joins a cluster. In earlier Harvester versions, worker nodes were randomly selected for promotion. If you prefer to promote specific nodes, please see [Role Management](./host.md#role-management) and [Harvester Configuration](../install/harvester-configuration.md#installrole) for more information.
+
+- The cluster has three control plane nodes and no worker nodes.
+
+  You must add a new node to the cluster before removing a control plane node. This ensures that the cluster always has three control plane nodes and that a quorum can be formed even if one control plane node fails.
+
+- The cluster has only two control plane nodes and no worker nodes.
+
+  Removing a control plane node in this situation is not recommended because etcd data is not replicated in a single-node cluster. Failure of a single node can cause etcd to lose its quorum and shut the cluster down.
+
+
+### 2. Check the status of volumes.
+
+1. Access the [embedded Longhorn UI](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards).
+
+1. Go to the **Volume** screen.
+
+1. Verify that the state of all volumes is **Healthy**.
+
+### 3. Evict replicas from the node to be removed.
+
+1. Access the [embedded Longhorn UI](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards).
+
+1. Go to the **Node** screen.
+1. Select the node that you want to remove, click the icon in the **Operation** column, and then select **Edit node and disks**.
+
+1. Configure the following settings:
+
+    - **Node Scheduling**: Select **Disable**.
+    - **Evict Requested**" Select **True**.
+
+1. Click **Save**.
+
+1. Go back to the **Node** screen and verify that **Replicas** value for the node to be removed is **0**.
+
+
+:::info important
+Eviction cannot be completed if the remaining nodes cannot accept replicas from the node to be removed. In this case, some volumes will remain in the **Degraded** state until you add more nodes to the cluster.
+:::
+
+### 4. Manage non-migratable VMs.
+
+[Live migration](../vm/live-migration.md) cannot be performed for VMs with certain properties.
+
+- The VM has PCI passthrough devices or vGPU devices.
+
+  A PCI device is bound to a node. You must remove the PCI device from the VM, or delete the VM and then create a new VM from a backup or snapshot.
+
+- The VM has a node selector or affinity rules that bind it to the node to be removed.
+
+  You must change the node selector or affinity rules.
+
+- The VM is on a VM network that binds it to the node to be removed.
+
+  You must select a different VM network.
+
+:::tip
+Create a backup or snapshot for each non-migratable VM before modifying the settings that bind it to the node that you want to remove.
+:::
+
+### 5. Evict workloads from the node to be removed.
+
+If your cluster is running Harvester v1.1.2 or later, you can enable [Maintenance Mode](./host.md#node-maintenance) on the node to automatically live-migrate VMs and workloads. You can also [manually live-migrate](/vm/live-migration.md#starting-a-migration) VMs to other nodes.
+
+All workloads have been successfully evicted if the node state is **Maintenance**.
+
+![node-maintain-completed.png](/img/v1.3/host/node-maintain-completed.png)
+
+:::info important
+If a cluster has only two control plane nodes, Harvester does not allow you to enable Maintenance Mode on any node. You can manually drain the node to be removed using the following command:
+
+```
+kubectl drain <node_name> --force --ignore-daemonsets --delete-local-data --pod-selector='app!=csi-attacher,app!=csi-provisioner'
+```
+
+Again, removing a control plane node in this situation is **not recommended** because etcd data is not replicated. Failure of a single node can cause etcd to lose its quorum and shut the cluster down.
+:::
+
+### 6. Remove the node.
+
+1. On the Harvester UI, go to the **Hosts** screen.
+
+1. Locate the node that you want to remove, and then click **⋮ > Delete**.
+
+![delete.png](/img/v1.2/host/delete-node.png)
+
+### 7. Delete RKE2 services on the node.
+
+1. Log in to the node using the root account.
+
+1. Run the script `/opt/rke2/bin/rke2-uninstall.sh`.
 
 :::note
 
 There's a [known issue](https://github.com/harvester/harvester/issues/1497) about node hard delete.
-Once resolved, the last step can be skipped.
+Once resolved, you can skip this step.
 
 :::
 
-![delete.png](/img/v1.2/host/delete-node.png)
 
 ## Role Management
 
