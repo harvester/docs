@@ -20,7 +20,7 @@ steps:
 
   - name: build
     image: node:18-alpine
-     env:
+    env:
           NODE_OPTIONS: "--max_old_space_size=7168"
     commands:
       - yarn build
@@ -62,7 +62,7 @@ steps:
 
   - name: build
     image: node:18-alpine
-     env:
+    env:
           NODE_OPTIONS: "--max_old_space_size=7168"
     commands:
       - yarn build
