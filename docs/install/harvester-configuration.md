@@ -540,6 +540,21 @@ install:
   persistent_partition_size: 150Gi
 ```
 
+### `install.skipchecks`
+
+#### Definition
+
+The installer automatically checks if the hardware meets the [minimum requirements](./requirements/#hardware-requirements) for production use. If any of the checks fail, installation is stopped, and warnings are printed to the system console and saved to `/var/log/console.log` in the installation environment.
+
+To override this behavior, set `install.skipchecks=true`. When set to `true`, warning messages are still saved to `/var/log/console.log`, but the installation proceeds even if hardware requirements for production use are not met.
+
+#### Example
+
+```yaml
+install:
+  skipchecks: true
+```
+
 ### `install.tty`
 
 #### Definition
