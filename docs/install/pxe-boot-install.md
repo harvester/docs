@@ -29,9 +29,7 @@ To see sample iPXE scripts, please visit [Harvester iPXE Examples](https://githu
 Nodes need to have at least **8 GiB** of RAM because the installer loads the full ISO file into tmpfs.
 
 :::info
-The installer automatically checks if the hardware meets the [minimum requirements](https://docs.harvesterhci.io/v1.3/install/requirements/#hardware-requirements) for production use. If any of the checks fail, installation is stopped, and warnings are printed to the system console and saved to `/var/log/console.log` in the installation environment.
-
-To override this behavior, set the kernel parameter `harvester.install.skipchecks=true`. When set to `true`, warning messages are still saved to `/var/log/console.log`, but the installation proceeds even if hardware requirements for production use are not met.
+The installer automatically checks if the hardware meets the [minimum requirements](./requirements/#hardware-requirements) for production use. If any of the checks fail, installation will be stopped. To override this behavior, set either the [configuration file option](./harvester-configuration/#installskipchecks) `install.skipchecks=true` or the [kernel parameter](#harvesterinstallskipcheckstrue) `harvester.install.skipchecks=true`.
 :::
 
 ## Preparing HTTP Servers
