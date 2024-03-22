@@ -16,7 +16,7 @@ Some situations may require you to avoid deploying workloads and user data to ma
 
 Witness nodes do not store any data, but the [hardware recommendations](https://etcd.io/docs/v3.3/op-guide/hardware/) for etcd nodes must still be considered. Using hardware with limited resources significantly affects cluster performance, as described in the article [Slow etcd performance (performance testing and optimization)](https://www.suse.com/support/kb/doc/?id=000020100). 
 
-Harvester v1.3.0 supports clusters with two management nodes and one witness node. For more information about node roles in Harvester, see [Role Management](../host/host.md#role-management).
+Harvester v1.3.0 supports clusters with two management nodes and one witness node (and optionally, one or more worker nodes). For more information about node roles in Harvester, see [Role Management](../host/host.md#role-management).
 
 
 :::info important
@@ -52,11 +52,20 @@ The witness node only runs the following essential workloads:
 
 The general upgrade requirements and procedures apply to clusters with a witness node. However, the existence of degraded volumes in such clusters may cause upgrade operations to fail. 
 
+## Longhorn Replicas in Clusters with a Witness Node
+
+Harvester uses Longhorn, a distributed block storage system, for management of block device volumes. Longhorn is provisioned to management and worker nodes but not to witness nodes, which do not store any data.
+
+Longhorn creates replicas of each volume to increase availability. Replicas contain a chain of snapshots of the volume, with each snapshot storing the change from a previous snapshot. In Harvester, the default StorageClass `harvester-longhorn` has a replica count value of `3`.
+
 ## Limitations
 
-The witness node does not store any data so only two replicas are created for each Longhorn volume in the cluster. However, the default StorageClass `harvester-longhorn` has a replica count value of `3` for high availability. If you use this StorageClass to create volumes, Longhorn is unable to create the configured number of replicas. This results in volumes being marked as **Degraded** on the Longhorn UI.
+Witness nodes do not store any data. This means that in three-node clusters (no worker nodes), only two replicas are created for each Longhorn volume. However, the default StorageClass `harvester-longhorn` has a replica count value of `3` for high availability. If you use this StorageClass to create volumes, Longhorn is unable to create the configured number of replicas. This results in volumes being marked as **Degraded** on the Longhorn UI.
 
-To resolve this issue, create a new *default* StorageClass with the **Number of Replicas** parameter set to **2**. This ensures that only two replicas are created for each Longhorn volume.
+In summary, you must use a StorageClass that matches the cluster configuration.
+
+- 2 management nodes + 1 witness node: Create a new default StorageClass with the **Number of Replicas** parameter set to **2**. This ensures that only two replicas are created for each Longhorn volume.
+- 2 management nodes + 1 witness node + 1 or more worker nodes: You can use the existing default StorageClass.
   
 ![new storageclass replica 2](/img/v1.3/advanced/new-storageclass-rep-2.png)
 ![set to default](/img/v1.3/advanced/set-to-default-sc.png)
