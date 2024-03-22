@@ -425,6 +425,20 @@ os:
     mylabel: myvalue
 ```
 
+### `os.sshd.sftp`
+
+#### Definition
+
+Subsystem used to configure the OpenSSH Daemon (sshd). Harvester currently only supports `sftp`.
+
+#### Example
+
+```yaml
+os:
+  sshd:
+    sftp: true  #  The SFTP subsystem is enabled.
+```
+
 ### `install.mode`
 
 #### Definition
