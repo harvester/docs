@@ -18,7 +18,7 @@ Harvester uses the planned infrastructure network so you must ensure that networ
 
 ## Install and Enable the vm-dhcp-controller Add-On
 
-The vm-dhcp-controller add-on is not packed into the Harvester ISO, but you can download it from the [expreimental-addons repository](https://github.com/harvester/experimental-addons). You can install the add-on by running the following command:
+The vm-dhcp-controller add-on is not packed into the Harvester ISO, but you can download it from the [experimental-addons repository](https://github.com/harvester/experimental-addons). You can install the add-on by running the following command:
 
 ```shell
 kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/main/harvester-vm-dhcp-controller/harvester-vm-dhcp-controller.yaml
