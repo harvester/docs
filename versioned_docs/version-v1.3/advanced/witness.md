@@ -56,6 +56,14 @@ The general upgrade requirements and procedures apply to clusters with a witness
 
 The witness node does not store any data so only two replicas are created for each Longhorn volume in the cluster. However, the default StorageClass `harvester-longhorn` has a replica count value of `3` for high availability. If you use this StorageClass to create volumes, Longhorn is unable to create the configured number of replicas. This results in volumes being marked as **Degraded** on the Longhorn UI.
 
+The above case only happens when you use the three-node cluster, which means this cluster does not contain any worker nodes. The Longhorn replica could be scheduled for either the worker or management nodes.
+
+:::note
+It can be summarized as follows:
+- Three-node cluster (two management nodes and one witness node): You need to create a new StorageClass with the replica count set to `2`.
+- More than three nodes cluster: No need to do anything.
+:::
+
 To resolve this issue, create a new *default* StorageClass with the **Number of Replicas** parameter set to **2**. This ensures that only two replicas are created for each Longhorn volume.
   
 ![new storageclass replica 2](/img/v1.3/advanced/new-storageclass-rep-2.png)
