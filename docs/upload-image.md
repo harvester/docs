@@ -96,3 +96,6 @@ You can add labels to the image, which will help identify the OS type more accur
 If your image name or URL contains any valid information, the UI will automatically recognize the OS type and image category for you. If not, you can also manually specify those corresponding labels on the UI.
 
 ![](/img/v1.2/image-labels.png)
+
+### Download Images
+Explanation for downloading images from Harvester GUI
