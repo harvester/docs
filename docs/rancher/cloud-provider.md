@@ -64,13 +64,33 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 ![](/img/v1.2/rancher/custom.png)
 1. Generate cloud config data using the script `generate_addon.sh`, and then place the data on every custom node (directory: `/etc/kubernetes/cloud-config`).
 
-    ```
+    ```bash
     curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
     ```
 
+    :::note
+
+    The `generate_addon.sh` script depends on `kubectl` and `jq` to operate the Harvester cluster.
+
+    The script needs access to the `Harvester Cluster` kubeconfig to work. You can find the `kubeconfig` file from one of the Harvester management nodes in the `/etc/rancher/rke2/rke2.yaml` path. The content is like following. Remember to change server IP to the VIP address.
+
+    ```yaml
+    apiVersion: v1
+    clusters:
+    - cluster:
+        certificate-authority-data: <redacted>
+        server: https://127.0.0.1:6443
+      name: default
+    # ...
+    ```
+
+    The namespace needs to be the namespace in which the guest cluster will be created.
+
+    :::
+
     The output will look as follows:
 
-    ```
+    ```yaml
     ########## cloud config ############
     apiVersion: v1
     clusters:
@@ -100,16 +120,6 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
       path: /etc/kubernetes/cloud-config
       permissions: '0644'
     ```
-
-    :::note
-
-    The `generate_addon.sh` script depends on `kubectl` and `jq` to operate the Harvester cluster.
-
-    The script needs access to the `Harvester Cluster` kubeconfig to work. You can find the `kubeconfig` file from one of the Harvester management nodes in the `/etc/rancher/rke2/rke2.yaml` path.
-
-    The namespace needs to be the namespace in which the guest cluster will be created.
-
-    :::
 
 1. Create a VM in the Harvester cluster with the following settings:
 
