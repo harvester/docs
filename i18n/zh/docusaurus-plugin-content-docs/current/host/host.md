@@ -1,5 +1,4 @@
 ---
-id: host-management
 sidebar_position: 1
 sidebar_label: 主机管理
 title: "主机管理"
@@ -93,7 +92,7 @@ Admin 用户可以点击 **Enable Maintenance Mode** 来自动驱逐节点中所
 
 :::note
 
-如果你在 QEMU 环境中测试 Harvester，你需要使用 QEMU v6.0 或更高版本。以前版本的 QEMU 将始终为 NVMe 磁盘模拟生成相同的 WWN，这将导致 Harvester 不添加其他磁盘。
+如果你在 QEMU 环境中测试 Harvester，你需要使用 QEMU v6.0 或更高版本。以前版本的 QEMU 将始终为 NVMe 磁盘模拟生成相同的 WWN，这将导致 Harvester 不添加其他磁盘。但是，你仍然可以使用 SCSI 控制器来添加虚拟磁盘。WWN 信息可以与磁盘附加操作一起手动添加。有关更多详情，请参阅[脚本](https://github.com/harvester/vagrant-rancherd/blob/2782981b6017754d016f5b72d630dff4895f7ad6/scripts/attach-disk.sh#L75)。
 
 :::
 

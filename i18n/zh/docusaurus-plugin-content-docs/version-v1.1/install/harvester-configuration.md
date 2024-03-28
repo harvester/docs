@@ -58,7 +58,8 @@ install:
       hwAddr: "B8:CA:3A:6A:64:7C"
     method: dhcp
   force_efi: true
-  device: /dev/vda
+  device: /dev/sda
+  data_disk: /dev/sdb
   silent: true
   iso_url: http://myserver/test.iso
   poweroff: true
@@ -415,6 +416,8 @@ install:
 
 用于安装操作系统的设备。
 
+如果你的机器通过 PXE 安装包含了多个物理存储设备，最好使用 `/dev/disk/by-id/$id` 或 `/dev/disk/by-path/$path` 来指定存储设备。
+
 ### `install.silent`
 
 保留。
@@ -510,6 +513,8 @@ _从 v1.0.1 起可用_
 
 设置默认存储设备来存储 VM 数据。
 
+如果你的机器通过 PXE 安装包含了多个物理存储设备，最好使用 `/dev/disk/by-id/$id` 或 `/dev/disk/by-path/$path` 来指定存储设备。
+
 默认值：与 [`install.device`](#installdevice) 设置的存储设备相同
 
 #### 示例
@@ -517,6 +522,31 @@ _从 v1.0.1 起可用_
 ```yaml
 install:
   data_disk: /dev/sdb
+```
+
+### `install.harvester.storage_class.replica_count`
+
+_从 v1.1.2 起可用_
+
+#### 定义
+
+设置 Harvester 默认存储类 `harvester-longhorn` 的副本数。
+
+默认值：3
+
+支持值：1、2、3。所有其他值均视为 3。
+
+在边缘场景中，用户可能部署单节点 Harvester 集群，因此可以将该值设置为 1。在大多数场景下，为了实现存储高可用，建议你保留默认值 3。
+
+有关更多信息，请参阅 [longhorn-replica-count](https://longhorn.io/docs/1.4.1/references/settings/#default-replica-count)。
+
+#### 示例
+
+```yaml
+install:
+  harvester:
+    storage_class:
+      replica_count: 1
 ```
 
 ### `system_settings`

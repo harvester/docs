@@ -498,5 +498,9 @@
   "sidebar.api.doc.List Virtual Machines For All Namespaces": {
     "message": "List Virtual Machines For All Namespaces",
     "description": "The label for the doc item List Virtual Machines For All Namespaces in sidebar api, linking to the doc api/list-virtual-machine-for-all-namespaces"
+  },
+  "sidebar.docs.category.Available Addons": {
+    "message": "可用插件",
+    "description": "The label for category Available Addons in sidebar docs"
   }
 }

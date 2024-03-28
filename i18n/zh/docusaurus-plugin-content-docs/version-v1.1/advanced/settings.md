@@ -1,5 +1,4 @@
 ---
-id: index
 sidebar_position: 1
 sidebar_label: 设置
 title: "设置"
@@ -389,6 +388,10 @@ https://your.upgrade.checker-url/v99/checkupgrade
 当节点不可用时，强制重新调度虚拟机。当节点状态变成 `Not Ready` 时，此设置会强制删除该节点上的虚拟机，并在几秒后将虚拟机重新调度到另一个可用的节点。 Harvester 升级检查配置 URL。
 
 默认值：`{"enable":true, "period":300}`
+
+:::note
+主机不可用或断电时，虚拟机只会重启，不会迁移。
+:::
 
 #### 示例
 

@@ -71,11 +71,6 @@ _从 v1.1.0 起可用_
 
 ![](/img/v1.2/troubleshooting/support-access-embedded-ui.png)
 
-如果你使用旧的版本，你可以通过以下方式手动访问：
-- `https://{{HARVESTER_IP}}/dashboard/c/local/explorer` (Embedded Rancher)
-- `https://{{HARVESTER_IP}}/dashboard/c/local/longhorn` (Embedded Longhorn)
-
-
 :::note
 
 我们仅支持使用嵌入式 Rancher 和 Longhorn 仪表板进行调试和验证。
@@ -112,3 +107,49 @@ setting.harvesterhci.io/ssl-parameters edited
 ```
 
 你也可以进一步检查 `rke2-ingress-nginx-controller` Pod 的日志，来确认 NGINX Ingress Controller 是否能正常运行。
+
+
+## 网络接口未显示
+
+由于接口未显示，你可能需要帮助才能查找具有 10G 上行链路的正确接口。当 ixgbe 模块由于检测到不支持的 SFP+ 模块类型而无法加载时，上行链路不会显示。
+
+#### 如何识别不受支持的 SFP 问题？
+
+执行命令 `lspci | grep -i net` 查看​​连接到主板的网卡端口数。你可以运行命令 `ip a` 收集检测到的接口的信息。如果检测到的接口数量少于已识别的 NIC 端口数量，那么问题可能是由于使用了不受支持的 SFP+ 模块而引起的。
+
+##### 测试
+
+你可以执行简单的测试来验证问题是否由不支持的 SFP+ 造成的。在运行的节点上执行以下步骤：
+
+1. 使用以下内容手动创建文件 `/etc/modprobe.d/ixgbe.conf`：
+
+```
+options ixgbe allow_unsupported_sfp=1
+```
+
+1. 然后运行以下命令：
+
+```
+rmmod ixgbe && modprobe ixgbe
+```
+
+如果上述步骤成功并且显示缺少的接口，我们可以确认问题是不受支持的 SFP+。不过，上述测试并不是永久性的，重启后会被刷新。
+
+#### 解决方案
+
+由于支持问题，Intel 限制其 NIC 上使用的 SFP 类型。要让上述更改持久存在，建议在安装过程中将以下内容添加到 [config.yaml](/install/harvester-configuration.md) 中。
+
+```YAML
+os:
+  write_files:
+  - content: |
+     options ixgbe allow_unsupported_sfp=1
+    path: /etc/modprobe.d/ixgbe.conf
+  - content: |
+      name: "reload ixgbe module"
+      stages:
+        boot:
+          - commands:
+            - rmmod ixgbe && modprobe ixgbe
+    path: /oem/99_ixgbe.yaml
+```

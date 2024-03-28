@@ -6,7 +6,7 @@ title: "存储网络"
 
 Harvester 内置 Longhorn 作为存储系统，用于为 VM 和 Pod 提供块设备卷。如果用户希望将 Longhorn 复制流量与 Kubernetes 集群网络（即管理网络）或其它集群工作负载隔离开来，用户可以为 Longhorn 复制流量分配一个专用的存储网络来提高网络带宽和性能。
 
-有关更多信息，请参阅 [Longhorn存储网络](https://longhorn.io/docs/1.3.2/advanced-resources/deploy/storage-network/)。
+有关更多信息，请参阅 [Longhorn 存储网络](https://longhorn.io/docs/1.3.2/advanced-resources/deploy/storage-network/)。
 
 :::note
 
@@ -25,6 +25,7 @@ Harvester 内置 Longhorn 作为存储系统，用于为 VM 和 Pod 提供块设
    - `kubectl get -A vmi`
 - 停止了连接到 Longhorn 卷的所有 Pod。
    - 用户可以使用 Harvester 存储网络设置跳过此步骤。Harvester 将自动停止与 Longhorn 相关的 Pod。
+- 所有正在进行的镜像上传或下载操作都应已完成或删除。
 
 :::caution
 
@@ -48,8 +49,12 @@ kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/de
    - 如需更多信息，请参阅网络页面，然后配置 `Cluster Network` 和 `VLAN Config`，但不要配置 `Network`。
 - 存储网络的 IP 范围
    - IP 范围不能与 Kubernetes 集群网络冲突或重叠（`10.42.0.0/16`、`10.43.0.0/16`、`10.52.0.0/16` 和 `10.53.0.0/16` 是保留的）。
-   - IP 范围格式是 IPv4 CIDR，而且是集群节点数的 4 倍。Longhorn 将为每个节点使用 2 个 IP，升级过程中会同时运行两个版本的 Longhorn。在升级过程中，每个节点将消耗 4 个 IP。
-   - 如果你的集群有 250 个节点，则 IP 范围应大于 `/22`。
+   - IP 范围应采用 IPv4 CIDR 格式，并且 Longhorn Pod 使用存储网络，如下所示：
+      - `instance-manger-e` 和 `instance-manager-r` Pod：每个节点需要 2 个 IP。升级过程中，这些 Pod 会存在两个版本（旧版本和新版本），升级成功后旧版本将被删除。
+      - `backing-image-ds` pod：用于处理后台镜像数据源的动态上传和下载。镜像上传或下载完成后，这些 Pod 将被删除。
+      - `backing-image-manager` Pod：每个磁盘 1 个 IP，类似于 instance manager Pod。升级过程中，两个版本将共存，升级完成后旧版本将被删除。
+      - 所需的 IP 数量使用此公式计算：`所需的 IP 数量 = 节点数量 * 4 + 磁盘数量 * 2 + 要下载/上传的镜像数量`。
+   - 例如，如果你的集群有 5 个节点，每个节点有 2 个磁盘，同时上传 10 个镜像，则 IP 范围应大于或等于 `/26` (`5 * 4 + 5 * 2 * 2 + 10 = 50`）。
 
 
 我们将使用下面的配置为例来详细说明存储网络：
@@ -142,7 +147,7 @@ value: '{"vlan":100,"clusterNetwork":"storage","range":"192.168.0.0/24"}'
 
 Harvester 还将创建一个新的 NetworkAttachmentDefinition 并更新 Longhorn Storage Network 设置。
 
-Longhorn 设置更新后，Longhorn 将重新启动所有 `instance-manager-r` 和 `instance-manager-e` 以应用新的网络配置，并且 Harvester 将重新启动 Pod。
+更新 Longhorn 设置后，Longhorn 将重启所有 `instance-manager-r`、`instance-manager-e` 和 `backing-image-manager` Pod 来应用新的网络配置，并且 Harvester 将重启 Pod。
 
 :::note
 
@@ -185,8 +190,42 @@ status:
 
 #### 步骤 2
 
-- 检查所有 Longhorn `instance-manager-e` 和 `instance-manager-r` 是否准备就绪以及网络是否正确。
-- 检查注释 `k8s.v1.cni.cncf.io/network-status` 是否具有名为 `lhnet1` 的接口并且 IP 地址在 IP 范围内。
+验证所有 Longhorn `instance-manager-e`、`instance-manager-r` 和 `backing-image-manager` Pod 的准备情况，并确认他们的网络配置正确。
+
+执行以下命令来检查 Pod 的详细信息：
+
+```bash
+kubectl -n longhorn-system describe pod <pod-name>
+```
+
+如果你遇到类似以下的事件，则存储网络可能已耗尽其可用 IP：
+
+```bash
+Events:
+  Type     Reason                  Age                    From     Message
+  ----     ------                  ----                   ----     -------
+  ....
+
+  Warning  FailedCreatePodSandBox  2m58s                  kubelet  Failed to create pod sandbox: rpc error: code = Unknown desc = failed to setup network for
+ sandbox "04e9bc160c4f1da612e2bb52dadc86702817ac557e641a3b07b7c4a340c9fc48": plugin type="multus" name="multus-cni-network" failed (add): [longhorn-system/ba
+cking-image-ds-default-image-lxq7r/7d6995ee-60a6-4f67-b9ea-246a73a4df54:storagenetwork-sdfg8]: error adding container to network "storagenetwork-sdfg8": erro
+r at storage engine: Could not allocate IP in range: ip: 172.16.0.1 / - 172.16.0.6 / range: net.IPNet{IP:net.IP{0xac, 0x10, 0x0, 0x0}, Mask:net.IPMask{0xff,
+0xff, 0xff, 0xf8}}
+
+  ....
+```
+
+请重新配置存储网络，使其具有足够的 IP 范围。
+
+:::note
+
+如果存储网络的 IP 已用完，你在上传/下载镜像时可能会遇到相同的错误。请删除相关镜像并重新配置存储网络，使其具有足够的 IP 范围。
+
+:::
+
+#### 步骤 3
+
+检查 `k8s.v1.cni.cncf.io/network-status` 注释，确保存在名为 `lhnet1` 的接口，并且 IP 地址在指定的 IP 范围内。
 
 用户可以使用以下命令来列出所有 Longhorn Instance Manager：
 

@@ -1,5 +1,4 @@
 ---
-id: index
 sidebar_position: 1
 sidebar_label: 创建虚拟机
 title: "创建虚拟机"
@@ -34,6 +33,8 @@ Description: 从"虚拟机"页面创建一个或多个虚拟机。
 1. 如果需要配置网络，前往 **Networks** 选项卡。
    1. **Management Network** 是默认添加的。如果配置了 VLAN 网络，则可以去掉它。
    1. 你还可以使用 VLAN 网络向 VM 添加其他网络。你可以先在 **Advanced > Networks** 上配置 VLAN 网络。
+1. （可选）在 **Node Scheduling** 选项卡中设置节点亲和性规则。
+1. （可选）在 **VM Scheduling** 选项卡中设置工作负载亲和性规则。
 1. 运行策略、操作系统类型和 cloud-init 数据等高级选项是可选的。你可以在 **Advanced Options** 选项卡中进行配置。
 
 ![create-vm](/img/v1.2/vm/create-vm.png)
@@ -95,6 +96,19 @@ Description: 从"虚拟机"页面创建一个或多个虚拟机。
 你也可以使用 Harvester 的内置 [VLAN 网络](../networking/harvester-network.md) 来辅助网络连接虚拟机。
 
 在网桥 VLAN 中，虚拟机通过 Linux `bridge` 连接到主机网络。网络 IPv4 地址通过 DHCPv4 分配给虚拟机。虚拟机需要配置为使用 DHCP 来获取 IPv4 地址。
+
+## 节点调度
+`节点调度`支持根据节点标签来限制虚拟机可以调度到哪些节点。
+
+有关更多信息，请参阅 [Kubernetes 节点亲和性文档](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity)。
+
+## 虚拟机调度
+
+`虚拟机调度`支持根据已在节点上运行的工作负载（VM 和 Pod）标签（而不是节点标签）来限制可以在哪些节点上调度虚拟机。
+
+例如，你可以结合 `Required` 与 `Affinity`，指示调度程序将来自两个服务的虚拟机放在同一区域中，从而提高通信效率。同样，你也可以结合使用 `Preferred` 与 `Anti-Affinity` 来跨多个区域分发特定服务的虚拟机，从而提高可用性。
+
+有关更多信息，请参阅 [Kubernetes Pod 亲和性和反亲和性文档](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity)。
 
 ## 高级选项
 

@@ -1,5 +1,4 @@
 ---
-id: index
 sidebar_position: 1
 sidebar_label: 升级 Harvester
 title: "升级 Harvester"
