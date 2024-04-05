@@ -51,7 +51,7 @@ The following diagram shows the relationship between a cluster network, a networ
 
 All `Network Configs` and `VM Networks` are grouped under a cluster network. 
 
-- A label can be assigned to each host to categorize hosts based on their network specifications.  
+- A label can be assigned to each host to categorize hosts based on their network specifications.
 - A network config can be added for each group of hosts using a node selector. 
 
 For example, in the diagram above, the hosts in `ClusterNetwork-A` are divided into three groups as follows:
@@ -85,6 +85,14 @@ If there is no need for traffic separation, you can put all your network under t
 
 You are allowed to add the custom cluster network, which will not be available until it's enabled on some hosts by adding a network configuration.
 
+:::note
+
+Before creating a new cluster network, ensure that the [hardware requirements](../install/requirements.md#hardware-requirements) are met.
+
+The [witness node](../advanced/witness.md) is generally not involved in the custom cluster network.
+
+:::
+
 #### How to create a new cluster network
 
 1. To create a cluster network, go to the **Networks > ClusterNetworks/Configs** page and click the **Create** button. You only need to specify the name.
@@ -98,6 +106,12 @@ You are allowed to add the custom cluster network, which will not be available u
 3. In the **Node Selector** tab, specify the name and choose one of the three methods to select nodes where the network configuration will apply. If you want to cover the unselected nodes, you can create another network configuration.
 
    ![](/img/v1.2/networking/select-nodes.png)
+
+:::note
+
+The method **Select all nodes** works only when all nodes use the exact same dedicated NICs for this specific custom cluster network. In other situations (for example, when the cluster has a [witness node](../advanced/witness.md)), you must select either of the remaining methods.
+
+:::
 
 4. Click the **Uplink** tab to add the NICs, and configure the bond options and link attributes. The bond mode defaults to `active-backup`.
     
@@ -113,5 +127,7 @@ You are allowed to add the custom cluster network, which will not be available u
 :::note
 
 Starting with Harvester v1.1.2, Harvester supports updating network configs. Make sure to stop all affected VMs before updating network configs.
+
+To simplify cluster maintenance, create one network configuration for each node or group of nodes. Without dedicated network configurations, certain maintenance tasks (for example, replacing old NICs with NICs in different slots) will require you to stop and/or migrate the affected VMs before updating the network configuration.
 
 :::
