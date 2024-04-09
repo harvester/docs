@@ -45,7 +45,6 @@ The [nvidia-driver-toolkit](./addons/nvidiadrivertoolkit.md) addon needs to be e
 
   After you select the first profile, the NVIDIA driver automatically configures the profiles available for the remaining vGPUs.
   :::
-:::
 
 1. Attach the vGPU to a new or existing VM.
 
