@@ -15,18 +15,23 @@ With Rancher's virtualization management capabilities, you can import and manage
 
 Additionally, Harvester leverages Rancher's existing capabilities, such as [authentication](https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/authentication-config) and [RBAC control](https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/manage-role-based-access-control-rbac), to provide full multi-tenancy support.
 
+Please refer to the [Harvester & Rancher Support Matrix](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/) to find a desired Rancher version. You can use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:
+ - [AWS](https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/deploy-rancher-manager) (uses Terraform)
+ - [AWS Marketplace](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/aws-marketplace) (uses Amazon EKS)
+ - [Azure](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/azure) (uses Terraform)
+ - [DigitalOcean](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/digitalocean) (uses Terraform)
+ - [GCP](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/gcp) (uses Terraform)
+ - [Hetzner Cloud](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/hetzner-cloud) (uses Terraform)
+ - [Vagrant](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/vagrant)
+ - [Equinix Metal](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/equinix-metal)
+ - [Outscale](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/outscale-qs) (uses Terraform)
+ - [Manual Install](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli)
+
 ## Importing Harvester cluster
-1. Please refer to the [Harvester & Rancher Support Matrix](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/) to find a desired Rancher version. You can use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:
-    - [AWS](https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/deploy-rancher-manager) (uses Terraform)
-    - [AWS Marketplace](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/aws-marketplace) (uses Amazon EKS)
-    - [Azure](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/azure) (uses Terraform)
-    - [DigitalOcean](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/digitalocean) (uses Terraform)
-    - [GCP](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/gcp) (uses Terraform)
-    - [Hetzner Cloud](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/hetzner-cloud) (uses Terraform)
-    - [Vagrant](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/vagrant)
-    - [Equinix Metal](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/equinix-metal)
-    - [Outscale](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/outscale-qs) (uses Terraform)
-    - [Manual Install](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli)
+
+<Tabs>
+<TabItem value="ui" label="UI" default>
+
 1. Once the Rancher server is up and running, log in and click the hamburger menu and choose the **Virtualization Management** tab. Select **Import Existing** to import the downstream Harvester cluster into the Rancher server.
 ![](/img/v1.2/rancher/vm-menu.png)
 1. Specify the `Cluster Name` and click **Create**. You will then see the registration guide; please open the dashboard of the target Harvester cluster and follow the guide accordingly.
@@ -35,6 +40,61 @@ Additionally, Harvester leverages Rancher's existing capabilities, such as [auth
 ![](/img/v1.2/rancher/harv-cluster-view.png)
 1. From the Harvester UI, you can click the hamburger menu to navigate back to the Rancher multi-cluster management page.
 ![](/img/v1.2/rancher/harv-go-back.png)
+
+</TabItem>
+<TabItem value="api" label="API">
+
+1. In the Rancher K8s cluster, create a new `Cluster` resource
+
+```yaml
+apiVersion: provisioning.cattle.io/v1
+kind: Cluster
+metadata:
+  name: harvester-cluster-name
+  namespace: fleet-default
+  labels:
+    provider.cattle.io: harvester
+  annotations:
+    field.cattle.io/description: Human readable cluster description
+spec:
+  agentEnvVars: []
+```
+
+2. Wait until the `Cluster` resource has been updated with a status and read the
+   `.status.clusterName` property to obtain the cluster ID. It will take the
+   form of `c-m-foobar`
+
+3. Create a `ClusterRegistrationToken` using the cluster ID in the namespace
+   that with the same name as the cluster ID. Make sure to fill the cluster ID
+   into the cluster registration token's `.spec.clusterName` field.
+
+```yaml
+apiVersion: management.cattle.io/v3
+kind: ClusterRegistrationToken
+metadata:
+  name: default-token
+  namespace: c-m-foobar
+spec:
+  clusterName: c-m-foobar
+```
+
+4. Wait until the cluster registration token has been updated with a status.
+   Read the `.status.manifestUrl` property of the cluster registration token.
+
+5. In the Harvester cluster, patch the setting `cluster-registration-url` and
+   set its value to the URL obtained from the cluster registration token's
+   `.status.manifestUrl` property
+
+```yaml
+apiVersion: harvesterhci.io/v1beta1
+kind: Setting
+metadata:
+  name: cluster-registration-url
+value: https://rancher.example.com/v3/import/abcdefghijkl1234567890-c-m-foobar.yaml
+```
+
+</TabItem>
+</Tabs>
 
 ## Multi-Tenancy
 
