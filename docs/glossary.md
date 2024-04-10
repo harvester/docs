@@ -31,7 +31,7 @@ Group of integrated physical servers (hosts) on which the Harvester hypervisor i
 
 A three-node cluster is required to fully realize the multi-node features of Harvester, particularly high availability. Certain versions of Harvester allow you to create clusters with two management nodes and one [witness node](./advanced/witness.md) (and optionally, one or more worker nodes). You can also create [single-node clusters](./advanced/singlenodeclusters.md) that support most Harvester features (excluding high availability, multi-replica support, and live migration).
 
-Harvester clusters can be imported into and managed by Rancher. Within the Rancher context, an imported Harvester cluster is known as a "managed server" or "downstream user cluster" (often abbreviated to "downstream cluster"). The Rancher term refers to any Kubernetes cluster that is connected to a Rancher server.
+Harvester clusters can be imported into and managed by Rancher. Within the Rancher context, an imported Harvester cluster is known as a "managed cluster" or "downstream user cluster" (often abbreviated to "downstream cluster"). The Rancher term refers to any Kubernetes cluster that is connected to a Rancher server.
 
 Certain versions of Harvester and Rancher allow you to deploy container workloads directly to Harvester clusters (with some limitations). When this [experimental feature](./rancher/rancher-integration/#harvester-baremetal-container-workload-support-experimental) is enabled, container workloads seamlessly interact with VM workloads.
 
