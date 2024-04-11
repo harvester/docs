@@ -463,6 +463,10 @@ install:
       enabled: false
 ```
 
+### `install.automatic`
+
+> PENDING
+
 ### `install.data_disk` 
 
 **Versions**: v1.0.1 and later 
@@ -590,15 +594,15 @@ Harvester uses the [systemd net naming scheme](https://www.freedesktop.org/softw
 
 **Fields**:
 - `method`: Method used to assign an IP to the network. Supported values:
-  - `static`: IP and gateway addresses are manually assigned.
   - `dhcp`: Harvester requests an IP from the DHCP server.
-- `ip`: Static IP assigned to the network. This field is required if the specified method is `static`.
-- `subnet_mask`: Subnet mask of the network. This field is required if the specified method is `static`.
-- `gateway`: Gateway address assigned to the network. This field is required if the specified method is `static`.
+  - `static`: IP and gateway addresses are manually assigned.
+- `ip`: Static IP assigned to the network. This field is required when the value of `method` is `static`.
+- `subnet_mask`: Subnet mask of the network. This field is required when the value of `method` is `static`.
+- `gateway`: Gateway address assigned to the network. This field is required when the value of `method` is `static`.
 - `interfaces`: Array of network interfaces. The installer combines the specified interfaces (slaves) into a single logical bonded interface.
   - `interfaces.name`: Name of a slave interface.
   - `interfaces.hwAddr`: Hardware MAC address of a slave interface. This field is optional.
-- `bond_options`: Options for [bonded interfaces](https://www.kernel.org/doc/Documentation/networking/bonding.txt). If unspecified, the following options are used:
+- `bond_options`: Options for [bonded interfaces](https://www.kernel.org/doc/Documentation/networking/bonding.txt). When unspecified, the following options are used:
   - `mode`: balance-tlb
   - `miimon`: 100
 - `mtu`: Maximum transmission unit (MTU) for the interface.
@@ -674,7 +678,7 @@ install:
 
 ### `install.silent`
 
-> Definition: Reserved.
+> Definition: Reserved
 
 ### `install.skipchecks`
 
@@ -695,7 +699,7 @@ install:
 
 ### `install.tty`
 
-**Definition**: tty device used for the console.
+**Definition**: TTY device used for the console.
 
 **Example**:
 
@@ -704,25 +708,21 @@ install:
   tty: ttyS0,115200n8
 ```
 
----
-
 ### `install.vip`
+
+**Definition**: VIP of the Harvester management endpoint. 
+
+After installation, you can access the Harvester UI at `https://<VIP>`.
+
 ### `install.vip_mode`
-### `install.vip_hw_addr`
 
-#### Definition
+**Definition**: Mode of assigning the VIP.
 
-- `install.vip`: The VIP of the Harvester management endpoint. After installation, users can access the Harvester GUI at the URL `https://<VIP>`.
-- `install.vip_mode`
-    - `dhcp`: Harvester will send DHCP requests to get the VIP. The `install.vip_hw_addr` field needs to be provided.
-    - `static`: Harvester uses a static VIP.
-- `install.vip_hw_addr`: The hardware address corresponding to the VIP. Users must configure their on-premise DHCP server to offer the configured VIP. The field is mandatory when `install.vip_mode` is `dhcp`.
+**Supported values**:
+- `dhcp`: Harvester sends DHCP requests to get the VIP. You must specify the hardware address using the `install.vip_hw_addr` field.
+- `static`: Harvester uses a static VIP.
 
-See [Management Address](./management-address.md) for more information.
-
-#### Example
-
-Configure a static VIP.
+**Example**:
 
 ```yaml
 install:
@@ -730,7 +730,13 @@ install:
   vip_mode: static
 ```
 
-Configure a DHCP VIP.
+### `install.vip_hw_addr`
+
+**Definition**: Hardware address corresponding to the VIP. 
+
+You must configure an on-premises DHCP server to offer the configured VIP. This field is required when the value of `install.vip_mode` is `dhcp`. For more information, see [Management Address](./management-address.md).
+
+**Example**:
 
 ```yaml
 install:
@@ -739,11 +745,62 @@ install:
   vip_hw_addr: 52:54:00:ec:0e:0b
 ```
 
-webhooks: [] - MISSING
+### `install.webhooks`
 
-wipedisks: true - MISSING
+**Definition**: Webhooks that allow you to receive notifications for certain installer-related events.
 
-withnetimages: false - MISSING
+The installer sends HTTP requests to the specified URL. Multiple requests can be sent for a single event but if one request fails, the remaining requests are not sent.
+
+**Fields**:
+
+- `event`: Event type that triggers an HTTP action on the webhook. 
+  - `STARTED`: The installation has started.
+  - `SUCCEEDED`: The installation was completed without errors.
+  - `FAILED`: The installation was unsuccessful.
+- `method`: HTTP method 
+- `url`*: URL to which HTTP requests are sent
+- `insecure`: When set to `true`, Harvester does not verify the server's certificate. The default value is `false`.
+- `basicAuth`: When set to `true`, Harvester uses the "Basic" HTTP authentication scheme.
+- `headers`: When set to `true`, custom headers are included in the HTTP requests. Headers such as `Content-Length` are automatically included.
+- `payload`*: When set to `true`, payload data is sent with the HTTP requests. You may need to set the correct Content-Type header in the `headers` field to ensure that the server accepts the request.
+
+**Example**:
+
+```yaml
+install:
+  webhooks:
+    - event: SUCCEEDED
+      method: GET
+      url: http://10.100.0.100/cblr/svc/op/nopxe/system/{{.Hostname}}
+    - event: STARTED
+      method: GET
+      url: https://10.100.0.100/started/{{.Hostname}}
+      insecure: true
+      basicAuth:
+        user: admin
+        password: p@assword
+    - event: FAILED
+      method: POST
+      url: http://10.100.0.100/record
+      headers:
+        Content-Type:
+           - 'application/json; charset=utf-8'
+      payload: |
+        {
+          "host": "{{.Hostname}}",
+          "device": "hd"
+        }
+```
+
+### `install.wipedisks`
+
+> PENDING
+
+### `install.with-net-images`
+
+**Definition**: Setting that determines if images are pulled from the internet after installation.
+
+The value of this field is typically derived from the kernel parameter `harvester.install.with_net_images`. When the value is `true`, Harvester does not preload images packaged in the installation medium, and instead pulls images from the internet when necessary.
 
 ---
 
