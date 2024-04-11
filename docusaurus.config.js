@@ -75,7 +75,6 @@ const config = {
   ],
   themeConfig: {
     zoom: {},
-    /*
     algolia: {
       appId: 'U7QCSJFCWR',
       apiKey: '954c1b1327687e818ef6930a5e8f8770',
@@ -85,7 +84,6 @@ const config = {
       // Optional: path for search page that enabled by default (`false` to disable it)
       searchPagePath: 'search',
     },
-    */
     docs: {
       sidebar: {
         hideable: true,
@@ -234,16 +232,6 @@ const config = {
   },
   plugins: [
     require.resolve('docusaurus-plugin-image-zoom'),
-    /*require.resolve("@cmfcmf/docusaurus-search-local"),*/
-    [ 
-      require.resolve('docusaurus-lunr-search'), 
-      {
-        language: ['en'],
-        indexBaseUrl: true,
-        maxHits: 10,
-        highlightResult: true,
-      }
-    ],
     [
       '@docusaurus/plugin-client-redirects',
       {
