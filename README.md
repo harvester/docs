@@ -55,6 +55,21 @@ yarn build
 This command generates static content into the `build` directory and can be
 served using any static contents hosting service. The build may take a while.
 
+### Generate PDF
+
+First, the docs need to be served on a local dev server. You can do that with:
+
+```console
+yarn start > /dev/null 2>&1 &
+```
+
+When they are successfully generated and served at `localhost:3000` the PDF can
+be generated with
+
+```console
+yarn gen-pdf-docs
+```
+
 ## Deployment
 
 ```console
