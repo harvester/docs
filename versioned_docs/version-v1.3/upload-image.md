@@ -68,6 +68,29 @@ If Rancher is deployed on an RKE2 cluster, perform the following steps:
 
 3. Delete the stuck image, and then restart the upload process.
 
+#### Prolonged Uploading of Large Images in Rancher Multi-Cluster Management
+
+If you upload a very large image (over 10 GB) from the **Multi-Cluster Management** screen on the Rancher UI, the operation may take longer than usual and the image status (Uploading) may not change.
+
+This behavior is related to *proxy-request-buffering* in the ingress configuration, which is also specific to the cluster that is hosting Rancher.
+
+The current workaround is to upload images from the **Harvester UI**. If you choose to upload images from the Rancher UI, you may need to configure related settings on the ingress server (for example, [`proxy-request-buffering`](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_request_buffering) in NGINX).
+
+If Rancher is deployed on an RKE2 cluster, perform the following steps:
+
+1. Edit the Rancher ingress.
+
+    ```
+    $ kubectl -n cattle-system edit ingress rancher
+    ```
+
+2. Turn off `nginx.ingress.kubernetes.io/proxy-request-buffering`.
+
+  Example:
+  ![](/img/img-ingress-request-proxy-buffering.png)
+
+3. Delete the stuck image, and then restart the upload process.
+
 
 ### Create Images via Volumes
 
