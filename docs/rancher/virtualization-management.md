@@ -44,54 +44,53 @@ Please refer to the [Harvester & Rancher Support Matrix](https://www.suse.com/su
 </TabItem>
 <TabItem value="api" label="API">
 
-1. In the Rancher K8s cluster, create a new `Cluster` resource
+1. In the Rancher Kubernetes cluster, create a new `Cluster` resource.
 
-```yaml
-apiVersion: provisioning.cattle.io/v1
-kind: Cluster
-metadata:
-  name: harvester-cluster-name
-  namespace: fleet-default
-  labels:
-    provider.cattle.io: harvester
-  annotations:
-    field.cattle.io/description: Human readable cluster description
-spec:
-  agentEnvVars: []
-```
+  Example:
 
-2. Wait until the `Cluster` resource has been updated with a status and read the
-   `.status.clusterName` property to obtain the cluster ID. It will take the
-   form of `c-m-foobar`
+  ```yaml
+  apiVersion: provisioning.cattle.io/v1
+  kind: Cluster
+  metadata:
+    name: harvester-cluster-name
+    namespace: fleet-default
+    labels:
+      provider.cattle.io: harvester
+    annotations:
+      field.cattle.io/description: Human readable cluster description
+  spec:
+    agentEnvVars: []
+  ```
 
-3. Create a `ClusterRegistrationToken` using the cluster ID in the namespace
-   that with the same name as the cluster ID. Make sure to fill the cluster ID
-   into the cluster registration token's `.spec.clusterName` field.
+1. Once the status of the `Cluster` resource is updated, obtain the cluster ID (format: `c-m-foobar`) from the `.status.clusterName` property.
 
-```yaml
-apiVersion: management.cattle.io/v3
-kind: ClusterRegistrationToken
-metadata:
-  name: default-token
-  namespace: c-m-foobar
-spec:
-  clusterName: c-m-foobar
-```
+1. Create a `ClusterRegistrationToken` using the cluster ID in the namespace with the same name as the cluster ID. You must specify the cluster ID in the token's `.spec.clusterName` field.
 
-4. Wait until the cluster registration token has been updated with a status.
-   Read the `.status.manifestUrl` property of the cluster registration token.
+  Example:
 
-5. In the Harvester cluster, patch the setting `cluster-registration-url` and
-   set its value to the URL obtained from the cluster registration token's
-   `.status.manifestUrl` property
+  ```yaml
+  apiVersion: management.cattle.io/v3
+  kind: ClusterRegistrationToken
+  metadata:
+    name: default-token
+    namespace: c-m-foobar
+  spec:
+    clusterName: c-m-foobar
+  ```
 
-```yaml
-apiVersion: harvesterhci.io/v1beta1
-kind: Setting
-metadata:
-  name: cluster-registration-url
-value: https://rancher.example.com/v3/import/abcdefghijkl1234567890-c-m-foobar.yaml
-```
+1. Once the status of the `ClusterRegistrationToken` is updated, obtain the value of the token's `.status.manifestUrl` property.
+
+1. In the Harvester cluster, patch the setting `cluster-registration-url` and specify the URL obtained from the cluster registration token's `.status.manifestUrl` property in the `value` field.
+
+  Example:
+
+  ```yaml
+  apiVersion: harvesterhci.io/v1beta1
+  kind: Setting
+  metadata:
+    name: cluster-registration-url
+  value: https://rancher.example.com/v3/import/abcdefghijkl1234567890-c-m-foobar.yaml
+  ```
 
 </TabItem>
 </Tabs>

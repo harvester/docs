@@ -32,11 +32,13 @@ The image name will be auto-filled using the URL address's filename. You can cus
 :::
 
 ![](/img/v1.2/upload-image.png)
+
 </TabItem>
 <TabItem value="api" label="API">
 
-To import a virtual machine image from a URL via the API, create a
-`VirtualMachineImage` object
+To import a virtual machine image from a repository using the API, create a `VirtualMachineImage` object. You must specify a URL that can be accessed from the cluster.
+
+Example:
 
 ```yaml
 apiVersion: harvesterhci.io/v1beta1
@@ -52,8 +54,7 @@ spec:
   checksum: 80c27afb7cd791ac86ee1b0b0c572a242f6142579db5beac841e71151d370cd6
 ```
 
-Refer to [the reference docs](./api/create-namespaced-virtual-machine-image)
-for the full specifications.
+For more information, see the [API reference](./api/create-namespaced-virtual-machine-image).
 
 </TabItem>
 </Tabs>
