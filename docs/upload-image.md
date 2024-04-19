@@ -20,7 +20,11 @@ Currently, there are three ways that are supported to create an image: uploading
 
 ### Upload Images via URL
 
+<Tabs>
+<TabItem value="ui" label="UI" default>
+
 To import virtual machine images in the **Images** page, enter a URL that can be accessed from the cluster. Description and labels are optional.
+
 :::note
 
 The image name will be auto-filled using the URL address's filename. You can customize the image name at any time.
@@ -29,6 +33,31 @@ The image name will be auto-filled using the URL address's filename. You can cus
 
 ![](/img/v1.2/upload-image.png)
 
+</TabItem>
+<TabItem value="api" label="API">
+
+To import a virtual machine image from a repository using the API, create a `VirtualMachineImage` object. You must specify a URL that can be accessed from the cluster.
+
+Example:
+
+```yaml
+apiVersion: harvesterhci.io/v1beta1
+kind: VirtualMachineImage
+metadata:
+  name: opensuse-leap
+  namespace: default
+spec:
+  description: A human-readable description for the VM image
+  displayName: openSUSE-Leap
+  sourceType: download
+  url: "https://download.opensuse.org/repositories/Cloud:/Images:/Leap_15.5/images/openSUSE-Leap-15.5.x86_64-NoCloud.qcow2"
+  checksum: 80c27afb7cd791ac86ee1b0b0c572a242f6142579db5beac841e71151d370cd6
+```
+
+For more information, see the [API reference](./api/create-namespaced-virtual-machine-image).
+
+</TabItem>
+</Tabs>
 
 ### Upload Images via Local File
 
