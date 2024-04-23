@@ -67,6 +67,16 @@ Users can generate a support bundle in the Harvester GUI with the following step
 - Enter a useful description for the support bundle and click `Create` to generate and download a support bundle.
     ![](/img/v1.2/troubleshooting/harvester-sb-support-modal.png)
 
+:::note
+
+Whenever you encounter an issue that may be related to workloads deployed in custom namespaces, configure the [support-bundle-namespaces](../advanced/settings.md#support-bundle-namespaces) setting to include those namespaces as data sources. The support bundle only collects data from the configured namespaces.
+
+For timeout errors, you can adjust the value of the [support-bundle-timeout](../advanced/settings.md#support-bundle-timeout) setting and then restart the support bundle generation process.
+
+If you intend to use a non-default container image, you can configure the [support-bundle-image](../advanced/settings.md#support-bundle-image) setting.
+
+:::
+
 ### Manually Download and Retain a Support Bundle File
 
 By default, a support bundle file is automatically generated, downloaded, and deleted after you click **Create** on the Harvester UI. However, you may want to retain a file for various reasons, including the following:
