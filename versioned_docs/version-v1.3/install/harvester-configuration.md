@@ -713,23 +713,23 @@ install:
       replica_count: 1
 ```
 
-### `install.harvester.longhorn.default_settings.guaranteedEngineManagerCPU`
+### `install.harvester.longhorn.default_settings.guaranteedInstanceManagerCPU`
 
-_Available as of v1.2.0_
+_Available as of v1.3.1_
 
 #### Definition
 
-Sets the default percentage of the total allocatable CPU on each node will be reserved for each Longhorn engine manager Pod.
+Percentage of the total allocatable CPU on each node to be reserved for each Longhorn Instance Manager pod.
 
 Default: 12
 
 Supported values: 0-12. All other values are considered 12.
 
-This integer value indicates what percentage of the total allocatable CPU on each node will be reserved for each engine manager Pod.
+This integer value indicates the percentage of the total allocatable CPU on each node to be reserved for each Longhorn Instance Manager pod.
 
-In edge scenarios where users may deploy single-node Harvester clusters, they can set this parameter to a value smaller than 12. In most scenarios, it is recommended to keep the default value for system high availability.
+Using the default value is recommended for high system availability. When deploying single-node Harvester clusters, you can specify a value less than 12.
 
-Before setting the value, please refer to [longhorn-guaranteed-engine-manager-cpu](https://longhorn.io/docs/1.4.1/references/settings/#guaranteed-engine-manager-cpu) for more details.
+For more information about how to set the correct value, see [Guaranteed Instance Manager CPU](https://longhorn.io/docs/1.6.0/references/settings/#guaranteed-instance-manager-cpu) in the Longhorn documentation.
 
 #### Example
 
@@ -738,35 +738,7 @@ install:
   harvester:
     longhorn:
       default_settings:
-        guaranteedEngineManagerCPU: 6
-```
-
-### `install.harvester.longhorn.default_settings.guaranteedReplicaManagerCPU`
-
-_Available as of v1.2.0_
-
-#### Definition
-
-Sets the default percentage of the total allocatable CPU on each node will be reserved for each Longhorn replica manager Pod.
-
-Default: 12
-
-Supported values: 0-12. All other values are considered 12.
-
-This integer value indicates what percentage of the total allocatable CPU on each node will be reserved for each replica manager Pod.
-
-In edge scenarios where users may deploy single-node Harvester clusters, can set this parameter to a value smaller than 12. In most scenarios, it is recommended to keep the default value for system high availability.
-
-Before setting the value, please refer to [longhorn-guaranteed-replica-manager-cpu](https://longhorn.io/docs/1.4.1/references/settings/#guaranteed-replica-manager-cpu) for more details.
-
-#### Example
-
-```yaml
-install:
-  harvester:
-    longhorn:
-      default_settings:
-        guaranteedReplicaManagerCPU: 6
+        guaranteedInstanceManagerCPU: 6
 ```
 
 ### `system_settings`
