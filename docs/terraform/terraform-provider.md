@@ -6,7 +6,7 @@ title: "Harvester Terraform Provider"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/terraform/terraform-provider"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/terraform/terraform-provider"/>
 </head>
 
 ## Support Matrix

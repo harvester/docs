@@ -5,7 +5,7 @@ title: "Troubleshooting"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/upgrade/troubleshooting"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/upgrade/troubleshooting"/>
 </head>
 
 ## Overview

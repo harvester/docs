@@ -5,7 +5,7 @@ title: "Monitoring"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/troubleshooting/monitoring"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/troubleshooting/monitoring"/>
 </head>
 
 The following sections contain tips to troubleshoot Harvester Monitoring.

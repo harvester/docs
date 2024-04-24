@@ -11,6 +11,10 @@ keywords:
 description: Harvester provides two ways to upgrade. Users can either upgrade using the ISO image or upgrade through the UI.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/upgrade/index"/>
+</head>
+
 :::note
 
 Upgrade is not supported from previous versions to v0.3.0 version.
