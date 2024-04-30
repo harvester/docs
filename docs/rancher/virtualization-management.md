@@ -32,12 +32,38 @@ Please refer to the [Harvester & Rancher Support Matrix](https://www.suse.com/su
 <Tabs>
 <TabItem value="ui" label="UI" default>
 
+1. Check and prepare the container image.
+
+    To facilitate the importing task, a new pod named `cattle-cluster-agent-***` will be created on the Harvester cluster. The container image used for this pod depends on the version of your Rancher server (for example, the image `rancher/rancher-agent:v2.7.9` is used if you are running Rancher v2.7.9). Moreover, this dynamic image is not packed into the Harvester ISO and is instead pulled from the repository during importing.
+
+    If your Harvester cluster is not directly accessible from the internet, perform one of the following actions:
+
+    - Configure a [private registry](../advanced/settings.md#containerd-registry) for the cluster and add the image. Harvester will automatically pull the image from this registry.
+
+    - If you configured an [HTTP proxy](../airgap.md/#configure-an-http-proxy-in-harvester-settings) for accessing external services, verify that it is working as expected. The [DNS servers](../install/update-harvester-configuration.md#dns-servers) that you specified in the Harvester configuration should be able to resolve the domain name `docker.io`.
+
+    - Download the image using the command `docker pull rancher/rancher-agent:v2.7.9 && docker save -o rancher-agent.tar rancher/rancher-agent:v2.7.9`. Next, create a copy of the downloaded image in each cluster node, and then import the image to containerd using the command `sudo -i ctr --namespace k8s.io image import rancher-agent.tar`. Finally, run `sudo -i crictl image ls | grep "rancher-agent"` on each node to ensure that the image is ready.
+
 1. Once the Rancher server is up and running, log in and click the hamburger menu and choose the **Virtualization Management** tab. Select **Import Existing** to import the downstream Harvester cluster into the Rancher server.
 ![](/img/v1.2/rancher/vm-menu.png)
+
 1. Specify the `Cluster Name` and click **Create**. You will then see the registration guide; please open the dashboard of the target Harvester cluster and follow the guide accordingly.
 ![](/img/v1.2/rancher/harv-importing.png)
+
 1. Once the agent node is ready, you should be able to view and access the imported Harvester cluster from the Rancher server and manage your VMs accordingly.
 ![](/img/v1.2/rancher/harv-cluster-view.png)
+
+  Whenever the agent node becomes stuck, run the command `kubectl get pod cattle-cluster-agent-*** -n cattle-system -oyaml` on the Harvester cluster. If the following message is displayed, check the information in step 1, kill this pod and then a new pod will be created automatically to restart the importing process.
+
+  ```yaml
+  ...
+  state:
+    waiting:
+      message: Back-off pulling image "rancher/rancher-agent:v2.7.9"
+      reason: ImagePullBackOff
+  ...
+  ```
+
 1. From the Harvester UI, you can click the hamburger menu to navigate back to the Rancher multi-cluster management page.
 ![](/img/v1.2/rancher/harv-go-back.png)
 
