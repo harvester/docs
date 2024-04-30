@@ -438,6 +438,7 @@ os:
 ```
 
 ---
+<p>&nbsp;</p>
 
 ### `install.addons`
 
@@ -758,7 +759,7 @@ The installer sends HTTP requests to the specified URL. Multiple requests can be
   - `SUCCEEDED`: The installation was completed without errors.
   - `FAILED`: The installation was unsuccessful.
 - `method`: HTTP method 
-- `url`*: URL to which HTTP requests are sent
+- `url`: URL to which HTTP requests are sent
 - `insecure`: When set to `true`, Harvester does not verify the server's certificate. The default value is `false`.
 - `basicAuth`: When set to `true`, Harvester uses the "Basic" HTTP authentication scheme.
 - `headers`: When set to `true`, custom headers are included in the HTTP requests. Headers such as `Content-Length` are automatically included.
@@ -803,6 +804,7 @@ install:
 The value of this field is typically derived from the kernel parameter `harvester.install.with_net_images`. When the value is `true`, Harvester does not preload images packaged in the installation medium, and instead pulls images from the internet when necessary.
 
 ---
+<p>&nbsp;</p>
 
 ### `system_settings`
 
