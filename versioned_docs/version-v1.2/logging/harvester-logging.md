@@ -124,7 +124,7 @@ You can still make configuration adjustments when the addon is disabled. However
 
 Logging is backed by the [Banzai Cloud Logging Operator](https://banzaicloud.com/docs/one-eye/logging-operator/), and so is controlled by [`Flows`/`ClusterFlows`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/flow/) and [`Outputs`/`ClusterOutputs`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/output/). You can route and filter logs as you like by applying these `CRD`s to the Harvester cluster.
 
-When applying new `Ouptuts` and `Flows` to the cluster, it can take some time for the logging operator to effectively apply them. So please allow a few minutes for the logs to start flowing.
+When applying new `Outputs` and `Flows` to the cluster, it can take some time for the logging operator to effectively apply them. So please allow a few minutes for the logs to start flowing.
 
 #### Clustered vs Namespaced
 

@@ -518,13 +518,17 @@ install:
   force_mbr: true
 ```
 
-### `install.harvester.longhorn.default_settings.guaranteedEngineManagerCPU`
+### `install.harvester.longhorn.default_settings.guaranteedInstanceManagerCPU`
 
-**Versions**: v1.2.0 and later
+_Available as of v1.4.0_
 
-**Definition**: Percentage of the total allocatable CPU on each node to be reserved for each Longhorn Engine Manager pod.
+**Definition**: Percentage of the total allocatable CPU on each node to be reserved for each Longhorn Instance Manager pod.
+
+This integer value indicates the percentage of the total allocatable CPU on each node to be reserved for each Longhorn Instance Manager pod.
 
 Using the default value is recommended for high system availability. When deploying single-node Harvester clusters, you can specify a value less than 12.
+
+For more information about how to set the correct value, see [Guaranteed Instance Manager CPU](https://longhorn.io/docs/1.6.0/references/settings/#guaranteed-instance-manager-cpu) in the Longhorn documentation.
 
 **Default value**: 12
 
@@ -532,12 +536,11 @@ Using the default value is recommended for high system availability. When deploy
 
 **Example**:
 
-```yaml
-install:
+```
   harvester:
     longhorn:
       default_settings:
-        guaranteedEngineManagerCPU: 6
+        guaranteedInstanceManagerCPU: 6
 ```
 
 ### `install.harvester.longhorn.default_settings.guaranteedReplicaManagerCPU`

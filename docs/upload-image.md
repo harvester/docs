@@ -20,7 +20,11 @@ Currently, there are three ways that are supported to create an image: uploading
 
 ### Upload Images via URL
 
+<Tabs>
+<TabItem value="ui" label="UI" default>
+
 To import virtual machine images in the **Images** page, enter a URL that can be accessed from the cluster. Description and labels are optional.
+
 :::note
 
 The image name will be auto-filled using the URL address's filename. You can customize the image name at any time.
@@ -29,6 +33,31 @@ The image name will be auto-filled using the URL address's filename. You can cus
 
 ![](/img/v1.2/upload-image.png)
 
+</TabItem>
+<TabItem value="api" label="API">
+
+To import a virtual machine image from a repository using the API, create a `VirtualMachineImage` object. You must specify a URL that can be accessed from the cluster.
+
+Example:
+
+```yaml
+apiVersion: harvesterhci.io/v1beta1
+kind: VirtualMachineImage
+metadata:
+  name: opensuse-leap
+  namespace: default
+spec:
+  description: A human-readable description for the VM image
+  displayName: openSUSE-Leap
+  sourceType: download
+  url: "https://download.opensuse.org/repositories/Cloud:/Images:/Leap_15.5/images/openSUSE-Leap-15.5.x86_64-NoCloud.qcow2"
+  checksum: 80c27afb7cd791ac86ee1b0b0c572a242f6142579db5beac841e71151d370cd6
+```
+
+For more information, see the [API reference](./api/create-namespaced-virtual-machine-image).
+
+</TabItem>
+</Tabs>
 
 ### Upload Images via Local File
 
@@ -65,6 +94,29 @@ If Rancher is deployed on an RKE2 cluster, perform the following steps:
 
   Example:
   ![](/img/v1.3/img-ingress-client-body.png)
+
+3. Delete the stuck image, and then restart the upload process.
+
+#### Prolonged Uploading of Large Images in Rancher Multi-Cluster Management
+
+If you upload a very large image (over 10 GB) from the **Multi-Cluster Management** screen on the Rancher UI, the operation may take longer than usual and the image status (Uploading) may not change.
+
+This behavior is related to *proxy-request-buffering* in the ingress configuration, which is also specific to the cluster that is hosting Rancher.
+
+The current workaround is to upload images from the **Harvester UI**. If you choose to upload images from the Rancher UI, you may need to configure related settings on the ingress server (for example, [`proxy-request-buffering`](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_request_buffering) in NGINX).
+
+If Rancher is deployed on an RKE2 cluster, perform the following steps:
+
+1. Edit the Rancher ingress.
+
+    ```
+    $ kubectl -n cattle-system edit ingress rancher
+    ```
+
+2. Turn off `nginx.ingress.kubernetes.io/proxy-request-buffering`.
+
+  Example:
+  ![](/img/img-ingress-request-proxy-buffering.png)
 
 3. Delete the stuck image, and then restart the upload process.
 

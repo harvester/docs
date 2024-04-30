@@ -20,6 +20,9 @@ description: Create one or more virtual machines from the Virtual Machines page.
 
 ## How to Create a VM
 
+<Tabs>
+<TabItem value="ui" label="UI" default>
+
 You can create one or more virtual machines from the **Virtual Machines** page.
 
 :::note
@@ -43,6 +46,51 @@ Please refer to [this page](./create-windows-vm.md) for creating Windows virtual
 1. Advanced options such as run strategy, os type and cloud-init data are optional. You may configure these in the **Advanced Options** section when applicable.
 
 ![create-vm](/img/v1.2/vm/create-vm.png)
+</TabItem>
+<TabItem value="api" label="API">
+
+To create virtual machines using the Kubernetes API, create a `VirtualMachine` object.
+
+```yaml
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: new-vm
+  namespace: default
+spec:
+  runStrategy: RerunOnFailure
+  template:
+    spec:
+      domain:
+        cpu:
+          cores: 2
+          sockets: 1
+          threads: 1
+        memory: "3996Mi"
+        devices:
+          disks: []
+          interfaces:
+            - name: default
+              model: virtio
+              masquerade: {}
+        machine:
+          type: q35
+        resources:
+          requests:
+            cpu: "125m"
+            memory: "2730Mi"
+          limits:
+            cpu: 2
+            memory: "4Gi"
+        networks:
+          - name: default
+            pod: {}
+```
+
+For more information, see the [API reference](../api/create-namespaced-virtual-machine).
+
+</TabItem>
+</Tabs>
 
 ## Volumes
 

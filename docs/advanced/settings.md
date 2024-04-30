@@ -415,7 +415,7 @@ Default:
 
 _Available as of v1.2.0_
 
-This setting allows you to specify additional namespaces when collecting a support bundle. The support bundle will only capture resources from pre-defined namespaces by default.
+This setting allows you to specify additional namespaces when [collecting a support bundle](../troubleshooting/harvester.md#generate-a-support-bundle). The support bundle will only capture resources from pre-defined namespaces by default.
 
 Here is the pre-defined namespaces list:
 - cattle-dashboards

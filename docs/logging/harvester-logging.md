@@ -124,7 +124,7 @@ You can still make configuration adjustments when the addon is disabled. However
 
 Logging is backed by the [Banzai Cloud Logging Operator](https://banzaicloud.com/docs/one-eye/logging-operator/), and so is controlled by [`Flows`/`ClusterFlows`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/flow/) and [`Outputs`/`ClusterOutputs`](https://banzaicloud.com/docs/one-eye/logging-operator/configuration/output/). You can route and filter logs as you like by applying these `CRD`s to the Harvester cluster.
 
-When applying new `Ouptuts` and `Flows` to the cluster, it can take some time for the logging operator to effectively apply them. So please allow a few minutes for the logs to start flowing.
+When applying new `Outputs` and `Flows` to the cluster, it can take some time for the logging operator to effectively apply them. So please allow a few minutes for the logs to start flowing.
 
 #### Clustered vs Namespaced
 
@@ -289,7 +289,8 @@ For more information, you can find the related documentation [here](https://banz
 
 ### Example `Outputs`
 
-#### Elasticsearch
+<Tabs>
+<TabItem value="elasticsearch" label="Elasticsearch" default>
 
 For the simplest deployment, you can deploy Elasticsearch on your local system using docker:
 
@@ -392,7 +393,9 @@ $ curl localhost:9200/fluentd/_search
 }
 ```
 
-#### Graylog
+</TabItem>
+<TabItem value="graylog" label="Graylog">
+
 You can follow the instructions [here](https://github.com/w13915984028/harvester-develop-summary/blob/main/integrate-harvester-logging-with-log-servers.md#integrate-harvester-logging-with-graylog) to deploy and view cluster logs via [Graylog](https://www.graylog.org/):
 
 ```yaml
@@ -417,7 +420,8 @@ spec:
     protocol: "udp"
 ```
 
-#### Splunk
+</TabItem>
+<TabItem value="splunk" label="Splunk">
 
 You can follow the instructions [here](https://github.com/w13915984028/harvester-develop-summary/blob/main/test-log-event-audit-with-splunk.md) to deploy and view cluster logs via [Splunk](https://www.splunk.com/).
 
@@ -456,7 +460,8 @@ spec:
       - harvester-logging-splunk
 ```
 
-#### Loki
+</TabItem>
+<TabItem value="loki" label="Loki">
 
 You can follow the instructions in the [logging HEP](https://github.com/joshmeranda/harvester/blob/logging/enhancements/20220525-system-logging.md) on deploying and viewing cluster logs via [Grafana Loki](https://grafana.com/oss/loki/).
 
@@ -483,6 +488,9 @@ spec:
     extra_labels:
       logOutput: harvester-loki
 ```
+
+</TabItem>
+</Tabs>
 
 ## Audit
 
