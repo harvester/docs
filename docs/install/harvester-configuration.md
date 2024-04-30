@@ -466,7 +466,9 @@ install:
 
 ### `install.automatic`
 
-> PENDING
+**Definition**: Setting that forces the installer to skip the interactive steps in the installation process. 
+
+When enabled, the configuration is either retrieved from the value of `harvester.install.config_url` or defined individually using kernel parameters.
 
 ### `install.data_disk` 
 
@@ -666,7 +668,7 @@ install:
 
 ### `install.rawdiskimagepath`
 
-> PENDING
+**Definition**: Setting that forces the installer to only install the Harvester hypervisor (without any configuration). You must enable `harvester.install.automatic` to use this setting.
 
 ### `install.role`
 
@@ -795,7 +797,7 @@ install:
 
 ### `install.wipedisks`
 
-> PENDING
+**Definition**: Setting that clears all disk partitions on the host using the `sgdisk` command.
 
 ### `install.with-net-images`
 
