@@ -524,17 +524,15 @@ install:
   force_mbr: true
 ```
 
-### `install.harvester.longhorn.default_settings.guaranteedInstanceManagerCPU`
+### `install.harvester.longhorn.default_settings.guaranteedEngineManagerCPU`
 
-_Available as of v1.4.0_
+**Versions**: v1.2.0 and later
 
-**Definition**: Percentage of the total allocatable CPU on each node to be reserved for each Longhorn Instance Manager pod.
+**Definition**: Percentage of the total allocatable CPU on each node to be reserved for each Longhorn Engine Manager pod.
 
-This integer value indicates the percentage of the total allocatable CPU on each node to be reserved for each Longhorn Instance Manager pod.
+Using the default value is recommended for high system availability. When deploying single-node Harvester clusters, you can specify a value less than 12. 
 
-Using the default value is recommended for high system availability. When deploying single-node Harvester clusters, you can specify a value less than 12.
-
-For more information about how to set the correct value, see [Guaranteed Instance Manager CPU](https://longhorn.io/docs/1.6.0/references/settings/#guaranteed-instance-manager-cpu) in the Longhorn documentation.
+For more information about how to set the correct value, see [Guaranteed Engine Manager CPU](https://longhorn.io/docs/archives/1.4.1/references/settings/#guaranteed-engine-manager-cpu) in the Longhorn documentation.
 
 **Default value**: 12
 
@@ -542,11 +540,36 @@ For more information about how to set the correct value, see [Guaranteed Instanc
 
 **Example**:
 
-```
+```yaml
+install:
   harvester:
     longhorn:
       default_settings:
-        guaranteedInstanceManagerCPU: 6
+        guaranteedEngineManagerCPU: 6
+```
+
+### `install.harvester.longhorn.default_settings.guaranteedReplicaManagerCPU`
+
+**Versions**: v1.2.0 and later
+
+**Definition**: Percentage of the total allocatable CPU on each node to be reserved for each Longhorn Replica Manager pod.
+
+Using the default value is recommended for high system availability. When deploying single-node Harvester clusters, you can specify a value less than 12. 
+
+For more information about how to set the correct value, see [Guaranteed Replica Manager CPU](https://longhorn.io/docs/archives/1.4.1/references/settings/#guaranteed-replica-manager-cpu) in the Longhorn documentation.
+
+**Default value**: 12
+
+**Supported values**: 0 to 12. All other values are considered 12.
+
+**Example**:
+
+```yaml
+install:
+  harvester:
+    longhorn:
+      default_settings:
+        guaranteedReplicaManagerCPU: 6
 ```
 
 ### `install.harvester.storage_class.replica_count`

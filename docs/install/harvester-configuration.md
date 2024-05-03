@@ -521,11 +521,9 @@ install:
 
 ### `install.harvester.longhorn.default_settings.guaranteedInstanceManagerCPU`
 
-_Available as of v1.4.0_
+**Versions**: v1.4.0 and later
 
 **Definition**: Percentage of the total allocatable CPU on each node to be reserved for each Longhorn Instance Manager pod.
-
-This integer value indicates the percentage of the total allocatable CPU on each node to be reserved for each Longhorn Instance Manager pod.
 
 Using the default value is recommended for high system availability. When deploying single-node Harvester clusters, you can specify a value less than 12.
 
