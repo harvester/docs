@@ -170,6 +170,9 @@ Or a node token
 token: "K1074ec55daebdf54ef48294b0ddf0ce1c3cb64ee7e3d0b9ec79fbc7baf1f7ddac6::node:77689533d0140c7019416603a05275d4"
 ```
 
+---
+<p>&nbsp;</p>
+
 ### `os.ssh_authorized_keys`
 
 #### Definition
@@ -440,209 +443,23 @@ os:
     sftp: true  #  The SFTP subsystem is enabled.
 ```
 
-### `install.mode`
-
-#### Definition
-
-Harvester installation mode:
-
-- `create`: Creating a new Harvester installation.
-- `join`: Join an existing Harvester installation. Need to specify `server_url`.
-
-#### Example
-
-```yaml
-install:
-  mode: create
-```
-
-### `install.management_interface`
-
-#### Definition
-
-Configure network interfaces for the host machine. Valid configuration fields are:
-
-- `method`: Method to assign an IP to this network. The following are supported:
-    - `static`: Manually assign an IP and gateway.
-    - `dhcp`: Request an IP from the DHCP server.
-- `ip`: Static IP for this network. Required if `static` method is chosen.
-- `subnet_mask`: Subnet mask for this network. Required if `static` method is chosen.
-- `gateway`: Gateway for this network. Required if `static` method is chosen.
-- `interfaces`: An array of interface names. If provided, the installer then combines these NICs into a single logical bonded interface.
-    - `interfaces.name`: The name of the slave interface for the bonded network.
-    - `interfaces.hwAddr`: The hardware MAC address of the interface.
-- `bond_options`: Options for bonded interfaces. Refer to [here](https://www.kernel.org/doc/Documentation/networking/bonding.txt) for more info. If not provided, the following options would be used:
-    - `mode: balance-tlb`
-    - `miimon: 100`
-- `mtu`: The MTU for the interface.
-- `vlan_id`: The VLAN ID for the interface.
-
-:::note
-
-Harvester uses the [systemd net naming scheme](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html).
-Please make sure the interface name is present on the target machine before installation.
-
-:::
-
-#### Example
-
-```yaml
-install:
-  mode: create
-  management_interface:
-    interfaces:
-    - name: ens5
-      hwAddr: "B8:CA:3A:6A:64:7D"     # The hwAddr is optional
-    method: dhcp
-    bond_options:
-      mode: balance-tlb
-      miimon: 100
-    mtu: 1492
-    vlan_id: 101
-```
-
-### `install.force_efi`
-
-Force EFI installation even when EFI is not detected. Default: `false`.
-
-### `install.device`
-
-The device to install the OS.
-
-Prefer to use `/dev/disk/by-id/$id` or `/dev/disk/by-path/$path` to specify the storage device if your machine contains multiple physical volumes via pxe installation.
-
-### `install.silent`
-
-Reserved.
-
-### `install.iso_url`
-
-ISO to download and install from if booting from kernel/vmlinuz and not ISO.
-
-### `install.poweroff`
-
-Shutdown the machine after installation instead of rebooting
-
-### `install.no_format`
-
-Do not partition and format, assume layout exists already.
-
-### `install.debug`
-
-Run the installation with additional logging and debugging enabled for the installed system.
-
-### `install.persistent_partition_size`
-
-#### Definition
-
-Configure the size of partition `COS_PERSISTENT` in `Gi` or `Mi`. This partition is used to store data like system packages and container images. The default and minimum value is `150Gi`.
-
-#### Example
-
-```yaml
-install:
-  persistent_partition_size: 150Gi
-```
-
-### `install.tty`
-
-#### Definition
-
-The tty device used for the console.
-
-#### Example
-
-```yaml
-install:
-  tty: ttyS0,115200n8
-```
-
-### `install.vip`
-### `install.vip_mode`
-### `install.vip_hw_addr`
-
-#### Definition
-
-- `install.vip`: The VIP of the Harvester management endpoint. After installation, users can access the Harvester GUI at the URL `https://<VIP>`.
-- `install.vip_mode`
-    - `dhcp`: Harvester will send DHCP requests to get the VIP. The `install.vip_hw_addr` field needs to be provided.
-    - `static`: Harvester uses a static VIP.
-- `install.vip_hw_addr`: The hardware address corresponding to the VIP. Users must configure their on-premise DHCP server to offer the configured VIP. The field is mandatory when `install.vip_mode` is `dhcp`.
-
-See [Management Address](./management-address.md) for more information.
-
-#### Example
-
-Configure a static VIP.
-
-```yaml
-install:
-  vip: 192.168.0.100
-  vip_mode: static
-```
-
-Configure a DHCP VIP.
-
-```yaml
-install:
-  vip: 10.10.0.19
-  vip_mode: dhcp
-  vip_hw_addr: 52:54:00:ec:0e:0b
-```
-
-### `install.force_mbr`
-
-#### Definition
-
-By default, Harvester uses GPT partitioning scheme on both UEFI and BIOS systems.
-However, if you face compatibility issues, the MBR partitioning scheme can be forced on BIOS systems.
-
-:::note
-
-Harvester creates an additional partition for storing VM data if
-[`install.data_disk`](#installdata_disk) is configured to use the same
-storage device as the one set for [`install.device`](#installdevice).
-When force using MBR, no additional partition will be created and VM data will be stored in a partition shared with the OS data.
-
-:::
-
-#### Example
-
-```yaml
-install:
-  force_mbr: true
-```
-
-### `install.data_disk`
-
-_Available as of v1.0.1_
-
-#### Definition
-
-Sets the default storage device to store the VM data.
-
-Prefer to use `/dev/disk/by-id/$id` or `/dev/disk/by-path/$path` to specify the storage device if your machine contains multiple physical volumes via pxe installation.
-
-Default: Same storage device as the one set for [`install.device`](#installdevice)
-
-#### Example
-
-```yaml
-install:
-  data_disk: /dev/sdb
-```
+---
+<p>&nbsp;</p>
 
 ### `install.addons`
 
-_Available as of v1.2.0_
+**Versions**: v1.2.0 and later
 
-#### Definition
+**Definition**: Setting that defines the default addon status. Harvester addons are disabled by default.
 
-Sets the default enabled/disabled status of Harvester addons.
+**Supported values**:
+- `vm-import-controller` (chartName: harvester-vm-import-controller)
+- `pcidevices-controller` (chartName: harvester-pcidevices-controller)
+- `rancher-monitoring`
+- `rancher-logging`
+- `harvester-seeder` (experimental)
 
-Default: The addons are disabled.
-
-#### Example
+**Example**:
 
 ```yaml
 install:
@@ -653,31 +470,100 @@ install:
       enabled: false
 ```
 
-Harvester v1.2.0 ships with five addons:
+### `install.automatic`
 
-- vm-import-controller (chartName: `harvester-vm-import-controller`)
-- pcidevices-controller (chartName: `harvester-pcidevices-controller`)
-- rancher-monitoring
-- rancher-logging
-- harvester-seeder (experimental)
+**Definition**: Setting that forces the installer to skip the interactive steps in the installation process. 
+
+When enabled, the configuration is either retrieved from the value of `harvester.install.config_url` or defined individually using kernel parameters.
+
+### `install.data_disk` 
+
+**Versions**: v1.0.1 and later 
+
+**Definition**: Default device for storing VM data. 
+
+When installing via PXE, use `/dev/disk/by-id/$id` or `/dev/disk/by-path/$path` to specify the storage device if the server contains multiple physical volumes.
+
+**Default value**: Storage device configured in the setting `install.device`
+
+**Example**:
+
+```yaml
+install:
+  data_disk: /dev/sdb
+```
+
+### `install.debug` 
+
+**Definition**: Setting that enables additional logging and debugging during installation. 
+
+### `install.device` 
+
+**Definition**: Device on which the Harvester OS is installed. 
+
+When installing via PXE, use `/dev/disk/by-id/$id` or `/dev/disk/by-path/$path` to specify the storage device if the server contains multiple physical volumes. 
+
+### `install.force_efi`
+
+**Definition**: Setting that forces EFI installation even when EFI is not detected.
+
+**Default value**: `false`
+
+### `install.force_mbr`
+
+**Definition**: Setting that forces usage of MBR partitioning on BIOS systems.
+
+Harvester uses GPT partitioning on UEFI and BIOS systems by default. Compatibility issues may require you to use MBR partitioning instead.
+
+If you specify the same storage device for both `install.device` and `install.data_disk`, Harvester creates an additional partition for storing VM data. This additional partition is not created when you force usage of MBR partitioning. Instead, VM data is stored in a partition that stores OS data.
+
+**Example**:
+
+```yaml
+install:
+  force_mbr: true
+```
+
+### `install.harvester.longhorn.default_settings.guaranteedInstanceManagerCPU`
+
+_Available as of v1.4.0_
+
+**Definition**: Percentage of the total allocatable CPU on each node to be reserved for each Longhorn Instance Manager pod.
+
+This integer value indicates the percentage of the total allocatable CPU on each node to be reserved for each Longhorn Instance Manager pod.
+
+Using the default value is recommended for high system availability. When deploying single-node Harvester clusters, you can specify a value less than 12.
+
+For more information about how to set the correct value, see [Guaranteed Instance Manager CPU](https://longhorn.io/docs/1.6.0/references/settings/#guaranteed-instance-manager-cpu) in the Longhorn documentation.
+
+**Default value**: 12
+
+**Supported values**: 0 to 12. All other values are considered 12.
+
+**Example**:
+
+```
+  harvester:
+    longhorn:
+      default_settings:
+        guaranteedInstanceManagerCPU: 6
+```
 
 ### `install.harvester.storage_class.replica_count`
 
-_Available as of v1.1.2_
+**Versions**: v1.1.2 and later
 
-#### Definition
+**Definition**: Replica count of the default Harvester StorageClass `harvester-longhorn`.
 
-Sets the replica count of Harvester's default storage class `harvester-longhorn`.
+Using the default value is recommended for high storage availability. When deploying single-node Harvester clusters, you must set the value to 1.
 
-Default: 3
+For more information, see [Default Replica Count](https://longhorn.io/docs/1.6.0/references/settings/#default-replica-count) in the Longhorn documentation.
 
-Supported values: 1, 2, 3. All other values are considered 3.
+**Default value**: 3
 
-In edge scenarios where users may deploy single-node Harvester clusters, they can set this value to 1. In most scenarios, it is recommended to keep the default value 3 for storage high availability.
+**Supported values**: 1 to 3. All other values are considered 3.
 
-Please refer to [longhorn-replica-count](https://longhorn.io/docs/1.4.1/references/settings/#default-replica-count) for more details.
-
-#### Example
+**Example**:
 
 ```yaml
 install:
@@ -686,89 +572,228 @@ install:
       replica_count: 1
 ```
 
-### `install.harvester.longhorn.default_settings.guaranteedEngineManagerCPU`
+### `install.iso_url`
 
-_Available only on v1.2.0 and v1.2.1_
+**Definition**: URL of ISO image to be downloaded and used to install Harvester when booting from the kernel or vmlinuz.
 
-#### Definition
+### `install.management_interface`
 
-Sets the default percentage of the total allocatable CPU on each node will be reserved for each Longhorn engine manager Pod.
+**Definition**: Network interfaces for the host machine. 
 
-Default: 12
+Harvester uses the [systemd net naming scheme](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html). Ensure that the interface name is present on the target machine before installation.
 
-Supported values: 0-12. All other values are considered 12.
+**Fields**:
+- `method`: Method used to assign an IP to the network. Supported values:
+  - `dhcp`: Harvester requests an IP from the DHCP server.
+  - `static`: IP and gateway addresses are manually assigned.
+- `ip`: Static IP assigned to the network. This field is required when the value of `method` is `static`.
+- `subnet_mask`: Subnet mask of the network. This field is required when the value of `method` is `static`.
+- `gateway`: Gateway address assigned to the network. This field is required when the value of `method` is `static`.
+- `interfaces`: Array of network interfaces. The installer combines the specified interfaces (slaves) into a single logical bonded interface.
+  - `interfaces.name`: Name of a slave interface.
+  - `interfaces.hwAddr`: Hardware MAC address of a slave interface. This field is optional.
+- `bond_options`: Options for [bonded interfaces](https://www.kernel.org/doc/Documentation/networking/bonding.txt). When unspecified, the following options are used:
+  - `mode`: balance-tlb
+  - `miimon`: 100
+- `mtu`: Maximum transmission unit (MTU) for the interface.
+- `vlan_id`: VLAN ID for the interface.
 
-This integer value indicates what percentage of the total allocatable CPU on each node will be reserved for each engine manager Pod.
-
-In edge scenarios where users may deploy single-node Harvester clusters, they can set this parameter to a value smaller than 12. In most scenarios, it is recommended to keep the default value for system high availability.
-
-Before setting the value, please refer to [longhorn-guaranteed-engine-manager-cpu](https://longhorn.io/docs/1.4.1/references/settings/#guaranteed-engine-manager-cpu) for more details.
-
-#### Example
-
-```yaml
-install:
-  harvester:
-    longhorn:
-      default_settings:
-        guaranteedEngineManagerCPU: 6
-```
-
-### `install.harvester.longhorn.default_settings.guaranteedReplicaManagerCPU`
-
-_Available only on v1.2.0 and v1.2.1_
-
-#### Definition
-
-Sets the default percentage of the total allocatable CPU on each node will be reserved for each Longhorn replica manager Pod.
-
-Default: 12
-
-Supported values: 0-12. All other values are considered 12.
-
-This integer value indicates what percentage of the total allocatable CPU on each node will be reserved for each replica manager Pod.
-
-In edge scenarios where users may deploy single-node Harvester clusters, can set this parameter to a value smaller than 12. In most scenarios, it is recommended to keep the default value for system high availability.
-
-Before setting the value, please refer to [longhorn-guaranteed-replica-manager-cpu](https://longhorn.io/docs/1.4.1/references/settings/#guaranteed-replica-manager-cpu) for more details.
-
-#### Example
+**Example**:
 
 ```yaml
 install:
-  harvester:
-    longhorn:
-      default_settings:
-        guaranteedReplicaManagerCPU: 6
+  mode: create
+  management_interface:
+    interfaces:
+    - name: ens5
+      hwAddr: "B8:CA:3A:6A:64:7D"  # Optional
+    method: dhcp
+    bond_options:
+      mode: balance-tlb
+      miimon: 100
+    mtu: 1492
+    vlan_id: 101
 ```
 
-### `install.harvester.longhorn.default_settings.guaranteedInstanceManagerCPU`
+### `install.mode`
 
-_Available as of v1.2.2_
+**Definition**: Mode of installing Harvester.
 
-#### Definition
+**Supported values**:
+- `create`: Create a new Harvester installation.
+- `join`: Join an existing Harvester installation. You must specify the `server_url`.
 
-Percentage of the total allocatable CPU on each node to be reserved for each Longhorn Instance Manager pod.
-
-Default: 12
-
-Supported values: 0-12. All other values are considered 12.
-
-This integer value indicates the percentage of the total allocatable CPU on each node to be reserved for each Longhorn Instance Manager pod.
-
-Using the default value is recommended for high system availability. When deploying single-node Harvester clusters, you can specify a value less than 12.
-
-For more information about how to set the correct value, see [Guaranteed Instance Manager CPU](https://longhorn.io/docs/1.5.5/references/settings/#guaranteed-instance-manager-cpu) in the Longhorn documentation.
-
-#### Example
+**Example**:
 
 ```yaml
 install:
-  harvester:
-    longhorn:
-      default_settings:
-        guaranteedInstanceManagerCPU: 6
+  mode: create
 ```
+
+### `install.no_format`
+
+Definition: Setting that prevents partitioning and formatting of the installation disk.
+
+### `install.persistent_partition_size`
+
+**Definition**: Size of the partition COS_PERSISTENT in Gi or Mi. 
+
+This partition stores data such as system packages and container images. The minimum value is 150 Gi.
+
+**Default value**: 150 Gi
+
+**Example**:
+
+```yaml
+install:
+  persistent_partition_size: 150Gi
+```
+
+### `install.poweroff`
+
+**Definition**: Setting that shuts down (instead of rebooting) the server after installation.
+
+### `install.rawdiskimagepath`
+
+**Definition**: Setting that forces the installer to only install the Harvester hypervisor (without any configuration). You must enable `harvester.install.automatic` to use this setting.
+
+### `install.role`
+
+**Definition**: Role assigned to a node at the time of installation. When unspecified, Harvester assigns the `default` role.
+
+- `default`: Allows a node to function as a management node or a worker node.
+- `management`: Allows a node to be prioritized when Harvester promotes nodes to management nodes.
+- `worker`: Restricts a node to being a worker node (never promoted to management node) in a specific cluster.
+- `witness`: Restricts a node to being a witness node (only functions as an etcd node) in a specific cluster.
+
+### `install.silent`
+
+> Definition: Reserved
+
+### `install.skipchecks`
+
+**Definition**: Setting that allows installation to proceed even if minimum requirements for production use are not met
+
+The installer automatically checks if the hardware meets the [minimum requirements](./requirements/#hardware-requirements) for production use. When performing automated installation via [PXE Boot](./pxe-boot-install), if any of the checks fail, installation is stopped, and warnings are printed to the system console and saved to `/var/log/console.log` in the installation environment.
+
+To override this behavior, set `install.skipchecks=true`. When set to `true`, warning messages are still saved to `/var/log/console.log`, but the installation proceeds even if hardware requirements for production use are not met.
+
+**Default value**: `false`
+
+**Example**:
+
+```yaml
+install:
+  skipchecks: true
+```
+
+### `install.tty`
+
+**Definition**: TTY device used for the console.
+
+**Example**:
+
+```yaml
+install:
+  tty: ttyS0,115200n8
+```
+
+### `install.vip`
+
+**Definition**: VIP of the Harvester management endpoint. 
+
+After installation, you can access the Harvester UI at `https://<VIP>`.
+
+### `install.vip_mode`
+
+**Definition**: Mode of assigning the VIP.
+
+**Supported values**:
+- `dhcp`: Harvester sends DHCP requests to get the VIP. You must specify the hardware address using the `install.vip_hw_addr` field.
+- `static`: Harvester uses a static VIP.
+
+**Example**:
+
+```yaml
+install:
+  vip: 192.168.0.100
+  vip_mode: static
+```
+
+### `install.vip_hw_addr`
+
+**Definition**: Hardware address corresponding to the VIP. 
+
+You must configure an on-premises DHCP server to offer the configured VIP. This field is required when the value of `install.vip_mode` is `dhcp`. For more information, see [Management Address](./management-address.md).
+
+**Example**:
+
+```yaml
+install:
+  vip: 10.10.0.19
+  vip_mode: dhcp
+  vip_hw_addr: 52:54:00:ec:0e:0b
+```
+
+### `install.webhooks`
+
+**Definition**: Webhooks that allow you to receive notifications for certain installer-related events.
+
+The installer sends HTTP requests to the specified URL. Multiple requests can be sent for a single event but if one request fails, the remaining requests are not sent.
+
+**Fields**:
+
+- `event`: Event type that triggers an HTTP action on the webhook. 
+  - `STARTED`: The installation has started.
+  - `SUCCEEDED`: The installation was completed without errors.
+  - `FAILED`: The installation was unsuccessful.
+- `method`: HTTP method 
+- `url`: URL to which HTTP requests are sent
+- `insecure`: When set to `true`, Harvester does not verify the server's certificate. The default value is `false`.
+- `basicAuth`: When set to `true`, Harvester uses the "Basic" HTTP authentication scheme.
+- `headers`: When set to `true`, custom headers are included in the HTTP requests. Headers such as `Content-Length` are automatically included.
+- `payload`*: When set to `true`, payload data is sent with the HTTP requests. You may need to set the correct Content-Type header in the `headers` field to ensure that the server accepts the request.
+
+**Example**:
+
+```yaml
+install:
+  webhooks:
+    - event: SUCCEEDED
+      method: GET
+      url: http://10.100.0.100/cblr/svc/op/nopxe/system/{{.Hostname}}
+    - event: STARTED
+      method: GET
+      url: https://10.100.0.100/started/{{.Hostname}}
+      insecure: true
+      basicAuth:
+        user: admin
+        password: p@assword
+    - event: FAILED
+      method: POST
+      url: http://10.100.0.100/record
+      headers:
+        Content-Type:
+           - 'application/json; charset=utf-8'
+      payload: |
+        {
+          "host": "{{.Hostname}}",
+          "device": "hd"
+        }
+```
+
+### `install.wipedisks`
+
+**Definition**: Setting that clears all disk partitions on the host using the `sgdisk` command.
+
+### `install.with-net-images`
+
+**Definition**: Setting that determines if images are pulled from the internet after installation.
+
+The value of this field is typically derived from the kernel parameter `harvester.install.with_net_images`. When the value is `true`, Harvester does not preload images packaged in the installation medium, and instead pulls images from the internet when necessary.
+
+---
+<p>&nbsp;</p>
 
 ### `system_settings`
 

@@ -167,6 +167,7 @@ token: "K1074ec55daebdf54ef48294b0ddf0ce1c3cb64ee7e3d0b9ec79fbc7baf1f7ddac6::nod
 ```
 
 ---
+<p>&nbsp;</p>
 
 ### `os.ssh_authorized_keys`
 
@@ -541,28 +542,6 @@ For more information about how to set the correct value, see [Guaranteed Instanc
     longhorn:
       default_settings:
         guaranteedInstanceManagerCPU: 6
-```
-
-### `install.harvester.longhorn.default_settings.guaranteedReplicaManagerCPU`
-
-**Versions**: v1.2.0 and later
-
-**Definition**: Percentage of the total allocatable CPU on each node to be reserved for each Longhorn Replica Manager pod.
-
-Using the default value is recommended for high system availability. When deploying single-node Harvester clusters, you can specify a value less than 12. 
-
-**Default value**: 12
-
-**Supported values**: 0 to 12. All other values are considered 12.
-
-**Example**:
-
-```yaml
-install:
-  harvester:
-    longhorn:
-      default_settings:
-        guaranteedReplicaManagerCPU: 6
 ```
 
 ### `install.harvester.storage_class.replica_count`
