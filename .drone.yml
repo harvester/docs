@@ -65,6 +65,7 @@ steps:
     env:
           NODE_OPTIONS: "--max_old_space_size=7168"
     commands:
+      - yarn gen-api-docs
       - yarn build
 
   - name: release
