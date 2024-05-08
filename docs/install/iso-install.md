@@ -71,7 +71,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
    ![config-hostname.png](/img/v1.2/install/config-hostname.png)
 
-1. Configure network interface(s) for the management network. By default, Harvester creates a bonded NIC named `mgmt-bo`, and the IP address can be configured via DHCP or statically assigned.
+1. Configure network interface(s) for the management network. By default, Harvester creates a [bonded NIC](./requirements.md#hardware-requirements) named `mgmt-bo` for the [built-in management cluster network](../networking/clusternetwork.md#built-in-cluster-network), and the IP address can be configured via DHCP or statically assigned.
 
    ![config-network.png](/img/v1.2/install/config-network.png)
 
@@ -82,7 +82,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 	For example:
 	```
 	Linux~ # ip route
-	default via 192.168.122.1 dev mgmt-br proto dhcp 
+	default via 192.168.122.1 dev mgmt-br proto dhcp
 	```
 	For more information, see [DHCP Server Configuration](./pxe-boot-install.md#dhcp-server-configuration).
 	:::

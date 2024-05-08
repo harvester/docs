@@ -28,12 +28,14 @@ Harvester nodes have the following hardware requirements and recommendations for
 | Memory           | 32 GB minimum for testing; 64 GB or above required for production                                                                                                                                                               |
 | Disk Capacity    | 250 GB minimum for testing (180 GB minimum when using multiple disks); 500 GB or above required for production                                                                                                                                  |
 | Disk Performance | 5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be [fast enough for etcd](https://www.suse.com/support/kb/doc/?id=000020100) |
-| Network Card     | 1 Gbps Ethernet minimum for testing; 10Gbps Ethernet required for production                                                                                                                       |
+| Network Card     | Minimum Ethernet speed: 1 Gbps for testing, 10 Gbps for production; Recommended network interfaces: 2 NICs for the management cluster network, 2 additional NICs for the dedicated VM workload network       |
 | Network Switch   | Trunking of ports required for VLAN support                                                                                                                                                           |
 
 :::info important
 - Use server-class hardware to achieve the best results. Laptops and nested virtualization are not supported.
 - Each node must have a unique `product_uuid` (fetched from `/sys/class/dmi/id/product_uuid`) to prevent errors from occurring during VM live migration and other operations. For more information, see [Issue #4025](https://github.com/harvester/harvester/issues/4025).
+- Harvester has a [built-in management cluster network](../networking/clusternetwork.md#built-in-cluster-network) (`mgmt`). To achieve high availability and the best performance in production environments, use at least two NICs in each node to set up a bonded NIC for the management network (see step 6 in [ISO Installation](../install/iso-install.md#installation-steps)). You can also create [custom cluster networks](../networking/clusternetwork.md#custom-cluster-network) for VM workloads. Each custom cluster network requires at least two additional NICs to set up a bonded NIC in every involved node of the Harvester cluster. For more information, see [Cluster Network](../networking/clusternetwork.md#concepts).
+- During testing, you can use only one NIC for the [built-in management cluster network](../networking/clusternetwork.md#built-in-cluster-network) (`mgmt`), and for testing the [VM network](../networking/harvester-network.md#create-a-vm-network) that is also carried by `mgmt`. High availability and optimal performance are not guaranteed.
 :::
 
 ## Network Requirements
