@@ -233,15 +233,6 @@ const config = {
   plugins: [
     require.resolve('docusaurus-plugin-image-zoom'),
     [
-      require.resolve('docusaurus-lunr-search'), 
-      {
-        language: ['en'],
-        indexBaseUrl: true,
-        maxHits: 10,
-        highlightResult: true,
-      }
-    ],
-    [
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
