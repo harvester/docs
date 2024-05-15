@@ -49,8 +49,9 @@ Harvester nodes require the following port connections or inbound rules. Typical
 | Protocol  |   Port                 |  Source                                |   Description                           |
 |:----------|:---------------------------|:-----------------------------------------|:----------------------------------------|
 | TCP    |   2379                 |  Harvester management nodes            |   Etcd client port                      |
-| TCP       | 2381                     | Harvester management nodes              | Etcd health checks                    |
+| TCP       | 2381                     | Harvester management nodes              | Etcd metrics collection                |
 | TCP       | 2380                     | Harvester management nodes              | Etcd peer port                        |
+| TCP       | 2382                     | Harvester management nodes              | Etcd client port (HTTP only)          |
 | TCP       | 10010                    | Harvester management and compute nodes  | Containerd                            |
 | TCP       | 6443                     | Harvester management nodes              | Kubernetes API                        |
 | TCP       | 9345                     | Harvester management nodes              | Kubernetes API                        |
@@ -60,7 +61,8 @@ Harvester nodes require the following port connections or inbound rules. Typical
 | TCP       | 10259                    | Harvester management nodes              | Kube-scheduler secure port            |
 | TCP       | 10250                    | Harvester management and compute nodes  | Kubelet                               |
 | TCP       | 10256                    | Harvester management and compute nodes  | Kube-proxy health checks              |
-| TCP       | 10258                    | Harvester management nodes              | Cloud-controller-manager              |
+| TCP       | 10258                    | Harvester management nodes              | cloud-controller-manager              |
+| TCP       | 10260                    | Harvester management nodes              | cloud-controller-manager              |
 | TCP       | 9091                     | Harvester management and compute nodes  | Canal calico-node felix               |
 | TCP       | 9099                     | Harvester management and compute nodes  | Canal CNI health checks               |
 | UDP       | 8472                     | Harvester management and compute nodes  | Canal CNI with VxLAN                  |
