@@ -58,6 +58,12 @@ When the Harvester node driver is enabled, you can create Kubernetes clusters on
 
 :::
 
+## Known Issues
+
+| Summary                                                                                                                                             | Status                                                                                          | Last Updated |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|--------------|
+| [Rancher loses ability to manage/scale guest clusters when the corresponding API tokens expire](https://github.com/harvester/harvester/issues/5827) | [Temporary Workaround Exists](https://harvesterhci.io/kb/modify_harvester_cloud_credential_ttl) | 2024-05-17   |
+
 ## RKE1 Kubernetes cluster
 Click to learn [how to create RKE1 Kubernetes Clusters](./rke1-cluster.md).
 
