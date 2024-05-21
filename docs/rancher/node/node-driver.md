@@ -60,9 +60,24 @@ When the Harvester node driver is enabled, you can create Kubernetes clusters on
 
 ## Known Issues
 
-| Summary                                                                                                                                             | Status                                                                                          | Last Updated |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|--------------|
-| [Rancher loses ability to manage/scale guest clusters when the corresponding API tokens expire](https://github.com/harvester/harvester/issues/5827) | [Temporary Workaround Exists](https://harvesterhci.io/kb/modify_harvester_cloud_credential_ttl) | 2024-05-17   |
+### Rancher loses the ability to manage or scale guest clusters when the corresponding API tokens expire
+
+**Issue**: [#5827](https://github.com/harvester/harvester/issues/5827)
+
+**Description**: Rancher uses kubeconfigs with embedded authentication tokens to
+provision guest Kubernetes clusters on Harvester. When these tokens expire,
+Rancher loses the ability to perform management operations for the corresponding
+Rancher-managed guest Kubernetes cluster. This issue affects only guest
+Kubernetes clusters running on Harvester and using cloud credentials created
+after installing or upgrading to Rancher v2.8.x, which reduced the
+[kubeconfig-default-token-ttl-minutes](https://ranchermanager.docs.rancher.com/api/api-tokens#kubeconfig-default-token-ttl-minutes)
+setting as well as the
+[auth-token-max-ttl-minutes](https://ranchermanager.docs.rancher.com/api/api-tokens#auth-token-max-ttl-minutes)
+setting to 30 days and 90 days respectively.
+
+**Status**: A [temporary workaround](https://harvesterhci.io/kb/modify_harvester_cloud_credential_ttl) is available.
+
+**Last updated**: 2024-05-21
 
 ## RKE1 Kubernetes cluster
 Click to learn [how to create RKE1 Kubernetes Clusters](./rke1-cluster.md).
