@@ -449,6 +449,14 @@ This setting allows you to define the number of minutes Harvester waits before d
 
 Default: `30`
 
+## `support-bundle-node-timeout`
+
+_Available as of v1.4.0_
+
+This setting allows you to define the number of minutes Harvester waits before node collection is timeout. If node is timeout, Harvester still could download support bundle without node's logs. The minimum value is `30`.
+
+Default: `30`
+
 ## `upgrade-checker-enabled`
 
 This setting allows you to automatically check if there's an upgrade available for Harvester.
