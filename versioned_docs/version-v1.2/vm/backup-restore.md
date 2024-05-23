@@ -187,3 +187,81 @@ Example:
 | `b-c` | `a` | `a-b-c.cfg` |
 
 Harvester v1.3.0 fixes this issue by changing the metadata file path to `<storage-path>/harvester/vmbackups/<vmbackup-namespace>/<vmbackup-name>.cfg`. If you are using an earlier version, however, ensure that VM backup names do not cause the described file naming conflicts.
+
+### Failure to Create Backup for Stopped VM
+
+When creating a backup for a stopped VM, the Harvester UI may display an error message that indicates a known issue.
+
+![](/img/v1.2/vm/vm_backup_fail.png)
+
+To determine if the [issue](https://github.com/harvester/harvester/issues/5841) has occurred, locate the VM backup on the **Dashboard** screen and perform the following steps:
+
+1. Obtain the names of the problematic `VolumeSnapshot` resources that are related to the VM backup.
+
+    ```
+    $ kubectl get virtualmachinebackups.harvesterhci.io <VM backup name> -o json | jq '.status.volumeBackups[] | select(.readyToUse == false) | .name '
+    ```
+
+    Example:
+
+    ```
+    $ kubectl get virtualmachinebackups.harvesterhci.io extra-default.off -o json | jq '.status.volumeBackups[] | select(.readyToUse == false) | .name '
+    extra-default.off-volume-vm-extra-default-rootdisk-vp3py
+    extra-default.off-volume-vm-extra-default-disk-1-oohjf
+    ```
+
+2. Obtain the names of the `VolumeSnapshotContent` resources that are related to the problematic volume snapshots.
+
+    ```
+    $ SNAPSHOT_CONTENT=$(kubectl get volumesnapshot <VolumeSnapshot Name> -o json | jq -r '.status.boundVolumeSnapshotContentName')
+    ```
+
+    Example:
+    ```
+    $ SNAPSHOT_CONTENT=$(kubectl get volumesnapshot extra-default.off-volume-vm-extra-default-rootdisk-vp3py -o json | jq -r '.status.boundVolumeSnapshotContentName')
+    ```
+
+3. Obtain the names of the related `Longhorn Snapshot` resources.
+
+    ```
+    $ LH_SNAPSHOT=snapshot-$(echo "$SNAPSHOT_CONTENT" | sed 's/^snapcontent-//')
+    ```
+
+4. Check if the status of the related `Longhorn Snapshot` resources is `readyToUse`.
+
+    ```
+    $ kubectl -n longhorn-system get snapshots.longhorn.io $LH_SNAPSHOT -o json | jq '.status.readyToUse'    
+    ```
+
+    Example:
+    ```
+    $ kubectl -n longhorn-system get snapshots.longhorn.io $LH_SNAPSHOT -o json | jq '.status.readyToUse'
+    true
+    ```    
+
+5. Check the state of the related `Longhorn backups` resources.
+
+    ```
+    $ kubectl -n longhorn-system get backups.longhorn.io -o json | jq --arg snapshot "$LH_SNAPSHOT" '.items[] | select(.spec.snapshotName == $snapshot) | .status.state'
+    ```
+
+    Example:
+    ```
+    $ kubectl -n longhorn-system get backups.longhorn.io -o json | jq --arg snapshot "$LH_SNAPSHOT" '.items[] | select(.spec.snapshotName == $snapshot) | .status.state'
+    Completed
+    ```
+
+:::info important
+You must perform the listed actions for all problematic `VolumeSnapshot` resources identified in step 1.
+:::
+
+The issue has likely occurred if the status of the related `Longhorn Snapshot` resources is `readyToUse` and the state of the related `Longhorn backups` resources is `Completed`.
+
+Start the VM before creating the VM backup to prevent the issue from occurring again. If you still choose to create the backup while the VM is stopped, change the state of the VM backup by running the following command:
+
+```
+$ kubectl -n longhorn-system rollout restart deployment csi-snapshotter
+```
+
+Related issue:
+- [[BUG] Fail to backup a Stopped/Off VM due to volume error state](https://github.com/harvester/harvester/issues/5841)
