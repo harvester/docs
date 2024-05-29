@@ -205,8 +205,8 @@ If you also configure `cluster-registration-url`, you usually need to add the ho
 
 :::note
 
-Harvester appends necessary addresses to user configured `no-proxy` to ensure the internal traffic works.
-i.e., `localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,longhorn-system,cattle-system,cattle-system.svc,harvester-system,.svc,.cluster.local`. `harvester-system` was added into the list since v1.1.2.
+Harvester appends necessary addresses to user configured `noProxy` to ensure the internal traffic works.
+i.e., `localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,longhorn-system,cattle-system,cattle-system.svc,harvester-system,.svc,.cluster.local`. The `harvester-system` was added into the list since v1.1.2.
 
 :::
 
