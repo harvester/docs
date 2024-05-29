@@ -75,7 +75,7 @@ setting as well as the
 [auth-token-max-ttl-minutes](https://ranchermanager.docs.rancher.com/api/api-tokens#auth-token-max-ttl-minutes)
 setting to 30 days and 90 days respectively.
 
-**Status**: A [temporary workaround](https://harvesterhci.io/kb/modify_harvester_cloud_credential_ttl) is available.
+**Status**: A [temporary workaround](https://harvesterhci.io/kb/renew_harvester_cloud_credentials) is available.
 
 **Last updated**: 2024-05-21
 

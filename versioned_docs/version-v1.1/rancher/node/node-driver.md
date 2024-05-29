@@ -37,10 +37,10 @@ Refer to [Rancher Downstream Cluster Support Matrix](https://www.suse.com/suse-r
 
 ## Known Issues
 
-| Summary                                                                                                                                                                                   | Status                                                                                          | Last Updated |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|--------------|
-| [Volumes created by the Harvester CSI driver in the host Harvester cluster would be deleted after editing/deleting the guest cluster](https://github.com/harvester/harvester/issues/3272) | Resolved                                                                                        | 2023-05-08   |
-| [Rancher loses ability to manage/scale guest clusters when the corresponding API tokens expire](https://github.com/harvester/harvester/issues/5827)                                       | [Temporary Workaround Exists](https://harvesterhci.io/kb/modify_harvester_cloud_credential_ttl) | 2024-05-17   |
+| Summary                                                                                                                                                                                   | Status                                                                                      | Last Updated |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|--------------|
+| [Volumes created by the Harvester CSI driver in the host Harvester cluster would be deleted after editing/deleting the guest cluster](https://github.com/harvester/harvester/issues/3272) | Resolved                                                                                    | 2023-05-08   |
+| [Rancher loses ability to manage/scale guest clusters when the corresponding API tokens expire](https://github.com/harvester/harvester/issues/5827)                                       | [Temporary Workaround Exists](https://harvesterhci.io/kb/renew_harvester_cloud_credentials) | 2024-05-17   |
 
 ### Volumes created by the Harvester CSI driver in the host Harvester cluster would be deleted after editing/deleting the guest cluster
 | Status    | Last updated |
