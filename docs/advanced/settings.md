@@ -449,7 +449,7 @@ This setting allows you to define the number of minutes Harvester waits before d
 
 Default: `30`
 
-## `support-bundle-node-timeout`
+## `support-bundle-node-collection-timeout`
 
 _Available as of v1.4.0_
 
