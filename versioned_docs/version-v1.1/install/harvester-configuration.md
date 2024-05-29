@@ -537,31 +537,6 @@ install:
   data_disk: /dev/sdb
 ```
 
-### `install.harvester.storage_class.replica_count`
-
-_Available as of v1.1.2_
-
-#### Definition
-
-Sets the replica count of Harvester's default storage class `harvester-longhorn`.
-
-Default: 3
-
-Supported values: 1, 2, 3. All other values are considered 3.
-
-In edge scenarios where users may deploy single-node Harvester clusters, they can set this value to 1. In most scenarios, it is recommended to keep the default value 3 for storage high availability.
-
-Please refer to [longhorn-replica-count](https://longhorn.io/docs/1.4.1/references/settings/#default-replica-count) for more details.
-
-#### Example
-
-```yaml
-install:
-  harvester:
-    storage_class:
-      replica_count: 1
-```
-
 ### `system_settings`
 
 #### Definition

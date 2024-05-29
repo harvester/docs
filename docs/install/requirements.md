@@ -35,6 +35,8 @@ Harvester nodes have the following hardware requirements and recommendations for
 :::info important
 - Use server-class hardware to achieve the best results. Laptops and nested virtualization are not supported.
 - Each node must have a unique `product_uuid` (fetched from `/sys/class/dmi/id/product_uuid`) to prevent errors from occurring during VM live migration and other operations. For more information, see [Issue #4025](https://github.com/harvester/harvester/issues/4025).
+- Harvester has a [built-in management cluster network](../networking/clusternetwork.md#built-in-cluster-network) (`mgmt`). To achieve high availability and the best performance in production environments, use at least two NICs in each node to set up a bonded NIC for the management network (see step 6 in [ISO Installation](../install/iso-install.md#installation-steps)). You can also create [custom cluster networks](../networking/clusternetwork.md#custom-cluster-network) for VM workloads. Each custom cluster network requires at least two additional NICs to set up a bonded NIC in every involved node of the Harvester cluster. The [witness node](../advanced/witness.md) does not require additional NICs. For more information, see [Cluster Network](../networking/clusternetwork.md#concepts).
+- During testing, you can use only one NIC for the [built-in management cluster network](../networking/clusternetwork.md#built-in-cluster-network) (`mgmt`), and for testing the [VM network](../networking/harvester-network.md#create-a-vm-network) that is also carried by `mgmt`. High availability and optimal performance are not guaranteed.
 :::
 
 ## Network Requirements
@@ -48,8 +50,9 @@ Harvester nodes require the following port connections or inbound rules. Typical
 | Protocol  |   Port                 |  Source                                |   Description                           |
 |:----------|:---------------------------|:-----------------------------------------|:----------------------------------------|
 | TCP    |   2379                 |  Harvester management nodes            |   Etcd client port                      |
-| TCP       | 2381                     | Harvester management nodes              | Etcd health checks                    |
+| TCP       | 2381                     | Harvester management nodes              | Etcd metrics collection                |
 | TCP       | 2380                     | Harvester management nodes              | Etcd peer port                        |
+| TCP       | 2382                     | Harvester management nodes              | Etcd client port (HTTP only)          |
 | TCP       | 10010                    | Harvester management and compute nodes  | Containerd                            |
 | TCP       | 6443                     | Harvester management nodes              | Kubernetes API                        |
 | TCP       | 9345                     | Harvester management nodes              | Kubernetes API                        |
@@ -59,7 +62,8 @@ Harvester nodes require the following port connections or inbound rules. Typical
 | TCP       | 10259                    | Harvester management nodes              | Kube-scheduler secure port            |
 | TCP       | 10250                    | Harvester management and compute nodes  | Kubelet                               |
 | TCP       | 10256                    | Harvester management and compute nodes  | Kube-proxy health checks              |
-| TCP       | 10258                    | Harvester management nodes              | Cloud-controller-manager              |
+| TCP       | 10258                    | Harvester management nodes              | cloud-controller-manager              |
+| TCP       | 10260                    | Harvester management nodes              | cloud-controller-manager              |
 | TCP       | 9091                     | Harvester management and compute nodes  | Canal calico-node felix               |
 | TCP       | 9099                     | Harvester management and compute nodes  | Canal CNI health checks               |
 | UDP       | 8472                     | Harvester management and compute nodes  | Canal CNI with VxLAN                  |
