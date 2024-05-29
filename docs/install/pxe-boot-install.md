@@ -259,6 +259,82 @@ group {
 
 The config file declares a subnet and two groups. The first group is for hosts to boot using `CREATE` mode and the other one is for `JOIN` mode. By default, the iPXE path is chosen, but if it sees a PXE client it offers the iPXE image according to the client architecture. Please prepare those images and a TFTP server first.
 
+The Internet Systems Consortium (ISC) announced the final [end-of-life (EOL) for ISC DHCP](https://www.isc.org/blogs/isc-dhcp-eol/) in 2022. ISC DHCP users are encouraged to migrate to the newer, feature-rich [Kea DHCP](https://www.isc.org/kea/), which the ISC designed for more modern network environments. If you are already using the Kea DHCPv4 server, check the following configuration example. For more information, see [Kea DHCPv4 Configuration](https://kea.readthedocs.io/en/kea-1.6.2/arm/dhcp4-srv.html#dhcpv4-server-configuration).
+```json
+"client-classes": [
+  {
+    "name": "iPXE UEFI/CREATE",
+    "test": "option[user-class].exists and substring(option[user-class].hex,0,4) == 'iPXE' and option[client-system].hex == 0x0007",
+    "boot-file-name": "http://10.100.0.10/harvester/ipxe-create-efi",
+    "only-if-required": true
+  },
+  {
+    "name": "iPXE non-UEFI/CREATE",
+    "test": "option[user-class].exists and substring(option[user-class].hex,0,4) == 'iPXE' and not option[client-system].hex == 0x0007",
+    "boot-file-name": "http://10.100.0.10/harvester/ipxe-create",
+    "only-if-required": true
+  },
+  {
+    "name": "iPXE UEFI/JOIN",
+    "test": "option[user-class].exists and substring(option[user-class].hex,0,4) == 'iPXE' and option[client-system].hex == 0x0007",
+    "boot-file-name": "http://10.100.0.10/harvester/ipxe-join-efi",
+    "only-if-required": true
+  },
+  {
+    "name": "iPXE non-UEFI/JOIN",
+    "test": "option[user-class].exists and substring(option[user-class].hex,0,4) == 'iPXE' and not option[client-system].hex == 0x0007",
+    "boot-file-name": "http://10.100.0.10/harvester/ipxe-join",
+    "only-if-required": true
+  },
+  {
+    "name": "PXE UEFI",
+    "test": "option[user-class].exists and not substring(option[user-class].hex,0,4) == 'iPXE' and option[client-system].hex == 0x0007",
+    "next-server": "10.100.0.20",
+    "boot-file-name": "ipxe.efi"
+  },
+  {
+    "name": "PXE non-UEFI",
+    "test": "option[user-class].exists and not substring(option[user-class].hex,0,4) == 'iPXE' and option[client-system].hex == 0x0007",
+    "next-server": "10.100.0.20",
+    "boot-file-name": "undionly.kpxe"
+  }
+]
+
+"subnet4": [
+  {
+    "subnet": "10.100.0.0/24",
+    "pools": [
+      {
+        "pool": "10.100.0.100 - 10.100.0.199",
+        "require-client-classes" : [ "iPXE UEFI/CREATE", "iPXE non-UEFI/CREATE" ]
+      }.
+      {
+        "pool": "10.100.0.200 - 10.100.0.253",
+        "require-client-classes" : [ "iPXE UEFI/JOIN", "iPXE non-UEFI/JOIN" ]
+      }
+    ],
+    "option-data": [
+      {
+        "name": "routers",
+        "data": "10.100.0.10"
+      }
+    ],
+    "reservations": [
+      // assign ip address to the host for booting in CREATE mode
+      {
+        "hw-address": "52:54:00:6b:13:e2",
+        "ip-address": "10.100.0.101"
+      },
+      // assign ip address to the host for booting in JOIN mode
+      {
+        "hw-address": "52:54:00:69:d5:92",
+        "ip-address": "10.100.0.201"
+      }
+    ]
+  }
+]
+```
+
 ## Harvester Configuration
 
 For more information about Harvester configuration, please refer to the [Harvester configuration](./harvester-configuration.md) page.
@@ -318,6 +394,23 @@ group {
 ```
 
 The `elsif substring` statement is new, and it offers `http://10.100.0.10/harvester/ipxe.efi` when it sees a UEFI HTTP boot DHCP request. After the client fetches the iPXE program and runs it, the iPXE program will send a DHCP request again and load the iPXE script from the URL `http://10.100.0.10/harvester/ipxe-create-efi`.
+
+If you want to enable UEFI HTTP boot on the Kea DHCPv4 server, you must add a new `client-class` at the end of the `client-classes`.
+
+Example:
+```json
+{
+  "name": "HTTP",
+  "test": "substring(option[vendor-class-identifier].hex,0,10) == 'HTTPClient'",
+  "option-data": [
+    {
+      "name": "vendor-class-identifier",
+      "data": "HTTPClient"
+    }
+  ],
+  "boot-file-name": "http://10.100.0.10/harvester/ipxe.efi"
+}
+```
 
 ### The iPXE Script for UEFI Boot
 
