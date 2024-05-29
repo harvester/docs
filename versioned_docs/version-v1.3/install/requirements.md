@@ -22,14 +22,15 @@ Certain versions of Harvester support the deployment of [single-node clusters](h
 
 Harvester nodes have the following hardware requirements and recommendations for installation and testing.
 
-| Type             | Requirements and Recommendations                                                                                                          |
-|:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------|
-| CPU              | x86_64 only. Hardware-assisted virtualization is required. 8-core processor minimum for testing; 16-core or above required for production                                                            |
-| Memory           | 32 GB minimum for testing; 64 GB or above required for production                                                                                                                                                               |
-| Disk Capacity    | 250 GB minimum for testing (180 GB minimum when using multiple disks); 500 GB or above required for production                                                                                                                                  |
-| Disk Performance | 5,000+ random IOPS per disk(SSD/NVMe). Management nodes (first 3 nodes) must be [fast enough for etcd](https://www.suse.com/support/kb/doc/?id=000020100) |
-| Network Card     | Minimum Ethernet speed: 1 Gbps for testing, 10 Gbps for production; Recommended network interfaces: 2 NICs for the management cluster network, 2 additional NICs for the dedicated VM workload network (does not apply to the [witness node](../advanced/witness.md))       |
-| Network Switch   | Trunking of ports required for VLAN support                                                                                                                                                           |
+| Hardware | Development/Testing | Production |
+| :--- | :--- | :--- |
+| CPU | x86_64 (with hardware-assisted virtualization); 8 cores minimum | x86_64 (with hardware-assisted virtualization); 16 cores minimum |
+| Memory | 32 GB minimum | 64 GB minimum |
+| Disk capacity	| 250 GB minimum (180 GB minimum when using multiple disks) | 500 GB minimum |
+| Disk performance | 5,000+ random IOPS per disk (SSD/NVMe); management node storage must meet [etcd]((https://www.suse.com/support/kb/doc/?id=000020100)) speed requirements | 5,000+ random IOPS per disk (SSD/NVMe); management node storage must meet [etcd]((https://www.suse.com/support/kb/doc/?id=000020100)) speed requirements |
+| Network card count | Management cluster network: 1 NIC required, 2 NICs recommended; VM workload network: 1 NIC required, at least 2 NICs recommended (does not apply to the [witness node](../advanced/witness.md)) | Management cluster network: 1 NIC required, 2 NICs recommended; VM workload network: 1 NIC required, at least 2 NICs recommended (does not apply to the [witness node](../advanced/witness.md)) |
+| Network card speed | 1 Gbps Ethernet minimum | 10 Gbps Ethernet minimum |
+| Network switch | Port trunking for VLAN support | Port trunking for VLAN support |
 
 :::info important
 - Use server-class hardware to achieve the best results. Laptops and nested virtualization are not supported.
