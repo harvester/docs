@@ -451,7 +451,7 @@ Default: `30`
 
 ## `support-bundle-node-collection-timeout`
 
-_Available as of v1.4.0_
+_Available as of v1.3.1_
 
 This setting allows you to define the number of minutes Harvester allows for collection of logs and configurations (Harvester) on the nodes for the support bundle. If the collection process is not completed within the allotted time, Harvester still allows you to download the support bundle (without the uncollected data). The minimum value is `30`.
 
