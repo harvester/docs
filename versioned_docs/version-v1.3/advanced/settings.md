@@ -60,6 +60,24 @@ The following example will add disks matching the glob pattern `/dev/sd*` or `/d
 /dev/sd*,/dev/hd*
 ```
 
+## `auto-rotate-rke2-certs`
+
+_Available as of v1.3.0_
+
+Setting that allows you to automatically rotate certificates for RKE2 services. This setting is disabled by default.
+
+Use the field `expiringInHours` to specify the validity period of each certificate (`1` to `8759` hours). Harvester automatically replaces the certificate before the specified period ends.
+
+For more information, see the **Certificate Rotation** section of the [Rancher](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/manage-clusters/rotate-certificates) and [RKE2](https://docs.rke2.io/advanced#certificate-rotation) documentation.
+
+Default: `{"enable":false,"expiringInHours":240}`
+
+#### Example
+
+```
+{"enable":true,"expiringInHours":48}
+```
+
 ## `backup-target`
 
 This setting allows you to set a custom backup target to store VM backups. It supports NFS and S3.
