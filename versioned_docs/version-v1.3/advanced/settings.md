@@ -62,6 +62,8 @@ The following example will add disks matching the glob pattern `/dev/sd*` or `/d
 
 ## `auto-rotate-rke2-certs`
 
+_Available as of v1.3.0_
+
 Setting that allows you to automatically rotate certificates for RKE2 services. This setting is disabled by default.
 
 Use the field `expiringInHours` to specify the validity period of each certificate (`1` to `8759` hours). Harvester automatically replaces the certificate before the specified period ends.
