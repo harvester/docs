@@ -55,11 +55,18 @@ const config = {
               banner: `none`
             },
             "v1.1": {
-              path: "v1.1",
-              banner: `none`
+              label: 'v1.1 (EOL)',
+              path: 'v1.1',
+              banner: `unmaintained`
             },
             "v1.0": {
-              path: "v1.0",
+              label: 'v1.0 (EOL)',
+              path: 'v1.0',
+              banner: `unmaintained`
+            },
+            "v0.3": {
+              label: 'v0.3 (EOL)',
+              path: 'v0.3',
               banner: `unmaintained`
             }
           }
