@@ -1,0 +1,58 @@
+on:
+  workflow_call:
+    inputs:
+      production:
+        required: true
+        type: boolean
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          npm install -g yarn
+          yarn install --frozen-lockfile
+
+      - name: Ignore OpenAPI
+        run: |
+          ./scripts/ignore-openapi
+
+      - name: Build
+        env:
+          NODE_OPTIONS: "--max_old_space_size=7168"
+        run: |
+          yarn gen-api-docs
+          yarn build
+      
+      - name: Deploy to Netlify
+        id: netlify
+        if: ${{ inputs.production != true }}
+        uses: nwtgck/actions-netlify@v3.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          publish-dir: build
+          production-deploy: false
+          deploy-message: Deploy from ${{ github.event.pull_request.title }}
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          enable-commit-status: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+    
+      - name: Upload artifact
+        if: ${{ inputs.production == true }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/
