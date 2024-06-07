@@ -206,6 +206,7 @@ const config = {
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
+      additionalLanguages: ['hcl'],
     },
     languageTabs: [
       {

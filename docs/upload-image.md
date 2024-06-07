@@ -57,6 +57,20 @@ spec:
 For more information, see the [API reference](./api/create-namespaced-virtual-machine-image).
 
 </TabItem>
+<TabItem value="terraform" label="Terraform">
+
+```hcl
+resource "harvester_image" "opensuse154" {
+  name      = "opensuse154"
+  namespace = "harvester-public"
+
+  display_name = "openSUSE-Leap-15.4.x86_64-NoCloud.qcow2"
+  source_type  = "download"
+  url          = "https://downloadcontent-us1.opensuse.org/repositories/Cloud:/Images:/Leap_15.4/images/openSUSE-Leap-15.4.x86_64-NoCloud.qcow2"
+}
+```
+
+</TabItem>
 </Tabs>
 
 ### Upload Images via Local File
