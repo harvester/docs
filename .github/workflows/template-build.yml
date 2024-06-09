@@ -10,6 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
+      id-token: write
       contents: write
       pages: write
     steps:
@@ -20,6 +21,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+
+      - name: "Read some Secrets"
+        uses: rancher-eio/read-vault-secrets@main
+        if: ${{ inputs.production != true }}
+        with:
+          secrets: |
+            secret/data/github/repo/${{ github.repository }}/netlify-auth-token/credentials token | NETLIFY_AUTH_TOKEN ;
+            secret/data/github/repo/${{ github.repository }}/netlify-site-id/credentials token | NETLIFY_SITE_ID 
 
       - name: Install dependencies
         run: |
@@ -51,8 +60,8 @@ jobs:
           enable-commit-status: true
           overwrites-pull-request-comment: true
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ env.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ env.NETLIFY_SITE_ID }}
 
       - name: Set outputs
         id: vars
