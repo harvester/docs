@@ -49,3 +49,28 @@ provider "harvester" {
 More details about the provider-specific configurations can be found in the [docs](https://registry.terraform.io/providers/harvester/harvester/latest/docs).
 
 Github Repo: [https://github.com/harvester/terraform-provider-harvester](https://github.com/harvester/terraform-provider-harvester)
+
+### Resource Timeouts
+
+Several resource-related operations (for example, creating a new image and
+downloading its content from the internet) may take some time to complete.
+Depending on the host hardware and other factors, these operations may exceed
+default timeout settings and cause errors. To modify timeout values for such
+operations, define a timeout block in the resource.
+
+```hcl
+resource "harvester_image" "opensuse154" {
+  name      = "opensuse154"
+  namespace = "harvester-public"
+
+  display_name = "openSUSE-Leap-15.4.x86_64-NoCloud.qcow2"
+  source_type  = "download"
+  url          = "https://downloadcontent-us1.opensuse.org/repositories/Cloud:/Images:/Leap_15.4/images/openSUSE-Leap-15.4.x86_64-NoCloud.qcow2"
+
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "1m"
+  }
+}
+```

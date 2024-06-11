@@ -17,6 +17,9 @@ For support with other storage, please refer to [Third-Party Storage Support](..
 :::
 
 ## Creating a StorageClass
+
+<Tabs>
+<TabItem value="ui" label="UI" default>
 You can create one or more StorageClasses from the **Advanced > StorageClasses** page.
 
 ![](/img/v1.2/storageclass/create_storageclasses_entry.png)
@@ -96,6 +99,50 @@ The `volumeBindingMode` field controls when volume binding and dynamic provision
 2. `WaitForFirstConsumer`: Binds and provisions a persistent volume once a VM using the PersistentVolumeClaim is created.
 
 ![](/img/v1.2/storageclass/customize_tab_vol_binding_mode.png)
+
+</TabItem>
+<TabItem value="api" label="API">
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    storageclass.beta.kubernetes.io/is-default-class: 'true'
+    storageclass.kubernetes.io/is-default-class: 'true'
+  name: single-replica
+parameters:
+  migratable: 'false'
+  numberOfReplicas: '1'
+  staleReplicaTimeout: '30'
+provisioner: driver.longhorn.io
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
+```
+
+</TabItem>
+<TabItem value="terraform" label="Terraform">
+
+```hcl
+resource "harvester_storageclass" "single-replica" {
+  name = "single-replica"
+
+  is_default = "true"
+  allow_volume_expansion = "true"
+  volume_binding_mode = "immediate"
+  reclaim_policy = "delete"
+
+  parameters = {
+    "migratable"          = "false"
+    "numberOfReplicas"    = "1"
+    "staleReplicaTimeout" = "30"
+  }
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## Data Locality Settings
 

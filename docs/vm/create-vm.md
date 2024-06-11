@@ -90,6 +90,54 @@ spec:
 For more information, see the [API reference](../api/create-namespaced-virtual-machine).
 
 </TabItem>
+<TabItem value="terraform" label="Terraform">
+
+To create a virtual machine using the [Harvester Terraform Provider](https://registry.terraform.io/providers/harvester/harvester/latest),
+define a `harvester_virtualmachine` resource block:
+
+```hcl
+
+resource "harvester_virtualmachine" "opensuse154" {
+  name                 = "opensuse154"
+  namespace            = "default"
+  restart_after_update = true
+
+  cpu    = 2
+  memory = "2Gi"
+
+  run_strategy = "RerunOnFailure"
+  hostname     = "opensuse154"
+  machine_type = "q35"
+
+  ssh_keys = [
+    harvester_ssh_key.mysshkey.id
+  ]
+
+  network_interface {
+    name           = "nic-1"
+    network_name   = harvester_network.cluster-vlan1.id
+    wait_for_lease = true
+  }
+
+  disk {
+    name       = "rootdisk"
+    type       = "disk"
+    size       = "10Gi"
+    bus        = "virtio"
+    boot_order = 1
+
+    image       = harvester_image.opensuse154.id
+    auto_delete = true
+  }
+
+  cloudinit {
+    user_data_secret_name    = harvester_cloudinit_secret.cloud-config-opensuse154.name
+    network_data_secret_name = harvester_cloudinit_secret.cloud-config-opensuse154.name
+  }
+}
+
+```
+</TabItem>
 </Tabs>
 
 ## Volumes
