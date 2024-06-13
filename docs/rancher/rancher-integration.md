@@ -115,3 +115,37 @@ This feature lets you deploy custom container workloads directly to the bare-met
 With this feature enabled, your Harvester cluster does not appear on the **Continuous Delivery** page in the Rancher UI. Please check the issue [#4482](https://github.com/harvester/harvester/issues/4482) for further updates.
 
 :::
+
+## Rancher fleet support (experimental)
+
+_Available as of Harvester v1.3.0 + Rancher v2.7.9_
+
+:::note
+Needs Rancher Feature `harvester-baremetal-container-workload` to be enabled
+:::
+
+Starting with Rancher v2.7.9, users can leverage [Rancher Fleet](https://fleet.rancher.io/) for managing container workloads and / or configuring Harvester via a gitops based approach.
+
+To get started, follow these steps:
+1. Click Continuous Delivery from left navigation panel in Rancher. 
+![](/img/v1.3/rancher/continuous-delivery-overview.png)
+
+2. Optional: Edit fleet cluster config to add additional labels, which can be used to group Harvester clusters into a Cluster Group. In our example we have added an additional label `location=private-dc`
+![](/img/v1.3/rancher/fleet-cluster-config.png)
+![](/img/v1.3/rancher/fleet-additional-labels.png)
+
+3. Optional: Create a Cluster Group, `private-dc-clusters` with `Cluster Selectors` defined to match the label key/value pair of `location=private-dc`
+![](/img/v1.3/rancher/create-cluster-group.png)
+
+4. Create a `GitRepo` name `harvester-config`, pointing to the [harvester-fleet-examples repo](https://github.com/harvester/harvester-fleet-examples), with branch defined as `main`. Define the following paths:
+  * keypair
+  * vmimage
+  * vmnetwork
+  * cloudint
+![](/img/v1.3/rancher/gitrepo-definition.png)
+
+On the next page define the `GitRepo` targets. This can be all clusters, an individual cluster or a group of clusters. For this example we will be using the optional `ClusterGroup` named `private-dc-clusters`
+![](/img/v1.3/rancher/gitrepo-targets.png) 
+
+5. Once `GitRepo` is saved, it can take a few seconds for the resources to be rolled out to the target clusters
+![](/img/v1.3/rancher/gitrepo-synced.png)
