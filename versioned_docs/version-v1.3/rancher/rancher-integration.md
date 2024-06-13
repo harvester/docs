@@ -115,3 +115,49 @@ This feature lets you deploy custom container workloads directly to the bare-met
 With this feature enabled, your Harvester cluster does not appear on the **Continuous Delivery** page in the Rancher UI. Please check the issue [#4482](https://github.com/harvester/harvester/issues/4482) for further updates.
 
 :::
+
+## Fleet Support (Experimental)
+
+_Available as of Harvester v1.3.0 + Rancher v2.7.9_
+
+Starting with Rancher v2.7.9, you can leverage [Fleet](https://fleet.rancher.io/) for managing container workloads and configuring Harvester with a GitOps-based approach.
+
+:::info
+The Rancher feature `harvester-baremetal-container-workload` must be enabled.
+:::
+1. On the Rancher UI, go to **☰** > **Continuous Delivery**.
+
+  ![](/img/v1.3/rancher/continuous-delivery-overview.png)
+
+1. (Optional) On the **Clusters** tab, edit the Fleet cluster config to add labels that can be used to group Harvester clusters. 
+
+  In this example, the label `location=private-dc` was added.
+
+  ![](/img/v1.3/rancher/fleet-cluster-config.png)
+
+  ![](/img/v1.3/rancher/fleet-additional-labels.png)
+
+1. (Optional) On the **Cluster Groups** tab, create a cluster group.
+
+  In this example, the cluster group `private-dc-clusters` is created with a cluster selector rule that matches the label key/value pair of `location=private-dc`.
+
+  ![](/img/v1.3/rancher/create-cluster-group.png)
+
+1. On the **Git Repos** tab, create a Git repo named `harvester-config` that points to the [harvester-fleet-examples repo](https://github.com/harvester/harvester-fleet-examples), with the branch defined as `main`. You must define the following paths:
+
+  - `keypair`
+  - `vmimage`
+  - `vmnetwork`
+  - `cloudinit`
+
+  ![](/img/v1.3/rancher/gitrepo-definition.png)
+
+1. Click **Next**, and then define the Git repo targets. You can select all clusters, an individual cluster, or a group of clusters. 
+
+  In this example, the cluster group named `private-dc-clusters` is used.
+
+  ![](/img/v1.3/rancher/gitrepo-targets.png) 
+
+1. Click **Save**. It may take a few seconds for the resources to be rolled out to the target clusters.
+
+  ![](/img/v1.3/rancher/gitrepo-synced.png)

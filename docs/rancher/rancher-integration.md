@@ -148,7 +148,7 @@ The Rancher feature `harvester-baremetal-container-workload` must be enabled.
   - `keypair`
   - `vmimage`
   - `vmnetwork`
-  - `cloudint`
+  - `cloudinit`
 
   ![](/img/v1.3/rancher/gitrepo-definition.png)
 
