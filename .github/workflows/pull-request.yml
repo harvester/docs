@@ -1,11 +1,53 @@
 name: Pull Request Preview
 
 on:
-  pull_request:
+  pull_request_target:
 
 jobs:
   build:
-    uses: ./.github/workflows/template-build.yml
-    with:
-      production: false
-    secrets: inherit
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      pages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Set up Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          npm install -g yarn
+          yarn install --frozen-lockfile
+
+      - name: Ignore OpenAPI
+        run: |
+          ./scripts/ignore-openapi
+
+      - name: Build
+        env:
+          NODE_OPTIONS: "--max_old_space_size=7168"
+        run: |
+          yarn gen-api-docs
+          yarn build
+      
+      - name: Deploy to Netlify
+        id: netlify
+        uses: nwtgck/actions-netlify@v3.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          publish-dir: build
+          production-deploy: false
+          deploy-message: Deploy from ${{ github.event.pull_request.title }}
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          enable-commit-status: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
