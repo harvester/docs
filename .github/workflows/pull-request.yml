@@ -7,9 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: write
-      issues: write
+      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -46,8 +44,8 @@ jobs:
           production-deploy: false
           deploy-message: Deploy from ${{ github.event.pull_request.title }}
           enable-pull-request-comment: true
-          enable-commit-comment: true
-          enable-commit-status: true
+          enable-commit-comment: false
+          enable-commit-status: false
           overwrites-pull-request-comment: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
