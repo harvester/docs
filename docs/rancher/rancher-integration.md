@@ -116,36 +116,48 @@ With this feature enabled, your Harvester cluster does not appear on the **Conti
 
 :::
 
-## Rancher fleet support (experimental)
+## Fleet Support (Experimental)
 
 _Available as of Harvester v1.3.0 + Rancher v2.7.9_
 
-:::note
-Needs Rancher Feature `harvester-baremetal-container-workload` to be enabled
+Starting with Rancher v2.7.9, you can leverage [Fleet](https://fleet.rancher.io/) for managing container workloads and configuring Harvester with a GitOps-based approach.
+
+:::info
+The Rancher feature `harvester-baremetal-container-workload` must be enabled.
 :::
+1. On the Rancher UI, go to **☰** > **Continuous Delivery**.
 
-Starting with Rancher v2.7.9, users can leverage [Rancher Fleet](https://fleet.rancher.io/) for managing container workloads and / or configuring Harvester via a gitops based approach.
+  ![](/img/v1.3/rancher/continuous-delivery-overview.png)
 
-To get started, follow these steps:
-1. Click Continuous Delivery from left navigation panel in Rancher. 
-![](/img/v1.3/rancher/continuous-delivery-overview.png)
+1. (Optional) On the **Clusters** tab, edit the Fleet cluster config to add labels that can be used to group Harvester clusters. 
 
-2. Optional: Edit fleet cluster config to add additional labels, which can be used to group Harvester clusters into a Cluster Group. In our example we have added an additional label `location=private-dc`
-![](/img/v1.3/rancher/fleet-cluster-config.png)
-![](/img/v1.3/rancher/fleet-additional-labels.png)
+  In this example, the label `location=private-dc` was added.
 
-3. Optional: Create a Cluster Group, `private-dc-clusters` with `Cluster Selectors` defined to match the label key/value pair of `location=private-dc`
-![](/img/v1.3/rancher/create-cluster-group.png)
+  ![](/img/v1.3/rancher/fleet-cluster-config.png)
 
-4. Create a `GitRepo` name `harvester-config`, pointing to the [harvester-fleet-examples repo](https://github.com/harvester/harvester-fleet-examples), with branch defined as `main`. Define the following paths:
-  * keypair
-  * vmimage
-  * vmnetwork
-  * cloudint
-![](/img/v1.3/rancher/gitrepo-definition.png)
+  ![](/img/v1.3/rancher/fleet-additional-labels.png)
 
-On the next page define the `GitRepo` targets. This can be all clusters, an individual cluster or a group of clusters. For this example we will be using the optional `ClusterGroup` named `private-dc-clusters`
-![](/img/v1.3/rancher/gitrepo-targets.png) 
+1. (Optional) On the **Cluster Groups** tab, create a cluster group.
 
-5. Once `GitRepo` is saved, it can take a few seconds for the resources to be rolled out to the target clusters
-![](/img/v1.3/rancher/gitrepo-synced.png)
+  In this example, the cluster group `private-dc-clusters` is created with a cluster selector rule that matches the label key/value pair of `location=private-dc`.
+
+  ![](/img/v1.3/rancher/create-cluster-group.png)
+
+1. On the **Git Repos** tab, create a Git repo named `harvester-config` that points to the [harvester-fleet-examples repo](https://github.com/harvester/harvester-fleet-examples), with the branch defined as `main`. You must define the following paths:
+
+  - `keypair`
+  - `vmimage`
+  - `vmnetwork`
+  - `cloudint`
+
+  ![](/img/v1.3/rancher/gitrepo-definition.png)
+
+1. Click **Next**, and then define the Git repo targets. You can select all clusters, an individual cluster, or a group of clusters. 
+
+  In this example, the cluster group named `private-dc-clusters` is used.
+
+  ![](/img/v1.3/rancher/gitrepo-targets.png) 
+
+1. Click **Save**. It may take a few seconds for the resources to be rolled out to the target clusters.
+
+  ![](/img/v1.3/rancher/gitrepo-synced.png)
