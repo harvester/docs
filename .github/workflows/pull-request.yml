@@ -4,10 +4,9 @@ on:
   pull_request_target:
 
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
+    permissions: {} # disable all permission
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,7 +20,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g yarn
           yarn install --frozen-lockfile
 
       - name: Ignore OpenAPI
@@ -34,20 +32,85 @@ jobs:
         run: |
           yarn gen-api-docs
           yarn build
-      
+
+      - name: Upload build to artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: ./build
+
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    needs: prepare
+    steps:
+      - name: Set up Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          npm install netlify-cli -g yarn
+
+      - name: Download build from artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: ./build
+
       - name: Deploy to Netlify
+        run: >
+          netlify deploy
+          --site ${{ secrets.NETLIFY_SITE_ID }}
+          --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          --message "Deploy from GitHub Action (pull-request: ${{ github.event.number }}, ${{ github.event.pull_request.head.sha }})"
+          --dir ./build
+          --json > deploy_output.json
+        
+      - name: Get Netlify Deploy URL
         id: netlify
-        uses: nwtgck/actions-netlify@v3.0
+        run: |
+          DEPLOY_URL=$(jq -r '.deploy_url' deploy_output.json)
+          echo "deploy_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+      
+      - name: Add or Update PR comment
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          publish-dir: build
-          production-deploy: false
-          deploy-message: Deploy from ${{ github.event.pull_request.title }}
-          enable-pull-request-comment: true
-          enable-commit-comment: false
-          enable-commit-status: false
-          enable-github-deployment: false
-          overwrites-pull-request-comment: true
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          script: |
+            const sha = `${{ github.event.pull_request.head.sha }}`
+            const pr_number = `${{ github.event.number }}`;
+            const deployUrl = `${{ steps.netlify.outputs.deploy_url }}`;
+            const commentIdentifier = "<!-- deploy-comment -->";
+            const body = `${commentIdentifier}\n
+            |  Name | Link |
+            |:-:|------------------------|
+            |<span aria-hidden="true">🔨</span> Latest commit | ${sha} |
+            |<span aria-hidden="true">😎</span> Deploy Preview | ${deployUrl} |
+            `
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr_number,
+            });
+
+            const existingComment = comments.find(comment => comment.body.includes(commentIdentifier));
+
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body: body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr_number,
+                body: body,
+              });
+            }
