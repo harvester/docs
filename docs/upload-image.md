@@ -134,6 +134,11 @@ If Rancher is deployed on an RKE2 cluster, perform the following steps:
 
 3. Delete the stuck image, and then restart the upload process.
 
+#### Uploading Images Previously Downloaded from Harvester
+
+Starting with **v1.5.5**, Longhorn [compresses backing images for downloading](https://github.com/longhorn/backing-image-manager/pull/153). If you attempt to upload a compressed backing image, Harvester rejects the attempt and displays the message **Upload failed: the uploaded file size xxxx should be a multiple of 512 bytes since Longhorn uses directIO by default** because the compressed data violates Longhorn's data alignment.
+
+Before uploading, decompress backing images using the command `$ gzip -d <file name>`.
 
 ### Create Images via Volumes
 
