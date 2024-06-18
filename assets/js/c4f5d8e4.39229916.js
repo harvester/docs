@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkharvester_docs=self.webpackChunkharvester_docs||[]).push([[64195],{1257:(e,s,r)=>{r.r(s),r.d(s,{default:()=>c});var t=r(85893),a=(r(67294),r(16550));function c(e){return(0,t.jsx)(a.l_,{to:`${e.config.baseUrl}v1.3`})}}}]);
