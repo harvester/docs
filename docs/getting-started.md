@@ -21,10 +21,10 @@ Harvester is built for bare metal servers using enterprise-grade open-source sof
 
 You can download the installation files from the [Harvester Releases](https://github.com/harvester/harvester/releases) page. The **Downloads** section of the release notes contains links to the ISO files and related artifacts. The following types of ISO files are available:
 
-- **Full ISO**: Contains the core operating system components and all required container images, which are preloaded during installation. You must use a full ISO when installing Harvester behind a firewall or proxy, and in environments without internet connectivity.
-- [**Net install ISO**](../install/net-install): Contains only the core operating system components. After installation is completed, the operating system pulls all required container images from the internet (mostly from Docker Hub).
+- **Full ISO**: Contains the core operating system components and all required container images, which are preloaded during installation. You must use a full ISO when installing Harvester behind a firewall or proxy, and in environments without internet connectivity. 
+- [**Net install ISO**](../install/net-install): Contains only the core operating system components. After installation is completed, the operating system pulls all required container images from the internet (mostly from Docker Hub). 
 
-<p>&nbsp;</p>
+
 | Method | Required Installation Files | Other Requirements |
 | --- | --- | --- |
 | [ISO](../install/index) | ISO | N/A |
