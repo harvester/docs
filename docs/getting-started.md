@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
-sidebar_label: Getting Started
-title: "Getting Started"
+sidebar_label: Getting Started (High-Availability Clusters)
+title: "Getting Started (High-Availability Clusters)"
 keywords:
 - Harvester
 - getting started
