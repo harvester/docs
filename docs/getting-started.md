@@ -13,7 +13,7 @@ A three-node [Harvester cluster](../glossary/#harvester-cluster) is required to 
 
 This guide walks you through the steps required to deploy a high-availability cluster and virtual machines (VMs) that can host [guest clusters](../glossary/#guest-cluster--guest-kubernetes-cluster). 
 
-## 1. Verify that the minimum hardware and network requirements for installing and running Harvester are met. 
+## 1. Verify that the minimum hardware and network requirements are met. 
 
 Harvester is built for bare metal servers using enterprise-grade open-source software components. The installer automatically checks the hardware and displays warning messages if the minimum [requirements](../install/requirements) are not met. 
 
@@ -58,17 +58,33 @@ During installation, you must configure node settings, and specify the cluster m
 
 When the cluster has three or more nodes, the two nodes added after the first node are automatically promoted to management nodes to form a high-availability (HA) cluster. 
 
-## 7. Networking? 
+## 7. Create a cluster network and a VM network.
 
-## 8. Import one or more VM images. 
+Networking in Harvester involves three major concepts:
+
+- [**Cluster network**](../networking/index#cluster-network): Traffic-isolated forwarding path for transmission of network traffic in the Harvester cluster. 
+    
+    During deployment, a cluster network called the [*management network*](../networking/index#built-in-cluster-network) is created for intra-cluster communications. Harvester allows you to create [custom cluster networks](../networking/index#custom-cluster-network) that can be dedicated to VM traffic and that allow VMs to be accessed from both internal and external networks.
+
+- [**Network configuration**](../networking/index#cluster-network): Definition of how cluster nodes connect to a specific cluster network. 
+    
+    Each network configuration corresponds to a set of nodes with uniform network specifications. Only nodes that are covered by the network configuration can access the associated cluster network.
+
+- [**VM network**](../networking/index#vm-network): Virtual network that VMs use to communicate with other VMs and external networks.
+    
+    Each VM network is linked to a specific cluster network, which is used for transmission of VM traffic. Depending on the capabilities of network devices in your environment, you can create either a [VLAN network](../networking/harvester-network/#vlan-network) or an [untagged network](../networking/harvester-network/#untagged-network).
+
+Before you create VMs, [create a custom cluster network](../networking/index#how-to-create-a-new-cluster-network) (including the associated network configuration), and then [create a VM network](../networking/index#how-to-create-a-new-cluster-network) that is linked to the custom cluster network.
+
+## 8. Import VM images. 
 
 On the Harvester UI, you can import ISO, qcow2, and raw [images](../upload-image/) by uploading an image from the local file system, or by specifying the URL of an image that can be accessed from the cluster. 
 
-## 9. (Optional) Import SSH keys. 
+## 9. (Recommended) Import SSH keys. 
 
 You can store SSH public keys in Harvester. When a VM is launched, a stored key can be [injected](../vm/access-to-the-vm/#ssh-access) into the VM to allow secure access via SSH. Validated keys are displayed on the **SSH Keys** screen on the Harvester UI. 
 
-## 10. Create one or more VMs. 
+## 10. Create VMs. 
 
 You can create [Linux VMs](../vm/index) using one of the following methods: 
 
