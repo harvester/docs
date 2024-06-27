@@ -28,9 +28,9 @@ The following steps assume that you have a running VM and a ready volume:
 1. Go to the **Virtual Machines** page.
 1. Find the VM that you want to add a volume to and select **⋮ > Add Volume**.
 
-  ![Add Volume Button](/img/v1.2/vm/add-volume-button.png)
+    ![Add Volume Button](/img/v1.2/vm/add-volume-button.png)
 
 1. Enter the **Name** and select the **Volume**.
 1. Click **Apply**.
 
-  ![Add Volume Panel](/img/v1.2/vm/add-volume-panel.png)
+    ![Add Volume Panel](/img/v1.2/vm/add-volume-panel.png)

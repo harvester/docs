@@ -30,8 +30,8 @@ $ kubectl get svc -n kube-system ingress-expose -ojsonpath='{.metadata.annotatio
 ```
 
 ## 用途
-管理地址有两个用途：
+管理地址：
 
 - 允许通过 `HTTPS` 协议访问 Harvester API/UI。
-- 作为其他节点加入集群的地址。
+- 允许其他节点加入集群。
    ![](/img/v1.2/install/configure-management-address.png)

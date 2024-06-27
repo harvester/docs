@@ -34,12 +34,12 @@ Users can modify the global `overcommit-config` by following the steps below, an
 
 1. Go to the **Advanced > Settings** page.
 
-  ![overcommit page](/img/v1.2/vm/overcommit-page.png)
+    ![overcommit page](/img/v1.2/vm/overcommit-page.png)
 
 1. Find the `overcommit-config` setting.
 1. Configure the desired CPU, Memory, and Storage ratio.
 
-  ![overcommit panel](/img/v1.2/vm/overcommit-panel.png)
+    ![overcommit panel](/img/v1.2/vm/overcommit-panel.png)
 
 ## Configure overcommit for a single virtual machine
 

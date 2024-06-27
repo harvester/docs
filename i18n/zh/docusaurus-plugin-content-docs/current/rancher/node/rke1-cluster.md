@@ -4,7 +4,9 @@ sidebar_label: 创建 RKE1 Kubernetes 集群
 title: "创建 RKE1 Kubernetes 集群"
 ---
 
-在 Rancher `2.6.3` 或以上的版本，你可以使用内置的 Harvester 主机驱动创建基于 Harvester 集群之上的 RKE1 Kubernetes 集群。
+现在，你可以使用内置的 Harvester 主机驱动在 Rancher 中的 Harvester 集群上配置 RKE1 Kubernetes 集群。
+
+RKE1 和 RKE2 有一些细微的差异。请参阅 [RKE1 和 RKE2 之间的差异](https://ranchermanager.docs.rancher.com/v2.7/how-to-guides/new-user-guides/launch-kubernetes-with-rancher/rke1-vs-rke2-differences)了解更多信息。
 
 ![rke1-cluster](/img/v1.2/rancher/rke1-node-driver.png)
 
@@ -12,6 +14,7 @@ title: "创建 RKE1 Kubernetes 集群"
 
 - Harvester 主机驱动需要 VLAN 网络。
 - Harvester 主机驱动仅支持云服务镜像（Cloud Image）。
+- 有关 Harvester 中部署的 Guest 集群端口要求，请参阅 [Guest 集群的端口要求](../../install/requirements.md#k3s-或-rkerke2-集群的端口要求)。
 
 :::
 
@@ -26,7 +29,7 @@ title: "创建 RKE1 Kubernetes 集群"
 
 所有`云凭证`都绑定到你的用户配置文件，不能与其他用户共享。
 
-### 创建你的云凭证
+### 创建云凭证
 
 1. 单击 **☰ > Cluster Management**。
 1. 单击 **Cloud Credentials**。
@@ -104,9 +107,8 @@ RKE1 配置依赖 `qemu-guest-agent` 来获取虚拟机的 IP，并依赖 `docke
 
 你可以使用以下选项解决安装限制：
 
-选项 1：使用安装了 `qemu-guest-agent` 和 `docker` 的虚拟机镜像。
-
-选项 2：配置 `cloud init` 用户数据，使虚拟机能够通过 HTTP(S) 代理安装 `qemu-guest-agent` 和 `docker`。
+- 选项 1：使用预配置了 `qemu-guest-agent` 和 `docker` 的虚拟机镜像。
+- 选项 2：配置 `cloud-init` 用户数据，使虚拟机能够通过 HTTP(S) 代理安装 `qemu-guest-agent` 和 `docker`。
 
 Harvester 节点模板中的用户数据示例：
 ```

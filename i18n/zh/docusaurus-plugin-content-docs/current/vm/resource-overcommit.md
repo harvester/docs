@@ -29,12 +29,19 @@ Harvester 支持在计算节点上超量使用 CPU 和 RAM。这样，你能通�
 按照以下步骤修改全局 `overcommit-config`，修改后的配置会应用到所有新创建的虚拟机上：
 
 1. 转到 **Advanced > Settings** 页面。
+
+   ![overcommit page](/img/v1.2/vm/overcommit-page.png)
+
 1. 找到 `overcommit-config` 设置。
 1. 配置所需的 CPU、内存和存储比率。
 
+   ![overcommit panel](/img/v1.2/vm/overcommit-panel.png)
+
 ## 为单个虚拟机配置超量使用
 
-如果你需要为单个虚拟机配置超量使用，请单独调整目标 VirtualMachine 资源的 ` spec.template.spec.domain.resources.<memory|cpu>` 值。请注意，通过修改这些值，你将接管 Harvester 对虚拟机资源管理的控制。
+要为各个虚拟机进行特定配置而不影响全局设置，你可以通过在相应的虚拟机规格上修改 `spec.template.spec.domain.resources.limits.<memory|cpu>` 值轻松实现此目的。
+
+![vm overcommit config](/img/v1.2/vm/vm-overcommit-config.png)
 
 ## 预留更多系统内存
 

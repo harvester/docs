@@ -29,7 +29,7 @@ Description: Harvester 中的 k8s 集群使用的 Harvester Cloud Provider 提�
 ### 使用 Harvester 主机驱动部署到 RKE1 集群
 使用 Harvester 主机驱动启动 RKE 集群时，你可以执行两个步骤来部署 `Harvester` 云提供商：
 
-- 选择 `Harvester(Out-of-tree)` 选项。
+- 选择 `Harvester (Out-of-tree)` 选项。
 
    ![](/img/v1.0/rancher/rke-cloud-provider.png)
 
