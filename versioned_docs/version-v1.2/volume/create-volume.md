@@ -9,7 +9,7 @@ description: Create a volume from the Volume page.
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/volume/create-volume"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/volume/index"/>
 </head>
 
 ## Create an Empty Volume
