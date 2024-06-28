@@ -3,10 +3,12 @@ sidebar_position: 2
 sidebar_label: Getting Started (High-Availability Clusters)
 title: "Getting Started (High-Availability Clusters)"
 keywords:
-- Harvester
-- getting started
-- step by step
 - deployment
+- getting started
+- Harvester
+- Harvester cluster
+- high availability
+- virtual machine
 ---
 
 A three-node [Harvester cluster](../glossary/#harvester-cluster) is required to fully realize multi-node features such as high availability. Certain versions of Harvester allow you to create clusters with two management nodes and one [witness node](../advanced/witness/) (and optionally, one or more worker nodes). You can also create [single-node clusters](../advanced/singlenodeclusters/) that support most Harvester features (excluding high availability, multi-replica support, and live migration). 
@@ -42,7 +44,7 @@ You can download the installation files from the [Harvester Releases](https://gi
 
 Deployment involves installing the operating system and other components on the host, and then rebooting once installation is completed. Deploying the first node creates the cluster, and the first node is assigned the management node by default. 
     
-During installation, you must configure node settings, define the cluster management address (VIP) and the cluster token, and specify other information. If necessary, you can configure more settings related to installation, the operating system, and advanced features using a [Harvester configuration](../install/harvester-configuration/) file. 
+During installation, you must configure node settings, define the cluster management address (VIP) and the cluster token, and specify other information. If necessary, you can configure more settings using a [Harvester configuration](../install/harvester-configuration/) file. 
 
 Once installation is completed, the node restarts and then the Harvester console appears. The console displays information about the cluster (management URL and status) and the node (hostname, IP address, and status). After the cluster is initialized and all services start running, the cluster status changes to **Ready**. 
 
@@ -54,7 +56,7 @@ Once the cluster status changes to **Ready**, you can access the [Harvester UI](
 
 Deployment involves installing the operating system and other components on the host, and then rebooting once installation is completed. All other nodes join the cluster that was created when the first node was deployed. 
 
-During installation, you must configure node settings, and specify the cluster management address (virtual IP) and the cluster token that you defined previously. If necessary, you can configure more settings related to installation, the operating system, and advanced features using a [Harvester configuration](../install/harvester-configuration/) file. 
+During installation, you must configure node settings, and specify the cluster management address (virtual IP) and the cluster token that you defined previously. If necessary, you can configure more settings using a [Harvester configuration](../install/harvester-configuration/) file. 
 
 When the cluster has three or more nodes, the two nodes added after the first node are automatically promoted to management nodes to form a high-availability (HA) cluster. 
 
@@ -72,7 +74,7 @@ Networking in Harvester involves three major concepts:
 
 - [**VM network**](../networking/index#vm-network): Virtual network that VMs use to communicate with other VMs and external networks.
     
-    Each VM network is linked to a specific cluster network, which is used for transmission of VM traffic. Depending on the capabilities of network devices in your environment, you can create either a [VLAN network](../networking/harvester-network/#vlan-network) or an [untagged network](../networking/harvester-network/#untagged-network).
+    Each VM network is linked to a specific cluster network, which is used for transmission of VM traffic. You can create either a [VLAN network](../networking/harvester-network/#vlan-network) or an [untagged network](../networking/harvester-network/#untagged-network) based on your requirements, such as traffic isolation, network segmentation, ease of management, or alignment with the external network environment. 
 
 Before you create VMs, [create a custom cluster network](../networking/index#how-to-create-a-new-cluster-network) (including the associated network configuration), and then [create a VM network](../networking/index#how-to-create-a-new-cluster-network) that is linked to the custom cluster network.
 
@@ -80,7 +82,7 @@ Before you create VMs, [create a custom cluster network](../networking/index#how
 
 On the Harvester UI, you can import ISO, qcow2, and raw [images](../upload-image/) by uploading an image from the local file system, or by specifying the URL of an image that can be accessed from the cluster. 
 
-## 9. (Recommended) Import SSH keys. 
+## 9. Import SSH keys. (Recommended)
 
 You can store SSH public keys in Harvester. When a VM is launched, a stored key can be [injected](../vm/access-to-the-vm/#ssh-access) into the VM to allow secure access via SSH. Validated keys are displayed on the **SSH Keys** screen on the Harvester UI. 
 
