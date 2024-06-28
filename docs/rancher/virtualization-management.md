@@ -8,7 +8,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/rancher/virtualization-management"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/rancher/virtualization-management"/>
 </head>
 
 With Rancher's virtualization management capabilities, you can import and manage multiple Harvester clusters. It provides a solution that unifies virtualization and container management from a single pane of glass.

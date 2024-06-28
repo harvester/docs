@@ -5,7 +5,7 @@ title: "Creating an RKE1 Kubernetes Cluster"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/rancher/node/rke1-cluster"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/rancher/node/rke1-cluster"/>
 </head>
 
 You can now provision RKE1 Kubernetes clusters on top of the Harvester cluster in Rancher using the built-in Harvester node driver.

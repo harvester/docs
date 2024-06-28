@@ -5,7 +5,7 @@ title: "Monitoring"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/monitoring/harvester-monitoring"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/monitoring/harvester-monitoring"/>
 </head>
 
 _Available as of v0.3.0_
