@@ -90,7 +90,7 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 
     :::
 
-    The output will look as follows:
+    Example of output:
 
     ```yaml
     ########## cloud config ############
