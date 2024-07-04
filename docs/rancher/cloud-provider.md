@@ -72,7 +72,9 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 
     The script depends on `kubectl` and `jq` when operating the Harvester cluster, and functions only when given access to the `Harvester Cluster` kubeconfig file.
 
-    The script needs access to the `Harvester Cluster` kubeconfig to work. You can find the `kubeconfig` file from one of the Harvester management nodes in the `/etc/rancher/rke2/rke2.yaml` path. The content is like following. Remember to change server IP to the VIP address.
+    You can find the `kubeconfig` file in one of the Harvester management nodes in the `/etc/rancher/rke2/rke2.yaml` path. The server IP must be replaced with the VIP address.
+
+  Example of content:
 
     ```yaml
     apiVersion: v1
