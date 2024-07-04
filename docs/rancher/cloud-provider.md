@@ -125,17 +125,17 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 
 1. Create a VM in the Harvester cluster with the following settings:
 
-  - **Basics** tab: The minimum requirements are 2 CPUs and 4 GiB of RAM. The required disk space depends on the VM image.
+    - **Basics** tab: The minimum requirements are 2 CPUs and 4 GiB of RAM. The required disk space depends on the VM image.
 
-    ![](/img/v1.3/rancher/custom-cluster-vm-cpu-and-ram.png)
+      ![](/img/v1.3/rancher/custom-cluster-vm-cpu-and-ram.png)
 
-  - **Networks** tab: Specify a network name with the format `nic-<number>`.
+    - **Networks** tab: Specify a network name with the format `nic-<number>`.
 
-    ![](/img/v1.3/rancher/custom-cluster-vm-network.png)
+      ![](/img/v1.3/rancher/custom-cluster-vm-network.png)
 
-  - **Advanced Options** tab: Copy and paste the content of the **Cloud Config User Data** screen.
+    - **Advanced Options** tab: Copy and paste the content of the **Cloud Config User Data** screen.
 
-    ![](/img/v1.3/rancher/custom-cluster-vm-user-data.png)
+      ![](/img/v1.3/rancher/custom-cluster-vm-user-data.png)
 
 1. On the **Basics** tab of the **Cluster Configuration** screen, select **Harvester** as the **Cloud Provider** and then select **Create** to spin up the cluster.
 
