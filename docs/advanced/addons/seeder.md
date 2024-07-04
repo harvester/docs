@@ -10,6 +10,8 @@ title: "Seeder"
 
 _Available as of v1.2.0_
 
+_Unavailable on ARM64 architecture_
+
 The `harvester-seeder` addon lets you perform out-of-band operations on underlying nodes. 
 
 This addon can also discover hardware and hardware events for bare-metal nodes that support redfish-based access and then associate the hardware with the corresponding Harvester nodes.

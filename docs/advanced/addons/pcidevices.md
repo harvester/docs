@@ -10,6 +10,8 @@ title: "PCI Devices"
 
 _Available as of v1.1.0_
 
+_Unavailable on ARM64 architecture_
+
 A `PCIDevice` in Harvester represents a host device with a PCI address. 
 The devices can be passed through the hypervisor to a VM by creating a `PCIDeviceClaim` resource, 
 or by using the UI to enable passthrough. Passing a device through the hypervisor means that 
