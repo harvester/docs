@@ -86,7 +86,7 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
     # ...
     ```
 
-    The namespace needs to be the namespace in which the guest cluster will be created.
+    You must specify the namespace in which the guest cluster will be created.
 
     :::
 
