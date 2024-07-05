@@ -5,7 +5,7 @@ title: "Harvester Cloud Provider"
 keywords:
   - Harvester
   - harvester
-  - RKE 
+  - RKE
   - rke
   - RKE2
   - rke2
@@ -47,12 +47,12 @@ When spinning up an RKE cluster using the Harvester node driver, you can perform
 1. Select `Harvester(Out-of-tree)` option.
 
     ![](/img/v1.2/rancher/rke-cloud-provider.png)
-  
+
 2. Install `Harvester Cloud Provider` from the Rancher marketplace.
 
     ![](/img/v1.2/rancher/install-harvester-cloud-provider.png)
 
-  
+
 ### Deploying to the RKE2 Cluster with Harvester Node Driver
 
 When spinning up an RKE2 cluster using the Harvester node driver, select the `Harvester` cloud provider. The node driver will then help deploy both the CSI driver and CCM automatically.
@@ -62,25 +62,88 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 ### Deploying to the RKE2 custom cluster (experimental)
 
 ![](/img/v1.2/rancher/custom.png)
-1. Use `generate_addon.sh` to generate a cloud-config and place it into the directory `/etc/kubernetes/cloud-config` on every custom node.
+1. Generate cloud config data using the script `generate_addon.sh`, and then place the data on every custom node (directory: `/etc/kubernetes/cloud-config`).
 
-   ```
-   curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace> 
-   ```
+    ```bash
+    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
+    ```
 
   :::note
 
-  The `generate_addon.sh` script depends on `kubectl` and `jq` to operate the Harvester cluster.
+    The script depends on `kubectl` and `jq` when operating the Harvester cluster, and functions only when given access to the `Harvester Cluster` kubeconfig file.
 
-  The script needs access to the `Harvester Cluster` kubeconfig to work. You can find the `kubeconfig` file from one of the Harvester management nodes in the `/etc/rancher/rke2/rke2.yaml` path.
+    You can find the `kubeconfig` file in one of the Harvester management nodes in the `/etc/rancher/rke2/rke2.yaml` path. The server IP must be replaced with the VIP address.
 
-  The namespace needs to be the namespace in which the guest cluster will be created.
+  Example of content:
+
+    ```yaml
+    apiVersion: v1
+    clusters:
+    - cluster:
+        certificate-authority-data: <redacted>
+        server: https://127.0.0.1:6443
+      name: default
+    # ...
+    ```
+
+    You must specify the namespace in which the guest cluster will be created.
 
   :::
 
+    Example of output:
 
-2. Configure the **Cloud Provider** to `Harvester` and select **Create** to spin up the cluster.
-     ![](/img/v1.2/rancher/create-custom-rke2.png)
+    ```yaml
+    ########## cloud config ############
+    apiVersion: v1
+    clusters:
+    - cluster:
+        certificate-authority-data: <CACERT>
+        server: https://HARVESTER-ENDPOINT/k8s/clusters/local
+      name: local
+    contexts:
+    - context:
+        cluster: local
+        namespace: default
+        user: harvester-cloud-provider-default-local
+      name: harvester-cloud-provider-default-local
+    current-context: harvester-cloud-provider-default-local
+    kind: Config
+    preferences: {}
+    users:
+    - name: harvester-cloud-provider-default-local
+      user:
+        token: <TOKEN>
+
+    ########## cloud-init user data ############
+    write_files:
+    - encoding: b64
+      content: <CONTENT>
+      owner: root:root
+      path: /etc/kubernetes/cloud-config
+      permissions: '0644'
+    ```
+
+1. Create a VM in the Harvester cluster with the following settings:
+
+    - **Basics** tab: The minimum requirements are 2 CPUs and 4 GiB of RAM. The required disk space depends on the VM image.
+
+      ![](/img/v1.3/rancher/custom-cluster-vm-cpu-and-ram.png)
+
+    - **Networks** tab: Specify a network name with the format `nic-<number>`.
+
+      ![](/img/v1.3/rancher/custom-cluster-vm-network.png)
+
+    - **Advanced Options** tab: Copy and paste the content of the **Cloud Config User Data** screen.
+
+      ![](/img/v1.3/rancher/custom-cluster-vm-user-data.png)
+
+1. On the **Basics** tab of the **Cluster Configuration** screen, select **Harvester** as the **Cloud Provider** and then select **Create** to spin up the cluster.
+
+  ![](/img/v1.2/rancher/create-custom-rke2.png)
+
+1. On the **Registration** tab, perform the steps required to run the RKE2 registration command on the VM.
+
+    ![](/img/v1.3/rancher/custom-cluster-registration.png)
 
 ### Deploying to the K3s cluster with Harvester node driver (experimental)
 
@@ -115,8 +178,8 @@ When spinning up a K3s cluster using the Harvester node driver, you can perform 
     - name: harvester-cloud-provider-default-local
       user:
         token: <TOKEN>
-        
-        
+
+
     ########## cloud-init user data ############
     write_files:
     - encoding: b64
@@ -188,12 +251,12 @@ The cloud provider can be upgraded by upgrading the RKE2 version. You can upgrad
 RKE/K3s upgrade cloud provider via the Rancher UI, as follows:
 1. Click **☰ > RKE/K3s Cluster > Apps > Installed Apps**.
 2. Find the cloud provider chart and select ⋮ **> Edit/Upgrade**.
-3. Select **Version**. 
+3. Select **Version**.
 4. Click **Next > Update**.
 
 :::note
 
-The upgrade process for a [single-node guest cluster](../advanced/singlenodeclusters) may stall when the new `harvester-cloud-provider` pod is stuck in the *Pending* state. This issue is caused by a section in the `harvester-cloud-provider` deployment that describes the rolling update strategy. Specifically, the default value conflicts with the `podAntiAffinity` configuration in single-node clusters. 
+The upgrade process for a [single-node guest cluster](../advanced/singlenodeclusters) may stall when the new `harvester-cloud-provider` pod is stuck in the *Pending* state. This issue is caused by a section in the `harvester-cloud-provider` deployment that describes the rolling update strategy. Specifically, the default value conflicts with the `podAntiAffinity` configuration in single-node clusters.
 
 For more information, see [this GitHub issue comment](https://github.com/harvester/harvester/issues/5348#issuecomment-2055453709). To address the issue, manually delete the old `harvester-cloud-provider` pod. You might need to do this multiple times until the new pod can be successfully scheduled.
 
@@ -203,7 +266,7 @@ For more information, see [this GitHub issue comment](https://github.com/harvest
 Once you've deployed the Harvester cloud provider, you can leverage the Kubernetes `LoadBalancer` service to expose a microservice within the guest cluster to the external world. Creating a Kubernetes `LoadBalancer` service assigns a dedicated Harvester load balancer to the service, and you can make adjustments through the `Add-on Config` within the Rancher UI.
 
 ![](/img/v1.2/rancher/lb-svc.png)
-  
+
 
 ### IPAM
 Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and you can configure it by adding the annotation `cloudprovider.harvesterhci.io/ipam: $mode` to its corresponding service. Starting from Harvester cloud provider >= v0.2.0, it also introduces a unique **Share IP** mode. A service shares its load balancer IP with other services in this mode.
