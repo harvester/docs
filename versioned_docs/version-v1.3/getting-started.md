@@ -60,7 +60,7 @@ During installation, you must configure node settings, and specify the cluster m
 
 When the cluster has three or more nodes, the two nodes added after the first node are automatically promoted to management nodes to form a high-availability (HA) cluster. 
 
-## 7. Create a cluster network and a VM network.
+## 7. Create a custom cluster network (optional) and a VM network (required).
 
 Networking in Harvester involves three major concepts:
 
@@ -70,13 +70,13 @@ Networking in Harvester involves three major concepts:
 
 - [**Network configuration**](../networking/index#cluster-network): Definition of how cluster nodes connect to a specific cluster network. 
     
-    Each network configuration corresponds to a set of nodes with uniform network specifications. Only nodes that are covered by the network configuration can access the associated cluster network.
+    Each network configuration corresponds to a set of nodes with uniform network specifications. Only nodes that are covered by the network configuration can access the associated cluster network. This arrangement offers you flexibility when configuring a heterogeneous cluster, particularly when the network interface names are different for each node.
 
 - [**VM network**](../networking/index#vm-network): Virtual network that VMs use to communicate with other VMs and external networks.
     
     Each VM network is linked to a specific cluster network, which is used for transmission of VM traffic. You can create either a [VLAN network](../networking/harvester-network/#vlan-network) or an [untagged network](../networking/harvester-network/#untagged-network) based on your requirements, such as traffic isolation, network segmentation, ease of management, or alignment with the external network environment. 
 
-Before you create VMs, [create a custom cluster network](../networking/index#how-to-create-a-new-cluster-network) (including the associated network configuration), and then [create a VM network](../networking/index#how-to-create-a-new-cluster-network) that is linked to the custom cluster network.
+Before you create VMs, create the necessary networks. If more than one network interface is attached to each cluster node, consider [creating custom cluster networks](../networking/index#how-to-create-a-new-cluster-network) and network configurations for better traffic isolation. Otherwise, you can only use the management network for transmission of VM traffic. Next, [create a VM network](../networking/index#how-to-create-a-new-cluster-network) that is linked to either the management network or any of the custom cluster networks that you created.
 
 ## 8. Import VM images. 
 
