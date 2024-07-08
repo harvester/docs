@@ -290,6 +290,97 @@ metadata:
 Omitted...
 ```
 
+#### Step 4
+
+The storage network is dedicated to [internal communication between Longhorn pods](#same-physical-interfaces), resulting in high performance and reliability. However, the storage network still relies on the [external network infrastructure](../networking/deep-dive.md#external-networking) for connectivity (similar to how the [VM VLAN network](../networking/harvester-network.md#create-a-vm-with-vlan-network) functions). When the external network is not connected and configured correctly, you may encounter the following issues:
+
+- The newly created VM becomes stuck at the `Not-Ready` state.
+
+- The `longhorn-manager` pod logs include error messages.
+
+Example:
+
+```
+longhorn-manager-j6dhh/longhorn-manager.log:2024-03-20T16:25:24.662251001Z time="2024-03-20T16:25:24Z" level=error msg="Failed rebuilding of replica 10.0.16.26:10000" controller=longhorn-engine engine=pvc-0a151c59-ffa9-4938-9c86-59ebb296bc88-e-c2a7fe77 error="proxyServer=10.52.6.33:8501 destination=10.0.16.23:10000: failed to add replica tcp://10.0.16.26:10000 for volume: rpc error: code = Unknown desc = failed to get replica 10.0.16.26:10000: rpc error: code = Unavailable desc = all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 10.0.16.26:10000: connect: no route to host\"" node=oml-harvester-9 volume=pvc-0a151c59-ffa9-4938-9c86-59ebb296bc88
+```
+
+To test the communication between Longhorn pods, perform the following steps:
+
+4.1 Obtain the storage network IP of each Longhorn Instance Manager pod identified in the previous step.
+
+Example:
+
+```
+instance-manager-r-43f1624d14076e1d95cd72371f0316e2
+storage network IP: 10.0.16.8
+
+instance-manager-e-ba38771e483008ce61249acf9948322f
+storage network IP: 10.0.16.14
+```
+
+4.2 Log in to those pods.
+
+When you run the command `ip addr`, the output includes IPs that are identical to IPs in the pod annotations. In the following example, one IP is for the pod network, while the other is for the storage network.
+
+Example:
+
+```
+$ kubectl exec -i -t -n longhorn-system instance-manager-e-ba38771e483008ce61249acf9948322f -- /bin/sh
+
+$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+...
+3: eth0@if2277: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default
+    link/ether 0e:7c:d6:77:44:72 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.52.6.146/32 scope global eth0
+...
+4: lhnet1@if2278: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether fe:92:4f:fb:dd:20 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.0.16.14/20 brd 10.0.31.255 scope global lhnet1
+...
+
+$ ip route
+default via 169.254.1.1 dev eth0
+10.0.16.0/20 dev lhnet1 proto kernel scope link src 10.0.16.14
+169.254.1.1 dev eth0 scope link
+```
+
+4.3 Start a simple HTTP server in one pod.
+
+Example:
+
+```
+$ python3 -m http.server 8000 --bind 10.0.16.14 (replace with your pod storage network IP)
+```
+
+:::note
+
+Explicitly bind the simple HTTP server to the storage network IP.
+
+:::
+
+4.4 Test the HTTP server in another pod.
+
+Example:
+
+```
+From instance-manager-r-43f1624d14076e1d95cd72371f0316e2 (IP 10.0.16.8)
+
+$ curl http://10.0.16.14:8000
+```
+
+When the storage network is functioning correctly, the `curl` command returns a list of files on the HTTP server.
+
+4.5 (Optional) Troubleshoot issues.
+
+The storage network may malfunction because of issues with the external network, such as the following:
+
+- Physical NICs (installed on Harvester nodes) that are associated with the storage network were not added to the same VLAN in the external switches.
+
+- The external switches are not correctly connected and configured.
+
 
 ### Start VM Manually
 
