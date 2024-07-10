@@ -12,25 +12,30 @@ title: "Settings"
 This page contains a list of advanced settings which can be used in Harvester.
 You can modify the custom resource `settings.harvesterhci.io` from the Dashboard UI or with the `kubectl` command.
 
-## `additional-ca`
+---
+<p>&nbsp;</p>
 
-This setting allows you to configure additional trusted CA certificates for Harvester to access external services.
+## General Settings
 
-Default: none
+### `additional-ca`
 
-#### Example
+**Definition**: Additional trusted CA certificates that enable Harvester to access external services.
+
+:::caution
+
+Changing this setting might cause single-node clusters to temporarily become unavailable or inaccessible.
+
+:::
+
+**Default value**: None
+
+**Example**:
 
 ```
 -----BEGIN CERTIFICATE-----
 SOME-CA-CERTIFICATES
 -----END CERTIFICATE-----
 ```
-
-:::caution
-
-Changing this setting might cause a short downtime for single-node clusters.
-
-:::
 
 ## `auto-disk-provision-paths` [Experimental]
 
@@ -60,34 +65,33 @@ The following example will add disks matching the glob pattern `/dev/sd*` or `/d
 /dev/sd*,/dev/hd*
 ```
 
-## `auto-rotate-rke2-certs`
+### `auto-rotate-rke2-certs`
 
-_Available as of v1.3.0_
+**Versions**: v1.3.0 and later
 
-Setting that allows you to automatically rotate certificates for RKE2 services. This setting is disabled by default.
+**Definition**: Setting that allows you to automatically rotate certificates for RKE2 services. This setting is disabled by default.
 
 Use the field `expiringInHours` to specify the validity period of each certificate (`1` to `8759` hours). Harvester automatically replaces the certificate before the specified period ends.
 
 For more information, see the **Certificate Rotation** section of the [Rancher](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/manage-clusters/rotate-certificates) and [RKE2](https://docs.rke2.io/advanced#certificate-rotation) documentation.
 
-Default: `{"enable":false,"expiringInHours":240}`
+**Default value**: `{"enable":false,"expiringInHours":240}`
 
-#### Example
+**Example**:
 
 ```
 {"enable":true,"expiringInHours":48}
 ```
 
-## `backup-target`
+### `backup-target`
 
-This setting allows you to set a custom backup target to store VM backups. It supports NFS and S3.
-For further information, please refer to the [Longhorn documentation][longhorn-backup-target].
+**Definition**: Custom backup target used to store VM backups. 
 
-Default: none
+For more information, see the [Longhorn documentation](https://longhorn.io/docs/1.6.0/snapshots-and-backups/backup-and-restore/set-backup-target/#set-up-aws-s3-backupstore).
 
-[longhorn-backup-target]: https://longhorn.io/docs/1.2.2/snapshots-and-backups/backup-and-restore/set-backup-target/#set-up-aws-s3-backupstore
+**Default value**: None
 
-#### Example
+**Example**:
 
 ```json
 {
@@ -102,43 +106,36 @@ Default: none
 }
 ```
 
-## `cluster-registration-url`
+### `cluster-registration-url`
 
-This setting allows you to import the Harvester cluster to Rancher for multi-cluster management.
-
-Default: none
-
-#### Example
-
-```
-https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhrc7c_c-m-zxbbbck9.yaml
-```
-
-:::note
+**Definition**: URL used to import the Harvester cluster into Rancher for multi-cluster management.
 
 When you configure this setting, a new pod called `cattle-cluster-agent-*` is created in the namespace `cattle-system` for registration purposes. This pod uses the container image `rancher/rancher-agent:related-version`, which is not packed into the Harvester ISO and is instead determined by Rancher. The `related-version` is usually the same as the Rancher version. For example, when you register Harvester to Rancher v2.7.9, the image is `rancher/rancher-agent:v2.7.9`. For more information, see [Find the required assets for your Rancher version](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/other-installation-methods/air-gapped-helm-cli-install/publish-images#1-find-the-required-assets-for-your-rancher-version) in the Rancher documentation.
 
 Depending on your Harvester settings, the image is downloaded from either of the following locations:
 
- - Harvester containerd-registry: You can configure a [private registry for the Harvester cluster](#containerd-registry).
-
- - Docker Hub (docker.io): This is the default option when you do not configure a private registry in Rancher.
+- Harvester containerd-registry: You can configure a [private registry for the Harvester cluster](#containerd-registry).
+- Docker Hub (docker.io): This is the default option when you do not configure a private registry in Rancher.
 
 Alternatively, you can obtain a copy of the image and manually upload it to all Harvester nodes.
 
-:::
+**Default value**: None
 
-## `containerd-registry`
+**Example**:
 
-This setting allows you to configure a private registry for the Harvester cluster. The value will be set in `/etc/rancher/rke2/registries.yaml` of each node. You can read [RKE2 - Containerd Registry Configuration](https://docs.rke2.io/install/containerd_registry_configuration) for more information.
+```
+https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhrc7c_c-m-zxbbbck9.yaml
+```
 
-:::note
+### `containerd-registry`
 
-If you set a username and password for a private registry, the system will automatically remove it to protect the credential after the system saves it in `registries.yaml`.
+**Definition**: Configuration of a private registry created for the Harvester cluster. 
 
-:::
+The value is stored in the `registries.yaml` file of each node (path: `/etc/rancher/rke2/registries.yaml`). For more information, see [Containerd Registry Configuration](https://docs.rke2.io/install/containerd_registry_configuration) in the RKE2 documentation.
 
-#### Example
+For security purposes, Harvester automatically removes the username and password configured for the private registry after those credentials are stored in the `registries.yaml` file.
+
+**Example**:
 
 ![containerd-registry](/img/v1.2/advanced/containerd-registry.png)
 
@@ -164,13 +161,20 @@ If you set a username and password for a private registry, the system will autom
 }
 ```
 
-## `csi-driver-config`
+### `csi-driver-config`
 
-_Available as of v1.2.0_
+**Versions**: v1.2.0 and later
 
-If you install third-party CSI drivers in the Harvester cluster, you must configure some necessary information through this setting before using **Backup & Snapshot** related features.
+**Definition**: Configuration necessary for using third-party CSI drivers installed in the Harvester cluster.
 
-Default:
+You must configure the following information before using features related to backups and snapshots:
+
+- Provisioner for the installed third-party CSI driver
+- `volumeSnapshotClassName`: Name of the `VolumeSnapshotClass` used to create volume snapshots or VM snapshots.
+- `backupVolumeSnapshotClassName`: Name of the `VolumeSnapshotClass` used to create VM backups.
+
+**Default value**:
+
 ```
 {
   "driver.longhorn.io": {
@@ -180,38 +184,42 @@ Default:
 }
 ```
 
-1. Add the provisioner for the newly added CSI driver.
-1. Configure **Volume Snapshot Class Name**, which refers to the name of the `VolumeSnapshotClass` used to create volume snapshots or VM snapshots.
-1. Configure **Backup Volume Snapshot Class Name**, which refers to the name of the `VolumeSnapshotClass` used to create VM backups.
+### `default-vm-termination-grace-period-seconds`
 
-## `default-vm-termination-grace-period-seconds`
+**Versions**: v1.2.0 and later
 
-_Available as of v1.2.0_
+**Definition**: Number of seconds Harvester waits before stopping a VM.
 
-This setting allows you to specify a default termination grace period for stopping a virtual machine in seconds.
+**Default value**: `120`
 
-Default: `120`
+### `http-proxy`
 
-## `http-proxy`
+**Definition**: HTTP proxy used to access external services, including downloading of images and backup to S3 services.
 
-This setting allows you to configure an HTTP proxy to access external services, including the download of images and backup to s3 services.
+:::caution
 
-Default: `{}`
+Changing this setting might cause single-node clusters to temporarily become unavailable or inaccessible.
 
-The following options and values can be set:
+:::
+
+**Default value**: `{}`
+
+**Supported options and values**:
 
 - Proxy URL for HTTP requests: `"httpProxy": "http://<username>:<pswd>@<ip>:<port>"`
 - Proxy URL for HTTPS requests: `"httpsProxy": "https://<username>:<pswd>@<ip>:<port>"`
 - Comma-separated list of hostnames and/or CIDRs: `"noProxy": "<hostname | CIDR>"`
 
-:::caution
+You must specify key information in the `noProxy` field if you configured the following options or settings: 
 
-If you configure `httpProxy` and `httpsProxy`, you must also put Harvester node's CIDR into `noProxy`, otherwise the Harvester cluster will be broken.
-If you also configure `cluster-registration-url`, you usually need to add the host of `cluster-registration-url` to `noProxy` as well, otherwise you cannot access the Harvester cluster from Rancher.
+| Configured option/setting | Required value in `noProxy` | Reason |
+| --- | --- | --- |
+| `httpProxy` and `httpsProxy` | Harvester node's CIDR | Not specifying the node's CIDR can break the Harvester cluster. |
+| `cluster-registration-url` | Host of `cluster-registration-url` | The host information allows you to access the Harvester cluster from Rancher. |
 
-:::
+Harvester appends necessary addresses to user-specified `noProxy` values (for example,`localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,longhorn-system,cattle-system,cattle-system.svc,harvester-system,.svc,.cluster.local`). This ensures that internal traffic flows as expected.
 
-#### Example
+**Example**:
 
 ```json
 {
@@ -221,58 +229,45 @@ If you also configure `cluster-registration-url`, you usually need to add the ho
 }
 ```
 
-:::note
+### `log-level`
 
-Harvester appends necessary addresses to user configured `noProxy` to ensure the internal traffic works.
-i.e., `localhost,127.0.0.1,0.0.0.0,10.0.0.0/8,longhorn-system,cattle-system,cattle-system.svc,harvester-system,.svc,.cluster.local`. The `harvester-system` was added into the list since v1.1.2.
+**Definition**: Log level for the Harvester host.
 
-:::
+**Default value**: `info`
 
-:::caution
+**Supported options and values**:
 
-Changing this setting might cause a short downtime for single-node clusters.
-
-:::
-
-## `log-level`
-
-This setting allows you to configure the log level for the Harvester server.
-
-Default: `info`
-
-The following values can be set. The list goes from the least to most verbose log level:
-
-- `panic`
+- `panic`: Least verbose log level
 - `fatal`
 - `error`
 - `warn`, `warning`
 - `info`
 - `debug`
-- `trace`
+- `trace`: Most verbose log level
 
-#### Example
+**Example**:
 
 ```
 debug
 ```
 
-## `ntp-servers`
+### `ntp-servers`
 
-_Available as of v1.2.0_
+**Versions**: v1.2.0 and later
 
-This setting allows you to configure NTP servers for time synchronization on the Harvester nodes.
+**Definition**: NTP servers for time synchronization on Harvester nodes.
 
-Using this setting, you can define NTP servers during [installation](../install/harvester-configuration.md#osntp_servers) or update NTP servers after installation.
+You can define NTP servers during [installation](../install/harvester-configuration.md#osntp_servers) and update the addresses after installation.
 
 :::caution
 
-Modifying the NTP servers will replace the previous values for all nodes.
+Changes to the server address list are applied to all nodes.
 
 :::
 
-Default: ""
+**Default value**: ""
 
-#### Example
+**Example**:
 
 ```
 {
@@ -283,17 +278,17 @@ Default: ""
 }
 ```
 
-## `overcommit-config`
+### `overcommit-config`
 
-This setting allows you to configure the percentage for resources overcommit on CPU, memory, and storage. By setting resources overcommit, this will permit to schedule additional virtual machines even if the the physical resources are already fully utilized.
+**Definition**: Percentage of the maximum amount of CPU, memory, and storage resources that a specific VM can use.
 
-Default: `{ "cpu":1600, "memory":150, "storage":200 }`
+This setting allows you to schedule additional VMs even when the Harvester cluster's physical resources are already fully utilized.
 
-The default CPU overcommit with 1600% means, for example, if the CPU resources
-limit of a virtual machine is `1600m` core, Harvester would only request `100m`
-CPU for it from Kubernetes scheduler.
+**Default values**: `{ "cpu":1600, "memory":150, "storage":200 }`
 
-#### Example
+If the VM can use a maximum of 1,600 millicpu (`1600m`) and the overcommit value is 1600% (`"cpu":1600`), Harvester only requests 100 millicpu from the Kubernetes scheduler.
+
+**Example**:
 
 ```json
 {
@@ -303,15 +298,15 @@ CPU for it from Kubernetes scheduler.
 }
 ```
 
-## `release-download-url`
+### `release-download-url`
 
-_Available as of v1.0.1_
+**Definition**: URL for downloading the software required for upgrades.
 
-This setting allows you to configure the `upgrade release download` URL address. Harvester will get the ISO URL and checksum value from the `${URL}/${VERSION}/version.yaml` file hosted by the configured URL.
+Harvester retrieves the ISO URL and checksum value from the `${URL}/${VERSION}/version.yaml` file that is accessible through the configured URL.
 
-Default: `https://releases.rancher.com/harvester`
+**Default value**: `https://releases.rancher.com/harvester`
 
-#### Example of the version.yaml
+**Example (version.yaml)**:
 
 ```
 apiVersion: harvesterhci.io/v1beta1
@@ -324,23 +319,29 @@ spec:
   isoURL: ${ISO_URL}
 ```
 
-## `server-version`
+### `server-version`
 
-This setting displays the version of Harvester server.
+**Definition**: Version of Harvester that is installed on Harvester nodes.
 
-#### Example
+**Example**:
 
 ```
 v1.0.0-abcdef-head
 ```
 
-## `ssl-certificates`
+### `ssl-certificates`
 
-This setting allows you to configure serving certificates for Harvester UI/API.
+**Definition**: SSL certificates for the Harvester UI and API.
 
-Default: `{}`
+:::caution
 
-#### Example
+Changing this setting might cause single-node clusters to temporarily become unavailable or inaccessible.
+
+:::
+
+**Default value**: `{}`
+
+**Example**:
 
 ```json
 {
@@ -350,37 +351,28 @@ Default: `{}`
 }
 ```
 
-:::caution
+### `ssl-parameters`
 
-Changing this setting might cause a short downtime on single-node clusters.
+**Definition**: Enabled SSL/TLS protocols and ciphers of the Harvester UI and API.
 
-:::
+:::info important
 
-## `ssl-parameters`
-
-This setting allows you to change the enabled SSL/TLS protocols and ciphers of Harvester GUI and API.
-
-The following options and values can be set:
-
-- `protocols`: Enabled protocols. See NGINX Ingress Controller's configs [`ssl-protocols`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-protocols) for supported input.
-
-- `ciphers`: Enabled ciphers. See NGINX Ingress Controller's configs [`ssl-ciphers`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-ciphers) for supported input.
-
-If no value is provided, `protocols` is set to `TLSv1.2` only and the `ciphers` list is
-`ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305`.
-
-Default: none
-
-:::note
-
-See [Troubleshooting](../troubleshooting/harvester.md#i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers) if you have misconfigured this setting and no longer have access to Harvester GUI and API.
+If you misconfigure this setting and are unable to access the Harvester UI and API, see [Troubleshooting](../troubleshooting/harvester.md#i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers).
 
 :::
 
-#### Example
+**Default value**: None
 
-The following example sets the enabled SSL/TLS protocols to `TLSv1.2` and `TLSv1.3` and the ciphers list to
-`ECDHE-ECDSA-AES128-GCM-SHA256` and `ECDHE-ECDSA-CHACHA20-POLY1305`.
+**Supported options and values**:
+
+- `protocols`: Enabled protocols. 
+- `ciphers`: Enabled ciphers.
+
+For more information about the supported options, see [`ssl-protocols`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-protocols) and [`ssl-ciphers`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-ciphers) in the Ingress-Nginx Controller documentation.
+
+If you do not specify any values, Harvester uses `TLSv1.2` and `ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305`.
+
+**Example**:
 
 ```
 {
@@ -389,22 +381,23 @@ The following example sets the enabled SSL/TLS protocols to `TLSv1.2` and `TLSv1
 }
 ```
 
-## `storage-network`
+### `storage-network`
 
-By default, Longhorn uses the default management network in the Harvester cluster that is limited to a single interface and shared with other workloads cluster-wide. This setting allows you to configure a segregated storage network when network isolation is preferred.
+**Definition**: Segregated storage network for Longhorn traffic.
 
-For details, please refer to the [Harvester Storage Network](./storagenetwork.md)
+By default, Longhorn uses the management network, which is limited to a single interface and shared with cluster-wide workloads. If your implementation requires network segregation, you can use a [storage network](./storagenetwork.md) to isolate Longhorn in-cluster data traffic.
 
-:::caution
+:::info important
 
-Any change to storage-network requires shutting down all VMs before applying this setting.
-IP Range should be IPv4 CIDR format and 4 times the number of your cluster nodes.
+Shut down all VMs before configuring this setting.
+
+Specify an IP range in the IPv4 CIDR format. The number of IPs must be four times the number of your cluster nodes.
 
 :::
 
-Default: ""
+**Default value**: ""
 
-#### Example
+**Example**:
 
 ```
 {
@@ -414,13 +407,14 @@ Default: ""
 }
 ```
 
-## `support-bundle-image`
+### `support-bundle-image`
 
-_Available as of v1.2.0_
+**Versions**: v1.2.0 and later
 
-This setting allows you to configure the support bundle image, with various versions available in [rancher/support-bundle-kit](https://hub.docker.com/r/rancher/support-bundle-kit/tags).
+**Definition**: Support bundle image, with various versions available in [rancher/support-bundle-kit](https://hub.docker.com/r/rancher/support-bundle-kit/tags).
 
-Default:
+**Default value**:
+
 ```
 {
   "repository": "rancher/support-bundle-kit",
@@ -429,13 +423,14 @@ Default:
 }
 ```
 
-## `support-bundle-namespaces`
+### `support-bundle-namespaces`
 
-_Available as of v1.2.0_
+**Versions**: v1.2.0 and later
 
-This setting allows you to specify additional namespaces when [collecting a support bundle](../troubleshooting/harvester.md#generate-a-support-bundle). The support bundle will only capture resources from pre-defined namespaces by default.
+**Definition**: Additional namespaces that you can use when [generating a support bundle](../troubleshooting/harvester.md#generate-a-support-bundle). 
 
-Here is the pre-defined namespaces list:
+By default, the support bundle only collects resources from the following predefined namespaces:
+
 - cattle-dashboards
 - cattle-fleet-local-system
 - cattle-fleet-system
@@ -447,71 +442,75 @@ Here is the pre-defined namespaces list:
 - longhorn-system
 - cattle-logging-system
 
-If you select more namespaces, it will append to the pre-defined namespaces list.
+Namespaces that you select are appended to the predefined namespaces list.
 
-Default: none
+**Default value**: None
 
-## `support-bundle-timeout`
+### `support-bundle-timeout`
 
-_Available as of v1.2.0_
+**Versions**: v1.2.0 and later
 
-This setting allows you to define the number of minutes Harvester allows for the completion of the support bundle generation process. The process is considered to have failed when the data collection and file packing tasks are not completed within the configured number of minutes. Harvester will not continue or retry support bundle generation processes that have timed out. When the value is "0", the timeout feature is disabled.
+**Definition**: Number of minutes Harvester allows for the completion of the support bundle generation process.
 
-Default: `10`
+The process is considered to have failed when the data collection and file packing tasks are not completed within the configured number of minutes. Harvester does not continue or retry support bundle generation processes that have timed out. When the value is `0`, the timeout feature is disabled.
 
-## `support-bundle-expiration`
+**Default value**: `10`
 
-_Available as of v1.3.0_
+### `support-bundle-expiration`
 
-This setting allows you to define the number of minutes Harvester waits before deleting a support bundle that has been packaged but not downloaded (either deliberately or unsuccessfully) or retained. The minimum value is `30`.
+**Versions**: v1.3.0 and later
 
-Default: `30`
+**Definition**: Number of minutes Harvester waits before deleting a support bundle that has been packaged but not downloaded (either deliberately or unsuccessfully) or retained. 
 
-## `support-bundle-node-collection-timeout`
+The minimum value is `30`.
 
-_Available as of v1.3.1_
+**Default value**: `30`
 
-This setting allows you to define the number of minutes Harvester allows for collection of logs and configurations (Harvester) on the nodes for the support bundle. If the collection process is not completed within the allotted time, Harvester still allows you to download the support bundle (without the uncollected data). The minimum value is `30`.
+### `support-bundle-node-collection-timeout`
 
-Default: `30`
+**Versions**: v1.3.1 and later
 
-## `upgrade-checker-enabled`
+**Definition**: Number of minutes Harvester allows for collection of logs and configurations (Harvester) on the nodes for the support bundle. 
 
-This setting allows you to automatically check if there's an upgrade available for Harvester.
+If the collection process is not completed within the allotted time, Harvester still allows you to download the support bundle (without the uncollected data). The minimum value is `30`.
 
-Default: `true`
+**Default value**: `30`
 
-#### Example
+### `upgrade-checker-enabled`
+
+**Definition**: Setting that automatically checks for available Harvester upgrades.
+
+**Default value**: `true`
+
+**Example**:
 
 ```
 false
 ```
 
-## `upgrade-checker-url`
+### `upgrade-checker-url`
 
-This setting allows you to configure the URL for the upgrade check of Harvester. Can only be used if the `upgrade-checker-enabled` setting is set to true.
+**Definition**: URL used to check for available Harvester upgrades.
 
-Default: `https://harvester-upgrade-responder.rancher.io/v1/checkupgrade`
+This setting can only be used if the `upgrade-checker-enabled` setting is set to `true`.
 
-#### Example
+**Default value**: `https://harvester-upgrade-responder.rancher.io/v1/checkupgrade`
+
+**Example**:
 
 ```
 https://your.upgrade.checker-url/v99/checkupgrade
 ```
 
-## `vip-pools`
+### `vip-pools`
 
-_Deprecated as of v1.2.0, use [IP Pool](../networking/ippool.md) instead_
+**Versions**: Deprecated as of v1.2.0 (Use [IP pools](../networking/ippool.md) instead.)
 
-This setting allows you to configure the global or namespace IP address pools of the VIP by CIDR or IP range.
+**Definition**: Global or namespace-specific IP address pools of the VIP by CIDR or IP range.
 
-Default: `{}`
+**Default value**: `{}`
 
-:::note
-Configuring multi-CIDR or IP range from UI is only available from Harvester v1.1.1.
-:::
-
-#### Example
+**Example**:
 
 ```json
 {
@@ -520,17 +519,17 @@ Configuring multi-CIDR or IP range from UI is only available from Harvester v1.1
 }
 ```
 
-## `vm-force-reset-policy`
+### `vm-force-reset-policy`
 
-This setting allows you to force reschedule VMs when a node is unavailable. When a node turns to be `Not Ready`, it will force delete the VM on that node and reschedule it to another available node after a period of seconds.
+**Definition**: Setting that allows you to force rescheduling of a VM when the node that it is running on becomes unavailable. 
 
-Default: `{"enable":true, "period":300}`
+When the state of the node changes to `Not Ready`, the VM is force deleted and rescheduled to an available node after the configured number of seconds.
 
-:::note
-When a host is unavailable or is powered off, the VM only reboots and does not migrate.
-:::
+When the node becomes unavailable or is powered off, the VM only restarts and does not migrate.
 
-#### Example
+**Default value**: `{"enable":true, "period":300}`
+
+**Example**:
 
 ```json
 {
@@ -539,33 +538,36 @@ When a host is unavailable or is powered off, the VM only reboots and does not m
 }
 ```
 
+---
+<p>&nbsp;</p>
+
 ## UI Settings
 
 ### `branding`
 
-_Available as of v1.2.0_
+**Versions**: v1.2.0 and later
 
-This setting allows you to globally re-brand the UI by customizing the Harvester product name, logos, and color scheme.
+**Definition**: Setting allows you to globally rebrand the Harvester UI by customizing the product name, logos, and color scheme.
 
-Default: **Harvester**
+**Default value**: **Harvester**
 
 ![containerd-registry](/img/v1.2/advanced/branding.png)
 
-You can set the following options and values:
+**Supported options and values**:
 
-- **Private Label:** This option replaces "Harvester" with the value you provide in most places.
-- **Logo:** Upload light and dark logos to replace the Harvester logo in the top-level navigation header.
-- **Favicon:** Upload an icon to replace the Harvester favicon in the browser tab.
-- **Primary Color:** You can override the primary color used throughout the UI with a custom color of your choice.
-- **Link Color:** You can override the link color used throughout the UI with a custom color of your choice.
+- **Private Label**: Product name or other text that replaces "Harvester" in most locations on the Harvester UI.
+- **Logo**: Logo image in the top-level navigation header. You must upload logos for both light and dark modes.
+- **Favicon**: Small image displayed next to the page title in the browser tab.
+- **Primary Color**: Main color used throughout the Harvester UI.
+- **Link Color**: Color used for link text throughout the Harvester UI.
 
 ### `ui-index`
 
-This setting allows you to configure the HTML index location for the UI.
+**Definition**: HTML index location for the Harvester UI.
 
-Default: `https://releases.rancher.com/harvester-ui/dashboard/latest/index.html`
+**Default value**: `https://releases.rancher.com/harvester-ui/dashboard/latest/index.html`
 
-#### Example
+**Example**:
 
 ```
 https://your.static.dashboard-ui/index.html
@@ -573,11 +575,11 @@ https://your.static.dashboard-ui/index.html
 
 ### `ui-plugin-index`
 
-This setting allows you to configure the JS address for the Harvester plugin (when accessing Harvester from Rancher).
+**Definition**: JavaScript address for the Harvester plugin (when accessing Harvester from Rancher).
 
-Default: `https://releases.rancher.com/harvester-ui/plugin/harvester-latest/harvester-latest.umd.min.js`
+**Default value**: `https://releases.rancher.com/harvester-ui/plugin/harvester-latest/harvester-latest.umd.min.js`
 
-#### Example
+**Example**:
 
 ```
 https://your.static.dashboard-ui/*.umd.min.js
@@ -585,15 +587,17 @@ https://your.static.dashboard-ui/*.umd.min.js
 
 ### `ui-source`
 
-This setting allows you to configure how to load the UI source.
+**Definition**: Setting that allows you to configure how to load the UI source.
 
-You can set the following values:
+**Default value**: `auto`
 
-- `auto`: The default. Auto-detect whether to use bundled UI or not.
-- `external`: Use external UI source.
-- `bundled`: Use the bundled UI source.
+**Supported values**:
 
-#### Example
+- `auto`: Automatically detects whether to use the bundled UI or not.
+- `external`: Uses the external UI source.
+- `bundled`: Uses the bundled UI source.
+
+**Example**:
 
 ```
 external
