@@ -37,29 +37,23 @@ SOME-CA-CERTIFICATES
 -----END CERTIFICATE-----
 ```
 
-## `auto-disk-provision-paths` [Experimental]
+### `auto-disk-provision-paths` [Experimental]
 
-This setting allows Harvester to automatically add disks that match the given glob pattern as VM storage.
-It's possible to provide multiple patterns by separating them with a comma.
+**Definition**: Setting that allows Harvester to automatically add disks that match the specified glob pattern as VM storage.
 
-:::note
-
-This setting only adds formatted disks mounted to the system.
-
-:::
+This setting only adds formatted disks that are mounted to the system. When specifying multiple patterns, separate values using commas.
 
 :::caution
 
-- This setting is applied to **every Node** in the cluster.
-- All the data in these storage devices **will be destroyed**. Use at your own risk.
+This setting is applied to **all nodes** in the cluster. All data in the storage devices **will be destroyed**.
 
 :::
 
-Default: none
+**Default value**: None
 
-#### Example
+**Example**:
 
-The following example will add disks matching the glob pattern `/dev/sd*` or `/dev/hd*`:
+The following example adds disks that match the glob pattern `/dev/sd*` or `/dev/hd*`:
 
 ```
 /dev/sd*,/dev/hd*
@@ -538,6 +532,16 @@ When the node becomes unavailable or is powered off, the VM only restarts and do
 }
 ```
 
+### `volume-snapshot-class`
+
+**Definition**: VolumeSnapshotClassName for the VolumeSnapshot and VolumeSnapshotContent when restoring a VM to a namespace that does not contain the source VM.
+
+**Default value**: `longhorn`
+
+**Example**:
+
+`longhorn`
+
 ---
 <p>&nbsp;</p>
 
@@ -572,6 +576,25 @@ When the node becomes unavailable or is powered off, the VM only restarts and do
 ```
 https://your.static.dashboard-ui/index.html
 ```
+
+### `ui-path`
+
+**Definition**: Path that describes the location of `index.html`, which is used to access the Harvester UI.
+
+`ui-path` serves as the entry point to the Harvester UI and is active only in the following situations:
+
+- The value of `ui-source` is `bundled`.
+- The value of `ui-source` is `auto`, but `ui-index` is unable to retrieve the HTML file.
+
+**Default value**: `/usr/share/harvester/harvester`
+
+**Examples**:
+
+`index.html` is stored in a container in `/home/samplefolder`. The value of `ui-source` is `bundled`.
+
+Situation 1: The value of `ui-path` is `/home/samplefolder`. When you access the Harvester UI, the content of .
+
+Situation 2: The value of `ui-index` points to a page that is unavailable or non-existent (for example, `notexist-example.com/index.html`). When you access the Harvester UI for the first time, the content of `/home/samplefolder/index.html` is displayed. However, if you modify the `ui-index` setting to use the default value and access the Harvester UI again, the content of `/home/samplefolder/index.html` is still displayed (even if the new `ui-index` value points to an available page).
 
 ### `ui-plugin-index`
 
