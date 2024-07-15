@@ -592,9 +592,9 @@ https://your.static.dashboard-ui/index.html
 
 `index.html` is stored in a container in `/home/samplefolder`. The value of `ui-source` is `bundled`.
 
-Situation 1: The value of `ui-path` is `/home/samplefolder`. When you access the Harvester UI, the content of .
+Scenario 1: The value of `ui-path` is `/home/samplefolder`. Whenever you access the Harvester UI, the content of `/home/samplefolder/index.html` is displayed.
 
-Situation 2: The value of `ui-index` points to a page that is unavailable or non-existent (for example, `notexist-example.com/index.html`). When you access the Harvester UI for the first time, the content of `/home/samplefolder/index.html` is displayed. However, if you modify the `ui-index` setting to use the default value and access the Harvester UI again, the content of `/home/samplefolder/index.html` is still displayed (even if the new `ui-index` value points to an available page).
+Scenario 2: The value of `ui-index` points to a page that is unavailable or non-existent (for example, `notexist-example.com/index.html`). When you access the Harvester UI for the first time, the content of `/home/samplefolder/index.html` is displayed. However, if you modify the `ui-index` setting to use the default value and access the Harvester UI again, the content of `/home/samplefolder/index.html` is still displayed (even if the new `ui-index` value points to an available page). For more information, see [Issue #6066](https://github.com/harvester/harvester/issues/6066).
 
 ### `ui-plugin-index`
 
