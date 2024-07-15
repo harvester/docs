@@ -1,7 +1,7 @@
 ---
-sidebar_position: 2
-sidebar_label: Getting Started (High-Availability Clusters)
-title: "Getting Started (High-Availability Clusters)"
+sidebar_position: 1
+sidebar_label: Deploy a High-Availability Cluster
+title: "Deploy a High-Availability Cluster"
 keywords:
 - deployment
 - getting started
@@ -13,7 +13,7 @@ keywords:
 
 A three-node [Harvester cluster](../glossary/#harvester-cluster) is required to fully realize multi-node features such as high availability. Certain versions of Harvester allow you to create clusters with two management nodes and one [witness node](../advanced/witness/) (and optionally, one or more worker nodes). You can also create [single-node clusters](../advanced/singlenodeclusters/) that support most Harvester features (excluding high availability, multi-replica support, and live migration). 
 
-This guide walks you through the steps required to deploy a high-availability cluster and virtual machines (VMs) that can host [guest clusters](../glossary/#guest-cluster--guest-kubernetes-cluster). 
+This guide walks you through the steps required to deploy a **high-availability cluster** and virtual machines (VMs) that can host [guest clusters](../glossary/#guest-cluster--guest-kubernetes-cluster). 
 
 ## 1. Verify that the minimum hardware and network requirements are met. 
 
