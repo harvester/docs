@@ -276,3 +276,19 @@ Now you can create a new StorageClass that you intend to use in your guest Kuber
     :::
 
 1. You can now create a PVC based on this new **StorageClass**, which utilizes the **Host StorageClass** to provision volumes on the bare-metal Harvester cluster.
+
+## Upgrade CSI Driver
+
+### Upgrade RKE2
+The csi driver can be upgraded by upgrading the RKE2 version. You can upgrade the RKE2 cluster via the Rancher UI as follows:
+1. Click **☰ > Cluster Management**.
+2. Find the guest cluster that you want to upgrade and select ⋮ **> Edit Config**.
+3. Select **Kubernetes Version**.
+4. Click **Save**.
+
+### Upgrade RKE/K3s
+RKE/K3s upgrade csi driver via the Rancher UI, as follows:
+1. Click **☰ > RKE/K3s Cluster > Apps > Installed Apps**.
+2. Find the csi driver chart and select ⋮ **> Edit/Upgrade**.
+3. Select **Version**.
+4. Click **Next > Update**.
