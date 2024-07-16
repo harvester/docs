@@ -5,7 +5,7 @@ title: "VM"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/troubleshooting/vm"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/troubleshooting/vm"/>
 </head>
 
 The following sections contain information useful in troubleshooting issues related to Harvester VM management.

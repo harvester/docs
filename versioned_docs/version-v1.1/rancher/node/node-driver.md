@@ -12,7 +12,7 @@ description: The Harvester node driver is used to provision VMs in the Harvester
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/rancher/node/node-driver"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/rancher/node/node-driver"/>
 </head>
 
 The Harvester node driver is used to provision VMs in the Harvester cluster. In this section, you'll learn how to configure Rancher to use the Harvester node driver to launch and manage Kubernetes clusters.

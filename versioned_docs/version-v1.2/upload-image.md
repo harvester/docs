@@ -12,6 +12,10 @@ keywords:
 description: To import virtual machine images in the **Images** page, enter a URL that can be accessed from the cluster. The image name will be auto-filled using the URL address's filename. You can always customize it when required.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/upload-image"/>
+</head>
+
 Currently, there are three ways that are supported to create an image: uploading images via URL, uploading images via local files, and creating images via volumes.
 
 ### Upload Images via URL

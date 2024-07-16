@@ -5,7 +5,7 @@ title: "Creating an K3s Kubernetes Cluster"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/rancher/node/k3s-cluster"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/rancher/node/k3s-cluster"/>
 </head>
 
 You can now provision K3s Kubernetes clusters on top of the Harvester cluster in Rancher `v2.6.3+` using the built-in Harvester node driver.

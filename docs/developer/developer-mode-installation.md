@@ -12,6 +12,10 @@ keywords:
 Description: Developer mode (dev mode) is intended to be used for testing and development purposes.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/developer/developer-mode-installation"/>
+</head>
+
 # Developer Mode
 
 :::caution attention
