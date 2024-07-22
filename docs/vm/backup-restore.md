@@ -84,42 +84,11 @@ You can choose to either delete or retain the previous volumes. By default, all 
 
 ### Restore a new VM on another Harvester cluster
 
-_Available as of v1.0.0_
+_Available as of v1.4.0_
 
 Users can now restore a new VM on another cluster by leveraging the VM metadata & content backup feature.
-
-:::info prerequisites
-
-You must manually configure the virtual machine images with the same name on the new cluster first, otherwise the virtual machines will be failed to recover.
-
-:::
-
-#### Upload the same VM images to a new cluster
-
-1. Check the existing image name (normally starts with `image-`) and create the same one on the new cluster.
-```
-$ kubectl get vmimages -A
-NAMESPACE   NAME                               DISPLAY-NAME                              SIZE         AGE
-default     image-79hdq                        focal-server-cloudimg-amd64.img           566886400    5h36m
-default     image-l7924                        harvester-v1.0.0-rc2-amd64.iso            3964551168   137m
-default     image-lvqxn                        opensuse-leap-15.3.x86_64-nocloud.qcow2   568524800    5h35m
-```
-2. Apply a VM image YAML with the same name and content in the new cluster.
-```
-$ cat <<EOF | kubectl apply -f -
-apiVersion: harvesterhci.io/v1beta1
-kind: VirtualMachineImage
-metadata:
-  name: image-lvqxn
-  namespace: default
-spec:
-  displayName: opensuse-leap-15.3.x86_64-nocloud.qcow2
-  pvcName: ""
-  pvcNamespace: ""
-  sourceType: download
-  url: http://download.opensuse.org/repositories/Cloud:/Images:/Leap_15.3/images/openSUSE-Leap-15.3.x86_64-NoCloud.qcow2
-EOF
-```
+Harvester will handle VM image data automatically. If a volume is based on a VM image and there is a backup for it, Harvester will automatically sync the VM image to backup target.
+In a new cluster, it the VMbackup is restored to a new VM, Harvester will automatically create the VM image from the backup target.
 
 #### Restore a new VM in a new cluster
 
