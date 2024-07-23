@@ -56,3 +56,22 @@ Live migration will be aborted if it exceeds the completion timeout of 800s per 
 ### Progress Timeout
 
 Live migration will also be aborted when copying memory doesn't make any progress in 150s.
+
+## Limitations
+
+When performing live migration, the process will check the value of `spec.domain.cpu.model` in VMI CR, which is derived from `spec.template.spec.domain.cpu.model` in VM CR. If this vaule is not set, it'll defaults to `host-model`.
+
+With `host-model`, it only allows the live migration process to migrate the VM to a node with same CPU model. For example, if the original CPU model is `XYZ`, it can migrate VM to another node with `XZY` CPU model. However, sometimes VM does not require a specified CPU model. In such case, we need to shut down the VM, assign a CPU model supported by all nodes, and then restart the VM.
+
+Each node has primary CPU model labeled with `host-model-cpu.node.kubevirt.io` and mutliple supported CPU models which are labeled with `cpu-model.node.kubevirt.io`.
+
+For example, consider two nodes:
+
+- A node: `host-model-cpu.node.kubevirt.io/XYZ` `cpu-model.node.kubevirt.io/123`
+- B node: `host-model-cpu.node.kubevirt.io/ABC` `cpu-model.node.kubevirt.io/123`
+
+It is not possible to migrate a VM with `host-model` in this case due to different `host-model-cpu.node.kubevirt.io` values. However, both nodes support the `123` CPU model. Thus, it is possible to migrate VM with `123` CPU model in two ways:
+- Cluster Level: Run `kubectl edit kubevirts.kubevirt.io -n harvester-system` and add `spec.configuration.cpuModel: "123"`. This changes also affects the newly created VMs.
+- Per VM Level: Edit the VM spec to include `spec.template.spec.domain.cpu.model: "123"`.
+
+Both methods require the restarting the VMs. If you know all nodes in this cluster support a specified CPU model, you can define this at cluster level before creating any VMs. This way, you won't need to restart the VMs to assign the CPU model later while performing live migration.
