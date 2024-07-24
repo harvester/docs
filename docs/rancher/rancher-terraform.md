@@ -37,7 +37,8 @@ description: Rancher Terraform allows administrators to create and manage RKE2 g
 
     ![Harvester Cluster ID](/img/v1.4/rancher/harvester-cluster-id.png)
 
-1. Get kubeconfig for Harvester Cloud Provider and Harvester CSI Driver.
+1. Obtain the kubeconfig for the Harvester Cloud Provider and the Harvester CSI Driver.
+
 
     ```shell
     # Generate harvester cloud provider kubeconfig
