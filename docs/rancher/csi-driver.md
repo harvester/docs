@@ -291,9 +291,14 @@ You can upgrade the CSI driver by upgrading RKE2 using the Rancher UI.
 
 1. Click **Save**.
 
-### Upgrade RKE/K3s
-RKE/K3s upgrade csi driver via the Rancher UI, as follows:
-1. Click **☰ > RKE/K3s Cluster > Apps > Installed Apps**.
-2. Find the csi driver chart and select ⋮ **> Edit/Upgrade**.
-3. Select **Version**.
-4. Click **Next > Update**.
+### Upgrade RKE and K3s
+
+You can upgrade RKE and K3s using the Rancher UI.
+
+1. Go to **☰** > **RKE/K3s Cluster** > **Apps** > **Installed Apps**.
+
+1. Find the CSI driver chart and select **⋮** > **Edit/Upgrade**.
+
+1. Select **Version**.
+
+1. Select **Next** > **Update**.
