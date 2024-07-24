@@ -122,7 +122,9 @@ Rancher allows you to import existing Harvester VMs in which you installed Kuber
     sudo /var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get nodes
     ```
 
-1. Import the VM into Rancher. Cluster Management > Clusters > Import Existing > Generic > Create.
+1. Import the VM into Rancher. 
+
+    On the Rancher UI, go to **Cluster Management** > **Clusters** > **Import Existing** > **Generic** > **Create**.
 
     ![Import Exisging Cluster](/img/v1.4/rancher/import-existing-cluster.png)
 
