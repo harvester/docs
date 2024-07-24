@@ -116,7 +116,7 @@ Rancher allows you to import existing Harvester VMs in which you installed Kuber
     sudo systemctl start rke2-server.service
     ```
 
-1. Check RKE2 is running in the VM.
+1. Verify that RKE2 is running in the VM.
 
     ```shell
     sudo /var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get nodes
