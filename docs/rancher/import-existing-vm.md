@@ -9,13 +9,13 @@ keywords:
   - rancher
 ---
 
-Rancher allows you to import existing Harvester virtual machines which installed Kubernetes by yourself.
+Rancher allows you to import existing Harvester VMs in which you installed Kubernetes.
 
-## Deploying
+## Deployment
 
 ### Prerequisites
 
-- The Kubernetes cluster is built on top of Harvester virtual machines.
+- The Kubernetes cluster is built on top of Harvester VMs.
 
 ### Deploying Guest Cluster with Harvester Virtual Machine
 
