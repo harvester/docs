@@ -31,7 +31,9 @@ description: Rancher Terraform allows administrators to create and manage RKE2 g
     ![Create API Key](/img/v1.4/rancher/create-api-key.png)
     ![Access & Secret Keys](/img/v1.4/rancher/access-and-secret-keys.png)
 
-1. Get the Harvester cluster ID. Virtualization Management > Manage > Related Resources > Mgmt Cluster Name.
+1. Obtain the Harvester cluster ID. 
+
+    On the Rancher UI, go to **Virtualization Management** > **Manage** > **Related Resources** > **Mgmt Cluster Name**.
 
     ![Harvester Cluster ID](/img/v1.4/rancher/harvester-cluster-id.png)
 
