@@ -17,9 +17,11 @@ Rancher allows you to import existing Harvester VMs in which you installed Kuber
 
 - The Kubernetes cluster is built on top of Harvester VMs.
 
-### Deploying Guest Cluster with Harvester Virtual Machine
+### Deploy Guest Clusters on Harvester VMs
 
-1. Generate the csi-driver cloud-config. You can generate the cloud-config file using the [generate_addon_csi.sh](https://raw.githubusercontent.com/harvester/harvester-csi-driver/master/deploy/generate_addon_csi.sh) script. It is available on the [harvester/harvester-csi-driver](https://github.com/harvester/harvester-csi-driver) repo.
+1. Generate the csi-driver cloud-config file using the [generate_addon_csi.sh](https://raw.githubusercontent.com/harvester/harvester-csi-driver/master/deploy/generate_addon_csi.sh) script, which is available in the [harvester/harvester-csi-driver](https://github.com/harvester/harvester-csi-driver) repository.
+
+    Example:
 
     ```shell
     ./generate_addon_csi.sh <serviceaccount name> <namespace> RKE2
