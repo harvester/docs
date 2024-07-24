@@ -184,4 +184,5 @@ description: Rancher Terraform allows administrators to create and manage RKE2 g
     ```
 
 1. Run `terraform init`.
-1. Run `terraform apply`
+
+1. Run `terraform apply`.
