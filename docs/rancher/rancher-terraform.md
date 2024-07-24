@@ -22,9 +22,11 @@ description: Rancher Terraform allows administrators to create and manage RKE2 g
 - The Harvester virtual machines that run as guest Kubernetes nodes are in the same namespace.
 
 
-### Deploying Guest Cluster with Rancher Terraform
+### Deploy Guest Clusters Using the Rancher Terraform Provider
 
-1. Create an API key on Rancher dashboard. Account & API Keys > Create API key > Create.
+1. Create an API key. 
+
+    On the Rancher UI, go to **Account & API Keys** > **Create API key** > **Create**.
 
     ![Create API Key](/img/v1.4/rancher/create-api-key.png)
     ![Access & Secret Keys](/img/v1.4/rancher/access-and-secret-keys.png)
