@@ -18,8 +18,8 @@ description: Rancher Terraform allows administrators to create and manage RKE2 g
 
 ### Prerequisites
 
-- The Kubernetes cluster is built on top of Harvester virtual machines.
-- The Harvester virtual machines that run as guest Kubernetes nodes are in the same namespace.
+- The Kubernetes cluster is built on top of Harvester VMs.
+- The Harvester VMs that run as guest Kubernetes nodes are in the same namespace.
 
 
 ### Deploy Guest Clusters Using the Rancher Terraform Provider
