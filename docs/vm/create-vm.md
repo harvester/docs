@@ -238,6 +238,15 @@ In order to meet the scenario requirements of more users, the `RunStrategy` fiel
 - Stop: There will be no VM instance. If the guest is already running, it will be stopped. This is the same behavior as `Running: false`.
 
 
+### Reserved Memory
+
+The VM is configured with a memory value, this memory is targeted for guest OS to see and use. In Harvester, each VM is carried by a Kubernetes POD. To support the VM to run, Harvester and KubeVirt add some additional memory as the VM memory overhead. The memory overhead is computed by many factors like CPU cores. However, sometimes the OOM(Out Of Memory) can still happen.
+
+Harvester adds a `Reserved Memory` field and a setting `additional-guest-memory-overhead-ratio` for user to adjust the guest OS memory and the memory overhead.
+
+See [additional-guest-memory-overhead-ratio](../advanced/settings.md#additional-guest-memory-overhead-ratio) for more details.
+
+
 ### Cloud Configuration
 
 Harvester supports the ability to assign a startup script to a virtual machine instance which is executed automatically when the VM initializes.

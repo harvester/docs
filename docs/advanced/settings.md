@@ -328,6 +328,70 @@ A VM that is configured to use 2 CPUs (equivalent to 2,000 milliCPU) can consume
 }
 ```
 
+### `additional-guest-memory-overhead-ratio`
+
+**Definition**: The ratio to futher tune the VM memory overhead.
+
+The VM is configured with a memory value, this memory is targeted for guest OS to see and use. In Harvester, each VM is carried by a Kubernetes POD. To support the VM to run, Harvester and KubeVirt add some additional memory as the VM memory overhead. The memory overhead is computed by many factors like CPU cores. However, sometimes the OOM(Out Of Memory) can still happen.
+
+This setting is for more flexibly tuning the guest memory overhead.
+
+**Default values**: `"1.5"`
+
+Valid values: `""`, `"0"` and from `"1.0"` to `"10.0"`.
+
+A VM that is configured to have `1 CPU, 2 Gi Memory, 1 Volume and 1 NIC` will get around `240 Mi` memory overhead when the ratio is `"1.0"`. When the ratio is `"1.5"`, the memory overhead becomes `360 Mi`. When the ratio is `"3"`, the memory overhead becomes `720 Mi`.
+
+The yaml output of this setting on a new cluster:
+
+```
+apiVersion: harvesterhci.io/v1beta1
+default: "1.5"
+kind: Setting
+metadata:
+  name: additional-guest-memory-overhead-ratio
+value: ""
+```
+
+When the `value` field is `""`, the `default` field is used.
+
+When the `value` field is `"0"`, the `additional-guest-memory-overhead-ratio` setting is not used, Harvester will fallback to the legacy [Reserved Memory](../../versioned_docs/version-v1.3/vm/create-vm.md#reserved-memory) which is used in Harvester v1.3.x, v1.2.x and earlier versions.
+
+If you have already set a valid value on the `spec.configuration.additionalGuestMemoryOverheadRatio` field of `kubevirt` object, Harvester will fetch and convert it to the `value` field of this setting on the upgrade path. After that, Harvester will always use this setting to sync to the `kubevirt` object.
+
+This setting is combined with the [Reserved Memroy](../vm/create-vm.md#reserved-memory).
+
+The following table shows how they work together.
+
+| VM Configured Memory | Reserved Memory | additional-guest-memory-overhead-ratio| Guest OS Memory | PoD memory Limit |
+| --- | --- | --- | --- | --- |
+| 2 Gi | ""(not configured) | "0.0" | 2 Gi - 100 Mi | 2 Gi + 240 Mi |
+| 2 Gi | 256 Mi | "0.0" | 2 Gi - 256 Mi | 2 Gi + 240 Mi |
+| --- | --- | --- | --- | --- |
+| 2 Gi | ""(not configured) | "1.0" | 2 Gi | 2 Gi + 240*1.0 Mi |
+| 2 Gi | ""(not configured) | "3.0" | 2 Gi | 2 Gi + 240*3.0 Mi |
+| --- | --- | --- | --- | --- |
+| 2 Gi | ""(not configured) | "1.5" | 2 Gi | 2 Gi + 240*1.5 Mi |
+| 2 Gi | 256 Mi | "1.5" | 2 Gi - 256 Mi | 2 Gi + 240*1.5 Mi |
+
+**Example**:
+
+```
+2.0
+```
+
+:::note
+
+To reduce the chance of hitting OOM, Harvester suggests to:
+
+- Configure this setting with value `"2"` to give all the VMs more guest memory overhead.
+
+- Configure the `Reserved Memory` for some important VMs to give them even more memory overhead.
+
+- Avoid configuring the `spec.configuration.additionalGuestMemoryOverheadRatio` field of `kubevirt` object directly.
+
+:::
+
 ### `release-download-url`
 
 **Definition**: URL for downloading the software required for upgrades.
