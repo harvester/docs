@@ -24,14 +24,14 @@ The [Rancher Terraform Provider](https://registry.terraform.io/providers/rancher
 
 ### Deploy Guest Clusters Using the Rancher Terraform Provider
 
-1. Create an API key. 
+1. Create an API key.
 
     On the Rancher UI, go to **Account & API Keys** > **Create API key** > **Create**.
 
     ![Create API Key](/img/v1.4/rancher/create-api-key.png)
     ![Access & Secret Keys](/img/v1.4/rancher/access-and-secret-keys.png)
 
-1. Obtain the Harvester cluster ID. 
+1. Obtain the Harvester cluster ID.
 
     On the Rancher UI, go to **Virtualization Management** > **Manage** > **Related Resources** > **Mgmt Cluster Name**.
 
@@ -126,10 +126,6 @@ The [Rancher Terraform Provider](https://registry.terraform.io/providers/rancher
                 - enable
                 - '--now'
                 - qemu-guest-agent.service
-            password: test
-            chpasswd:
-            expire: false
-            ssh_pwauth: true
             EOF
         }
     }

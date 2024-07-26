@@ -121,10 +121,6 @@ description: Rancher Terraform allows administrators to create and manage RKE2 g
                 - enable
                 - '--now'
                 - qemu-guest-agent.service
-            password: test
-            chpasswd:
-            expire: false
-            ssh_pwauth: true
             EOF
         }
     }
