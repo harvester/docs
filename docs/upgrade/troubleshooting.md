@@ -15,7 +15,7 @@ Here are some tips to troubleshoot a failed upgrade:
 - Check [version-specific upgrade notes](./automatic.md#upgrade-support-matrix). You can click the version in the support matrix table to see if there are any known issues.
 - Dive into the upgrade [design proposal](https://github.com/harvester/harvester/blob/master/enhancements/20220413-zero-downtime-upgrade.md). The following section briefly describes phases within an upgrade and possible diagnostic methods.
 
-## Diagnose the upgrade flow
+## Investigate the Upgrade Flow
 
 A Harvester upgrade process contains several phases.
     ![](/img/v1.2/upgrade/ts_upgrade_phases.png)
