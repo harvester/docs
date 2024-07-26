@@ -28,18 +28,19 @@ Live migration means moving a virtual machine to a different host without downti
 
 ## How Migration Works
 
-Each node has multiple CPU models labeled with different keys:
+Each node has multiple CPU models that are labeled with different keys.
 
-- Primary CPU Model: `host-model-cpu.node.kubevirt.io/{cpu-model}`
-- Supported CPU Models: `cpu-model.node.kubevirt.io/{cpu-model}`
-- Supported Migration CPU Models: `cpu-model-migration.node.kubevirt.io/{cpu-model}`
+- Primary CPU model: `host-model-cpu.node.kubevirt.io/{cpu-model}`
+- Supported CPU models: `cpu-model.node.kubevirt.io/{cpu-model}`
+- Supported CPU models for migration: `cpu-model-migration.node.kubevirt.io/{cpu-model}`
 
-When performing live migration, the process will check the value of `spec.domain.cpu.model` in VMI CR, which is derived from `spec.template.spec.domain.cpu.model` in VM CR. If this value is not set, it defaults to `host-model`.
+During live migration, the system checks the value of `spec.domain.cpu.model` in the VirtualMachineInstance (VMI) CR, which is derived from `spec.template.spec.domain.cpu.model` in the VirtualMachine (VM) CR. If the value of `spec.template.spec.domain.cpu.model` is not set, the system uses the default value `host-model`.
 
-- With `host-model`, the process will fetch the value of the primary CPU model and fill `spec.NodeSelectors` of the newly created POD with the label `cpu-model-migration.node.kubevirt.io/{cpu-model}`.
-- With a custom CPU model like `XYZ`, the process will fill `spec.NodeSelectors` of the newly created POD with the label `cpu-model.node.kubevirt.io/XYZ`.
+When `host-model` is used, the process fetches the value of the primary CPU model and fills `spec.NodeSelectors` of the newly created pod with the label `cpu-model-migration.node.kubevirt.io/{cpu-model}`. 
 
-However, there is a limitation with `host-model`, please check [limitation section](#limitation) for more details.
+Besides, you can customize the CPU model in `spec.domain.cpu.model` instead of using default `host-model`. For example, if the CPU model is `XYZ`, the process fills `spec.NodeSelectors` of the newly created pod with the label `cpu-model.node.kubevirt.io/XYZ`.
+
+However, `host-model` only allows migration of the VM to a node with same CPU model. For more information, see [Limitations](#limitation).
 
 ## Starting a Migration
 
@@ -74,15 +75,16 @@ Live migration will also be aborted when copying memory doesn't make any progres
 
 ## Limitation
 
-With `host-model`, it only allows the live migration process to migrate the VM to a node with same CPU model. For example, if the original CPU model is `XYZ`, it can migrate VM to another node with `XYZ` CPU model. However, sometimes VM does not require a specified CPU model. In such case, we need to shut down the VM, assign a CPU model supported by all nodes, and then restart the VM.
+`host-model` only allows migration of the VM to a node with same CPU model. However, specifying a CPU model is not always required. When no CPU model is specified, you must shut down the VM, assign a CPU model that is supported by all nodes, and then restart the VM.
 
-For example, consider two nodes:
+Example:
 
 - A node: `host-model-cpu.node.kubevirt.io/XYZ` `cpu-model-migration.node.kubevirt.io/XYZ` `cpu-model.node.kubevirt.io/123`
 - B node: `host-model-cpu.node.kubevirt.io/ABC` `cpu-model-migration.node.kubevirt.io/ABC` `cpu-model.node.kubevirt.io/123`
 
-It is not possible to migrate a VM with `host-model` in this case due to different `host-model-cpu.node.kubevirt.io` values. However, both nodes support the `123` CPU model. Thus, it is possible to migrate VM with `123` CPU model in two ways:
-- Cluster Level: Run `kubectl edit kubevirts.kubevirt.io -n harvester-system` and add `spec.configuration.cpuModel: "123"`. This changes also affects the newly created VMs.
-- Per VM Level: Edit the VM spec to include `spec.template.spec.domain.cpu.model: "123"`.
+Migrating a VM with `host-model` is not possible because the values of `host-model-cpu.node.kubevirt.io` are not identical. However, both nodes support the `123` CPU model, so you can migrate any VM with the `123` CPU model using either of the following methods:
 
-Both methods require the restarting the VMs. If you know all nodes in this cluster support a specified CPU model, you can define this at cluster level before creating any VMs. This way, you won't need to restart the VMs to assign the CPU model later while performing live migration.
+- Cluster level: Run `kubectl edit kubevirts.kubevirt.io -n harvester-system` and add `spec.configuration.cpuModel: "123"`. This change also affects newly created VMs.
+- Individual VMs: Modify the VM configuration to include `spec.template.spec.domain.cpu.model: "123"`.
+
+Both methods require the restarting the VMs. If you are certain that all nodes in the cluster support a specific CPU model, you can define this at the cluster level before creating any VMs. In doing so, you eliminate the need to restart the VMs (to assign the CPU model) during live migration.
