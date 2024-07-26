@@ -17,7 +17,7 @@ Here are some tips to troubleshoot a failed upgrade:
 
 ## Investigate the Upgrade Flow
 
-A Harvester upgrade process contains several phases.
+The Harvester upgrade process includes several phases.
     ![](/img/v1.2/upgrade/ts_upgrade_phases.png)
 
 ### Phase 1: Provision upgrade repository VM.
