@@ -230,6 +230,43 @@ In order to meet the scenario requirements of more users, the `RunStrategy` fiel
 - Stop: There will be no VM instance. If the guest is already running, it will be stopped. This is the same behavior as `Running: false`.
 
 
+### Reserved Memory
+
+You can set a customized value for the VM, it depends on many factors
+
+- the numuber of devices like network nics, hot-plug volumes
+
+If no value is configured, Harvester will set a default value according to rollowing rules.
+
+```
+  Expected VM Memory      Default Reserved Memory
+   100M ...  512M                  100M
+   512M ...  1G                    128M
+   1G   ...  2.5G                  256M
+   2.5G ...  10G             10%, round to M
+   10G  ...                         1G
+```
+
+For example, one VM is configured with 2GiB memory from the [Harvester UI](https://docs.harvesterhci.io/v1.3/vm/index#how-to-create-a-vm) and the `Reserved Memory` is not set, the default value of the `Reserved Memory` is 256MiB, the Guest OS gets 1792MiB memory.
+
+The final virtual machine object created on the cluster has following parameters:
+
+```
+harvester$ kubectl get vm vmname -n vm-namespace -oyaml
+...
+        memory:
+          guest: 1792Mi    // Auto calculated, if `Reserved Memory` is not net
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi    // From UI input
+          requests:
+            cpu: 62m
+            memory: 1365Mi // Auto calculated, depends on the overcommit configuration
+...
+```
+
+
 ### Cloud Configuration
 
 Harvester supports the ability to assign a startup script to a virtual machine instance which is executed automatically when the VM initializes.
