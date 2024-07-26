@@ -38,7 +38,7 @@ During live migration, the system checks the value of `spec.domain.cpu.model` in
 
 When `host-model` is used, the process fetches the value of the primary CPU model and fills `spec.NodeSelectors` of the newly created pod with the label `cpu-model-migration.node.kubevirt.io/{cpu-model}`. 
 
-Besides, you can customize the CPU model in `spec.domain.cpu.model` instead of using default `host-model`. For example, if the CPU model is `XYZ`, the process fills `spec.NodeSelectors` of the newly created pod with the label `cpu-model.node.kubevirt.io/XYZ`.
+Alternatively, you can customize the CPU model in `spec.domain.cpu.model`. For example, if the CPU model is `XYZ`, the process fills `spec.NodeSelectors` of the newly created pod with the label `cpu-model.node.kubevirt.io/XYZ`.
 
 However, `host-model` only allows migration of the VM to a node with same CPU model. For more information, see [Limitations](#limitation).
 
