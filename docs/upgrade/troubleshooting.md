@@ -201,13 +201,12 @@ deployment.apps/hvst-upgrade-xxxxx-upgradelog-downloader scaled
 
 :::
 
-### Clean up unused images
+### Clean Up Unused Images
 
-The default value of `imageGCHighThresholdPercent` in [KubeletConfiguration](https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/#kubelet-config-k8s-io-v1beta1-KubeletConfiguration) is `85`. If kubelet detects disk usage is more than 85%, it tries to remove unused images.
+The default value of `imageGCHighThresholdPercent` in [KubeletConfiguration](https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/#kubelet-config-k8s-io-v1beta1-KubeletConfiguration) is `85`. When disk usage exceeds 85%, the kubelet attempts to remove unused images.
 
-During Harvester upgrade, the system loads new images to each node. If disk usage exceeds 85%, these new images may be marked for cleanup since they are not used by any containers.
-In an airgapped environment, this may break the upgrade because new images cannot be found in the cluster.
+New images are loaded to each Harvester node during upgrades. When disk usage exceeds 85%, these new images may be marked for cleanup because they are not used by any containers. In air-gapped environments, removal of new images from the cluster may break the upgrade process.
 
-If you get error message like 'Node xxx will reach xx.xx% storage space after loading new images. It's higher than kubelet image garbage collection threshold 85%.', you can run `crictl rmi --prune` to cleanup unused images first, before new upgrade starts.
+If you encounter the error message `Node xxx will reach xx.xx% storage space after loading new images. It's higher than kubelet image garbage collection threshold 85%.`, run `crictl rmi --prune` to clean up unused images before starting a new upgrade.
 
 ![Disk space not enough error message](/img/v1.4/upgrade/disk-space-not-enough-error-message.png)
