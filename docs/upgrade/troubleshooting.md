@@ -15,9 +15,9 @@ Here are some tips to troubleshoot a failed upgrade:
 - Check [version-specific upgrade notes](./automatic.md#upgrade-support-matrix). You can click the version in the support matrix table to see if there are any known issues.
 - Dive into the upgrade [design proposal](https://github.com/harvester/harvester/blob/master/enhancements/20220413-zero-downtime-upgrade.md). The following section briefly describes phases within an upgrade and possible diagnostic methods.
 
-## Diagnose the upgrade flow 
+## Investigate the Upgrade Flow
 
-A Harvester upgrade process contains several phases. 
+The Harvester upgrade process includes several phases.
     ![](/img/v1.2/upgrade/ts_upgrade_phases.png)
 
 ### Phase 1: Provision upgrade repository VM.
@@ -200,3 +200,13 @@ deployment.apps/hvst-upgrade-xxxxx-upgradelog-downloader scaled
 ```
 
 :::
+
+### Clean Up Unused Images
+
+The default value of `imageGCHighThresholdPercent` in [KubeletConfiguration](https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/#kubelet-config-k8s-io-v1beta1-KubeletConfiguration) is `85`. When disk usage exceeds 85%, the kubelet attempts to remove unused images.
+
+New images are loaded to each Harvester node during upgrades. When disk usage exceeds 85%, these new images may be marked for cleanup because they are not used by any containers. In air-gapped environments, removal of new images from the cluster may break the upgrade process.
+
+If you encounter the error message `Node xxx will reach xx.xx% storage space after loading new images. It's higher than kubelet image garbage collection threshold 85%.`, run `crictl rmi --prune` to clean up unused images before starting a new upgrade.
+
+![Disk space not enough error message](/img/v1.4/upgrade/disk-space-not-enough-error-message.png)
