@@ -11,9 +11,9 @@ keywords:
 - virtual machine
 ---
 
-A three-node [Harvester cluster](../glossary/#harvester-cluster) is required to fully realize multi-node features such as high availability. Certain versions of Harvester allow you to create clusters with two management nodes and one [witness node](../advanced/witness/) (and optionally, one or more worker nodes). You can also create [single-node clusters](../advanced/singlenodeclusters/) that support most Harvester features (excluding high availability, multi-replica support, and live migration). 
+A [Harvester cluster](../glossary/#harvester-cluster) with three or more nodes is required to fully realize multi-node features such as high availability. Certain versions of Harvester allow you to create clusters with two management nodes and one [witness node](../advanced/witness/) (and optionally, one or more worker nodes). You can also create [single-node clusters](../advanced/singlenodeclusters/) that support most Harvester features (excluding high availability, multi-replica support, and live migration). 
 
-This guide walks you through the steps required to deploy a **single-node cluster** and virtual machines (VMs) that can host [guest clusters](../glossary/#guest-cluster--guest-kubernetes-cluster). 
+This guide walks you through the steps required to deploy a **single-node cluster** and virtual machines (VMs) that can host [guest clusters](../glossary/#guest-cluster--guest-kubernetes-cluster) or run custom workloads. 
 
 ## 1. Verify that the minimum hardware and network requirements are met. 
 
@@ -52,13 +52,19 @@ Once installation is completed, the node restarts and then the Harvester console
 
 Once the cluster status changes to **Ready**, you can access the [Harvester UI](../authentication) using the management URL displayed on the console. 
 
-## 6. Create a new default StorageClass.
+## 6. Configure the default StorageClass. 
 
-Creating a new [StorageClass](../advanced/storageclass/#creating-a-storageclass) is necessary because the default StorageClass `harvester-longhorn` has a replica count value of **3** for high availability. If you use `harvester-longhorn` to create volumes, Longhorn is unable to create the configured number of replicas and volumes are marked as *Degraded* on the Longhorn UI.
+Harvester uses StorageClasses to describe how Longhorn must provision volumes. Each StorageClass has a parameter that defines the number of replicas Longhorn creates for each volume. 
 
-When configuring the new StorageClass, set the **Number of Replicas** parameter to **1** so that only one replica is created for each Longhorn volume. 
+The default StorageClass `harvester-longhorn` has a replica count value of **3** for high availability. If you use the default StorageClass in your single-node cluster, Longhorn is unable to create the configured number of replicas, and volumes are marked as *Degraded* on the [embedded Longhorn UI](../troubleshooting/harvester/#access-embedded-rancher-and-longhorn-dashboards). 
 
-## 7. Create a custom cluster network (optional) and a VM network (required).
+To avoid this issue, you can perform either of the following actions:
+
+- Modify the [replica count](../install/harvester-configuration/#installharvesterstorage_classreplica_count) of `harvester-longhorn` using a [Harvester configuration](../install/harvester-configuration/) file.
+
+- [Create a new StorageClass](../advanced/storageclass/#creating-a-storageclass) with the **Number of Replicas** parameter to **1**. On the **Storage Classes** screen, locate the new StorageClass and then select **⋮** > **Set as Default**.
+
+## 7. (Optional) Create a custom cluster network and a VM network.
 
 Networking in Harvester involves three major concepts:
 
@@ -74,7 +80,7 @@ Networking in Harvester involves three major concepts:
     
     Each VM network is linked to a specific cluster network, which is used for transmission of VM traffic. You can create either a [VLAN network](../networking/harvester-network/#vlan-network) or an [untagged network](../networking/harvester-network/#untagged-network) based on your requirements, such as traffic isolation, network segmentation, ease of management, or alignment with the external network environment. 
 
-Before you create VMs, create the necessary networks. If more than one network interface is attached to each cluster node, consider [creating custom cluster networks](../networking/index#how-to-create-a-new-cluster-network) and network configurations for better traffic isolation. Otherwise, you can only use the management network for transmission of VM traffic. Next, [create a VM network](../networking/index#how-to-create-a-new-cluster-network) that is linked to either the management network or any of the custom cluster networks that you created.
+You can use the management network for transmission of VM traffic when testing Harvester using a single-node cluster. 
 
 ## 8. Import VM images. 
 
@@ -90,7 +96,7 @@ You can create [Linux VMs](../vm/index) using one of the following methods:
 
 - Harvester UI: On the **Virtual Machines** screen, click **Create** and configure the settings on each tab. 
 - Kubernetes API: Create a `VirtualMachine` object. 
-- Harvester Terraform Provider: Define a `harvester_virtualmachine` resource block. 
+- [Harvester Terraform Provider](../terraform/terraform-provider): Define a `harvester_virtualmachine` resource block. 
 
 Creating [Windows VMs](../vm/create-windows-vm) on the Harvester UI involves slightly different steps. Harvester provides a VM template named `windows-iso-image-base-template` that adds a volume with the Virtio drivers for Windows, which streamlines the VM configuration process. If you require Virtio devices but choose to not use the template, you must add your own Virtio drivers for Windows to enable correct hardware detection. 
 
