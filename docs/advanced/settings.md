@@ -9,8 +9,7 @@ title: "Settings"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/advanced/settings"/>
 </head>
 
-This page contains a list of advanced settings which can be used in Harvester.
-You can modify the custom resource `settings.harvesterhci.io` from the Dashboard UI or with the `kubectl` command.
+The following is a list of advanced settings that you can use in Harvester. You can modify the `settings.harvesterhci.io` custom resource using both the Harvester UI and the `kubectl` command.
 
 ---
 <p>&nbsp;</p>
