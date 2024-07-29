@@ -182,7 +182,9 @@ You must configure the following information before using features related to ba
 
 **Versions**: v1.2.0 and later
 
-**Definition**: Number of seconds Harvester waits before stopping a VM.
+**Definition**: Number of seconds Harvester waits before forcibly shutting down a VM that was stopped using the Harvester UI.
+
+Harvester sends a graceful shutdown signal to any VM that is stopped using the Harvester UI. If the graceful shutdown process is not completed within the specified number of seconds, Harvester forcibly shuts down the VM.
 
 **Default value**: `120`
 
