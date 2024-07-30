@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
-sidebar_label: Import Existing VM
-title: "Import Existing VM"
+sidebar_label: Import Existing Cluster built on Harvester VM
+title: "Import Existing Cluster built on Harvester VM"
 keywords:
   - Harvester
   - harvester
@@ -122,7 +122,7 @@ Rancher allows you to import existing Harvester VMs in which you installed Kuber
     sudo /var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get nodes
     ```
 
-1. Import the VM into Rancher. 
+1. Import the VM into Rancher.
 
     On the Rancher UI, go to **Cluster Management** > **Clusters** > **Import Existing** > **Generic** > **Create**.
 
@@ -133,11 +133,11 @@ Rancher allows you to import existing Harvester VMs in which you installed Kuber
     curl --insecure -sfL https://192.168.0.181:6443/v3/import/g5p2g2gtxw4564nktdl4nr5cwwvtwqp9zxd6dmhm5nc7vpnxmr9cfk_c-m-mzf28skd.yaml | sudo /var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml apply -f -
     ```
 
-1. Install the Harvester Cloud Provider. 
+1. Install the Harvester Cloud Provider.
 
     On the RKE2 Cluster Dashboard, go to **Apps** > **Charts** > **Harvester Cloud Provider** > **Install**.
 
-1. Install the Harvester CSI Driver. 
+1. Install the Harvester CSI Driver.
 
     On the RKE2 Cluster Dashboard, go to **Apps** > **Charts** > **Harvester CSI Driver** > **Install**.
 

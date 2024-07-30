@@ -281,7 +281,7 @@ Now you can create a new StorageClass that you intend to use in your guest Kuber
 
 ### Upgrade RKE2
 
-You can upgrade the CSI driver by upgrading RKE2 using the Rancher UI.
+To upgrade the CSI driver, use the Rancher UI to upgrade RKE2. Ensure the new RKE2 version supports/bundled with the updated CSI driver version.
 
 1. Go to **☰** > **Cluster Management**.
 

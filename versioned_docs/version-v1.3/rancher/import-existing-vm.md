@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
-sidebar_label: Import Existing VM
-title: "Import Existing VM"
+sidebar_label: Import Existing Cluster built on Harvester VM
+title: "Import Existing Cluster built on Harvester VM"
 keywords:
   - Harvester
   - harvester
