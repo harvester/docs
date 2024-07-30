@@ -64,7 +64,7 @@ To avoid this issue, you can perform either of the following actions:
 
 - [Create a new StorageClass](../advanced/storageclass/#creating-a-storageclass) with the **Number of Replicas** parameter to **1**. On the **Storage Classes** screen, locate the new StorageClass and then select **⋮** > **Set as Default**.
 
-## 7. (Optional) Create a custom cluster network and a VM network.
+## 7. Create a custom cluster network and a VM network. (Optional)
 
 Networking in Harvester involves three major concepts:
 
