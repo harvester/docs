@@ -54,15 +54,15 @@ Once the cluster status changes to **Ready**, you can access the [Harvester UI](
 
 ## 6. Configure the default StorageClass. 
 
-Harvester uses StorageClasses to describe how Longhorn must provision volumes. Each StorageClass has a parameter that defines the number of replicas Longhorn creates for each volume. 
+Harvester uses StorageClasses to describe how Longhorn must provision volumes. Each StorageClass has a parameter that defines the number of replicas to be created for each volume. 
 
-The default StorageClass `harvester-longhorn` has a replica count value of **3** for high availability. If you use the default StorageClass in your single-node cluster, Longhorn is unable to create the configured number of replicas, and volumes are marked as *Degraded* on the [embedded Longhorn UI](../troubleshooting/harvester/#access-embedded-rancher-and-longhorn-dashboards). 
+The default StorageClass `harvester-longhorn` has a replica count value of **3** for high availability. If you use `harvester-longhorn` in your single-node cluster, Longhorn is unable to create the default number of replicas, and volumes are marked as *Degraded* on the [embedded Longhorn UI](../troubleshooting/harvester/#access-embedded-rancher-and-longhorn-dashboards). 
 
-To avoid this issue, you can perform either of the following actions:
+To avoid this issue, you can perform either of the following actions: 
 
-- Modify the [replica count](../install/harvester-configuration/#installharvesterstorage_classreplica_count) of `harvester-longhorn` using a [Harvester configuration](../install/harvester-configuration/) file.
+- Change the [replica count](../install/harvester-configuration/#installharvesterstorage_classreplica_count) of `harvester-longhorn` to *1** using a [Harvester configuration](../install/harvester-configuration/) file. 
 
-- [Create a new StorageClass](../advanced/storageclass/#creating-a-storageclass) with the **Number of Replicas** parameter to **1**. On the **Storage Classes** screen, locate the new StorageClass and then select **⋮** > **Set as Default**.
+- [Create a new StorageClass](../advanced/storageclass/#creating-a-storageclass) with the **Number of Replicas** parameter set to **1**. Once created, locate the new StorageClass in the list and then select **⋮** > **Set as Default**. 
 
 ## 7. Create a custom cluster network and a VM network. (Optional)
 
