@@ -1,15 +1,13 @@
 ---
-title: Glossary
+sidebar_position: 3
 sidebar_label: Glossary
+title: "Glossary"
 keywords:
 - Harvester
 - glossary
 - terminology
+- concepts
 ---
-
-<head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/glossary"/>
-</head>
 
 ## **guest cluster** / **guest Kubernetes cluster**
 
