@@ -1,23 +1,22 @@
 ---
-id: singlenodeclusters
 sidebar_position: 7
 sidebar_label: Single-Node Clusters
 title: "Single-Node Clusters"
+description: Support for deployment of single-node clusters
 keywords:
-- Single Node
-Description: Support for deployment of single-node clusters
+- one node
+- single node
 ---
 
 <head>
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/advanced/singlenodeclusters"/>
 </head>
 
-As of Harvester release v1.2.0, single-node clusters are supported for implementations that require minimal initial deployment resources or that can tolerate lower resiliency. You can create single-node clusters using the standard installation methods ([ISO](https://docs.harvesterhci.io/v1.3/install/index), [USB](https://docs.harvesterhci.io/v1.3/install/usb-install), and [PXE boot](https://docs.harvesterhci.io/v1.3/install/pxe-boot-install)).
+Harvester supports single-node clusters for implementations that can tolerate lower resilience or require minimal initial deployment resources. You can create single-node clusters using the standard installation methods ([ISO](https://docs.harvesterhci.io/v1.3/install/index), [USB](https://docs.harvesterhci.io/v1.3/install/usb-install), and [PXE boot](https://docs.harvesterhci.io/v1.3/install/pxe-boot-install)).
 
 Single-node clusters support most Harvester features, including the creation of RKE2 clusters and node upgrades (with some limitations). However, this deployment type has the following key disadvantages:
 
 - No high availability: Errors and updates that require rebooting of the node cause downtime to running VMs.
-- No multi-replica support: Only one replica is created for each volume in Longhorn.
 - No live migration and zero-downtime support during upgrades.
 
 ## Prerequisites
@@ -26,8 +25,29 @@ Before you begin deploying your single-node cluster, ensure that the following r
 
 - Hardware: [Use server-class hardware](https://docs.harvesterhci.io/v1.3/install/requirements#hardware-requirements) with sufficient resources to run Harvester and a production workload. Laptops and nested virtualization are not supported.
 - Network: [Configure ports](https://docs.harvesterhci.io/v1.3/install/requirements#port-requirements-for-harvester-nodes) based on the type of traffic to be transmitted among VMs.
-- StorageClass: [Create a new default StorageClass](https://docs.harvesterhci.io/v1.3/advanced/storageclass#creating-a-storageclass) with the **Number of Replicas** parameter set to "1". This ensures that only one replica is created for each volume in Longhorn.
 
-  :::info important
-  The default StorageClass `harvester-longhorn` has a replica count value of `3` for high availability. If you use this StorageClass to create volumes for your single-node cluster, Longhorn is unable to create the configured number of replicas. This results in volumes being marked as "Degraded" on the Longhorn UI.
-  :::
+## Replica Count of the Default StorageClass 
+
+Harvester uses StorageClasses to describe how Longhorn must provision volumes. Each StorageClass has a parameter that defines the number of replicas to be created for each volume. 
+
+The default StorageClass `harvester-longhorn` has a replica count value of **3** for high availability. If you use `harvester-longhorn` in your single-node cluster, Longhorn is unable to create the default number of replicas, and volumes are marked as *Degraded* on the [embedded Longhorn UI](../troubleshooting/harvester/#access-embedded-rancher-and-longhorn-dashboards). 
+
+To avoid this issue, you can perform either of the following actions: 
+
+- Change the [replica count](../install/harvester-configuration/#installharvesterstorage_classreplica_count) of `harvester-longhorn` to **1** using a [Harvester configuration](../install/harvester-configuration/) file. 
+
+- [Create a new StorageClass](../advanced/storageclass/#creating-a-storageclass) with the **Number of Replicas** parameter set to **1**. Once created, locate the new StorageClass in the list and then select **⋮** > **Set as Default**. 
+
+## Multiple Replicas on a Node with Multiple Disks 
+
+Longhorn creates only one replica for each volume even if the node has multiple disks because **Replica Hard Anti-Affinity** is enabled by default. When a healthy replica already exists on a node, the scheduler is prevented from scheduling new replicas of the same volume on the node.
+
+In high-availability clusters, **Replica Hard Anti-Affinity** ensures volume redundancy. However, this same mechanism can cause volumes to become degraded in single-node clusters (since no other nodes are available for scheduling of new replicas).
+
+If you want Longhorn to create multiple replicas on a node with multiple disks, perform the following actions: 
+
+1. Enable [`Replica Node Level Soft Anti-Affinity`](https://longhorn.io/docs/1.7.0/references/settings/#replica-node-level-soft-anti-affinity): When this setting is enabled, Longhorn schedules new replicas on nodes with existing healthy replicas of the same volume.
+
+1. Disable [`Replica Disk Level Soft Anti-Affinity`](https://longhorn.io/docs/1.7.0/references/settings/#replica-disk-level-soft-anti-affinity): When this setting is disabled, Longhorn does not schedule new replicas on disks with existing healthy replicas of the same volume. Disabling this setting provides failure tolerance for disks in single-node clusters.
+
+1. [Create a new StorageClass](../advanced/storageclass/#creating-a-storageclass) and specify the disk tags that must be matched during volume scheduling.
