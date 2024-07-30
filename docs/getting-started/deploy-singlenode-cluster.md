@@ -60,7 +60,7 @@ The default StorageClass `harvester-longhorn` has a replica count value of **3**
 
 To avoid this issue, you can perform either of the following actions: 
 
-- Change the [replica count](../install/harvester-configuration/#installharvesterstorage_classreplica_count) of `harvester-longhorn` to *1** using a [Harvester configuration](../install/harvester-configuration/) file. 
+- Change the [replica count](../install/harvester-configuration/#installharvesterstorage_classreplica_count) of `harvester-longhorn` to **1** using a [Harvester configuration](../install/harvester-configuration/) file. 
 
 - [Create a new StorageClass](../advanced/storageclass/#creating-a-storageclass) with the **Number of Replicas** parameter set to **1**. Once created, locate the new StorageClass in the list and then select **⋮** > **Set as Default**. 
 
