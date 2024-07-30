@@ -275,13 +275,19 @@ Changes to the server address list are applied to all nodes.
 
 ### `overcommit-config`
 
-**Definition**: Percentage of the maximum amount of CPU, memory, and storage resources that a specific VM can use.
+**Definition**: Percentage of physical CPU, memory, and storage allocatable for VM usage.
 
-This setting allows you to schedule additional VMs even when the Harvester cluster's physical resources are already fully utilized.
+Setting these values greater than 100% will allow multiple virtual machines to be scheduled even when physical resources would notionally be fully allocated. For example, with the default CPU overcommit of 1600%, memory overcommit of 150%, and storage overcommit of 200%, it will be possible to schedule:
+
+- 16x the number of physical CPUs on a host for VM usage.
+- 1.5x the amount of physical RAM on a host for VM usage.
+- 2x the amount of physical storage in Longhorn for VM storage.
+
+Overcommit is commonly used to optimize physical resource allocation when most VMs are not often expected to hit their allocated limits for CPU, memory and storage.
 
 **Default values**: `{ "cpu":1600, "memory":150, "storage":200 }`
 
-If the VM can use a maximum of 1,600 millicpu (`1600m`) and the overcommit value is 1600% (`"cpu":1600`), Harvester only requests 100 millicpu from the Kubernetes scheduler.
+If a VM is configured to use 2 CPUs (i.e. 2,000 milicpus of `2000m`), and the overcommit value is 1600%, Harvester only requests 2000/16 = 125 milicpu from the Kubernetes scheduler.
 
 **Example**:
 
