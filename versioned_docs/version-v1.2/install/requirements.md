@@ -39,6 +39,14 @@ Harvester nodes have the following hardware requirements and recommendations for
 - During testing, you can use only one NIC for the [built-in management cluster network](../networking/clusternetwork.md#built-in-cluster-network) (`mgmt`), and for testing the [VM network](../networking/harvester-network.md#create-a-vm-network) that is also carried by `mgmt`. High availability and optimal performance are not guaranteed.
 :::
 
+### CPU Specifications
+
+[Live Migration](../vm/live-migration/) functions correctly only if the CPUs of all physical servers in the [Harvester cluster](../glossary#harvester-cluster) have the same specifications. This requirement applies to all operations that rely on Live Migration functionality, such as automatic VM migration when [Maintenance Mode](../host/#node-maintenance) is enabled.
+
+Newer CPUs (even those from the same vendor, generation, and family) can have varying capabilities that may be exposed to VM operating systems. To ensure VM stability, Live Migration checks if the CPU capabilities are consistent, and blocks migration attempts when the source and destination are incompatible. 
+
+When creating clusters, adding more hosts to a cluster, and replacing hosts, always use CPUs with the same specifications to prevent operational constraints.
+
 ## Network Requirements
 
 Harvester nodes have the following network requirements for installation.
