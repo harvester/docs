@@ -51,3 +51,7 @@ If you want Longhorn to create multiple replicas on a node with multiple disks, 
 1. Disable [`Replica Disk Level Soft Anti-Affinity`](https://longhorn.io/docs/1.7.0/references/settings/#replica-disk-level-soft-anti-affinity): When this setting is disabled, Longhorn does not schedule new replicas on disks with existing healthy replicas of the same volume. Disabling this setting provides failure tolerance for disks in single-node clusters.
 
 1. [Create a new StorageClass](../advanced/storageclass/#creating-a-storageclass) and specify the disk tags that must be matched during volume scheduling.
+
+## Upgrades and Maintenance
+
+Single-node clusters do not support [Live Migration](../vm/live-migration/), so VMs become unavailable during cluster upgrades. Enabling [Maintenance Mode](https://docs.harvesterhci.io/v1.4/host/#node-maintenance) is also not possible because that operation relies on Live Migration functionality, and Harvester cannot place the only control plane in Maintenance Mode.

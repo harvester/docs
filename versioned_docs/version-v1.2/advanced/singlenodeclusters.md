@@ -38,3 +38,7 @@ To avoid this issue, you can perform either of the following actions:
 - Change the [replica count](../install/harvester-configuration/#installharvesterstorage_classreplica_count) of `harvester-longhorn` to **1** using a [Harvester configuration](../install/harvester-configuration/) file. 
 
 - [Create a new StorageClass](../advanced/storageclass/#creating-a-storageclass) with the **Number of Replicas** parameter set to **1**. Once created, locate the new StorageClass in the list and then select **⋮** > **Set as Default**. 
+
+## Upgrades and Maintenance
+
+Single-node clusters do not support [Live Migration](../vm/live-migration/), so VMs become unavailable during cluster upgrades. Enabling [Maintenance Mode](https://docs.harvesterhci.io/v1.4/host/#node-maintenance) is also not possible because that operation relies on Live Migration functionality, and Harvester cannot place the only control plane in Maintenance Mode.
