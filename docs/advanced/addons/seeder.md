@@ -1,20 +1,20 @@
 ---
 sidebar_position: 4
-sidebar_label: harvester-seeder
-title: "harvester-seeder"
+sidebar_label: Harvester Seeder
+title: "Harvester Seeder"
 ---
 
 <head>
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/advanced/seeder"/>
 </head>
 
-The `harvester-seeder` add-on allows you to perform out-of-band operations on Harvester hosts using the Intelligent Platform Management Interface (IPMI).
+The Harvester Seeder add-on allows you to perform out-of-band operations on Harvester hosts using the Intelligent Platform Management Interface (IPMI).
 
 This add-on can also discover hardware and related events for hosts that support [Redfish](https://www.dmtf.org/standards/redfish)-based access, and then associate that hardware with the corresponding hosts.
 
 ## Prerequisites
 
-To use `harvester-seeder`, ensure that the following requirements are met.
+Ensure that the following requirements are met before enabling the add-on.
 
 - IPMI access is enabled on the hosts, and your user account has the necessary privileges for performing related operations.
 
@@ -24,7 +24,7 @@ To use `harvester-seeder`, ensure that the following requirements are met.
 
     You can run `curl -vk https://iloOriDracIPAddress/redfish/v1` to verify that Redfish is enabled.
 
-- Ports **443** and **623** are reachable.
+- Ports 443 and 623 are reachable.
 
     Some IPMI implementations allow you to access devices using a web interface on port 443. However, IPMI devices are more commonly accessed using a command-line interface on UDP port 623 (IPMI over IP).
 
@@ -32,7 +32,7 @@ To use `harvester-seeder`, ensure that the following requirements are met.
 
     Some hardware vendors may require that you enable alerts.
 
-## Enable **harvester-seeder** and Configure Hosts
+## Enable the Add-On and Configure Hosts
 
 1. On the Harvester UI, go to **Advanced** > **Addons** screen.
 
@@ -48,19 +48,17 @@ To use `harvester-seeder`, ensure that the following requirements are met.
 
 1. Select a host, and then select **⋮** > **Edit Config**.
 
-    The host details screen opens.
-
 ![](/img/v1.2/seeder/EditConfig.png)
 
 1. On the **Out-of-Band Access** tab, select **Enabled**, configure the settings, and then select **Save**.
 
-    **harvester-seeder** uses the information to connect to your IPMI interface.
+    Harvester Seeder uses the information to connect to your IPMI interface.
 
 ![](/img/v1.2/seeder/OutOfBandAccess.png)
 
-## Power operations
+## Power-Related Operations
 
-Once you've defined the out-of-band config for a node, you can put the node into `Maintenance` mode, which allows you to shut down or reboot the node as needed.
+After configuring the out-of-band access settings, you can enable Maintenance Mode, which allows you to shut down or reboot the host as necessary.
 
 ![](/img/v1.2/seeder/ShutdownReboot.png)
 
@@ -68,8 +66,7 @@ If a node is shut down, you can also select **Power On** to power it on again:
 
 ![](/img/v1.2/seeder/PowerOn.png)
 
-
-## Hardware event aggregation
+## Hardware Event Aggregation
 
 If you've enabled **Event** in **Out-of-Band Access**, `seeder` will leverage `redfish` to query the underlying hardware for information about component failures and fan temperatures.
 
