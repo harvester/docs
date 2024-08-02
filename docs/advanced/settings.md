@@ -275,19 +275,19 @@ Changes to the server address list are applied to all nodes.
 
 ### `overcommit-config`
 
-**Definition**: Percentage of physical CPU, memory, and storage allocatable for VM usage.
+**Definition**: Percentage of physical compute, memory, and storage resources that can be allocated for VM use.
 
-Setting these values greater than 100% will allow multiple virtual machines to be scheduled even when physical resources would notionally be fully allocated. For example, with the default CPU overcommit of 1600%, memory overcommit of 150%, and storage overcommit of 200%, it will be possible to schedule:
-
-- 16x the number of physical CPUs on a host for VM usage.
-- 1.5x the amount of physical RAM on a host for VM usage.
-- 2x the amount of physical storage in Longhorn for VM storage.
-
-Overcommit is commonly used to optimize physical resource allocation when most VMs are not often expected to hit their allocated limits for CPU, memory and storage.
+Overcommitting is used to optimize physical resource allocation, particularly when VMs are not expected to fully consume the allocated resources most of the time. Setting values greater than 100% allows scheduling of multiple VMs even when physical resources are notionally fully allocated. 
 
 **Default values**: `{ "cpu":1600, "memory":150, "storage":200 }`
 
-If a VM is configured to use 2 CPUs (i.e. 2,000 milicpus of `2000m`), and the overcommit value is 1600%, Harvester only requests 2000/16 = 125 milicpu from the Kubernetes scheduler.
+With the default values, it would be possible to schedule the following:
+
+- 16x the number of physical CPUs on a host
+- 1.5x the amount of physical RAM on a host
+- 2x the amount of physical storage in Longhorn
+
+A VM that is configured to use 2 CPUs (equivalent to 2,000 milliCPU) can consume the full allocation as long as the resources are available. However, if the host is running heavy workloads and an overcommit value is set (for example, 1600%), Harvester only requests 125 milliCPU from the Kubernetes scheduler (2000/16 = 125 milliCPU).
 
 **Example**:
 
