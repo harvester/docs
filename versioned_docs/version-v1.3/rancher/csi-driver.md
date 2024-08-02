@@ -73,7 +73,7 @@ Perform the following steps to deploy the Harvester CSI driver manually:
    ./generate_addon_csi.sh <serviceaccount name> <namespace> RKE2
    ```
     ![](/img/v1.1/rancher/creating_guest_cluster.png)
-    
+
     The generated output will be similar to the following one:
     ```shell
     ########## cloud-config ############
@@ -95,7 +95,7 @@ Perform the following steps to deploy the Harvester CSI driver manually:
     - name: rke2-guest-01-default-default
       user:
         token: <token>
-    
+
     ########## cloud-init user data ############
     write_files:
       - encoding: b64
@@ -107,7 +107,7 @@ Perform the following steps to deploy the Harvester CSI driver manually:
 
 1. Copy and paste the `cloud-init user data` content to **Machine Pools** > **Show Advanced** > **User Data**.
    ![](/img/v1.2/rancher/cloud-config-userdata.png)
-   
+
    The `cloud-provider-config` file will be created after you apply the cloud-init user data above. You can find it on the guest Kubernetes nodes at the path `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`.
 
 1. Configure the **Cloud Provider** either to **Default - RKE2 Embedded** or **External**.
@@ -162,7 +162,7 @@ You can use the parameter `host-storage-class` to customize the default StorageC
 1. Verify that the Harvester CSI driver is ready.
 
     1. On the **PersistentVolumeClaims** screen, create a PVC. Select **Use a Storage Class to provision a new Persistent Volume** and specify the StorageClass you created.
-        
+
         Example:
         ![](/img/v1.3/rancher/create-volume-with-harvester-csi-driver.png)
 
@@ -172,7 +172,7 @@ You can use the parameter `host-storage-class` to customize the default StorageC
         ![](/img/v1.3/rancher/check-volume-and-pvc-name.png)
 
     3. On the **Volumes** screen, verify that the volume was provisioned using the StorageClass that you created.
-    
+
         Example:
         ![](/img/v1.3/rancher/check-pvc-name-on-host-harvester-volume-page.png)
 
@@ -279,5 +279,23 @@ Now you can create a new StorageClass that you intend to use in your guest Kuber
     - If you leave the `Host StorageClass` field empty, the default StorageClass of the Harvester cluster will be used.
 
     :::
-  
+
 1. You can now create a PVC based on this new **StorageClass**, which utilizes the **Host StorageClass** to provision volumes on the bare-metal Harvester cluster.
+
+## Upgrade CSI Driver
+
+### Upgrade RKE2
+
+To upgrade the CSI driver, use the Rancher UI to upgrade RKE2. Ensure the new RKE2 version supports/bundled with the updated CSI driver version.
+
+1. Click **☰ > Cluster Management**.
+2. Find the guest cluster that you want to upgrade and select ⋮ **> Edit Config**.
+3. Select **Kubernetes Version**.
+4. Click **Save**.
+
+### Upgrade RKE/K3s
+RKE/K3s upgrade csi driver via the Rancher UI, as follows:
+1. Click **☰ > RKE/K3s Cluster > Apps > Installed Apps**.
+2. Find the csi driver chart and select ⋮ **> Edit/Upgrade**.
+3. Select **Version**.
+4. Click **Next > Update**.
