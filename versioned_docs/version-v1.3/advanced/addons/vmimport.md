@@ -10,6 +10,8 @@ title: "VM Import"
 
 _Available as of v1.1.0_
 
+_Unavailable on ARM64 architecture_
+
 Beginning with v1.1.0, users can import their virtual machines from VMWare and OpenStack into Harvester.
 
 This is accomplished using the vm-import-controller addon.
