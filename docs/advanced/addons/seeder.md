@@ -2,13 +2,20 @@
 sidebar_position: 4
 sidebar_label: Harvester Seeder
 title: "Harvester Seeder"
+keywords:
+- add-on
+- addon
+- out-of-band
+- harvester-seeder
+- Seeder
+Description: Perform out-of-band operations on Harvester hosts via IPMI and discover hardware events via Redfish
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/advanced/seeder"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/advanced/seeder"/>
 </head>
 
-The Harvester Seeder add-on allows you to perform out-of-band operations on Harvester hosts using the Intelligent Platform Management Interface (IPMI).
+The harvester-seeder add-on allows you to perform out-of-band operations on Harvester hosts using the Intelligent Platform Management Interface (IPMI).
 
 This add-on can also discover hardware and related events for hosts that support [Redfish](https://www.dmtf.org/standards/redfish)-based access, and then associate that hardware with the corresponding hosts.
 
@@ -52,31 +59,31 @@ Ensure that the following requirements are met before enabling the add-on.
 
 1. On the **Out-of-Band Access** tab, select **Enabled**, configure the settings, and then select **Save**.
 
-    Harvester Seeder uses the information to connect to your IPMI interface.
+    The add-on uses the information to connect to your IPMI interface.
 
 ![](/img/v1.2/seeder/OutOfBandAccess.png)
 
 ## Power-Related Operations
 
-After configuring the out-of-band access settings, you can enable Maintenance Mode, which allows you to shut down or reboot the host as necessary.
+You can use the Harvester UI to shut down and reboot hosts once the Out-of-Band Access settings are configured. However, you must first enable [Maintenance Mode](../host/host.md#node-maintenance), which automatically migrates all VMs to other nodes. harvester-seeder communicates with the hosts via IPMI when performing the selected operation.
 
 ![](/img/v1.2/seeder/ShutdownReboot.png)
 
-If a node is shut down, you can also select **Power On** to power it on again:
+You can also power on VMs while Maintenance Mode is enabled.
 
 ![](/img/v1.2/seeder/PowerOn.png)
 
 ## Hardware Event Aggregation
 
-If you've enabled **Event** in **Out-of-Band Access**, `seeder` will leverage `redfish` to query the underlying hardware for information about component failures and fan temperatures.
-
-This information is associated with Harvester nodes and can be used as Kubernetes events.
+If you selected **Enabled** in the **Event** section of the **Out-of-Band Access** settings screen, harvester-seeder leverages Redfish to query the hardware for information about component failures and fan temperatures. The information is converted to Kubernetes events during hardware reconciliation and is subsequently handled by the Kubernetes garbage collection policy. Harvester stores these events for 1 hour by default.
 
 ![](/img/v1.2/seeder/HardwareEvents.png)
 
+## Troubleshooting
 
-:::info
+The **Out-of-Band Access** settings screen may become unresponsive and display the message `Waiting for "inventories.metal.harvesterhci.io" to be ready`. You must refresh the page whenever this occurs. For more information, see [Issue #4412](https://github.com/harvester/harvester/issues/4412).
 
-Sometimes, the `Out-Of-Band Access` section may be stuck with the message `Waiting for "inventories.metal.harvesterhci.io" to be ready`. In this case, you need to refresh the page. For more information, see [this issue](https://github.com/harvester/harvester/issues/4412).
+If you encounter persistent issues while using harvester-seeder, submit the following to SUSE Support:
 
-:::
+- Support bundle
+- Output of the command `kubectl get machine -n harvester-system -o yaml`
