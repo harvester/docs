@@ -44,5 +44,5 @@ To avoid this issue, you can perform either of the following actions:
 
 Single-node clusters do not support [Live Migration](../vm/live-migration.md), so VMs become unavailable during cluster upgrades. You must stop all VMs before starting the upgrade process.
 
-Enabling [Maintenance Mode](../host.md#node-maintenance) is also not possible because that operation relies on Live Migration functionality, and Harvester cannot place the only control plane in Maintenance Mode.
+Enabling [Maintenance Mode](../host/host.md#node-maintenance) is also not possible because that operation relies on Live Migration functionality, and Harvester cannot place the only control plane in Maintenance Mode.
 
