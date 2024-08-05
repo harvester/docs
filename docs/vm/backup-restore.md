@@ -87,7 +87,7 @@ You can choose to either delete or retain the previous volumes. By default, all 
 _Available as of v1.4.0_
 
 Users can now restore a new VM on another cluster by leveraging the VM metadata & content backup feature.
-Harvester will handle VM image data automatically. If a volume is based on a VM image and there is a backup for it, Harvester will automatically sync the VM image to backup target.
+Harvester automatically handles VM image data. If a volume is based on a VM image with a backup, Harvester automatically syncs the VM image with the backup target.
 In a new cluster, it the VMbackup is restored to a new VM, Harvester will automatically create the VM image from the backup target.
 
 #### Restore a new VM in a new cluster
