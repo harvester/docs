@@ -21,9 +21,35 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 ## Node Maintenance
 
+In the following scenarios, you plan to migrate/shutdown the workloads from one node and also possibly shutdown the node.
+
+- Replace/add/remove hardware
+
+- Change the network setting
+
+- Troubleshooting
+
+- Remove a node
+
+Harvester provides `Node Maintenance` feature to run a series of checks and operations automatically.
+
 For admin users, you can click **Enable Maintenance Mode** to evict all VMs from a node automatically. It will leverage the `VM live migration` feature to migrate all VMs to other nodes automatically. Note that at least two active nodes are required to use this feature.
 
 ![node-maintenance.png](/img/v1.2/host/node-maintenance.png)
+
+After a while the target node will enter `Maintenance Mode` successfully.
+
+![node-enter-maintenance-mode.png](/img/v1.3/troubleshooting/node-enter-maintenance-mode.png)
+
+:::info important
+
+Check those [known limitations and workarounds](../troubleshooting/host.md#an-enable-maintenance-mode-node-stucks-on-cordoned-state) before you click this menu or when you have encountered some issues.
+
+If you have attached any volume to this node manually, it may block the `Node Maintenance`, check the section [Manually Attached Volumes](../troubleshooting/host.md#manually-attached-volumes) and set a proper global option.
+
+If you have any single-replica volume, it may block the `Node Maintenance`, check the section [Single-Replica Volumes](../troubleshooting/host.md#single-replica-volumes) and set a proper global option.
+
+:::
 
 ## Cordoning a Node
 
@@ -41,6 +67,8 @@ Before removing a node from a Harvester cluster, determine if the remaining node
 - Ability of the remaining nodes to maintain enough replicas for all volumes
 
 If the remaining nodes do not have enough resources, VMs might fail to migrate and volumes might degrade when you remove a node.
+
+If you have some volumes which were created from the customized `StorageClass` with the value **1** of the [Number of Replicas](../advanced/storageclass.md#number-of-replicas), it is recommended to backup those single-replica volumes or re-deploy the related workloads to other node in advance to get the volume scheduled to other node. Otherwise, those volumes can't be rebuilt or restored from other nodes after this node is removed.
 
 :::
 

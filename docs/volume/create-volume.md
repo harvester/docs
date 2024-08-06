@@ -29,6 +29,14 @@ description: Create a volume from the Volume page.
 
 ![create-empty-volume](/img/v1.2/volume/create-empty-volume.png)
 
+:::info important
+
+Manually attaching a volume to the node is not recommended.
+
+Harvester automatically attaches/detaches volumes based on operations like creating or migrating VM. If you plan to attach any volume to certain node manually, it may block the [Node Maintenance](../host/host.md#node-maintenance), check the section [Manually Attached Volumes](../troubleshooting/host.md#manually-attached-volumes) and set a proper global option.
+
+:::
+
 </TabItem>
 <TabItem value="api" label="API">
 

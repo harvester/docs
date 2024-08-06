@@ -41,6 +41,12 @@ The number of replicas created for each volume in Longhorn. Defaults to `3`.
 
 ![](/img/v1.2/storageclass/create_storageclasses_replicas.png)
 
+:::info important
+
+When the value is `1`, the created volume from this `StorageClass` has only one replica, it may block the [Node Maintenance](../host/host.md#node-maintenance), check the section [Single-Replica Volumes](../troubleshooting/host.md#single-replica-volumes) and set a proper global option.
+
+:::
+
 #### Stale Replica Timeout
 
 Determines when Longhorn would clean up an error replica after the replica's status is ERROR. The unit is minute. Defaults to `30` minutes in Harvester.
