@@ -39,6 +39,15 @@ The [Rancher Terraform Provider](https://registry.terraform.io/providers/rancher
 
 1. Obtain the kubeconfig for the Harvester Cloud Provider and the Harvester CSI Driver.
 
+    <Tabs>
+    <TabItem value="ui" label="UI" default>
+
+    On the Rancher UI, go to **Virtualization Management**. Locate the target Harvester cluster in the list and then select **⋮** > **Download KubeConfig**.
+
+    ![Download Kubeconfig](/img/v1.4/rancher/download-kubeconfig-harvester.png)
+
+    </TabItem>
+    <TabItem value="shell" label="Shell">
 
     ```shell
     # Generate harvester cloud provider kubeconfig
@@ -52,6 +61,9 @@ The [Rancher Terraform Provider](https://registry.terraform.io/providers/rancher
     -u ${RANCHER_ACCESS_KEY}:${RANCHER_SECRET_KEY} \
     -d '{"clusterRoleName": "harvesterhci.io:cloudprovider", "namespace": "default", "serviceAccountName": "'${CLUSTER_NAME}'"}' | xargs | sed 's/\\n/\n/g' > ${CLUSTER_NAME}-kubeconfig
     ```
+
+    </TabItem>
+    </Tabs>
 
 1. Prepare a `provider.tf` file with the following content:
 
