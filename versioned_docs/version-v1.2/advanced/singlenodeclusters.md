@@ -32,7 +32,7 @@ Before you begin deploying your single-node cluster, ensure that the following r
 
 Harvester uses StorageClasses to describe how Longhorn must provision volumes. Each StorageClass has a parameter that defines the number of replicas to be created for each volume. 
 
-The default StorageClass `harvester-longhorn` has a replica count value of **3** for high availability. If you use `harvester-longhorn` in your single-node cluster, Longhorn is unable to create the default number of replicas, and volumes are marked as *Degraded* on the [embedded Longhorn UI](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards). 
+The default StorageClass `harvester-longhorn` has a replica count value of **3** for high availability. If you use `harvester-longhorn` in your single-node cluster, Longhorn is unable to create the default number of replicas, and volumes are marked as *Degraded* on the **Volumes** screen of the Harvester UI. 
 
 To avoid this issue, you can perform either of the following actions: 
 
@@ -42,7 +42,7 @@ To avoid this issue, you can perform either of the following actions:
 
 ## Upgrades and Maintenance
 
-Single-node clusters do not support [Live Migration](../vm/live-migration.md), so VMs become unavailable during cluster upgrades. You must stop all VMs before starting the upgrade process.
+Single-node clusters do not support [Live Migration](../vm/live-migration.md), so VMs become unavailable during cluster upgrades. Harvester forcibly shuts down all VMs before starting the upgrade process.
 
 Enabling [Maintenance Mode](../host/host.md#node-maintenance) is also not possible because that operation relies on Live Migration functionality, and Harvester cannot place the only control plane in Maintenance Mode.
 
