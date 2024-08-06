@@ -25,6 +25,16 @@ For admin users, you can click **Enable Maintenance Mode** to evict all VMs from
 
 ![node-maintenance.png](/img/v1.2/host/node-maintenance.png)
 
+After a while the target node will enter maintenance mode successfully.
+
+![node-enter-maintenance-mode.png](/img/v1.3/troubleshooting/node-enter-maintenance-mode.png)
+
+:::note important
+
+Check those [known limitations and workarounds](../troubleshooting/host.md#an-enable-maintenance-mode-node-stucks-on-cordoned-state) before you click this menu or you have encountered some issues.
+
+:::
+
 ## Cordoning a Node
 
 Cordoning a node marks it as unschedulable. This feature is useful for performing short tasks on the node during small maintenance windows, like reboots, upgrades, or decommissions. When you’re done, power back on and make the node schedulable again by uncordoning it.
@@ -41,6 +51,8 @@ Before removing a node from a Harvester cluster, determine if the remaining node
 - Ability of the remaining nodes to maintain enough replicas for all volumes
 
 If the remaining nodes do not have enough resources, VMs might fail to migrate and volumes might degrade when you remove a node.
+
+If you have some volumes which were created from the customized `StorageClass` with the value **1** of the [Number of Replicas](../advanced/storageclass.md#number-of-replicas), it is recommended to backup those single-replica volumes or re-deploy the related workloads to other node in advance to get the volume scheduled to other node. Otherwise, those volumes can't be rebuilt or restored from other nodes after this node is removed.
 
 :::
 
