@@ -56,6 +56,16 @@ description: Rancher Terraform allows administrators to create and manage RKE2 g
 
 1. Get kubeconfig for Harvester Cloud Provider and Harvester CSI Driver.
 
+    <Tabs>
+    <TabItem value="ui" label="UI" default>
+
+    On the Rancher UI, go to **Virtualization Management**. Locate the target Harvester cluster in the list and then select **⋮** > **Download KubeConfig**.
+
+    ![Download Kubeconfig](/img/v1.4/rancher/download-kubeconfig-harvester.png)
+
+    </TabItem>
+    <TabItem value="shell" label="Shell">
+
     ```shell
     # Generate harvester cloud provider kubeconfig
     RANCHER_SERVER_URL="<RANCHER_SERVER_URL>" # Pure server URL like https://192.168.0.181:6443
@@ -68,6 +78,9 @@ description: Rancher Terraform allows administrators to create and manage RKE2 g
     -u ${RANCHER_ACCESS_KEY}:${RANCHER_SECRET_KEY} \
     -d '{"clusterRoleName": "harvesterhci.io:cloudprovider", "namespace": "default", "serviceAccountName": "'${CLUSTER_NAME}'"}' | xargs | sed 's/\\n/\n/g' > ${CLUSTER_NAME}-kubeconfig
     ```
+
+    </TabItem>
+    </Tabs>
 
 1. Prepare a `main.tf` file with the following content:
 
