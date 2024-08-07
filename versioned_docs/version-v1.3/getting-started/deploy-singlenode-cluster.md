@@ -70,9 +70,9 @@ Networking in Harvester involves three major concepts:
 
 - [**Cluster network**](../networking/clusternetwork.md#cluster-network): Traffic-isolated forwarding path for transmission of network traffic in the Harvester cluster. 
     
-    During deployment, a cluster network called the [*management network*](../networking/clusternetwork.md#built-in-cluster-network) is created for intra-cluster communications. Harvester allows you to create [custom cluster networks](../networking/index#custom-cluster-network) that can be dedicated to VM traffic and that allow VMs to be accessed from both internal and external networks.
+    During deployment, a cluster network called [`mgmt`](../networking/clusternetwork.md#built-in-cluster-network) is created for intra-cluster communications. `mgmt` allows VMs to be accessed from the infrastructure network (external to the Harvester cluster) to which each Harvester node attaches with management NICs for cluster management purposes. Harvester also allows you to create [custom cluster networks](../networking/clusternetwork.md#custom-cluster-network) that can be dedicated to VM traffic. 
 
-- [**Network configuration**](../networking/clusternetwork.md#cluster-network): Definition of how cluster nodes connect to a specific cluster network. 
+- [**Network configuration**](../networking/clusternetwork.md#network-configuration): Definition of how cluster nodes connect to a specific cluster network. 
     
     Each network configuration corresponds to a set of nodes with uniform network specifications. Only nodes that are covered by the network configuration can access the associated cluster network. This arrangement offers you flexibility when configuring a heterogeneous cluster, particularly when the network interface names are different for each node.
 
@@ -80,7 +80,7 @@ Networking in Harvester involves three major concepts:
     
     Each VM network is linked to a specific cluster network, which is used for transmission of VM traffic. You can create either a [VLAN network](../networking/harvester-network.md#vlan-network) or an [untagged network](../networking/harvester-network.md#untagged-network) based on your requirements, such as traffic isolation, network segmentation, ease of management, or alignment with the external network environment. 
 
-You can use the management network for transmission of VM traffic when testing Harvester using a single-node cluster. 
+You can create a VM network that uses `mgmt` when testing Harvester with a single-node cluster. 
 
 ## 8. Import VM images. 
 
