@@ -45,13 +45,13 @@ Longhorn creates only one replica for each volume even if the node has multiple 
 
 In high-availability clusters, **Replica Hard Anti-Affinity** ensures volume redundancy. However, this same mechanism can cause volumes to become degraded in single-node clusters (since no other nodes are available for scheduling of new replicas).
 
-If you want Longhorn to create multiple replicas on a node with multiple disks, perform the following actions: 
+If you want Longhorn to create multiple replicas on a node with multiple disks, perform the following steps: 
 
 1. Enable [`Replica Node Level Soft Anti-Affinity`](https://longhorn.io/docs/1.7.0/references/settings/#replica-node-level-soft-anti-affinity): When this setting is enabled, Longhorn schedules new replicas on nodes with existing healthy replicas of the same volume.
 
 1. Disable [`Replica Disk Level Soft Anti-Affinity`](https://longhorn.io/docs/1.7.0/references/settings/#replica-disk-level-soft-anti-affinity): When this setting is disabled, Longhorn does not schedule new replicas on disks with existing healthy replicas of the same volume. Disabling this setting provides failure tolerance for disks in single-node clusters.
 
-1. [Create a new StorageClass](../advanced/storageclass.md#creating-a-storageclass) and specify the disk tags that must be matched during volume scheduling.
+1. (Optional) [Create a new StorageClass](../advanced/storageclass.md#creating-a-storageclass) and specify the disk tags that must be matched during volume scheduling.
 
 ## Upgrades and Maintenance
 
