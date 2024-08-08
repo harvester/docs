@@ -1,5 +1,4 @@
 ---
-id: index
 sidebar_position: 1
 sidebar_label: 设置
 title: "设置"
@@ -32,6 +31,12 @@ SOME-CA-CERTIFICATES
 
 此设置允许 Harvester 自动添加符合给定 glob 模式的磁盘作为虚拟机存储。
 你可以使用逗号分隔来提供多个模式。
+
+:::note
+
+此设置仅能添加挂载到系统的格式化磁盘。
+
+:::
 
 :::caution
 
@@ -122,6 +127,34 @@ https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhr
 }
 ```
 
+## `csi-driver-config`
+
+_从 v1.2.0 起可用_
+
+如果你在 Harvester 集群中安装了第三方 CSI Driver，在使用 **Backup & Snapshot** 相关功能之前，你必须通过此参数进行一些必要的配置。
+
+默认：
+```
+{
+  "driver.longhorn.io": {
+    "volumeSnapshotClassName": "longhorn-snapshot",
+    "backupVolumeSnapshotClassName": "longhorn"
+  }
+}
+```
+
+1. 为新添加的 CSI Driver 添加配置程序。
+1. 配置 **Volume Snapshot Class Name**，指用于创建卷快照或虚拟机快照的 `VolumeSnapshotClass` 的名称。
+1. 配置 **Backup Volume Snapshot Class Name**，指用于创建虚拟机备份的 `VolumeSnapshotClass` 的名称。
+
+## `default-vm-termination-grace-period-seconds`
+
+_从 v1.2.0 起可用_
+
+指定用于停止虚拟机的默认终止宽限期（以秒为单位）。
+
+默认值：`120`
+
 ## `http-proxy`
 
 配置 HTTP 代理以访问外部服务，包括下载镜像和备份到 S3 服务。
@@ -184,6 +217,33 @@ Harvester 在用户配置的 `no-proxy` 后附加必要的地址，来确保内�
 
 ```
 debug
+```
+
+## `ntp-servers`
+
+_从 v1.2.0 起可用_
+
+配置 NTP 服务器以在 Harvester 节点上同步时间。
+
+使用此设置，你可以在[安装](../install/harvester-configuration.md#osntp_servers)期间定义 NTP 服务器或在安装后更新 NTP 服务器。
+
+:::caution
+
+修改 NTP 服务器将替换所有节点之前的值。
+
+:::
+
+默认值：""
+
+#### 示例
+
+```
+{
+  "ntpServers": [
+    "0.suse.pool.ntp.org",
+    "1.suse.pool.ntp.org"
+  ]
+}
 ```
 
 ## `overcommit-config`
@@ -313,45 +373,50 @@ IP 范围格式是 IPv4 CIDR，而且是集群节点数的 4 倍。
 }
 ```
 
-## `ui-index`
+## `support-bundle-image`
 
-为 UI 配置 HTML 索引位置。
+_从 v1.2.0 起可用_
 
-默认值：`https://releases.rancher.com/harvester-ui/dashboard/latest/index.html`
+此配置 Support Bundle 镜像，[rancher/support-bundle-kit](https://hub.docker.com/r/rancher/support-bundle-kit/tags) 提供了各种版本。
 
-#### 示例
-
+默认：
 ```
-https://your.static.dashboard-ui/index.html
-```
-
-## `ui-plugin-index`
-
-为 Harvester 插件配置 JS 地址 (从 Rancher 中访问 Harvester 时使用)。
-
-默认值：`https://releases.rancher.com/harvester-ui/plugin/harvester-latest/harvester-latest.umd.min.js`
-
-#### 示例
-
-```
-https://your.static.dashboard-ui/*.umd.min.js
+{
+  "repository": "rancher/support-bundle-kit",
+  "tag": "v0.0.25",
+  "imagePullPolicy": "IfNotPresent"
+}
 ```
 
-## `ui-source`
+## `support-bundle-namespaces`
 
-配置如何加载 UI 源。
+_从 v1.2.0 起可用_
 
-你可以设置以下值：
+在收集 Support Bundle 时指定其他命名空间。默认情况下，Support Bundle 只会从预定义的命名空间捕获资源。
 
-- `auto`：默认。自动检测是否使用绑定的 UI。
-- `external`：使用外部 UI 源。
-- `bundled`：使用绑定的 UI 源。
+预定义的命名空间列表如下：
+- cattle-dashboards
+- cattle-fleet-local-system
+- cattle-fleet-system
+- cattle-fleet-clusters-system
+- cattle-monitoring-system
+- fleet-local
+- harvester-system
+- local
+- longhorn-system
+- cattle-logging-system
 
-#### 示例
+如果你选择更多命名空间，它们将附加到预定义的命名空间列表中。
 
-```
-external
-```
+默认值：none
+
+## `support-bundle-timeout`
+
+_从 v1.2.0 起可用_
+
+定义 Support Bundle 的默认超时时间（以分钟为单位）。使用 `0` 禁用超时功能。
+
+默认值：`10`
 
 ## `upgrade-checker-enabled`
 
@@ -379,6 +444,8 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
 ## `vip-pools`
 
+_自 v1.2.0 起已弃用，请改用 [IP 池](../networking/ippool.md)_
+
 使用 CIDR 或 IP 范围配置 VIP 的全局或命名空间 IP 地址池。
 
 默认值：`{}`
@@ -402,6 +469,10 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
 默认值：`{"enable":true, "period":300}`
 
+:::note
+主机不可用或断电时，虚拟机只会重启，不会迁移。
+:::
+
 #### 示例
 
 ```json
@@ -409,4 +480,64 @@ https://your.upgrade.checker-url/v99/checkupgrade
   "enable": "true",
   "period": 300
 }
+```
+
+## UI 设置
+
+### `branding`
+
+_从 v1.2.0 起可用_
+
+用于通过修改 Harvester 产品名称、Logo 和配色方案来全局自定义 UI 界面。
+
+默认：**Harvester**
+
+![containerd-registry](/img/v1.2/advanced/branding.png)
+
+你可以设置以下选项和值：
+
+- **Private Label**：此选项将大多数出现的 “Harvester” 替换为你提供的值。
+- **Logo**：上传深色和浅色的 Logo 来替换顶层导航标题中的 Harvester logo。
+- **Favicon**：上传一个网站图标来替换浏览器选项卡中的 Harvester 图标。
+- **Primary Color**：使用自定义颜色替换整个 UI 中使用的主颜色。
+- **Link Color**：使用自定义链接颜色替换整个 UI 中使用的链接颜色。
+
+### `ui-index`
+
+为 UI 配置 HTML 索引位置。
+
+默认值：`https://releases.rancher.com/harvester-ui/dashboard/latest/index.html`
+
+#### 示例
+
+```
+https://your.static.dashboard-ui/index.html
+```
+
+### `ui-plugin-index`
+
+为 Harvester 插件配置 JS 地址 (从 Rancher 中访问 Harvester 时使用)。
+
+默认值：`https://releases.rancher.com/harvester-ui/plugin/harvester-latest/harvester-latest.umd.min.js`
+
+#### 示例
+
+```
+https://your.static.dashboard-ui/*.umd.min.js
+```
+
+### `ui-source`
+
+配置如何加载 UI 源。
+
+你可以设置以下值：
+
+- `auto`：默认。自动检测是否使用绑定的 UI。
+- `external`：使用外部 UI 源。
+- `bundled`：使用绑定的 UI 源。
+
+#### 示例
+
+```
+external
 ```

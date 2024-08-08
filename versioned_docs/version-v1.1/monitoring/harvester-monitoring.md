@@ -1,5 +1,4 @@
 ---
-id: harvester-monitoring
 sidebar_position: 1
 sidebar_label: Monitoring
 title: "Monitoring"

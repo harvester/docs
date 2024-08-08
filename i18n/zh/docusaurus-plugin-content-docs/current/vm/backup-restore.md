@@ -48,7 +48,9 @@ _从 v0.3.0 起可用_
 
 **结果**：备份已创建。你将收到一条通知消息。你也可以前往 `Backup & Snapshot > VM Backups` 页面查看所有 VM 备份。
 
-备份完成后，`ReadyToUse` 状态会设置为 `true`。
+备份完成后，`State` 将设置为 `Ready`。
+
+![vm-backup-results.png](/img/v1.2/vm/vm-backup-results.png)
 
 你可以使用备份恢复一个新虚拟机，或替换现有虚拟机。
 
@@ -71,8 +73,8 @@ _从 v0.3.0 起可用_
 
 1. 前往 `VM Backups` 页面。
 1. 单击 `Replace Existing`。
-
-你可以在 `Virtual Machine` 页面查看还原进度。
+1. 你可以从 `Virtual Machines` 页面查看还原进度。
+   ![vm-restore-existing.png](/img/v1.2/vm/vm-restore-existing.png)
 
 ### 在另一个 Harvester 集群上恢复新虚拟机
 
@@ -136,7 +138,9 @@ _从 v1.1.0 起可用_
 
 **结果**：快照已创建。你也可以前往 `Backup & Snapshot > VM Snapshots` 页面查看所有 VM 快照。
 
-快照完成后，`ReadyToUse` 状态会设置为 `true`。
+快照完成后，`State` 将设置为 `Ready`。
+
+![vm-snapshot-results.png](/img/v1.2/vm/vm-snapshot-results.png)
 
 你可以使用快照恢复一个新虚拟机，或替换现有虚拟机。
 
@@ -161,5 +165,5 @@ _从 v1.1.0 起可用_
 
 1. 前往 `VM Snapshots` 页面。
 1. 单击 `Replace Existing`。
-
-你可以在 `Virtual Machine` 页面查看还原进度。
+1. 你可以从 `Virtual Machines` 页面查看还原进度。
+   ![restore-vm-snapshot-existing.png](/img/v1.2/vm/restore-vm-snapshot-existing.png)

@@ -6,6 +6,12 @@ title: "StorageClass"
 
 StorageClass 允许管理员描述存储的**类**。不同的 Longhorn StorageClass 可能会映射到集群管理员配置的不同的副本策略、不同的节点调度策略或不同的磁盘调度策略。这个概念在其他存储系统中也称为 **profiles**。
 
+:::note
+
+如需其他存储的支持，请参阅[第三方存储支持](../advanced/csidriver.md)。
+
+:::
+
 ## 创建 StorageClass
 你可以从 **Advanced > StorageClasses** 页面创建一个或多个 StorageClass。
 
@@ -86,7 +92,6 @@ StorageClass 动态创建的卷将具有在类的 `reclaimPolicy` 字段中指�
 2. `WaitForFirstConsumer`：创建使用 PersistentVolumeClaim 的 VM 后绑定和配置持久卷。
 
 ![](/img/v1.2/storageclass/customize_tab_vol_binding_mode.png)
-
 
 ## 附录 - 用例
 

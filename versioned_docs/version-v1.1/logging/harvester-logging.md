@@ -1,5 +1,4 @@
 ---
-id: harvester-logging
 sidebar_position: 1
 sidebar_label: Logging
 title: "Logging"

@@ -81,9 +81,7 @@ Harvester `Monitoring` 使用 `Persistent Volume (PV)` 来存储运行数据。�
 
 根据[此文档](../troubleshooting/harvester.md#访问嵌入式-rancher-和-longhorn-仪表板)访问嵌入式 Longhorn WebUI。
 
-![](/img/v1.2/troubleshooting/1-access-embedded-longhorn.png)
-
-默认视图。
+Longhorn 仪表板默认视图。
 
 ![](/img/v1.2/troubleshooting/2-longhorn-dashboard.png)
 
