@@ -59,6 +59,11 @@ When spinning up an RKE2 cluster using the Harvester node driver, select the `Ha
 
   ![](/img/v1.2/rancher/rke2-cloud-provider.png)
 
+Starting with Rancher v2.9.0, you can configure a specific folder for cloud config data using the **Data directory configuration path** field.
+
+  ![](/img/v1.4/rancher/rke2-cloud-provider-custom-data-dir.png)
+
+
 ### Deploying to the RKE2 custom cluster (experimental)
 
 ![](/img/v1.2/rancher/custom.png)
