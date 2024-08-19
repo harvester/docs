@@ -59,14 +59,18 @@ You can install Harvester on an [RKE2](https://docs.rke2.io/) cluster using the 
     sudo chown $(id -u):$(id -g) ~/.kube/config
     ```
 
+:::info important
+
+Allow some time for all pods in the `kube-system` namespace to reach the `Ready` state before proceeding to the next step.
+
+If you are unable to locate the kubectl binary in `/usr/local/bin`, check `/var/lib/rancher/rke2/bin`.
+
+:::
+
 1. Install system-upgrade-controller. This Kubernetes-native upgrade controller for nodes installs `upgrade.cattle.io/v1` CRDs.
     ```bash
     kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/download/v0.13.1/system-upgrade-controller.yaml
     ```
-
-:::info note
-If you are unable to locate the `kubectl` binary in `/usr/local/bin`, check `/var/lib/rancher/rke2/bin`.
-:::
 
 1. Create the cattle-system namespace.
     ```bash
@@ -91,6 +95,10 @@ If you are unable to locate the `kubectl` binary in `/usr/local/bin`, check `/va
     --set useBundledSystemChart=true \
     --set bootstrapPassword=admin
     ```
+
+:::info note
+Wait until Rancher will be fully up (all pods in `cattle-system` namespace will be running) before continuing with next steps.
+:::
 
 1. Clone the `rancher/charts` repository.
     ```bash
