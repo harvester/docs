@@ -503,6 +503,62 @@ This setting can only be used if the `upgrade-checker-enabled` setting is set to
 https://your.upgrade.checker-url/v99/checkupgrade
 ```
 
+### `upgrade-config`
+
+**Definition**: Upgrade-related configuration.
+
+**Default value**: `{"imagePreloadOption":{"strategy":{"type":"sequential"}}}`
+
+**Supported options and fields**:
+
+- `imagePreloadOption`: Options for the image preloading phase.
+  
+  The full ISO contains the core operating system components and all required container images. Harvester can preload these container images to each node during installation and upgrades. When workloads are scheduled to management and worker nodes, the container images are ready to use.
+
+- `strategy`: Image preload strategy.
+
+- `type`: Type of image preload strategy.
+
+    - `sequential`: Harvester preloads the container images from the target ISO to each node. This is the default option.
+
+    - `skip`: Harvester does not preload the container images from the target ISO to each node. **Do not use this option in production environments.**
+
+      :::info important
+
+      If you decide to use `skip`, ensure that the following requirements are met:
+
+      - You have a private container registry that contains all required images.
+      - Your cluster has high-speed internet access and is able to pull all images from Docker Hub when necessary. 
+        
+      Note any potential internet service interruptions and how close you are to reaching your [Docker Hub rate limit](https://www.docker.com/increase-rate-limits/). Failure to download any of the required images may cause the upgrade to fail and may leave the cluster in a middle state.
+    
+      :::
+
+    - `parallel` (**experimental**): Nodes preload images in batches. You can adjust this using the `concurrency` option.
+
+- `concurrency`: Number of nodes that can simultaneously preload images. This option takes effect only when `type` is set to `parallel`.
+
+  The default value is `0`, which is equivalent to following the cluster's node counts. Using `0` allows the system to dynamically follow the scale of the cluster. Values higher than the cluster's node counts are treated as `0`, while lower values are considered invalid and are rejected by Harvester.
+
+  :::note
+
+  Harvester deploys an upgrade-repo service on the cluster that serves as an HTTP server for nodes that need to preload the container images. When a `concurrency` value is set, each batch of nodes downloads the container images from this upgrade-repo in parallel. Because of this, you must consider the speed of the Harvester management network and the read speed of the default disk for Longhorn.
+
+  :::
+
+**Example**:
+
+```json
+{
+  "imagePreloadOption": {
+    "strategy": {
+      "type": "parallel",
+      "concurrency": 2
+    }
+  }
+}
+```
+
 ### `vip-pools`
 
 **Versions**: Deprecated as of v1.2.0 (Use [IP pools](../networking/ippool.md) instead.)

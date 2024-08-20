@@ -39,6 +39,10 @@ For the Harvester & Rancher support matrix, please visit our website [here](http
 
 :::
 
+## Before starting an upgrade
+
+Check out the available [`upgrade-config` setting](../advanced/settings.md#upgrade-config) to tweak the upgrade strategies and behaviors that best suit your cluster environment.
+
 ## Start an upgrade
 
 :::caution
