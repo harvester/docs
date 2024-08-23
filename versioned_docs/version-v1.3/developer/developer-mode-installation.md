@@ -96,9 +96,11 @@ You can install Harvester on an [RKE2](https://docs.rke2.io/) cluster using the 
     --set bootstrapPassword=admin
     ```
 
-:::info note
-Wait until Rancher will be fully up (all pods in `cattle-system` namespace will be running) before continuing with next steps.
-:::
+    :::info important
+
+    Allow some time for all pods in the `cattle-system` namespace to reach the `Ready` state before proceeding to the next step.
+
+    :::
 
 1. Clone the `rancher/charts` repository.
     ```bash
