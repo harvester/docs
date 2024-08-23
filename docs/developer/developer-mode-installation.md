@@ -59,13 +59,13 @@ You can install Harvester on an [RKE2](https://docs.rke2.io/) cluster using the 
     sudo chown $(id -u):$(id -g) ~/.kube/config
     ```
     
-:::info important
+    :::info important
 
-Allow some time for all pods in the `kube-system` namespace to reach the `Ready` state before proceeding to the next step.
+    Allow some time for all pods in the `kube-system` namespace to reach the `Ready` state before proceeding to the next step.
 
-If you are unable to locate the kubectl binary in `/usr/local/bin`, check `/var/lib/rancher/rke2/bin`.
+    If you are unable to locate the kubectl binary in `/usr/local/bin`, check `/var/lib/rancher/rke2/bin`.
 
-:::
+    :::
 
 1. Install system-upgrade-controller. This Kubernetes-native upgrade controller for nodes installs `upgrade.cattle.io/v1` CRDs.
     ```bash
