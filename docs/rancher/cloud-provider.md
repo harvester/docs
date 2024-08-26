@@ -126,13 +126,17 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
       permissions: '0644'
     ```
 
-1. Configure the **Cloud Provider** either to **External**.
+1. On the Harvester UI, go to the **Cluster Configuration** screen and set the value of **Cloud Provider** to **External**.
+
     ![](/img/v1.4/rancher/external-harvester-cloud-provider.png)
 
-1. Copy and paste the `cloud-init user data` content to **Machine Pools >Show Advanced > User Data**.
+1. Copy and paste the `cloud-init user data` content to **Machine Pools** > **Show Advanced** > **User Data**.
+
     ![](/img/v1.2/rancher/cloud-config-userdata.png)
 
-1. Add the following `HelmChart` yaml of `harvester-cloud-provider` to **Cluster Configuration > Add-On Config > Additional Manifest**. Remember to change `<cluster-name>` to the name of your cluster.
+1. Add the `HelmChart` CRD for `harvester-cloud-provider` to **Cluster Configuration** > **Add-On Config** > **Additional Manifest**. 
+
+    You must replace `<cluster-name>` with the name of your cluster.
 
     ```
     apiVersion: helm.cattle.io/v1
