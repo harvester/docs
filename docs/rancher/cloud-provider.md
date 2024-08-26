@@ -63,7 +63,7 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
 
   ![](/img/v1.4/rancher/rke2-cloud-provider-custom-data-dir.png)
 
-### Manually install in the RKE2 Cluster
+### Manually Deploying to the RKE2 Cluster
 
 1. Generate cloud config data using the script `generate_addon.sh`, and then place the data on every custom node (directory: `/etc/kubernetes/cloud-config`).
 
