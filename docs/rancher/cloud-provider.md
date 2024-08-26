@@ -159,7 +159,8 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
 
     ![](/img/v1.2/rancher/external-cloud-provider-addon.png)
 
-1. To create load balancer, please add `cloudprovider.harvesterhci.io/ipam: <dhcp|pool>` annotation.
+1. To create the load balancer, add the annotation `cloudprovider.harvesterhci.io/ipam: <dhcp|pool>`.
+
     ![](/img/v1.4/rancher/harvester-cloud-provider-loadbalancer-annotation.png)
 
 
