@@ -30,10 +30,10 @@ kind: Addon
 metadata:
   name: example-addon           # name of Addon
   namespace: example-namespace  # namespace where Addon is deployed. The associated k8s components will be deployed in the same namespace as the Addon crd
-  labels:                       # optional aAddon labels
+  labels:                       # optional Addon labels
     addon.harvesterhci.io/experimental: "true" # predefined label used by Harvester dashboard to indicate experimental tag in UI
 spec:
-  enabled: false                # boolean indicating if aAddon should be enabled or disabled on definition
+  enabled: false                # boolean indicating if an Addon should be enabled or disabled on definition
   repo: https://chartsrepo.com  # helm chart repo containing the helm chart being managed by Addon
   version: "v0.19.0"            # version of helm chart to be installed
   chart: mychart                # name of helm chart in the helm chart repo
