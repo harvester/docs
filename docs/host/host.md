@@ -21,31 +21,31 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 ## Node Maintenance
 
-In the following scenarios, you plan to migrate/shutdown the workloads from one node and also possibly shutdown the node.
+Migrating or shutting down workloads (and in some cases, also shutting down the underlying node) may be necessary during the following activities:
 
-- Replace/add/remove hardware
+- Replacing, adding, and removing hardware
 
-- Change the network setting
+- Changing network settings
 
-- Troubleshooting
+- Troubleshooting issues
 
-- Remove a node
+- Removing a node from the cluster
 
-Harvester provides `Node Maintenance` feature to run a series of checks and operations automatically.
+If your cluster has two or more active nodes, you can enable **Maintenance Mode** on nodes that are affected by the planned changes. Maintenance Mode runs a series of checks and leverages **Live Migration** functionality to automatically migrate all VMs to other nodes.
 
-For admin users, you can click **Enable Maintenance Mode** to evict all VMs from a node automatically. It will leverage the `VM live migration` feature to migrate all VMs to other nodes automatically. Note that at least two active nodes are required to use this feature.
+You can enable Maintenance Mode on the **Hosts** screen of the Harvester UI. Select the target node, and then select **⋮** > **Enable Maintenance Mode**.
 
 ![node-maintenance.png](/img/v1.2/host/node-maintenance.png)
 
-After a while the target node will enter `Maintenance Mode` successfully.
+After some time, the state of the node changes to *Maintenance*.
 
 ![node-enter-maintenance-mode.png](/img/v1.3/troubleshooting/node-enter-maintenance-mode.png)
 
 :::info important
 
-Check those [known limitations and workarounds](../troubleshooting/host.md#an-enable-maintenance-mode-node-stucks-on-cordoned-state) before you click this menu or when you have encountered some issues.
+Check the list of [known limitations and workarounds](../troubleshooting/host.md#node-in-maintenance-mode-becomes-stuck-in-cordoned-state) before enabling Maintenance Mode and whenever you encounter related issues.
 
-If you have attached any volume to this node manually, it may block the `Node Maintenance`, check the section [Manually Attached Volumes](../troubleshooting/host.md#manually-attached-volumes) and set a proper global option.
+Volumes that are [manually attached](../troubleshooting/host.md#manually-attached-volumes) to the node may prevent you from enabling Maintenance Mode.
 
 If you have any single-replica volume, it may block the `Node Maintenance`, check the section [Single-Replica Volumes](../troubleshooting/host.md#single-replica-volumes) and set a proper global option.
 
@@ -68,7 +68,7 @@ Before removing a node from a Harvester cluster, determine if the remaining node
 
 If the remaining nodes do not have enough resources, VMs might fail to migrate and volumes might degrade when you remove a node.
 
-If you have some volumes which were created from the customized `StorageClass` with the value **1** of the [Number of Replicas](../advanced/storageclass.md#number-of-replicas), it is recommended to backup those single-replica volumes or re-deploy the related workloads to other node in advance to get the volume scheduled to other node. Otherwise, those volumes can't be rebuilt or restored from other nodes after this node is removed.
+To ensure that [single-replica](../advanced/storageclass.md#number-of-replicas) volumes can be restored or rebuilt after the node is deleted, either back up those volumes or redeploy the related workloads to other nodes in advance so that the volumes are scheduled to other nodes.
 
 :::
 

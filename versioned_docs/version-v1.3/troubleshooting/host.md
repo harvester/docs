@@ -35,11 +35,9 @@ The following sections describe the known causes and their corresponding workaro
 
 A volume that is attached to a node using the [embedded Longhorn UI](./harvester.md#access-embedded-rancher-and-longhorn-dashboards) can cause the error. This is because the object is attached to a node name instead of the pod name.
 
-You can check it from the [Embedded Longhorn UI](./harvester.md#access-embedded-rancher-and-longhorn-dashboards).
+You can check it from the embedded Longhorn UI.
 
 ![attached-volume.png](/img/v1.3/troubleshooting/attached-volume.png)
-
-The manually attached object is attached to a node name instead of the pod name.
 
 You can also use the CLI to retrieve the details of the CRD object `VolumeAttachment`.
 
@@ -76,7 +74,7 @@ Example of a volume that was attached using the Longhorn CSI driver:
 
 Manually attaching a volume to the node is not recommended.
 
-Harvester automatically attaches/detaches volumes based on operations like creating or migrating VM.
+Harvester automatically attaches and detaches volumes during operations such as VM creation and migration.
 
 :::
 
@@ -91,7 +89,7 @@ The default value of this setting depends on the embedded Longhorn version:
 | v1.3.1 | v1.6.0 | `true` |
 | v1.4.0 | v1.7.0 | `false` |
 
-Set this option to `true` from the [embedded Longhorn UI](./harvester.md#access-embedded-rancher-and-longhorn-dashboards).
+Set the value to `true` using the [embedded Longhorn UI](./harvester.md#access-embedded-rancher-and-longhorn-dashboards).
 
 #### Workaround 2: Manually Detach the Volume
 
@@ -99,15 +97,15 @@ Detach the volume using the [embedded Longhorn UI](./harvester.md#access-embedde
 
 ![detached-volume.png](/img/v1.3/troubleshooting/detached-volume.png)
 
-Once the volume is detached, you can successfully enable `Maintenance Mode` on the node.
+Once the volume is detached, you can successfully enable Maintenance Mode on the node.
 
 ![node-enter-maintenance-mode.png](/img/v1.3/troubleshooting/node-enter-maintenance-mode.png)
 
 ### Single-Replica Volumes
 
-Harvester allows you to create customized `StorageClasses` that describe how Longhorn must provision volumes. If necessary, you can create a `StorageClass` with the [Number of Replicas](../advanced/storageclass.md#number-of-replicas) parameter set to `1`.
+Harvester allows you to create customized StorageClasses that describe how Longhorn must provision volumes. If necessary, you can create a StorageClass with the [Number of Replicas](../advanced/storageclass.md#number-of-replicas) parameter set to `1`.
 
-When a volume is created using such a `StorageClass` and is attached to a node using the CSI driver or other methods, the single replica stays on that node even after the volume is detached.
+When a volume is created using such a StorageClass and is attached to a node using the CSI driver or other methods, the single replica stays on that node even after the volume is detached.
 
 You can check this using the CRD object `Volume`.
 
@@ -134,8 +132,8 @@ To address the issue, change the value to `allow-if-replica-is-stopped` using th
 
 :::info important
 
-If you plan to remove the node after `Maintenance Mode` is enabled, backup those single-replica volumes or redeploy the related workloads to other nodes in advance so that the volumes are scheduled to other nodes.
+If you plan to remove the node after Maintenance Mode is enabled, backup those single-replica volumes or redeploy the related workloads to other nodes in advance so that the volumes are scheduled to other nodes.
 
 :::
 
-Starting with Harvester v1.4.0, the `Node Drain Policy` is set to `allow-if-replica-is-stopped` by default.
+Starting with Harvester v1.4.0, the Node Drain Policy is set to `allow-if-replica-is-stopped` by default.
