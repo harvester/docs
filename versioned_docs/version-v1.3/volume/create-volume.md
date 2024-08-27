@@ -38,4 +38,11 @@ description: Create a volume from the Volume page.
 1. Select an existing `Image`.
 1. Configure the `Size` of the volume.
 
+:::caution
+
+When creating volumes from VM images, be sure the volume size is sufficient for the image. This is particularly important with qcow2 images, which can have a virtual size larger than the physical image size. If the volume size is set smaller than size of the underlying image, the volume will potentially be corrupt.
+You can run the command `qemu-img info YOUR_IMAGE_FILE.qcow2` to determine the virtual size of a qcow2 image.
+
+:::
+
 ![create-image-volume](/img/v1.2/volume/create-image-volume.png)

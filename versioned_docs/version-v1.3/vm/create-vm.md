@@ -57,6 +57,13 @@ A disk can be made accessible via the following types:
 
 A volume's [StorageClass](../advanced/storageclass.md) can be specified when adding a new empty volume; for other volumes (such as VM images), the `StorageClass` is defined during image creation.
 
+:::caution
+
+When creating volumes from VM images, be sure the volume size is sufficient for the image. This is particularly important with qcow2 images, which can have a virtual size larger than the physical image size. If the volume size is set smaller than size of the underlying image, the volume will potentially be corrupt.
+You can run the command `qemu-img info YOUR_IMAGE_FILE.qcow2` to determine the virtual size of a qcow2 image.
+
+:::
+
 ![create-vm](/img/v1.2/vm/create-vm-volumes.png)
 
 ### Adding a container disk

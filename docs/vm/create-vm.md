@@ -153,6 +153,12 @@ A disk can be made accessible via the following types:
 
 A volume's [StorageClass](../advanced/storageclass.md) can be specified when adding a new empty volume; for other volumes (such as VM images), the `StorageClass` is defined during image creation.
 
+:::info important
+
+When creating volumes from VM images, be sure the volume size is sufficient for the image. This is particularly important with qcow2 images, which can have a virtual size larger than the physical image size. If the volume size is set smaller than size of the underlying image, the volume will potentially be corrupt. By default, Harvester will set the volume size to 10GiB, or the virtual size of the image, whichever is greater.
+
+:::
+
 ![create-vm](/img/v1.2/vm/create-vm-volumes.png)
 
 ### Adding a container disk
