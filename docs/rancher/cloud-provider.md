@@ -126,7 +126,7 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
       permissions: '0644'
     ```
 
-1. On the Harvester UI, go to the **Cluster Configuration** screen and set the value of **Cloud Provider** to **External**.
+1. On the RKE2 cluster creation page, go to the **Cluster Configuration** screen and set the value of **Cloud Provider** to **External**.
 
     ![](/img/v1.4/rancher/external-harvester-cloud-provider.png)
 
@@ -134,7 +134,7 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
 
     ![](/img/v1.2/rancher/cloud-config-userdata.png)
 
-1. Add the `HelmChart` CRD for `harvester-cloud-provider` to **Cluster Configuration** > **Add-On Config** > **Additional Manifest**. 
+1. Add the `HelmChart` CRD for `harvester-cloud-provider` to **Cluster Configuration** > **Add-On Config** > **Additional Manifest**.
 
     You must replace `<cluster-name>` with the name of your cluster.
 
