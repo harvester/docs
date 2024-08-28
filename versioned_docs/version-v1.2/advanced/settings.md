@@ -515,6 +515,12 @@ This setting allows you to globally re-brand the UI by customizing the Harvester
 
 Default: **Harvester**
 
+:::caution
+
+Because this setting is part of the `settings.management.cattle.io` custom resource, you cannot configure any of the supported options (for example, `Logo` and `Primary Color` using a [Harvester configuration](../install/harvester-configuration.md#system_settings) file.
+
+:::
+
 ![containerd-registry](/img/v1.2/advanced/branding.png)
 
 You can set the following options and values:
