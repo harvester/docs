@@ -46,7 +46,7 @@ The number of replicas created for each volume in Longhorn. Defaults to `3`.
 
 :::info important
 
-When the value is `1`, the created volume from this `StorageClass` has only one replica, it may block the [Node Maintenance](../host/host.md#node-maintenance), check the section [Single-Replica Volumes](../troubleshooting/host.md#single-replica-volumes) and set a proper global option.
+When the value is `1`, the created volume from this `StorageClass` has only one replica, it may block the [Node Maintenance](../host/host.md#node-maintenance), check the section [Single-Replica Volumes](../troubleshooting/host.md#single-replica-volumes).
 
 :::
 

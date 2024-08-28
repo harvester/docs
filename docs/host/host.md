@@ -47,7 +47,7 @@ Check the list of [known limitations and workarounds](../troubleshooting/host.md
 
 Volumes that are [manually attached](../troubleshooting/host.md#manually-attached-volumes) to the node may prevent you from enabling Maintenance Mode.
 
-If you have any single-replica volume, it may block the `Node Maintenance`, check the section [Single-Replica Volumes](../troubleshooting/host.md#single-replica-volumes) and set a proper global option.
+If you have any single-replica volume, it may block the `Node Maintenance`, check the section [Single-Replica Volumes](../troubleshooting/host.md#single-replica-volumes).
 
 :::
 
