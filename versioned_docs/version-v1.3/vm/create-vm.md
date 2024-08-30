@@ -59,7 +59,9 @@ A volume's [StorageClass](../advanced/storageclass.md) can be specified when add
 
 :::caution
 
-When creating volumes from VM images, be sure the volume size is sufficient for the image. This is particularly important with qcow2 images, which can have a virtual size larger than the physical image size. If the volume size is set smaller than size of the underlying image, the volume will potentially be corrupt.
+When creating volumes from a VM image, ensure that the volume size is greater than or equal to the image size. The volume may become corrupted if the configured volume size is less than the size of the underlying image. This is particularly important for qcow2 images because the virtual size is typically greater than the physical size. 
+
+Harvester sets the volume size to 10 GiB by default. You must verify if this value is sufficient and then modify it if necessary. To determine the virtual size of a qcow2 image, you can run the command `qemu-img info YOUR_IMAGE_FILE.qcow2`.
 You can run the command `qemu-img info YOUR_IMAGE_FILE.qcow2` to determine the virtual size of a qcow2 image.
 
 :::
