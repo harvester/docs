@@ -40,8 +40,9 @@ description: Create a volume from the Volume page.
 
 :::caution
 
-When creating volumes from VM images, be sure the volume size is sufficient for the image. This is particularly important with qcow2 images, which can have a virtual size larger than the physical image size. If the volume size is set smaller than size of the underlying image, the volume will potentially be corrupt.
-You can run the command `qemu-img info YOUR_IMAGE_FILE.qcow2` to determine the virtual size of a qcow2 image.
+When creating volumes from a VM image, ensure that the volume size is greater than or equal to the image size. The volume may become corrupted if the configured volume size is less than the size of the underlying image. This is particularly important for qcow2 images because the virtual size is typically greater than the physical size.
+
+To determine the virtual size of a qcow2 image, you can run the command `qemu-img info YOUR_IMAGE_FILE.qcow2`.
 
 :::
 

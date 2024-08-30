@@ -85,7 +85,9 @@ resource "harvester_volume" "empty-volume" {
 
 :::info important
 
-When creating volumes from VM images, be sure the volume size is sufficient for the image. This is particularly important with qcow2 images, which can have a virtual size larger than the physical image size. If the volume size is set smaller than size of the underlying image, the volume will potentially be corrupt. By default, Harvester will set the volume size to the virtual size of the image.
+When creating volumes from a VM image, ensure that the volume size is greater than or equal to the image size. The volume may become corrupted if the configured volume size is less than the size of the underlying image. This is particularly important for qcow2 images because the virtual size is typically greater than the physical size.
+
+By default, Harvester will set the volume size to the virtual size of the image.
 
 :::
 
