@@ -10,28 +10,27 @@ title: "CloudInit CRD"
 
 _Available as of v1.3.0_
 
-Harvester now offers the capability to configure Harvester OS specific settings via the `CloudInit` CRD.
-
-This can be used to configure underlying Harvester OS specific options manually or via Gitops
+You can use the `CloudInit` CRD to configure Harvester operating system settings either manually or using GitOps solutions.
 
 ## Background
-Harvester OS uses the [elemental-toolkit](https://rancher.github.io/elemental-toolkit/docs/reference/cloud_init/) which ships with its unique cloud-init support. 
 
-As part of the Harvester installation, settings defined by users are written to an elemental cloud-init file in /oem directory. As Harvester OS itself is immutable, the cloud-init file ensures node specific settings are applied on each reboot. 
+The Harvester operating system uses the [elemental-toolkit](https://github.com/rancher/elemental-toolkit), which has a unique form of [cloud-init support](https://rancher.github.io/elemental-toolkit/docs/reference/cloud_init/). 
 
-The Harvester `CloudInit` CRD exposes the `elemental cloud-init` via a Kubernetes CRD. This allows users to perform additional node specific changes post Harvester install without having to follow the process of making the rootfs writable.
+Settings configured during the Harvester installation process are written to the `elemental` cloud-init file in the `/oem` directory. Because the Harvester operating system is immutable, the cloud-init file ensures that node-specific settings are applied on each reboot. 
 
-The `CloudInit` CRD is persisted and sync across to the underlying hosts via Harvester, which ensures changes made directly to OS are not lost across reboots or upgrades.
+The Harvester `CloudInit` CRD exposes the cloud-init file through a Kubernetes CRD. This allows you to modify node-specific settings after installation without needing to take steps to make the root filesystem writable.
+
+In addition, the `CloudInit` CRD is persisted and synchronized with the underlying hosts so that changes made directly to the Harvester operating system are not lost whenever nodes are rebooted and upgraded.
 
 :::note
 
-`CloudInit CRD` is a cluster scoped resource. Please ensure you have appropriate access via Rancher rbac to access the resource.
+The `CloudInit` CRD is a cluster-scoped resource. Ensure that your user account has the permissions required to access the resource (via Rancher role-based access control).
 
 :::
 
-## Getting started
+## Getting Started
 
-The following example adds additional ssh keys to all nodes in an existing Harvester cluster.
+The following example adds SSH keys to all nodes in an existing Harvester cluster.
 
 ```yaml
 apiVersion: node.harvesterhci.io/v1beta1
@@ -53,17 +52,16 @@ spec:
   paused: false
 ```
 
-Details of the CRD spec are as follows:
+The `spec` field contains the following:
 
-* `matchSelector (required)`: defines label selector to filter nodes the change needs to be applied to. `harvesterhci.io/managed: "true"` is a harvester specific label, akin to select all nodes
-* `filename (required)`: defines the name of file in /oem. cloud-init files in /oem are applied in alphabetical order, and this can be used to ensure how file changes are applied during boot
-* `content (required)`: defines the inline content for the elemental cloud-init resource which will be written to target nodes
-* `paused (optional)`: optional field to pause the reconcile of `CloudInit` CRD. A elemental cloud-init file being managed by the `CloudInit` CRD is watched by the Harvester controllers. Any direct changes made to these files are immediately reconcilled back to the defined state, unless the CRD is paused. 
+- `matchSelector (required)`: Label selector used to identify the nodes that the change must be applied to. `harvesterhci.io/managed: "true"` is a Harvester-specific label that you can use to select all nodes.
+- `filename (required)`: Name of the file in `/oem`. cloud-init files in `/oem` are applied in alphabetical order. This can be used to ensure that file changes are applied during booting.
+- `content (required)`: Inline content for the Elemental cloud-init resource that is written to target nodes.
+- `paused (optional)`: Used to pause `CloudInit` CRD reconciliation. The Harvester controllers monitor Elemental cloud-init files that are managed by the `CloudInit` CRD. Direct changes made to these files are immediately reconciled back to the defined state unless the CRD is paused. 
 
+Once the object is created, you can log in to the target nodes to verify the results.
 
-Once the object is created, the user can login to the target nodes to verify the results.
-
-In our case, a file named `/oem/99-my-ssh-keys.yaml` is created and subsequently monitored by the Harvester controllers.
+In the following example, a file named `/oem/99-my-ssh-keys.yaml` is created and subsequently monitored by the Harvester controllers.
 
 ```
 harvester-qhgd4:/oem # more 99-my-ssh-keys.yaml
@@ -76,9 +74,9 @@ stages:
         - ssh-rsa key2
 ```
 
-The `status` subresource can be used to track the rollout of a change to the underlying Harvester nodes
+The `status` subresource can be used to track the rollout of a change to the underlying Harvester nodes.
 
-For example, in a 3 node cluster, the `status` indicates that the change has been rolled out to all nodes.
+In the following example, the `status` values indicate that the change was applied to all three nodes in the cluster.
 
 ```
 status:
@@ -136,9 +134,11 @@ status:
         type: Present
 ```
 :::note
-Once the cloud-init changes are applied, the nodes need to be rebooted to ensure `elemental-toolkit` applies the requested changes to the OS.
+
+Once the cloud-init changes are applied, you must reboot the nodes to ensure that the `elemental-toolkit` applies the requested changes to the operating system.
+
 :::
 
-Deleting the `CloudInit` CRD will result in the associated files being removed from the underlying Harvester nodes. The effect of this change like other cloud-init resources will not be applicable until the impacted nodes are rebooted.
+Deleting the `CloudInit` CRD results in the removal of associated files from the underlying Harvester nodes. As with other cloud-init resources, the effects of this change are not exhibited until the impacted nodes are rebooted.
 
-Users are encouraged to leverage [fleet](https://fleet.rancher.io) and `CloudInit` CRD to manage changes to underlying Harvester OS.
+You are encouraged to leverage [Fleet](https://fleet.rancher.io) and the `CloudInit` CRD to manage changes to the Harvester operating system.
