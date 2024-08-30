@@ -129,12 +129,12 @@ const config = {
           position: 'left',
           dropdownActiveClassDisabled: true,
         },
-        {
-          type: 'docSidebar',
-          label: 'API',
-          position: 'left',
-          sidebarId: 'api',
-        },
+        //{
+        //  type: 'docSidebar',
+        //  label: 'API',
+        //  position: 'left',
+        //  sidebarId: 'api',
+        //},
         {
           type: "localeDropdown",
           position: "left",
