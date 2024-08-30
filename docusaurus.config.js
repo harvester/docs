@@ -129,12 +129,6 @@ const config = {
           position: 'left',
           dropdownActiveClassDisabled: true,
         },
-        //{
-        //  type: 'docSidebar', 
-        //  label: 'API', # Redundant link
-        //  position: 'left',
-        //  sidebarId: 'api',
-        //},
         {
           type: "localeDropdown",
           position: "left",
