@@ -130,8 +130,8 @@ const config = {
           dropdownActiveClassDisabled: true,
         },
         //{
-        //  type: 'docSidebar',
-        //  label: 'API',
+        //  type: 'docSidebar', 
+        //  label: 'API', # Redundant link
         //  position: 'left',
         //  sidebarId: 'api',
         //},
