@@ -21,9 +21,35 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 ## Node Maintenance
 
-For admin users, you can click **Enable Maintenance Mode** to evict all VMs from a node automatically. It will leverage the `VM live migration` feature to migrate all VMs to other nodes automatically. Note that at least two active nodes are required to use this feature.
+Migrating or shutting down workloads (and in some cases, also shutting down the underlying node) may be necessary during the following activities:
+
+- Replacing, adding, and removing hardware
+
+- Changing network settings
+
+- Troubleshooting issues
+
+- Removing a node from the cluster
+
+If your cluster has two or more active nodes, you can enable **Maintenance Mode** on nodes that are affected by the planned changes. Maintenance Mode runs a series of checks and leverages **Live Migration** functionality to automatically migrate all VMs to other nodes.
+
+You can enable Maintenance Mode on the **Hosts** screen of the Harvester UI. Select the target node, and then select **⋮** > **Enable Maintenance Mode**.
 
 ![node-maintenance.png](/img/v1.2/host/node-maintenance.png)
+
+After some time, the state of the node changes to *Maintenance*.
+
+![node-enter-maintenance-mode.png](/img/v1.3/troubleshooting/node-enter-maintenance-mode.png)
+
+:::info important
+
+Check the list of [known limitations and workarounds](../troubleshooting/host.md#node-in-maintenance-mode-becomes-stuck-in-cordoned-state) before enabling Maintenance Mode and whenever you encounter related issues.
+
+Volumes that are [manually attached](../troubleshooting/host.md#manually-attached-volumes) to the node may prevent you from enabling Maintenance Mode.
+
+If you have any single-replica volume, it may block the `Node Maintenance`, check the section [Single-Replica Volumes](../troubleshooting/host.md#single-replica-volumes).
+
+:::
 
 ## Cordoning a Node
 
@@ -41,6 +67,8 @@ Before removing a node from a Harvester cluster, determine if the remaining node
 - Ability of the remaining nodes to maintain enough replicas for all volumes
 
 If the remaining nodes do not have enough resources, VMs might fail to migrate and volumes might degrade when you remove a node.
+
+To ensure that [single-replica](../advanced/storageclass.md#number-of-replicas) volumes can be restored or rebuilt after the node is deleted, either back up those volumes or redeploy the related workloads to other nodes in advance so that the volumes are scheduled to other nodes.
 
 :::
 

@@ -26,6 +26,14 @@ description: Create a volume from the Volume page.
 
 ![create-empty-volume](/img/v1.2/volume/create-empty-volume.png)
 
+:::info important
+
+Harvester automatically attaches and detaches volumes during operations such as VM creation and migration.
+
+Manually attaching a volume to the node is not recommended because it may prevent you from enabling [Maintenance Mode](../host/host.md#node-maintenance). For troubleshooting information, see [Manually Attached Volumes](../troubleshooting/host.md#manually-attached-volumes).
+
+:::
+
 ## Create an Image Volume
 
 ### Header Section
