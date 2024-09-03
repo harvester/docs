@@ -240,11 +240,11 @@ In order to meet the scenario requirements of more users, the `RunStrategy` fiel
 
 ### Reserved Memory
 
-The VM is configured with a memory value, this memory is targeted for guest OS to see and use. In Harvester, each VM is carried by a Kubernetes POD. To support the VM to run, Harvester and KubeVirt add some additional memory as the VM memory overhead. The memory overhead is computed by many factors like CPU cores. However, sometimes the OOM(Out Of Memory) can still happen.
+Each VM is configured with a memory value, this memory is targeted for the VM guest OS to see and use. In Harvester, the VM is carried by a Kubernetes POD. The memory limitation is achieved by Kubernetes [Resource requests and limits of Pod and container](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container). Certain amount of memory is required to simulate and manage the `CPU/Memory/Storage/Network/...` for the VM to run. Harvester and KubeVirt summarize such additional memory as the VM `memory overhead`. The `memory overhead` is computed by a complex formula. However, sometimes the OOM(Out Of Memory) can still happen and the related VM is killed by the Harvester OS, the direct cause is that the whole POD/Container exceeds its memory limits. From practice, the `memory overhead` varies on different kinds of VM, different kinds of VM operating system, and also depends on the running workloads on the VM. There is no one-fit-all solution.
 
-Harvester adds a `Reserved Memory` field and a setting `additional-guest-memory-overhead-ratio` for user to adjust the guest OS memory and the memory overhead.
+Harvester adds a `Reserved Memory` field and a setting `additional-guest-memory-overhead-ratio` for users to adjust the guest OS memory and the `memory overhead`.
 
-See [additional-guest-memory-overhead-ratio](../advanced/settings.md#additional-guest-memory-overhead-ratio) for more details.
+All the details are described in the setting [additional-guest-memory-overhead-ratio](../advanced/settings.md#additional-guest-memory-overhead-ratio).
 
 
 ### Cloud Configuration

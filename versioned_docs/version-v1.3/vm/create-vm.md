@@ -144,22 +144,22 @@ In order to meet the scenario requirements of more users, the `RunStrategy` fiel
 
 ### Reserved Memory
 
-The VM is configured with a memory value, this memory is targeted for guest OS to see and use. In Harvester, each VM is carried by a Kubernetes POD. To support the VM to run, Harvester and KubeVirt add some additional memory as the VM memory overhead. The memory overhead is computed by many factors like CPU cores. However, sometimes the OOM(Out Of Memory) can still happen.
+Each VM is configured with a memory value, this memory is targeted for the VM guest OS to see and use. In Harvester, the VM is carried by a Kubernetes POD. The memory limitation is achieved by Kubernetes [Resource requests and limits of Pod and container](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container). Certain amount of memory is required to simulate and manage the `CPU/Memory/Storage/Network/...` for the VM to run. Harvester and KubeVirt summarize such additional memory as the VM `memory overhead`. The `memory overhead` is computed by a complex formula. However, sometimes the OOM(Out Of Memory) can still happen and the related VM is killed by the Harvester OS, the direct cause is that the whole POD/Container exceeds its memory limits. From practice, the `memory overhead` varies on different kinds of VM, different kinds of VM operating system, and also depends on the running workloads on the VM. There is no one-fit-all solution.
 
-Harvester adds a `Reserved Memory` field for user to adjust the guest OS memory and the memory overhead.
+Harvester adds a `Reserved Memory` field for users to adjust the guest OS memory and the `memory overhead`. A proper `memory overhead` can help the VM to eliminate the chance of hitting OOM.
 
 The following table shows how it works.
 
-| VM Configured Memory | Reserved Memory | Guest OS Memory |
-| --- | --- | --- |
-| 2Gi | ""(not configured) | 2 Gi - 100 Mi |
-| 2Gi | 256Mi | 2 Gi - 256 Mi |
-| 8Gi | ""(not configured) | 8 Gi - 100 Mi |
-| 8Gi | 512Mi | 8 Gi - 512 Mi |
+| VM Configured Memory | Reserved Memory | Guest OS Memory | POD Container Memory Limit | Memory Overhead |
+| --- | --- | --- | --- | --- |
+| 2 Gi | ""(not configured) | 2 Gi - 100 Mi | 2 Gi + ~240 Mi | ~340 Mi |
+| 2 Gi | 256 Mi | 2 Gi - 256 Mi | 2 Gi + ~240 Mi | ~500 Mi |
+| 8 Gi | ""(not configured) | 8 Gi - 100 Mi | 2 Gi + ~250 Mi | ~350 Mi |
+| 8 Gi | 512 Mi | 8 Gi - 512 Mi | 2 Gi + ~250 Mi | ~760 Mi |
 
 :::note
 
-When `Reserved Memory` field is not configured, Harvester will reserve 100Mi memory automatically.
+When `Reserved Memory` field is not configured, Harvester will reserve `100 Mi` memory automatically.
 
 :::
 
