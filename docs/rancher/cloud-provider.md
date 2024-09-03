@@ -41,6 +41,28 @@ For a detailed support matrix, please refer to the **Harvester CCM & CSI Driver 
 - The Harvester virtual machines run as guest Kubernetes nodes are in the same namespace.
 - The Harvester virtual machine guests' hostnames match their corresponding Harvester virtual machine names. Guest cluster Harvester VMs can't have different hostnames than their Harvester VM names when using the Harvester CSI driver. We hope [to remove this limitation](https://github.com/harvester/harvester/issues/4396) in a future release of Harvester.
 
+:::info important
+
+Each Harvester VM must have the `macvlan` kernel module, which is required for the `LoadBalancer` services of the **DHCP** IPAM mode.
+
+To check if the kernel module is available, access the VM and run the following commands:
+
+```shell
+lsmod | grep macvlan
+sudo modprobe macvlan
+```
+
+The kernel module is likely to be missing if the following occur:
+
+- `$ lsmod | grep macvlan` does not produce output.
+- `$ sudo modprobe macvlan` displays an error message similar to `modprobe: FATAL: Module macvlan not found in directory /lib/modules/5.14.21-150400.22-default`.
+
+By default, the `macvlan` kernel module is not included in SUSE Linux Enterprise 15 Service Pack 4/5/6 minimal cloud images (see [Issue #6418](https://github.com/harvester/harvester/issues/6418)). Those images contain the [`kernel-default-base`](https://software.opensuse.org/package/kernel-default-base) package, which includes only the base modules. However, the `macvlan` kernel driver becomes available when you install the `kernel-default` package.
+
+To eliminate the need for manual intervention after the guest cluster is provisioned, build your own cloud images using the openSUSE Build Service (OBS). You must remove the `kernel-default-base` package and add the `kernel-default` package in the `Minimal.kiwi` file to ensure that the resulting cloud image includes the `macvlan` kernel module. For more information, see [Custom SUSE VM Images](../advanced/customsuseimages.md).
+
+:::
+
 ### Deploying to the RKE1 Cluster with Harvester Node Driver
 When spinning up an RKE cluster using the Harvester node driver, you can perform two steps to deploy the `Harvester` cloud provider:
 
