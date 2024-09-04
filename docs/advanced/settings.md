@@ -332,15 +332,17 @@ A VM that is configured to use 2 CPUs (equivalent to 2,000 milliCPU) can consume
 
 **Definition**: The ratio to futher tune the VM `memory overhead`.
 
-Each VM is configured with a memory value, this memory is targeted for the VM guest OS to see and use. In Harvester, the VM is carried by a Kubernetes POD. The memory limitation is achieved by Kubernetes [Resource requests and limits of Pod and container](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container). Certain amount of memory is required to simulate and manage the `CPU/Memory/Storage/Network/...` for the VM to run. Harvester and KubeVirt summarize such additional memory as the VM `memory overhead`. The `memory overhead` is computed by a complex formula. However, sometimes the OOM(Out Of Memory) can still happen and the related VM is killed by the Harvester OS, the direct cause is that the whole POD/Container exceeds its memory limits. From practice, the `memory overhead` varies on different kinds of VM, different kinds of VM operating system, and also depends on the running workloads on the VM. There is no one-fit-all solution.
+Each VM is configured with a memory value, this memory is targeted for the VM guest OS to see and use. In Harvester, the VM is carried by a Kubernetes POD. The memory limitation is achieved by Kubernetes [Resource requests and limits of Pod and container](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container). Certain amount of memory is required to simulate and manage the `CPU/Memory/Storage/Network/...` for the VM to run. Harvester and KubeVirt summarize such additional memory as the VM `Memory Overhead`. The `Memory Overhead` is computed by a complex formula formula. However, sometimes the OOM(Out Of Memory) can still happen and the related VM is killed by the Harvester OS, the direct cause is that the whole POD/Container exceeds its memory limits. From practice, the `Memory Overhead` varies on different kinds of VM, different kinds of VM operating system, and also depends on the running workloads on the VM.
 
-This setting is for more flexibly tuning the guest `memory overhead`. It is also combined with the [Reserved Memroy](../vm/create-vm.md#reserved-memory).
+This setting is for more flexibly tuning the VM `Memory Overhead`.
 
 **Default values**: `"1.5"`
 
 Valid values: `""`, `"0"` and from `"1.0"` to `"10.0"`.
 
-A VM that is configured to have `1 CPU, 2 Gi Memory, 1 Volume and 1 NIC` will get around `240 Mi` `memory overhead` when the ratio is `"1.0"`. When the ratio is `"1.5"`, the `memory overhead` is `360 Mi`. When the ratio is `"3"`, the `memory overhead` is `720 Mi`.
+A VM that is configured to have `1 CPU, 2 Gi Memory, 1 Volume and 1 NIC` will get around `240 Mi` `Memory Overhead` when the ratio is `"1.0"`. When the ratio is `"1.5"`, the `Memory Overhead` is `360 Mi`. When the ratio is `"3"`, the `Memory Overhead` is `720 Mi`.
+
+A VM that is configured to have `1 CPU, 64 Gi Memory, 1 Volume and 1 NIC` will get around `250 Mi` `Memory Overhead` when the ratio is `"1.0"`. The VM memory size does not have a big influence on the computing of `Memory Overhead`.
 
 The yaml output of this setting on a new cluster:
 
@@ -359,9 +361,13 @@ When the `value` field is `"0"`, the `additional-guest-memory-overhead-ratio` se
 
 If you have already set a valid value on the `spec.configuration.additionalGuestMemoryOverheadRatio` field of `kubevirt` object, Harvester will fetch and convert it to the `value` field of this setting on the upgrade path. After that, Harvester will always use this setting to sync to the `kubevirt` object.
 
+This setting and the VM configuration field [Reserved Memroy](../vm/create-vm.md#reserved-memory) are both taken into account to get a final `Total Memory Overhead` for each VM.
+
+The `Total Memory Overhead` = automatically computed `Memory Overhead` + Harvester `Reserved Memory`.
+
 The following table shows how they work together.
 
-| VM Configured Memory | Reserved Memory | additional-guest-memory-overhead-ratio| Guest OS Memory | POD Container Memory Limit | Memory Overhead |
+| VM Configured Memory | Reserved Memory | additional-guest-memory-overhead-ratio| Guest OS Memory | POD Container Memory Limit | Total Memory Overhead |
 | --- | --- | --- | --- | --- | --- |
 | 2 Gi | ""(not configured) | "0.0" | 2 Gi - 100 Mi | 2 Gi + 240 Mi | ~340 Mi |
 | 2 Gi | 256 Mi | "0.0" | 2 Gi - 256 Mi | 2 Gi + 240 Mi | ~500 Mi |
@@ -371,6 +377,32 @@ The following table shows how they work together.
 | --- | --- | --- | --- | --- | --- |
 | 2 Gi | ""(not configured) | "1.5" | 2 Gi | 2 Gi + 240*1.5 Mi | ~360 Mi |
 | 2 Gi | 256 Mi | "1.5" | 2 Gi - 256 Mi | 2 Gi + 240*1.5 Mi | ~620 Mi |
+
+The related information can be fetched from those objects:
+
+```
+When `additional-guest-memory-overhead-ratio` is set as "1.5".
+
+The VM object:
+...
+        memory:
+          guest: 2Gi    // Guest OS Memory
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi // VM Configured Memory
+
+The POD object:
+...
+    resources:
+      limits:
+        cpu: "1"
+        devices.kubevirt.io/kvm: "1"
+        devices.kubevirt.io/tun: "1"
+        devices.kubevirt.io/vhost-net: "1"
+        memory: "2532309561"                // POD Container Memory Limit
+
+```
 
 **Example**:
 
@@ -382,11 +414,27 @@ The following table shows how they work together.
 
 To reduce the chance of hitting OOM, Harvester suggests to:
 
-- Configure this setting with value `"2"` to give all the VMs more guest memory overhead.
+- Configure this setting with value `"2"` to give all the VMs `~480 Mi` `Memory Overhead`, if the cluster has no memory resource pressure.
 
-- Configure the `Reserved Memory` for some important VMs to give them even more memory overhead.
+- Configure the `Reserved Memory` field to have a bigger `Total Memory Overhead`, if some VMs are important. The rules based on experiences are:
+
+-- When `VM Configured Memory` is between `5 Gi` and `10 Gi`, the `Total Memory Overhead` is `>= VM Configured Memory * 10%`.
+
+-- When `VM Configured Memory` is greater than `10 Gi`, the `Total Memory Overhead` is `>= 1 Gi`.
+
+-- Keep observing, tuning and testing to get the best values for each VM.
 
 - Avoid configuring the `spec.configuration.additionalGuestMemoryOverheadRatio` field of `kubevirt` object directly.
+
+The bigger `Total Memory Overhead` does not mean that the amount of memory is used up all the time, it is set to tolerant the peak and hence avoid hitting OOM.
+
+There is no `one-fit-all` solution.
+
+:::
+
+:::important
+
+If you have set the `Reserved Memory` field for each VM and plan to keep the legacy [Reserved Memory](../../versioned_docs/version-v1.3/vm/create-vm.md#reserved-memory), after the cluster is upgraded to Harvester v1.4.0, you can set the `additional-guest-memory-overhead-ratio` setting to `"0"`.
 
 :::
 
