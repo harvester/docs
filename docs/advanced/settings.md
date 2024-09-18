@@ -507,7 +507,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
 **Definition**: Upgrade-related configuration.
 
-**Default value**: `{"imagePreloadOption":{"strategy":{"type":"sequential"}}}`
+**Default value**: `{"imagePreloadOption":{"strategy":{"type":"sequential"}}, "restoreVM": false}`
 
 **Supported options and fields**:
 
@@ -546,6 +546,8 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
   :::
 
+- `restoreVM`: This setting controls whether to automatically restore running VMs after a single-node upgrade. By default, it is set to `false`, meaning all VMs are stopped after the upgrade. If set to true, Harvester will restart VMs that were running prior to the upgrade. Note that VMs that were paused before the upgrade will remain stopped once the upgrade is complete.
+
 **Example**:
 
 ```json
@@ -555,7 +557,8 @@ https://your.upgrade.checker-url/v99/checkupgrade
       "type": "parallel",
       "concurrency": 2
     }
-  }
+  },
+  "restoreVM": true
 }
 ```
 
