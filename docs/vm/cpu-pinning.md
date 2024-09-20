@@ -67,9 +67,7 @@ Allow some time for Harvester to apply the corresponding CPU Manager policy.
 
 - The CPU Manager cannot be enabled on the witness node.
 
-- You can enable or disable the CPU Manager on only one management node at a time.
-
-- You must wait for an operation (enabling or disabling) to be completed before starting another.
+- The CPU Manager must be enabled or disabled on each management node separately. You must wait for the operation to be completed before starting another.
 
 - VMs with CPU pinning enabled must be stopped before CPU Manager is disabled on the corresponding node.
 
@@ -82,10 +80,6 @@ Allow some time for Harvester to apply the corresponding CPU Manager policy.
 1. Click **Create**.
 
   ![create-vm](/img/v1.4/cpu-pinning/create-vm.png)
-
-1. On the **Advanced Options** tab, select **Enable CPU Pinning**.
-
-  ![vm-advanced-options](/img/v1.4/cpu-pinning/vm-advanced-options.png)
 
 1. On the **Advanced Options** tab, select **Enable CPU Pinning**.
 
@@ -105,8 +99,8 @@ To use CPU pinning on an existing VM, you must restart the VM after enabling the
 
 ## VM Live Migration
 
-VMs with CPU pinning enabled can be migrated only if the CPU Manager is enabled on the target node. For more information, see [Live Migration](./live-migration.md).
+VMs with CPU pinning enabled can be migrated only if the CPU Manager is enabled on the target node.
 
 ## Upgrades
 
-When upgrading a node, Harvester drains all pods and live migrates VMs to another node. To avoid interruptions to the upgrade process, ensure that the CPU Manager is enabled on other nodes and sufficient resources available whenever you use VMs with CPU pinning enabled.
+When upgrading a node, Harvester drains all pods and live migrates VMs to another node. To avoid interruptions to the upgrade process, ensure that the CPU Manager is enabled on other nodes and sufficient resources are available whenever you use VMs with CPU pinning enabled.
