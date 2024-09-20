@@ -620,7 +620,7 @@ When the node becomes unavailable or is powered off, the VM only restarts and do
 
 :::caution
 
-Because this setting is part of the `settings.management.cattle.io` custom resource, you cannot configure any of the supported options (for example, `Logo` and `Primary Color` using a [Harvester configuration](../install/harvester-configuration.md#system_settings) file.
+Because this setting is part of the `settings.management.cattle.io` custom resource, you cannot configure any of the supported options (for example, `Logo` and `Primary Color`) using a [Harvester configuration](../install/harvester-configuration.md#system_settings) file.
 
 :::
 
