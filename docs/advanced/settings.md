@@ -546,7 +546,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
   :::
 
-- `restoreVM`: This setting controls whether to automatically restore running VMs after a single-node upgrade. By default, it is set to `false`, meaning all VMs are stopped after the upgrade. If set to true, Harvester will restart VMs that were running prior to the upgrade. Note that VMs that were paused before the upgrade will remain stopped once the upgrade is complete.
+- `restoreVM`: Option that enables Harvester to automatically restore running VMs after a single-node cluster is upgraded. The default value is `false`, which causes all VMs to be stopped after the upgrade is completed. When set to `true`, Harvester restarts VMs that were running before the upgrade was started. VMs that were paused before the upgrade are not restarted.
 
 **Example**:
 

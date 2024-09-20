@@ -55,6 +55,6 @@ If you want Longhorn to create multiple replicas on a node with multiple disks, 
 
 ## Upgrades and Maintenance
 
-Single-node clusters do not support [Live Migration](../vm/live-migration.md), so VMs become unavailable during cluster upgrades. Harvester forcibly shuts down all VMs before starting the upgrade process. To restore running VMs after upgrade, please set `restoreVM` to true in the [`upgrade-config` setting](./settings.md#upgrade-config).
+Single-node clusters do not support [Live Migration](../vm/live-migration.md), so VMs become unavailable during cluster upgrades. Harvester forcibly shuts down all VMs before starting the upgrade process. You can configure Harvester to automatically restore running VMs using the `restoreVM` option of the [`upgrade-config`](./settings.md#upgrade-config) setting.
 
 Enabling [Maintenance Mode](../host/host.md#node-maintenance) is also not possible because that operation relies on Live Migration functionality, and Harvester cannot place the only control plane in Maintenance Mode.
