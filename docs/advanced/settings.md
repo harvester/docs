@@ -418,11 +418,11 @@ To reduce the chance of hitting OOM, Harvester suggests to:
 
 - Configure the `Reserved Memory` field to have a bigger `Total Memory Overhead`, if some VMs are important. The rules based on experiences are:
 
--- When `VM Configured Memory` is between `5 Gi` and `10 Gi`, the `Total Memory Overhead` is `>= VM Configured Memory * 10%`.
+    - When `VM Configured Memory` is between `5 Gi` and `10 Gi`, the `Total Memory Overhead` is `>= VM Configured Memory * 10%`.
 
--- When `VM Configured Memory` is greater than `10 Gi`, the `Total Memory Overhead` is `>= 1 Gi`.
+    - When `VM Configured Memory` is greater than `10 Gi`, the `Total Memory Overhead` is `>= 1 Gi`.
 
--- Keep observing, tuning and testing to get the best values for each VM.
+    - Keep observing, tuning and testing to get the best values for each VM.
 
 - Avoid configuring the `spec.configuration.additionalGuestMemoryOverheadRatio` field of `kubevirt` object directly.
 
