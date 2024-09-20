@@ -95,3 +95,57 @@ We have also introduced a new filter to help you filter PCI devices by the under
 
 The newly created PCI device can be passed through to virtual machines like any other PCI device.
 ![](/img/v1.2/pcidevices/SriovNetworkDevicesFilterResult.png)
+
+## USB Devices
+
+_Available as of v1.4.0_
+
+A `USBDevice` resource in Harvester represents a USB device on the node. USB devices can be "passed through" by the hypervisor to allow direct access from VMs. This is accomplished through the `pcidevices-controller` add-on. To use USB passthrough, you can either create a `USBDeviceClaim` resource or enable the feature on the Harvester UI. 
+
+USB passthrough is slightly different from PCI passthrough. For example, you can fully control a USB controller with four USB ports by creating a `PCIDeviceClaim`. However, you can also create a `USBDeviceClaim` to control only one USB port. The other three USB ports remain available to the node.
+
+### Enable Passthrough on a USB Device
+
+1. On the Harvester UI, go to **Advanced** > **USB Devices**.
+
+    ![](/img/v1.4/usbdevices/index.png)
+
+1. Locate the device in the list.
+
+    ![](/img/v1.4/usbdevices/search.png)
+
+1. Select the target device, and then select **⋮** > **Enable Passthrough**.
+
+   ![](/img/v1.4/usbdevices/select.png)
+
+1. Read the confirmation message, and then click **Enable**. Allow some time for the device state to change to **Enabled**.
+
+    ![](/img/v1.4/usbdevices/enable-done.png)
+
+### Attach a USB Device to a Virtual Machine
+
+1. Verify that passthrough is enabled on the target device.
+
+1. Go to **Virtual Machines**, and then create a virtual machine or edit the configuration of an existing virtual machine.
+
+1. On the virtual machine configuration screen, go to the **USB Devices** tab and then select a device from the **Available USB Devices** list. 
+
+    ![](/img/v1.4/usbdevices/attach-vm.png)
+
+1. Click **Create** or **Save**.
+
+### View USB Devices Attached to a Virtual Machine
+
+1. Start and then access the virtual machine.
+
+1. Run `lsusb`. This utility displays information about USB buses and attached devices.
+
+    ![](/img/v1.4/usbdevices/usb-in-vm.png)
+
+### Limitations
+
+- Virtual machines with attached USB devices cannot be live-migrated because the devices are bound to a specific node.
+
+- Hot-plugging and replugging of USB devices is not supported. For more information, see [KubeVirt Issue #11979](https://github.com/kubevirt/kubevirt/issues/11979).
+
+- If the device path changes when you reattach the device or reboot the node, you must create a new USBDeviceClaim to enable the device.
