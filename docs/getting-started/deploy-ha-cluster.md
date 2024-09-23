@@ -80,7 +80,7 @@ Before you create VMs, create the necessary networks. If more than one network i
 
 ## 8. Import VM images. 
 
-On the Harvester UI, you can import ISO, qcow2, and raw [images](../upload-image.md) by uploading an image from the local file system, or by specifying the URL of an image that can be accessed from the cluster. 
+On the Harvester UI, you can import ISO, qcow2, and raw [images](../image/upload-image.md) by uploading an image from the local file system, or by specifying the URL of an image that can be accessed from the cluster. 
 
 ## 9. Import SSH keys. (Recommended)
 

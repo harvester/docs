@@ -148,7 +148,7 @@ resource "harvester_storageclass" "single-replica" {
 
 You can use the `dataLocality` parameter when at least one replica of a Longhorn volume must be scheduled on the same node as the pod that uses the volume (whenever possible).
 
-Harvester officially supports data locality as of **v1.3.0**. This applies even to volumes created from [images](../upload-image.md). To configure data locality, create a new StorageClass on the Harvester UI (**Storage Classess** > **Create** > **Parameters**) and then add the following parameter:
+Harvester officially supports data locality as of **v1.3.0**. This applies even to volumes created from [images](../image/upload-image.md). To configure data locality, create a new StorageClass on the Harvester UI (**Storage Classess** > **Create** > **Parameters**) and then add the following parameter:
 
 - **Key**: `dataLocality`
 - **Value**: `disabled` or `best-effort`

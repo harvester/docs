@@ -18,7 +18,7 @@ Harvester 主机驱动（Node Driver）用于在 Harvester 集群中配置虚拟
 从 Rancher `2.6.3` 版本开始，你可以使用内置的 Harvester 主机驱动创建 RKE1/RKE2 Kubernetes 集群。
 此外，Harvester 可以为这些 Kubernetes 集群提供内置的[负载均衡器](../cloud-provider.md)以及 Harvester 集群的[存储直通](../csi-driver.md)支持。
 
-虽然你可以中[在 Harvester UI 中上传和查看 `.ISO` 镜像](../../upload-image.md#通过本地文件上传镜像)，但 Rancher UI 不支持此功能。有关更多信息，请参阅 [Rancher 文档](https://rancher.com/docs/rancher/v2.6/en/virtualization-admin/#harvester-node-driver)。
+虽然你可以中[在 Harvester UI 中上传和查看 `.ISO` 镜像](../../image/upload-image.md#通过本地文件上传镜像)，但 Rancher UI 不支持此功能。有关更多信息，请参阅 [Rancher 文档](https://rancher.com/docs/rancher/v2.6/en/virtualization-admin/#harvester-node-driver)。
 
 ## Harvester 主机驱动
 
