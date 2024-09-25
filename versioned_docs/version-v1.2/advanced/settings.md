@@ -411,6 +411,14 @@ Default:
 }
 ```
 
+**Supported options and values**:
+
+The value is a JSON object literal that contains the following key-value pairs:
+
+- `repository`: Name of the repository that stores the support bundle image.
+- `tag`:  Tag assigned to the support bundle image.
+- `imagePullPolicy`: Pull policy of the support bundle image. The supported values are `IfNotPresent`, `Always`, and `Never`. For more information, see [Image pull policy](https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy) in the Kubernetes documentation.
+
 ## `support-bundle-namespaces`
 
 _Available as of v1.2.0_
