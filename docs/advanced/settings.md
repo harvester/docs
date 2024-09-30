@@ -469,9 +469,9 @@ The process is considered to have failed when the data collection and file packi
 
 **Versions**: v1.3.0 and later
 
-**Definition**: Number of minutes Harvester waits before deleting a support bundle that has been packaged but not downloaded (either deliberately or unsuccessfully) or retained. 
+**Definition**: Number of minutes Harvester waits before deleting a support bundle that has been packaged but not downloaded (either deliberately or unsuccessfully) or retained.
 
-The minimum value is `30`.
+You can specify a value greater than or equal to 0. When the value is 0, Harvester uses the default value.
 
 **Default value**: `30`
 
@@ -481,7 +481,7 @@ The minimum value is `30`.
 
 **Definition**: Number of minutes Harvester allows for collection of logs and configurations (Harvester) on the nodes for the support bundle. 
 
-If the collection process is not completed within the allotted time, Harvester still allows you to download the support bundle (without the uncollected data). The minimum value is `30`.
+If the collection process is not completed within the allotted time, Harvester still allows you to download the support bundle (without the uncollected data). You can specify a value greater than or equal to 0. When the value is 0, Harvester uses the default value.
 
 **Default value**: `30`
 
