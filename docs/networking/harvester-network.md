@@ -127,7 +127,7 @@ The [VM load balancer](./loadbalancer#vm-load-balancer) functions as intended on
 
 :::
 
-The Harvester network controller checks VM network connectivity. This check is essential because if a VM network is reachable from a Harvester node (via routers, if necessary), the VM network is suitable for running workloads that require connections to the Harvester node, especially the control plane. For example, the Harvester cloud provider that is running in the guest cluster must access the underlying Harvester and Kubernetes APIs to be able to calculate the node topology and provide the load balancer functionality.
+The Harvester network controller checks VM network connectivity. This check is essential because if a VM network is reachable from a Harvester node (via routers, if necessary), the VM network is suitable for running workloads that require connections to the Harvester node, especially the control plane. For example, the [Harvester cloud provider](../rancher/cloud-provider.md) that is running in the guest cluster must access the underlying Harvester and Kubernetes APIs to be able to calculate the node topology and provide the load balancer functionality.
 
 To check connectivity, the Harvester network controller must know the gateway IP address, which is not always specified by the user when the VM network is created. However, this address can still be obtained if a DHCP server that is configured with the gateway information is running on the VM network. To obtain the information, the network controller creates a helper job, which functions as a DHCP client, on the VM network. Once the gateway address is obtained, the network controller sends ICMP Echo Request packets from the management network to the gateway, and waits for responses.
 
