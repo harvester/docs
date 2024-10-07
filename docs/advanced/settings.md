@@ -357,9 +357,9 @@ value: ""
 
 When the `value` field is `""`, the `default` field is used.
 
-When the `value` field is `"0"`, the `additional-guest-memory-overhead-ratio` setting is not used, Harvester will fallback to the legacy [Reserved Memory](../../versioned_docs/version-v1.3/vm/create-vm.md#reserved-memory) which is used in Harvester v1.3.x, v1.2.x and earlier versions.
+When the `value` field is `"0"`, the `additional-guest-memory-overhead-ratio` setting is not used, Harvester will fallback to the legacy [Reserved Memory](../../versioned_docs/version-v1.3/vm/create-vm.md#reserved-memory) which is used in Harvester v1.3.x, v1.2.x and earlier versions. When a new VM is created and the `Reserved Memory` field on WebUI is not filled, this VM will get the `100Mi default Reserved Memory`.
 
-If you have already set a valid value on the `spec.configuration.additionalGuestMemoryOverheadRatio` field of `kubevirt` object, Harvester will fetch and convert it to the `value` field of this setting on the upgrade path. After that, Harvester will always use this setting to sync to the `kubevirt` object.
+If you have already set a valid value on the `spec.configuration.additionalGuestMemoryOverheadRatio` field of `kubevirt` object before Harvester v1.4.0 and then upgrade to v1.4.0, Harvester will fetch and convert it to the `value` field of this setting on the upgrade path. After that, Harvester will always use this setting to sync to the `kubevirt` object.
 
 This setting and the VM configuration field [Reserved Memroy](../vm/create-vm.md#reserved-memory) are both taken into account to get a final `Total Memory Overhead` for each VM.
 
@@ -435,6 +435,16 @@ There is no `one-fit-all` solution.
 :::important
 
 If you have set the `Reserved Memory` field for each VM and plan to keep the legacy [Reserved Memory](../../versioned_docs/version-v1.3/vm/create-vm.md#reserved-memory), after the cluster is upgraded to Harvester v1.4.0, you can set the `additional-guest-memory-overhead-ratio` setting to `"0"`.
+
+Changing the `additional-guest-memory-overhead-ratio` setting affects the VMs per following rules:
+
+- It will affect the VMs newly created after this change immediately.
+
+- It will not affect the running VMs immediately, those VMs will get the new `Memory Overhead` calculated from the setting after those VMs are rebooted.
+
+- When a VM has a user configured `Reserved Memory`, this is always kept.
+
+- When the value changes between `"0"` and the range `["", "1.0" .. "10.0"]`, the existing VMs which have the `100Mi default Reserved Memory` will keep it, the existing VMs which do not have `100Mi default Reserved Memory` will not get it automatically.
 
 :::
 
