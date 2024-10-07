@@ -1,6 +1,6 @@
 ---
 id: upload-image
-sidebar_position: 6
+sidebar_position: 1
 sidebar_label: Upload Images
 title: "Upload Images"
 keywords:
@@ -88,7 +88,7 @@ Currently, qcow2, raw, and ISO images are supported.
 
 #### HTTP 413 Error in Rancher Multi-Cluster Management
 
-You can upload images from the [**Multi-Cluster Management**](./rancher/virtualization-management.md#importing-harvester-cluster) screen on the **Rancher UI**. When the status of an image is *Uploading* but the progress indicator displays *0%* for an extended period, check the HTTP response status code. *413* indicates that the size of the request body exceeds the limit.
+You can upload images from the [**Multi-Cluster Management**](../rancher/virtualization-management.md#importing-harvester-cluster) screen on the **Rancher UI**. When the status of an image is *Uploading* but the progress indicator displays *0%* for an extended period, check the HTTP response status code. *413* indicates that the size of the request body exceeds the limit.
 
 ![](/img/v1.3/img-413-code.png)
 
@@ -148,7 +148,7 @@ On the **Volumes** page, click **Export Image**. Enter the image name and select
 
 ### Image StorageClass
 
-When creating an image, you can select a [StorageClass](./advanced/storageclass.md) and use its pre-defined parameters like replicas, node selectors and disk selectors .
+When creating an image, you can select a [StorageClass](../advanced/storageclass.md) and use its pre-defined parameters like replicas, node selectors and disk selectors .
 
 :::note
 

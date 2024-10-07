@@ -60,7 +60,7 @@ The `bootOrder` values need to be set with the installation image first. If you 
 1. The **first volume** is an `Image Volume` with the following values: 
     1. `Name`: The value `cdrom-disk` is set by default. You can keep it or change it.
     2. `Type`: Select `cd-rom`.
-    3. `Image`: Select the Windows image to be installed. See [Upload Images](../upload-image.md) for the full description on how to create new images.
+    3. `Image`: Select the Windows image to be installed. See [Upload Images](../image/upload-image.md) for the full description on how to create new images.
     4. `Size`: The value `20` is set by default. You can change it if your image has a bigger size.
     5. `Bus`: The value `SATA` is set by default. It's recommended you don't change it.
 2. The **second volume** is a `Volume` with the following values:
