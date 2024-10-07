@@ -1,13 +1,8 @@
 ---
-id: harvester-monitoring
 sidebar_position: 1
 sidebar_label: 监控
 title: "监控"
 ---
-
-_从 v0.3.0 起可用_
-
-监控功能默认开启。
 
 _从 v1.2.0 起可用_
 
@@ -17,7 +12,7 @@ _从 v1.2.0 起可用_
 
 你还可以通过自定义 [harvester-configuration](../install/harvester-configuration.md#installaddons) 文件在 Harvester 中启用/禁用 `rancher-monitoring` 插件。
 
-对于从 v1.1.* 升级的 Harvester 集群，监控功能会自动转换为插件并像以前一样保持启用状态。
+对于从 v1.1.x 升级的 Harvester 集群，监控功能会自动转换为插件并像以前一样保持启用状态。
 
 ## 仪表盘指标
 Harvester 已使用 [Prometheus](https://prometheus.io/) 内置集成监控。监控会在 Harvester 安装期间自动启用。
@@ -63,23 +58,30 @@ Swap:            0B          0B          0B
 
 ## 配置 Monitoring
 
-_从 v1.0.1 起可用_
+_从 v1.0.2 起可用_
 
 Monitoring 有几个可用于收集和聚合所有节点/Pod/VM 指标数据的组件。Monitoring 所需的资源取决于你的工作负载和硬件资源。Harvester 会根据一般用例设置默认值，你可以相应地更改它们。
 
 目前，`Resources Settings` 可以配置以下组件：
 
 - Prometheus
-- Prometheus Node Exporter（_从 v1.0.2 开始可以从 UI 中进行配置_）
+- Prometheus Node Exporter
 
-### 使用 WebUI
+### 使用 UI
 
-在 `Monitoring & Logging` 页面上，你可以查看和更改资源设置：
+在 **Advanced** 页面上，你可以查看和更改资源设置，如下所示：
 
-1. 导航到 `Monitoring > Configuration` 页面。
-   ![](/img/v1.2/monitoring/monitoring-config.png)
+1. 转到 **Advanced** > **Addons** 页面并选择 **rancher-monitoring**。
+2. 在 **Prometheus** 选项卡中，更改资源请求和限制。
+3. 完成 **rancher-monitoring** 插件设置后，选择 **Save**。**Monitoring** 部署会在几秒钟内重启。请注意，重新启动可能需要一些时间来重新加载以前的数据。
 
-1. 点击 `Save`，`Monitoring` 资源会在几秒后重启。请注意，重新启动可能需要一些时间来重新加载以前的数据。
+![](/img/v1.2/monitoring/modify-prometheus-settings-from-addon.png)
+
+:::note
+
+UI 配置仅在启用 **rancher-monitoring** 插件时可见。
+
+:::
 
 **最常用的选项：内存设置**
 
@@ -103,29 +105,36 @@ Monitoring 有几个可用于收集和聚合所有节点/Pod/VM 指标数据的�
 
 ### 使用 CLI
 
-你可以使用 CLI 命令 `$kubectl edit managedchart rancher-monitoring -n fleet-local` 来更新这些值。
+你可以使用以下 `kubectl` 命令更改 `rancher-monitoring` 插件的资源配置：`kubectl edit addons.harvesterhci.io -n cattle-monitoring-system rancher-monitoring`。
 
-对于 `>= v1.0.1` 的 Harvester 版本，相关路径和默认值为：
+资源路径和默认值如下：
 
-```yaml
-# Prometheus configs
-spec.values.prometheus.prometheusSpec.resources.limits.cpu: 1000m
-spec.values.prometheus.prometheusSpec.resources.limits.memory: 2500Mi
-spec.values.prometheus.prometheusSpec.resources.requests.cpu: 750m
-spec.values.prometheus.prometheusSpec.resources.requests.memory: 1750Mi
----
-# node exporter configs
-spec.values.prometheus-node-exporter.resources.limits.cpu: 200m
-spec.values.prometheus-node-exporter.resources.limits.memory: 180Mi
-spec.values.prometheus-node-exporter.resources.requests.cpu: 100m
-spec.values.prometheus-node-exporter.resources.requests.memory: 30Mi
+```
+apiVersion: harvesterhci.io/v1beta1
+kind: Addon
+metadata:
+  name: rancher-monitoring
+  namespace: cattle-monitoring-system
+spec:
+  valuesContent: |
+    prometheus:
+      prometheusSpec:
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 2500Mi
+          requests:
+            cpu: 850m
+            memory: 1750Mi
 ```
 
-对于 `<= v1.0.0` 的版本，`managedchart rancher-monitoring` 中没有指定相关路径和默认值，因此你需要相应添加它们。
+:::note
+
+禁用插件后，你仍然可以调整配置。这些更改仅在你重新启用插件后才会生效。
+
+:::
 
 ## Alertmanager
-
-_从 v1.1.0 起可用_
 
 `Harvester` 使用 `Alertmanager` 来收集和管理集群中发生/正在发生的所有告警。
 
@@ -135,7 +144,7 @@ _从 v1.1.0 起可用_
 
 `Alertmanager` 默认启用。你可以通过以下配置路径来禁用它。
 
-![](/img/v1.2/monitoring/alertmanager-config-enable-and-resource.png)
+![](/img/v1.2/monitoring/modify-alertmanager-from-addon.png)
 
 #### 更改资源设置
 

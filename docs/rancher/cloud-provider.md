@@ -66,7 +66,7 @@ To eliminate the need for manual intervention after the guest cluster is provisi
 ### Deploying to the RKE1 Cluster with Harvester Node Driver
 When spinning up an RKE cluster using the Harvester node driver, you can perform two steps to deploy the `Harvester` cloud provider:
 
-1. Select `Harvester(Out-of-tree)` option.
+1. Select `Harvester (Out-of-tree)` option.
 
     ![](/img/v1.2/rancher/rke-cloud-provider.png)
 

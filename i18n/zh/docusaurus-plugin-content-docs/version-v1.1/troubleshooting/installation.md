@@ -1,5 +1,4 @@
 ---
-id: index
 sidebar_position: 1
 sidebar_label: 安装
 title: "安装"

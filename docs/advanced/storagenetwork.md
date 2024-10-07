@@ -48,17 +48,17 @@ kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/de
 ## Configuration Example
 
 - VLAN ID
-	- Please check with your network switch setting, and provide a dedicated VLAN ID for Storage Network.
+    - Please check with your network switch setting, and provide a dedicated VLAN ID for Storage Network.
 - Well-configured Cluster Network and VLAN Config
-	- Please refer Networking page for more details and configure `Cluster Network` and `VLAN Config` but not `Networks`.
+    - Please refer Networking page for more details and configure `Cluster Network` and `VLAN Config` but not `Networks`.
 - IP range for Storage Network
-	- IP range should not conflict or overlap with Kubernetes cluster networks(`10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16` and `10.53.0.0/16` are reserved).
-	- IP range should be in IPv4 CIDR format and Longhorn pods use Storage Network as follows:
-    - `instance-manger-e` and `instance-manager-r` pods: These require 2 IPs per node. During an upgrade, two versions of these pods will exist (old and new), and the old version will be deleted once the upgrade is successful.
-    - `backing-image-ds` pods: These are employed to process on-the-fly uploads and downloads of backing image data sources. These pods will be removed once the image uploads or downloads are completed.
-    - `backing-image-manager` pods: 1 IP per disk, similar to the instance manager pods. Two versions of these will coexist during an upgrade, and the old ones will be removed after the upgrade is completed.
-    - The required number of IPs is calculated using a simple formula: `Required Number of IPs = Number of Nodes * 4 + Number of Disks * 2 + Number of Images to Download/Upload`
-	- For example, if your cluster has five nodes, each node has two disks, and ten images will be uploaded simultaneously, the IP range should be greater than or equal to `/26` (`5 * 4 + 5 * 2 * 2 + 10 = 50`).
+    - IP range should not conflict or overlap with Kubernetes cluster networks(`10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16` and `10.53.0.0/16` are reserved).
+    - IP range should be in IPv4 CIDR format and Longhorn pods use Storage Network as follows:
+        - `instance-manger-e` and `instance-manager-r` pods: These require 2 IPs per node. During an upgrade, two versions of these pods will exist (old and new), and the old version will be deleted once the upgrade is successful.
+        - `backing-image-ds` pods: These are employed to process on-the-fly uploads and downloads of backing image data sources. These pods will be removed once the image uploads or downloads are completed.
+        - `backing-image-manager` pods: 1 IP per disk, similar to the instance manager pods. Two versions of these will coexist during an upgrade, and the old ones will be removed after the upgrade is completed.
+        - The required number of IPs is calculated using a simple formula: `Required Number of IPs = Number of Nodes * 4 + Number of Disks * 2 + Number of Images to Download/Upload`
+    - For example, if your cluster has five nodes, each node has two disks, and ten images will be uploaded simultaneously, the IP range should be greater than or equal to `/26` (`5 * 4 + 5 * 2 * 2 + 10 = 50`).
 
 
 We will take the following configuration as an example to explain the details of the Storage Network

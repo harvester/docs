@@ -1,5 +1,4 @@
 ---
-id: harvester-logging
 sidebar_position: 1
 sidebar_label: 日志
 title: "日志"
@@ -10,7 +9,7 @@ keywords:
 - 事件
 ---
 
-_从 v1.1.0 起可用_
+_从 v1.2.0 起可用_
 
 了解 `Harvester 集群`中正在发生/已经发生的事情是非常重要的。
 
@@ -22,15 +21,13 @@ _从 v1.1.0 起可用_
 日志数据的大小与集群规模、工作负载等因素有关。`Harvester` 不使用持久存储在集群内存储日志数据。用户需要设置一个日志服务器来接收相应的日志。
 :::
 
-_从 v1.2.0 起可用_
-
 现在的日志功能通过插件实现，并且在新安装中默认禁用。
 
-安装后，你可以从 Harvester WebUI 启用/禁用 `rancher-logging` [插件](../advanced/addons.md)。
+安装后，你可以从 Harvester UI 启用/禁用 `rancher-logging` [插件](../advanced/addons.md)。
 
 你还可以通过自定义 [harvester-configuration](../install/harvester-configuration.md#installaddons) 文件在 Harvester 中启用/禁用 `rancher-logging` 插件。
 
-对于从 v1.1.* 升级的 Harvester 集群，日志功能会自动转换为插件并像以前一样保持启用状态。
+对于从 v1.1.x 升级的 Harvester 集群，日志功能会自动转换为插件并像以前一样保持启用状态。
 
 ## 上层架构
 
@@ -67,32 +64,56 @@ Banzai Cloud Logging Operator 下面是 [`fluentd` ](https://www.fluentd.org/)�
 
 #### 使用 UI
 
-1. 导航到 `Monitoring & Logging > Logging` 下的 `Configuration` 页面。
-2. 在 `Fluentbit` 选项卡下，更改资源请求和限制。
-3. 在 `Fluentd` 选项卡下，更改资源请求和限制。
-4. 点击屏幕右下方的 `Save`。
+1. 转到 **Advanced** > **Addons** 页面并选择 **rancher-logging** 插件。
+2. 在 **Fluentbit** 选项卡中，更改资源请求和限制。
+3. 在 **Fluentd** 选项卡中，更改资源请求和限制。
+4. 完成 **rancher-logging** 插件设置后，选择 **Save**。
 
-![](/img/v1.2/logging/modify-logging-fluent-resources.png)
+![](/img/v1.2/logging/modify-logging-resources-from-addon.png)
+
+:::note
+
+UI 配置仅在启用 **rancher-logging** 插件时可见。
+
+:::
 
 #### 使用 CLI
 
-你还可以通过在命令行运行 `kubectl edit managedchart -nfleet-local rancher-logging` 来更改资源配置并修改相关文件。
+你可以使用以下 `kubectl` 命令更改 `rancher-logging` 插件的资源配置：`kubectl edit addons.harvesterhci.io -n cattle-logging-system rancher-logging`。
 
-如果你的 Harvester 版本 `>= v1.1.0`，相关路径和默认值为：
+资源路径和默认值如下。
 
-```yaml
-# fluentbit
-values.fluentbit.resources.limits.cpu: 200m
-values.fluentbit.resources.limits.memory: 200mi
-values.fluentbit.resources.requests.cpu: 50m
-values.fluentbit.resources.requests.memory: 50mi
----
-#fluentd
-values.fluentbit.resources.limits.cpu: 200m
-values.fluentbit.resources.limits.memory: 200mi
-values.fluentbit.resources.requests.cpu: 50m
-values.fluentbit.resources.requests.memory: 50mi
 ```
+apiVersion: harvesterhci.io/v1beta1
+kind: Addon
+metadata:
+  name: rancher-logging
+  namespace: cattle-logging-system
+spec:
+  valuesContent: |
+    fluentbit:
+      resources:
+        limits:
+          cpu: 200m
+          memory: 200Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+    fluentd:
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 800Mi
+        requests:
+          cpu: 100m
+          memory: 200Mi
+```
+
+:::note
+
+禁用插件后，你仍然可以调整配置。这些更改仅在你重新启用插件后才会生效。
+
+:::
 
 ### 配置日志目标
 
