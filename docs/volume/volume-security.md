@@ -9,101 +9,93 @@ keywords:
 
 _Available as of v1.4.0_
 
-Starting with v1.4.0 Harvester allows you to encrypt and decrypt volume. The encryption mechanism utilizes the Linux kernel module dm_crypt and the command-line utility cryptsetup.
+Harvester v1.4.0 and later versions allow you to encrypt and decrypt virtual machine images. The encryption mechanism utilizes the Linux kernel module dm_crypt and the command-line utility cryptsetup.
 
-## Prerequisite
+## Prerequisites
 
-Before encrypting volumes, we need to prepare following resources:
+Prepare the following resources:
 
-- secret
-- storage class
+- Secret: A Kubernetes secret is used as the passphrase of dm_crypt. You must specify the value of the `CRYPTO_KEY_VALUE` field. All other fields are fixed.
 
-### Secret
+  ![](/img/v1.4/image/create-encryption-used-secret.png)
 
-We use this secret as passphrase of dm_crypt. You need to customize the value of `CRYPTO_KEY_VALUE` field. Other fields are fixed.
+  Example Secret:
 
-![](/img/v1.4/image/create-encryption-used-secret.png)
+  ```yaml
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: encryption
+    namespace: default
+  data:
+    CRYPTO_KEY_CIPHER: aes-xts-plain64
+    CRYPTO_KEY_HASH: sha256
+    CRYPTO_KEY_PROVIDER: secret
+    CRYPTO_KEY_SIZE: 256
+    CRYPTO_KEY_VALUE: "Your encryption passphrase"
+    CRYPTO_PBKDF: argon2i
+  ```
 
-Example Secret:
+  :::info important
 
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: encryption
-  namespace: default
-data:
-  CRYPTO_KEY_CIPHER: aes-xts-plain64
-  CRYPTO_KEY_HASH: sha256
-  CRYPTO_KEY_PROVIDER: secret
-  CRYPTO_KEY_SIZE: 256
-  CRYPTO_KEY_VALUE: "Your encryption passphrase"
-  CRYPTO_PBKDF: argon2i
-```
+  You can create a secret in the system namespace using kubectl or the Harvester UI (**Edit as YAML** feature). Resources in the system namespace are not displayed on the Harvester UI **Secrets** screen.
 
-:::info important
+  :::
 
-If you'd like to create secret in the system namespace, you can use Edit as YAML or kubectl to create the secret. On the Harvester Secrets page, Harvester does not display resources in the system namespace.
+- StorageClass: Images are encrypted using Longhorn, so required fields must be passed to the Longhorn CSI Driver. You can specify the encryption secret when creating a StorageClass. For more information, see [Image StorageClass](./upload-image#image-storageclass). 
 
-:::
+  ![](/img/v1.4/image/create-storage-class.png)
 
-### Storage Class
+  Example of a StorageClass:
 
-Since Harvesters uses Longhorn to encrypt volume, we need to pass required fields to Longhorn CSI driver.
+  ```yaml
+  allowVolumeExpansion: true
+  apiVersion: storage.k8s.io/v1
+  kind: StorageClass
+  metadata:
+    name: encryption
+  parameters:
+    csi.storage.k8s.io/node-publish-secret-name: encryption
+    csi.storage.k8s.io/node-publish-secret-namespace: default
+    csi.storage.k8s.io/node-stage-secret-name: encryption
+    csi.storage.k8s.io/node-stage-secret-namespace: default
+    csi.storage.k8s.io/provisioner-secret-name: encryption
+    csi.storage.k8s.io/provisioner-secret-namespace: default
+    encrypted: "true"
+    migratable: "true"
+    numberOfReplicas: "3"
+    staleReplicaTimeout: "2880"
+  provisioner: driver.longhorn.io
+  reclaimPolicy: Delete
+  volumeBindingMode: Immediate
+  ```
 
-![](/img/v1.4/image/create-storage-class.png)
+  :::info important
 
-Example Storage Class:
+  You can create a secret in the system namespace using the Harvester UI (**Edit as YAML** feature) and kubectl. Resources in the system namespace are not displayed on the Harvester UI **Secrets** screen.
 
-```yaml
-allowVolumeExpansion: true
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: encryption
-parameters:
-  csi.storage.k8s.io/node-publish-secret-name: encryption
-  csi.storage.k8s.io/node-publish-secret-namespace: default
-  csi.storage.k8s.io/node-stage-secret-name: encryption
-  csi.storage.k8s.io/node-stage-secret-namespace: default
-  csi.storage.k8s.io/provisioner-secret-name: encryption
-  csi.storage.k8s.io/provisioner-secret-namespace: default
-  encrypted: "true"
-  migratable: "true"
-  numberOfReplicas: "3"
-  staleReplicaTimeout: "2880"
-provisioner: driver.longhorn.io
-reclaimPolicy: Delete
-volumeBindingMode: Immediate
-```
+  :::
 
-:::info important
+## Encrypted Volumes
 
-If you'd like to select secret in the system namespace. You can use Edit as YAML or kubectl to create the secret. On the Harvester Secrets page, Harvester does not display resources in the system namespace.
+You can create an encrypted volume using an encrypted StorageClass on the following UI locations:
 
-:::
+- **Volumes: Create** screen
 
-## Encrypt Volume
+  ![create-empty-volume](/img/v1.4/volume/create-empty-volume.png)
 
-There are two ways to create an encrypted volume. In either case, be sure to select an encrypted storage class.
+- **Volumes** tab on the **Virtual Machine: Create** screen
 
-### Volumes Page
+  ![create-empty-volume](/img/v1.4/volume/create-empty-volume-in-vm.png)
 
-![create-empty-volume](/img/v1.4/volume/create-empty-volume.png)
+## Advanced Usage with Rancher Integration
 
-### Volumes tab when creating a virtual machine
-
-When creating a virtual machine image, you can add a volume by clicking the `Add Volume button` in the Volumes tab on the virtual machine image page.
-
-![create-empty-volume](/img/v1.4/volume/create-empty-volume-in-vm.png)
-
-## Advanced usage with Rancher Integration
-
-### Prevent other users from reading the secret
-
-Since the secret is a base64 encoded string, it's not really encrypted. So, admin might want keep this secret safe. With Rancher Integration, we can use project and namespace to isolate permission. Please check [Multi-Tenancy](../rancher/virtualization-management#multi-tenancy) for more detail.
+The secret is an unencrypted Base64-encoded string. To keep the secret safe, you can use projects and namespaces to isolate permissions. For more information, see [Multi-Tenancy](../rancher/virtualization-management#multi-tenancy).
 
 ## Limitations
 
-- Don't support that export to image from encrypted volumes.
-- Don't support that data volume restoring from encrypted to unencrypted or unencrypted to encrypted one.
+You cannot perform the following actions:
+
+- Export a new volume from an encrypted volume
+- Restore an encrypted volume to an unencrypted volume
+- Restore an unencrypted volume to an encrypted volume

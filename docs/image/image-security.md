@@ -13,134 +13,145 @@ keywords:
 
 _Available as of v1.4.0_
 
-Starting with v1.4.0 Harvester allows you to encrypt and decrypt virtual machine image. The encryption mechanism utilizes the Linux kernel module dm_crypt and the command-line utility cryptsetup.
+Harvester v1.4.0 and later versions allow you to encrypt and decrypt virtual machine images. The encryption mechanism utilizes the Linux kernel module dm_crypt and the command-line utility cryptsetup.
 
-## Prerequisite
+## Prerequisites
 
-Before encrypting or decrypting the virtual machine image, we need to prepare following resources:
+Prepare the following resources:
 
-- source virtual machine image
-- secret
-- storage class
+- Source virtual machine image: You can [upload or create an image](./upload-image) using any of the supported methods.
 
-### Source Virtual Machine Image
+  :::caution
 
-Please follow [Upload Images](./upload-image) to create an image.
+  Do not upload an encrypted image.
 
-:::info important 
-Harvester doesn't support uploading an encrypted image
-:::
+  :::
 
-### Secret
+- Secret: A Kubernetes secret is used as the passphrase of dm_crypt. You must specify the value of the `CRYPTO_KEY_VALUE` field. All other fields are fixed.
 
-We use this secret as passphrase of dm_crypt. You need to customize the value of `CRYPTO_KEY_VALUE` field. Other fields are fixed.
+  ![](/img/v1.4/image/create-encryption-used-secret.png)
 
-![](/img/v1.4/image/create-encryption-used-secret.png)
+  Example of a secret:
 
-Example Secret:
+  ```yaml
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: encryption
+    namespace: default
+  data:
+    CRYPTO_KEY_CIPHER: aes-xts-plain64
+    CRYPTO_KEY_HASH: sha256
+    CRYPTO_KEY_PROVIDER: secret
+    CRYPTO_KEY_SIZE: 256
+    CRYPTO_KEY_VALUE: "Your encryption passphrase"
+    CRYPTO_PBKDF: argon2i
+  ```
 
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: encryption
-  namespace: default
-data:
-  CRYPTO_KEY_CIPHER: aes-xts-plain64
-  CRYPTO_KEY_HASH: sha256
-  CRYPTO_KEY_PROVIDER: secret
-  CRYPTO_KEY_SIZE: 256
-  CRYPTO_KEY_VALUE: "Your encryption passphrase"
-  CRYPTO_PBKDF: argon2i
-```
+  :::info important
 
-:::info important
+  You can create a secret in the system namespace using kubectl or the Harvester UI (**Edit as YAML** feature). Resources in the system namespace are not displayed on the Harvester UI **Secrets** screen.
 
-If you'd like to create secret in the system namespace, you can use Edit as YAML or kubectl to create the secret. On the Harvester Secrets page, Harvester does not display resources in the system namespace.
+  :::
 
-:::
+- StorageClass: Images are encrypted using Longhorn, so required fields must be passed to the Longhorn CSI Driver. You can specify the encryption secret when creating a StorageClass. For more information, see [Image StorageClass](./upload-image#image-storageclass). 
 
-### Storage Class
+  ![](/img/v1.4/image/create-storage-class.png)
 
-Since Harvesters uses Longhorn to encrypt image, we need to pass required fields to Longhorn CSI driver. You can select encryption used secret when creating storage class. If you're interested in this, please check [here](./upload-image#image-storageclass) for more details. 
+  Example of a StorageClass:
 
-![](/img/v1.4/image/create-storage-class.png)
+  ```yaml
+  allowVolumeExpansion: true
+  apiVersion: storage.k8s.io/v1
+  kind: StorageClass
+  metadata:
+    name: encryption
+  parameters:
+    csi.storage.k8s.io/node-publish-secret-name: encryption
+    csi.storage.k8s.io/node-publish-secret-namespace: default
+    csi.storage.k8s.io/node-stage-secret-name: encryption
+    csi.storage.k8s.io/node-stage-secret-namespace: default
+    csi.storage.k8s.io/provisioner-secret-name: encryption
+    csi.storage.k8s.io/provisioner-secret-namespace: default
+    encrypted: "true"
+    migratable: "true"
+    numberOfReplicas: "3"
+    staleReplicaTimeout: "2880"
+  provisioner: driver.longhorn.io
+  reclaimPolicy: Delete
+  volumeBindingMode: Immediate
+  ```
 
-Example Storage Class:
+  :::info important
 
-```yaml
-allowVolumeExpansion: true
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: encryption
-parameters:
-  csi.storage.k8s.io/node-publish-secret-name: encryption
-  csi.storage.k8s.io/node-publish-secret-namespace: default
-  csi.storage.k8s.io/node-stage-secret-name: encryption
-  csi.storage.k8s.io/node-stage-secret-namespace: default
-  csi.storage.k8s.io/provisioner-secret-name: encryption
-  csi.storage.k8s.io/provisioner-secret-namespace: default
-  encrypted: "true"
-  migratable: "true"
-  numberOfReplicas: "3"
-  staleReplicaTimeout: "2880"
-provisioner: driver.longhorn.io
-reclaimPolicy: Delete
-volumeBindingMode: Immediate
-```
+  You can create a secret in the system namespace using the Harvester UI (**Edit as YAML** feature) and kubectl. Resources in the system namespace are not displayed on the Harvester UI **Secrets** screen.
 
-:::info important
+  :::
 
-If you'd like to select secret in the system namespace. You can use Edit as YAML or kubectl to create the secret. On the Harvester Secrets page, Harvester does not display resources in the system namespace.
+## Encrypt a Virtual Machine Image
 
-:::
+1. On the Harvester UI, go to **Images**.
 
-## Encrypt Image
+1. Click **Create**.
 
-After getting a source image, please select `Encrypt` to encrypt the virtual machine image.
+1. Specify a namespace and a name.
 
-![](/img/v1.4/image/create-encrypted-image.png)
+1. On the **Basics** tab, select **Encrypt** and then select a source image.
 
-Select a previously created storage class. This storage class must include encryption-related fields. Harvester will pass this storage class to Longhorn.
+  ![](/img/v1.4/image/create-encrypted-image.png)
 
-![](/img/v1.4/image/select-encryption-storage-class.png)
+1. On the **Storage** tab, select a StorageClass that includes encryption-related fields. 
 
-## Decrypt Image
+  Harvester passes the required fields to Longhorn.
 
-After getting an encrypted image, please select `Decrypt` to decrypt an encrypted virtual machine image.
+  ![](/img/v1.4/image/select-encryption-storage-class.png)
 
-![](/img/v1.4/image/create-decrypted-image.png)
+1. Click **Create**.
 
-Select the default or a commonly used storage class. Harvester will use the storage class from the source virtual machine image that you want to decrypt.
+## Decrypt a Virtual Machine Image
 
-![](/img/v1.4/image/select-normal-storage-class.png)
+1. On the Harvester UI, go to **Images**.
 
-## Use Image
+1. Click **Create**.
 
-Select the image when creating a virtual machine.
+1. Specify a namespace and a name.
+
+1. On the **Basics** tab, select **Decrypt** and then select a source image.
+
+  ![](/img/v1.4/image/create-decrypted-image.png)
+
+1. On the **Storage** tab, select **harvester-longhorn (Default)** or another commonly used StorageClass.
+
+  Harvester uses the StorageClass of the source image that you want to decrypt.
+
+  ![](/img/v1.4/image/select-normal-storage-class.png)
+
+1. Click **Create**.
+
+## Use an Image with Encrypted Volumes
+
+You must select the image that you want to use when creating a virtual machine.
 
 ![](/img/v1.4/image/create.png)
 
-There are two cases in which the dashboard shows different messages on the virtual machine page.
+The **Virtual Machines** screen displays the following icons and messages when volumes used by virtual machines are encrypted.
 
-1. All volumes are encrypted.
-  ![](/img/v1.4/image/case1.png)
-2. Some volumes are encrypted.
-  ![](/img/v1.4/image/case2.png)
+![](/img/v1.4/image/case1.png)
 
-If you'd like to know which specific volume is encrypted or not, please check `Enctyption` field on Volume tab.
+![](/img/v1.4/image/case2.png)
+
+To determine which volumes are encrypted, check the **Volumes** tab on the **Virtual Machine** details screen.
 
 ![](/img/v1.4/image/volume-detail.png)
 
 ## Advanced Usage with Rancher Integration
 
-### Prevent other users from reading the secret
-
-Since the secret is a base64 encoded string, it's not really encrypted. So, admin might want keep this secret safe. With Rancher Integration, we can use project and namespace to isolate permission. Please check [Multi-Tenancy](../rancher/virtualization-management#multi-tenancy) for more detail.
+The secret is an unencrypted Base64-encoded string. To keep the secret safe, you can use projects and namespaces to isolate permissions. For more information, see [Multi-Tenancy](../rancher/virtualization-management#multi-tenancy).
 
 ## Limitations
 
-- Don't support that export to image from encrypted image.
-- Don't support that download encrypted image and upload it to reuse.
-- Don't support that upload an encrypted image.
+You cannot perform the following actions:
+
+- Export a new image from an encrypted image
+- Download an encrypted image
+- Upload an encrypted image
