@@ -175,3 +175,39 @@ You can only choose to retain the previous volumes.
 1. Click `Replace Existing`.
 1. You can view the restore process from the `Virtual Machines` page.
 ![restore-vm-snapshot-existing.png](/img/v1.2/vm/restore-vm-snapshot-existing.png)
+
+## VM Snapshot Space Management
+
+_Available as of v1.4.0_
+
+When creating a new VM Backup / Snapshot, volumes take extra space in the cluster. The space management feature is introduced to manage the extra space.
+
+Users can set snapshot space usage limits at Namespace or VM level. By default, there is no limit set. The limit will calculate the total extra space usage, including the VM Backup / Snapshot and Volume Snapshot.
+
+### Set Snapshot Space Usage Limit at Namespace Level
+
+1. Go to the `Namespaces` page and click `Edit Quota` button.
+
+![edit-quota-namespace.png](/img/v1.4/vm/edit-quota-namespace.png)
+
+2. Fill the `Total Snapshot Size` field and click `Save`.
+
+![edit-quota-namespace-save.png](/img/v1.4/vm/edit-quota-namespace-save.png)
+
+3. Check the `Total Snapshot Size` field in the `Namespaces` page.
+
+![edit-quota-namespace-read.png](/img/v1.4/vm/edit-quota-namespace-read.png)
+
+### Set Snapshot Space Usage Limit at VM Level
+
+1. Go to the `Virtual Machines` page, choose a VM and, click `Edit VM Quota` button.
+
+![edit-quota-vm.png](/img/v1.4/vm/edit-quota-vm.png)
+
+2. Fill the `Total Snapshot Size` field and click `Save`.
+
+![edit-quota-vm-save.png](/img/v1.4/vm/edit-quota-vm-save.png)
+
+3. Check the `Total Snapshot Size` field in the `Quotas` tab.
+
+![edit-quota-vm-read.png](/img/v1.4/vm/edit-quota-vm-read.png)
