@@ -104,6 +104,10 @@ A `USBDevice` resource in Harvester represents a USB device on the node. USB dev
 
 USB passthrough is slightly different from PCI passthrough. For example, you can fully control a USB controller with four USB ports by creating a `PCIDeviceClaim`. However, you can also create a `USBDeviceClaim` to control only one USB port. The other three USB ports remain available to the node.
 
+:::caution
+Please detach the USB device from VM and disable it before unplugging it.
+:::
+
 ### Enable Passthrough on a USB Device
 
 1. On the Harvester UI, go to **Advanced** > **USB Devices**.
