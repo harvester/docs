@@ -27,14 +27,18 @@ In the Rancher UI, administrators can configure resource quotas for namespaces t
 1. Click the hamburger menu and choose the **Virtualization Management** tab.
 1. Choose one of the clusters and go to **Projects/Namespaces** > **Create Project**.
 1. Specify the desired project **Name**. Next, go to the **Resource Quotas** tab and select the **Add Resource** option. Within the **Resource Type** field, select either **CPU Limit** or **Memory Limit** and define the **Project Limit** and **Namespace Default Limit** values.
-  ![](/img/v1.2/rancher/create-project.png)
+  ![](/img/v1.3/rancher/create-project.png)
 
 You can configure the **Namespace** limits as follows: 
 
 1. Find the newly created project, and select **Create Namespace**.
 1. Specify the desired namespace **Name**, and adjust the limits.
 1. Complete the process by selecting **Create**.
-  ![](/img/v1.2/rancher/create-namespace.png)
+  ![](/img/v1.3/rancher/create-namespace.png)
+
+:::note
+Attempts to provision VMs for guest clusters are blocked when the resource quotas are reached. Rancher responds by creating a new VM in a loop, in which each failed attempt to create a VM is immediately followed by another creation attempt. This results in a transient error state in the cluster that is not recorded as the VM is recreated.
+:::
 
 ## Overhead memory of virtual machine
 Upon creating a virtual machine (VM), the VM controller seamlessly incorporates overhead resources into the VM's configuration. These additional resources intend to guarantee the consistent and uninterrupted functioning of the VM. It's important to note that configuring memory limits requires a higher memory reservation due to the inclusion of these overhead resources.
