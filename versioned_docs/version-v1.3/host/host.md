@@ -279,6 +279,20 @@ The replica data would be rebuilt to another disk automatically to keep the high
 4. Select **Save** to remove the disk.
 
 
+## Topology spread constraints
+
+_Available as of v1.1.0_
+
+[Node labels](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/#node-labels) are used to identify the topology domains that each node is in. You can configure labels such as [`topology.kubernetes.io/zone`](https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesiozone) on the Harvester UI.
+
+1. Go to the **Hosts** screen.
+1. Locate the target node in the list, and then select **⋮ > Edit Config**.
+1. On the **Labels** tab, click **Add Label** and then specify the label `topology.kubernetes.io/zone` and a value.
+1. Click **Save**.
+
+The label is automatically synchronized with the corresponding Longhorn node.
+
+
 ## Ksmtuned Mode
 
 _Available as of v1.1.0_
