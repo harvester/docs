@@ -414,9 +414,11 @@ Specify an IP range in the IPv4 CIDR format. The number of IPs must be four time
 
 **Definition**: Support bundle image, with various versions available in [rancher/support-bundle-kit](https://hub.docker.com/r/rancher/support-bundle-kit/tags).
 
-**Default value**: The default value is the `support-bundle-kit` image which is packed into the Harvester ISO. It varies between different Harvester releases.
+**Default value**: `support-bundle-kit` image that is packed into the Harvester ISO and is specific to each Harvester release.
 
-**Example**: After one Harvester cluster is installed, you observe that the `default` image tag is `v0.0.25`.
+**Example**:
+
+In this example, the default image tag of the cluster is `v0.0.25`.
 
 ```
 {
@@ -436,7 +438,7 @@ The value is a JSON object literal that contains the following key-value pairs:
 
 **Notes**:
 
-From CLI, the `support-bundle-image` setting object is like:
+The CLI shows the following `support-bundle-image` setting object:
 
 ```
 apiVersion: harvesterhci.io/v1beta1
@@ -448,7 +450,7 @@ metadata:
 status: {}
 ```
 
-And you want to use the newer image tag `v0.0.36`, after setting from Harvester UI it is like:
+After some time, a newer image tag (`v0.0.36`) is specified in the `value` field using the Harvester UI.
 
 ![](/img/v1.3/advanced/support-bundle-image-set-customized-value.png)
 
@@ -463,7 +465,7 @@ status: {}
 value: '{"repository":"rancher/support-bundle-kit","tag":"v0.0.36","imagePullPolicy":"IfNotPresent"}'  // your setting value
 ```
 
-Later this cluster is upgraded, it is further like:
+Eventually, this cluster is upgraded and the object changes again.
 
 ```
 apiVersion: harvesterhci.io/v1beta1
@@ -476,15 +478,15 @@ status: {}
 value: '{"repository":"rancher/support-bundle-kit","tag":"v0.0.36","imagePullPolicy":"IfNotPresent"}'  // your setting value is kept unchanged
 ```
 
-Now the set `value` has image tag `v0.0.36` but the default image tag is `v0.0.38`, it is outdated.
+The value of `tag` in the `value` field is `v0.0.36`, while the value of `tag` in the `default` field is `v0.0.38`.
 
-To clear the customized setting and stick to the default value, you need to operate with `kubectl`, then remove the whole line of `value` and save.
+To clear the outdated setting and use the default image tag, run the following command, remove the `value` field, and save the changes.
 
 ```
 $ kubectl edit settings.harvesterhci.io support-bundle-image
 ```
 
-After clearing the customized setting, it is like:
+The object appears as follows after the `value` field is removed.
 
 ```
 apiVersion: harvesterhci.io/v1beta1
@@ -496,11 +498,11 @@ metadata:
 status: {}
 ```
 
-For this setting, the UI menu **Use the default value** copies the `default` to the `value` field.
+The **Use the default value** button on the Harvester UI can be used to copy the contents of the `default` field to the `value` field.
 
 ![](/img/v1.3/advanced/support-bundle-image-set-use-default-value.png)
 
-After clicking **Save**, the object is updated to:
+The object appears as follows after the changes are saved.
 
 ```
 apiVersion: harvesterhci.io/v1beta1
@@ -513,19 +515,21 @@ status: {}
 value: '{"repository":"rancher/support-bundle-kit","tag":"v0.0.38","imagePullPolicy":"IfNotPresent"}'  // copied from default
 ```
 
-In the future when you upgrade the cluster to a new version the `default` image tag may be like `v0.0.40`, the `value` field will be outdated again.
+When the cluster is upgraded in the future, the contents of the `value` field may become outdated again because the default image tag is likely to change.
 
 :::note
 
-- Harvester always sets the `default` field to the image tag which is packed into Harvester ISO. When the cluster is upgraded, the `default` field is also updated automatically. As long as the `value` field is not set or empty, Harvester sticks to the `default` field. It makes sure the image is on the cluster and is up-to-date.
+- The value of `tag` in the `default` field is always based on the image that is packed into the Harvester ISO. This field is automatically updated whenever the cluster is upgraded.
 
-- In general you do not need to set this setting. If you plan to set a specific image, be aware that it will take precedence of the `default` and is not updated automatically.
+- The `default` field is used when the `value` field is not set or is left empty. Harvester checks if the default image is stored in the cluster and is up-to-date.
 
-- If you have set a customized image but want to follow the default image, then use the `kubectl` command to clear the `value` field.
+- Configuring this setting is not required. If you decide to specify a different image tag in the `value` field, remember that this tag may become outdated when the cluster is upgraded.
 
-- The UI menu **Use the default value** is not the best option to clear this setting. It copies the current `default` to `value`, the `default` will be updated when upgrading but the `value` field will not.
+- Use the command `$ kubectl edit settings.harvesterhci.io support-bundle-image` to clear the `value` field.
 
-- If your cluster is in an air-gapped environment and the set `support-bundle-image` is not the default one, you need to prepare this image on your local [containerd registry](#containerd-registry). The operation [Generate a Support Bundle](../troubleshooting/harvester.md#generate-a-support-bundle) will fail if the set image is not available.
+- The **Use the default value** button on the Harvester UI only copies the contents of the `default` field to the `value` field. You may use this to replace an outdated image tag, but the copied tag will eventually become outdated as well (when the cluster is upgraded and the `default` field is updated).
+
+- If your cluster is in an air-gapped environment and you specified a non-default image tag in the `value` field, ensure that the image is available in the local [containerd registry](#containerd-registry). Harvester is unable to [generate a support bundle](../troubleshooting/harvester.md#generate-a-support-bundle) if the image is not available.
 
 :::
 
