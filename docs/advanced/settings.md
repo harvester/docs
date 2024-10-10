@@ -414,7 +414,11 @@ Specify an IP range in the IPv4 CIDR format. The number of IPs must be four time
 
 **Definition**: Support bundle image, with various versions available in [rancher/support-bundle-kit](https://hub.docker.com/r/rancher/support-bundle-kit/tags).
 
-**Default value**:
+**Default value**: `support-bundle-kit` image that is packed into the Harvester ISO and is specific to each Harvester release.
+
+**Example**:
+
+In this example, the default image tag of the cluster is `v0.0.25`.
 
 ```
 {
@@ -431,6 +435,103 @@ The value is a JSON object literal that contains the following key-value pairs:
 - `repository`: Name of the repository that stores the support bundle image.
 - `tag`:  Tag assigned to the support bundle image.
 - `imagePullPolicy`: Pull policy of the support bundle image. The supported values are `IfNotPresent`, `Always`, and `Never`. For more information, see [Image pull policy](https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy) in the Kubernetes documentation.
+
+**Notes**:
+
+The CLI shows the following `support-bundle-image` setting object:
+
+```
+apiVersion: harvesterhci.io/v1beta1
+default: '{"repository":"rancher/support-bundle-kit","tag":"v0.0.25","imagePullPolicy":"IfNotPresent"}'  // default value, automatically set
+kind: Setting
+metadata:
+  name: support-bundle-image
+...
+status: {}
+```
+
+After some time, a newer image tag (`v0.0.36`) is specified in the `value` field using the Harvester UI.
+
+![](/img/v1.3/advanced/support-bundle-image-set-customized-value.png)
+
+```
+apiVersion: harvesterhci.io/v1beta1
+default: '{"repository":"rancher/support-bundle-kit","tag":"v0.0.25","imagePullPolicy":"IfNotPresent"}'
+kind: Setting
+metadata:
+  name: support-bundle-image
+...
+status: {}
+value: '{"repository":"rancher/support-bundle-kit","tag":"v0.0.36","imagePullPolicy":"IfNotPresent"}'  // your setting value
+```
+
+Eventually, this cluster is upgraded and the object changes again.
+
+```
+apiVersion: harvesterhci.io/v1beta1
+default: '{"repository":"rancher/support-bundle-kit","tag":"v0.0.38","imagePullPolicy":"IfNotPresent"}'  // default value, automatically updated after upgrade
+kind: Setting
+metadata:
+  name: support-bundle-image
+...
+status: {}
+value: '{"repository":"rancher/support-bundle-kit","tag":"v0.0.36","imagePullPolicy":"IfNotPresent"}'  // your setting value is kept unchanged
+```
+
+The value of `tag` in the `value` field is `v0.0.36`, while the value of `tag` in the `default` field is `v0.0.38`.
+
+To clear the outdated setting and use the default image tag, run the following command, remove the `value` field, and save the changes.
+
+```
+$ kubectl edit settings.harvesterhci.io support-bundle-image
+```
+
+The object appears as follows after the `value` field is removed.
+
+```
+apiVersion: harvesterhci.io/v1beta1
+default: '{"repository":"rancher/support-bundle-kit","tag":"v0.0.38","imagePullPolicy":"IfNotPresent"}'
+kind: Setting
+metadata:
+  name: support-bundle-image
+...
+status: {}
+```
+
+The **Use the default value** button on the Harvester UI can be used to copy the contents of the `default` field to the `value` field.
+
+![](/img/v1.3/advanced/support-bundle-image-set-use-default-value.png)
+
+The object appears as follows after the changes are saved.
+
+```
+apiVersion: harvesterhci.io/v1beta1
+default: '{"repository":"rancher/support-bundle-kit","tag":"v0.0.38","imagePullPolicy":"IfNotPresent"}'  // default
+kind: Setting
+metadata:
+  name: support-bundle-image
+...
+status: {}
+value: '{"repository":"rancher/support-bundle-kit","tag":"v0.0.38","imagePullPolicy":"IfNotPresent"}'  // copied from default
+```
+
+When the cluster is upgraded in the future, the contents of the `value` field may become outdated again because the default image tag is likely to change.
+
+:::note
+
+- The value of `tag` in the `default` field is always based on the image that is packed into the Harvester ISO. This field is automatically updated whenever the cluster is upgraded.
+
+- The `default` field is used when the `value` field is not set or is left empty. Harvester checks if the default image is stored in the cluster and is up-to-date.
+
+- Configuring this setting is not required. If you decide to specify a different image tag in the `value` field, remember that this tag may become outdated when the cluster is upgraded.
+
+- Use the command `$ kubectl edit settings.harvesterhci.io support-bundle-image` to clear the `value` field.
+
+- The **Use the default value** button on the Harvester UI only copies the contents of the `default` field to the `value` field. You may use this to replace an outdated image tag, but the copied tag will eventually become outdated as well (when the cluster is upgraded and the `default` field is updated).
+
+- If your cluster is in an air-gapped environment and you specified a non-default image tag in the `value` field, ensure that the image is available in the local [containerd registry](#containerd-registry). Harvester is unable to [generate a support bundle](../troubleshooting/harvester.md#generate-a-support-bundle) if the image is not available.
+
+:::
 
 ### `support-bundle-namespaces`
 
