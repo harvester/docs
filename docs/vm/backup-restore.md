@@ -90,7 +90,19 @@ Users can now restore a new VM on another cluster by leveraging the VM metadata 
 
 :::info prerequisites
 
-You must manually configure the virtual machine images with the same name on the new cluster first, otherwise the virtual machines will be failed to recover.
+To restore a new VM from Harvester cluster above v1.4.0,
+users don't need to manually upload the VM images to the new cluster.
+The controller will automatically sync the VM images to the new cluster.
+
+There are two limitations for automatically sync the virtual machine images to the new cluster:
+
+1. There is a virtual machine image with the same name on the new cluster.
+2. There is a virtual machine image with the same display name on the new cluster.
+
+To restore a new VM from Harvester cluster below v1.4.0.
+You must manually configure the virtual machine images with the same name on the new cluster first,
+otherwise the virtual machines will be failed to recover.
+Please check the [Upload the same VM images to a new cluster](#upload-the-same-vm-images-to-a-new-cluster) section for more details.
 
 :::
 
