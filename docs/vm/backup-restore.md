@@ -198,16 +198,18 @@ Volumes consume extra disk space in the cluster whenever you create a new virtua
 
     ![edit-quota-namespace-read.png](/img/v1.4/vm/edit-quota-namespace-read.png)
 
-### Set Snapshot Space Usage Limit at VM Level
+### Configure the Snapshot Space Usage Limit at the Virtual Machine Level
 
-1. Go to the `Virtual Machines` page, choose a VM and, click `Edit VM Quota` button.
+1. Go to the **Virtual Machines** screen.
 
-![edit-quota-vm.png](/img/v1.4/vm/edit-quota-vm.png)
+1. Locate the target virtual machine, and then select **⋮ > Edit VM Quota**.
 
-2. Fill the `Total Snapshot Size` field and click `Save`.
+    ![edit-quota-vm.png](/img/v1.4/vm/edit-quota-vm.png)
 
-![edit-quota-vm-save.png](/img/v1.4/vm/edit-quota-vm-save.png)
+1. Specify the maximum total amount of disk space that can be consumed by all snapshots for the virtual machine, and then and click **Save**.
 
-3. Check the `Total Snapshot Size` field in the `Quotas` tab.
+    ![edit-quota-vm-save.png](/img/v1.4/vm/edit-quota-vm-save.png)
 
-![edit-quota-vm-read.png](/img/v1.4/vm/edit-quota-vm-read.png)
+1. Verify that the configured value is displayed on the **Quotas** tab of the virtual machine details screen.
+
+    ![edit-quota-vm-read.png](/img/v1.4/vm/edit-quota-vm-read.png)
