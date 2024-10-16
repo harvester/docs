@@ -175,3 +175,41 @@ You can only choose to retain the previous volumes.
 1. Click `Replace Existing`.
 1. You can view the restore process from the `Virtual Machines` page.
 ![restore-vm-snapshot-existing.png](/img/v1.2/vm/restore-vm-snapshot-existing.png)
+
+## VM Snapshot Space Management
+
+_Available as of v1.4.0_
+
+Volumes consume extra disk space in the cluster whenever you create a new virtual machine backup or snapshot. To manage this, you can configure space usage limits at the namespace and virtual machine levels. The configured values represent the maximum amount of disk space that can be used by all backups and snapshots. No limits are set by default.
+
+### Configure the Snapshot Space Usage Limit at the Namespace Level
+
+1. Go to the **Namespaces** screen.
+
+1. Locate the target namespace, and then select **⋮ > Edit Quota**.
+
+    ![edit-quota-namespace.png](/img/v1.4/vm/edit-quota-namespace.png)
+
+1. Specify the maximum amount of disk space that can be consumed by all snapshots in the namespace, and then and click **Save**.
+
+    ![edit-quota-namespace-save.png](/img/v1.4/vm/edit-quota-namespace-save.png)
+
+1. Verify that the configured value is displayed on the **Namespaces** screen.
+
+    ![edit-quota-namespace-read.png](/img/v1.4/vm/edit-quota-namespace-read.png)
+
+### Configure the Snapshot Space Usage Limit at the Virtual Machine Level
+
+1. Go to the **Virtual Machines** screen.
+
+1. Locate the target virtual machine, and then select **⋮ > Edit VM Quota**.
+
+    ![edit-quota-vm.png](/img/v1.4/vm/edit-quota-vm.png)
+
+1. Specify the maximum total amount of disk space that can be consumed by all snapshots for the virtual machine, and then and click **Save**.
+
+    ![edit-quota-vm-save.png](/img/v1.4/vm/edit-quota-vm-save.png)
+
+1. Verify that the configured value is displayed on the **Quotas** tab of the virtual machine details screen.
+
+    ![edit-quota-vm-read.png](/img/v1.4/vm/edit-quota-vm-read.png)
