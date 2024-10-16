@@ -88,7 +88,7 @@ _Available as of v1.0.0_
 
 Users can now restore a new VM on another cluster by leveraging the VM metadata & content backup feature.
 
-:::info prerequisites
+#### Prerequisites
 
 To restore a new VM from Harvester cluster above v1.4.0,
 users don't need to manually upload the VM images to the new cluster.
