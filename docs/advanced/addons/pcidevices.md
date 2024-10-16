@@ -152,4 +152,4 @@ Before you remove the USB device, detach it from the virtual machine and then di
 
 - Hot-plugging and replugging of USB devices is not supported. For more information, see [KubeVirt Issue #11979](https://github.com/kubevirt/kubevirt/issues/11979).
 
-- If the device path changes when you reattach the device or reboot the node, you must create a new USBDeviceClaim to enable the device.
+- If the device path changes when you reattach the device or reboot the node, you must detach the device from the virtual machine and then enable passthrough again.
