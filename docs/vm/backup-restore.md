@@ -180,9 +180,7 @@ You can only choose to retain the previous volumes.
 
 _Available as of v1.4.0_
 
-When creating a new VM Backup / Snapshot, volumes take extra space in the cluster. The space management feature is introduced to manage the extra space.
-
-Users can set snapshot space usage limits at Namespace or VM level. By default, there is no limit set. The limit will calculate the total extra space usage, including the VM Backup / Snapshot and Volume Snapshot.
+Volumes consume extra disk space in the cluster whenever you create a new virtual machine backup or snapshot. To manage this, you can configure space usage limits at the namespace and virtual machine levels. The configured values represent the maximum amount of disk space that can be used by all backups and snapshots. No limits are set by default.
 
 ### Set Snapshot Space Usage Limit at Namespace Level
 
