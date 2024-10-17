@@ -41,7 +41,13 @@ You can configure the **Namespace** limits as follows:
 Attempts to provision VMs for guest clusters are blocked when the resource quotas are reached. Rancher responds by creating a new VM in a loop, in which each failed attempt to create a VM is immediately followed by another creation attempt. This results in a transient error state in the cluster that is not recorded as the VM is recreated.
 :::
 
-## Overhead memory of virtual machine
+:::important
+
+Due to the [Overhead Memory of Virtual Machine](#overhead-memory-of-virtual-machine), each VM needs some additional memory to work. When setting **Memory Limit**, this should be taken into account. For example, when the project **Memory Limit** is `24 Gi`, it is not possible to run 3 VMs each has `8 Gi` memory.
+
+:::
+
+## Overhead Memory of Virtual Machine
 Upon creating a virtual machine (VM), the VM controller seamlessly incorporates overhead resources into the VM's configuration. These additional resources intend to guarantee the consistent and uninterrupted functioning of the VM. It's important to note that configuring memory limits requires a higher memory reservation due to the inclusion of these overhead resources.
 
 For example, consider the creation of a new VM with the following configuration:
@@ -56,18 +62,25 @@ Memory Overhead is calculated in the following sections:
 - **Memory PageTables Overhead:** This accounts for one bit for every 512b RAM size. For instance, a memory of 16Gi requires an overhead of 32Mi.
 - **VM Fixed Overhead:** This consists of several components:
     - `VirtLauncherMonitorOverhead`: 25Mi  (the `ps` RSS for virt-launcher-monitor)
-    - `VirtLauncherOverhead`: 75Mi  (the `ps` RSS for the virt-launcher process)
-    - `VirtlogdOverhead`: 17Mi  (the `ps` RSS for virtlogd)
-    - `LibvirtdOverhead`: 33Mi (the `ps` RSS for libvirtd)
+    - `VirtLauncherOverhead`: 100Mi  (the `ps` RSS for the virt-launcher process)
+    - `VirtlogdOverhead`: 20Mi  (the `ps` RSS for virtlogd)
+    - `VirtqemudOverhead`: 35Mi (the `ps` RSS for virtqemud)
     - `QemuOverhead` : 30Mi (the `ps` RSS for qemu, minus the RAM of its (stressed) guest, minus the virtual page table)
 - **8Mi per CPU (vCPU) Overhead:** Additionally, 8Mi of overhead per vCPU is added, along with a fixed 8Mi overhead for IOThread.
 - **Extra Added Overhead:** This encompasses various factors like video RAM overhead and architecture overhead. Refer to [Additional Overhead](https://github.com/kubevirt/kubevirt/blob/2bb88c3d35d33177ea16c0f1e9fffdef1fd350c6/pkg/virt-controller/services/template.go#L1853-L1890) for further details.
+- **additional-guest-memory-overhead-ratio** User can further tune the `Memory Overhead` by the Harvester setting [additional-guest-memory-overhead-ratio](../advanced/settings.md#additional-guest-memory-overhead-ratio), which defaults to `"1.5"`. This setting is important for VM to eliminate the chance to hit OOM(Out of Memory).
 
-This calculation demonstrates that the VM instance necessitates an additional memory overhead of approximately 276Mi.
+This calculation demonstrates that the VM instance necessitates an additional memory overhead of approximately 380Mi.
 
 For more information, see [Memory Overhead](https://kubevirt.io/user-guide/virtual_machines/virtual_hardware/#memory-overhead).
 
-For more information on how the memory overhead is calculated in Kubevirt, refer to [kubevirt/pkg/virt-controller/services/template.go](https://github.com/kubevirt/kubevirt/blob/v0.54.0/pkg/virt-controller/services/template.go#L1804).
+For more information on how the memory overhead is calculated in Kubevirt, refer to the source code [GetMemoryOverhead](https://github.com/kubevirt/kubevirt/blob/1466b658f78b9b8bb9517ffb6dafd4b777f33fe6/pkg/virt-controller/services/renderresources.go#L307).
+
+:::note
+
+The `Overhead Memory` varies between different Harvester releases (with different Kubevirt releases) because all those backing components are keeping adding new features and fixing bugs, they need more memory.
+
+:::
 
 ## Automatic adjustment of ResourceQuota during migration
 When the allocated resource quota controlled by the `ResourceQuota` object reaches its limit, migrating a VM becomes unfeasible. The migration process automatically creates a new pod mirroring the resource requirements of the source VM. If these pod creation prerequisites surpass the defined quota, the migration operation cannot proceed.
