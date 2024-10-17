@@ -37,7 +37,7 @@ Please refer to [this page](./create-windows-vm.md) for creating Windows virtual
 1. (Optional) VM template is optional, you can choose `iso-image`, `raw-image` or `windows-iso-image` template to speed up your VM instance creation.
 1. Configure the virtual machine's CPU and memory (see [overcommit settings](../advanced/settings.md#overcommit-config) if you want to over-provision).
 1. Select SSH keys or upload new keys.
-1. Select a custom VM image on the **Volumes** tab. The default disk will be the root disk. You can add more disks to the VM.
+1. Select a custom VM image on the **Volumes** tab. The default disk will be the `root disk`. You can add more disks to the VM.
 1. To configure networks, go to the **Networks** tab. 
     1. The **Management Network** is added by default, you can remove it if the VLAN network is configured.
     1. You can also add additional networks to the VMs using VLAN networks. You may configure the VLAN networks on **Advanced > Networks** first.
@@ -142,7 +142,7 @@ resource "harvester_virtualmachine" "opensuse154" {
 
 ## Volumes
 
-You can add one or more additional volumes via the `Volumes` tab, by default the first disk will be the root disk, you can change the boot order by dragging and dropping volumes, or using the arrow buttons.
+You can add one or more additional volumes via the `Volumes` tab, by default the first disk will be the `root disk`, you can change the boot order by dragging and dropping volumes, or using the arrow buttons.
 
 A disk can be made accessible via the following types:
 
@@ -167,7 +167,7 @@ By default, Harvester sets the volume size to either 10 GiB or the virtual size 
 
 A container disk is an ephemeral storage volume that can be assigned to any number of VMs and provides the ability to store and distribute VM disks in the container image registry. A container disk is:
 - An ideal tool if you want to replicate a large number of VM workloads or inject machine drivers that do not require persistent data. Ephemeral volumes are designed for VMs that need more storage but don't care whether that data is stored persistently across VM restarts or only expect some read-only input data to be present in files, like configuration data or secret keys.
-- Not a good solution for any workload that requires persistent root disks across VM restarts.
+- Not a good solution for any workload that requires persistent `root disks` across VM restarts.
 
 A container disk is added when creating a VM by providing a Docker image. When creating a VM, follow these steps:
 
