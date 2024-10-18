@@ -534,3 +534,23 @@ status:
 
 The `harvester-node-manager` pod(s) in the `harvester-system` namespace may also contain some hints as to why it is not rendering a file to a node.
 This pod is part of a daemonset, so it may be worth checking the pod that is running on the node of interest.
+
+## Remote Console
+
+You can configure the URL of the console for remote server management. This console is particularly useful in environments where physical access is limited.
+
+1. On the Harvester UI, go to **Hosts**.
+
+1. Locate the target host, and then select **⋮ > Edit Config**.
+
+  ![](/img/remote_console_config.png)
+
+1. Specify the **Console URL**, and then click **Save**.
+
+  Example (with HPE iLO):
+
+  ![](/img/remote_console_url.png)
+
+1. Click **Console** to access the remote server.
+
+  ![](/img/remote_console_button.png)
