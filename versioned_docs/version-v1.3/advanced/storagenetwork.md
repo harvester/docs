@@ -28,7 +28,6 @@ There are some prerequisites before configuring the Harvester Storage Network se
     - We recommend checking the VM status with the following command and should get an empty result.
     - `kubectl get -A vmi`
 - All pods that are attached to Longhorn Volumes should be stopped.
-    - Users could skip this step with the Harvester Storage Network setting. Harvester will stop Longhorn-related pods automatically.
 - All ongoing image uploads or downloads should be either completed or deleted.
 
 :::caution
@@ -54,11 +53,11 @@ kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/de
 - IP range for Storage Network
 	- IP range should not conflict or overlap with Kubernetes cluster networks(`10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16` and `10.53.0.0/16` are reserved).
 	- IP range should be in IPv4 CIDR format and Longhorn pods use Storage Network as follows:
-    - `instance-manger-e` and `instance-manager-r` pods: These require 2 IPs per node. During an upgrade, two versions of these pods will exist (old and new), and the old version will be deleted once the upgrade is successful.
+    - `instance-manager` pods: Longhorn Instance Manager components were [consolidated in Longhorn v1.5.0](https://longhorn.io/docs/1.5.0/deploy/important-notes/#instance-managers-consolidated). The Engine Instance Manager and Replica Instance Manager are now deprecated. One IP is required for each node. During an upgrade, two versions of these pods will exist (old and new), and the old version will be deleted once the upgrade is successful.
     - `backing-image-ds` pods: These are employed to process on-the-fly uploads and downloads of backing image data sources. These pods will be removed once the image uploads or downloads are completed.
     - `backing-image-manager` pods: 1 IP per disk, similar to the instance manager pods. Two versions of these will coexist during an upgrade, and the old ones will be removed after the upgrade is completed.
-    - The required number of IPs is calculated using a simple formula: `Required Number of IPs = Number of Nodes * 4 + Number of Disks * 2 + Number of Images to Download/Upload`
-	- For example, if your cluster has five nodes, each node has two disks, and ten images will be uploaded simultaneously, the IP range should be greater than or equal to `/26` (`5 * 4 + 5 * 2 * 2 + 10 = 50`).
+    - The required number of IPs is calculated using a simple formula: `Required Number of IPs = (Number of Nodes * 2) + (Number of Disks * 2) + Number of Images to Download/Upload`
+	- Example: If a cluster has five nodes with two disks each, and ten images will be uploaded simultaneously, the IP range should be greater than or equal to `/26` (`(5 * 2) + (5 * 2) + 10 = 30`).
 
 
 We will take the following configuration as an example to explain the details of the Storage Network
