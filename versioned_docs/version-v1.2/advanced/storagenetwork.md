@@ -28,7 +28,6 @@ There are some prerequisites before configuring the Harvester Storage Network se
     - We recommend checking the VM status with the following command and should get an empty result.
     - `kubectl get -A vmi`
 - All pods that are attached to Longhorn Volumes should be stopped.
-    - Users could skip this step with the Harvester Storage Network setting. Harvester will stop Longhorn-related pods automatically.
 - All ongoing image uploads or downloads should be either completed or deleted.
 
 :::caution
