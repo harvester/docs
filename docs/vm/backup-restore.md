@@ -213,3 +213,103 @@ Volumes consume extra disk space in the cluster whenever you create a new virtua
 1. Verify that the configured value is displayed on the **Quotas** tab of the virtual machine details screen.
 
     ![edit-quota-vm-read.png](/img/v1.4/vm/edit-quota-vm-read.png)
+
+## Schedule VM Backup/Snapshot
+
+_Available as of v1.4.0_
+
+Harvester supports the creation of virtual machine backups and snapshots on a scheduled basis, with the option to retain a specific number of backups and snapshots. You can suspend, resume, and update the schedule at runtime.
+
+### Create the Virtual Machine Schedule
+
+1. Go to the **Virtual Machine Schedules** screen, and then click **Create Schedule**.
+
+  ![create-schedule.png](/img/v1.4/vm/create-schedule.png)
+
+2. Configure the following settings:
+
+  ![configure-schedule.png](/img/v1.4/vm/configure-schedule.png)
+
+  - **Type**: Select either **Backup** or **Snapshot**.
+
+  - **Namespace** and **Virtual Machine Name**: Specify the namespace and name of the source virtual machine.
+    
+  - **Cron Schedule**: Specify the cron expression (a string consisting of fields separated by whitespace characters) that defines the schedule properties.
+
+    :::info important
+
+    The backup or snapshot creation interval must be **at least one hour**. Frequent backup or snapshot deletion results in heavy I/O load.
+
+    If two schedules have the same granularity level, each iteration's timing offset must be **at least 10 minutes**.
+    
+    :::
+
+  - **Retain**: Specify the number of up-to-date backups or snapshots to be retained.
+      
+    When this value is exceeded, the Harvester controller deletes the oldest backups or snapshots, and Longhorn starts the snapshot purge.
+    
+  - **Max Failure**: Specify the maximum number of consecutive failed backup or snapshot creation attempts to be allowed.
+    
+    When this value is exceeded, the Harvester controller suspends the schedule.
+
+3. Click **Create**.
+
+### Check the Status of a Virtual Machine Schedule
+
+1. Go to the **Virtual Machine Schedules** screen.
+
+1. Locate the target schedule, and then click the name to open the details screen.
+
+1. On the **Basics** tab, verify that the settings are correct.
+
+  ![check-schedule-basic.png](/img/v1.4/vm/check-schedule-basic.png)
+
+1. On the **Backups** tab, check the status of the backups or snapshots that were created according to the schedule.
+
+  ![check-schedule-backups.png](/img/v1.4/vm/check-schedule-backups.png)
+
+  Backups and snapshots that are marked **Ready** can be used to restore the source virtual machine. For more information, see [VM Backup & Restore](#vm-backup--restore) and [VM Snapshot & Restore](#vm-snapshot--restore).
+
+  ![check-schedule-restore.png](/img/v1.4/vm/check-schedule-restore.png)
+
+### Edit a Virtual Machine Schedule
+
+1. Go to the **Virtual Machine Schedules** screen.
+
+1. Locate the target schedule, and then select **⋮ > Edit Config**.
+
+  ![edit-schedule-config.png](/img/v1.4/vm/edit-schedule-config.png)
+
+1. Edit the **Cron Schedule**, **Retain**, or **Max Failure** values.
+
+  ![edit-schedule-parameters.png](/img/v1.4/vm/edit-schedule-parameters.png)
+
+1. Click **Save** to apply the changes.
+
+### Suspend or Resume a Virtual Machine Schedule
+
+You can suspend active schedules and resume suspended schedules.
+
+1. Go to the **Virtual Machine Schedules** screen.
+
+1. Locate the target schedule, and then select **⋮ > Suspend or Resume**.
+
+  ![suspend-resume-schedule.png](/img/v1.4/vm/suspend-resume-schedule.png)
+
+  The schedule is automatically suspended when the number of consecutive failed backup or snapshot creation attempts exceeds the **Max Failure** value.
+  
+  Harvester does not allow you to resume a suspended schedule for backup creation if the backup target is not reachable.
+
+### Virtual Machine Backup/Snapshot and Harvester Upgrade
+
+Before applying a Harvester upgrade, the user should make sure there is no VM backup/snapshot under processing and all the VM schedule is suspended, otherwise, the upgrade will be rejected by Harvester.
+
+  - If there are **running VM backups/snapshots** during applying the upgrade, Harvester will reject it with:
+
+  ![upgrade-vmbackup.png](/img/v1.4/vm/upgrade-vmbackup.png)
+
+  - If there are **active VM Schedules** during applying the upgrade, Harvester will reject it with:
+
+  ![upgrade-svmbackup.png](/img/v1.4/vm/upgrade-svmbackup.png)
+
+To improve the user experience, Harvester has a future plan to [`automatically suspend/resume all schedules before/after the upgrade`](https://github.com/harvester/harvester/issues/6759).
