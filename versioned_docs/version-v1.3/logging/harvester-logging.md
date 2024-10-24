@@ -36,7 +36,7 @@ For Harvester clusters upgraded from version v1.1.x, the logging feature is conv
 
 ## High-level Architecture
 
-The [Logging Operator](https://kube-logging.dev/docs/#overview) now powers both `Harvester` and `Rancher` as an in-house logging solution.
+Both Harvester and Rancher use the [Logging Operator](https://kube-logging.dev/docs/#overview) to manage specific components and operations of the internal logging infrastructure.
 
 ![](/img/v1.2/logging/logging-operator.png)
 
@@ -64,7 +64,7 @@ Users are able to configure and modify where the aggregated logs are sent, as we
 
 ### Configuring Log Resources
 
-Underneath Logging operator are [`fluentd`](https://www.fluentd.org/) and [`fluent-bit`](https://fluentbit.io/), which handle the log routing and collecting respectively.
+Underneath Logging Operator are [Fluentd](https://www.fluentd.org/) and [Fluent Bit](https://fluentbit.io/), which handle log collection and routing.
 If desired, you can modify how many resources are dedicated to those components.
 
 #### From UI
@@ -122,7 +122,7 @@ You can still make configuration adjustments when the addon is disabled. However
 
 ### Configuring Log Destinations
 
-Logging is backed by the [Logging Operator](https://kube-logging.dev/docs/#overview), and so is controlled by [`Flows`/`ClusterFlows`](https://kube-logging.dev/docs/configuration/flow/) and [`Outputs`/`ClusterOutputs`](https://kube-logging.dev/docs/configuration/output/). You can route and filter logs as you like by applying these `CRD`s to the Harvester cluster.
+Logging operations are backed by the [Logging Operator](https://kube-logging.dev/docs/#overview) and controlled using Fluentd resources, particularly [Flow and ClusterFlow](https://kube-logging.dev/docs/configuration/flow/) and [Outputs and ClusterOutput](https://kube-logging.dev/docs/configuration/output/). You can route and filter logs by applying these CRDs to the Harvester cluster.
 
 When applying new `Outputs` and `Flows` to the cluster, it can take some time for the logging operator to effectively apply them. So please allow a few minutes for the logs to start flowing.
 
@@ -134,8 +134,8 @@ The biggest implication of this is that `Flows` can only access `Outputs` that a
 
 For more information, see the documentation:
 
- - [`Flows`/`ClusterFlows`](https://kube-logging.dev/docs/configuration/flow/)
- - [`Outputs`/`ClusterOutputs`](https://kube-logging.dev/docs/configuration/output/)
+ - [Flow and ClusterFlow](https://kube-logging.dev/docs/configuration/flow/)
+ - [Output and ClusterOutput](https://kube-logging.dev/docs/configuration/output/)
 
 #### From UI
 
@@ -169,11 +169,11 @@ Depending on the output selected (Splunk, Elasticsearch, etc), there will be add
 
 ###### Output
 
-The fields present in the **Output** form will change depending on the `Output` chosen, in order to expose the fields present for each [output plugin](https://kube-logging.dev/docs/configuration/plugins/outputs/).
+The form shows the fields that are available for the selected [output](https://kube-logging.dev/docs/configuration/plugins/outputs/).
 
 ###### Output Buffer
 
-The `Output Buffer` editor allows you to describe how you want the output buffer to behave. You can find the documentation for the buffer fields [here](https://kube-logging.dev/docs/configuration/plugins/outputs/buffer/).
+The editor allows you to describe the preferred output buffer behavior using various [fields](https://kube-logging.dev/docs/configuration/plugins/outputs/buffer/).
 
 ###### Labels & Annotations
 
@@ -214,7 +214,7 @@ There must be at least one existing `ClusterOutput` or `Output` that can be atta
 
 ###### Filters
 
-Filters allow you to transform, process, and mutate the logs. In the text edit, you will find descriptions of the supported filters, but for more information, you can visit the list of [supported filters](https://kube-logging.dev/docs/configuration/plugins/filters/).
+Filters allow you to transform, process, and mutate the logs. For more information, see the list of supported [filters](https://kube-logging.dev/docs/configuration/plugins/filters/).
 
 #### From CLI
 
@@ -256,7 +256,7 @@ kubectl apply -f elasticsearch-logging.yaml
 
 ##### Referencing Secrets
 
-There are 3 ways `Logging Operator` allows specifying secret values via yaml values.
+You can define secret values (in YAML format) using any of the following methods:
 
 The simplest is to use the `value` key, which is a simple string value for the desired secret. This method should only be used for testing and never in production:
 
@@ -285,7 +285,7 @@ tls_cert_path:
          key: <kubernetes-secret-key>
 ```
 
-For more information, you can find the related documentation [here](https://kube-logging.dev/docs/configuration/plugins/outputs/secret/).
+For more information, see [Secret definition](https://kube-logging.dev/docs/configuration/plugins/outputs/secret/).
 
 ### Example `Outputs`
 
