@@ -5,7 +5,7 @@ title: "vGPU Support"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/advanced/vgpusupport"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/advanced/vgpusupport"/>
 </head>
 
 _Available as of v1.3.0_
@@ -13,7 +13,6 @@ _Available as of v1.3.0_
 Harvester now offers the capability to share NVIDIA GPU's supporting SRIOV based virtualisation as vGPU devices.
 
 The additional capability is provided by the `pcidevices-controller` addon, and leverages `sriov-manage` to manage the gpu. Please refer the [Nvidia Documentation](https://docs.nvidia.com/grid/15.0/grid-vgpu-user-guide/index.html#creating-sriov-vgpu-device-red-hat-el-kvm) and your GPU documentation to identify if the GPU is supported.
-
 
 The [nvidia-driver-toolkit](./addons/nvidiadrivertoolkit.md) addon needs to be enabled for users to be able to manage the lifecycle of vGPU's on GPU devices.
 
@@ -53,6 +52,18 @@ The [nvidia-driver-toolkit](./addons/nvidiadrivertoolkit.md) addon needs to be e
   :::info important
   Once a vGPU has been assigned to a VM, it may not be possible to disable the VM until the vGPU is removed.
   :::
+
+## vGPU Devices in Rancher-Managed Clusters
+
+Ever since vGPU support was introduced in Harvester v1.3.0, Rancher has allowed attaching of vGPUs to virtual machines running on Rancher-managed Harvester clusters. However, Rancher was initially unable to track vGPU device allocation across virtual machines. You could create virtual machines with vGPU device requests that could not be accommodated, and assign vGPU profiles with unallocatable devices to guest clusters. As a result, the affected virtual machines became unschedulable and Rancher repeatedly attempted to recreate those virtual machines without success.
+
+Enhancements in Harvester v1.3.0 and v1.4.0 allow specific Rancher versions to identify the allocatable vGPU devices across all Harvester nodes. Rancher v2.8 and v2.9 display this information on the UI, and prevent the assignment of a vGPU profile when its allocatable device count does not meet the required quantity. 
+
+:::info important
+
+You must install Harvester v1.4.0 and Rancher v2.8 or v2.9 to leverage the improved vGPU tracking and allocation mechanism. If you upgrade Rancher but continue to use a Harvester version that does not contain the enhancements, Harvester is unable to track vGPU profiles that you assign to virtual machines using the upgraded Rancher UI.
+
+:::
 
 ### Limitations
 
