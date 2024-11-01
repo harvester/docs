@@ -73,7 +73,10 @@ The Longhorn V2 Data Engine is only available for newly created volumes. Existin
 
   :::note
 
-  Harvester sets the Longhorn disk driver to "auto" as described in [the Longhorn documentation](https://longhorn.io/docs/1.7.2/v2-data-engine/features/node-disk-support/). This means that NVMe disks will use the nvme bdev driver which provides the best performance. If testing with non-NVMe disks (e.g. SSDs), note that these will fall back to using the aio bdev driver, which requires that the disk size be an even multiple of 4096 bytes. Non-NVMe disks that do not meet this size constraint will not be added successfully.
+  Harvester sets the [Longhorn disk driver](https://longhorn.io/docs/1.7.2/v2-data-engine/features/node-disk-support/) to `auto` so that NVMe disks use the SPDK NVMe bdev driver, which provides the best performance.
+  
+  SSDs and other non-NVMe disks are managed using the SPDK AIO bdev driver, which requires a disk size that is an *even multiple of 4096 bytes*. Non-NVMe disks that do not meet this size requirement cannot be added.
+
   :::
 
 1. Go to **Advanced** > **Storage Classes**, and then add a new StorageClass as described in [Creating a StorageClass](storageclass.md#creating-a-storageclass). 
