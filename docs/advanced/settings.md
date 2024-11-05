@@ -246,6 +246,35 @@ Harvester appends necessary addresses to user-specified `noProxy` values (for ex
 debug
 ```
 
+### `longhorn-v2-data-engine-enabled` [Experimental]
+
+**Versions**: v1.4.0 and later
+
+**Definition**: Setting that enables and disables the Longhorn V2 Data Engine.
+
+When set to `true`, Harvester automatically loads the kernel modules required by the Longhorn V2 Data Engine, and attempts to allocate 1024 × 2 MiB-sized huge pages (for example, 2 GiB of RAM) on all nodes. 
+
+Changing this setting automatically restarts RKE2 on all nodes but does not affect running virtual machine workloads.
+
+:::tip
+
+If you encounter error messages that include the phrase "not enough hugepages-2Mi capacity", allow some time for the error to be resolved. If the error persists, reboot the affected nodes.
+
+To disable the Longhorn V2 Data Engine on specific nodes (for example, nodes with less processing and memory resources), go to the **Hosts** screen and add the following label to the target nodes:
+  
+- label: `node.longhorn.io/disable-v2-data-engine`
+- value: `true`
+
+:::
+
+**Default value**: `false`
+
+**Example**:
+
+```
+true
+```
+
 ### `ntp-servers`
 
 **Versions**: v1.2.0 and later
