@@ -184,11 +184,11 @@ Users can view and add multiple disks as additional data volumes from the edit h
 1. Go to the **Hosts** page.
 2. On the node you want to modify, click **⋮ > Edit Config**.
 
-![Edit Config](/img/v1.2/host/edit-config.png)
+![Edit Config](/img/v1.4/host/multidisk-mgmt-01.png)
 
 3. Select the **Storage** tab and click **Add Disk**.
 
-![Add Disks](/img/v1.2/host/add-disks.png)
+![Add Disks](/img/v1.4/host/multidisk-mgmt-02.png)
 
 :::caution
 
@@ -196,14 +196,33 @@ As of Harvester v1.0.2, we no longer support adding partitions as additional dis
 
 :::
 
-4. Select an additional raw block device to add as an additional data volume.
-    - The `Force Formatted` option is required if the block device has never been force-formatted.
+4. Select a provisioner for the disk.
 
-![Force Format](/img/v1.2/host/force-format-disks.png)
+  - **LonghornV1 (CSI)**: This is the default provisioner.
 
-5. Last, you can click **⋮ > Edit Config** again to check the newly added disk. Meanwhile, you can also add the "Host/Disk" tag (details are described in the [next section](#storage-tags)).
+    ![Provisioner LonghornV1](/img/v1.4/host/multidisk-mgmt-03.png)
 
-![Check Result](/img/v1.2/host/check-added-disks.png)
+    You must set **Force Formatted** to **Yes** if the block device has never been force-formatted.
+
+    ![Force Format](/img/v1.4/host/multidisk-mgmt-08.png)
+
+  - **LonghornV2 (CSI)**: Select this provisioner if you want to use the [Longhorn V2 Data Engine](../advanced/longhorn-v2.md).
+
+    ![Provisioner LonghornV2](/img/v1.4/host/multidisk-mgmt-04.png)
+
+  - **LVM**: Select this provisioner if you want to use [local storage](../advanced/addons/lvm-local-storage.md) to create persistent volumes for your workloads.
+
+    ![Provisioner LVM](/img/v1.4/host/multidisk-mgmt-05.png)
+
+5. Click **Save**.
+
+6. On the host details screen, verify that the disks were added and the correct provisioner was set.
+
+You can also add [storage tags](#storage-tags) if you want Longhorn volume data to be stored on specific nodes or disks. Storage tags can only be used with the **LonghornV1 (CSI)** and **LonghornV2 (CSI)** provisioners.
+
+![disk tag 01](/img/v1.4/host/multidisk-mgmt-06.png)
+
+![disk tag 02](/img/v1.4/host/multidisk-mgmt-07.png)
 
 :::note
 
