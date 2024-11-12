@@ -415,3 +415,11 @@ Modifying the `IPAM` mode isn't allowed. You must create a new service if you in
 ## Health checks
 
 Beginning with Harvester cloud provider v0.2.0, additional health checks of the `LoadBalancer` service within the guest Kubernetes cluster are no longer necessary. Instead, you can configure [liveness](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-tcp-liveness-probe) and [readiness](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-readiness-probes) probes for your workloads. Consequently, any unavailable pods will be automatically removed from the load balancer endpoints to achieve the same desired outcome.
+
+## Known issues
+
+---
+
+### 1. In single-node cluster, the harvester-cloud-provider pod can't be ready when changing Rancher from community to prime version
+
+When changing Rancher from community to prime version or vice versa, the `system-default-registry` will change. Each pod in the guest cluster will be updated with new registry. Most of pods can be ready, but harvester-cloud-provider can't in a single-node cluster. The harvester-cloud-provider deployment set `maxUnavailable` as `25%`, so it's stuck in upgrade. The problem has been fixed after 103.0.3+up0.2.6 in Rancher 2.8.x and 104.0.2+up0.2.6 in Rancher 2.9.x. In an old cluster, a workaround is to manually remove the old pod to fix the issue.
