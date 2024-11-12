@@ -20,7 +20,7 @@ _Available as of v1.4.0_
 ### Background
 A common ask from Harvester users has been the ability to install and boot Harvester from external disks. Such diskless systems are common in large datacenter environments.
 
-Nodes with nic's or hba's supporting boot from external iscsi devices or SAN storage arrays can leverage this feature to install Harvester to disk less systems.
+Nodes with NIC's or HBA supporting boot from external iSCSI devices or SAN storage arrays can leverage this feature to install Harvester to diskless systems.
 
 We will cover a simple example of installing to an external iscsi disk. The workflow for SAN arrays will be similar but a different set of kernel arguments may be needed to allow Harvester to successfully boot from the SAN array
 
@@ -59,14 +59,32 @@ The following changes have been made to the installer when an iscsi target is us
 During the install phase, users need to provide a config yaml to configure multipath and additional kernel arguments. This information is added to the installed OS to allow subsequent boots from an iscsi target
 
 For example in our environment we have provided the following config.yaml
+
 ```
 os:
+  write_files:
+  - content: |
+      name: "fix default gateway"
+      stages:
+        network:
+          - commands:
+            - ip route delete default dev enp4s0f0.2017
+            - ip route add default via 10.115.7.254
+    path: /oem/99_fix_gateway.yaml
   externalStorageConfig:
     enabled: true
     multiPathConfig:
     - vendor: "IET"
       product: "MediaFiles"
-  additionalKernelArguments: "rd.iscsi.firmware rd.iscsi.ibft"
+  additionalKernelArguments: "rd.iscsi.firmware vlan=enp4s0f0.2017:enp4s0f0 ip=10.115.48.10::10.115.55.254:255.255.248.0::enp4s0f0.2017:none"
 ``` 
+
+In our test setup, we have multiple tagged VLANs. With VLAN 2017 used for connecting with the iSCSI volume and VLAN2011 being used for Harvester management interface.
+
+`vlan=enp4s0f0.2017:enp4s0f0 ip=10.115.48.10::10.115.55.254:255.255.248.0::enp4s0f0.2017:none` kernel argument is only needed if the iSCSI volume is accessible via an interface on a tagged VLAN. The arguments ensure that additional tagged interface is created during boot and a static address is allocated to the same.
+
+Please refer to the [dracut cmdline arguments](https://manpages.opensuse.org/Tumbleweed/dracut/dracut.cmdline.7.en.html) to configure the kernel arguments to suit your use case.
+
+The `write_files` directive is needed to ensure that the management interface is used as the default gateway. This is essential as RKE2 uses the interface with the default gateway as the node address. 
 
 Post install Harvester should boot up and work as it would normally.
