@@ -12,7 +12,7 @@ Description: How to enable and use the Longhorn V2 Data Engine
 
 The Longhorn V2 Data Engine harnesses the power of the Storage Performance Development Kit (SPDK) to significantly reduce I/O latency while boosting IOPS and throughput. The result is a high-performance storage solution that is capable of meeting diverse workload demands.
 
-:::info important
+:::caution
 
 The Longhorn V2 Data Engine is an **Experimental** feature in Harvester v1.4.0 and should not be utilized in a production environment.
 
@@ -28,7 +28,7 @@ Every node with an active Longhorn V2 Data Engine requires the following dedicat
 
 ## Limitations
 
-:::info important
+:::note
 
 The Longhorn V2 Data Engine currently does not support the following operations:
 

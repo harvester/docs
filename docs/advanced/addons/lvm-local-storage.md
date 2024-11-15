@@ -172,7 +172,7 @@ You can also create a new virtual machine with the volume of the LVM StorageClas
 - Volume cloning
 - Snapshot creation
 
-:::info important
+:::note
 
 Backup creation is currently not supported. This limitation will be addressed in a future release.
 
