@@ -1,5 +1,4 @@
 ---
-id: index
 sidebar_position: 1
 sidebar_label: Cluster Network
 title: "Cluster Network"
@@ -12,7 +11,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/networking/clusternetwork"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/networking/index"/>
 </head>
 
 ## Concepts

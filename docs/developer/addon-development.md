@@ -1,5 +1,4 @@
 ---
-id: Add-on-development-guide
 title: "Add-on Development Guide"
 sidebar_position: 1
 sidebar_label: Add-on Development Guide
@@ -10,8 +9,11 @@ keywords:
 Description: How to write your own Harvester add-on
 ---
 
-Harvester add-ons allow you to enable and disable specific Harvester and third-party components based on your requirements. Add-ons function as a wrapper for the [RKE2 HelmChart resource definition (CRD)](https://docs.rke2.io/helm#using-the-helm-crd).
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/developer/Add-on-development-guide"/>
+</head>
 
+Harvester add-ons allow you to enable and disable specific Harvester and third-party components based on your requirements. Add-ons function as a wrapper for the [RKE2 HelmChart resource definition (CRD)](https://docs.rke2.io/helm#using-the-helm-crd).
 
 ## Prerequisites
 

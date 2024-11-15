@@ -1,5 +1,4 @@
 ---
-id: upload-image
 sidebar_position: 1
 sidebar_label: Upload Images
 title: "Upload Images"
@@ -13,7 +12,7 @@ description: To import virtual machine images in the **Images** page, enter a UR
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/upload-image"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/image/upload-image"/>
 </head>
 
 Currently, there are three ways that are supported to create an image: uploading images via URL, uploading images via local files, and creating images via volumes.

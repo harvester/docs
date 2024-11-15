@@ -1,5 +1,4 @@
 ---
-id: image-security
 sidebar_position: 2
 sidebar_label: Image Security
 title: "Image Security"
@@ -10,6 +9,10 @@ keywords:
   - rancher
   - Image Security
 ---
+
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/image/image-security"/>
+</head>
 
 _Available as of v1.4.0_
 

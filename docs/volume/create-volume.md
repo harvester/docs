@@ -1,5 +1,4 @@
 ---
-id: index
 sidebar_position: 1
 sidebar_label: Create a Volume
 title: "Create a Volume"
@@ -9,7 +8,7 @@ description: Create a volume from the Volume page.
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/volume/create-volume"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/volume/index"/>
 </head>
 
 ## Create an Empty Volume

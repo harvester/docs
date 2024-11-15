@@ -1,5 +1,4 @@
 ---
-id: authentication
 sidebar_position: 5
 sidebar_label: Authentication
 title: "Authentication"
@@ -13,7 +12,7 @@ description: With ISO installation mode, user will be prompted to set the passwo
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/authentication"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/authentication"/>
 </head>
 
 After installation, user will be prompted to set the password for the default `admin` user on the first-time login.

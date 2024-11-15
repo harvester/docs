@@ -1,5 +1,4 @@
 ---
-id: index
 sidebar_position: 1
 sidebar_label: Create a Virtual Machine
 title: "Create a Virtual Machine"
@@ -15,7 +14,7 @@ description: Create one or more virtual machines from the Virtual Machines page.
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/vm/create-vm"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/vm/index"/>
 </head>
 
 ## How to Create a VM

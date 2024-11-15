@@ -1,12 +1,11 @@
 ---
-id: terraform-provider
 sidebar_position: 1
 sidebar_label: Harvester Terraform Provider
 title: "Harvester Terraform Provider"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/terraform/terraform-provider"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/terraform/terraform-provider"/>
 </head>
 
 ## Support Matrix

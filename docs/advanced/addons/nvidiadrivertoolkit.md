@@ -1,11 +1,11 @@
 ---
 sidebar_position: 6
 sidebar_label: Nvidia Driver Toolkit
-title: "Nvidia Driver Toolkit"
+title: "NVIDIA Driver Toolkit"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/advanced/nvidiadrivertoolkit"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/advanced/addons/nvidiadrivertoolkit"/>
 </head>
 
 _Available as of v1.3.0_

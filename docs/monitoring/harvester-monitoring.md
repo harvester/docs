@@ -1,12 +1,11 @@
 ---
-id: harvester-monitoring
 sidebar_position: 1
 sidebar_label: Monitoring
 title: "Monitoring"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/monitoring/harvester-monitoring"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/monitoring/harvester-monitoring"/>
 </head>
 
 _Available as of v1.2.0_

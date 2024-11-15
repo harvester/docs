@@ -1,5 +1,4 @@
 ---
-id: airgap
 sidebar_position: 3
 sidebar_label: Air Gapped Environment
 title: "Air Gapped Environment"
@@ -11,7 +10,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/airgap"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/airgap"/>
 </head>
 
 This section describes how to use Harvester in an air gapped environment. Some use cases could be where Harvester will be installed offline, behind a firewall, or behind a proxy.

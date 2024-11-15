@@ -1,5 +1,4 @@
 ---
-id: customsuseimages
 sidebar_position: 8
 sidebar_label: Custom SUSE VM Images
 title: "Custom SUSE VM Images"
@@ -9,7 +8,7 @@ Description: How to create custom SLES and openSUSE guest virtual machine images
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/advanced/customsuseimages"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/advanced/customsuseimages"/>
 </head>
 
 SUSE provides [SUSE Linux Enterprise (SLE)](https://www.suse.com/download/sles/) and [openSUSE Leap](https://get.opensuse.org/leap/) virtual machine (VM) images suitable for use in Harvester. These images are built on the [openSUSE Build Service](https://build.opensuse.org/) (OBS) using the [Kiwi](https://osinside.github.io/kiwi/) image building tool, and can be used immediately after downloading.

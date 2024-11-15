@@ -1,5 +1,4 @@
 ---
-id: harvester-logging
 sidebar_position: 1
 sidebar_label: Logging
 title: "Logging"
@@ -11,7 +10,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/logging/harvester-logging"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/logging/harvester-logging"/>
 </head>
 
 _Available as of v1.2.0_

@@ -5,7 +5,7 @@ title: "Local Storage Support"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/advanced/lvm-local-storage"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/advanced/addons/lvm-local-storage"/>
 </head>
 
 _Available as of v1.4.0_

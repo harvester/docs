@@ -1,5 +1,4 @@
 ---
-id: index
 sidebar_position: 1
 sidebar_label: Upgrading Harvester
 title: "Upgrading Harvester"
@@ -13,7 +12,7 @@ description: Harvester provides two ways to upgrade. Users can either upgrade us
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/upgrade/automatic"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/upgrade/index"/>
 </head>
 
 ## Upgrade support matrix
