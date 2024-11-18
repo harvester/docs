@@ -1,4 +1,5 @@
 ---
+id: customsuseimages
 sidebar_position: 8
 sidebar_label: Custom SUSE VM Images
 title: "Custom SUSE VM Images"

@@ -1,4 +1,5 @@
 ---
+id: index
 sidebar_position: 1
 sidebar_label: Cluster Network
 title: "Cluster Network"

@@ -1,4 +1,5 @@
 ---
+id: Add-on-development-guide
 title: "Add-on Development Guide"
 sidebar_position: 1
 sidebar_label: Add-on Development Guide
