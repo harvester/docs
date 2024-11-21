@@ -18,7 +18,7 @@ The Longhorn V2 Data Engine is an **Experimental** feature in Harvester v1.4.0 a
 
 :::
 
-## Prerequisities
+## Prerequisites
 
 Every node with an active Longhorn V2 Data Engine requires the following dedicated resources:
 
