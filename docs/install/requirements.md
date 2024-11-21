@@ -27,7 +27,7 @@ Harvester nodes have the following hardware requirements and recommendations for
 | CPU | x86_64 (with hardware-assisted virtualization); 8 cores minimum | x86_64 (with hardware-assisted virtualization); 16 cores minimum |
 | Memory | 32 GB minimum | 64 GB minimum |
 | Disk capacity	| 250 GB minimum (180 GB minimum when using multiple disks) | 500 GB minimum |
-| Disk performance | 5,000+ random IOPS per disk (SSD/NVMe); management node storage must meet [etcd]((https://www.suse.com/support/kb/doc/?id=000020100)) speed requirements. Only local disks and hardware RAID are supported. | 5,000+ random IOPS per disk (SSD/NVMe); management node storage must meet [etcd]((https://www.suse.com/support/kb/doc/?id=000020100)) speed requirements. Only local disks and hardware RAID are supported. |
+| Disk performance | 5,000+ random IOPS per disk (SSD/NVMe); management node storage must meet [etcd](https://www.suse.com/support/kb/doc/?id=000020100) speed requirements. Only local disks and hardware RAID are supported. | 5,000+ random IOPS per disk (SSD/NVMe); management node storage must meet [etcd](https://www.suse.com/support/kb/doc/?id=000020100) speed requirements. Only local disks and hardware RAID are supported. |
 | Network card count | Management cluster network: 1 NIC required, 2 NICs recommended; VM workload network: 1 NIC required, at least 2 NICs recommended (does not apply to the [witness node](../advanced/witness.md)) | Management cluster network: 1 NIC required, 2 NICs recommended; VM workload network: 1 NIC required, at least 2 NICs recommended (does not apply to the [witness node](../advanced/witness.md)) |
 | Network card speed | 1 Gbps Ethernet minimum | 10 Gbps Ethernet minimum |
 | Network switch | Port trunking for VLAN support | Port trunking for VLAN support |
@@ -41,7 +41,7 @@ Harvester nodes have the following hardware requirements and recommendations for
 
 ### CPU Specifications
 
-[Live Migration](../vm/live-migration/) functions correctly only if the CPUs of all physical servers in the [Harvester cluster](../glossary#harvester-cluster) have the same specifications. This requirement applies to all operations that rely on Live Migration functionality, such as automatic VM migration when [Maintenance Mode](../host/#node-maintenance) is enabled.
+[Live Migration](../vm/live-migration.md) functions correctly only if the CPUs of all physical servers in the [Harvester cluster](../getting-started/glossary.md#harvester-cluster) have the same specifications. This requirement applies to all operations that rely on Live Migration functionality, such as automatic VM migration when [Maintenance Mode](../host/host.md#node-maintenance) is enabled.
 
 Newer CPUs (even those from the same vendor, generation, and family) can have varying capabilities that may be exposed to VM operating systems. To ensure VM stability, Live Migration checks if the CPU capabilities are consistent, and blocks migration attempts when the source and destination are incompatible. 
 
