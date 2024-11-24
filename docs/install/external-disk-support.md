@@ -17,48 +17,49 @@ description: Install Harvester on diskless systems.
 
 _Available as of v1.4.0_
 
-### Background
-A common ask from Harvester users has been the ability to install and boot Harvester from external disks. Such diskless systems are common in large datacenter environments.
+## Background
 
-Nodes with NIC's or HBA supporting boot from external iSCSI devices or SAN storage arrays can leverage this feature to install Harvester to diskless systems.
+Harvester can now be installed on and booted from external disks. This is particularly useful in environments where hosts have NICs or HBA cards that support booting from external iSCSI devices or SAN storage arrays. Such diskless systems are common in large datacenters.
 
-We will cover a simple example of installing to an external iscsi disk. The workflow for SAN arrays will be similar but a different set of kernel arguments may be needed to allow Harvester to successfully boot from the SAN array
+The following sections provide information about installing Harvester on an external iSCSI device. The workflow for SAN arrays is similar, but a different set of kernel arguments may be needed to allow Harvester to successfully boot from a SAN array.
 
-### iscsi disk based install
+## iSCSI-Based Installation
 
-#### configure iscsi target
+### Configure the iSCSI Target
+
 :::note
-bios/firmware changes will need to be adapter for user specific hardware
+
+Necessary changes to the BIOS or firmware will depend on the hardware that you use.
+
 :::
-When your system to be installed powers on or is reset, you must enter the firmware setup menu to change the boot settings and enable booting via iSCSI.
 
-Precise details for this are difficult to provide because they vary from system to system.
+When the installation destination powers on or resets, you must enter the firmware setup menu to change the boot settings and enable booting via iSCSI. The settings vary from system to system.
 
-It is typical to force the system to enter the firmware settings menu by typing a special key such as F2, F7, ESC, etc. Which one works for your system varies. Often the system will display a list of which key(s) are available for specific firmware functions, but it is not uncommon for the firmware to erase this list and start to boot after only a very short delay, so you have to pay close attention.
+Entering the firmware setup menu usually requires pressing a designated key (for example, F2, F7, or ESC). The system will likely display a list of keys that are available for specific firmware functions. However, this list is displayed for a very short time, so you must select a menu option before the list disappears and the system starts to boot.
 
-If in doubt, consult the system provider's documentation. An example document link is provided in the References section. Other vendors should provide similar documentation.
+Configuration tasks that you must perform include the following:
 
-The typical things you need to configure are:
+- Enable UEFI boot
+- Configure iSCSI initiator and target parameters
+- Enable the iSCSI device in the boot menu
+- Set the boot order so that your system boots from the iSCSI device
 
-* Enable UEFI boot
-* Configure iSCSI initiator and target parameters
-* Enable the iSCSI device in the boot menu
-* Set the boot order so that your system will boot from the iSCSI device
+See your system provider's documentation for more information about boot settings and firmware functions. A link to a sample document is provided in the References section.
 
 ![target-details.png](/img/v1.4/external-disk/target-details.png)
 
-#### install Harvester
-This can be done by whatever means you would normally use to load the Harvester install image.
+### Install Harvester
 
-The Harvester installer should automatically "see" the iSCSI device in the dialog where you chose the installation destination. Choose this device to install.
+You can load the Harvester ISO using any of the standard methods. The installer should automatically detect the iSCSI device. Select this device when you are prompted to specify the installation disk.
 
-The following changes have been made to the installer when an iscsi target is used:
-* network interfaces being used for mounting the iscsi volumes are skipped from the installer network configuration page
-* the disks page will show the first path to a multipath'd remote disk, however post install assuming `os.externalStorageConfig` is provided, the OS will boot off the multipath device
+The information displayed on the installer differs slightly when you select an iSCSI target.
 
-During the install phase, users need to provide a config yaml to configure multipath and additional kernel arguments. This information is added to the installed OS to allow subsequent boots from an iscsi target
+- Network configuration screen: Does not show the network interfaces that are used for mounting the iSCSI volumes.
+- Disk configuration screen: Shows the first path to a multipath'd remote disk. However, after installation (assuming `os.externalStorageConfig` is provided), the operating system boots from the multipath device.
 
-For example in our environment we have provided the following config.yaml
+During installation, you must provide a configuration file (`config.yaml`) that contains multipath and additional kernel arguments. The information is added to the installed operating system to allow subsequent boots from an iSCSI target.
+
+Example (`config.yaml`):
 
 ```
 os:
@@ -79,12 +80,8 @@ os:
   additionalKernelArguments: "rd.iscsi.firmware vlan=enp4s0f0.2017:enp4s0f0 ip=10.115.48.10::10.115.55.254:255.255.248.0::enp4s0f0.2017:none"
 ``` 
 
-In our test setup, we have multiple tagged VLANs. With VLAN 2017 used for connecting with the iSCSI volume and VLAN2011 being used for Harvester management interface.
+The test setup uses multiple tagged VLANs, such as VLAN 2017 (used for connecting with the iSCSI volume) and VLAN 2011 (used for the Harvester management interface).
 
-`vlan=enp4s0f0.2017:enp4s0f0 ip=10.115.48.10::10.115.55.254:255.255.248.0::enp4s0f0.2017:none` kernel argument is only needed if the iSCSI volume is accessible via an interface on a tagged VLAN. The arguments ensure that additional tagged interface is created during boot and a static address is allocated to the same.
+The kernel argument `vlan=enp4s0f0.2017:enp4s0f0 ip=10.115.48.10::10.115.55.254:255.255.248.0::enp4s0f0.2017:none` is necessary only if the iSCSI volume is accessible via an interface on a tagged VLAN. The arguments ensure that an additional tagged interface is created during boot and that a static address is allocated to the interface. See [dracut.cmdline](https://manpages.opensuse.org/Tumbleweed/dracut/dracut.cmdline.7.en.html) for more information about configuring the kernel arguments to match your use case.
 
-Please refer to the [dracut cmdline arguments](https://manpages.opensuse.org/Tumbleweed/dracut/dracut.cmdline.7.en.html) to configure the kernel arguments to suit your use case.
-
-The `write_files` directive is needed to ensure that the management interface is used as the default gateway. This is essential as RKE2 uses the interface with the default gateway as the node address. 
-
-Post install Harvester should boot up and work as it would normally.
+The `write_files` directive is needed to ensure that the management interface is used as the default gateway. This is essential because RKE2 uses the interface with the default gateway as the node address.
