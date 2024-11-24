@@ -85,3 +85,7 @@ The test setup uses multiple tagged VLANs, such as VLAN 2017 (used for connectin
 The kernel argument `vlan=enp4s0f0.2017:enp4s0f0 ip=10.115.48.10::10.115.55.254:255.255.248.0::enp4s0f0.2017:none` is necessary only if the iSCSI volume is accessible via an interface on a tagged VLAN. The arguments ensure that an additional tagged interface is created during boot and that a static address is allocated to the interface. See [dracut.cmdline](https://manpages.opensuse.org/Tumbleweed/dracut/dracut.cmdline.7.en.html) for more information about configuring the kernel arguments to match your use case.
 
 The `write_files` directive is needed to ensure that the management interface is used as the default gateway. This is essential because RKE2 uses the interface with the default gateway as the node address.
+
+
+### References
+[Dell PowerEdge R630 Owner's Manual](https://www.dell.com/support/manuals/en-au/poweredge-r630/r630_om_pub/uefi-iscsi-settings?guid=guid-adc7d625-5c7b-469d-ba9c-4a2c704fcc49&lang=en-us) This is an example of relevant vendor documentation. Other vendors such as HPE, IBM, Lenovo, etc should provide comparable documentation, though the details will vary.
