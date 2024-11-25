@@ -12,6 +12,21 @@ keywords:
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/rancher/csi-driver"/>
 </head>
 
+:::caution
+
+A [known issue](https://github.com/harvester/harvester/issues/6849) in v0.1.20 of the Harvester CSI driver causes volumes to get stuck when the host cluster is running a Harvester version that was released before v1.4.0.
+
+This issue was fixed in v0.1.21. If your system is affected, you can follow the suggested [workaround](https://github.com/harvester/harvester/issues/6849#issuecomment-2462545795).
+
+| Harvester CSI Driver Version | Harvester Version  | Affected |
+| ---------------------------- | ------------------ | -------- |
+| v0.1.21 and later            | All versions       | No       |
+| v0.1.20                      | v1.4.0 and later   | No       |
+| v0.1.20                      | v1.3.2 and earlier | Yes      |
+| v0.1.18 and earlier          | All versions       | No       |
+
+:::
+
 The Harvester Container Storage Interface (CSI) Driver provides a standard CSI interface used by guest Kubernetes clusters in Harvester. It connects to the host cluster and hot-plugs host volumes to the virtual machines (VMs) to provide native storage performance.
 
 ## Deploying
