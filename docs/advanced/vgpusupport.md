@@ -5,17 +5,16 @@ title: "vGPU Support"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/advanced/vgpusupport"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/advanced/vgpusupport"/>
 </head>
 
 _Available as of v1.3.0_
 
-Harvester now offers the capability to share NVIDIA GPU's supporting SRIOV based virtualisation as vGPU devices.
+Harvester can share NVIDIA GPU support for [Single Root IO Virtualization (SR-IOV)](https://docs.nvidia.com/networking/display/mlnxofedv581011/single+root+io+virtualization+(sr-iov)). This additional capability, which is provided by the **pcidevices-controller** add-on, leverages `sriov-manage` for GPU management. 
 
-The additional capability is provided by the `pcidevices-controller` addon, and leverages `sriov-manage` to manage the gpu. Please refer the [Nvidia Documentation](https://docs.nvidia.com/grid/15.0/grid-vgpu-user-guide/index.html#creating-sriov-vgpu-device-red-hat-el-kvm) and your GPU documentation to identify if the GPU is supported.
+Check the documentation of your GPU to determine if it supports SR-IOV. For more information about creating an NVIDIA vGPU that supports SR-IOV, see the [NVIDIA documentation](https://docs.nvidia.com/grid/15.0/grid-vgpu-user-guide/index.html#creating-sriov-vgpu-device-red-hat-el-kvm).
 
-
-The [nvidia-driver-toolkit](./addons/nvidiadrivertoolkit.md) addon needs to be enabled for users to be able to manage the lifecycle of vGPU's on GPU devices.
+You must enable the [**nvidia-driver-toolkit** add-on](./addons/nvidiadrivertoolkit.md) to manage the lifecycle of vGPUs on GPU devices.
 
 ## Usage
 

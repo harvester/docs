@@ -9,7 +9,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/rancher/csi-driver"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/rancher/csi-driver"/>
 </head>
 
 :::caution
@@ -292,7 +292,7 @@ Now you can create a new StorageClass that you intend to use in your guest Kuber
 
 1. You can now create a PVC based on this new **StorageClass**, which utilizes the **Host StorageClass** to provision volumes on the bare-metal Harvester cluster.
 
-## RWX volumes support
+## RWX Volumes Support
 
 ### Prerequisites
 

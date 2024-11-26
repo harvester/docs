@@ -19,7 +19,7 @@ description: Create VM with CPU pinning
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/vm/CPU-pinning"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/vm/cpu-pinning"/>
 </head>
 
 _Available as of v1.4.0_

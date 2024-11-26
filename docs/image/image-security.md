@@ -11,6 +11,10 @@ keywords:
   - Image Security
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/image/image-security"/>
+</head>
+
 _Available as of v1.4.0_
 
 Harvester v1.4.0 and later versions allow you to encrypt and decrypt virtual machine images. The encryption mechanism utilizes the Linux kernel module dm_crypt and the command-line utility cryptsetup.

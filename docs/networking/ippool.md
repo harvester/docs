@@ -5,6 +5,11 @@ title: "IP Pool"
 keywords:
 - IP Pool
 ---
+
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/networking/ippool"/>
+</head>
+
 _Available as of v1.2.0_
 
 Harvester IP Pool is a built-in IP address management (IPAM) solution exclusively available to Harvester load balancers (LBs).

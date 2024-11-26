@@ -12,7 +12,7 @@ description: VM backups are created from the Virtual Machines page. The VM backu
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/vm/backup-restore"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/vm/backup-restore"/>
 </head>
 
 ## VM Backup & Restore

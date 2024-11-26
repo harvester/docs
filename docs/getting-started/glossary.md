@@ -9,6 +9,10 @@ keywords:
 - concepts
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/getting-started/glossary"/>
+</head>
+
 ## **guest cluster** / **guest Kubernetes cluster**
 
 Group of integrated Kubernetes worker machines that run in VMs on top of a Harvester cluster. 

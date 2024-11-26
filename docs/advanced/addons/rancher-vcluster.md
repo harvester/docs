@@ -5,7 +5,7 @@ title: "Rancher Manager (Experimental)"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/advanced/rancher-vcluster"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/advanced/addons/rancher-vcluster"/>
 </head>
 
 _Available as of v1.2.0_

@@ -5,7 +5,7 @@ title: "Local Storage Support"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/advanced/lvm-local-storage"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/advanced/addons/lvm-local-storage"/>
 </head>
 
 _Available as of v1.4.0_
@@ -172,7 +172,7 @@ You can also create a new virtual machine with the volume of the LVM StorageClas
 - Volume cloning
 - Snapshot creation
 
-:::info important
+:::note
 
 Backup creation is currently not supported. This limitation will be addressed in a future release.
 

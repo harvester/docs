@@ -9,7 +9,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/networking/deep-dive"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/networking/deep-dive"/>
 </head>
 
 The network topology below reveals how we implement the Harvester network.
