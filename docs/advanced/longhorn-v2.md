@@ -40,9 +40,11 @@ The Longhorn V2 Data Engine currently does not support the following operations:
 
 :::
 
-Within the Harvester context, volumes backed by the Longhorn V2 Data Engine must be added to virtual machines as extra disks. The boot disk of each virtual machine must still be added from an image that is backed by the Longhorn V1 Data Engine.
+- Within the Harvester context, volumes backed by the Longhorn V2 Data Engine must be added to virtual machines as extra disks. The boot disk of each virtual machine must still be added from an image that is backed by the Longhorn V1 Data Engine.
 
-Harvester is unable to live-migrate virtual machines with V2 volumes attached, which means those virtual machines will be shut down during Harvester cluster upgrades. Moreover, snapshots of V2 volumes cannot be created because snapshot and restoration functionality in Harvester relies on volume cloning.
+- Harvester is unable to live-migrate virtual machines with V2 volumes attached, which means those virtual machines will be shut down during Harvester cluster upgrades. Moreover, snapshots of V2 volumes cannot be created because snapshot and restoration functionality in Harvester relies on volume cloning.
+
+- SSDs and other non-NVMe disks are managed using the SPDK AIO bdev driver, which does not support the unmap operation. If you are using non-NVMe disks, avoid trimming the filesystem because this results in I/O errors and paused virtual machines. For example, when creating an ext4 filesystem on a Linux virtual machine, use `mkfs.ext4 -E nodiscard /dev/vdb` (assuming `/dev/vdb` is your device path). On Windows virtual machines, you can disable trimming for NTFS by running the command `fsutil behavior set disabledeletenotify NTFS 1`.
 
 ## Using the Longhorn V2 Data Engine
 
@@ -71,11 +73,11 @@ The Longhorn V2 Data Engine is only available for newly created volumes. Existin
 
   Set the `Provisioner` of each extra disk to `Longhorn V2 (CSI)`.
 
-  :::note
+  :::info important
 
-  Harvester sets the [Longhorn disk driver](https://longhorn.io/docs/1.7.2/v2-data-engine/features/node-disk-support/) to `auto` so that NVMe disks use the SPDK NVMe bdev driver, which provides the best performance.
+  Harvester sets the [Longhorn disk driver](https://longhorn.io/docs/1.7.2/v2-data-engine/features/node-disk-support/) to `auto` so that NVMe disks use the SPDK NVMe bdev driver, which provides the best performance and also supports advanced operations such as trim (also known as discard).
   
-  SSDs and other non-NVMe disks are managed using the SPDK AIO bdev driver, which requires a disk size that is an *even multiple of 4096 bytes*. Non-NVMe disks that do not meet this size requirement cannot be added.
+  SSDs and other non-NVMe disks are managed using the SPDK AIO bdev driver, which requires a disk size that is an *even multiple of 4096 bytes*. Non-NVMe disks that do not meet this size requirement cannot be added.  Additionally, the SPDK AIO bdev driver does not support the unmap operation. If you are using non-NVMe disks, avoid trimming the filesystem because this results in I/O errors and paused virtual machines.
 
   :::
 
