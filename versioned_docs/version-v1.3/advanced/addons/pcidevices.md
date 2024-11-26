@@ -67,6 +67,12 @@ Boot the VM up, and run `lspci` inside the VM, the attached PCI devices will sho
 
 This is just like installing drivers in the host. The PCI passthrough feature will bind the host device to the `vfio-pci` driver, which gives VMs the ability to use their own drivers. [Here is a screenshot](https://tobilehman.com/posts/suse-harvester-pci/#toc) of NVIDIA drivers being installed in a VM. It includes a CUDA example that proves that the device drivers work.
 
+## Known Issues
+* [issue-6648](https://github.com/harvester/harvester/issues/6648): In a cluster with multiple instances of the same device, it is possible for a VM to be scheduled to an incorrect node. 
+
+The current implementation of the addon, publishes each device using a unique resource descriptor to the kubelet. If multiple `PCIDeviceClaims` of same device type exist within the cluster, the VM may be scheduled to an incorrect node as the unique resource descriptor will be same for all similar devices. To ensure device from the correct node is used, please use the `VM Scheduling` section and use `Run VM on specific node(s)`
+![](/img/v1.4/vm/vm-scheduling.png)
+
 ## SRIOV Network Devices
 _Available as of v1.2.0_
 
