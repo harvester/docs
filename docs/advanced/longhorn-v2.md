@@ -73,9 +73,11 @@ The Longhorn V2 Data Engine is only available for newly created volumes. Existin
 
   :::note
 
-  Harvester sets the [Longhorn disk driver](https://longhorn.io/docs/1.7.2/v2-data-engine/features/node-disk-support/) to `auto` so that NVMe disks use the SPDK NVMe bdev driver, which provides the best performance.
+  Harvester sets the [Longhorn disk driver](https://longhorn.io/docs/1.7.2/v2-data-engine/features/node-disk-support/) to `auto` so that NVMe disks use the SPDK NVMe bdev driver, which provides the best performance and also supports advanced operations like trimming.
   
   SSDs and other non-NVMe disks are managed using the SPDK AIO bdev driver, which requires a disk size that is an *even multiple of 4096 bytes*. Non-NVMe disks that do not meet this size requirement cannot be added.
+
+  Additionally, the SPDK AIO bdev driver does not support the unmap operation. This means attempting to use trimming (also known as discard) with these devices will result in I/O errors and will pause your virtual machines. Accordingly, if you are using non-NVMe disks, you should avoid trim/discard.  For example, when creating an ext4 filesystem in a Linux VM, use `mkfs.ext4 -E nodiscard /dev/vdb` (assuming `/dev/vdb` is your device path).  On Windows VMs, trim support for NTFS can be disabled by running `fsutil behavior set disabledeletenotify NTFS 1` from the command prompt.
 
   :::
 
