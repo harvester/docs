@@ -381,6 +381,16 @@ Now you can create a new StorageClass that you intend to use in your guest Kuber
 
   ![](/img/v1.4/rancher/harvester-csi-driver-version.png)
 
+- The NFS client is installed on each node in the guest cluster.
+
+  Run any of the following commands to install the NFS client.
+
+  - Debian and Ubuntu: `apt-get install -y nfs-common`
+  
+  - CentOS and RHEL: `yum install -y nfs-utils`
+
+  - SUSE and OpenSUSE: `zypper install -y nfs-client`
+
 ### Usage
 
 1. Create a new StorageClass on the guest cluster.
