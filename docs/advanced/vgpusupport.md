@@ -61,7 +61,12 @@ Enhancements in Harvester v1.3.0 and v1.4.0 allow specific Rancher versions to i
 
 :::info important
 
-You must install Harvester v1.4.0 and Rancher v2.8 or v2.9 to fully leverage the improved vGPU tracking and allocation mechanism. If you upgrade Rancher but continue to use a Harvester version that does not contain the enhancements, Harvester is unable to track vGPU profiles that you assign to virtual machines using the upgraded Rancher UI.
+You must install specific versions of Harvester and Rancher to fully leverage the improved vGPU tracking and allocation mechanism. 
+
+- Harvester: 1.3.2 or v1.4.0
+- Rancher: v2.8.9, 2.9.3, or 2.10.0
+
+If you upgrade Rancher but continue to use a Harvester version that does not contain the enhancements, Harvester is unable to track vGPU profiles that you assign to virtual machines using the upgraded Rancher UI.
 
 :::
 
