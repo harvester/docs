@@ -39,7 +39,6 @@ For a detailed support matrix, please refer to the **Harvester CCM & CSI Driver 
 ### Prerequisites
 - The Kubernetes cluster is built on top of Harvester virtual machines.
 - The Harvester virtual machines run as guest Kubernetes nodes are in the same namespace.
-- The Harvester virtual machine guests' hostnames match their corresponding Harvester virtual machine names. Guest cluster Harvester VMs can't have different hostnames than their Harvester VM names when using the Harvester CSI driver. We hope [to remove this limitation](https://github.com/harvester/harvester/issues/4396) in a future release of Harvester.
 
 :::info important
 
