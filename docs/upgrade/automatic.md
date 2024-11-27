@@ -13,7 +13,7 @@ description: Harvester provides two ways to upgrade. Users can either upgrade us
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.3/upgrade/automatic"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/upgrade/index"/>
 </head>
 
 ## Upgrade support matrix
@@ -54,6 +54,7 @@ Check out the available [`upgrade-config` setting](../advanced/settings.md#upgra
 - Make sure your hardware meets the **preferred** [hardware requirements](../install/requirements.md#hardware-requirements). This is due to there will be intermediate resources consumed by an upgrade.
 - Make sure each node has at least 30 GiB of free system partition space (`df -h /usr/local/`). If any node in the cluster has less than 30 GiB of free system partition space, the upgrade will be denied. Check [free system partition space requirement](#free-system-partition-space-requirement) for more information.
 - Run the pre-check script on a Harvester control-plane node. Please pick a script according to your cluster's version: https://github.com/harvester/upgrade-helpers/tree/main/pre-check. 
+- A number of one-off privileged pods will be created in the `harvester-system` and `cattle-system` namespaces to perform host-level upgrade operations. If [pod security admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/) is enabled, adjust these policies to allow these pods to run.
 
 :::
 

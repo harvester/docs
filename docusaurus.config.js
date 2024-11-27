@@ -72,9 +72,9 @@ const config = {
               banner: `none`
             },
             "v1.2": {
-              label: 'v1.2',
+              label: 'v1.2 (EOL)',
               path: 'v1.2',
-              banner: `none`
+              banner: `unmaintained`
             },
             "v1.1": {
               label: 'v1.1 (EOL)',

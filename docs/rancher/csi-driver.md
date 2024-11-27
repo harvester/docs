@@ -9,8 +9,23 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/rancher/csi-driver"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/rancher/csi-driver"/>
 </head>
+
+:::caution
+
+A [known issue](https://github.com/harvester/harvester/issues/6849) in v0.1.20 of the Harvester CSI driver causes volumes to get stuck when the host cluster is running a Harvester version that was released before v1.4.0.
+
+This issue was fixed in v0.1.21. If your system is affected, you can follow the suggested [workaround](https://github.com/harvester/harvester/issues/6849#issuecomment-2462545795).
+
+| Harvester CSI Driver Version | Harvester Version  | Affected |
+| ---------------------------- | ------------------ | -------- |
+| v0.1.21 and later            | All versions       | No       |
+| v0.1.20                      | v1.4.0 and later   | No       |
+| v0.1.20                      | v1.3.2 and earlier | Yes      |
+| v0.1.18 and earlier          | All versions       | No       |
+
+:::
 
 The Harvester Container Storage Interface (CSI) Driver provides a standard CSI interface used by guest Kubernetes clusters in Harvester. It connects to the host cluster and hot-plugs host volumes to the virtual machines (VMs) to provide native storage performance.
 
@@ -276,6 +291,134 @@ Now you can create a new StorageClass that you intend to use in your guest Kuber
     :::
 
 1. You can now create a PVC based on this new **StorageClass**, which utilizes the **Host StorageClass** to provision volumes on the bare-metal Harvester cluster.
+
+## RWX Volumes Support
+
+### Prerequisites
+
+- Harvester v1.4 or later is installed on the host cluster.
+
+- You have created an RWX StorageClass on the host Harvester cluster.
+
+  On the **Storage Class: Create** screen, click **Edit as YAML** and specify the following:
+  ```
+  kind: StorageClass
+  apiVersion: storage.k8s.io/v1
+  metadata:
+    name: longhorn-rwx
+  provisioner: driver.longhorn.io
+  allowVolumeExpansion: true
+  reclaimPolicy: Delete
+  volumeBindingMode: Immediate
+  parameters:
+    numberOfReplicas: "3"
+    staleReplicaTimeout: "2880"
+    fromBackup: ""
+    fsType: "ext4"
+    nfsOptions: "vers=4.2,noresvport,softerr,timeo=600,retrans=5"
+  ```
+
+  ![](/img/v1.4/rancher/create-rwx-sc-host-cluster-01.png)
+
+  ![](/img/v1.4/rancher/create-rwx-sc-host-cluster-02.png)
+
+  ![](/img/v1.4/rancher/create-rwx-sc-host-cluster-03.png)
+
+- The role-based access control (RBAC) settings are up-to-date.
+
+  [RBAC authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/) uses a specific Kubernetes API group to drive authorization decisions regarding access to computer or network resources.
+
+  The Harvester CSI driver requires the new RBAC settings to support RWX volumes. To check the RBAC settings, run the command `kubectl get clusterrole harvesterhci.io:csi-driver -o yaml`.
+
+    ```
+    # kubectl get clusterrole harvesterhci.io:csi-driver -o yaml
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRole
+    metadata:
+    ...
+      name: harvesterhci.io:csi-driver
+    ...
+    rules:
+    - apiGroups:
+      - storage.k8s.io
+      resources:
+      - storageclasses
+      verbs:
+      - get
+      - list
+      - watch
+    - apiGroups:
+      - harvesterhci.io
+      resources:
+      - networkfilesystems
+      - networkfilesystems/status
+      verbs:
+      - '*'
+    - apiGroups:
+      - longhorn.io
+      resources:
+      - volumes
+      - volumes/status
+      verbs:
+      - get
+      - list
+    ```
+
+- The networkfs-manager pods are running.
+
+  To check the status of the networkfs-manager pods, run the command `kubectl get pods -n harvester-system | grep networkfs-manager`.
+
+  Example:
+
+  ```
+  # kubectl get pods -n harvester-system | grep networkfs-manager
+  harvester-networkfs-manager-2pxhm                       1/1     Running     4 (34m ago)    3h41m
+  harvester-networkfs-manager-8tst2                       1/1     Running     4 (37m ago)    3h41m
+  harvester-networkfs-manager-xvkgp                       1/1     Running     4 (37m ago)    3h41m
+  ```
+
+- The Harvester CSI driver version is v0.1.20 or later.
+
+  ![](/img/v1.4/rancher/harvester-csi-driver-version.png)
+
+### Usage
+
+1. Create a new StorageClass on the guest cluster.
+
+  On the **StorageClass: Create** screen, add a **Host Storage Class** parameter and specify the RWX StorageClass that you created on the host Harvester cluster.  
+  
+  ![](/img/v1.4/rancher/new-sc-associated-with-rwx.png)
+
+1. Create an RWX PersistentVolumeClaim (PVC).
+
+  On the **PersistentVolumeClaim: Create** screen, configure the following settings:
+  
+  - **Volume Claim** tab: Specify the new StorageClass.
+  - **Customize** tab: Select **Many Nodes Read-Write**.
+
+  ![](/img/v1.4/rancher/create-rwx-pvc-01.png)
+
+  ![](/img/v1.4/rancher/create-rwx-pvc-02.png)
+
+1. Verify that the RWX PVC was created successfully.
+
+  ![](/img/v1.4/rancher/check-rwx-pvc.png)
+
+1. Create two pods.
+
+  On the **Pod: Create** screen, specify the RWX PVC.
+
+  ![](/img/v1.4/rancher/create-pod-with-rwx-pvc-01.png)
+
+  ![](/img/v1.4/rancher/create-pod-with-rwx-pvc-02.png)
+
+  ![](/img/v1.4/rancher/create-pod-with-rwx-pvc-03.png)
+
+:::note
+
+You can follow the same steps to create an RWX PVC on the guest cluster and then use it on pods that require RWX volumes.
+
+:::
 
 ## Upgrade the CSI Driver
 

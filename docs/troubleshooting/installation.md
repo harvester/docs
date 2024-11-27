@@ -6,7 +6,7 @@ title: "Installation"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/troubleshooting/installation"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/troubleshooting/index"/>
 </head>
 
 The following sections contain tips to troubleshoot or get assistance with failed installations.
