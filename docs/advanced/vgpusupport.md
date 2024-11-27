@@ -53,6 +53,23 @@ You must enable the [**nvidia-driver-toolkit** add-on](./addons/nvidiadrivertool
   Once a vGPU has been assigned to a VM, it may not be possible to disable the VM until the vGPU is removed.
   :::
 
+## vGPU Devices in Rancher-Managed Clusters
+
+Ever since vGPU support was introduced in Harvester v1.3.0, Rancher has allowed attaching of vGPUs to virtual machines running on Rancher-managed Harvester clusters. However, Rancher was initially unable to track vGPU device allocation across virtual machines. You could create virtual machines with vGPU device requests that could not be accommodated, and assign vGPU profiles with unallocatable devices to guest clusters. As a result, the affected virtual machines became unschedulable and Rancher repeatedly attempted to recreate those virtual machines without success.
+
+Enhancements in Harvester v1.3.0 and v1.4.0 allow specific Rancher versions to identify the allocatable vGPU devices across all Harvester nodes. Rancher v2.8 and v2.9 display this information on the UI, and prevent the assignment of a vGPU profile when its allocatable device count does not meet the required quantity. 
+
+:::info important
+
+You must install specific versions of Harvester and Rancher to fully leverage the improved vGPU tracking and allocation mechanism. 
+
+- Harvester: 1.3.2 or v1.4.0
+- Rancher: v2.8.9, 2.9.3, or 2.10.0
+
+If you upgrade Rancher but continue to use a Harvester version that does not contain the enhancements, Harvester is unable to track vGPU profiles that you assign to virtual machines using the upgraded Rancher UI.
+
+:::
+
 ### Limitations
 
 #### Attaching multiple vGPU's:
