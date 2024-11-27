@@ -22,6 +22,7 @@ The following table shows the upgrade path of all supported versions.
 
 | Upgrade from version | Supported new version(s) |
 |----------------------|--------------------------|
+| [v1.3.2](./v1-3-2-to-v1-4-0.md) | v1.4.0        |
 | [v1.3.1](./v1-3-1-to-v1-3-2.md) | v1.3.2        |
 | [v1.2.2/v1.3.0](./v1-2-2-to-v1-3-1.md) | v1.3.1        |
 | [v1.2.1](./v1-2-1-to-v1-2-2.md) | v1.2.2        |
@@ -49,7 +50,7 @@ For the Harvester & Rancher support matrix, please visit our website [here](http
 - Do not operate the cluster during an upgrade. For example, creating new VMs, uploading new images, etc.
 - Make sure your hardware meets the **preferred** [hardware requirements](../install/requirements.md#hardware-requirements). This is due to there will be intermediate resources consumed by an upgrade.
 - Make sure each node has at least 30 GiB of free system partition space (`df -h /usr/local/`). If any node in the cluster has less than 30 GiB of free system partition space, the upgrade will be denied. Check [free system partition space requirement](#free-system-partition-space-requirement) for more information.
-- Run the pre-check script on a Harvester control-plane node. Please pick a script according to your cluster's version: https://github.com/harvester/upgrade-helpers/tree/main/pre-check. 
+- Run the pre-check script on a Harvester control-plane node. Please pick a script according to your cluster's version: https://github.com/harvester/upgrade-helpers/tree/main/pre-check.
 
 :::
 
