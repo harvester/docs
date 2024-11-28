@@ -266,7 +266,7 @@ const config = {
       {
         redirects: [
           { // Redirects for links in the Harvester README.md file
-            to: '/v1.1/install/pxe-boot-install',
+            to: '/v1.4/install/pxe-boot-install',
             from: '/latest/install/pxe-boot-install'
           },
         ],
