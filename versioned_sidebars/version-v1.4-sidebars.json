@@ -141,19 +141,7 @@
               "api/replace-namespaced-network-attachment-definition",
               "api/delete-namespaced-network-attachment-definition",
               "api/patch-namespaced-network-attachment-definition",
-              "api/list-network-attachment-definition-for-all-namespaces",
-              "api/list-namespaced-cluster-network",
-              "api/create-namespaced-cluster-network",
-              "api/read-namespaced-cluster-network",
-              "api/replace-namespaced-cluster-network",
-              "api/delete-namespaced-cluster-network",
-              "api/patch-namespaced-cluster-network",
-              "api/list-namespaced-node-network",
-              "api/create-namespaced-node-network",
-              "api/read-namespaced-node-network",
-              "api/replace-namespaced-node-network",
-              "api/delete-namespaced-node-network",
-              "api/patch-namespaced-node-network"
+              "api/list-network-attachment-definition-for-all-namespaces"
             ]
           },
           {
