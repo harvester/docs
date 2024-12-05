@@ -139,13 +139,13 @@ kubectl drain <node_name> --force --ignore-daemonsets --delete-local-data --pod-
 Again, removing a control plane node in this situation is **not recommended** because etcd data is not replicated. Failure of a single node can cause etcd to lose its quorum and shut the cluster down.
 :::
 
-### 6. Delete RKE2 services on the node and Shutdown the node.
+### 6. Delete RKE2 services and shut down the node.
 
 1. Log in to the node using the root account.
 
-1. Run the script `/opt/rke2/bin/rke2-uninstall.sh`.
+1. Run the script `/opt/rke2/bin/rke2-uninstall.sh` to delete RKE2 services running on the node.
 
-1. Shutdown the node.
+1. Shut down the node.
 
 :::note
 
