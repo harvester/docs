@@ -169,9 +169,10 @@ spec:
   storageClass: "harvester-longhorn"
 ```
 
-This will trigger the controller to export the VM named "alpine-export-test"
-from the folder "/vm-folder" on the VMWare source cluster to be exported,
-processed and recreated into the harvester cluster
+This CRD prompts the controller to export the VM named "alpine-export-test"
+from the folder "/vm-folder", which is on the source VMWare cluster.
+The virtual machine is expored, processed, and recreated into the Harvester
+cluster.
 </TabItem>
 <TabItem value="openstack" label="OpenStack">
 
@@ -182,7 +183,7 @@ metadata:
   name: openstack-demo
   namespace: default
 spec:
-  virtualMachineName: "openstack-demo" #Name or UUID for instance
+  virtualMachineName: "openstack-demo"  # Instance name or UUID
   folder: "/vm-folder"
   networkMapping:
     - sourceNetwork: "shared"
@@ -198,25 +199,26 @@ spec:
 ```
 
 :::note
-OpenStack allows users to have multiple instances with the same name. In such a
-scenario, users are advised to use the Instance ID. The reconciliation logic
-tries to perform a name-to-ID lookup when a name is used.
+The reconciliation logic attempts to perform a name-to-uuid lookup when an
+instance name is used.
+OpenStack allows the creation of multiple virtual machines with the same
+instance name. In this scenario, you are advised to use the UUID.
 :::
 </TabItem>
 </Tabs>
 
-This can take a while based on the size of the virtual machine, but users should
-see `VirtualMachineImages` created for each disk in the defined virtual machine.
+This process can take a while depending on the virtual machine size, but you
+should see `VirtualMachineImages` created for each disk in the defined virtual
+machine.
 
-The list of items in `networkMapping` will define how the source network
-interfaces are mapped to the Harvester Networks.
+The entries listed under `networkMapping` determine how the source network
+interfaces are mapped to the Harvester networks. If no matches are found, each
+unmatched network interface is attached to the default `managementNetwork`.
 
-If a match is not found, each unmatched network interface is attached to the
-default `managementNetwork`.
+Once the virtual machine is imported successfully, the status of the object
+changes to `virtualMachineRunning`.
 
-Once the virtual machine has been imported successfully, the object will reflect
-the status:
-
+Example:
 ```shell
 $ kubectl get virtualmachineimport.migration
 NAME                    STATUS
