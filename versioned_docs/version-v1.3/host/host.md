@@ -128,19 +128,13 @@ kubectl drain <node_name> --force --ignore-daemonsets --delete-local-data --pod-
 Again, removing a control plane node in this situation is **not recommended** because etcd data is not replicated. Failure of a single node can cause etcd to lose its quorum and shut the cluster down.
 :::
 
-### 6. Remove the node.
-
-1. On the Harvester UI, go to the **Hosts** screen.
-
-1. Locate the node that you want to remove, and then click **⋮ > Delete**.
-
-![delete.png](/img/v1.2/host/delete-node.png)
-
-### 7. Delete RKE2 services on the node.
+### 6. Delete RKE2 services and shut down the node.
 
 1. Log in to the node using the root account.
 
-1. Run the script `/opt/rke2/bin/rke2-uninstall.sh`.
+1. Run the script `/opt/rke2/bin/rke2-uninstall.sh` to delete RKE2 services running on the node.
+
+1. Shut down the node.
 
 :::note
 
@@ -149,6 +143,13 @@ Once resolved, you can skip this step.
 
 :::
 
+### 7. Remove the node.
+
+1. On the Harvester UI, go to the **Hosts** screen.
+
+1. Locate the node that you want to remove, and then click **⋮ > Delete**.
+
+![delete.png](/img/v1.2/host/delete-node.png)
 
 ## Role Management
 
@@ -250,7 +251,7 @@ The replica data would be rebuilt to another disk automatically to keep the high
 #### Evict replicas (Longhorn dashboard)
 1. Please follow [this session](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards) to enable the embedded Longhorn dashboard.
 2. Visit the Longhorn dashboard and go to the **Node** page.
-3. Expand the node containing the disk. Confirm the mount point `/var/lib/harvester/extra-disks/1b805b97eb5aa724e6be30cbdb373d04` is in the disks list. 
+3. Expand the node containing the disk. Confirm the mount point `/var/lib/harvester/extra-disks/1b805b97eb5aa724e6be30cbdb373d04` is in the disks list.
 
 ![Check the removing disk](/img/v1.2/host/remove-disks-longhorn-nodes.png)
 
@@ -390,7 +391,7 @@ You can set up multiple NTP servers at once.
 
 ![](/img/v1.3/host/harvester-ntp-settings-multiple.png)
 
-You can check the settings in the `node.harvesterhci.io/ntp-service` annotation in Kubernetes nodes: 
+You can check the settings in the `node.harvesterhci.io/ntp-service` annotation in Kubernetes nodes:
 - `ntpSyncStatus`: Status of the connection to NTP servers (possible values: `disabled`, `synced` and `unsynced`)
 - `currentNtpServers`: List of existing NTP servers
 
@@ -470,7 +471,7 @@ matchSelector:
 ```
 
 :::note
-All label key-value pairs listed in the `matchSelector` field must match the labels of the intended nodes. 
+All label key-value pairs listed in the `matchSelector` field must match the labels of the intended nodes.
 
 In the following example, `matchSelector` will match `harvester-node-1` only if that node also has the `example.com/role` label with the value `role-a`.
 
