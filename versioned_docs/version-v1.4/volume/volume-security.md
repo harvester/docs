@@ -76,8 +76,16 @@ Prepare the following resources:
 
   :::info important
 
-  You can create a secret in the system namespace using the Harvester UI (**Edit as YAML** feature) and kubectl. Resources in the system namespace are not displayed on the Harvester UI **Secrets** screen.
+  The example contains the default YAML code for Kubernetes secrets. Aside from this, you can use [encryption options for LUKS mode](https://wiki.archlinux.org/title/Dm-crypt/Device_encryption#Encryption_options_for_LUKS_mode), which is a cryptsetup operating mode. Harvester v1.4.1 and later versions support these options, but you must verify that these are supported by your nodes.
 
+  | Option | Possible Values |
+  | --- | --- |
+  | CRYPTO_KEY_CIPHER | aes-xts-plain, aes-xts-plain64, aes-cbc-plain, aes-cbc-plain64, aes-cbc-essiv:sha256 |
+  | CRYPTO_KEY_HASH | sha256, sha384, sha512 |
+  | CRYPTO_KEY_SIZE | 256, 384, 512 |
+  | CRYPTO_PBKDF | argon2i, argon2id, pbkdf2 |
+
+  You can create a secret in the system namespace using kubectl or the Harvester UI (**Edit as YAML** feature). Resources in the system namespace are not displayed on the Harvester UI **Secrets** screen.
   :::
 
 ## Encrypted Volumes
