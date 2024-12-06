@@ -54,14 +54,16 @@ Prepare the following resources:
 
   :::info important
 
+  The example contains the default YAML code for Kubernetes secrets. Aside from this, you can use [encryption options for LUKS mode](https://wiki.archlinux.org/title/Dm-crypt/Device_encryption#Encryption_options_for_LUKS_mode), which is a cryptsetup operating mode. Harvester v1.4.1 and later versions support these options, but you must verify that these are supported by your nodes.
+
+  | Option | Possible Values |
+  | --- | --- |
+  | CRYPTO_KEY_CIPHER | aes-xts-plain, aes-xts-plain64, aes-cbc-plain, aes-cbc-plain64, aes-cbc-essiv:sha256 |
+  | CRYPTO_KEY_HASH | sha256, sha384, sha512 |
+  | CRYPTO_KEY_SIZE | 256, 384, 512 |
+  | CRYPTO_PBKDF | argon2i, argon2id, pbkdf2 |
+
   You can create a secret in the system namespace using kubectl or the Harvester UI (**Edit as YAML** feature). Resources in the system namespace are not displayed on the Harvester UI **Secrets** screen.
-
-  The example of secret is default yaml. From Harvester v1.4.1, we also support to accept these parameters from [cryptsetup](https://wiki.archlinux.org/title/Dm-crypt/Device_encryption#Encryption_options_for_LUKS_mode), but it eventually depends on whether your node supports them or not. 
-
-  - CRYPTO_KEY_CIPHER: aes-xts-plain, aes-xts-plain64, aes-cbc-plain, aes-cbc-plain64, aes-cbc-essiv:sha256  
-  - PBKDF: argon2i, argon2id, pbkdf2  
-  - Hash: sha256, sha384, sha512  
-  - Key Size: 256, 384, 512  
   :::
 
 - StorageClass: Images are encrypted using Longhorn, so required fields must be passed to the Longhorn CSI Driver. You can specify the encryption secret when creating a StorageClass. For more information, see [Image StorageClass](./upload-image#image-storageclass). 
