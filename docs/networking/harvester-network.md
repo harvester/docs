@@ -69,6 +69,14 @@ The [Harvester network-controller](https://github.com/harvester/harvester-networ
 
     ![](/img/v1.2/networking/create-vlan-network.png)
 
+:::note
+
+The `VM Network` inheriates the `MTU` from the `Network Config` of the `Cluster Network`, this makes sure the VMs will get the best match and best performance from the hardware. It is not allowed to set a different `MTU` on the `VM Network`.
+
+Follow the guide [Change the MTU of Network Config which has Storage Network Attached](./clusternetwork.md#change-the-mtu-of-network-config-which-has-storage-network-attached) or [Change the MTU of Network Config which has no Storage Network Attached](./clusternetwork.md#change-the-mtu-of-network-config-which-has-no-storage-network-attached) to set a different `MTU` on the physical `NICs` first, then the `VM Network` will inheriate the new `MTU` automatically.
+
+:::
+
 1. On the Route tab, select an option and then specify the related IPv4 addresses.
 
     - Auto(DHCP): The Harvester network controller retrieves the CIDR and gateway addresses from the DHCP server. You can specify the DHCP server address. 
