@@ -20,13 +20,13 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 ## Node Maintenance
 
-For admin users, you can click **Enable Maintenance Mode** to evict all VMs from a node automatically. It will leverage the `VM live migration` feature to migrate all VMs to other nodes automatically. Note that at least two active nodes are required to use this feature.
+Admin users can enable Maintenance Mode (select **⋮ > Enable Maintenance Mode**) to automatically evict all virtual machines from a node. This mode leverages the **live migration** feature to migrate the virtual machines to other nodes, which is useful when you need to reboot, upgrade firmware, or replace hardware components. At least two active nodes are required to use this feature.
 
 ![node-maintenance.png](./assets/node-maintenance.png)
 
 ## Cordoning a Node
 
-Cordoning a node marks it as unschedulable. This feature is useful for performing short tasks on the node during small maintenance windows, like reboots, upgrades, or decommissions. When you’re done, power back on and make the node schedulable again by uncordoning it.
+Cordoned nodes are marked as unschedulable. Cordoning is useful when you want to prevent new workloads from being scheduled on a node. You can uncordon a node to make it schedulable again.
 
 ![cordon-node.png](./assets/cordon-nodes.png)
 
