@@ -13,6 +13,9 @@ jobs:
       contents: write
       pages: write
     steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -59,3 +62,10 @@ jobs:
           AUTHOR_EMAIL: ${{ steps.vars.outputs.email }}
           COMMIT: ${{ steps.vars.outputs.sha_short }}
           GITHUB_REPO_LINK: "${{ github.server_url }}/${{ github.repository }}.git"
+      - name: Crawler
+        run: |
+          docker run \
+          -e APPLICATION_ID=${{ secrets.ALGOLIA_APP_ID }} \
+          -e API_KEY=${{ secrets.ALGOLIA_CRAWLER_API_KEY }} \
+          -e "CONFIG=$(cat ./docsearch.json | jq -r tostring)" \
+          algolia/docsearch-scraper

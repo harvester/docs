@@ -1,0 +1,23 @@
+{
+    "index_name": "harvester",
+    "sitemap_urls": ["http://docs.harvesterhci.io/sitemap.xml"],
+    "start_urls": ["http://docs.harvesterhci.io/"],
+    "selectors": {
+      "lvl0": "",
+      "lvl1": "article h1",
+      "lvl2": "article h2",
+      "lvl3": "article h3",
+      "lvl4": "article h4",
+      "lvl5": "article h5",
+      "lvl6": "article h6",
+      "text": "article p, article li, article td:last-child"
+    },
+    "custom_settings": {
+      "attributesForFaceting": [
+        "language",
+        "version",
+        "type",
+        "docusaurus_tag"
+      ]
+    }
+  }
