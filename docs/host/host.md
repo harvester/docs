@@ -21,6 +21,28 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 ## Node Maintenance
 
+
+:::warning
+
+We found that there is a chance that VMs on a node can encounter an I/O error while the node enters maintenance mode. Please follow this procedure to avoid the problem before a fix is released:
+
+- Set the taint on the maintenance node:
+    ```
+    kubectl taint node <NODE> --overwrite kubevirt.io/drain=draining:NoSchedule
+    ```
+- Wait for all VMs to be live-migrated out of the maintenance node.
+- Select **Enable Maintenence Mode** in the GUI.
+
+Once you finish the maintenance work, you need to:
+- Remove the taint on the maintenance node: 
+    ```
+    kubectl taint node <NODE> kubevirt.io/drain-
+    ```
+- Select **Disable Maintenence Mode** in the GUI.
+
+For more information, please check the [issue](https://github.com/harvester/harvester/issues/7128).
+:::
+
 Admin users can enable Maintenance Mode (select **⋮ > Enable Maintenance Mode**) to automatically evict all virtual machines from a node. This mode leverages the **live migration** feature to migrate the virtual machines to other nodes, which is useful when you need to reboot, upgrade firmware, or replace hardware components. At least two active nodes are required to use this feature.
 
 If you want to force individual VMs to shut down instead of migrating to other nodes, add the label `harvesterhci.io/maintain-mode-strategy` and one of the following values to those VMs:
