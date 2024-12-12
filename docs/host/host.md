@@ -24,7 +24,7 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 :::warning
 
-A recent [bug](https://github.com/harvester/harvester/issues/7128) reveals that there is a chance that VMs on a node can encounter an I/O error while in maintenance mode. Users [must|should] follow the following maintenance procedure until a fix is released:
+A recent [bug](https://github.com/harvester/harvester/issues/7128) reveals that there is a chance that VMs on a node can encounter an I/O error while in maintenance mode. Users should follow the following maintenance procedure until a fix is released:
 
 - Set the taint on the maintenance node:
     ```
