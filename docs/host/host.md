@@ -24,14 +24,14 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 :::warning
 
-We found that there is a chance that VMs on a node can encounter an I/O error while the node enters maintenance mode. Please follow this procedure to avoid the problem before a fix is released:
+A recent [bug](https://github.com/harvester/harvester/issues/7128) reveals that there is a chance that VMs on a node can encounter an I/O error while in maintenance mode. Users [must|should] follow the following maintenance procedure until a fix is released:
 
 - Set the taint on the maintenance node:
     ```
     kubectl taint node <NODE> --overwrite kubevirt.io/drain=draining:NoSchedule
     ```
 - Wait for all VMs to be live-migrated out of the maintenance node.
-- Select **Enable Maintenence Mode** in the GUI.
+- Select **Enable Maintenance Mode** in the GUI.
 
 Once you finish the maintenance work, you need to:
 - Remove the taint on the maintenance node: 
