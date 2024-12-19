@@ -1,0 +1,26 @@
+name: Algolia Search Index
+
+on:
+  schedule:
+    # Trigger every day at 20:00 UTC+0
+    - cron: '0 20 * * *'
+  workflow_dispatch:
+
+jobs:
+  build-algolia-search-index:
+    name: Build Algolia Search Index
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Crawler
+      run: |
+        docker run \
+        -e APPLICATION_ID=${{ secrets.ALGOLIA_APP_ID }} \
+        -e API_KEY=${{ secrets.ALGOLIA_CRAWLER_API_KEY }} \
+        -e "CONFIG=$(cat ./docsearch.json | jq -r tostring)" \
+        algolia/docsearch-scraper

@@ -55,17 +55,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-        
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Crawler
-        run: |
-          docker run \
-          -e APPLICATION_ID=${{ secrets.ALGOLIA_APP_ID }} \
-          -e API_KEY=${{ secrets.ALGOLIA_CRAWLER_API_KEY }} \
-          -e "CONFIG=$(cat ./docsearch.json | jq -r tostring)" \
-          algolia/docsearch-scraper
