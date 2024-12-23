@@ -63,7 +63,7 @@ As a result, we recommend monitoring each [RKE2 release](https://github.com/ranc
 
 ---
 
-### 1. Missing rancher/rancher-agent:v2.9.2 image in the air-gapped environment. (Issue [#7157](https://github.com/harvester/harvester/issues/7157))
+### 1. Missing rancher/rancher-agent:v2.9.2 image affects deployment in air-gapped environments. (Issue [#7157](https://github.com/harvester/harvester/issues/7157))
 
 In harvester v1.4.0, the embedded rancher is v2.9.2. It introduced a new cronjob [rke2-machine-config-cleanup](https://github.com/rancher/rancher/commit/53ba791e11f98a5594c6fa8a30d321602483446c). It used rancher/rancher-agent:v2.9.2 as container image, but it's not included in the harvester v1.4.0 ISO. To avoid the issue, you can pull the image from the internet and load it into the air-gapped environment.
 
