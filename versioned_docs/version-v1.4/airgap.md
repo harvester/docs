@@ -59,6 +59,24 @@ If the **Cloud Provider** option is configured to **Harvester** in a guest K8s c
 
 As a result, we recommend monitoring each [RKE2 release](https://github.com/rancher/rke2/releases) in your air gapped environment and pulling the required images into your private registry. Please refer to the **Harvester CCM & CSI Driver** with RKE2 Releases section on the [Harvester support matrix page](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/harvester-v1-1-2/) for the best Harvester cloud provider and CSI driver capability support.
 
+## Integrate with External Rancher
+
+When importing Harvester to an external Rancher, the rancher-agent image is decided by the external Rancher. The image may not be included in the Harvester ISO. In this case, you need to pull the rancher-agent image from the internet and load it on each node or push it to the Harvester cluster's registry.
+
+```bash
+# on a computer which can reach the internet and harvester cluster
+docker pull rancher/rancher-agent:<version>
+docker save rancher/rancher-agent:<version> -o rancher-agent-<version>.tar
+
+# copy image tar file to the air-gapped environment
+scp rancher-agent-<version>.tar rancher@<harvester-node-ip>:/tmp
+
+# ssh to the harvester node and load the image
+ssh rancher@<harvester-node-ip>
+sudo -i
+docker load -i /tmp/rancher-agent-<version>.tar
+```
+
 ## Known issues
 
 ---
