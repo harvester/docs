@@ -1,5 +1,5 @@
 ---
-sidebar_position: 11
+sidebar_position: 10
 sidebar_label: Guest Clusters
 title: "Guest Clusters"
 keywords:
