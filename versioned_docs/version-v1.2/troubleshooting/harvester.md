@@ -200,21 +200,23 @@ Example:
 kubectl cp harvester-system/supportbundle-manager-bundle-dtl2k-69dcc69b59-w64vl:/tmp/support-bundle-kit/supportbundle_db25ccb6-b52a-4f9d-97dd-db2df2b004d4_2024-02-02T11-18-10Z.zip bundle.zip
 ```
 
-### Manually Collect Node Bunndle
+### Manually Collect Data for Support Bundle
 
-If node is not ready or down, support bundle kit can't collect data. Please follow these steps to manually collect data.
+Harvester is unable to collect data and generate a support bundle when the node is inaccessible or not ready. The workaround is to run a script and compress the generated files.
 
-1. Run script to prepare envioronment.
-```sh
-mkdir -p /tmp/support-bundle # ensure /tmp/support-bundle exists
-echo JOURNALCTL="/usr/bin/journalctl -o short-precise" > /tmp/common
-export SUPPORT_BUNDLE_NODE_NAME=$(hostname)
-```
-2. Run `curl -o collector-harvester https://raw.githubusercontent.com/rancher/support-bundle-kit/refs/heads/master/hack/collector-harvester` to download script
-3. Run `chmod +x collector-harvester`
-3. Run `./collector-harvester / /tmp/support-bundle`
+1. Prepare the environment.
+    ```sh
+    mkdir -p /tmp/support-bundle # ensure /tmp/support-bundle exists
+    echo JOURNALCTL="/usr/bin/journalctl -o short-precise" > /tmp/common
+    export SUPPORT_BUNDLE_NODE_NAME=$(hostname)
+    ```
 
-After finishing this process, please compress the `/tmp/support-bundle` and attach it with the related issue.
+1. Run the following commands:
+    - Download the script: `curl -o collector-harvester https://raw.githubusercontent.com/rancher/support-bundle-kit/refs/heads/master/hack/collector-harvester`
+    - Add executable permissions: `chmod +x collector-harvester`
+    - Run the script: `./collector-harvester / /tmp/support-bundle`
+
+1. Compress the files in `/tmp/support-bundle`, and then attach the archive to the related issue.
 
 ### Known Limitations
 
