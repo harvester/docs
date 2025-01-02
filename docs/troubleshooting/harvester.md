@@ -215,11 +215,13 @@ mkdir -p /tmp/support-bundle # ensure /tmp/support-bundle exists
 echo JOURNALCTL="/usr/bin/journalctl -o short-precise" > /tmp/common
 export SUPPORT_BUNDLE_NODE_NAME=$(hostname)
 ```
-2. Run `curl -o collector-harvester https://raw.githubusercontent.com/rancher/support-bundle-kit/refs/heads/master/hack/collector-harvester` to download script
-3. Run `chmod +x collector-harvester`
-3. Run `./collector-harvester / /tmp/support-bundle`
+1. Run the following commands:
 
-After finishing this process, please compress the `/tmp/support-bundle` and attach it with the related issue.
+  - Download the script: `curl -o collector-harvester https://raw.githubusercontent.com/rancher/support-bundle-kit/refs/heads/master/hack/collector-harvester`
+  - Add executable permissions: `chmod +x collector-harvester`
+  - Run the script: `./collector-harvester / /tmp/support-bundle`
+
+1. Compress the files in `/tmp/support-bundle`, and then attach the archive to the related issue.
 
 ### Known Limitations
 
