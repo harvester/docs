@@ -57,7 +57,7 @@ If you prefer, the following guide will take you through the same process in ind
 
 ## Virtualization management
 
-With Rancher's virtualization management feature, you can import and manage your Harvester cluster. By clicking one of the imported clusters, you can easily access and manage a range of Harvester cluster resources, including hosts, VMs, images, volumes, and more. 
+With Rancher's virtualization management feature, you can import and manage your Harvester cluster. By clicking one of the imported clusters, you can easily access and manage a range of Harvester cluster resources, including hosts, VMs, images, volumes, and more.
 Additionally, the virtualization management feature leverages Rancher's existing capabilities, such as authentication with various auth providers and multi-tenancy support.
 
 For in-depth insights, please refer to the [virtualization management](./virtualization-management.md) page.
@@ -129,7 +129,7 @@ The Rancher feature `harvester-baremetal-container-workload` must be enabled.
 
   ![](/img/v1.3/rancher/continuous-delivery-overview.png)
 
-1. (Optional) On the **Clusters** tab, edit the Fleet cluster config to add labels that can be used to group Harvester clusters. 
+1. (Optional) On the **Clusters** tab, edit the Fleet cluster config to add labels that can be used to group Harvester clusters.
 
   In this example, the label `location=private-dc` was added.
 
@@ -152,12 +152,21 @@ The Rancher feature `harvester-baremetal-container-workload` must be enabled.
 
   ![](/img/v1.3/rancher/gitrepo-definition.png)
 
-1. Click **Next**, and then define the Git repo targets. You can select all clusters, an individual cluster, or a group of clusters. 
+1. Click **Next**, and then define the Git repo targets. You can select all clusters, an individual cluster, or a group of clusters.
 
   In this example, the cluster group named `private-dc-clusters` is used.
 
-  ![](/img/v1.3/rancher/gitrepo-targets.png) 
+  ![](/img/v1.3/rancher/gitrepo-targets.png)
 
 1. Click **Save**. It may take a few seconds for the resources to be rolled out to the target clusters.
 
   ![](/img/v1.3/rancher/gitrepo-synced.png)
+
+## Work with prime Rancher
+
+The prime Rancher uses different registry. If there is no `CATTLE_AGENT_IMAGE` environment variable, the default value uses `docker.io` as default registry whick makes the Harvester can't get correct rancher-agent image. You need to set the `CATTLE_AGENT_IMAGE` environment variable to the correct registry.
+
+Example:
+```bash
+docker run --privileged -d --name=rancher --restart=unless-stopped -p 8080:80 -p 6443:443 -e CATTLE_AGENT_IMAGE=<registry>/rancher/rancher-agent:v2.8.10 <registry>/rancher/rancher:v2.8.10
+```
