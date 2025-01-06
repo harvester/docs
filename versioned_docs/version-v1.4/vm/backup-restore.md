@@ -300,6 +300,12 @@ You can suspend active schedules and resume suspended schedules.
   
   Harvester does not allow you to resume a suspended schedule for backup creation if the backup target is not reachable.
 
+  :::note
+
+  If a schedule was automatically suspended because the **Max Failure** value was exceeded, you must explicitly resume that schedule after verifying that the backup/snapshot can be created successfully. For example, when the backup target is back online from the previous disconnection, the user can manually create a backup and check the result first.
+
+  :::
+
 ### Virtual Machine Operations and Harvester Upgrades
 
 Before you upgrade Harvester, ensure that no virtual machine backups or snapshots are in use, and that all virtual machine schedules are suspended. The Harvester UI displays the following error messages when upgrade attempts are rejected:
