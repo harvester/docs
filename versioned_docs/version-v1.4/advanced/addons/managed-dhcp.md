@@ -16,6 +16,19 @@ Beginning with v1.3.0, you can configure IP pool information and serve IP addres
 Harvester uses the planned infrastructure network so you must ensure that network connectivity is available and plan the IP pools in advance.
 :::
 
+## Unique Features
+
+- DHCP leases are stored in etcd as the single source of truth across the entire cluster.
+- Each of the leases is static by nature and works well with your current network infrastructure.
+- The Managed DHCP agents can still serve DHCP requests for existing entities even if the cluster's control plane stops working, ensuring that your virtual machine workload's network remains available.
+
+## Limitations
+
+- The Managed DHCP feature only works with the network interfaces specified in the VirtualMachine CRs. Network interfaces created in the virtual machine are not supported.
+- IP addresses are not allocated or deallocated when you add or remove network interfaces after the virtual machine is created. The actual MAC addresses are recorded in the VirtualMachineNetworkConfig CRs.
+- The DHCP RELEASE operation is currently not supported.
+- IPPool configuration updates take effect only after you manually restart the relevant agent pods.
+
 ## Install and Enable the vm-dhcp-controller Add-On
 
 The vm-dhcp-controller add-on is not packed into the Harvester ISO, but you can download it from the [expreimental-addons repository](https://github.com/harvester/experimental-addons). You can install the add-on by running the following command:
@@ -30,7 +43,7 @@ After installation, enable the add-on on the **Dashboard** screen of the Harvest
 
 ## Usage
 
-1. On the **Dashboard** screen of the Harvester UI, [create a VM Network](../../networking/harvester-network.md#create-a-vm-network).  
+1. On the **Dashboard** screen of the Harvester UI, [create a VM Network](../../networking/harvester-network.md#create-a-vm-network).
 
     ![](/img/v1.3/vm-dhcp-controller/vm-network.png)
 
@@ -69,7 +82,7 @@ After installation, enable the add-on on the **Dashboard** screen of the Harvest
 1. Check the `.status` field of the IPPool and VirtualMachineNetworkConfig objects, and verify that the IP address is allocated and assigned to the MAC address.
 
     ```shell
-    $ kubectl get ippools.network net-48 -o yaml                      
+    $ kubectl get ippools.network net-48 -o yaml
     apiVersion: network.harvesterhci.io/v1alpha1
     kind: IPPool
     metadata:
@@ -247,6 +260,6 @@ spec:
 
 After the VirtualMachineNetworkConfig object is created, the controller attempts to retrieve a list of unused IP addresses from the IP allocation module for each recorded MAC address. The IP-MAC mapping is then updated in the VirtualMachineNetworkConfig object and the corresponding IPPool objects.
 
-:::note 
+:::note
 Manual creation of VirtualMachineNetworkConfig objects for VMs is unnecessary in most cases because vm-dhcp-controller handles that task during the VirtualMachine reconciliation process. Automatically-created VirtualMachineNetworkConfig objects are deleted when VirtualMachine objects are removed.
 :::
