@@ -16,6 +16,7 @@ You can now provision K3s Kubernetes clusters on top of the Harvester cluster in
 
 - Harvester K3s node driver is in **Tech Preview**.
 - [VLAN network](../../networking/harvester-network.md#vlan-network) is required for Harvester node driver.
+- Provisioning K3s Kubernetes clusters involves configuring the IP address of the underlying virtual machines. You can do this using a DHCP server on the VLAN network that the virtual machines are attached to. If such a server does not exist on the network, you can use the [Managed DHCP](../../advanced/addons/managed-dhcp.md) feature to configure the IP address.
 - Harvester node driver only supports cloud images.
 - For the port requirements of the guest clusters deployed within Harvester, please refer to the [port requirements for guest clusters](../../install/requirements.md#port-requirements-for-k3s-or-rkerke2-clusters).
 
