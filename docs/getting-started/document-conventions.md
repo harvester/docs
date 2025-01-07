@@ -19,7 +19,7 @@ Harvester has a 26-week release cycle and an N - 1 support policy. Each release 
 
 - **Dev**: The software is under active development and has not been thoroughly tested. Upgrading from earlier versions or to later versions is not supported. Use this version only for testing purposes.
 
-- **Latest**: The software has passed all stages of verification and testing. All remaining known issues are considered acceptable. Use this version only in testing and limited production environments.
+- **Latest**: The software has passed all stages of verification and testing. All remaining known issues are considered acceptable. Use this version only for testing purposes.
 
 - **Stable**: The software is considered reliable and free of critical issues. This version is recommended for general use.
 
@@ -27,7 +27,7 @@ Harvester has a 26-week release cycle and an N - 1 support policy. Each release 
 
 :::note
 
-Harvester provides documentation for major and minor releases. Information about enhancements and bug fixes implemented in patch releases is added to the documentation for the relevant minor releases.
+Harvester provides documentation for major and minor releases. Information about enhancements and bug fixes implemented in patch releases is added to the minor release documentation.
 
 :::
 
