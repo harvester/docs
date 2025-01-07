@@ -44,3 +44,17 @@ Features that are labeled **Experimental** or **Technical Preview** are availabl
 Experimental and Technical Preview features are usually disabled by default. The documentation provides information about how you can enable and configure such features. 
 
 :::
+
+## Admonitions
+
+Admonitions are text blocks that provide additional or important information. Each text block is marked with a special label and icon.
+
+- **Note**: Additional information that is useful but not critical.
+
+- **Important**: Information that requires special attention, such as changes in product behavior.
+
+- **Tip**: Helpful advice and suggestions, such as alternative methods of completing a task.
+
+- **Caution**: Information that must be considered before proceeding with specific actions, such as errors that may occur.
+
+- **Warning**: Critical information about harmful consequences, such as irreversible damage and data loss.
