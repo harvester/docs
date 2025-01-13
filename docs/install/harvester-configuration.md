@@ -73,6 +73,9 @@ install:
   vip: 10.10.0.19
   vip_hw_addr: 52:54:00:ec:0e:0b
   vip_mode: dhcp
+  cluster_pod_cidr: 172.16.0.0/16
+  cluster_service_cidr: 172.22.0.0/16
+  cluster_dns_ip: 172.22.0.10
   force_mbr: false
   addons:
     harvester_vm_import_controller:
@@ -726,6 +729,49 @@ install:
   vip: 10.10.0.19
   vip_mode: dhcp
   vip_hw_addr: 52:54:00:ec:0e:0b
+```
+
+### `install.cluster_pod_cidr`
+
+**Definition**: CIDR of the Harvester pods.
+
+Use this field to override the default pod CIDR of 10.52.0.0/16.
+
+**Example**:
+
+```yaml
+install:
+  cluster_pod_cidr: 172.16.0.0/16
+```
+
+### `install.cluster_service_cidr`
+
+**Definition**: CIDR of the Harvester services.
+
+Use this field to override the default service CIDR of 10.53.0.0/16.
+
+If this CIDR is changed, the cluster DNS IP must be within this range. See the `install.cluster_dns` field.
+
+**Example**:
+
+```yaml
+install:
+  cluster_service_cidr: 172.22.0.0/16
+```
+
+### `install.cluster_dns`
+
+**Definition**: IP of the Harvester DNS service.
+
+Use this field to override the default DNS service IP of 10.53.0.10.
+
+This IP must be within the range defined by the `cluster_service_cidr` field.
+
+**Example**:
+
+```yaml
+install:
+  cluster_dns: 172.16.0.10
 ```
 
 ### `install.webhooks`

@@ -87,6 +87,20 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 	For more information, see [DHCP Server Configuration](./pxe-boot-install.md#dhcp-server-configuration).
 	:::
 
+1. (Optional) Configure the CIDRs for the cluster pods and services. Leave these fields blank to use the default CIDRs.
+
+	![config-cluster-cidrs.png](/img/v1.5/install/config-cluster-cidrs.png)
+
+  The following is an example of a valid CIDR configuration:
+
+  * Pod CIDR: 172.16.0.0/16
+  * Service CIDR: 172.22.0.0/16
+  * Cluster DNS IP: 172.22.0.10
+
+	:::note
+  The pod CIDR and service CIDR must not overlap. The DNS service IP must be within the service CIDR.
+	:::
+
 1. (Optional) Configure the `DNS Servers`. Use commas as a delimiter to add more DNS servers. Leave it blank to use the default DNS server.
 
 	![config-dns-server.png](/img/v1.2/install/config-dns-server.png)
@@ -94,10 +108,10 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 1. Configure the virtual IP (VIP) by selecting a `VIP Mode`. This VIP is used to access the cluster or for other nodes to join the cluster.
 
 	:::note
-	If using DHCP to configure the IP address, you need to configure a static MAC-to-IP address mapping on your DHCP server to have a persistent virtual IP (VIP), and the VIP must be unique.
+	For DHCP setup with static MAC-to-IP address mappings configured, enter the MAC address in the provided field to fetch the unique persistent virtual IP (VIP). Otherwise, leave it blank.
 	:::
 
-	![config-virtual-ip.png](/img/v1.2/install/config-virtual-ip.png)
+	![config-virtual-ip.png](/img/v1.5/install/config-virtual-ip.png)
 
 1. Configure the `Cluster token`. This token is used for adding other nodes to the cluster.
 
