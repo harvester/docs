@@ -60,7 +60,7 @@ Harvester currently does not allow you to modify the volume group composition (a
 
     ![](/img/v1.4/csi-driver-lvm/add-disk-to-vg-03.png)
 
-  For more information about adding disks, see [Multi-Disk Management](../../host/#multi-disk-management).
+  For more information about adding disks, see [Multi-Disk Management](../../../host/#multi-disk-management).
 
 1. Click **Save**.
 
