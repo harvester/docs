@@ -98,7 +98,11 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
   * Cluster DNS IP: 172.22.0.10
 
 	:::note
-  The pod CIDR and service CIDR must not overlap. The DNS service IP must be within the service CIDR.
+  The pod CIDR and service CIDR must not overlap.
+
+  The CIDRs must be within the private IP address range of either 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16.
+
+  The DNS service IP must be within the service CIDR.
 	:::
 
 1. (Optional) Configure the `DNS Servers`. Use commas as a delimiter to add more DNS servers. Leave it blank to use the default DNS server.
