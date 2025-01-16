@@ -87,23 +87,25 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 	For more information, see [DHCP Server Configuration](./pxe-boot-install.md#dhcp-server-configuration).
 	:::
 
-1. (Optional) Configure the CIDRs for the cluster pods and services. Leave these fields blank to use the default CIDRs.
+1. (Optional) Configure the CIDRs for the cluster pods and services.
 
-	![config-cluster-cidrs.png](/img/v1.5/install/config-cluster-cidrs.png)
+    If you want to use the default values, leave the fields blank.
 
-  The following is an example of a valid CIDR configuration:
+    ![config-cluster-cidrs.png](/img/v1.5/install/config-cluster-cidrs.png)
 
-  * Pod CIDR: 172.16.0.0/16
-  * Service CIDR: 172.22.0.0/16
-  * Cluster DNS IP: 172.22.0.10
+    :::info important
+  
+    The CIDR values must not overlap and must be within the private IP address range of 10.0.0.0/8, 172.16.0.0/12, or 192.168.0.0/16.
 
-	:::note
-  The pod CIDR and service CIDR must not overlap.
+    The DNS service IP must be within the range defined by the **Service CIDR** field.
+    
+    :::
+    
+    Example of a valid CIDR configuration:
 
-  The CIDRs must be within the private IP address range of either 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16.
-
-  The DNS service IP must be within the service CIDR.
-	:::
+    - **Pod CIDR**: 172.16.0.0/16
+    - **Service CIDR**: 172.22.0.0/16
+    - **Cluster DNS IP**: 172.22.0.10
 
 1. (Optional) Configure the `DNS Servers`. Use commas as a delimiter to add more DNS servers. Leave it blank to use the default DNS server.
 

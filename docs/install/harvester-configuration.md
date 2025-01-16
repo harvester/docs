@@ -750,7 +750,11 @@ install:
 
 Use this field to override the default service CIDR of 10.53.0.0/16.
 
-If this CIDR is changed, the cluster DNS IP must be within this range. See the `install.cluster_dns` field.
+:::info important
+
+If you change this CIDR, you must ensure that the cluster DNS IP (`install.cluster_dns`) is within this range.
+
+:::
 
 **Example**:
 
@@ -765,7 +769,11 @@ install:
 
 Use this field to override the default DNS service IP of 10.53.0.10.
 
+:::info important
+
 This IP must be within the range defined by the `cluster_service_cidr` field.
+
+:::
 
 **Example**:
 
