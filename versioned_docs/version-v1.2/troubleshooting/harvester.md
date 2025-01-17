@@ -207,7 +207,7 @@ Harvester is unable to collect data and generate a support bundle when the node 
 1. Prepare the environment.
     ```sh
     mkdir -p /tmp/support-bundle # ensure /tmp/support-bundle exists
-    echo JOURNALCTL="/usr/bin/journalctl -o short-precise" > /tmp/common
+    echo 'JOURNALCTL="/usr/bin/journalctl -o short-precise"' > /tmp/common
     export SUPPORT_BUNDLE_NODE_NAME=$(hostname)
     ```
 
