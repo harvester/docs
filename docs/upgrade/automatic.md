@@ -149,7 +149,7 @@ Harvester v1.5.0 includes checks that ensure nodes do not trigger garbage collec
 
 ![](/img/v1.5/upgrade/upgrade_free_space_check.png)
 
-If some nodes do not have enough free system partition space, but you still want to try upgrading, you can customize the upgrade by updating the `harvesterhci.io/skipGarbageCollectionThresholdCheck: true` annotation of `Version` object.
+If you want to try upgrading even if the free system partition space is insufficient on some nodes, you can update the `harvesterhci.io/skipGarbageCollectionThresholdCheck: true` annotation of the `Version` object.
 
 ```
 apiVersion: harvesterhci.io/v1beta1
