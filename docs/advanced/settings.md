@@ -332,7 +332,7 @@ A VM that is configured to use 2 CPUs (equivalent to 2,000 milliCPU) can consume
 
 **Definition**: The ratio to futher tune the VM `memory overhead`.
 
-Each VM is configured with a memory value, this memory is targeted for the VM guest OS to see and use. In Harvester, the VM is carried by a Kubernetes POD. The memory limitation is achieved by Kubernetes [Resource requests and limits of Pod and container](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container). Certain amount of memory is required to simulate and manage the `CPU/Memory/Storage/Network/...` for the VM to run. Harvester and KubeVirt summarize such additional memory as the VM `Memory Overhead`. The `Memory Overhead` is computed by a complex formula formula. However, sometimes the OOM(Out Of Memory) can still happen and the related VM is killed by the Harvester OS, the direct cause is that the whole POD/Container exceeds its memory limits. From practice, the `Memory Overhead` varies on different kinds of VM, different kinds of VM operating system, and also depends on the running workloads on the VM.
+Each VM is configured with a memory value, this memory is targeted for the VM guest OS to see and use. In Harvester, the VM run in a virt-launcher pod. CPU/VM resource limits are translated and applied to the launcher pod [Resource requests and limits of Pod and container](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container). Kubevirt ensures certain amount of memory is reserved in the pod for managing the virtualization process. Harvester and KubeVirt summarize such additional memory as the VM `Memory Overhead`. The `Memory Overhead` is computed by a complex formula formula. However, sometimes the OOM(Out Of Memory) can still happen and the related VM is killed by the Harvester OS, the direct cause is that the whole POD/Container exceeds its memory limits. From practice, the `Memory Overhead` varies on different kinds of VM, different kinds of VM operating system, and also depends on the running workloads on the VM.
 
 This setting is for more flexibly tuning the VM `Memory Overhead`.
 
@@ -342,7 +342,7 @@ Valid values: `""`, `"0"` and from `"1.0"` to `"10.0"`.
 
 A VM that is configured to have `1 CPU, 2 Gi Memory, 1 Volume and 1 NIC` will get around `240 Mi` `Memory Overhead` when the ratio is `"1.0"`. When the ratio is `"1.5"`, the `Memory Overhead` is `360 Mi`. When the ratio is `"3"`, the `Memory Overhead` is `720 Mi`.
 
-A VM that is configured to have `1 CPU, 64 Gi Memory, 1 Volume and 1 NIC` will get around `250 Mi` `Memory Overhead` when the ratio is `"1.0"`. The VM memory size does not have a big influence on the computing of `Memory Overhead`.
+A VM that is configured to have `1 CPU, 64 Gi Memory, 1 Volume and 1 NIC` will get around `250 Mi` `Memory Overhead` when the ratio is `"1.0"`. The VM memory size does not have a big influence on the computing of `Memory Overhead`. The overhead of `guest OS pagetables` needs one bit for every 512b of RAM size.
 
 The yaml output of this setting on a new cluster:
 
