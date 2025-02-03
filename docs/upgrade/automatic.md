@@ -143,7 +143,7 @@ Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section fir
 
 _Available as of v1.5.0_
 
-During upgrade, harvester loads images on each node. If the disk usage is more than garbage collection threshold in kubelet, kubelet will delete unused images to free up space. This may break airgapped environment, because the images are not available on the node.
+Harvester loads images on each node during upgrades. When disk usage exceeds the kubelet's garbage collection threshold, the kubelet deletes unused images to free up space. This may cause issues in airgapped environments because the images are not available on the node.
 
 In harvester v1.5.0, we add checks to ensure that each node doesn't trigger garbage collection after loading new images.
 
