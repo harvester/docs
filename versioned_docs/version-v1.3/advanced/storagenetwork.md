@@ -385,3 +385,10 @@ The storage network may malfunction because of issues with the external network,
 ### Start VM Manually
 
 After verifying the configuration, users could start VM manually on demand.
+
+
+## Best Practices
+
+- When configuring an [IP range](#configuration-example) for the storage network, ensure that the allocated IP addresses can service the future needs of the cluster. This is important because Longhorn pods (`instance-manager` and `backing-image-manager`) stop running when new nodes are added to the cluster or more disks are added to a node after the storage network is configured, and when the required number of IPs exceeds the allocated IPs. Resolving the issue involves reconfiguring the storage network with the correct IP range.
+
+- Configure the storage network on a non-`mgmt` cluster network to ensure complete separation of the Longhorn replication traffic from the Kubernetes control plane traffic. Using `mgmt` is possible but not recommended because of the negative impact (resource and bandwidth contention) on the control plane network performance. Use `mgmt` only if your cluster has NIC-related constraints and if you can completely segregate the traffic.
