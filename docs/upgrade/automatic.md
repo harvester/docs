@@ -142,29 +142,29 @@ Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section fir
 
 ## Free system partition space requirement
 
-_Available as of v1.2.0_
+_Available as of v1.5.0_
 
-The minimum free system partition space requirement in Harvester v1.2.0 is 30 GiB, which will be revised in each release.
+Harvester loads images on each node during upgrades. When disk usage exceeds the kubelet's garbage collection threshold, the kubelet deletes unused images to free up space. This may cause issues in airgapped environments because the images are not available on the node.
 
-Harvester will check the amount of free system partition space on each node when you select **Upgrade**. If any node does not meet the requirement, the upgrade will be denied as follows
+Harvester v1.5.0 includes checks that ensure nodes do not trigger garbage collection after loading new images.
 
-![](/img/v1.2/upgrade/upgrade_free_space_check.png)
+![](/img/v1.5/upgrade/upgrade_free_space_check.png)
 
-If some nodes do not have enough free system partition space, but you still want to try upgrading, you can customize the upgrade by updating the `harvesterhci.io/minFreeDiskSpaceGB` annotation of `Version` object.
+If you want to try upgrading even if the free system partition space is insufficient on some nodes, you can update the `harvesterhci.io/skipGarbageCollectionThresholdCheck: true` annotation of the `Version` object.
 
 ```
 apiVersion: harvesterhci.io/v1beta1
 kind: Version
 metadata:
   annotations:
-    harvesterhci.io/minFreeDiskSpaceGB: "30" # the value is pre-defined and may be customized
-  name: 1.2.0
+    harvesterhci.io/skipGarbageCollectionThresholdCheck: true
+  name: 1.5.0
   namespace: harvester-system
 spec:
   isoChecksum: <SHA-512 checksum of the ISO>
   isoURL: http://192.168.0.181:8000/harvester-master-amd64.iso
-  minUpgradableVersion: 1.1.2
-  releaseDate: "20230609"
+  minUpgradableVersion: 1.4.1
+  releaseDate: "20250630"
 ```
 
 :::caution
