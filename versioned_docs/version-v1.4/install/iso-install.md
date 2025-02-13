@@ -62,8 +62,8 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 1. Choose the installation disk you want to install the Harvester cluster on and the data disk you want to store VM data on. By default, Harvester uses [GUID Partition Table (GPT)](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [Master boot record (MBR)](https://en.wikipedia.org/wiki/Master_boot_record).
 
 	![choose-installation-target-data-disk.png](/img/v1.2/install/choose-installation-target-data-disk.png)
-	
-	- `Installation disk`: The disk to install the Harvester cluster on. 
+
+	- `Installation disk`: The disk to install the Harvester cluster on.
 	- `Data disk`: The disk to store VM data on. Choosing a separate disk to store VM data is recommended.
 	- `Persistent size`: If you only have one disk or use the same disk for both OS and VM data, you need to configure persistent partition size to store system packages and container images. The default and minimum persistent partition size is 150 GiB. You can specify a size like 200Gi or 153600Mi.
 
@@ -231,9 +231,12 @@ Oct 06 03:43:51 node-0 systemd[1]: rancher-system-agent.service: Main process ex
 Oct 06 03:43:51 node-0 systemd[1]: rancher-system-agent.service: Failed with result 'exit-code'.
 ```
 
-If you see a similar log output, you need to manually add the CA to the trust list on each joining node with the following commands:
+If you see a similar log output, you need to change rancher setting and manually add the CA to the trust list on each joining node with the following commands:
 
 ```sh
+# change rancher setting `agent-tls-mode` from `strict` to `system-store`
+$ kubectl patch setting.management.cattle.io agent-tls-mode --type merge --patch '{"value": "system-store"}'
+
 # prepare the CA as embedded-rancher-ca.pem on the nodes
 $ sudo cp embedded-rancher-ca.pem /etc/pki/trust/anchors/
 $ sudo update-ca-certificates
