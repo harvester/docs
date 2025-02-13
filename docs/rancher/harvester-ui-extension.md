@@ -60,6 +60,9 @@ Note: Do not navigate away during the installation process, as this may cause it
 
 ### Manual Installation
 If the automatic installation fails, you can manually set up the Harvester UI Extension repository URL and install it.
+
+  ![](/img/v1.5/rancher/ui-extension-install-failed.png)
+
  
 1. In the Rancher UI, go to **local > Apps > Repositories**.
 
@@ -80,6 +83,8 @@ If the automatic installation fails, you can manually set up the Harvester UI Ex
 
 ### Automatic Upgrade
 1. In the Rancher UI, go to **Virtualization Management**.
+
+1. The **Update** button will be visible when a new extension version is available.
 
 1. Click the **Update** button and allow some time for the extension to upgrade. The page will automatically refresh once the upgrade is complete.
 
