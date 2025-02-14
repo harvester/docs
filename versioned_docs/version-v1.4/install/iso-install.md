@@ -231,7 +231,7 @@ Oct 06 03:43:51 node-0 systemd[1]: rancher-system-agent.service: Main process ex
 Oct 06 03:43:51 node-0 systemd[1]: rancher-system-agent.service: Failed with result 'exit-code'.
 ```
 
-If you see a similar log output, you need to change rancher setting and manually add the CA to the trust list on each joining node with the following commands:
+If you see similar log output, you must change the Rancher setting and manually add the CA to the trust list on each joining node with the following commands:
 
 ```sh
 # change rancher setting `agent-tls-mode` from `strict` to `system-store`
