@@ -234,7 +234,7 @@ Oct 06 03:43:51 node-0 systemd[1]: rancher-system-agent.service: Failed with res
 If you see similar log output, you must change the Rancher setting and manually add the CA to the trust list on each joining node with the following commands:
 
 ```sh
-# change rancher setting `agent-tls-mode` from `strict` to `system-store`
+# Change the value of the Rancher `agent-tls-mode` setting from `strict` to `system-store`.
 $ kubectl patch setting.management.cattle.io agent-tls-mode --type merge --patch '{"value": "system-store"}'
 
 # prepare the CA as embedded-rancher-ca.pem on the nodes
