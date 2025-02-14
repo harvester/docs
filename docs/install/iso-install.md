@@ -62,8 +62,8 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 1. Choose the installation disk you want to install the Harvester cluster on and the data disk you want to store VM data on. By default, Harvester uses [GUID Partition Table (GPT)](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [Master boot record (MBR)](https://en.wikipedia.org/wiki/Master_boot_record).
 
 	![choose-installation-target-data-disk.png](/img/v1.2/install/choose-installation-target-data-disk.png)
-	
-	- `Installation disk`: The disk to install the Harvester cluster on. 
+
+	- `Installation disk`: The disk to install the Harvester cluster on.
 	- `Data disk`: The disk to store VM data on. Choosing a separate disk to store VM data is recommended.
 	- `Persistent size`: If you only have one disk or use the same disk for both OS and VM data, you need to configure persistent partition size to store system packages and container images. The default and minimum persistent partition size is 150 GiB. You can specify a size like 200Gi or 153600Mi.
 
@@ -94,13 +94,13 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
     ![config-cluster-cidrs.png](/img/v1.5/install/config-cluster-cidrs.png)
 
     :::info important
-  
+
     The CIDR values must not overlap and must be within the private IP address range of 10.0.0.0/8, 172.16.0.0/12, or 192.168.0.0/16.
 
     The DNS service IP must be within the range defined by the **Service CIDR** field.
-    
+
     :::
-    
+
     Example of a valid CIDR configuration:
 
     - **Pod CIDR**: 172.16.0.0/16
@@ -186,77 +186,3 @@ If you are using a version earlier than v1.1.1, please try the following workaro
    ![edit-menu-entry.png](/img/v1.2/install/edit-menu-entry.png)
 
 1. Press `Ctrl+X` or `F10` to boot up.
-
-### Fail to join nodes using FQDN to a cluster which has custom SSL certificate configured
-
-You may encounter that newly joined nodes stay in the **Not Ready** state indefinitely. This is likely the outcome if you already have a set of **custom SSL certificates** configured on the to-be-joined Harvester cluster and provide an **FQDN** instead of a VIP address for the management address during the Harvester installation.
-
-![Joining nodes stuck at the "NotReady" state](/img/v1.3/install/join-node-not-ready.png)
-
-You can check the **SSL certificates** on the Harvester dashboard's setting page or using the command line tool `kubectl get settings.harvesterhci.io ssl-certificates` to see if there is any custom SSL certificate configured (by default, it is empty).
-
-![The SSL certificate setting](/img/v1.3/install/ssl-certificates-setting.png)
-
-The second thing to look at is the joining nodes. Try to get access to the nodes via consoles or SSH sessions and then check the log of `rancherd`:
-
-```sh
-$ journalctl -u rancherd.service
-Oct 06 03:36:06 node-0 systemd[1]: Starting Rancher Bootstrap...
-Oct 06 03:36:06 node-0 rancherd[2171]: time="2023-10-06T03:36:06Z" level=info msg="Loading config file [/usr/share/rancher/rancherd/config.yaml.d/50-defaults.yaml]"
-Oct 06 03:36:06 node-0 rancherd[2171]: time="2023-10-06T03:36:06Z" level=info msg="Loading config file [/usr/share/rancher/rancherd/config.yaml.d/91-harvester-bootstrap-repo.yaml]"
-Oct 06 03:36:06 node-0 rancherd[2171]: time="2023-10-06T03:36:06Z" level=info msg="Loading config file [/etc/rancher/rancherd/config.yaml]"
-Oct 06 03:36:06 node-0 rancherd[2171]: time="2023-10-06T03:36:06Z" level=info msg="Bootstrapping Rancher (v2.7.5/v1.25.9+rke2r1)"
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="Writing plan file to /var/lib/rancher/rancherd/plan/plan.json"
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="Applying plan with checksum "
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="No image provided, creating empty working directory /var/lib/rancher/rancherd/plan/work/20231006-033608-applied.plan/_0"
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="Running command: /usr/bin/env [sh /var/lib/rancher/rancherd/install.sh]"
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="[stdout]: [INFO]  Using default agent configuration directory /etc/rancher/agent"
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="[stdout]: [INFO]  Using default agent var directory /var/lib/rancher/agent"
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="[stderr]: [WARN]  /usr/local is read-only or a mount point; installing to /opt/rancher-system-agent"
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="[stdout]: [INFO]  Determined CA is necessary to connect to Rancher"
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="[stdout]: [INFO]  Successfully downloaded CA certificate"
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="[stdout]: [INFO]  Value from https://harvester.192.168.48.240.sslip.io:443/cacerts is an x509 certificate"
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="[stdout]: [INFO]  Successfully tested Rancher connection"
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="[stdout]: [INFO]  Downloading rancher-system-agent binary from https://harvester.192.168.48.240.sslip.io:443/assets/rancher-system-agent-amd64"
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="[stdout]: [INFO]  Successfully downloaded the rancher-system-agent binary."
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="[stdout]: [INFO]  Downloading rancher-system-agent-uninstall.sh script from https://harvester.192.168.48.240.sslip.io:443/assets/system-agent-uninstall.sh"
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="[stdout]: [INFO]  Successfully downloaded the rancher-system-agent-uninstall.sh script."
-Oct 06 03:36:08 node-0 rancherd[2171]: time="2023-10-06T03:36:08Z" level=info msg="[stdout]: [INFO]  Generating Cattle ID"
-Oct 06 03:36:09 node-0 rancherd[2171]: time="2023-10-06T03:36:09Z" level=info msg="[stdout]: [INFO]  Successfully downloaded Rancher connection information"
-Oct 06 03:36:09 node-0 rancherd[2171]: time="2023-10-06T03:36:09Z" level=info msg="[stdout]: [INFO]  systemd: Creating service file"
-Oct 06 03:36:09 node-0 rancherd[2171]: time="2023-10-06T03:36:09Z" level=info msg="[stdout]: [INFO]  Creating environment file /etc/systemd/system/rancher-system-agent.env"
-Oct 06 03:36:09 node-0 rancherd[2171]: time="2023-10-06T03:36:09Z" level=info msg="[stdout]: [INFO]  Enabling rancher-system-agent.service"
-Oct 06 03:36:09 node-0 rancherd[2171]: time="2023-10-06T03:36:09Z" level=info msg="[stderr]: Created symlink /etc/systemd/system/multi-user.target.wants/rancher-system-agent.service → /etc/systemd/system/rancher-system-agent.service."
-Oct 06 03:36:09 node-0 rancherd[2171]: time="2023-10-06T03:36:09Z" level=info msg="[stdout]: [INFO]  Starting/restarting rancher-system-agent.service"
-Oct 06 03:36:09 node-0 rancherd[2171]: time="2023-10-06T03:36:09Z" level=info msg="No image provided, creating empty working directory /var/lib/rancher/rancherd/plan/work/20231006-033608-applied.plan/_1"
-Oct 06 03:36:09 node-0 rancherd[2171]: time="2023-10-06T03:36:09Z" level=info msg="Running command: /usr/bin/rancherd [probe]"
-Oct 06 03:36:09 node-0 rancherd[2171]: time="2023-10-06T03:36:09Z" level=info msg="[stderr]: time=\"2023-10-06T03:36:09Z\" level=info msg=\"Running probes defined in /var/lib/rancher/rancherd/plan/plan.json\""
-Oct 06 03:36:10 node-0 rancherd[2171]: time="2023-10-06T03:36:10Z" level=info msg="[stderr]: time=\"2023-10-06T03:36:10Z\" level=info msg=\"Probe [kubelet] is unhealthy\""
-
-```
-
-The above log shows that `rancherd` is waiting for `kubelet` to become healthy. `rancherd` is doing nothing wrong and is working as expected. The next step is to check the `rancher-system-agent`:
-
-```sh
-$ journalctl -u rancher-system-agent.service
-Oct 06 03:43:51 node-0 systemd[1]: rancher-system-agent.service: Scheduled restart job, restart counter is at 88.
-Oct 06 03:43:51 node-0 systemd[1]: Stopped Rancher System Agent.
-Oct 06 03:43:51 node-0 systemd[1]: Started Rancher System Agent.
-Oct 06 03:43:51 node-0 rancher-system-agent[4164]: time="2023-10-06T03:43:51Z" level=info msg="Rancher System Agent version v0.3.3 (9e827a5) is starting"
-Oct 06 03:43:51 node-0 rancher-system-agent[4164]: time="2023-10-06T03:43:51Z" level=info msg="Using directory /var/lib/rancher/agent/work for work"
-Oct 06 03:43:51 node-0 rancher-system-agent[4164]: time="2023-10-06T03:43:51Z" level=info msg="Starting remote watch of plans"
-Oct 06 03:43:51 node-0 rancher-system-agent[4164]: time="2023-10-06T03:43:51Z" level=info msg="Initial connection to Kubernetes cluster failed with error Get \"https://harvester.192.168.48.240.sslip.io/version\": x509: certificate signed by unknown authority, removing CA data and trying again"
-Oct 06 03:43:51 node-0 rancher-system-agent[4164]: time="2023-10-06T03:43:51Z" level=fatal msg="error while connecting to Kubernetes cluster with nullified CA data: Get \"https://harvester.192.168.48.240.sslip.io/version\": x509: certificate signed by unknown authority"
-Oct 06 03:43:51 node-0 systemd[1]: rancher-system-agent.service: Main process exited, code=exited, status=1/FAILURE
-Oct 06 03:43:51 node-0 systemd[1]: rancher-system-agent.service: Failed with result 'exit-code'.
-```
-
-If you see a similar log output, you need to manually add the CA to the trust list on each joining node with the following commands:
-
-```sh
-# prepare the CA as embedded-rancher-ca.pem on the nodes
-$ sudo cp embedded-rancher-ca.pem /etc/pki/trust/anchors/
-$ sudo update-ca-certificates
-```
-
-After adding the CA to the trust list, the nodes can join to the cluster successfully.
