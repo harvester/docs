@@ -49,12 +49,30 @@ When the nodes in the cluster do not use a proxy to communicate with each other,
 
 ## Guest Cluster Images
 
-All necessary images to install and run Harvester are conveniently packaged into the ISO, eliminating the need to pre-load images on bare-metal nodes. A Harvester cluster manages them independently and effectively behind the scenes. 
+All necessary images to install and run Harvester are conveniently packaged into the ISO, eliminating the need to pre-load images on bare-metal nodes. A Harvester cluster manages them independently and effectively behind the scenes.
 
-However, it's essential to understand a guest K8s cluster (e.g., RKE2 cluster) created by the [Harvester node driver](./rancher/node/node-driver.md) is a distinct entity from a Harvester cluster. A guest cluster operates within VMs and requires pulling images either from the internet or a [private registry](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/global-default-private-registry#configure-a-private-registry-with-credentials-when-creating-a-cluster). 
+However, it's essential to understand a guest K8s cluster (e.g., RKE2 cluster) created by the [Harvester node driver](./rancher/node/node-driver.md) is a distinct entity from a Harvester cluster. A guest cluster operates within VMs and requires pulling images either from the internet or a [private registry](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/global-default-private-registry#configure-a-private-registry-with-credentials-when-creating-a-cluster).
 
 If the **Cloud Provider** option is configured to **Harvester** in a guest K8s cluster, it deploys the Harvester cloud provider and Container Storage Interface (CSI) driver.
 
 ![cluster-registry](/img/v1.2/cluster-registry.png)
 
 As a result, we recommend monitoring each [RKE2 release](https://github.com/rancher/rke2/releases) in your air gapped environment and pulling the required images into your private registry. Please refer to the **Harvester CCM & CSI Driver** with RKE2 Releases section on the [Harvester support matrix page](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/harvester-v1-1-2/) for the best Harvester cloud provider and CSI driver capability support.
+
+## Integrate with External Rancher
+
+Rancher determines the `rancher-agent` image to be used whenever a Harvester cluster is imported. If the image is not included in the Harvester ISO, it must be pulled from the internet and loaded on each node, or pushed to the Harvester cluster's registry.
+
+```bash
+# Run the following commands on a computer that can access both the internet and the Harvester cluster.
+docker pull rancher/rancher-agent:<version>
+docker save rancher/rancher-agent:<version> -o rancher-agent-<version>.tar
+
+# Copy the image TAR file to the air-gapped environment.
+scp rancher-agent-<version>.tar rancher@<harvester-node-ip>:/tmp
+
+# Use SSH to connect to the Harvester node, and then load the image.
+ssh rancher@<harvester-node-ip>
+sudo -i
+docker load -i /tmp/rancher-agent-<version>.tar
+```
