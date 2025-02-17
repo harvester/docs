@@ -59,7 +59,7 @@ A volume's [StorageClass](../advanced/storageclass.md) can be specified when add
 
 :::caution
 
-When creating volumes from a VM image, ensure that the volume size is greater than or equal to the image size. The volume may become corrupted if the configured volume size is less than the size of the underlying image. This is particularly important for qcow2 images because the virtual size is typically greater than the physical size. 
+When creating volumes from a VM image, ensure that the volume size is greater than or equal to the image size. The volume may become corrupted if the configured volume size is less than the size of the underlying image. This is particularly important for qcow2 images because the virtual size is typically greater than the physical size.
 
 Harvester sets the volume size to 10 GiB by default. You must verify if this value is sufficient and then modify it if necessary. To determine the virtual size of a qcow2 image, you can run the command `qemu-img info YOUR_IMAGE_FILE.qcow2`.
 
@@ -140,6 +140,60 @@ In order to meet the scenario requirements of more users, the `RunStrategy` fiel
 - Manual: The presence or absence of a VM instance is controlled only by the `start/stop/restart` VirtualMachine actions.
 
 - Stop: There will be no VM instance. If the guest is already running, it will be stopped. This is the same behavior as `Running: false`.
+
+
+### Reserved Memory
+
+Each VM is configured with a memory value, this memory is targeted for the VM guest OS to see and use. In Harvester, the VM is carried by a Kubernetes POD. The memory limitation is achieved by Kubernetes [Resource requests and limits of Pod and container](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container). Certain amount of memory is required to simulate and manage the `CPU/Memory/Storage/Network/...` for the VM to run. Harvester and KubeVirt summarize such additional memory as the VM `Memory Overhead`. The `Memory Overhead` is computed by a complex formula and added to the POD Container memory limits. However, sometimes the OOM(Out Of Memory) can still happen and the related VM is killed by the Harvester OS, the direct cause is that the whole POD/Container exceeds its memory limits. From practice, the `Memory Overhead` varies on different kinds of VM, different kinds of VM operating system, and also depends on the running workloads on the VM.
+
+Harvester adds a `Reserved Memory` field for users to adjust the guest OS memory and the final `Total Memory Overhead`. A proper `Total Memory Overhead` can help the VM to eliminate the chance of hitting OOM.
+
+The `Total Memory Overhead` = automatically computed `Memory Overhead` + Harvester `Reserved Memory`.
+
+The following table shows how it works.
+
+| VM Configured Memory | Reserved Memory | Guest OS Memory | POD Container Memory Limit | Total Memory Overhead |
+| --- | --- | --- | --- | --- |
+| 2 Gi | ""(not configured) | 2 Gi - 100 Mi | 2 Gi + ~240 Mi | ~340 Mi |
+| 2 Gi | 256 Mi | 2 Gi - 256 Mi | 2 Gi + ~240 Mi | ~500 Mi |
+| 8 Gi | ""(not configured) | 8 Gi - 100 Mi | 2 Gi + ~250 Mi | ~350 Mi |
+| 8 Gi | 512 Mi | 8 Gi - 512 Mi | 2 Gi + ~250 Mi | ~760 Mi |
+
+The related information can be fetched from those objects:
+
+```
+The VM object:
+...
+        memory:
+          guest: 1948Mi // Guest OS Memory; 100 Mi is reserved by Harvester automatically
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi // VM Configured Memory
+
+The POD object:
+...
+    resources:
+      limits:
+        cpu: "1"
+        devices.kubevirt.io/kvm: "1"
+        devices.kubevirt.io/tun: "1"
+        devices.kubevirt.io/vhost-net: "1"
+        memory: "2404034561"                // POD Container Memory Limit
+
+```
+
+:::note
+
+- `Total Memory Overhead` = automatically computed `Memory Overhead` + Harvester `Reserved Memory`.
+
+- When `Reserved Memory` field is not configured, Harvester will use the default value `100 Mi` automatically.
+
+- The bigger `Total Memory Overhead` does not mean that the amount of memory is used up all the time, it is set to tolerant the peak and hence avoid hitting OOM.
+
+- There is no `one-fit-all` solution.
+
+:::
 
 
 ### Cloud Configuration

@@ -40,6 +40,12 @@ You can configure the **Namespace** limits as follows:
 Attempts to provision VMs for guest clusters are blocked when the resource quotas are reached. Rancher responds by creating a new VM in a loop, in which each failed attempt to create a VM is immediately followed by another creation attempt. This results in a transient error state in the cluster that is not recorded as the VM is recreated.
 :::
 
+:::important
+
+Due to the [Overhead Memory of Virtual Machine](#overhead-memory-of-virtual-machine), each VM needs some additional memory to work. When setting **Memory Limit**, this should be taken into account. For example, when the project **Memory Limit** is `24 Gi`, it is not possible to run 3 VMs each has `8 Gi` memory.
+
+:::
+
 ## Overhead memory of virtual machine
 Upon creating a virtual machine (VM), the VM controller seamlessly incorporates overhead resources into the VM's configuration. These additional resources intend to guarantee the consistent and uninterrupted functioning of the VM. It's important to note that configuring memory limits requires a higher memory reservation due to the inclusion of these overhead resources.
 
@@ -66,7 +72,13 @@ This calculation demonstrates that the VM instance necessitates an additional me
 
 For more information, see [Memory Overhead](https://kubevirt.io/user-guide/virtual_machines/virtual_hardware/#memory-overhead).
 
-For more information on how the memory overhead is calculated in Kubevirt, refer to [kubevirt/pkg/virt-controller/services/template.go](https://github.com/kubevirt/kubevirt/blob/v0.54.0/pkg/virt-controller/services/template.go#L1804).
+For more information on how the memory overhead is calculated in Kubevirt, refer to the source code [GetMemoryOverhead](https://github.com/kubevirt/kubevirt/blob/e8e638edc22587ec7be2cc3d983b61763e33f973/pkg/virt-controller/services/renderresources.go#L299).
+
+:::note
+
+The `Overhead Memory` varies between different Harvester releases (with different Kubevirt releases) because all those backing components are keeping adding new features and fixing bugs, they need more memory.
+
+:::
 
 ## Automatic adjustment of ResourceQuota during migration
 When the allocated resource quota controlled by the `ResourceQuota` object reaches its limit, migrating a VM becomes unfeasible. The migration process automatically creates a new pod mirroring the resource requirements of the source VM. If these pod creation prerequisites surpass the defined quota, the migration operation cannot proceed.
