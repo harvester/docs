@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 sidebar_label: VM Backup, Snapshot & Restore
 title: "VM Backup, Snapshot & Restore"
 keywords:

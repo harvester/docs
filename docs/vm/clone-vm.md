@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 10
 sidebar_label: Clone VM 
 title: "Clone VM"
 keywords:
