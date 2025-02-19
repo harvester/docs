@@ -139,6 +139,10 @@ Because of the design, Harvester will treat extra and insignificant characters i
 
 :::
 
+#### Change the MTU of the Storage Network
+
+When you plan to change the MTU of the Storage Network, please follow the guide [Change the MTU of Network Config which has Storage Network Attached](../networking/clusternetwork.md#change-the-mtu-of-network-config-which-has-storage-network-attached).
+
 ### After Applying Harvester Storage Network Setting
 
 After applying Harvester's Storage Network setting, Harvester will stop all pods that are related to Longhorn volumes. Currently, Harvester has some pods listed below that will be stopped during setting.
