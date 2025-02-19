@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 11
 sidebar_label: CPU Pinning
 title: "CPU Pinning"
 keywords:

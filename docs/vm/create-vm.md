@@ -1,6 +1,6 @@
 ---
 id: index
-sidebar_position: 1
+sidebar_position: 2
 sidebar_label: Create a Virtual Machine
 title: "Create a Virtual Machine"
 keywords:

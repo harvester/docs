@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 sidebar_label: Hot-Plug Volumes
 title: "Hot-Plug Volumes"
 keywords:
