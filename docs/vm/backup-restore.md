@@ -58,6 +58,24 @@ The `State` will be set to `Ready` once the backup is complete.
 
 Users can either restore a new VM or replace an existing VM using this backup.
 
+:::note
+
+The network configuration of a virtual machine running an Ubuntu release later than 16.04 is likely managed by `netplan` by default. Before creating backups, you must stop the virtual machine, edit the configuration (**Edit Config > Advanced Options**), and then restart the virtual machine. Use the following `network` settings as reference for DHCP configuration.
+
+```YAML
+network:
+  ethernets:
+    enp1s0:
+      dhcp4: true
+      dhcp6: true
+      dhcp-identifier: mac
+  version: 2
+```
+
+The restored virtual machine retains the machine ID of the original virtual machine. If `dhcp-identifier: mac` is not specified, the restored virtual machine receives the same IP address from the DHCP server because `netplan` uses the machine ID as the DHCP client identifier by default. This is why you must configure the `network` settings before creating backups of virtual machines running Ubuntu. Failure to do so may result in unexpected behavior and potential network conflicts.
+
+:::
+
 ### Restore a new VM using a backup
 
 To restore a new VM from a backup, follow these steps:
@@ -149,6 +167,24 @@ The `State` will be set to `Ready` once the snapshot is complete.
 ![vm-snapshot-results.png](/img/v1.2/vm/vm-snapshot-results.png)
 
 Users can either restore a new VM or replace an existing VM using this snapshot.
+
+:::note
+
+The network configuration of a virtual machine running an Ubuntu release later than 16.04 is likely managed by `netplan` by default. Before creating snapshots, you must stop the virtual machine, edit the configuration (**Edit Config > Advanced Options**), and then restart the virtual machine. Use the following `network` settings as reference for DHCP configuration.
+
+```YAML
+network:
+  ethernets:
+    enp1s0:
+      dhcp4: true
+      dhcp6: true
+      dhcp-identifier: mac
+  version: 2
+```
+
+The restored virtual machine retains the machine ID of the original virtual machine. If `dhcp-identifier: mac` is not specified, the restored virtual machine receives the same IP address from the DHCP server because `netplan` uses the machine ID as the DHCP client identifier by default. This is why you must configure the `network` settings before creating snapshot of virtual machines running Ubuntu. Failure to do so may result in unexpected behavior and potential network conflicts.
+
+:::
 
 ### Restore a new VM using a snapshot
 
