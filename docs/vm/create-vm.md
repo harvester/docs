@@ -297,6 +297,24 @@ network:
 
 You can also use the `Advanced > Cloud Config Templates` feature to create a pre-defined cloud-init configuration template for the VM.
 
+:::note
+
+The network configuration of a virtual machine running an Ubuntu release later than 16.04 is likely managed by `netplan` by default. Please use the following `network` settings as reference for DHCP configuration to prevent IP address conflicts when restoring a virtual machine from a snapshot or backup.
+
+```YAML
+network:
+  ethernets:
+    enp1s0:
+      dhcp4: true
+      dhcp6: true
+      dhcp-identifier: mac
+  version: 2
+```
+
+If dhcp-identifier: mac is not specified, the restored virtual machine will receive the same IP address from the DHCP server. This happens because netplan defaults to using the machine ID as the DHCP client identifier. As a result, the restored virtual machine will receive the same IP address from the DHCP server and lead to IP address conflicts.
+
+:::
+
 #### Installing the QEMU guest agent
 The QEMU guest agent is a daemon that runs on the virtual machine instance and passes information to the host about the VM, users, file systems, and secondary networks.
 
