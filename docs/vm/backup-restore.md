@@ -96,30 +96,54 @@ Users can now restore a new VM on another cluster by leveraging the VM metadata 
 
 #### Upload the same VM images to a new cluster
 
+1. Download the virtual machine image from the existing cluster.
+
+  ![vm-snapshot.png](/img/v1.5/vm/download-vm-image.png)
+
+1. Decompress the downloaded image.
+  ```
+  $ gzip -d <image.gz>
+  ```
+
+1. Host the image on a server that is accessible to the new cluster.
+
+  Example (simple HTTP server):
+  ```
+  $ python -m http.server
+  ```
+
 1. Check the existing image name (normally starts with `image-`) and create the same one on the new cluster.
-```
-$ kubectl get vmimages -A
-NAMESPACE   NAME                               DISPLAY-NAME                              SIZE         AGE
-default     image-79hdq                        focal-server-cloudimg-amd64.img           566886400    5h36m
-default     image-l7924                        harvester-v1.0.0-rc2-amd64.iso            3964551168   137m
-default     image-lvqxn                        opensuse-leap-15.3.x86_64-nocloud.qcow2   568524800    5h35m
-```
-2. Apply a VM image YAML with the same name and content in the new cluster.
-```
-$ cat <<EOF | kubectl apply -f -
-apiVersion: harvesterhci.io/v1beta1
-kind: VirtualMachineImage
-metadata:
-  name: image-lvqxn
-  namespace: default
-spec:
-  displayName: opensuse-leap-15.3.x86_64-nocloud.qcow2
-  pvcName: ""
-  pvcNamespace: ""
-  sourceType: download
-  url: http://download.opensuse.org/repositories/Cloud:/Images:/Leap_15.3/images/openSUSE-Leap-15.3.x86_64-NoCloud.qcow2
-EOF
-```
+  ```
+  $ kubectl get vmimages -A
+  NAMESPACE   NAME                               DISPLAY-NAME                              SIZE         AGE
+  default     image-79hdq                        focal-server-cloudimg-amd64.img           566886400    5h36m
+  default     image-l7924                        harvester-v1.0.0-rc2-amd64.iso            3964551168   137m
+  default     image-lvqxn                        opensuse-leap-15.3.x86_64-nocloud.qcow2   568524800    5h35m
+  ```
+
+1. Apply a `VirtualMachineImage` YAML with the same name and configuration in the new cluster.
+
+  Example:
+  ```
+  $ cat <<EOF | kubectl apply -f -
+  apiVersion: harvesterhci.io/v1beta1
+  kind: VirtualMachineImage
+  metadata:
+    name: image-79hdq
+    namespace: default
+  spec:
+    displayName: focal-server-cloudimg-amd64.img
+    pvcName: ""
+    pvcNamespace: ""
+    sourceType: download
+    url: https://<server-ip-to-host-image>:8000/<image-name>
+  EOF
+  ```
+  :::info important
+
+  Harvester can restore virtual machines only if the image name and configuration on both old and new clusters are identical.
+
+  :::
 
 #### Restore a new VM in a new cluster
 
@@ -233,7 +257,7 @@ Harvester supports the creation of virtual machine backups and snapshots on a sc
   - **Type**: Select either **Backup** or **Snapshot**.
 
   - **Namespace** and **Virtual Machine Name**: Specify the namespace and name of the source virtual machine.
-    
+
   - **Cron Schedule**: Specify the cron expression (a string consisting of fields separated by whitespace characters) that defines the schedule properties.
 
     :::info important
@@ -241,15 +265,15 @@ Harvester supports the creation of virtual machine backups and snapshots on a sc
     The backup or snapshot creation interval must be **at least one hour**. Frequent backup or snapshot deletion results in heavy I/O load.
 
     If two schedules have the same granularity level, each iteration's timing offset must be **at least 10 minutes**.
-    
+
     :::
 
   - **Retain**: Specify the number of up-to-date backups or snapshots to be retained.
-      
+
     When this value is exceeded, the Harvester controller deletes the oldest backups or snapshots, and Longhorn starts the snapshot purge.
-    
+
   - **Max Failure**: Specify the maximum number of consecutive failed backup or snapshot creation attempts to be allowed.
-    
+
     When this value is exceeded, the Harvester controller suspends the schedule.
 
 3. Click **Create**.
@@ -297,7 +321,7 @@ You can suspend active schedules and resume suspended schedules.
   ![suspend-resume-schedule.png](/img/v1.4/vm/suspend-resume-schedule.png)
 
   The schedule is automatically suspended when the number of consecutive failed backup or snapshot creation attempts exceeds the **Max Failure** value.
-  
+
   Harvester does not allow you to resume a suspended schedule for backup creation if the backup target is not reachable.
 
   :::note

@@ -96,30 +96,54 @@ You must manually configure the virtual machine images with the same name on the
 
 #### Upload the same VM images to a new cluster
 
+1. Download the virtual machine image from the existing cluster.
+
+  ![vm-snapshot.png](/img/v1.5/vm/download-vm-image.png)
+
+1. Decompress the downloaded image.
+  ```
+  $ gzip -d <image.gz>
+  ```
+
+1. Host the image on a server that is accessible to the new cluster.
+
+  Example (simple HTTP server):
+  ```
+  $ python -m http.server
+  ```
+
 1. Check the existing image name (normally starts with `image-`) and create the same one on the new cluster.
-```
-$ kubectl get vmimages -A
-NAMESPACE   NAME                               DISPLAY-NAME                              SIZE         AGE
-default     image-79hdq                        focal-server-cloudimg-amd64.img           566886400    5h36m
-default     image-l7924                        harvester-v1.0.0-rc2-amd64.iso            3964551168   137m
-default     image-lvqxn                        opensuse-leap-15.3.x86_64-nocloud.qcow2   568524800    5h35m
-```
-2. Apply a VM image YAML with the same name and content in the new cluster.
-```
-$ cat <<EOF | kubectl apply -f -
-apiVersion: harvesterhci.io/v1beta1
-kind: VirtualMachineImage
-metadata:
-  name: image-lvqxn
-  namespace: default
-spec:
-  displayName: opensuse-leap-15.3.x86_64-nocloud.qcow2
-  pvcName: ""
-  pvcNamespace: ""
-  sourceType: download
-  url: http://download.opensuse.org/repositories/Cloud:/Images:/Leap_15.3/images/openSUSE-Leap-15.3.x86_64-NoCloud.qcow2
-EOF
-```
+  ```
+  $ kubectl get vmimages -A
+  NAMESPACE   NAME                               DISPLAY-NAME                              SIZE         AGE
+  default     image-79hdq                        focal-server-cloudimg-amd64.img           566886400    5h36m
+  default     image-l7924                        harvester-v1.0.0-rc2-amd64.iso            3964551168   137m
+  default     image-lvqxn                        opensuse-leap-15.3.x86_64-nocloud.qcow2   568524800    5h35m
+  ```
+
+1. Apply a `VirtualMachineImage` YAML with the same name and configuration in the new cluster.
+
+  Example:
+  ```
+  $ cat <<EOF | kubectl apply -f -
+  apiVersion: harvesterhci.io/v1beta1
+  kind: VirtualMachineImage
+  metadata:
+    name: image-79hdq
+    namespace: default
+  spec:
+    displayName: focal-server-cloudimg-amd64.img
+    pvcName: ""
+    pvcNamespace: ""
+    sourceType: download
+    url: https://<server-ip-to-host-image>:8000/<image-name>
+  EOF
+  ```
+  :::info important
+
+  Harvester can restore virtual machines only if the image name and configuration on both old and new clusters are identical.
+
+  :::
 
 #### Restore a new VM in a new cluster
 
