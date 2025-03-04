@@ -58,6 +58,22 @@ The `State` will be set to `Ready` once the backup is complete.
 
 Users can either restore a new VM or replace an existing VM using this backup.
 
+:::note
+
+If your OS is Ubuntu and the version is newer than 16.04, the network configuration is very likely handled by `netplan` by default. Please `Edit Config` > `Advanced Options` on your VM before creating backup, and take the following network-data as reference for DHCP configuration.
+```YAML
+network:
+  ethernets:
+    enp1s0:
+      dhcp4: true
+      dhcp6: true
+      dhcp-identifier: mac
+  version: 2
+```
+The restored VM will retain the same machine ID as the original, which will cause it to receive the same IP address from the DHCP server if `dhcp-identifier: mac` is not specified since `netplan` use machine ID as dhcp identifier by default. It is essential to configure the network-data before performing a VM backup for Ubuntu systems. Failure to do so will result in unexpected behavior and potential network conflicts.
+
+:::
+
 ### Restore a new VM using a backup
 
 To restore a new VM from a backup, follow these steps:
@@ -173,6 +189,21 @@ The `State` will be set to `Ready` once the snapshot is complete.
 ![vm-snapshot-results.png](/img/v1.2/vm/vm-snapshot-results.png)
 
 Users can either restore a new VM or replace an existing VM using this snapshot.
+
+:::note
+
+If your OS is Ubuntu and the version is newer than 16.04, the network configuration is very likely handled by `netplan` by default. Please `Edit Config` > `Advanced Options` on your VM before creating snapshot, and take the following network-data as reference for DHCP configuration.
+```YAML
+network:
+  ethernets:
+    enp1s0:
+      dhcp4: true
+      dhcp6: true
+      dhcp-identifier: mac
+  version: 2
+```                                                                                                                     The restored VM will retain the same machine ID as the original, which will cause it to receive the same IP address from the DHCP server if `dhcp-identifier: mac` is not specified since `netplan` use machine ID as dhcp identifier by default. It is essential to configure the network-data before performing a VM snapshot for Ubuntu systems. Failure to do so will result in unexpected behavior and potential network conflicts.
+
+:::
 
 ### Restore a new VM using a snapshot
 
