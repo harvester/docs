@@ -10,10 +10,11 @@ title: "Creating an RKE1 Kubernetes Cluster"
 
 :::caution
 
-RKE (Rancher Kubernetes Engine, also known as RKE1) will reach its end of life on **31st, July 2025**. Starting from Harvester **v1.6.0**, RKE will not be supported. Visit the [link](https://www.suse.com/support/kb/doc/?id=000021513) for more information.
-We highly recommend you switch to [RKE2 Kubernete clusters](./rke2-cluster.md).
-:::
+Rancher Kubernetes Engine (RKE) will reach the end of its life on **July 31, 2025**. Harvester **v1.6.0** and later versions will not support RKE. Switching to RKE2, which provides a more secure and efficient environment, is recommended.
 
+In-place upgrades are not an option, so you must [create new RKE2 clusters](./rke2-cluster.md) and migrate the workloads from your existing RKE clusters (known as replatforming). For more information, see [RKE End of Life](https://www.suse.com/support/kb/doc/?id=000021513).
+
+:::
 
 You can now provision RKE1 Kubernetes clusters on top of the Harvester cluster in Rancher using the built-in Harvester node driver.
 
