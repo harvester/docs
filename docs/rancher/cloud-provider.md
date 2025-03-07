@@ -63,6 +63,12 @@ To eliminate the need for manual intervention after the guest cluster is provisi
 :::
 
 ### Deploying to the RKE1 Cluster with Harvester Node Driver
+
+:::caution
+
+RKE (Rancher Kubernetes Engine, also known as RKE1) will reach its end of life on **31st, July 2025**. Starting from Harvester **v1.6.0**, RKE will not be supported. Visit the [link](https://www.suse.com/support/kb/doc/?id=000021513) for more information.
+We highly recommend you switch to [RKE2 Kubernete clusters](./node/rke2-cluster.md).
+:::
 When spinning up an RKE cluster using the Harvester node driver, you can perform two steps to deploy the `Harvester` cloud provider:
 
 1. Select `Harvester(Out-of-tree)` option.
