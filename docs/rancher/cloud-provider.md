@@ -71,6 +71,7 @@ Rancher Kubernetes Engine (RKE) will reach the end of its life on **July 31, 202
 In-place upgrades are not an option, so you must [create new RKE2 clusters](./node/rke2-cluster.md) and migrate the workloads from your existing RKE clusters (known as replatforming). For more information, see [RKE End of Life](https://www.suse.com/support/kb/doc/?id=000021513).
 
 :::
+
 When spinning up an RKE cluster using the Harvester node driver, you can perform two steps to deploy the `Harvester` cloud provider:
 
 1. Select `Harvester(Out-of-tree)` option.
