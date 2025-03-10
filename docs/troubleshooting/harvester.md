@@ -77,6 +77,12 @@ If you intend to use a non-default container image, you can configure the [suppo
 
 :::
 
+:::note
+
+To collect useful logs and configuration files of a guest cluster, please check [Collect Guest Cluster Logs](./rancher.md#collect-guest-cluster-logs).
+
+:::
+
 ### Manually Download and Retain a Support Bundle File
 
 By default, a support bundle file is automatically generated, downloaded, and deleted after you click **Create** on the Harvester UI. However, you may want to retain a file for various reasons, including the following:
