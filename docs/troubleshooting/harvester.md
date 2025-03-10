@@ -79,7 +79,7 @@ If you intend to use a non-default container image, you can configure the [suppo
 
 :::note
 
-To collect useful logs and configuration files of a guest cluster, please check [Collect Guest Cluster Logs](./rancher.md#collect-guest-cluster-logs).
+For information about collecting guest cluster logs and configuration files, see [Guest Cluster Log Collection](./rancher.md#guest-cluster-log-collection).
 
 :::
 
