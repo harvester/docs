@@ -44,6 +44,14 @@ Currently, the Harvester CSI driver only supports single-node read-write(RWO) vo
 
 ### Deploying with Harvester RKE1 node driver
 
+:::caution
+
+Rancher Kubernetes Engine (RKE) will reach the end of its life on **July 31, 2025**. Harvester **v1.6.0** and later versions will not support RKE. Switching to RKE2, which provides a more secure and efficient environment, is recommended.
+
+In-place upgrades are not an option, so you must [create new RKE2 clusters](./node/rke2-cluster.md) and migrate the workloads from your existing RKE clusters (known as replatforming). For more information, see [RKE End of Life](https://www.suse.com/support/kb/doc/?id=000021513).
+
+:::
+
 - Select the `Harvester(Out-of-tree)` option.
 
     ![](/img/v1.2/rancher/rke-cloud-provider.png)
