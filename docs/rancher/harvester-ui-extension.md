@@ -34,6 +34,7 @@ Versions of the Harvester operating system and the Harvester UI Extension will a
 | v1.4.2                    | v1.0.4                          | Rancher 2.10.1             |
 | v1.5.0                    | v1.5.0                          | Rancher 2.11.0             |
 
+> Please check [here](/v1.5/airgap#harvester-ui-extension-with-rancher-integration) to install Harvester UI Extension in air gapped environment
 
 ## Installation on Rancher 2.10
 
