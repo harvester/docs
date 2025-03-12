@@ -75,7 +75,7 @@ install:
   vip_mode: dhcp
   cluster_pod_cidr: 10.52.0.0/16
   cluster_service_cidr: 10.53.0.0/16
-  cluster_dns_ip: 10.53.0.10
+  cluster_dns: 10.53.0.10
   force_mbr: false
   addons:
     harvester_vm_import_controller:
