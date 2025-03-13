@@ -82,7 +82,8 @@ docker load -i /tmp/rancher-agent-<version>.tar
 The Harvester UI Extension is required to access the Harvester UI in Rancher v2.10.x and later versions. However, installing the extension over the network is not possible in air-gapped environments, so you must perform the following workaround:
 
 
-1. Pull the image `rancher/ui-plugin-catalog` with [latest tag](https://hub.docker.com/r/rancher/ui-plugin-catalog/tags) and then push it to your private registry.
+
+1. Pull the image [rancher/ui-plugin-catalog](https://hub.docker.com/r/rancher/ui-plugin-catalog/tags) with the newest tag.
 
 1. On the Rancher UI, go to **Extensions**, and then select **⋮ > Manage Extension Catalogs**.
 
