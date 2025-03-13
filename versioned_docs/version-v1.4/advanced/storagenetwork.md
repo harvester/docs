@@ -10,7 +10,7 @@ title: "Storage Network"
 
 Harvester uses Longhorn as its built-in storage system to provide block device volumes for VMs and Pods. If the user wishes to isolate Longhorn replication traffic from the Kubernetes cluster network (i.e. the management network) or other cluster-wide workloads. Users can allocate a dedicated storage network for Longhorn replication traffic to get better network bandwidth and performance.
 
-For more information, please see [Longhorn Storage Network](https://longhorn.io/docs/1.4.3/advanced-resources/deploy/storage-network/)
+For more information, please see [Longhorn Storage Network](https://longhorn.io/docs/1.7.2/advanced-resources/deploy/storage-network/)
 
 :::note
 
