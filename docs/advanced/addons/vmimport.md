@@ -10,7 +10,7 @@ title: "VM Import"
 
 _Available as of v1.1.0_
 
-Beginning with v1.1.0, users can import their virtual machines from VMWare and OpenStack into Harvester.
+Beginning with v1.1.0, users can import their virtual machines from VMware and OpenStack into Harvester.
 
 This is accomplished using the vm-import-controller addon.
 
@@ -29,7 +29,7 @@ To avoid this, users are advised to enable PVC-backed storage and customize the 
 ## vm-import-controller
 
 Currently, the following source providers are supported:
-* VMWare
+* VMware
 * OpenStack
 
 ## API
@@ -140,15 +140,28 @@ spec:
     namespace: default
     kind: VmwareSource
     apiVersion: migration.harvesterhci.io/v1beta1
+  gracefulShutdown: true
+  gracefulShutdownTimeout: 300000000000
 ```
 
-This will trigger the controller to export the VM named "alpine-export-test" on the VMWare source cluster to be exported, processed and recreated into the harvester cluster
+This will trigger the controller to export the VM named "alpine-export-test" on the VMware source cluster to be exported, processed and recreated into the harvester cluster
 
 This can take a while based on the size of the virtual machine, but users should see `VirtualMachineImages` created for each disk in the defined virtual machine.
 
 The list of items in `networkMapping` will define how the source network interfaces are mapped to the Harvester Networks.
 
 If a match is not found, each unmatched network interface is attached to the default `managementNetwork`.
+
+By default, the VM is powered off. If you want the guest OS to gracefully shutdown the VM,
+you can set the `gracefulShutdown` field to `true`. Additionally, you can set an optional
+timeout with the `gracefulShutdownTimeout` field which is in nanoseconds. It defaults to
+1 minute. If the VM is not gracefully shutdown within the configured time period, then a 
+hard power off is enforced.
+
+:::note
+The `gracefulShutdown` field is not supported by the OpenStack VM importer because a
+graceful shutdown is done automatically by OpenStack.
+:::
 
 Once the virtual machine has been imported successfully, the object will reflect the status:
 
@@ -157,7 +170,6 @@ $ kubectl get virtualmachineimport.migration
 NAME                    STATUS
 alpine-export-test      virtualMachineRunning
 openstack-cirros-test   virtualMachineRunning
-
 ```
 
 Similarly, users can define a VirtualMachineImport for an OpenStack source as well:
