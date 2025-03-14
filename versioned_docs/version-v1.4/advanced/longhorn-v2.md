@@ -34,6 +34,7 @@ The Longhorn V2 Data Engine currently does not support the following operations:
 
 - Backing image creation and usage
 - Live migration
+- Storage network
 - Volume cloning
 - Volume encryption
 - Volume expansion
