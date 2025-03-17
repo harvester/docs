@@ -152,6 +152,7 @@ A disk can be made accessible via the following types:
 | cd-rom | This type will expose the volume as a cd-rom drive to the VM. It is read-only by default. |
 
 A volume's [StorageClass](../advanced/storageclass.md) can be specified when adding a new empty volume; for other volumes (such as VM images), the `StorageClass` is defined during image creation.
+If you are using external storage, ensure that the correct **StorageClass** and **Volume Mode** are selected. For example, a volume with the **nfs-csi** StorageClass must use the **Filesystem** volume mode.
 
 :::info important
 
