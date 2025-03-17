@@ -13,6 +13,12 @@ description: Export volume to image from the Volume page.
 
 You can select and export an existing volume to an image by following the steps below:
 
+:::note
+
+Since the third-party storage is supported, there is the limitation of the export volume. You need to ensure the volume did not attach to any workload (VM/Pods) before exporting the volume to an image or you will see the image is stuck in the `Exporting` status.
+
+:::
+
 1. Click the `⋮` button and select the `Export Image` option.
 
     ![export-volume-to-image-1](/img/v1.2/volume/export-volume-to-image-1.png)
