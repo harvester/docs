@@ -14,7 +14,7 @@ The Longhorn V2 Data Engine harnesses the power of the Storage Performance Devel
 
 :::caution
 
-The Longhorn V2 Data Engine is an **Experimental** feature in Harvester v1.4.0 and should not be utilized in a production environment.
+The Longhorn V2 Data Engine is an **Experimental** feature and should not be utilized in a production environment.
 
 :::
 
