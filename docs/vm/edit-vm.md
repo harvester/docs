@@ -49,6 +49,12 @@ For more details about the network implementation, please refer to the [Networki
 
 You can add additional volumes to the VM after booting. You can also expand the size of the volume after shutting down the VM, click the VM and go to the `Volumes` tab, edit the size of the expanded volume. After restarting the VM and waiting for the resize to complete, your disk will automatically finish expanding.
 
+:::note
+
+Since the third party storage is supported. You need to ensure the expansion capability of the third-party storage provider before you resize the volume.
+
+:::
+
 ![edit-vm](/img/v1.2/vm/edit-vm-volumes.png)
 
 ### Access Credentials

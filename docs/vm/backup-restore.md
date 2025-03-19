@@ -26,6 +26,8 @@ VM backups are created from the **Virtual Machines** page. The VM backup volumes
 
 A backup target must be set up. For more information, see [Configure Backup Target](#configure-backup-target). If the backup target has not been set, you’ll be prompted with a message to do so.
 
+The backup only supports the Longhorn v1 Data Engine. If the VM contains any volume from the third-party storage provider, the backup feature will be blocked.
+
 :::
 
 ### Configure Backup Target
