@@ -152,9 +152,8 @@ You can also create a new virtual machine with the volume of the LVM StorageClas
 
   - **Provisioner**: Select **lvm.driver.harvesterhci.io**.
   - **Volume Snapshot Class Name**: Select **lvm-snapshot**.
-  - **Backup Volume Snapshot Class Name**: Select **lvm-snapshot**.
 
-  ![](/img/v1.4/csi-driver-lvm/update-csi-driver-config-02.png)
+  ![](/img/v1.2/advanced/csi-driver-config-external.png)
 
 1. On the **Virtual Machines** screen, select the target virtual machine, and then select **⋮** > **Take Virtual Machine Snapshot**.
 
