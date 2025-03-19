@@ -343,3 +343,26 @@ Before you upgrade Harvester, ensure that no virtual machine backups or snapshot
   ![upgrade-svmbackup.png](/img/v1.4/vm/upgrade-svmbackup.png)
 
 To avoid such issues, the Harvester team plans to implement automatic suspension of all virtual machine schedules before the upgrade process is started. The suspended schedules will also be automatically resumed after the upgrade is completed. For more information, see [Issue #6759](https://github.com/harvester/harvester/issues/6759).
+
+## Known issues
+
+---
+
+### 1. High CPU usage on the Harvester
+
+High CPU usage may occur because of the `backup-target` setting's `refreshIntervalInSeconds` field, which was introduced in v1.4.2. If the field is left empty or is set to 0, Harvester constantly refreshes the backup target, resulting in high CPU usage.
+
+![](/img/v1.4/image/high-cpu-load-issue.png)
+
+To fix the issue, update the value of `refreshIntervalInSeconds` to a larger number (for example, 60) using the command `kubectl edit setting backup-target`.
+
+Example:
+
+```
+value: '{"type":"nfs","endpoint":"nfs://longhorn-test-nfs-svc.default:/opt/backupstore", "refreshIntervalInSeconds": 60}'
+```
+
+![](/img/v1.4/image/high-cpu-load-fix.png)
+
+Related issues:
+  - [[BUG] High load and use of cpu time by harvester process](https://github.com/harvester/harvester/issues/7885)
