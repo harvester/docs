@@ -177,6 +177,8 @@ You must configure the following information before using features related to ba
 }
 ```
 
+In Harvester v1.4.2 and later versions, you may encounter certain limitations when creating and restoring [backups that involve external storage](../../version-v1.4/advanced/csidriver.md#vm-backup-compatibility)
+
 ### `default-vm-termination-grace-period-seconds`
 
 **Versions**: v1.2.0 and later

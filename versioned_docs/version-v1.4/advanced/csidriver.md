@@ -55,9 +55,16 @@ Before you can make use of Harvester's **Backup & Snapshot** features, you need 
 1. Find and select **csi-driver-config**, and then select **⋮** > **Edit Setting** to access the configuration options.
 1. Set the **Provisioner** to the third-party CSI driver in the settings.
 1. Next, Configure the **Volume Snapshot Class Name**. This setting points to the name of the `VolumeSnapshotClass` used for creating volume snapshots or VM snapshots.
-1. Similarly, Configure the **Backup Volume Snapshot Class Name**. This corresponds to the name of the `VolumeSnapshotClass` responsible for creating VM backups.
 
 ![csi-driver-config-external](/img/v1.2/advanced/csi-driver-config-external.png)
+
+### VM Backup Compatibility
+
+- In Harvester **v1.4.2 and later versions**, the setting **Backup Volume Snapshot Class Name** cannot be used with external storage. Harvester is unable to create backups of volumes in external storage because the backup function is not included in the CSI standard and 
+there is no way to create a remote backup for differing storage providers. Backup support in Harvester is limited to Longhorn V1 Data Engine volumes.  
+- Harvester is unable to restore virtual machine backups with external storage because the data does not have a remote copy.
+
+For more information, see issues [7316](https://github.com/harvester/harvester/issues/7316), [7737](https://github.com/harvester/harvester/issues/7737), and [7755](https://github.com/harvester/harvester/issues/7755).
 
 ## Use the CSI driver
 
