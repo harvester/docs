@@ -177,6 +177,17 @@ You must configure the following information before using features related to ba
 }
 ```
 
+:::caution
+
+- Staring from **v1.4.2**, Harvester will block setting **Backup Volume Snapshot Class Name** for third-party storage, becuase except for **Longhorn V1 Data Engine**, **Backup** is not included in the CSI standard. There is no general way to have a remote backup for all kinds of storage providers.
+- If the **VM Backup** with third-party storage was already created mistakenly before **v1.4.2**, Harvester will refuse to restore it, since the data never has a remote copy
+- Please refer to the following tickets for more details:
+  - https://github.com/harvester/harvester/issues/7316
+  - https://github.com/harvester/harvester/issues/7755
+  - https://github.com/harvester/harvester/issues/7737
+
+:::
+
 ### `default-vm-termination-grace-period-seconds`
 
 **Versions**: v1.2.0 and later

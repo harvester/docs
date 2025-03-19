@@ -152,9 +152,19 @@ You can also create a new virtual machine with the volume of the LVM StorageClas
 
   - **Provisioner**: Select **lvm.driver.harvesterhci.io**.
   - **Volume Snapshot Class Name**: Select **lvm-snapshot**.
-  - **Backup Volume Snapshot Class Name**: Select **lvm-snapshot**.
 
-  ![](/img/v1.4/csi-driver-lvm/update-csi-driver-config-02.png)
+  ![](/img/v1.2/advanced/csi-driver-config-external.png)
+
+:::caution
+
+- Staring from **v1.4.2**, Harvester will block setting **Backup Volume Snapshot Class Name** for third-party storage, becuase except for **Longhorn V1 Data Engine**, **Backup** is not included in the CSI standard. There is no general way to have a remote backup for all kinds of storage providers.
+- If the **VM Backup** with third-party storage was already created mistakenly before **v1.4.2**, Harvester will refuse to restore it, since the data never has a remote copy
+- Please refer to the following tickets for more details:
+  - https://github.com/harvester/harvester/issues/7316
+  - https://github.com/harvester/harvester/issues/7755
+  - https://github.com/harvester/harvester/issues/7737
+
+:::
 
 1. On the **Virtual Machines** screen, select the target virtual machine, and then select **⋮** > **Take Virtual Machine Snapshot**.
 
