@@ -10,7 +10,7 @@ title: "Local Storage Support"
 
 _Available as of v1.4.0_
 
-Harvester v1.4.0 allows you to use local storage on the host to create persistent volumes for your workloads with better performance and latency. This functionality is made possible by LVM, which provides logical volume management facilities on Linux.
+Harvester allows you to use local storage on the host to create persistent volumes for your workloads with better performance and latency. This functionality is made possible by LVM, which provides logical volume management facilities on Linux.
 
 ## Installing and Enabling harvester-csi-driver-lvm
 
