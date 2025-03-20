@@ -169,7 +169,11 @@ spec:
     endpoint: http://ui-plugin-catalog-svc.cattle-ui-plugin-system:8080/plugin/harvester-1.0.3
 ```
 
-Ensure that `svc.namespace` is accessible from Rancher. If that endpoint is not accessible, you can directly use a cluster IP such as `10.43.33.58:8080/plugin/harvester-1.0.3`.
+Ensure that `{image name}-svc.namespace` is accessible from Rancher. If that endpoint is not accessible, you can directly use a cluster IP such as `10.43.33.58:8080/plugin/harvester-1.0.3`.
+
+The endpoint is built from the imported image name without organization name. For example:
+  - Wtih `rancher/harvester-ui-catalog` image, it'll be is `harvester-ui-catalog-svc`.
+  - With `rancher/ui-plugin-catalog` image, it'll be is `ui-plugin-catalog-svc`.
 
 ## Known issues
 
