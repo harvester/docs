@@ -88,7 +88,7 @@ https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhr
 
 ## `containerd-registry`
 
-此设置允许你为 Harvester 集群配置私有镜像仓库。你需要在每个节点的 `/etc/rancher/rke2/registries.yaml` 中设置参数的值。有关更多信息，请参阅 [RKE2 - Containerd 容器镜像仓库配置](https://docs.rke2.io/install/containerd_registry_configuration)。
+此设置允许你为 Harvester 集群配置私有镜像仓库。你需要在每个节点的 `/etc/rancher/rke2/registries.yaml` 中设置参数的值。有关更多信息，请参阅 [RKE2 - Containerd 容器镜像仓库配置](https://docs.rke2.io/install/private_registry)。
 
 :::note
 
