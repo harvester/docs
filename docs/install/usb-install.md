@@ -22,6 +22,10 @@ Refer to the [Harvester interactive ISO hangs with the USB installation method](
 No matter which tool you use, creating a bootable device erases your USB device data. Please back up all data on your USB device before making a bootable device.
 :::
 
+:::note
+**Tool Disclaimer**: When you create a bootable USB device the version of whatever tool you decide to use is something to be mindful of.  All the possible versions in existence of tools listed have not been extensively tested.  You may run into an issue with the tool itself.
+:::
+
 ### Rufus
 
 [Rufus](https://rufus.ie/) allows you to create an ISO image on your USB flash drive on a Windows computer.
@@ -53,6 +57,14 @@ You can use the 'dd' command on Linux or other platforms to create a USB install
 ```
 # sudo dd if=<path_to_iso> of=<path_to_usb_device> bs=64k
 ```
+
+### Popsicle
+
+[Popsicle](https://github.com/pop-os/popsicle) is a Linux utility for flashing multiple USB devices in parallel, written in [Rust](https://www.rust-lang.org/en-US/).
+1. Open Popsicle.
+2. Choose the Harvester installation ISO image you wish to flash.
+3. Select the USB device(s) (if flashing multiple USB devices) on the device selection screen.  Popsicle will dynamically refresh as device(s) are added or removed.
+4. Flash the device(s).
 
 ## Known issues
 
@@ -92,9 +104,9 @@ To address this problem, you can manually modify the root partition as follows:
 # Replace the `CDLABEL=COS_LIVE` with your USB data partition. Usually, your USB data partition is the first partition with the device name `sdx` that hangs on your screen.
 # Original
 $linux ($root)/boot/kernel cdroot root=live:CDLABEL=COS_LIVE rd.live.dir=/ rd.live.squashimg=rootfs.squashfs console=tty1 console=ttyS0 rd.cos.disable net.ifnames=1
-# Modified 
+# Modified
 $linux ($root)/boot/kernel cdroot root=live:/dev/sda1 rd.live.dir=/ rd.live.squashimg=rootfs.squashfs console=tty1 console=ttyS0 rd.cos.disable net.ifnames=1
-``` 
+```
 
 The modified parameter should look like the following:
 
@@ -103,4 +115,4 @@ The modified parameter should look like the following:
 After making this adjustment, press `Ctrl + x` to initiate booting. You should now enter the installer as usual.
 
 - Related issue:
-  - [[BUG] v1.2.0 Interactive ISO Fails to Install On Some Bare-Metal Devices](https://github.com/harvester/harvester/issues/4510) 
+  - [[BUG] v1.2.0 Interactive ISO Fails to Install On Some Bare-Metal Devices](https://github.com/harvester/harvester/issues/4510)
