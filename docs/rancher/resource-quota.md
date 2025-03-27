@@ -95,3 +95,15 @@ Please be aware of the following constrains of the automatic resizing of `Resour
 - After expanding `ResourceQuota`, potential resource contention may occur between non-VM pods and VM pods, leading to migration failures. Therefore, deploying custom container workloads and VMs to the same namespace is not recommended.
 - Due to the concurrent limitation of the webhook validator, the VM controller will execute a secondary validation to confirm resource sufficiency. If the resource is insufficient, it will auto config the VM's `RunStrategy` to `Halted`, and a new annotation `harvesterhci.io/insufficient-resource-quota` will be added to the VM object, informing you that the VM was shut down due to insufficient resources.
   ![](/img/v1.2/rancher/vm-annotation-insufficient-resource-quota.png)
+
+### Disable automatic adjustment of ResourceQuota during migration
+
+_Available as of v1.4.2_
+
+When a `ResourceQuota` object has the annotation `harvesterhci.io/skipResourceQuotaAutoScaling: "true"`, Harvester does not automatically adjust the values of that object. This feature is useful for debugging, troubleshooting and other tasks.
+
+:::info important
+
+You must set the annotation before the migration starts. If the annotation is set while the values are already being adjusted, Harvester is unable to automatically restore the previous configuration.
+
+:::
