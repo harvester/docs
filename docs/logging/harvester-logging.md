@@ -120,6 +120,21 @@ You can still make configuration adjustments when the addon is disabled. However
 
 :::
 
+#### Dangling Resources Check
+
+_Available as of v1.5.0_
+
+When enabling the **rancher-logging** add-on, you may encounter the following error:
+
+![](/img/v1.5/logging/logging-dangling-resources-check.png)
+
+You may also observe that deployments related to the add-on are not fully rolled out.
+
+To prevent the error from occurring again, perform the following actions before enabling the add-on:
+
+- Update or delete the affected dangling resources.
+- Add the annotation `harvesterhci.io/skipRancherLoggingAddonWebhookCheck: "true"` to the add-on.
+
 ### Configuring Log Destinations
 
 Logging operations are backed by the [Logging Operator](https://kube-logging.dev/docs/#overview) and controlled using Fluentd resources, particularly [Flow and ClusterFlow](https://kube-logging.dev/docs/configuration/flow/) and [Outputs and ClusterOutput](https://kube-logging.dev/docs/configuration/output/). You can route and filter logs by applying these CRDs to the Harvester cluster.
