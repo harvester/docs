@@ -27,7 +27,8 @@ To import virtual machine images in the **Images** page, enter a URL that can be
 
 :::note
 
-The image name will be auto-filled using the URL address's filename. You can customize the image name at any time.
+- The image name will be auto-filled using the URL address's filename. You can customize the image name at any time.
+- We strongly recommend against using the daily build URL  (e.g., [Ubuntu Jammy daily build](https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img)). Longhorn will try to re-download the file for self-healing. However, since the daily build URL changes every day, its checksum will no longer match, leading to a conflict that causes the replicas to be lost.
 
 :::
 
