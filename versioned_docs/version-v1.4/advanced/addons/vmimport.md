@@ -142,7 +142,7 @@ spec:
     apiVersion: migration.harvesterhci.io/v1beta1
 ```
 
-This will trigger the controller to export the VM named "alpine-export-test" on the VMWare source cluster to be exported, processed and recreated into the harvester cluster
+This will trigger the controller to export the VM named "alpine-export-test" on the VMWare source cluster to be exported, processed and recreated into the Harvester cluster
 
 This can take a while based on the size of the virtual machine, but users should see `VirtualMachineImages` created for each disk in the defined virtual machine.
 
