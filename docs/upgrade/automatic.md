@@ -177,3 +177,13 @@ Setting a smaller value than the pre-defined value may cause the upgrade to fail
 ## VM Backup Compatibility
 
 In Harvester v1.4.2 and later versions, you may encounter certain limitations when creating and restoring [backups that involve external storage](../../versioned_docs/version-v1.4/advanced/csidriver.md#vm-backup-compatibility)
+
+## Longhorn Manager Crashes Due to Backing Image Eviction
+
+:::caution
+
+When upgrading to Harvester **v1.4.x**, Longhorn Manager may crash if the `EvictionRequested` flag is set to `true` on any node or disk. This issue is caused by a [race condition](https://longhorn.io/kb/troubleshooting-longhorn-manager-crashes-due-to-backing-image-eviction/) between the deletion of a disk in the backing image spec and the updating of its status.
+
+To prevent the issue from occurring, ensure that the `EvictionRequested` flag is set to `false` before you start the upgrade process.
+
+:::
