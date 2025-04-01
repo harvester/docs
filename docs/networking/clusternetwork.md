@@ -93,9 +93,11 @@ The [witness node](../advanced/witness.md) is generally not involved in the cust
 
 :::
 
-#### How to create a new cluster network
+## Configurations
 
-1. To create a cluster network, go to the **Networks > ClusterNetworks/Configs** page and click the **Create** button. You only need to specify the name.
+### How to Create a new Cluster Network
+
+1. To create a new cluster network, go to the **Networks > ClusterNetworks/Configs** page and click the **Create** button. You only need to specify the name.
 
    ![](/img/v1.2/networking/create-clusternetwork.png)
 
@@ -114,7 +116,7 @@ The method **Select all nodes** works only when all nodes use the exact same ded
 :::
 
 4. Click the **Uplink** tab to add the NICs, and configure the bond options and link attributes. The bond mode defaults to `active-backup`.
-    
+
    ![](/img/v1.2/networking/config-uplink.png)
 
 :::note
@@ -129,5 +131,116 @@ The method **Select all nodes** works only when all nodes use the exact same ded
 Starting with Harvester v1.1.2, Harvester supports updating network configs. Make sure to stop all affected VMs before updating network configs.
 
 To simplify cluster maintenance, create one network configuration for each node or group of nodes. Without dedicated network configurations, certain maintenance tasks (for example, replacing old NICs with NICs in different slots) will require you to stop and/or migrate the affected VMs before updating the network configuration.
+
+:::
+
+### How to Change the Network Config
+
+Changes on the existing `Network Config` may affect both the Harvester VMs/workloads and the external devices/systems like Switches/Routers. For more information, please see [Network Topology](./deep-dive.md#network-topology).
+
+#### Change the MTU of Network Config which has no Storage Network attached
+
+You may plan to change the `MTU` of an existing `Cluster Network`. And the [Storage Network](../advanced/storagenetwork.md#harvester-storage-network-setting) is not enabled or not attached to this `Cluster Network`.
+
+The `MTU` on each `Network Config` of an existing custom `Cluster Network` is strictly to be identical. There are many restrictions to change the `MTU`, the following steps should be followed:
+
+1. Stop all the VMs which are attached to the target `Cluster Network`, this can be checked via the [VM Network](./harvester-network.md#create-a-vm-network) and [VM attached Secondary Network](../vm/create-vm.md#secondary-network). When any of the VMs is still running, Harvester will refuse the change.
+
+2. Check the number of `Network Config` of the target `Cluster Network`, if the number is greater than one, then repeat the operations below until there is only one `Network Config` left:
+
+    1. Record the `Node Selector` of a `Network Config`;
+
+    1. Remove this `Network Config`;
+
+3. Change the `MTU` of the last `Network Config`.
+
+4. Check the `MTU` on the selected Harvester nodes via the Linux `ip link` command, the related `*-br` device should be `UP` and with the new `MTU`.
+
+```
+Harvester node $ ip link
+
+                                                  |new MTU|              |state UP|
+3: cn-data-br: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9000 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:6e:5c:2a brd ff:ff:ff:ff:ff:ff
+```
+
+5. Test the new MTU on Harvester nodes via command like `ping` to another Harvester node (with the new MTU) or an external device.
+
+```
+Harvester node $ ping 8.8.8.8 -s 8800
+
+PING 8.8.8.8 (8.8.8.8) 8800(8828) bytes of data
+
+# the `-s` specify the ping packet size, which can test if the new MTU really works
+
+```
+
+6. Add those `Network Config` which were removed on Step 2, each should set the `MTU` to the new value. And run step 4, 5 to test and verify the new `MTU`.
+
+7. Start the VMs mentioned in step 1.
+
+:::note
+
+- The `MTU` affects both of the Harvester nodes and the infrastructure networking devices like Switches and Routers, the careful planning and testing are required to sure the new `MTU`. For more information, please see [Network Topology](./deep-dive.md#network-topology).
+
+- Service is interrupted while the whole process.
+
+- This method does not work on the built-in `mgmt Cluster Network`.
+
+:::
+
+#### Change the MTU of Network Config which has Storage Network Attached
+
+You may plan to change the `MTU` of an existing `Cluster Network`. And the [Storage Network](../advanced/storagenetwork.md#harvester-storage-network-setting) is enabled or attached to this `Cluster Network`. The `Storage Network` is dedicatedly used by `Longhorn`, the default CSI driver of Harvester cluster. Because the `Longhorn` is responsible for at least the [root disk](../vm/create-vm.md#volumes) of all VMs, this change will affect all the VMs.
+
+The `MTU` on each `Network Config` of an existing custom `Cluster Network` is strictly to be identical. There are many restrictions to change the `MTU`, the following steps should be followed:
+
+1. Stop all the VMs.
+
+2. Disable the Harvester [Storage Network](../advanced/storagenetwork.md#harvester-storage-network-setting). Wait and [Verify Configuration is Completed](../advanced/storagenetwork.md#verify-configuration-is-completed).
+
+3. Check the number of `Network Config` of the target `Cluster Network`, if the number is greater than one, then repeat the operations below until there is only one `Network Config` left:
+
+    1. Record the `Node Selector` of a `Network Config`;
+
+    1. Remove this `Network Config`;
+
+4. Change the `MTU` of the last `Network Config`.
+
+5. Check the `MTU` on the selected Harvester nodes via the Linux `ip link` command, the related `*-br` device should be `UP` and with the new `MTU`.
+
+```
+Harvester node $ ip link
+
+                                                  |new MTU|              |state UP|
+
+3: cn-data-br: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9000 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:6e:5c:2a brd ff:ff:ff:ff:ff:ff
+```
+
+6. Test the new MTU on Harvester nodes via command like `ping` to another Harvester node (with the new MTU) or an external device.
+
+```
+Harvester node $ ping 8.8.8.8 -s 8800
+
+PING 8.8.8.8 (8.8.8.8) 8800(8828) bytes of data
+
+# the `-s` specify the ping packet size, which can test if the new MTU really works
+
+```
+
+7. Add those `Network Config` which were removed on Step 3, each should set the `MTU` to the new value. And run step 5, 6 to test and verify the new `MTU`.
+
+8. Enable and set the Harvester [Storage Network](../advanced/storagenetwork.md#harvester-storage-network-setting), note the [Prerequisites](../advanced/storagenetwork.md#prerequisites) are met in the above steps. Wait and [Verify Configuration is Completed](../advanced/storagenetwork.md#verify-configuration-is-completed).
+
+9. Start the VMs mentioned in step 1.
+
+:::note
+
+- The `MTU` affects both of the Harvester nodes and the infrastructure networking devices like Switches and Routers, the careful planning and testing are required to sure the new `MTU`. For more information, please see [Network Topology](./deep-dive.md#network-topology).
+
+- Service is interrupted while the whole process.
+
+- This method does not work on the built-in `mgmt Cluster Network`.
 
 :::
