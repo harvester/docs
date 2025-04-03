@@ -101,3 +101,9 @@ For the port requirements for guest clusters deployed inside Harvester VMs, refe
 - [K3s Networking](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
 - [RKE Ports](https://rancher.com/docs/rke/latest/en/os/#ports)
 - [RKE2 Networking](https://docs.rke2.io/install/requirements#networking)
+
+## Time Requirements
+
+A reliable Network Time Protocol (NTP) server is critical for maintaining the correct system time across all nodes in a Kubernetes cluster, especially when running Harvester. Kubernetes relies on etcd, a distributed key-value store, which requires precise time synchronization to ensure data consistency and prevent issues with leader election, log replication, and cluster stability.
+
+Ensuring accurate and consistent time across the cluster is essential for reliability, security, and overall system integrity.

@@ -131,6 +131,10 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
 	![config-ntp-server.png](/img/v1.2/install/config-ntp-server.png)
 
+	:::note
+	Using multiple NTP servers provides redundancy, better accuracy, fault tolerance, and improved performance. It ensures that time synchronization continues even if one server fails or gives incorrect data, and it helps distribute the load across different servers.
+	:::
+
 1. (Optional) If you need to use an HTTP proxy to access the outside world, enter the `Proxy address`. Otherwise, leave this blank.
 
 	![config-proxy.png](/img/v1.2/install/config-proxy.png)
