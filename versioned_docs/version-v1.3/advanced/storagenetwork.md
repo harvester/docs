@@ -58,6 +58,7 @@ kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/de
     - `backing-image-manager` pods: 1 IP per disk, similar to the instance manager pods. Two versions of these will coexist during an upgrade, and the old ones will be removed after the upgrade is completed.
     - The required number of IPs is calculated using a simple formula: `Required Number of IPs = (Number of Nodes * 2) + (Number of Disks * 2) + Number of Images to Download/Upload`
 	- Example: If a cluster has five nodes with two disks each, and ten images will be uploaded simultaneously, the IP range should be greater than or equal to `/26` (`(5 * 2) + (5 * 2) + 10 = 30`).
+  - Exclude IP addresses that Longhorn pods and the storage network must not use, such as addresses reserved for [Harvester CSI RWX support](../../../docs/rancher/csi-driver.md#rwx-volumes-support), the gateway, and other components.
 
 
 We will take the following configuration as an example to explain the details of the Storage Network
@@ -65,6 +66,7 @@ We will take the following configuration as an example to explain the details of
 - VLAN ID for Storage Network: `100`
 - Cluster Network: `storage`
 - IP range: `192.168.0.0/24`
+- Exclude Address: `192.168.0.1/32`
 
 ## Configuration Process
 
@@ -119,7 +121,10 @@ The value format is JSON string or empty string as shown in below.
 {
     "vlan": 100,
     "clusterNetwork": "storage",
-    "range": "192.168.0.0/24"
+    "range": "192.168.0.0/24",
+    "exclude":[
+      "192.168.0.100/32"
+    ]
 }
 ```
 
@@ -130,7 +135,7 @@ apiVersion: harvesterhci.io/v1beta1
 kind: Setting
 metadata:
   name: storage-network
-value: '{"vlan":100,"clusterNetwork":"storage","range":"192.168.0.0/24"}'
+value: '{"vlan":100,"clusterNetwork":"storage","range":"192.168.0.0/24", "exclude":["192.168.0.100/32"]}'
 ```
 
 :::caution
