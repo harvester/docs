@@ -310,8 +310,16 @@ For more information, see [Secret definition](https://kube-logging.dev/docs/conf
 For the simplest deployment, you can deploy Elasticsearch on your local system using docker:
 
 ```sh
-docker run --name elasticsearch -p 9200:9200 -p 9300:9300 -e xpack.security.enabled=false -e node.name=es01 -it docker.elastic.co/elasticsearch/elasticsearch:6.8.23
+sudo docker run --name elasticsearch -p 9200:9200 -p 9300:9300 -e xpack.security.enabled=false -e node.name=es01 -e discovery.type=single-node -it docker.elastic.co/elasticsearch/elasticsearch:8.16.6
 ```
+
+:::note
+
+To use Elasticsearch with Harvester v1.5.0, ensure that the Elasticsearch server is running version 8.11.0 or later.
+
+You must upgrade Elasticsearch when the `rancher-logging-root-fluentd-0` pod reports an error such as `#0 unexpected error error_class=Elastic::Transport::Transport::Error error="no address for http (Resolv::ResolvError)" Client can’t recognise the server.`.
+
+:::
 
 Make sure that you have set `vm.max_map_count` to be >= 262144 or the docker command above will fail. Once the Elasticsearch server is up, you can create the yaml file for the `ClusterOutput` and `ClusterFlow`:
 

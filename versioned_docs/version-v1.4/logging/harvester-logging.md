@@ -298,6 +298,12 @@ For the simplest deployment, you can deploy Elasticsearch on your local system u
 docker run --name elasticsearch -p 9200:9200 -p 9300:9300 -e xpack.security.enabled=false -e node.name=es01 -it docker.elastic.co/elasticsearch/elasticsearch:6.8.23
 ```
 
+:::note
+
+You must upgrade Elasticsearch when the `rancher-logging-root-fluentd-0` pod reports an error such as `#0 unexpected error error_class=Elastic::Transport::Transport::Error error="no address for http (Resolv::ResolvError)" Client can’t recognise the server.`.
+
+:::
+
 Make sure that you have set `vm.max_map_count` to be >= 262144 or the docker command above will fail. Once the Elasticsearch server is up, you can create the yaml file for the `ClusterOutput` and `ClusterFlow`:
 
 ```shell
