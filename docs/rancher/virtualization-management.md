@@ -145,8 +145,6 @@ It is strongly recommended to use the built-in role templates and project-scoped
 
 Harvester implements its own RBAC model on top of Kubernetes and KubeVirt, integrating with Rancher-style Projects and multi-tenancy logic. During upgrades or reconfiguration, custom `RoleBindings` referencing only `kubevirt.io` roles may be lost, reset, or become inconsistent with Harvester's internal state.
 
-If CLI-only access to specific namespaces is required, you may combine Harvester roles with Kubernetes-native RBAC — but always ensure Harvester-specific CRDs are included.
-
 ### Multi-Tenancy Example
 The following example provides a good explanation of how the multi-tenant feature works:
 
