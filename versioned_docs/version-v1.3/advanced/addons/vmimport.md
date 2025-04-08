@@ -128,7 +128,7 @@ metadata:
   namespace: default
 spec: 
   virtualMachineName: "alpine-export-test"
-  folder: "Discovered VM" #optional folder name, in case your vm is placed in a folder
+  folder: "Discovered VM"
   networkMapping:
   - sourceNetwork: "dvSwitch 1"
     destinationNetwork: "default/vlan1"
@@ -145,6 +145,8 @@ spec:
 This will trigger the controller to export the VM named "alpine-export-test" on the VMware source cluster to be exported, processed and recreated into the Harvester cluster.
 
 This can take a while based on the size of the virtual machine, but users should see `VirtualMachineImages` created for each disk in the defined virtual machine.
+
+If the source VM is placed in a folder, then you can specify the folder name in the optional `folder` field.
 
 The list of items in `networkMapping` will define how the source network interfaces are mapped to the Harvester Networks.
 
@@ -192,10 +194,9 @@ OpenStack allows users to have multiple instances with the same name. In such a 
 * **Source VM name is not RFC1123 compliant:** vm-import-controller will create the Harvester VM object with the same name as the source VM name. Harvester VM names need to be meet the K8s Object naming [criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names).
 In case the source VM does not meet these criteria the VM import may fail. Users may need to rename the source VM to allow import to be successful.
 
-
-* **VM image name too long:** vm-import-controller, labels each imported disk with a label of format `vm-import-$VMname-$DiskName`. In certain scenarios this can exceed 63 characters. Users will notice the following error in the vm-import-controller logs
-```shell
-harvester-vm-import-controller-5698cd57c4-zw9l5 time="2024-08-30T19:20:34Z" level=error msg="error syncing 'default/mike-mr-tumbleweed-test': handler virtualmachine-import-job-change: error creating vmi: VirtualMachineImage.harvesterhci.io \"image-z
-nqsp\" is invalid: metadata.labels: Invalid value: \"vm-import-mike-mr-tumbleweed-test-mike-mr-tumbleweed-test-default-disk-0.img\": must be no more than 63 characters, requeuing"      
-```
-Users may need to rename the source VM to allow import to be successful.
+* **VM image name too long:** vm-import-controller, labels each imported disk with a label of format `vm-import-$VMname-$DiskName`. In certain scenarios this can exceed 63 characters. Users will notice the following error in the vm-import-controller logs:
+    ```shell
+    harvester-vm-import-controller-5698cd57c4-zw9l5 time="2024-08-30T19:20:34Z" level=error msg="error syncing 'default/mike-mr-tumbleweed-test': handler virtualmachine-import-job-change: error creating vmi: VirtualMachineImage.harvesterhci.io \"image-z
+    nqsp\" is invalid: metadata.labels: Invalid value: \"vm-import-mike-mr-tumbleweed-test-mike-mr-tumbleweed-test-default-disk-0.img\": must be no more than 63 characters, requeuing"      
+    ```
+    Users may need to rename the source VM to allow import to be successful.
