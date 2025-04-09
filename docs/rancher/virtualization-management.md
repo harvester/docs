@@ -139,7 +139,7 @@ Both global permissions and cluster and project roles are implemented on top of 
 - A cluster owner has full control over the cluster and all resources inside it, e.g., hosts, VMs, volumes, images, networks, backups, and settings.
 - A project user can be assigned to a specific project with permission to manage the resources inside the project.
 
-:::important
+:::info important
 
 Managing user access using the built-in role templates and project-scoped RBAC is strongly recommended.
 
