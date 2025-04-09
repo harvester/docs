@@ -26,19 +26,16 @@ Creating [Windows VMs](../vm/create-windows-vm.md) on the Harvester UI involves 
 
 The following operating systems have been validated to run in Harvester virtual machines:
 
-| Operating System | Harvester v1.3.0 | Harvester v1.3.1 | Harvester v1.3.2 | Harvester v1.4.0 |
-| --- | --- | --- | --- | --- |
-| OpenSUSE Leap | 15.4 | 15.4 | 15.5 | 15.6 |
-| SLE Micro | N/A | N/A | 6 | 6 |
-| SLES | 15 SP4, 15 SP5 | 15 SP4, 15 SP5 | 15 SP4, 15 SP6 | 15 SP4, 15 SP6 |
-| RHEL | N/A | N/A | 9.4 | 9.4 |
-| Ubuntu | 22.04, 23.04 | 22.04, 23.04 | 24.04 | 24.04 |
-| Windows |	11 | 11 | 11 | 11 |
-| Windows Server | 2022 | 2022 | 2022 | 2022 |
+- SUSE Linux Enterprise Micro 6
+- SUSE Linux Enterprise Server 15 SP6
+- Red Hat Enterprise Linux 9.5
+- Ubuntu 24.04
+- Windows 11
+- Windows Server 2025
 
 :::note
 
-The list includes only tested operating systems and is not intended to be exhaustive. Other operating systems may also run in Harvester virtual machines. However, Harvester cannot be held responsible for any damage or loss of data that may occur through the use of untested operating systems.
+The list includes only tested operating systems and is not intended to be exhaustive. Other x86 operating systems may also run in Harvester virtual machines. You are responsible for obtaining, activating, and managing licenses for any commercial software that you decide to use. Harvester cannot be held responsible for damage or loss of data that may occur through the use of untested, unpatched, and outdated operating systems.
 
 The contents of this document may not reflect the most current situation and may change at any time without notice.
 
