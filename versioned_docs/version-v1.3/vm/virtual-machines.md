@@ -30,7 +30,7 @@ The following operating systems have been validated to run in Harvester virtual 
 | --- | --- | --- | --- |
 | openSUSE Leap | 15.4 | 15.4 | 15.5 |
 | SUSE Linux Enterprise Micro | N/A | N/A | 6 |
-| SUSE Linux Enterprise Server | 15 SP4, 15 SP5 | 15 SP4, 15 SP5 | 15 SP4, 15 SP6 |
+| SUSE Linux Enterprise Server | 15 SP4, 15 SP5 | 15 SP4, 15 SP5 | 15 SP6 |
 | Red Hat Enterprise Linux | N/A | N/A | 9.4 |
 | Ubuntu | 22.04, 23.04 | 22.04, 23.04 | 24.04 |
 | Windows |	11 | 11 | 11 |
@@ -38,7 +38,7 @@ The following operating systems have been validated to run in Harvester virtual 
 
 :::note
 
-The list includes only tested operating systems and is not intended to be exhaustive. Other x86 operating systems may also run in Harvester virtual machines. However, Harvester cannot be held responsible for any damage or loss of data that may occur through the use of untested operating systems.
+he list includes only tested operating systems and is not intended to be exhaustive. Other x86 operating systems may also run in Harvester virtual machines. You are responsible for obtaining, activating, and managing licenses for any commercial software that you decide to use. Harvester cannot be held responsible for damage or loss of data that may occur through the use of untested, unpatched, and outdated operating systems.
 
 The contents of this document may not reflect the most current situation and may change at any time without notice.
 

@@ -36,7 +36,7 @@ The following operating systems have been validated to run in Harvester virtual 
 
 :::note
 
-The list includes only tested operating systems and is not intended to be exhaustive. Other x86 operating systems may also run in Harvester virtual machines. However, Harvester cannot be held responsible for any damage or loss of data that may occur through the use of untested operating systems.
+he list includes only tested operating systems and is not intended to be exhaustive. Other x86 operating systems may also run in Harvester virtual machines. You are responsible for obtaining, activating, and managing licenses for any commercial software that you decide to use. Harvester cannot be held responsible for damage or loss of data that may occur through the use of untested, unpatched, and outdated operating systems.
 
 The contents of this document may not reflect the most current situation and may change at any time without notice.
 
