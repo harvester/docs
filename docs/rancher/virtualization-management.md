@@ -141,9 +141,11 @@ Both global permissions and cluster and project roles are implemented on top of 
 
 :::important
 
-It is strongly recommended to use the built-in role templates and project-scoped RBAC to manage user access. 
+Managing user access using the built-in role templates and project-scoped RBAC is strongly recommended.
 
 Harvester implements its own RBAC model on top of Kubernetes and KubeVirt, integrating with Rancher-style Projects and multi-tenancy logic. During upgrades or reconfiguration, custom `RoleBindings` referencing only `kubevirt.io` roles may be lost, reset, or become inconsistent with Harvester's internal state.
+
+:::
 
 ### Multi-Tenancy Example
 The following example provides a good explanation of how the multi-tenant feature works:
