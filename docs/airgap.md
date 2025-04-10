@@ -130,6 +130,13 @@ The Harvester UI Extension is required to access the Harvester UI in Rancher v2.
 
   ![](/img/v1.5/air-gapped/air-gappted-harvester-ui-extension-07.png)
 
+## Time Requirements
+
+A reliable Network Time Protocol (NTP) server is critical for maintaining the correct system time across all nodes in a Kubernetes cluster, especially when running Harvester. Kubernetes relies on etcd, a distributed key-value store, which requires precise time synchronization to ensure data consistency and prevent issues with leader election, log replication, and cluster stability.
+
+In an air-gapped environment, where external time sources are unavailable, maintaining an accurate and synchronized time becomes even more crucial. Without proper time synchronization, cluster nodes may experience authentication failures, scheduling issues, or even data corruption. To mitigate these risks, organizations should deploy a robust, internal NTP server that synchronizes time across all systems within the network.
+
+Ensuring accurate and consistent time across the cluster is essential for reliability, security, and overall system integrity.
 
 ## Troubleshooting
 
