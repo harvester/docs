@@ -10,11 +10,9 @@ title: "VM Import"
 
 _Available as of v1.1.0_
 
-Beginning with v1.1.0, users can import their virtual machines from VMWare and OpenStack into Harvester.
+With the vm-import-controller addon users can import their virtual machines from VMware and OpenStack into Harvester.
 
-This is accomplished using the vm-import-controller addon.
-
-To use the VM Import feature, users need to enable the vm-import-controller addon.
+To use the VM import feature, users need to enable the vm-import-controller addon.
 
 ![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
@@ -29,7 +27,7 @@ To avoid this, users are advised to enable PVC-backed storage and customize the 
 ## vm-import-controller
 
 Currently, the following source providers are supported:
-* VMWare
+* VMware
 * OpenStack
 
 ## API
@@ -142,13 +140,15 @@ spec:
     apiVersion: migration.harvesterhci.io/v1beta1
 ```
 
-This will trigger the controller to export the VM named "alpine-export-test" on the VMWare source cluster to be exported, processed and recreated into the harvester cluster
+This will trigger the controller to export the VM named "alpine-export-test" on the VMware source cluster to be exported, processed and recreated into the Harvester cluster.
 
 This can take a while based on the size of the virtual machine, but users should see `VirtualMachineImages` created for each disk in the defined virtual machine.
 
 The list of items in `networkMapping` will define how the source network interfaces are mapped to the Harvester Networks.
 
 If a match is not found, each unmatched network interface is attached to the default `managementNetwork`.
+
+The `storageClass` field specifies the [StorageClass](../storageclass.md) to be used for images and provisioning persistent volumes during the import process. If not specified, the default StorageClass will be used.
 
 Once the virtual machine has been imported successfully, the object will reflect the status:
 
@@ -175,6 +175,7 @@ spec:
     destinationNetwork: "default/vlan1"
   - sourceNetwork: "public"
     destinationNetwork: "default/vlan2"
+  storageClass: "my-storage-class"
   sourceCluster: 
     name: devstack
     namespace: default
