@@ -112,12 +112,10 @@ The **Update** button appears whenever a new version of the extension is availab
 
 ## Limitation
 
-### Harvester versions lower than v1.3.0 are not supported
+### Harvester v1.2.x and earlier are not supported
 
-As Harvester [v1.2.x](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/harvester-v1-2-x/) has reached its end-of-life (EOL), the harvester-ui-extension is designed to support Harvester v1.3.0 and later versions.
+When you import a cluster that is running Harvester v1.2.x or earlier, an error message appears and the cluster link is disabled.
 
-If you import a Harvester cluster with a version lower than v1.3.0, an error message will appear and the cluster link will be disabled.
-
-The Manage button is still available in Rancher 2.11.0, but it will be removed in a future Rancher release. See issue [#8054](https://github.com/harvester/harvester/issues/8054) for more details.
+The **Manage** button is still available in Rancher 2.11.0, but it will be removed in a future Rancher release. For more information, see issue [#8054](https://github.com/harvester/harvester/issues/8054).
 
   ![](/img/v1.5/rancher/ui-extension-import-121harvester.png)
