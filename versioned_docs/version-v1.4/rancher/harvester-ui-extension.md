@@ -122,3 +122,7 @@ When you import a cluster that is running Harvester v1.2.x or earlier, an error 
 The **Manage** button is still available in Rancher 2.11.0, but it will be disabled in a future Rancher release. For more information, see issue [#8054](https://github.com/harvester/harvester/issues/8054).
 
   ![](/img/v1.5/rancher/ui-extension-import-121harvester.png)
+
+:::caution
+Please avoid clicking Manage button to operate Harvester cluster v1.2.x or earlier, as it is not supported.
+:::
