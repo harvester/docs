@@ -29,6 +29,36 @@ description: Create a volume from the Volume page.
 
 ![create-empty-volume](/img/v1.2/volume/create-empty-volume.png)
 
+### Oversized Volumes
+
+In Harvester v1.5.0, which uses Longhorn v1.8.1, oversized volumes (for example, 999999 Gi in size) are marked **Not Ready** and cannot be deleted.
+
+To resolve this issue, perform the following steps:
+
+1. Temporarily remove the PVC webhook rule.
+
+   ```bash
+   kubectl patch validatingwebhookconfiguration longhorn-webhook-validator \
+     --type='json' \
+     -p='[{"op": "remove", "path": "/webhooks/0/rules/17"}]'
+   ```
+
+1. Wait for the related PVC to be deleted.
+
+1. Restore the PVC webhook rule to re-enable validation.
+
+   ```bash
+   kubectl patch validatingwebhookconfiguration longhorn-webhook-validator \
+     --type='json' \
+     -p='[{"op": "add", "path": "/webhooks/0/rules/-", "value": {"apiGroups":[""],"apiVersions":["v1"],"operations":["UPDATE"],"resources":["persistentvolumeclaims"],"scope":"Namespaced"}}]'
+   ```
+
+The issue will be addressed in Longhorn v1.8.2, which will likely be included in Harvester v1.5.1.
+
+Related issues:
+- Harvester: [Issue #8096](https://github.com/harvester/harvester/issues/8096)
+- Longhorn: [Issue #10741](https://github.com/longhorn/longhorn/issues/10741)
+
 </TabItem>
 <TabItem value="api" label="API">
 
