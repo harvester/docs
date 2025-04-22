@@ -139,6 +139,8 @@ spec:
     namespace: default
     kind: VmwareSource
     apiVersion: migration.harvesterhci.io/v1beta1
+  gracefulShutdown: true
+  gracefulShutdownTimeout: 300000000000
 ```
 
 This will trigger the controller to export the VM named "alpine-export-test" on the VMware source cluster to be exported, processed and recreated into the Harvester cluster.
@@ -151,6 +153,12 @@ If a match is not found, each unmatched network interface is attached to the def
 
 The `storageClass` field specifies the [StorageClass](../storageclass.md) to be used for images and provisioning persistent volumes during the import process. If not specified, the default StorageClass will be used.
 
+By default, the guest operating system stops and shuts down the virtual machine before the import is started. If the virtual machine is not gracefully shut down within a specific period, Harvester forces a hard power off. You can adjust this shut down period by modifying the value of the `gracefulShutdownTimeout` field, which is set to `60000000000` nanoseconds (equivalent to one minute) by default. If you want to disable the graceful shutdown and force a hard power off, set the value of the `gracefulShutdown` field to `false`.
+
+:::note
+The OpenStack VM importer does not support the `gracefulShutdown` field because OpenStack automatically performs a graceful shutdown.
+:::
+
 Once the virtual machine has been imported successfully, the object will reflect the status:
 
 ```shell
@@ -158,7 +166,6 @@ $ kubectl get virtualmachineimport.migration
 NAME                    STATUS
 alpine-export-test      virtualMachineRunning
 openstack-cirros-test   virtualMachineRunning
-
 ```
 
 Similarly, users can define a VirtualMachineImport for an OpenStack source as well:
