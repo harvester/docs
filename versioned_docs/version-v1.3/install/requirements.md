@@ -24,7 +24,7 @@ Harvester nodes have the following hardware requirements and recommendations for
 
 | Hardware | Development/Testing | Production |
 | :--- | :--- | :--- |
-| CPU | x86_64 (with hardware-assisted virtualization); 8 cores minimum | x86_64 (with hardware-assisted virtualization); 16 cores minimum |
+| CPU | ARM64 or x86_64 (with hardware-assisted virtualization); 8 cores minimum | ARM64 or x86_64 (with hardware-assisted virtualization); 16 cores minimum |
 | Memory | 32 GB minimum | 64 GB minimum |
 | Disk capacity	| 250 GB minimum (180 GB minimum when using multiple disks) | 500 GB minimum |
 | Disk performance | 5,000+ random IOPS per disk (SSD/NVMe); management node storage must meet [etcd](https://www.suse.com/support/kb/doc/?id=000020100) speed requirements. Only local disks and hardware RAID are supported. | 5,000+ random IOPS per disk (SSD/NVMe); management node storage must meet [etcd](https://www.suse.com/support/kb/doc/?id=000020100) speed requirements. Only local disks and hardware RAID are supported. |
