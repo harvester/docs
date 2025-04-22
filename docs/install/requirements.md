@@ -33,6 +33,7 @@ Harvester nodes have the following hardware requirements and recommendations for
 | Network switch | Port trunking for VLAN support | Port trunking for VLAN support |
 
 :::info important
+- Mixed-architecture clusters are not supported. Deploy separate clusters to avoid unexpected system behavior.
 - For best results, use [YES-certified hardware](https://www.suse.com/partners/ihv/yes/) for SUSE Linux Enterprise Server (SLES) 15 SP3 or SP4. Harvester is built on SLE technology and YES-certified hardware has additional validation of driver and system board compatibility. Laptops and nested virtualization are not supported.
 - Nested virtualization is not supported on virtual machines running on Harvester.
 - Each node must have a unique `product_uuid` (fetched from `/sys/class/dmi/id/product_uuid`) to prevent errors from occurring during VM live migration and other operations. For more information, see [Issue #4025](https://github.com/harvester/harvester/issues/4025).
