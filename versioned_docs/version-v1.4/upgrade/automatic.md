@@ -183,3 +183,65 @@ When upgrading to Harvester **v1.4.x**, Longhorn Manager may crash if the `Evict
 To prevent the issue from occurring, ensure that the `EvictionRequested` flag is set to `false` before you start the upgrade process.
 
 :::
+
+## CVE-2025-1974: Re-enable RKE2 ingress-nginx Admission Webhooks
+
+If you have previously [disabled the RKE2 ingress-nginx admission webhook](https://harvesterhci.io/kb/2025/03/25/cve-2025-1974) due to [CVE-2025-1974](https://nvd.nist.gov/vuln/detail/CVE-2025-1974), you will need to re-enable it after upgrading to Harvester v1.4.3 or later with the following steps:
+
+1. Confirm that Harvester is using nginx-ingress v1.12.1 or later.
+
+  ```sh
+  $ kubectl -n kube-system get po -l"app.kubernetes.io/name=rke2-ingress-nginx" -ojsonpath='{.items[].spec.containers[].image}'
+  rancher/nginx-ingress-controller:v1.12.1-hardened1
+  ```
+
+1. Use `kubectl -n kube-system edit helmchartconfig rke2-ingress-nginx` to **remove** the following configurations from the resource.
+
+   * `.spec.valuesContent.controller.admissionWebhooks.enabled: false`
+   * `.spec.valuesContent.controller.extraArgs.enable-annotation-validation: true`
+
+1. The following is an example of what the new `.spec.ValuesContent` configuration should look like.
+
+  ```yaml
+  apiVersion: helm.cattle.io/v1
+  kind: HelmChartConfig
+  metadata:
+    name: rke2-ingress-nginx
+    namespace: kube-system
+  spec:
+    valuesContent: |-
+      controller:
+        admissionWebhooks:
+          port: 8444
+        extraArgs:
+          default-ssl-certificate: cattle-system/tls-rancher-internal
+        config:
+          proxy-body-size: "0"
+          proxy-request-buffering: "off"
+        publishService:
+          pathOverride: kube-system/ingress-expose
+  ```
+
+  :::info important
+  If the `HelmChartConfig` resource contains other custom ingress-nginx configuration, you must retain them when editing the resource.
+  :::
+
+1. Exit the `kubectl edit` command execution to save the configuration.
+
+  Harvester automatically applies the change once the content is saved.
+
+1. Verify that the `rke2-ingress-nginx-admission` webhook configuration is re-enabled.
+
+  ```sh
+  $ kubectl get validatingwebhookconfiguration rke2-ingress-nginx-admission
+  NAME                           WEBHOOKS   AGE
+  rke2-ingress-nginx-admission   1          6s
+  ```
+
+1. Verify that the ingress-nginx pods are restarted successfully.
+
+  ```sh
+  kubectl -n kube-system get po -lapp.kubernetes.io/instance=rke2-ingress-nginx
+  NAME                                  READY   STATUS    RESTARTS   AGE
+  rke2-ingress-nginx-controller-l2cxz   1/1     Running   0          94s
+  ```

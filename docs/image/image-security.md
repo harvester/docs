@@ -19,6 +19,12 @@ _Available as of v1.4.0_
 
 Harvester allows you to encrypt and decrypt virtual machine images. The encryption mechanism utilizes the Linux kernel module dm_crypt and the command-line utility cryptsetup.
 
+:::note
+
+This feature only supports the Longhorn V1 Data Engine. You cannot encrypt and decrypt images that are stored in other storage solutions.
+
+:::
+
 ## Prerequisites
 
 Prepare the following resources:
