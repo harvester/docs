@@ -146,7 +146,7 @@ This will trigger the controller to export the VM named "alpine-export-test" on 
 
 This can take a while based on the size of the virtual machine, but users should see `VirtualMachineImages` created for each disk in the defined virtual machine.
 
-If the source VM is placed in a folder, then you can specify the folder name in the optional `folder` field.
+If the source virtual machine is placed in a folder, you can specify the folder name in the optional `folder` field.
 
 The list of items in `networkMapping` will define how the source network interfaces are mapped to the Harvester Networks.
 
