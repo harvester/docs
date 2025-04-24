@@ -121,6 +121,10 @@ Please refer to the [Harvester & Rancher Support Matrix](https://www.suse.com/su
 </TabItem>
 </Tabs>
 
+### Troubleshooting
+
+Refer [Harvester is Pending Importing to Rancher Manager](../troubleshooting/rancher.md#harvester-is-pending-importing-to-rancher-manager).
+
 ## Multi-Tenancy
 
 In Harvester, we have leveraged the existing Rancher [RBAC authorization](https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/manage-role-based-access-control-rbac) such that users can view and manage a set of resources based on their cluster and project role permissions.
