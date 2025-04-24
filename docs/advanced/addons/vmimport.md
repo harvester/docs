@@ -128,6 +128,7 @@ metadata:
   namespace: default
 spec: 
   virtualMachineName: "alpine-export-test"
+  folder: "Discovered VM"
   networkMapping:
   - sourceNetwork: "dvSwitch 1"
     destinationNetwork: "default/vlan1"
@@ -144,6 +145,8 @@ spec:
 This will trigger the controller to export the VM named "alpine-export-test" on the VMware source cluster to be exported, processed and recreated into the Harvester cluster.
 
 This can take a while based on the size of the virtual machine, but users should see `VirtualMachineImages` created for each disk in the defined virtual machine.
+
+If the source virtual machine is placed in a folder, you can specify the folder name in the optional `folder` field.
 
 The list of items in `networkMapping` will define how the source network interfaces are mapped to the Harvester Networks.
 
@@ -186,3 +189,6 @@ spec:
 :::note 
 OpenStack allows users to have multiple instances with the same name. In such a scenario, users are advised to use the Instance ID. The reconciliation logic tries to perform a name-to-ID lookup when a name is used.
 :::
+
+#### Known issues
+* **Source virtual machine name is not RFC1123 compliant**: When creating a virtual machine object, the vm-import-controller add-on uses the name of the source virtual machine, which may not meet the Kubernetes object [naming criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names). You may need to rename the source virtual machine to allow successful completion of the import.
