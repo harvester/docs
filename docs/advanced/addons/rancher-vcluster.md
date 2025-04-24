@@ -57,3 +57,7 @@ If you enable the addon again, the PVC is re-used, and Rancher will have the old
 If you want to wipe the data, ensure that the PVC is deleted.
 
 :::
+
+## Troubleshooting
+
+Refer [Harvester is Pending Importing to Rancher Manager](../troubleshooting/rancher.md#harvester-is-pending-importing-to-rancher-manager).

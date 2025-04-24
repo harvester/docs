@@ -60,4 +60,5 @@ Refer [Release Node](https://github.com/rancher/rancher/issues/45628#issuecommen
 
 Related issues:
   - [[BUG] Rancher integration w/ Harv v1.4.0 and Rancher v2.9.2 failing](https://github.com/harvester/harvester/issues/7105)
+  - [[QUESTION] Upgrading rancher-vcluster addon?]https://github.com/harvester/harvester/issues/7284
   - [(Rancher Manager) add new agent-tls-mode setting](https://github.com/rancher/rancher/issues/45628)
