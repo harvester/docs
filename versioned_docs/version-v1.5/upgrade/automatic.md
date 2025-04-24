@@ -175,6 +175,27 @@ Setting a smaller value than the pre-defined value may cause the upgrade to fail
 
 :::
 
+There are some solutions for this case.
+
+### Free System Partition Space Manually
+
+Harvester tries to cleanup old images after upgrade by default.
+
+However, the automatic image cleanup may not be performed due to various of reasons or operations. You can use [this script](https://github.com/harvester/upgrade-helpers/blob/main/bin/harv-purge-images.sh) to manually clean up container images after the upgrade is completed. For more information, see [issue #6620](https://github.com/harvester/harvester/issues/6620).
+
+### Set a Private Container Repository and Do Not Preload the Images
+
+In the worst case, the system partition still can't not meet the requirement after manually cleaning up the old images.
+
+A feasible solution is to setup a private container registry, prepare all current and new images on the registry, then set the Harvester setting [upgrade-config](advanced/settings.md#upgrade-config) with following value.
+
+```
+{"imagePreloadOption":{"strategy":{"type":"skip"}}, "restoreVM": false}
+```
+
+Harvester will skip the upgrade image preloading process. When the deployments on the nodes are upgraded, kubelet/containerd will load the image the private container registry.
+
+
 ## VM Backup Compatibility
 
 In Harvester v1.4.2 and later versions, you may encounter certain limitations when creating and restoring [backups that involve external storage](../../versioned_docs/version-v1.4/advanced/csidriver.md#vm-backup-compatibility)
