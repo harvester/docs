@@ -164,14 +164,51 @@ Harvester node $ ip link
     link/ether 52:54:00:6e:5c:2a brd ff:ff:ff:ff:ff:ff
 ```
 
-5. Test the new MTU on Harvester nodes via command like `ping` to another Harvester node (with the new MTU) or an external device.
+:::note
+
+When the state is `UNKNOWN`, a possible cause is the MTU does not match between Harvester and external Switch/Router.
+
+:::
+
+5. Test the new MTU on Harvester nodes via command like `ping` to another Harvester node (with the new MTU) or an external IP.
 
 ```
-Harvester node $ ping 8.8.8.8 -s 8800
+Suppose a CIDR `192.168.100.0/24` and gateway `192.168.100.1` is prepared for the cn-data network.
 
-PING 8.8.8.8 (8.8.8.8) 8800(8828) bytes of data
+
+1. Set an IP on bridge device
+
+$ ip addr add dev cn-data-br 192.168.100.100/24
+
+2. Add a route for destination IP like `8.8.8.8` via the gateway
+
+$ ip route add 8.8.8.8 via 192.168.100.1 dev cn-data-br
+
+3. ping 8.8.8.8
+
+$ ping 8.8.8.8 -I 192.168.100.100
+PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=59 time=8.52 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=59 time=8.90 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=59 time=8.74 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=59 time=9.19 ms
+
+
+4. ping with different size to validate new MTU
+
+$ ping 8.8.8.8 -s 8800 -I 192.168.100.100
+
+PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 8800(8828) bytes of data
 
 # the `-s` specify the ping packet size, which can test if the new MTU really works
+
+5. Remove the added test route
+
+$ ip route delete 8.8.8.8 via 192.168.100.1 dev cn-data-br
+
+6. Remove the added test ip
+
+$ ip addr delete 192.168.100.100/24 dev cn-data-br
 
 ```
 
@@ -207,6 +244,12 @@ The `MTU` on each `Network Config` of an existing custom `Cluster Network` is st
 
 4. Change the `MTU` of the last `Network Config`.
 
+::: note
+
+The MUT on the peer external Switch/Router's port needs to be changed accordingly.
+
+:::
+
 5. Check the `MTU` on the selected Harvester nodes via the Linux `ip link` command, the related `*-br` device like `cn-data-br` should be `UP` and with the new `MTU`.
 
 ```
@@ -218,14 +261,52 @@ Harvester node $ ip link
     link/ether 52:54:00:6e:5c:2a brd ff:ff:ff:ff:ff:ff
 ```
 
-6. Test the new MTU on Harvester nodes via command like `ping` to another Harvester node (with the new MTU) or an external device.
+:::note
+
+When the state is `UNKNOWN`, a possible cause is the MTU does not match between Harvester and external Switch/Router.
+
+:::
+
+6. Test the new MTU on Harvester nodes via command like `ping` to another Harvester node (with the new MTU) or an external IP.
 
 ```
-Harvester node $ ping 8.8.8.8 -s 8800
+Suppose a CIDR `192.168.100.0/24` and gateway `192.168.100.1` is prepared for the cn-data network.
 
-PING 8.8.8.8 (8.8.8.8) 8800(8828) bytes of data
+
+1. Set an IP on bridge device
+
+$ ip addr add dev cn-data-br 192.168.100.100/24
+
+2. Add a route for destination IP like `8.8.8.8` via the gateway
+
+$ ip route add 8.8.8.8 via 192.168.100.1 dev cn-data-br
+
+3. ping 8.8.8.8
+
+$ ping 8.8.8.8 -I 192.168.100.100
+PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=59 time=8.52 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=59 time=8.90 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=59 time=8.74 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=59 time=9.19 ms
+
+
+4. ping with different size to validate new MTU
+
+$ ping 8.8.8.8 -s 8800 -I 192.168.100.100
+
+PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 8800(8828) bytes of data
 
 # the `-s` specify the ping packet size, which can test if the new MTU really works
+
+
+5. Remove the added test route
+
+$ ip route delete 8.8.8.8 via 192.168.100.1 dev cn-data-br
+
+6. Remove the added test ip
+
+$ ip addr delete 192.168.100.100/24 dev cn-data-br
 
 ```
 
