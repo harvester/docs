@@ -423,3 +423,19 @@ Modifying the `IPAM` mode isn't allowed. You must create a new service if you in
 ## Health checks
 
 Beginning with Harvester cloud provider v0.2.0, additional health checks of the `LoadBalancer` service within the guest Kubernetes cluster are no longer necessary. Instead, you can configure [liveness](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-tcp-liveness-probe) and [readiness](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-readiness-probes) probes for your workloads. Consequently, any unavailable pods will be automatically removed from the load balancer endpoints to achieve the same desired outcome.
+
+## Known Issues
+
+### Guest Cluster Load Balancer IP Permanently Stuck in IPAM Mode
+
+The `LoadBalancer` service may stay pending in the guest cluster and the associated `loadbalancer.loadbalancer.harvesterhci.io` resource on the Harvester cluster contains the following status message:
+
+```
+1.2.3.4 has been allocated to harvester-public/guest-cluster-name-default-test-loadbalancer-3-8c40671d, duplicate allocation is not allowed
+```
+
+The workaround is to replace the image tag of the `harvester-load-balancer` deployment on Harvester with [v1.5.0](https://github.com/harvester/load-balancer-harvester/releases/tag/v1.5.0) or a later version. When the image tag is replaced, the previously allocated IP is released and a new one is allocated.
+
+This issue is fixed in Harvester v1.5.0 and later.
+
+Related issue: [#7449](https://github.com/harvester/harvester/issues/7449)
