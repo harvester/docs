@@ -93,19 +93,21 @@ The [witness node](../advanced/witness.md) is generally not involved in the cust
 
 :::
 
-## Configurations
+## Configuration
 
-### How to Create a new Cluster Network
+### Create a New Cluster Network
 
-1. To create a new cluster network, go to the **Networks > ClusterNetworks/Configs** page and click the **Create** button. You only need to specify the name.
+1. Go to **Networks > ClusterNetworks/Configs**, and then click **Create**.
+
+1. Specify a name for the network.
 
    ![](/img/v1.2/networking/create-clusternetwork.png)
 
-2. Click the **Create Network Config** button on the right of the cluster network to create a new network configuration.
+1. Click the **Create Network Config** button on the right of the cluster network to create a new network configuration.
 
    ![](/img/v1.2/networking/create-network-config-button.png)
 
-3. In the **Node Selector** tab, specify the name and choose one of the three methods to select nodes where the network configuration will apply. If you want to cover the unselected nodes, you can create another network configuration.
+1. In the **Node Selector** tab, specify the name and choose one of the three methods to select nodes where the network configuration will apply. If you want to cover the unselected nodes, you can create another network configuration.
 
    ![](/img/v1.2/networking/select-nodes.png)
 
@@ -115,7 +117,7 @@ The method **Select all nodes** works only when all nodes use the exact same ded
 
 :::
 
-4. Click the **Uplink** tab to add the NICs, and configure the bond options and link attributes. The bond mode defaults to `active-backup`.
+1. Click the **Uplink** tab to add the NICs, and configure the bond options and link attributes. The bond mode defaults to `active-backup`.
 
    ![](/img/v1.2/networking/config-uplink.png)
 
@@ -134,285 +136,301 @@ To simplify cluster maintenance, create one network configuration for each node 
 
 :::
 
-### How to Change the Network Config
+### Change a Network Configuration
 
-Changes on the existing `Network Config` may affect both the Harvester VMs/workloads and the external devices/systems like Switches/Routers. For more information, please see [Network Topology](./deep-dive.md#network-topology).
+Changes to existing network configurations may affect Harvester virtual machines and workloads, and external devices such as switches and routers. For more information, see [Network Topology](./deep-dive.md#network-topology).
 
-Suppose a `Cluster Network` `cn-data` has been built with `MTU` value `1500`. And you plan to change the `MTU` value to `9000`.
+The following sections outline the steps you must perform to change the MTU of a network configuration. The sample cluster network used in these sections has `cn-data` that was built with an MTU value of `1500` and plans be changed to `9000`.
 
 ![](/img/v1.4/networking/set-a-new-mtu-value.png)
 
-#### Change the MTU of Network Config which has no Storage Network attached
+#### Change the MTU of a Network Configuration with No Attached Storage Network
 
-The [Storage Network](../advanced/storagenetwork.md#harvester-storage-network-setting) is not enabled or not attached to this `Cluster Network`.
+In this scenario, the [storage network](../advanced/storagenetwork.md#harvester-storage-network-setting) is neither enabled nor attached to the target cluster network.
 
-The `MTU` on each `Network Config` of an existing custom `Cluster Network` is strictly to be identical. There are many restrictions to change the `MTU`, the following steps should be followed:
+:::caution
 
-1. Stop all the VMs which are attached to the target `Cluster Network`, this can be checked via the [VM Network](./harvester-network.md#create-a-vm-network) and [VM attached Secondary Network](../vm/create-vm.md#secondary-network). When any of the VMs is still running, Harvester will refuse the change.
+- The MTU affects Harvester nodes and networking devices such as switches and routers. Careful planning and testing are required to ensure that changing the MTU does not adversely affect the system. For more information, see [Network Topology](./deep-dive.md#network-topology).
+- You must use the same MTU across all network configurations of a custom cluster network. You must also manually update the MTU on existing virtual machine networks.
+- Cluster operations are interrupted during the configuration change.
+- The information in this section does not apply to the built-in `mgmt` cluster network.
 
-2. Check the number of `Network Config` of the target `Cluster Network`, if the number is greater than one, then repeat the operations below until there is only one `Network Config` left:
+:::
 
-    1. Record the `Node Selector` of a `Network Config`;
+If you must change the MTU, perform the following steps:
 
-    1. Remove this `Network Config`;
+1. Stop all virtual machines that are attached to the target cluster network.
 
-3. Change the `MTU` of the last `Network Config`.
+  You can check this using the [VM network](./harvester-network.md#create-a-vm-network) and any [secondary networks](../vm/create-vm.md#secondary-network) you may have used. Harvester does not allow you to change the MTU when any of the connected virtual machines are still running.
 
-4. Check the `MTU` on the selected Harvester nodes via the Linux `ip link` command, the related `*-br` device like `cn-data-br` should be `UP` and with the new `MTU`.
+1. Check the network configurations of the target cluster network.
 
-```
-Harvester node $ ip link show dev cn-data-br
+  If multiple network configurations exist, record the node selector for each and remove configurations until only one remains.
+
+1. Verify that the MTU was changed using the Linux `ip link` command. If the network configuration selects multiple Harvester nodes, run the command on each node.
+
+  The output must show the new MTU of the related `*-br` device and the state `UP`. In the following example, the device is `cn-data-br` and the new MTU is `9000`.
+
+  ```
+  Harvester node $ ip link show dev cn-data-br
 
                                                   |new MTU|              |state UP|
-3: cn-data-br: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9000 qdisc noqueue state UP mode DEFAULT group default qlen 1000
-    link/ether 52:54:00:6e:5c:2a brd ff:ff:ff:ff:ff:ff
-```
+  3: cn-data-br: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9000 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+      link/ether 52:54:00:6e:5c:2a brd ff:ff:ff:ff:ff:ff
+  ```
 
-:::note
+  :::note
 
-1. When the state is `UNKNOWN`, a possible cause is the MTU does not match between Harvester and external Switch/Router.
+  When the state is `UNKNOWN`, it is likely that the MTU values on Harvester and the external switch or router do not match.
 
-2. If current `Network Config` selects more than one node, then repeat step 4 on each node.
+  :::
 
-:::
+1. Test the new MTU on Harvester nodes using commands such as `ping`. You must send the messages to a Harvester node with the new MTU or a node with an external IP.
 
-5. Test the new MTU on Harvester nodes via command like `ping` to another Harvester node (with the new MTU) or an external IP.
+  Example:
 
-```
-Suppose a CIDR `192.168.100.0/24` and gateway `192.168.100.1` is prepared for the cn-data network.
+  ```
+  Suppose a CIDR `192.168.100.0/24` and gateway `192.168.100.1` is prepared for the cn-data network.
 
+  1. Set an IP 192.168.100.100 on bridge device
 
-1. Set an IP 192.168.100.100 on bridge device
+  $ ip addr add dev cn-data-br 192.168.100.100/24
 
-$ ip addr add dev cn-data-br 192.168.100.100/24
+  2. Add a route for destination IP like `8.8.8.8` via the gateway
 
-2. Add a route for destination IP like `8.8.8.8` via the gateway
+  $ ip route add 8.8.8.8 via 192.168.100.1 dev cn-data-br
 
-$ ip route add 8.8.8.8 via 192.168.100.1 dev cn-data-br
+  3. ping 8.8.8.8 from the new IP 192.168.100.100
 
-3. ping 8.8.8.8 from the new IP 192.168.100.100
+  $ ping 8.8.8.8 -I 192.168.100.100
+  PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 56(84) bytes of data.
+  64 bytes from 8.8.8.8: icmp_seq=1 ttl=59 time=8.52 ms
+  64 bytes from 8.8.8.8: icmp_seq=2 ttl=59 time=8.90 ms
+  ...
 
-$ ping 8.8.8.8 -I 192.168.100.100
-PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 56(84) bytes of data.
-64 bytes from 8.8.8.8: icmp_seq=1 ttl=59 time=8.52 ms
-64 bytes from 8.8.8.8: icmp_seq=2 ttl=59 time=8.90 ms
-64 bytes from 8.8.8.8: icmp_seq=3 ttl=59 time=8.74 ms
-64 bytes from 8.8.8.8: icmp_seq=4 ttl=59 time=9.19 ms
+  4. ping with different size to validate new MTU
 
-4. ping with different size to validate new MTU
+  $ ping 8.8.8.8 -s 8800 -I 192.168.100.100
 
-$ ping 8.8.8.8 -s 8800 -I 192.168.100.100
+  PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 8800(8828) bytes of data
 
-PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 8800(8828) bytes of data
+  # the `-s` specify the ping packet size, which can test if the new MTU really works
 
-# the `-s` specify the ping packet size, which can test if the new MTU really works
+  5. Remove the added test route
 
-5. Remove the added test route
+  $ ip route delete 8.8.8.8 via 192.168.100.1 dev cn-data-br
 
-$ ip route delete 8.8.8.8 via 192.168.100.1 dev cn-data-br
+  6. Remove the added test ip
 
-6. Remove the added test ip
+  $ ip addr delete 192.168.100.100/24 dev cn-data-br
 
-$ ip addr delete 192.168.100.100/24 dev cn-data-br
+  ```
 
-```
+1. Add back the network configurations that you removed, change the MTU in each one, and verify that the new MTU was applied.
 
-6. Add those `Network Config` which were removed on Step 2, each should set the `MTU` to the new value. And run step 4, 5 to test and verify the new `MTU`.
+1. Edit the YAML of all virtual machine networks that are attached to the target cluster network.
 
-7. Change all the `Virtual Machine Network` which are attached to the current clusternetwork like `cn-data` manually.
+  On the Harvester UI **Virtual Machine Networks** screen, perform the following steps for each attached network:
 
-Click the `Edit Yaml` of `vm100`.
+  1. Select **⋮ > Edit YAML**.
 
-![](/img/v1.4/networking/edit-vm-networks.png)
+  ![](/img/v1.4/networking/edit-vm-networks.png)
 
-Change the MTU to new value and save.
+  1. Change the MTU.
 
-![](/img/v1.4/networking/edit-vm-network-mtu.png)
+  ![](/img/v1.4/networking/edit-vm-network-mtu.png)
 
-Change all other related `Virtual Machine Network`.
+  1. Click **Save**.
 
-You may also change the MTU via `kubectl` like `kubectl edit NetworkAttachmentDefinition.k8s.cni.cncf.io vm100`.
+  You can also use `kubectl` to change the MTU. In the following example, the network name is `vm100`. To edit the YAML of this network, run the command `kubectl edit NetworkAttachmentDefinition.k8s.cni.cncf.io vm100`.
 
-```
-apiVersion: k8s.cni.cncf.io/v1
-kind: NetworkAttachmentDefinition
-metadata:
-  annotations:
-    network.harvesterhci.io/route: '{"mode":"auto","serverIPAddr":"","cidr":"","gateway":""}'
-  creationTimestamp: '2025-04-25T10:21:01Z'
-  finalizers:
-    - wrangler.cattle.io/harvester-network-nad-controller
-    - wrangler.cattle.io/harvester-network-manager-nad-controller
-  generation: 1
-  labels:
-    network.harvesterhci.io/clusternetwork: cn-data
-    network.harvesterhci.io/ready: 'true'
-    network.harvesterhci.io/type: L2VlanNetwork
-    network.harvesterhci.io/vlan-id: '100'
-  name: vm100
-  namespace: default
-  resourceVersion: '1525839'
-  uid: 8dacf415-ce90-414a-a11b-48f041d46b42
-spec:
-  config: >-
-    {"cniVersion":"0.3.1","name":"vm100","type":"bridge","bridge":"cn-data-br","promiscMode":true,"vlan":100,"ipam":{},"mtu":1500}
-```
+  ```
+  apiVersion: k8s.cni.cncf.io/v1
+  kind: NetworkAttachmentDefinition
+  metadata:
+    annotations:
+      network.harvesterhci.io/route: '{"mode":"auto","serverIPAddr":"","cidr":"","gateway":""}'
+    creationTimestamp: '2025-04-25T10:21:01Z'
+    finalizers:
+      - wrangler.cattle.io/harvester-network-nad-controller
+      - wrangler.cattle.io/harvester-network-manager-nad-controller
+    generation: 1
+    labels:
+      network.harvesterhci.io/clusternetwork: cn-data
+      network.harvesterhci.io/ready: 'true'
+      network.harvesterhci.io/type: L2VlanNetwork
+      network.harvesterhci.io/vlan-id: '100'
+    name: vm100
+    namespace: default
+    resourceVersion: '1525839'
+    uid: 8dacf415-ce90-414a-a11b-48f041d46b42
+  spec:
+    config: >-
+      {"cniVersion":"0.3.1","name":"vm100","type":"bridge","bridge":"cn-data-br","promiscMode":true,"vlan":100,"ipam":{},"mtu":1500}
+  ```
 
-8. Start the VMs mentioned in step 1, they will inheriate the new `MTU`. Validate the `MTU` from the VM's OS via command like Linux `ip link`.
+1. Start all virtual machines that are attached to the target cluster network.
 
-9. You need to check the workloads on the VM to make sure they also work upon the new `MTU`, it is out of scope of Harvester.
+  The virtual machines should have inherited the new MTU. You can verify this in the guest operating system using the Linux `ip link` command.
 
-:::note
+1. Verify that the virtual machine workloads are running normally.
 
-- The `MTU` affects both of the Harvester nodes and the infrastructure networking devices like Switches and Routers, the careful planning and testing are required to ensure the new `MTU`. For more information, please see [Network Topology](./deep-dive.md#network-topology).
+:::info important
 
-- The `MTU` on the existing `Virtual Machine Network` needs to be updated manually.
-
-- Service is interrupted while the whole process.
-
-- This method does not work on the built-in `mgmt Cluster Network`.
+Harvester cannot be held responsible for any damage or loss of data that may occur when the MTU value is changed.
 
 :::
 
-#### Change the MTU of Network Config which has Storage Network Attached
+#### Change the MTU of Network Configuration with an Attached Storage Network
 
-The [Storage Network](../advanced/storagenetwork.md#harvester-storage-network-setting) is enabled or attached to this `Cluster Network`. The `Storage Network` is dedicatedly used by `Longhorn`, the default CSI driver of Harvester cluster. Because the `Longhorn` is responsible for at least the [root disk](../vm/create-vm.md#volumes) of all VMs, this change will affect all the VMs.
+In this scenario, the [storage network](../advanced/storagenetwork.md#harvester-storage-network-setting) is enabled and attached to the target cluster network.
 
-The `MTU` on each `Network Config` of an existing custom `Cluster Network` is strictly to be identical. There are many restrictions to change the `MTU`, the following steps should be followed:
+The storage network is used by `driver.longhorn.io`, which is Harvester's default CSI driver. Longhorn is responsible for provisioning [root volumes](../vm/create-vm.md#volumes), so changing the MTU affects all virtual machines.
+
+:::caution
+
+- The MTU affects Harvester nodes and networking devices such as switches and routers. Careful planning and testing are required to ensure that changing the MTU does not adversely affect the system. For more information, see [Network Topology](./deep-dive.md#network-topology).
+- You must use the same MTU across all network configurations of a custom cluster network. You must also manually update the MTU on existing virtual machine networks.
+- All cluster operations are interrupted during the configuration change.
+- The information in this section does not apply to the built-in `mgmt` cluster network.
+
+:::
+
+If you must change the MTU, perform the following steps:
 
 1. Stop all the VMs.
 
-2. Disable the Harvester [Storage Network](../advanced/storagenetwork.md#harvester-storage-network-setting). Wait and [Verify Configuration is Completed](../advanced/storagenetwork.md#verify-configuration-is-completed).
+1. Disable the Harvester [Storage Network](../advanced/storagenetwork.md#harvester-storage-network-setting).
 
-3. Check the number of `Network Config` of the target `Cluster Network`, if the number is greater than one, then repeat the operations below until there is only one `Network Config` left:
+  Allow some time for the setting to be disabled, and then [verify that the change was applied](../advanced/storagenetwork.md#verify-configuration-is-completed).
 
-    1. Record the `Node Selector` of a `Network Config`;
+1. Check the network configurations of the target cluster network.
 
-    1. Remove this `Network Config`;
+  If multiple network configurations exist, record the node selector for each and remove configurations until only one remains.
 
-4. Change the `MTU` of the last `Network Config`.
+1. Change the MTU of the remaining network configuration.
 
-::: note
+  :::info important
 
-The MUT on the peer external Switch/Router's port needs to be changed accordingly.
+  You must also change the MTU on the peer external switch or router.
 
-:::
+  :::
 
-5. Check the `MTU` on the selected Harvester nodes via the Linux `ip link` command, the related `*-br` device like `cn-data-br` should be `UP` and with the new `MTU`.
+1. Verify that the MTU was changed using the Linux `ip link` command. If the network configuration selects multiple Harvester nodes, run the command on each node.
 
-```
-Harvester node $ ip link show dev cn-data-br
+  The output must show the new MTU of the related `*-br` device and the state `UP`. In the following example, the device is `cn-data-br` and the new MTU is `9000`.
+
+  ```
+  Harvester node $ ip link show dev cn-data-br
 
                                                   |new MTU|              |state UP|
 
-3: cn-data-br: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9000 qdisc noqueue state UP mode DEFAULT group default qlen 1000
-    link/ether 52:54:00:6e:5c:2a brd ff:ff:ff:ff:ff:ff
-```
+  3: cn-data-br: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9000 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+      link/ether 52:54:00:6e:5c:2a brd ff:ff:ff:ff:ff:ff
+  ```
 
-:::note
+  :::note
 
-1. When the state is `UNKNOWN`, a possible cause is the MTU does not match between Harvester and external Switch/Router.
+  When the state is `UNKNOWN`, it is likely that the MTU values on Harvester and the external switch or router do not match.
 
-2. If current `Network Config` selects more than one node, then repeat step 5 on each node.
+  :::
 
-:::
+1. Test the new MTU on Harvester nodes using commands such as `ping`. You must send the messages to a Harvester node with the new MTU or to a node with an external IP.
 
-6. Test the new MTU on Harvester nodes via command like `ping` to another Harvester node (with the new MTU) or an external IP.
+  Example:
 
-```
-Suppose a CIDR `192.168.100.0/24` and gateway `192.168.100.1` is prepared for the cn-data network.
+  ```
+  Suppose a CIDR `192.168.100.0/24` and gateway `192.168.100.1` is prepared for the cn-data network.
 
+  1. Set an IP 192.168.100.100 on bridge device
 
-1. Set an IP 192.168.100.100 on bridge device
+  $ ip addr add dev cn-data-br 192.168.100.100/24
 
-$ ip addr add dev cn-data-br 192.168.100.100/24
+  2. Add a route for destination IP like `8.8.8.8` via the gateway
 
-2. Add a route for destination IP like `8.8.8.8` via the gateway
+  $ ip route add 8.8.8.8 via 192.168.100.1 dev cn-data-br
 
-$ ip route add 8.8.8.8 via 192.168.100.1 dev cn-data-br
+  3. ping 8.8.8.8 from the new IP 192.168.100.100
 
-3. ping 8.8.8.8 from the new IP 192.168.100.100
+  $ ping 8.8.8.8 -I 192.168.100.100
+  PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 56(84) bytes of data.
+  64 bytes from 8.8.8.8: icmp_seq=1 ttl=59 time=8.52 ms
+  64 bytes from 8.8.8.8: icmp_seq=2 ttl=59 time=8.90 ms
+  ...
 
-$ ping 8.8.8.8 -I 192.168.100.100
-PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 56(84) bytes of data.
-64 bytes from 8.8.8.8: icmp_seq=1 ttl=59 time=8.52 ms
-64 bytes from 8.8.8.8: icmp_seq=2 ttl=59 time=8.90 ms
-64 bytes from 8.8.8.8: icmp_seq=3 ttl=59 time=8.74 ms
-64 bytes from 8.8.8.8: icmp_seq=4 ttl=59 time=9.19 ms
+  4. ping with different size to validate new MTU
 
-4. ping with different size to validate new MTU
+  $ ping 8.8.8.8 -s 8800 -I 192.168.100.100
 
-$ ping 8.8.8.8 -s 8800 -I 192.168.100.100
+  PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 8800(8828) bytes of data
 
-PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 8800(8828) bytes of data
+  # the `-s` specify the ping packet size, which can test if the new MTU really works
 
-# the `-s` specify the ping packet size, which can test if the new MTU really works
+  5. Remove the added test route
 
-5. Remove the added test route
+  $ ip route delete 8.8.8.8 via 192.168.100.1 dev cn-data-br
 
-$ ip route delete 8.8.8.8 via 192.168.100.1 dev cn-data-br
+  6. Remove the added test ip
 
-6. Remove the added test ip
+  $ ip addr delete 192.168.100.100/24 dev cn-data-br
 
-$ ip addr delete 192.168.100.100/24 dev cn-data-br
+  ```
 
-```
+1. Add back the network configurations that you removed, change the MTU in each one, and verify that the new MTU was applied.
 
-7. Add those `Network Config` which were removed on Step 3, each should set the `MTU` to the new value. And run step 5, 6 to test and verify the new `MTU`.
+1. Enable and configure the Harvester [storage network setting](../advanced/storagenetwork.md#harvester-storage-network-setting), ensuring that the [prerequisites](../advanced/storagenetwork.md#prerequisites) are met.
 
-8. Enable and set the Harvester [Storage Network](../advanced/storagenetwork.md#harvester-storage-network-setting), note the [Prerequisites](../advanced/storagenetwork.md#prerequisites) are met in the above steps. Wait and [Verify Configuration is Completed](../advanced/storagenetwork.md#verify-configuration-is-completed).
+  Allow some time for the setting to be disabled, and then [verify that the change was applied](../advanced/storagenetwork.md#verify-configuration-is-completed).
 
-9. Change all the `Virtual Machine Network` which are attached to the current clusternetwork like `cn-data` manually.
+1. Edit the YAML of all virtual machine networks that are attached to the target cluster network.
 
-Click the `Edit Yaml` of `vm100`.
+  On the Harvester UI **Virtual Machine Networks** screen, perform the following steps for each attached network:
 
-![](/img/v1.4/networking/edit-vm-networks.png)
+  1. Select **⋮ > Edit YAML**.
 
-Change the `MTU` to new value and save.
+  ![](/img/v1.4/networking/edit-vm-networks.png)
 
-![](/img/v1.4/networking/edit-vm-network-mtu.png)
+  1. Change the MTU.
 
-Change all other related `Virtual Machine Network`.
+  ![](/img/v1.4/networking/edit-vm-network-mtu.png)
 
-You may also change the MTU via `kubectl` like `kubectl edit NetworkAttachmentDefinition.k8s.cni.cncf.io vm100`.
+  1. Click **Save**.
 
-```
-apiVersion: k8s.cni.cncf.io/v1
-kind: NetworkAttachmentDefinition
-metadata:
-  annotations:
-    network.harvesterhci.io/route: '{"mode":"auto","serverIPAddr":"","cidr":"","gateway":""}'
-  creationTimestamp: '2025-04-25T10:21:01Z'
-  finalizers:
-    - wrangler.cattle.io/harvester-network-nad-controller
-    - wrangler.cattle.io/harvester-network-manager-nad-controller
-  generation: 1
-  labels:
-    network.harvesterhci.io/clusternetwork: cn-data
-    network.harvesterhci.io/ready: 'true'
-    network.harvesterhci.io/type: L2VlanNetwork
-    network.harvesterhci.io/vlan-id: '100'
-  name: vm100
-  namespace: default
-  resourceVersion: '1525839'
-  uid: 8dacf415-ce90-414a-a11b-48f041d46b42
-spec:
-  config: >-
-    {"cniVersion":"0.3.1","name":"vm100","type":"bridge","bridge":"cn-data-br","promiscMode":true,"vlan":100,"ipam":{},"mtu":1500}
-```
+  You can also use `kubectl` to change the MTU. In the following example, the network name is `vm100`. To edit the YAML of this network, run the command `kubectl edit NetworkAttachmentDefinition.k8s.cni.cncf.io vm100`.
 
-10. Start the VMs mentioned in step 1, they will inheriate the new `MTU`. Validate the `MTU` from the VM's OS via command like Linux `ip link`.
+  ```
+  apiVersion: k8s.cni.cncf.io/v1
+  kind: NetworkAttachmentDefinition
+  metadata:
+    annotations:
+      network.harvesterhci.io/route: '{"mode":"auto","serverIPAddr":"","cidr":"","gateway":""}'
+    creationTimestamp: '2025-04-25T10:21:01Z'
+    finalizers:
+      - wrangler.cattle.io/harvester-network-nad-controller
+      - wrangler.cattle.io/harvester-network-manager-nad-controller
+    generation: 1
+    labels:
+      network.harvesterhci.io/clusternetwork: cn-data
+      network.harvesterhci.io/ready: 'true'
+      network.harvesterhci.io/type: L2VlanNetwork
+      network.harvesterhci.io/vlan-id: '100'
+    name: vm100
+    namespace: default
+    resourceVersion: '1525839'
+    uid: 8dacf415-ce90-414a-a11b-48f041d46b42
+  spec:
+    config: >-
+      {"cniVersion":"0.3.1","name":"vm100","type":"bridge","bridge":"cn-data-br","promiscMode":true,"vlan":100,"ipam":{},"mtu":1500}
+  ```
 
-11. You need to check the workloads on the VM to make sure they also work upon the new `MTU`, it is out of scope of Harvester.
+1. Start all virtual machines that are attached to the target cluster network.
 
-:::note
+  The virtual machines should have inherited the new MTU. You can verify this from the guest operating system using the Linux `ip link` command.
 
-- The `MTU` affects both of the Harvester nodes and the infrastructure networking devices like Switches and Routers, the careful planning and testing are required to ensure the new `MTU`. For more information, please see [Network Topology](./deep-dive.md#network-topology).
+1. Verify that the virtual machine workloads are running normally.
 
-- The `MTU` on the existing `Virtual Machine Network` needs to be updated manually.
+:::info important
 
-- Service is interrupted while the whole process.
-
-- This method does not work on the built-in `mgmt Cluster Network`.
+Harvester cannot be held responsible for any damage or loss of data that may occur when the MTU value is changed.
 
 :::
