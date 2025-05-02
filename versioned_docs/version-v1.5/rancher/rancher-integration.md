@@ -57,7 +57,7 @@ If you prefer, the following guide will take you through the same process in ind
 
 ## Virtualization management
 
-With Rancher's virtualization management feature, you can import and manage your Harvester cluster. By clicking one of the imported clusters, you can easily access and manage a range of Harvester cluster resources, including hosts, VMs, images, volumes, and more. 
+With Rancher's virtualization management feature, you can import and manage your Harvester cluster. By clicking one of the imported clusters, you can easily access and manage a range of Harvester cluster resources, including hosts, VMs, images, volumes, and more.
 Additionally, the virtualization management feature leverages Rancher's existing capabilities, such as authentication with various auth providers and multi-tenancy support.
 
 For in-depth insights, please refer to the [virtualization management](./virtualization-management.md) page.
@@ -85,7 +85,7 @@ Starting with Rancher v2.7.6, Harvester introduces a new feature that enables yo
 
 This guide will walk you through enabling and using this experimental feature, highlighting its capabilities and best practices.
 
-To enable this new feature flag, follow these steps:
+To enable this new feature flag, follow these steps on Rancher UI:
 
 1. Click the hamburger menu and choose the **Global Settings** tab.
 1. Click **Feature Flags** and locate the new feature flag `harvester-baremetal-container-workload`.
@@ -108,14 +108,6 @@ This feature lets you deploy custom container workloads directly to the bare-met
 - It is essential not to deploy any workloads to the system namespaces `cattle-system`, `harvester-system`, or `longhorn-system`. Keeping your workloads in separate namespaces is crucial to maintaining clarity and preserving the integrity of the system components.
 - For best practices, we recommend deploying container and VM workloads in separate namespaces.
 
-:::
-
-:::note
-
-With this feature enabled, your Harvester cluster does not appear on the **Continuous Delivery** page in the Rancher UI. Please check the issue [#4482](https://github.com/harvester/harvester/issues/4482) for further updates.
-
-:::
-
 ## Fleet Support (Experimental)
 
 _Available as of Harvester v1.3.0 + Rancher v2.7.9_
@@ -129,7 +121,7 @@ The Rancher feature `harvester-baremetal-container-workload` must be enabled.
 
   ![](/img/v1.3/rancher/continuous-delivery-overview.png)
 
-1. (Optional) On the **Clusters** tab, edit the Fleet cluster config to add labels that can be used to group Harvester clusters. 
+1. (Optional) On the **Clusters** tab, edit the Fleet cluster config to add labels that can be used to group Harvester clusters.
 
   In this example, the label `location=private-dc` was added.
 
@@ -152,11 +144,11 @@ The Rancher feature `harvester-baremetal-container-workload` must be enabled.
 
   ![](/img/v1.3/rancher/gitrepo-definition.png)
 
-1. Click **Next**, and then define the Git repo targets. You can select all clusters, an individual cluster, or a group of clusters. 
+1. Click **Next**, and then define the Git repo targets. You can select all clusters, an individual cluster, or a group of clusters.
 
   In this example, the cluster group named `private-dc-clusters` is used.
 
-  ![](/img/v1.3/rancher/gitrepo-targets.png) 
+  ![](/img/v1.3/rancher/gitrepo-targets.png)
 
 1. Click **Save**. It may take a few seconds for the resources to be rolled out to the target clusters.
 

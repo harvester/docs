@@ -58,7 +58,7 @@ If you prefer, the following guide will take you through the same process in ind
 
 ## Virtualization management
 
-With Rancher's virtualization management feature, you can import and manage your Harvester cluster. By clicking one of the imported clusters, you can easily access and manage a range of Harvester cluster resources, including hosts, VMs, images, volumes, and more. 
+With Rancher's virtualization management feature, you can import and manage your Harvester cluster. By clicking one of the imported clusters, you can easily access and manage a range of Harvester cluster resources, including hosts, VMs, images, volumes, and more.
 Additionally, the virtualization management feature leverages Rancher's existing capabilities, such as authentication with various auth providers and multi-tenancy support.
 
 For in-depth insights, please refer to the [virtualization management](./virtualization-management.md) page.
@@ -86,7 +86,7 @@ Starting with Rancher v2.7.6, Harvester introduces a new feature that enables yo
 
 This guide will walk you through enabling and using this experimental feature, highlighting its capabilities and best practices.
 
-To enable this new feature flag, follow these steps:
+To enable this new feature flag, follow these steps on Rancher UI:
 
 1. Click the hamburger menu and choose the **Global Settings** tab.
 1. Click **Feature Flags** and locate the new feature flag `harvester-baremetal-container-workload`.
