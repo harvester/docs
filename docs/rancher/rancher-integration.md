@@ -17,7 +17,7 @@ description: Rancher is an open source multi-cluster management platform. Harves
 
 [Rancher](https://github.com/rancher/rancher) is an open-source multi-cluster management platform. Starting with Rancher v2.6.1, Rancher has integrated Harvester by default to centrally manage VMs and containers.
 
-Users can import and manage multiple Harvester clusters using the Rancher [Virtualization Management](virtualization-management.md) feature. Leveraging the Rancher's [authentication](https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/authentication-config) feature and [RBAC control](https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/manage-role-based-access-control-rbac) for [multi-tenancy](virtualization-management.md#multi-tenancy) support.
+Users can import and manage multiple Harvester clusters using the Rancher [Virtualization Management](virtualization-management.md) feature. Leveraging the Rancher's [authentication](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/authentication-config) feature and [RBAC control](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/manage-role-based-access-control-rbac) for [multi-tenancy](virtualization-management.md#multi-tenancy) support.
 
 For a comprehensive overview of the support matrix, please refer to the [Harvester & Rancher Support Matrix](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/).
 
@@ -31,23 +31,13 @@ For the network requirements, please refer to the doc [here](../install/requirem
 
 ## Deploying Rancher server
 
-To use Rancher with Harvester, please install Rancher on a separate server. If you want to try out the integration features, you can create a VM in Harvester and install the Rancher server by following the [Helm CLI quick start](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli).
+To use Rancher with Harvester, please install Rancher on a separate server. If you want to try out the integration features, you can create a VM in Harvester and install the Rancher server by following the [Helm CLI quick start](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli).
 
-For production setup, please use one of the following guides to deploy and provision Rancher and a Kubernetes cluster with the provider of your choice:
-
-- [AWS](https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/deploy-rancher-manager) (uses Terraform)
-- [AWS Marketplace](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/aws-marketplace) (uses Amazon EKS)
-- [Azure](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/azure) (uses Terraform)
-- [DigitalOcean](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/digitalocean) (uses Terraform)
-- [GCP](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/gcp) (uses Terraform)
-- [Hetzner Cloud](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/hetzner-cloud) (uses Terraform)
-- [Vagrant](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/vagrant)
-- [Equinix Metal](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/equinix-metal)
-- [Outscale](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/outscale-qs) (uses Terraform)
+For production setup, please follow [Deploying Rancher Server document](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager) to  deploy and provision Rancher and a Kubernetes cluster with the provider of your choice.
 
 If you prefer, the following guide will take you through the same process in individual steps. Use this if you want to run Rancher with a different provider, on prem, or if you want to see how easy it is.
 
-- [Manual Install](https://ranchermanager.docs.rancher.com/v2.7/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli)
+- [Manual Install](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli)
 
 :::caution
 
@@ -57,7 +47,7 @@ If you prefer, the following guide will take you through the same process in ind
 
 ## Virtualization management
 
-With Rancher's virtualization management feature, you can import and manage your Harvester cluster. By clicking one of the imported clusters, you can easily access and manage a range of Harvester cluster resources, including hosts, VMs, images, volumes, and more. 
+With Rancher's virtualization management feature, you can import and manage your Harvester cluster. By clicking one of the imported clusters, you can easily access and manage a range of Harvester cluster resources, including hosts, VMs, images, volumes, and more.
 Additionally, the virtualization management feature leverages Rancher's existing capabilities, such as authentication with various auth providers and multi-tenancy support.
 
 For in-depth insights, please refer to the [virtualization management](./virtualization-management.md) page.
@@ -91,7 +81,7 @@ Starting with Rancher v2.7.6, Harvester introduces a new feature that enables yo
 
 This guide will walk you through enabling and using this experimental feature, highlighting its capabilities and best practices.
 
-To enable this new feature flag, follow these steps:
+To enable this new feature flag, follow these steps on Rancher UI:
 
 1. Click the hamburger menu and choose the **Global Settings** tab.
 1. Click **Feature Flags** and locate the new feature flag `harvester-baremetal-container-workload`.
@@ -116,12 +106,6 @@ This feature lets you deploy custom container workloads directly to the bare-met
 
 :::
 
-:::note
-
-With this feature enabled, your Harvester cluster does not appear on the **Continuous Delivery** page in the Rancher UI. Please check the issue [#4482](https://github.com/harvester/harvester/issues/4482) for further updates.
-
-:::
-
 ## Fleet Support (Experimental)
 
 _Available as of Harvester v1.3.0 + Rancher v2.7.9_
@@ -135,7 +119,7 @@ The Rancher feature `harvester-baremetal-container-workload` must be enabled.
 
   ![](/img/v1.3/rancher/continuous-delivery-overview.png)
 
-1. (Optional) On the **Clusters** tab, edit the Fleet cluster config to add labels that can be used to group Harvester clusters. 
+1. (Optional) On the **Clusters** tab, edit the Fleet cluster config to add labels that can be used to group Harvester clusters.
 
   In this example, the label `location=private-dc` was added.
 
@@ -158,11 +142,11 @@ The Rancher feature `harvester-baremetal-container-workload` must be enabled.
 
   ![](/img/v1.3/rancher/gitrepo-definition.png)
 
-1. Click **Next**, and then define the Git repo targets. You can select all clusters, an individual cluster, or a group of clusters. 
+1. Click **Next**, and then define the Git repo targets. You can select all clusters, an individual cluster, or a group of clusters.
 
   In this example, the cluster group named `private-dc-clusters` is used.
 
-  ![](/img/v1.3/rancher/gitrepo-targets.png) 
+  ![](/img/v1.3/rancher/gitrepo-targets.png)
 
 1. Click **Save**. It may take a few seconds for the resources to be rolled out to the target clusters.
 
