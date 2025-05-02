@@ -60,4 +60,4 @@ If you want to wipe the data, ensure that the PVC is deleted.
 
 ## Troubleshooting
 
-Refer [Harvester is Pending Importing to Rancher Manager](../troubleshooting/rancher.md#harvester-is-pending-importing-to-rancher-manager).
+See [Importing of Harvester Clusters into Rancher](../troubleshooting/rancher.md#importing-of-harvester-clusters-into-rancher).
