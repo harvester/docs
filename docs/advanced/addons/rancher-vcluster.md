@@ -60,4 +60,4 @@ If you want to wipe the data, ensure that the PVC is deleted.
 
 ## Troubleshooting
 
-See [Importing of Harvester Clusters into Rancher](../troubleshooting/rancher.md#importing-of-harvester-clusters-into-rancher).
+See [Importing of Harvester Clusters into Rancher](../../troubleshooting/rancher.md#importing-of-harvester-clusters-into-rancher).

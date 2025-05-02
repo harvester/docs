@@ -55,13 +55,13 @@ The default value of this setting depends on the Rancher version and installatio
 | New installation | v2.9 and later | `strict` |
 | Upgrade | v2.8 to v2.9 | `system-store` |
 
-There are two solutions to fix this issue. It is recommended to follow the [Solution 1](#solution-1) to enforce the system level security, the [Solution 2](#solution-2) can be used for a quick fix but keep in mind the security risk.
+There are two solutions to fix this issue. It is recommended to follow the [Solution 1: Stick to the `stric` Mode](#solution-1-stick-to-the-strict-mode) to enforce the system level security, the [Solution 2: Fallback to the `system-store` Mode](#solution-2-fallback-to-the-system-store-mode) can be used as a quick fix but keep in mind the security risk.
 
-#### Solution 1
+#### Solution 1: Stick to the `strict` Mode
 
 While the `strict` option enables a higher level of security, it requires Rancher to have access to the CA which generated the certificate visible to the agents. In the case of certain certificate configurations (notably, external certificates), this is not automatic, and extra configuration is needed. See the [installation guide](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster#3-choose-your-ssl-configuration) for more information on which scenarios require extra configuration.
 
-#### Solution 2
+#### Solution 2: Fallback to the `system-store` Mode
 
 1. Log in to the Rancher UI.
 
