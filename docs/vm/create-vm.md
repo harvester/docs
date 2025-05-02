@@ -142,7 +142,7 @@ resource "harvester_virtualmachine" "opensuse154" {
 
 ## Volumes
 
-You can add volumes on the **Volumes** tab. By default, the first disk is used as the root disk. You can change the boot order by dragging and dropping volumes, or using the arrow buttons.
+You can add volumes on the **Volumes** tab. By default, the first disk is used as the `root disk`. You can change the boot order by dragging and dropping volumes, or using the arrow buttons.
 
 A disk can be made accessible via the following types:
 
