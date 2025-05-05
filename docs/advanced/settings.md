@@ -87,7 +87,7 @@ For more information, see the [Longhorn documentation](https://longhorn.io/docs/
 **Example**:
 
 ```json
-{
+'{
   "type": "s3",
   "endpoint": "https://s3.endpoint.svc",
   "accessKeyId": "test-access-key-id",
@@ -96,7 +96,7 @@ For more information, see the [Longhorn documentation](https://longhorn.io/docs/
   "bucketRegion": "us‑east‑2",
   "cert": "",
   "virtualHostedStyle": false
-}
+}'
 ```
 
 ### `cluster-registration-url`
@@ -197,7 +197,7 @@ Changing this setting might cause single-node clusters to temporarily become una
 
 :::
 
-**Default value**: `{}`
+**Default value**: `'{}'`
 
 **Supported options and values**:
 
@@ -217,11 +217,11 @@ Harvester appends necessary addresses to user-specified `noProxy` values (for ex
 **Example**:
 
 ```json
-{
+'{
   "httpProxy": "http://my.proxy",
   "httpsProxy": "https://my.proxy",
   "noProxy": "some.internal.svc,172.16.0.0/16"
-}
+}'
 ```
 
 ### `log-level`
@@ -265,12 +265,7 @@ Changes to the server address list are applied to all nodes.
 **Example**:
 
 ```
-{
-  "ntpServers": [
-    "0.suse.pool.ntp.org",
-    "1.suse.pool.ntp.org"
-  ]
-}
+'{"ntpServer":["0.suse.pool.ntp.org", "1.suse.pool.ntp.org"]}'
 ```
 
 ### `overcommit-config`
@@ -292,11 +287,11 @@ A VM that is configured to use 2 CPUs (equivalent to 2,000 milliCPU) can consume
 **Example**:
 
 ```json
-{
+'{
   "cpu": 1000,
   "memory": 200,
   "storage": 300
-}
+}'
 ```
 
 ### `release-download-url`
@@ -340,16 +335,16 @@ Changing this setting might cause single-node clusters to temporarily become una
 
 :::
 
-**Default value**: `{}`
+**Default value**: `'{}'`
 
 **Example**:
 
 ```json
-{
+'{
   "ca": "-----BEGIN CERTIFICATE-----\nSOME-CERTIFICATE-ENCODED-IN-PEM-FORMAT\n-----END CERTIFICATE-----",
   "publicCertificate": "-----BEGIN CERTIFICATE-----\nSOME-CERTIFICATE-ENCODED-IN-PEM-FORMAT\n-----END CERTIFICATE-----",
   "privateKey": "-----BEGIN RSA PRIVATE KEY-----\nSOME-PRIVATE-KEY-ENCODED-IN-PEM-FORMAT\n-----END RSA PRIVATE KEY-----"
-}
+}'
 ```
 
 ### `ssl-parameters`
@@ -376,10 +371,10 @@ If you do not specify any values, Harvester uses `TLSv1.2` and `ECDHE-ECDSA-AES1
 **Example**:
 
 ```
-{
+'{
   "protocols": "TLSv1.2 TLSv1.3",
   "ciphers": "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
-}
+}'
 ```
 
 ### `storage-network`
@@ -401,11 +396,11 @@ Specify an IP range in the IPv4 CIDR format. The number of IPs must be four time
 **Example**:
 
 ```
-{
+'{
   "vlan": 100,
   "clusterNetwork": "storage",
   "range": "192.168.0.0/24"
-}
+}'
 ```
 
 ### `support-bundle-image`
@@ -421,11 +416,11 @@ Specify an IP range in the IPv4 CIDR format. The number of IPs must be four time
 In this example, the default image tag of the cluster is `v0.0.25`.
 
 ```
-{
+'{
   "repository": "rancher/support-bundle-kit",
   "tag": "v0.0.25",
   "imagePullPolicy": "IfNotPresent"
-}
+}'
 ```
 
 **Supported options and values**:
@@ -616,7 +611,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
 **Definition**: Upgrade-related configuration.
 
-**Default value**: `{"imagePreloadOption":{"strategy":{"type":"sequential"}}, "restoreVM": false}`
+**Default value**: `'{"imagePreloadOption":{"strategy":{"type":"sequential"}}, "restoreVM": false}'`
 
 **Supported options and fields**:
 
@@ -660,7 +655,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
 **Example**:
 
 ```json
-{
+'{
   "imagePreloadOption": {
     "strategy": {
       "type": "parallel",
@@ -668,7 +663,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
     }
   },
   "restoreVM": true
-}
+}'
 ```
 
 ### `vip-pools`
@@ -677,15 +672,15 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
 **Definition**: Global or namespace-specific IP address pools of the VIP by CIDR or IP range.
 
-**Default value**: `{}`
+**Default value**: `'{}'`
 
 **Example**:
 
 ```json
-{
+'{
   "default": "172.16.0.0/24,172.16.1.0/24",
   "demo": "172.16.2.50-172.16.2.100,172.16.2.150-172.16.3.200"
-}
+}'
 ```
 
 ### `vm-force-reset-policy`
