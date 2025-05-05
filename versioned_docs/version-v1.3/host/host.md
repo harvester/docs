@@ -6,7 +6,7 @@ title: "Host Management"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.2/host"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/host"/>
 </head>
 
 Users can view and manage Harvester nodes from the host page. The first node always defaults to be a management node of the cluster. When there are three or more nodes, the two other nodes that first joined are automatically promoted to management nodes to form a HA cluster.
@@ -21,13 +21,41 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 ## Node Maintenance
 
-For admin users, you can click **Enable Maintenance Mode** to evict all VMs from a node automatically. It will leverage the `VM live migration` feature to migrate all VMs to other nodes automatically. Note that at least two active nodes are required to use this feature.
+Admin users can enable Maintenance Mode (select **⋮ > Enable Maintenance Mode**) to automatically evict all virtual machines from a node. This mode leverages the **live migration** feature to migrate the virtual machines to other nodes, which is useful when you need to reboot, upgrade firmware, or replace hardware components. At least two active nodes are required to use this feature.
+
+:::warning
+
+A [bug](https://github.com/harvester/harvester/issues/7128) may cause an I/O error to occur in virtual machines while Maintenance Mode is enabled on the underlying node. To mitigate the issue, you can set a taint on the node before enabling Maintenance Mode.
+
+1. Set the taint on the target node.
+
+    ```sh
+    kubectl taint node <NODE> --overwrite kubevirt.io/drain=draining:NoSchedule
+    ```
+
+1. Wait for all virtual machines to be live-migrated out of the node.
+
+1. On the **Hosts** screen, select the target node, and then select **⋮ -> Enable Maintenance Mode**.
+
+Once the maintenance tasks are completed, perform the following steps to allow scheduling of workloads on the node.
+
+1. Remove the taint on the node.
+
+    ```sh
+    kubectl taint node <NODE> kubevirt.io/drain-
+    ```
+
+1. On the **Hosts** screen, select the node, and then select **⋮ -> Disable Maintenance Mode**.
+
+For more information, see [Issue #7128](https://github.com/harvester/harvester/issues/7128).
+
+:::
 
 ![node-maintenance.png](/img/v1.2/host/node-maintenance.png)
 
 ## Cordoning a Node
 
-Cordoning a node marks it as unschedulable. This feature is useful for performing short tasks on the node during small maintenance windows, like reboots, upgrades, or decommissions. When you’re done, power back on and make the node schedulable again by uncordoning it.
+Cordoned nodes are marked as unschedulable. Cordoning is useful when you want to prevent new workloads from being scheduled on a node. You can uncordon a node to make it schedulable again.
 
 ![cordon-node.png](/img/v1.2/host/cordon-nodes.png)
 
@@ -128,19 +156,13 @@ kubectl drain <node_name> --force --ignore-daemonsets --delete-local-data --pod-
 Again, removing a control plane node in this situation is **not recommended** because etcd data is not replicated. Failure of a single node can cause etcd to lose its quorum and shut the cluster down.
 :::
 
-### 6. Remove the node.
-
-1. On the Harvester UI, go to the **Hosts** screen.
-
-1. Locate the node that you want to remove, and then click **⋮ > Delete**.
-
-![delete.png](/img/v1.2/host/delete-node.png)
-
-### 7. Delete RKE2 services on the node.
+### 6. Delete RKE2 services and shut down the node.
 
 1. Log in to the node using the root account.
 
-1. Run the script `/opt/rke2/bin/rke2-uninstall.sh`.
+1. Run the script `/opt/rke2/bin/rke2-uninstall.sh` to delete RKE2 services running on the node.
+
+1. Shut down the node.
 
 :::note
 
@@ -149,6 +171,13 @@ Once resolved, you can skip this step.
 
 :::
 
+### 7. Remove the node.
+
+1. On the Harvester UI, go to the **Hosts** screen.
+
+1. Locate the node that you want to remove, and then click **⋮ > Delete**.
+
+![delete.png](/img/v1.2/host/delete-node.png)
 
 ## Role Management
 
@@ -250,7 +279,7 @@ The replica data would be rebuilt to another disk automatically to keep the high
 #### Evict replicas (Longhorn dashboard)
 1. Please follow [this session](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards) to enable the embedded Longhorn dashboard.
 2. Visit the Longhorn dashboard and go to the **Node** page.
-3. Expand the node containing the disk. Confirm the mount point `/var/lib/harvester/extra-disks/1b805b97eb5aa724e6be30cbdb373d04` is in the disks list. 
+3. Expand the node containing the disk. Confirm the mount point `/var/lib/harvester/extra-disks/1b805b97eb5aa724e6be30cbdb373d04` is in the disks list.
 
 ![Check the removing disk](/img/v1.2/host/remove-disks-longhorn-nodes.png)
 
@@ -390,7 +419,7 @@ You can set up multiple NTP servers at once.
 
 ![](/img/v1.3/host/harvester-ntp-settings-multiple.png)
 
-You can check the settings in the `node.harvesterhci.io/ntp-service` annotation in Kubernetes nodes: 
+You can check the settings in the `node.harvesterhci.io/ntp-service` annotation in Kubernetes nodes:
 - `ntpSyncStatus`: Status of the connection to NTP servers (possible values: `disabled`, `synced` and `unsynced`)
 - `currentNtpServers`: List of existing NTP servers
 
@@ -470,7 +499,7 @@ matchSelector:
 ```
 
 :::note
-All label key-value pairs listed in the `matchSelector` field must match the labels of the intended nodes. 
+All label key-value pairs listed in the `matchSelector` field must match the labels of the intended nodes.
 
 In the following example, `matchSelector` will match `harvester-node-1` only if that node also has the `example.com/role` label with the value `role-a`.
 

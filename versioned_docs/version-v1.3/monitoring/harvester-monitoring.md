@@ -181,6 +181,52 @@ Fill in the required parameters and click `Create`.
 
 ![](/img/v1.2/monitoring/webhook-receiver-2.png)
 
+To set up Microsoft Teams or SMS webhooks, first install the rancher-alerting-drivers app using the following commands:
+
+```shell
+helm repo add rancher-charts https://charts.rancher.io/
+helm repo update
+helm install rancher-charts/rancher-alerting-drivers \
+  --set sachet.enabled=false \  # Set to true if you want to use SMS Webhook
+  --set prom2teams.enabled=true \ # Set to true if you want to use MS Teams Webhook
+  --namespace cattle-monitoring-system \
+  --generate-name
+```
+
+For detailed configuration instructions, see [Rancher Monitoring Receiver Configuration](https://ranchermanager.docs.rancher.com/reference-guides/monitoring-v2-configuration/receivers) in the Rancher documentation.
+
+If your environment does not have direct internet access (air-gapped), you must manually download the Helm chart and related container images, and then upload them to the Harvester cluster.
+
+1. Download the rancher-alerting-drivers Helm chart and package it.
+
+    ```
+    helm pull rancher-charts/rancher-alerting-drivers --version <VERSION>
+    ```
+
+1. Download the required images.
+
+    ```
+    docker save -o sachet.tar rancher/mirrored-messagebird-sachet:<VERSION>
+    docker save -o prom2teams.tar rancher/mirrored-idealista-prom2teams:<VERSION>
+    ```
+
+1. Upload the chart and images to the Harvester cluster.
+
+1. Load the images on all Harvester nodes.
+
+    ```
+    docker load -i sachet.tar
+    docker load -i prom2teams.tar
+    ```
+
+1. Install rancher-alerting-drivers on the Harvester cluster.
+
+:::info important
+
+Harvester does not manage upgrades of the rancher-alerting-drivers app, which is not part of the Harvester project. You must upgrade the app manually.
+
+:::
+
 #### Configure AlertmanagerConfig from CLI
 
 You can also add `AlertmanagerConfig` from the CLI.

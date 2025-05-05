@@ -39,7 +39,6 @@ For a detailed support matrix, please refer to the **Harvester CCM & CSI Driver 
 ### Prerequisites
 - The Kubernetes cluster is built on top of Harvester virtual machines.
 - The Harvester virtual machines run as guest Kubernetes nodes are in the same namespace.
-- The Harvester virtual machine guests' hostnames match their corresponding Harvester virtual machine names. Guest cluster Harvester VMs can't have different hostnames than their Harvester VM names when using the Harvester CSI driver. We hope [to remove this limitation](https://github.com/harvester/harvester/issues/4396) in a future release of Harvester.
 
 :::info important
 
@@ -64,6 +63,15 @@ To eliminate the need for manual intervention after the guest cluster is provisi
 :::
 
 ### Deploying to the RKE1 Cluster with Harvester Node Driver
+
+:::caution
+
+Rancher Kubernetes Engine (RKE) will reach the end of its life on **July 31, 2025**. Harvester **v1.6.0** and later versions will not support RKE. Switching to RKE2, which provides a more secure and efficient environment, is recommended.
+
+In-place upgrades are not an option, so you must [create new RKE2 clusters](./node/rke2-cluster.md) and migrate the workloads from your existing RKE clusters (known as replatforming). For more information, see [RKE End of Life](https://www.suse.com/support/kb/doc/?id=000021513).
+
+:::
+
 When spinning up an RKE cluster using the Harvester node driver, you can perform two steps to deploy the `Harvester` cloud provider:
 
 1. Select `Harvester(Out-of-tree)` option.

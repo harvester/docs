@@ -7,6 +7,13 @@ title: "Creating an RKE1 Kubernetes Cluster"
 <head>
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/rancher/node/rke1-cluster"/>
 </head>
+:::caution
+
+Rancher Kubernetes Engine (RKE) will reach the end of its life on **July 31, 2025**. Harvester **v1.6.0** and later versions will not support RKE. Switching to RKE2, which provides a more secure and efficient environment, is recommended.
+
+In-place upgrades are not an option, so you must [create new RKE2 clusters](./rke2-cluster.md) and migrate the workloads from your existing RKE clusters (known as replatforming). For more information, see [RKE End of Life](https://www.suse.com/support/kb/doc/?id=000021513).
+
+:::
 
 You can now provision RKE1 Kubernetes clusters on top of the Harvester cluster in Rancher using the built-in Harvester node driver.
 
@@ -17,6 +24,7 @@ RKE1 and RKE2 have several slight behavioral differences. Refer to the [differen
 :::note
 
 - VLAN network is required for Harvester node driver.
+- Provisioning RKE1 Kubernetes clusters involves configuring the IP address of the underlying virtual machines. You can do this using a DHCP server on the VLAN network that the virtual machines are attached to. If such a server does not exist on the network, you can use the [Managed DHCP](../../advanced/addons/managed-dhcp.md) feature to configure the IP address.
 - Harvester node driver only supports cloud images.
 - For port requirements of guest clusters deployed within Harvester, please refer to the [port requirements for guest clusters](../../install/requirements.md#port-requirements-for-k3s-or-rkerke2-clusters).
 

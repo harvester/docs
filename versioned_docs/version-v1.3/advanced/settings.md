@@ -124,7 +124,7 @@ https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhr
 
 **Definition**: Configuration of a private registry created for the Harvester cluster. 
 
-The value is stored in the `registries.yaml` file of each node (path: `/etc/rancher/rke2/registries.yaml`). For more information, see [Containerd Registry Configuration](https://docs.rke2.io/install/containerd_registry_configuration) in the RKE2 documentation.
+The value is stored in the `registries.yaml` file of each node (path: `/etc/rancher/rke2/registries.yaml`). For more information, see [Containerd Registry Configuration](https://docs.rke2.io/install/private_registry) in the RKE2 documentation.
 
 For security purposes, Harvester automatically removes the username and password configured for the private registry after those credentials are stored in the `registries.yaml` file.
 
@@ -176,6 +176,8 @@ You must configure the following information before using features related to ba
   }
 }
 ```
+
+In Harvester v1.4.2 and later versions, you may encounter certain limitations when creating and restoring [backups that involve external storage](../../version-v1.4/advanced/csidriver.md#vm-backup-compatibility)
 
 ### `default-vm-termination-grace-period-seconds`
 

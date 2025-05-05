@@ -23,7 +23,8 @@ Currently, there are three ways that are supported to create an image: uploading
 To import virtual machine images in the **Images** page, enter a URL that can be accessed from the cluster. Description and labels are optional.
 :::note
 
-The image name will be auto-filled using the URL address's filename. You can customize the image name at any time.
+- The image name will be auto-filled using the URL address's filename. You can customize the image name at any time.
+- Avoid using a daily build URL (for example, the [Ubuntu Jammy daily build](https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img)). When all replicas of a Longhorn backing image are lost, Longhorn attempts to download the file again for self-healing purposes. Using a daily build URL is problematic because the URL itself changes, causing a checksum mismatch and a conflict that results in lost replicas.
 
 :::
 

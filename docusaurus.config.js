@@ -60,21 +60,30 @@ const config = {
           showLastUpdateTime: true,
           editUrl: "https://github.com/harvester/docs/edit/main/",
           docItemComponent: "@theme/ApiItem",
-          lastVersion: 'v1.3',
+          lastVersion: 'v1.5',
           versions: {
             current: {
-              label: 'v1.4 (dev)',
+              label: 'v1.6 (Dev)',
+              path: 'v1.6',
+            },
+            "v1.5": {
+              label: 'v1.5 (Latest)',
+              path: 'v1.5',
+            },
+            "v1.4": {
+              label: 'v1.4',
               path: 'v1.4',
+              banner: `none`
             },
             "v1.3": {
-              label: 'v1.3 (latest)',
+              label: 'v1.3',
               path: 'v1.3',
               banner: `none`
             },
             "v1.2": {
-              label: 'v1.2',
+              label: 'v1.2 (EOL)',
               path: 'v1.2',
-              banner: `none`
+              banner: `unmaintained`
             },
             "v1.1": {
               label: 'v1.1 (EOL)',
@@ -261,7 +270,7 @@ const config = {
       {
         redirects: [
           { // Redirects for links in the Harvester README.md file
-            to: '/v1.1/install/pxe-boot-install',
+            to: '/v1.5/install/pxe-boot-install',
             from: '/latest/install/pxe-boot-install'
           },
         ],
@@ -284,6 +293,18 @@ const config = {
             label: "dev", // Current version label
             baseUrl: "/dev/api", // Leading slash is important
             versions: {
+              "v1.5": {
+                specPath: "api/v1.5-swagger.json",
+                outputDir: "versioned_docs/version-v1.5/api", // No trailing slash
+                label: "v1.5",
+                baseUrl: "/v1.5/api", // Leading slash is important
+              },              
+              "v1.4": {
+                specPath: "api/v1.4-swagger.json",
+                outputDir: "versioned_docs/version-v1.4/api", // No trailing slash
+                label: "v1.4",
+                baseUrl: "/v1.4/api", // Leading slash is important
+              },              
               "v1.3": {
                 specPath: "api/v1.3-swagger.json",
                 outputDir: "versioned_docs/version-v1.3/api", // No trailing slash

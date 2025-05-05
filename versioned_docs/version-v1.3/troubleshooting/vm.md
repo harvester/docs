@@ -414,3 +414,43 @@ Node level operation, node by node:
 https://github.com/harvester/harvester/issues/5109
 
 https://github.com/longhorn/longhorn/issues/8009
+
+## Virtual Machine IP Address Not Displayed
+
+### Issue Description
+
+The **Virtual Machines** screen on the Harvester UI does not display the IP address of a newly created or imported virtual machine.
+
+### Issue Analysis
+
+This issue usually occurs when the `qemu-guest-agent` package is not installed on the virtual machine. To determine if this is the root cause, check the status of the `VirtualMachineInstance` object.
+
+```shell
+$ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].infoSource}'
+```
+
+The output does not contain the string `guest-agent` when the `qemu-guest-agent` package is not installed.
+
+### Workaround
+
+You can [install the QEMU guest agent](../vm/create-vm.md#installing-the-qemu-guest-agent) by editing the virtual machine configuration.
+
+1. On the Harvester UI, go to **Virtual Machines**.
+
+1. Locate the affected virtual machine, and then select **⋮ > Edit Config**.
+
+1. On the **Advanced Options** tab, under **Cloud Config**, select **Install guest agent**.
+
+1. Click **Save**.
+
+However, cloud-init is run only once (when the virtual machine is started for the first time). To apply new **Cloud Config** settings, you must delete the cloud-init directory in the virtual machine.
+
+```shell
+$ sudo rm -rf /var/lib/cloud/*
+```
+
+After deleting the directory, you must restart the virtual machine so that cloud-init is run again and the `qemu-guest-agent` package is installed.
+
+### Related Issue
+
+https://github.com/harvester/harvester/issues/6644

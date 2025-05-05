@@ -5,6 +5,10 @@ sidebar_label: Host Management
 title: "Host Management"
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/host"/>
+</head>
+
 Users can view and manage Harvester nodes from the host page. The first node always defaults to be a management node of the cluster. When there are three or more nodes, the two other nodes that first joined are automatically promoted to management nodes to form a HA cluster.
 
 :::note
@@ -17,13 +21,41 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 ## Node Maintenance
 
-For admin users, you can click **Enable Maintenance Mode** to evict all VMs from a node automatically. It will leverage the `VM live migration` feature to migrate all VMs to other nodes automatically. Note that at least two active nodes are required to use this feature.
+Admin users can enable Maintenance Mode (select **⋮ > Enable Maintenance Mode**) to automatically evict all virtual machines from a node. This mode leverages the **live migration** feature to migrate the virtual machines to other nodes, which is useful when you need to reboot, upgrade firmware, or replace hardware components. At least two active nodes are required to use this feature.
+
+:::warning
+
+A [bug](https://github.com/harvester/harvester/issues/7128) may cause an I/O error to occur in virtual machines while Maintenance Mode is enabled on the underlying node. To mitigate the issue, you can set a taint on the node before enabling Maintenance Mode.
+
+1. Set the taint on the target node.
+
+    ```sh
+    kubectl taint node <NODE> --overwrite kubevirt.io/drain=draining:NoSchedule
+    ```
+
+1. Wait for all virtual machines to be live-migrated out of the node.
+
+1. On the **Hosts** screen, select the target node, and then select **⋮ -> Enable Maintenance Mode**.
+
+Once the maintenance tasks are completed, perform the following steps to allow scheduling of workloads on the node.
+
+1. Remove the taint on the node.
+
+    ```sh
+    kubectl taint node <NODE> kubevirt.io/drain-
+    ```
+
+1. On the **Hosts** screen, select the node, and then select **⋮ -> Disable Maintenance Mode**.
+
+For more information, see [Issue #7128](https://github.com/harvester/harvester/issues/7128).
+
+:::
 
 ![node-maintenance.png](/img/v1.2/host/node-maintenance.png)
 
 ## Cordoning a Node
 
-Cordoning a node marks it as unschedulable. This feature is useful for performing short tasks on the node during small maintenance windows, like reboots, upgrades, or decommissions. When you’re done, power back on and make the node schedulable again by uncordoning it.
+Cordoned nodes are marked as unschedulable. Cordoning is useful when you want to prevent new workloads from being scheduled on a node. You can uncordon a node to make it schedulable again.
 
 ![cordon-node.png](/img/v1.2/host/cordon-nodes.png)
 

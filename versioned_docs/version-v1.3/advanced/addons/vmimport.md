@@ -10,11 +10,9 @@ title: "VM Import"
 
 _Available as of v1.1.0_
 
-Beginning with v1.1.0, users can import their virtual machines from VMWare and OpenStack into Harvester.
+With the vm-import-controller addon users can import their virtual machines from VMware and OpenStack into Harvester.
 
-This is accomplished using the vm-import-controller addon.
-
-To use the VM Import feature, users need to enable the vm-import-controller addon.
+To use the VM import feature, users need to enable the vm-import-controller addon.
 
 ![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
@@ -29,7 +27,7 @@ To avoid this, users are advised to enable PVC-backed storage and customize the 
 ## vm-import-controller
 
 Currently, the following source providers are supported:
-* VMWare
+* VMware
 * OpenStack
 
 ## API
@@ -130,11 +128,13 @@ metadata:
   namespace: default
 spec: 
   virtualMachineName: "alpine-export-test"
+  folder: "Discovered VM"
   networkMapping:
   - sourceNetwork: "dvSwitch 1"
     destinationNetwork: "default/vlan1"
   - sourceNetwork: "dvSwitch 2"
     destinationNetwork: "default/vlan2"
+  storageClass: "my-storage-class"
   sourceCluster: 
     name: vcsim
     namespace: default
@@ -142,13 +142,17 @@ spec:
     apiVersion: migration.harvesterhci.io/v1beta1
 ```
 
-This will trigger the controller to export the VM named "alpine-export-test" on the VMWare source cluster to be exported, processed and recreated into the harvester cluster
+This will trigger the controller to export the VM named "alpine-export-test" on the VMware source cluster to be exported, processed and recreated into the Harvester cluster.
 
 This can take a while based on the size of the virtual machine, but users should see `VirtualMachineImages` created for each disk in the defined virtual machine.
+
+If the source virtual machine is placed in a folder, you can specify the folder name in the optional `folder` field.
 
 The list of items in `networkMapping` will define how the source network interfaces are mapped to the Harvester Networks.
 
 If a match is not found, each unmatched network interface is attached to the default `managementNetwork`.
+
+The `storageClass` field specifies the [StorageClass](../storageclass.md) to be used for images and provisioning persistent volumes during the import process. If not specified, the default StorageClass will be used.
 
 Once the virtual machine has been imported successfully, the object will reflect the status:
 
@@ -185,3 +189,13 @@ spec:
 :::note 
 OpenStack allows users to have multiple instances with the same name. In such a scenario, users are advised to use the Instance ID. The reconciliation logic tries to perform a name-to-ID lookup when a name is used.
 :::
+
+#### Known issues
+* **Source virtual machine name is not RFC1123 compliant**: When creating a virtual machine object, the vm-import-controller add-on uses the name of the source virtual machine, which may not meet the Kubernetes object [naming criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names). You may need to rename the source virtual machine to allow successful completion of the import.
+
+* **Virtual machine image name is too long**: The vm-import-controller add-on labels each imported disk using the format `vm-import-$VMname-$DiskName`. If a label exceeds 63 characters, you will see the following error message in the vm-import-controller logs:
+    ```shell
+    harvester-vm-import-controller-5698cd57c4-zw9l5 time="2024-08-30T19:20:34Z" level=error msg="error syncing 'default/mike-mr-tumbleweed-test': handler virtualmachine-import-job-change: error creating vmi: VirtualMachineImage.harvesterhci.io \"image-z
+    nqsp\" is invalid: metadata.labels: Invalid value: \"vm-import-mike-mr-tumbleweed-test-mike-mr-tumbleweed-test-default-disk-0.img\": must be no more than 63 characters, requeuing"      
+    ```
+    You may need to rename the source virtual machine to allow successful completion of the import.

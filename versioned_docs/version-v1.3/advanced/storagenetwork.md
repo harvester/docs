@@ -10,7 +10,7 @@ title: "Storage Network"
 
 Harvester uses Longhorn as its built-in storage system to provide block device volumes for VMs and Pods. If the user wishes to isolate Longhorn replication traffic from the Kubernetes cluster network (i.e. the management network) or other cluster-wide workloads. Users can allocate a dedicated storage network for Longhorn replication traffic to get better network bandwidth and performance.
 
-For more information, please see [Longhorn Storage Network](https://longhorn.io/docs/1.4.3/advanced-resources/deploy/storage-network/)
+For more information, please see [Longhorn Storage Network](https://longhorn.io/docs/1.6.2/advanced-resources/deploy/storage-network/)
 
 :::note
 
@@ -58,6 +58,7 @@ kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/de
     - `backing-image-manager` pods: 1 IP per disk, similar to the instance manager pods. Two versions of these will coexist during an upgrade, and the old ones will be removed after the upgrade is completed.
     - The required number of IPs is calculated using a simple formula: `Required Number of IPs = (Number of Nodes * 2) + (Number of Disks * 2) + Number of Images to Download/Upload`
 	- Example: If a cluster has five nodes with two disks each, and ten images will be uploaded simultaneously, the IP range should be greater than or equal to `/26` (`(5 * 2) + (5 * 2) + 10 = 30`).
+  - Exclude IP addresses that Longhorn pods and the storage network must not use, such as addresses reserved for [Harvester CSI RWX support](../../../docs/rancher/csi-driver.md#rwx-volumes-support), the gateway, and other components.
 
 
 We will take the following configuration as an example to explain the details of the Storage Network
@@ -65,6 +66,7 @@ We will take the following configuration as an example to explain the details of
 - VLAN ID for Storage Network: `100`
 - Cluster Network: `storage`
 - IP range: `192.168.0.0/24`
+- Exclude Address: `192.168.0.1/32`
 
 ## Configuration Process
 
@@ -119,7 +121,10 @@ The value format is JSON string or empty string as shown in below.
 {
     "vlan": 100,
     "clusterNetwork": "storage",
-    "range": "192.168.0.0/24"
+    "range": "192.168.0.0/24",
+    "exclude":[
+      "192.168.0.100/32"
+    ]
 }
 ```
 
@@ -130,7 +135,7 @@ apiVersion: harvesterhci.io/v1beta1
 kind: Setting
 metadata:
   name: storage-network
-value: '{"vlan":100,"clusterNetwork":"storage","range":"192.168.0.0/24"}'
+value: '{"vlan":100,"clusterNetwork":"storage","range":"192.168.0.0/24", "exclude":["192.168.0.100/32"]}'
 ```
 
 :::caution
@@ -385,3 +390,10 @@ The storage network may malfunction because of issues with the external network,
 ### Start VM Manually
 
 After verifying the configuration, users could start VM manually on demand.
+
+
+## Best Practices
+
+- When configuring an [IP range](#configuration-example) for the storage network, ensure that the allocated IP addresses can service the future needs of the cluster. This is important because Longhorn pods (`instance-manager` and `backing-image-manager`) stop running when new nodes are added to the cluster or more disks are added to a node after the storage network is configured, and when the required number of IPs exceeds the allocated IPs. Resolving the issue involves reconfiguring the storage network with the correct IP range.
+
+- Configure the storage network on a non-`mgmt` cluster network to ensure complete separation of the Longhorn replication traffic from the Kubernetes control plane traffic. Using `mgmt` is possible but not recommended because of the negative impact (resource and bandwidth contention) on the control plane network performance. Use `mgmt` only if your cluster has NIC-related constraints and if you can completely segregate the traffic.
