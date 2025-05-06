@@ -113,10 +113,13 @@ The Harvester controller deletes the upgrade repository VM and all files that ar
 
 ## Common operations
 
-### Start over an upgrade
+### Stop the current upgrade
+
+When the current upgrade hits issues or is stucking, run below steps to stop the upgrade.
 
 1. Log in to a control plane node.
-2. List `Upgrade` CRs in the cluster:
+
+1. List `Upgrade` CRs in the cluster:
 
     ```
     # become root
@@ -128,13 +131,54 @@ The Harvester controller deletes the upgrade repository VM and all files that ar
     hvst-upgrade-9gmg2   10m
     ```
 
-3. Delete the Upgrade CR
+1. Delete the Upgrade CR
 
     ```
     $ kubectl delete upgrade.harvesterhci.io/hvst-upgrade-9gmg2 -n harvester-system
     ```
 
-4. Click the upgrade button in the Harvester dashboard to start an upgrade again.
+1. Resume the following Managedcharts
+
+    ```
+    cat > resumeallcharts.sh << 'FOE'
+    resume_all_charts() {
+
+      local patchfile="/tmp/charttmp.yaml"
+
+      cat >"$patchfile" << 'EOF'
+    spec:
+      paused: false
+    EOF
+      echo "the to-be-patched file"
+      cat "$patchfile"
+
+      local charts="harvester harvester-crd rancher-monitoring-crd rancher-logging-crd"
+
+      for chart in $charts; do
+        echo "unapuse managedchart $chart"
+        kubectl patch managedcharts.management.cattle.io $chart -n fleet-local --patch-file "$patchfile" --type merge || echo "failed, check reason"
+      done
+
+      rm "$patchfile"
+    }
+
+    resume_all_charts
+
+    FOE
+
+    chmod +x ./resumeallcharts.sh
+
+    ./resumeallcharts.sh
+
+    ```
+
+### Start over an upgrade
+
+1. [Stop the current upgrade](#stop-the-current-upgrade)
+
+1. Click the upgrade button in the Harvester dashboard to start an upgrade again.
+
+    If you [Create the Version Object](./automatic.md#create-the-version-object) manually, you might need to create the object again.
 
 ### Download upgrade logs
 

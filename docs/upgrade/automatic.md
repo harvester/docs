@@ -112,9 +112,13 @@ Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section fir
 
 :::
 
-- Download a Harvester ISO file from [release pages](https://github.com/harvester/harvester/releases).
-- Save the ISO to a local HTTP server. Assume the file is hosted at `http://10.10.0.1/harvester.iso`.
-- Download the version file from release pages, for example, `https://releases.rancher.com/harvester/{version}/version.yaml`
+### Prepare the ISO and Version File
+
+1. Download a Harvester ISO file from [release pages](https://github.com/harvester/harvester/releases).
+
+1. Save the ISO to a local HTTP server. Assume the file is hosted at `http://10.10.0.1/harvester.iso`.
+
+1. Download the version file from release pages, for example, `https://releases.rancher.com/harvester/{version}/version.yaml`
 
     - Replace `isoURL` value in the `version.yaml` file:
 
@@ -122,25 +126,46 @@ Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section fir
         apiVersion: harvesterhci.io/v1beta1
         kind: Version
         metadata:
-          name: v1.0.2
+          name: v1.5.0
           namespace: harvester-system
+          annotations:
+            harvesterhci.io/skipGarbageCollectionThresholdCheck: false
         spec:
           isoChecksum: <SHA-512 checksum of the ISO>
           isoURL: http://10.10.0.1/harvester.iso  # change to local ISO URL
-          releaseDate: '20220512'
+          releaseDate: '20250425'
         ```
 
     - Assume the file is hosted at `http://10.10.0.1/version.yaml`.
 
-- Log in to one of your control plane nodes.
-- Become root and create a version:
+### Create the Version Object
+
+1. Log in to one of your control plane nodes.
+
+1. Become root and create a version:
 
     ```
     rancher@node1:~> sudo -i
     rancher@node1:~> kubectl create -f http://10.10.0.1/version.yaml
     ```
 
-- An upgrade button should show up on the Harvester GUI Dashboard page.
+### Trgger the Upgrade
+
+1. An upgrade button should show up on the Harvester GUI Dashboard page.
+
+    Refresh the web page if the button does not appear.
+
+## Manually Start an Upgrade before the Harvester Official Upgrade is Available
+
+After a new Harvester version is released, the official upgrade is not available right now, you do not see the `upgrade` button on your cluster.
+
+When you want to upgrade your cluster to the new release, follow the stpes on [Prepare an air-gapped upgrade](#prepare-an-air-gapped-upgrade).
+
+:::caution
+
+For production clusters, recommend to wait until the official upgrade is available.
+
+:::
 
 ## Free system partition space requirement
 
