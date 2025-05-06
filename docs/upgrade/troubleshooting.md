@@ -102,7 +102,7 @@ $ kubectl logs -n harvester-system jobs/hvst-upgrade-9gmg2-post-drain-node2
 
 :::caution
 
-Please do not start over an upgrade if the upgrade fails at this phase.
+Do not [restart the upgrade](#restart-an-upgrade) if the process fails at this point. Identify the cause first, ask help from [Community](https://github.com/harvester/harvester?tab=readme-ov-file#community) or [SUSE support](https://www.suse.com/support/) if necessary.
 
 :::
 
@@ -113,10 +113,19 @@ The Harvester controller deletes the upgrade repository VM and all files that ar
 
 ## Common operations
 
-### Start over an upgrade
+### Stop the Ongoing Upgrade
+
+:::caution
+
+If an ongoing upgrade fails or becomes stuck at [Phase 4: Upgrade nodes](#phase-4-upgrade-nodes), identify the cause first.
+
+:::
+
+You can stop the upgrade by performing the following steps:
 
 1. Log in to a control plane node.
-2. List `Upgrade` CRs in the cluster:
+
+1. List the `Upgrade` CRs in the cluster.
 
     ```
     # become root
@@ -128,13 +137,56 @@ The Harvester controller deletes the upgrade repository VM and all files that ar
     hvst-upgrade-9gmg2   10m
     ```
 
-3. Delete the Upgrade CR
+1. Delete the Upgrade CR
 
     ```
     $ kubectl delete upgrade.harvesterhci.io/hvst-upgrade-9gmg2 -n harvester-system
     ```
 
-4. Click the upgrade button in the Harvester dashboard to start an upgrade again.
+1. Resume the paused ManagedCharts.
+
+    ManagedCharts are paused to avoid a data race between the upgrade and other processes. When the upgrade is manually stopped, the ManagedCharts might not been resumed, you need to manually resume all paused ManagedCharts.
+
+    ```
+    cat > resumeallcharts.sh << 'FOE'
+    resume_all_charts() {
+
+      local patchfile="/tmp/charttmp.yaml"
+
+      cat >"$patchfile" << 'EOF'
+    spec:
+      paused: false
+    EOF
+      echo "the to-be-patched file"
+      cat "$patchfile"
+
+      local charts="harvester harvester-crd rancher-monitoring-crd rancher-logging-crd"
+
+      for chart in $charts; do
+        echo "unapuse managedchart $chart"
+        kubectl patch managedcharts.management.cattle.io $chart -n fleet-local --patch-file "$patchfile" --type merge || echo "failed, check reason"
+      done
+
+      rm "$patchfile"
+    }
+
+    resume_all_charts
+
+    FOE
+
+    chmod +x ./resumeallcharts.sh
+
+    ./resumeallcharts.sh
+
+    ```
+
+### Restart an Upgrade
+
+1. [Stop the ongoing upgrade](#stop-the-ongoing-upgrade).
+
+1. Click the **Upgrade** button on the Harvester UI **Dashboard** screen.
+
+    If you [customized the version](./automatic.md#customize-the-version), you might need to [create the version object](./automatic.md#prepare-the-version) again.
 
 ### Download upgrade logs
 

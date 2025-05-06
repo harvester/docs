@@ -89,20 +89,78 @@ Check out the available [`upgrade-config` setting](../advanced/settings.md#upgra
 
 :::
 
-- Make sure to read the Warning paragraph at the top of this document first.
-- Harvester checks if there are new upgradable versions periodically. If there are new versions, an upgrade button shows up on the Dashboard page.
-    - If the cluster is in an air-gapped environment, please see [Prepare an air-gapped upgrade](#prepare-an-air-gapped-upgrade) section first. You can also speed up the ISO download by using the approach in that section.
-- Navigate to Harvester GUI and click the upgrade button on the Dashboard page.
+1. Make sure to read the above `caution`.
+
+1. On the Harvester UI **Dashboard** screen, click **Upgrade**.
+
+    The **Upgrade** button appears whenever a new Harvester version that you can upgrade to becomes available.
+
+    If your environment does not have direct internet access, follow the instructions in [Prepare an air-gapped upgrade](#prepare-an-air-gapped-upgrade), which provides an efficient approach to downloading the Harvester ISO.
 
     ![](/img/v1.2/upgrade/upgrade_button.png)
 
-- Select a version to start upgrading.
+1. Select a version that you want to upgrade to.
+
+    If you require customizations, see [Customize the Version](#customize-the-version).
 
     ![](/img/v1.2/upgrade/upgrade_select_version.png)
 
-- Click the circle on the top to display the upgrade progress.
+1. Click the progress indicator (the **circle** button) to view the status of each related process.
+
     ![](/img/v1.2/upgrade/upgrade_progress.png)
 
+### Customize the Version
+
+1. Download the version file (`https://releases.rancher.com/harvester/{version}/version.yaml`).
+
+    Example:
+
+    The [Harvester v1.5.0 version file](https://releases.rancher.com/harvester/v1.5.0/version.yaml) is downloaded as `v1.5.0.yaml`.
+
+    ```
+    apiVersion: harvesterhci.io/v1beta1
+    kind: Version
+    metadata:
+      name: v1.5.0-customized # Changed, to avoid duplicated with the official version name
+      namespace: harvester-system
+    spec:
+      isoChecksum: 'df28e9bf8dc561c5c26dee535046117906581296d633eb2988e4f68390a281b6856a5a0bd2e4b5b988c695a53d0fc86e4e3965f19957682b74317109b1d2fe32'  # Don't change
+      isoURL: https://releases.rancher.com/harvester/v1.5.0/harvester-v1.5.0-amd64.iso # Official ISO path by default
+      releaseDate: '20250425'
+    ```
+
+1. Add the necessary annotations.
+
+    - [minCertsExpirationInDay Annotation](#mincertsexpirationinday-annotation)
+    - [skipGarbageCollectionThresholdCheck Annotation](skipgarbagecollectionthresholdcheck-annotation)
+
+1. Run `kubectl create -f v1.5.0.yaml` to create the version.
+
+#### minCertsExpirationInDay Annotation
+
+Harvester checks the validity period of certificates on each node. This check eliminates the possibility of certificates expiring while the upgrade is in progress. If a certificate will expire within 7 days, an error is returned.
+
+Example:
+
+`harvesterhci.io/minCertsExpirationInDay: "14"` - When this annotation is added, Harvester returns an error when it detects a certificate that will expire within 14 days.
+
+For more information, see [auto-rotate-rke2-certs](advanced/settings.md/#auto-rotate-rke2-certs).
+
+#### skipGarbageCollectionThresholdCheck Annotation
+
+Harvester checks the disk space on each node to ensure that the kubelet's image garbage collection threshold is not exceeded when the required images are loaded during upgrades.
+
+Example:
+
+`harvesterhci.io/skipGarbageCollectionThresholdCheck: true` - When this annotation is added, Harvester skips the check.
+
+:::caution
+
+Do not use this annotation in production environments. When the check is skipped, required images might be deleted, causing the upgrade to fail.
+
+:::
+
+For more information, see [Free system partition space requirement](#free-system-partition-space-requirement).
 
 ## Prepare an air-gapped upgrade
 
@@ -112,9 +170,15 @@ Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section fir
 
 :::
 
-- Download a Harvester ISO file from [release pages](https://github.com/harvester/harvester/releases).
-- Save the ISO to a local HTTP server. Assume the file is hosted at `http://10.10.0.1/harvester.iso`.
-- Download the version file from release pages, for example, `https://releases.rancher.com/harvester/{version}/version.yaml`
+### Prepare the ISO File
+
+1. Download a Harvester ISO file from the [Releases](https://github.com/harvester/harvester/releases) page.
+
+1. Save the ISO to a local HTTP server. Assume the file is hosted at `http://10.10.0.1/harvester.iso`.
+
+### Prepare the Version
+
+1. Download the version file (`https://releases.rancher.com/harvester/{version}/version.yaml`).
 
     - Replace `isoURL` value in the `version.yaml` file:
 
@@ -122,25 +186,40 @@ Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section fir
         apiVersion: harvesterhci.io/v1beta1
         kind: Version
         metadata:
-          name: v1.0.2
+          name: v1.5.0
           namespace: harvester-system
         spec:
           isoChecksum: <SHA-512 checksum of the ISO>
           isoURL: http://10.10.0.1/harvester.iso  # change to local ISO URL
-          releaseDate: '20220512'
+          releaseDate: '20250425'
         ```
 
     - Assume the file is hosted at `http://10.10.0.1/version.yaml`.
 
-- Log in to one of your control plane nodes.
-- Become root and create a version:
+    - If you require customizations, see [Customize the Version](#customize-the-version).
+
+1. Access one of the control plane nodes via SSH and log in using the root account.
+
+1. Create a version object.
 
     ```
     rancher@node1:~> sudo -i
     rancher@node1:~> kubectl create -f http://10.10.0.1/version.yaml
     ```
 
-- An upgrade button should show up on the Harvester GUI Dashboard page.
+### Start the Upgrade
+
+The **Upgrade** button appears on the **Dashboard** screen whenever a new Harvester version that you can upgrade to becomes available. Refresh the screen if the button does not appear.
+
+## Manually Start an Upgrade before the Harvester Official Upgrade is Available
+
+The **Upgrade** button does not appear on the UI immediately after a new Harvester version is released. If you want to upgrade your cluster before the option becomes available on the UI, follow the steps in [Prepare an air-gapped upgrade](#prepare-an-air-gapped-upgrade).
+
+:::tip
+
+In production environments, upgrading clusters via the Harvester UI is recommended.
+
+:::
 
 ## Free system partition space requirement
 
