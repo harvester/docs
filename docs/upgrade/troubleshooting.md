@@ -102,7 +102,7 @@ $ kubectl logs -n harvester-system jobs/hvst-upgrade-9gmg2-post-drain-node2
 
 :::caution
 
-Please do not start over an upgrade if the upgrade fails at this phase.
+Please do not [Start over an Upgrade](#start-over-an-upgrade) if the upgrade fails at this phase.
 
 :::
 
@@ -113,7 +113,13 @@ The Harvester controller deletes the upgrade repository VM and all files that ar
 
 ## Common operations
 
-### Stop the current upgrade
+### Stop the Current Upgrade
+
+:::caution
+
+If the current upgrade fails/is stucking at [Phase 4: Upgrade nodes](#phase-4-upgrade-nodes), check the reason first.
+
+:::
 
 When the current upgrade hits issues or is stucking, run below steps to stop the upgrade.
 
@@ -138,6 +144,8 @@ When the current upgrade hits issues or is stucking, run below steps to stop the
     ```
 
 1. Resume the following Managedcharts
+
+    The upgrade pauses the managedchart to avoid data race between upgrade and others. When those managedcharts have been paused and later the upgrade is stopped, it is essential to resume them.
 
     ```
     cat > resumeallcharts.sh << 'FOE'
@@ -172,13 +180,13 @@ When the current upgrade hits issues or is stucking, run below steps to stop the
 
     ```
 
-### Start over an upgrade
+### Start over an Upgrade
 
-1. [Stop the current upgrade](#stop-the-current-upgrade)
+1. [Stop the Current upgrade](#stop-the-current-upgrade)
 
 1. Click the upgrade button in the Harvester dashboard to start an upgrade again.
 
-    If you [Create the Version Object](./automatic.md#create-the-version-object) manually, you might need to create the object again.
+    If you [Customize the Version](./automatic.md#customize-the-version) manually, you might need to create the version object again.
 
 ### Download upgrade logs
 
