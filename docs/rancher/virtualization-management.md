@@ -123,7 +123,7 @@ Please refer to the [Harvester & Rancher Support Matrix](https://www.suse.com/su
 
 ### Troubleshooting
 
-Refer [Harvester is Pending Importing to Rancher Manager](../troubleshooting/rancher.md#harvester-is-pending-importing-to-rancher-manager).
+See [Importing of Harvester Clusters into Rancher](../troubleshooting/rancher.md#importing-of-harvester-clusters-into-rancher).
 
 ## Multi-Tenancy
 
