@@ -32,8 +32,9 @@ Please refer to [this page](./create-windows-vm.md) for creating Windows virtual
 1. Select the namespace of your VMs, only the `harvester-public` namespace is visible to all users.
 1. The VM Name is a required field.
 1. (Optional) VM template is optional, you can choose `iso-image`, `raw-image` or `windows-iso-image` template to speed up your VM instance creation.
-1. Configure the virtual machine's CPU and memory (see [overcommit settings](../advanced/settings.md#overcommit-config) if you want to over-provision).
-1. Select SSH keys or upload new keys.
+1. On the **Basics** tab, configure the following settings:
+  - **CPU** and **Memory**: You can allocate a maximum of **254** vCPUs. If virtual machines are not expected to fully consume the allocated resources most of the time, you can use the [`overcommit-config`](../advanced/settings.md#overcommit-config) setting to optimize physical resource allocation.
+  - **SSHKey**: Select SSH keys or upload new keys.
 1. Select a custom VM image on the **Volumes** tab. The default disk will be the root disk. You can add more disks to the VM.
 1. To configure networks, go to the **Networks** tab. 
     1. The **Management Network** is added by default, you can remove it if the VLAN network is configured.

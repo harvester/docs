@@ -22,7 +22,7 @@ You can create [Linux VMs](../vm/create-vm.md) using one of the following method
 
 Creating [Windows VMs](../vm/create-windows-vm.md) on the Harvester UI involves slightly different steps. Harvester provides a VM template named `windows-iso-image-base-template` that adds a volume with the Virtio drivers for Windows, which streamlines the VM configuration process. If you require Virtio devices but choose to not use the template, you must add your own Virtio drivers for Windows to enable correct hardware detection. 
 
-## Supported Guest Operating Systems
+## Validated Guest Operating Systems
 
 The following operating systems have been validated to run in Harvester virtual machines:
 
