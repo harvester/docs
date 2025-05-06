@@ -68,12 +68,12 @@ Use the field `expiringInHours` to specify the validity period of each certifica
 
 For more information, see the **Certificate Rotation** section of the [Rancher](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/manage-clusters/rotate-certificates) and [RKE2](https://docs.rke2.io/advanced#certificate-rotation) documentation.
 
-**Default value**: `{"enable":false,"expiringInHours":240}`
+**Default value**: `'{"enable":false,"expiringInHours":240}'`
 
 **Example**:
 
 ```
-{"enable":true,"expiringInHours":48}
+'{"enable":true,"expiringInHours":48}'
 ```
 
 ### `backup-target`
@@ -87,7 +87,7 @@ For more information, see the [Longhorn documentation](https://longhorn.io/docs/
 **Example**:
 
 ```json
-{
+'{
   "type": "s3",
   "endpoint": "https://s3.endpoint.svc",
   "accessKeyId": "test-access-key-id",
@@ -96,7 +96,7 @@ For more information, see the [Longhorn documentation](https://longhorn.io/docs/
   "bucketRegion": "us‑east‑2",
   "cert": "",
   "virtualHostedStyle": false
-}
+}'
 ```
 
 ### `cluster-registration-url`
@@ -133,7 +133,7 @@ For security purposes, Harvester automatically removes the username and password
 ![containerd-registry](/img/v1.2/advanced/containerd-registry.png)
 
 ```json
-{
+'{
   "Mirrors": {
     "docker.io": {
       "Endpoints": ["https://myregistry.local:5000"],
@@ -151,7 +151,7 @@ For security purposes, Harvester automatically removes the username and password
       }
     }
   }
-}
+}'
 ```
 
 ### `csi-driver-config`
@@ -169,12 +169,12 @@ You must configure the following information before using features related to ba
 **Default value**:
 
 ```
-{
+'{
   "driver.longhorn.io": {
     "volumeSnapshotClassName": "longhorn-snapshot",
     "backupVolumeSnapshotClassName": "longhorn"
   }
-}
+}'
 ```
 
 ### `default-vm-termination-grace-period-seconds`
@@ -197,7 +197,7 @@ Changing this setting might cause single-node clusters to temporarily become una
 
 :::
 
-**Default value**: `{}`
+**Default value**: `'{}'`
 
 **Supported options and values**:
 
@@ -217,11 +217,11 @@ Harvester appends necessary addresses to user-specified `noProxy` values (for ex
 **Example**:
 
 ```json
-{
+'{
   "httpProxy": "http://my.proxy",
   "httpsProxy": "https://my.proxy",
   "noProxy": "some.internal.svc,172.16.0.0/16"
-}
+}'
 ```
 
 ### `log-level`
@@ -294,12 +294,12 @@ Changes to the server address list are applied to all nodes.
 **Example**:
 
 ```
-{
+'{
   "ntpServers": [
     "0.suse.pool.ntp.org",
     "1.suse.pool.ntp.org"
   ]
-}
+}'
 ```
 
 ### `overcommit-config`
@@ -308,7 +308,7 @@ Changes to the server address list are applied to all nodes.
 
 Overcommitting is used to optimize physical resource allocation, particularly when VMs are not expected to fully consume the allocated resources most of the time. Setting values greater than 100% allows scheduling of multiple VMs even when physical resources are notionally fully allocated. 
 
-**Default values**: `{ "cpu":1600, "memory":150, "storage":200 }`
+**Default values**: `'{"cpu":1600, "memory":150, "storage":200}'`
 
 With the default values, it would be possible to schedule the following:
 
@@ -321,11 +321,11 @@ A VM that is configured to use 2 CPUs (equivalent to 2,000 milliCPU) can consume
 **Example**:
 
 ```json
-{
+'{
   "cpu": 1000,
   "memory": 200,
   "storage": 300
-}
+}'
 ```
 
 ### `additional-guest-memory-overhead-ratio`
@@ -489,16 +489,16 @@ Changing this setting might cause single-node clusters to temporarily become una
 
 :::
 
-**Default value**: `{}`
+**Default value**: `'{}'`
 
 **Example**:
 
 ```json
-{
+'{
   "ca": "-----BEGIN CERTIFICATE-----\nSOME-CERTIFICATE-ENCODED-IN-PEM-FORMAT\n-----END CERTIFICATE-----",
   "publicCertificate": "-----BEGIN CERTIFICATE-----\nSOME-CERTIFICATE-ENCODED-IN-PEM-FORMAT\n-----END CERTIFICATE-----",
   "privateKey": "-----BEGIN RSA PRIVATE KEY-----\nSOME-PRIVATE-KEY-ENCODED-IN-PEM-FORMAT\n-----END RSA PRIVATE KEY-----"
-}
+}'
 ```
 
 ### `ssl-parameters`
@@ -525,10 +525,10 @@ If you do not specify any values, Harvester uses `TLSv1.2` and `ECDHE-ECDSA-AES1
 **Example**:
 
 ```
-{
+'{
   "protocols": "TLSv1.2 TLSv1.3",
   "ciphers": "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
-}
+}'
 ```
 
 ### `storage-network`
@@ -550,11 +550,11 @@ Specify an IP range in the IPv4 CIDR format. The number of IPs must be four time
 **Example**:
 
 ```
-{
+'{
   "vlan": 100,
   "clusterNetwork": "storage",
   "range": "192.168.0.0/24"
-}
+}'
 ```
 
 ### `support-bundle-image`
@@ -570,11 +570,11 @@ Specify an IP range in the IPv4 CIDR format. The number of IPs must be four time
 In this example, the default image tag of the cluster is `v0.0.25`.
 
 ```
-{
+'{
   "repository": "rancher/support-bundle-kit",
   "tag": "v0.0.25",
   "imagePullPolicy": "IfNotPresent"
-}
+}'
 ```
 
 **Supported options and values**:
@@ -809,7 +809,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
 **Example**:
 
 ```json
-{
+'{
   "imagePreloadOption": {
     "strategy": {
       "type": "parallel",
@@ -817,7 +817,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
     }
   },
   "restoreVM": true
-}
+}'
 ```
 
 ### `vip-pools`
@@ -826,15 +826,15 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
 **Definition**: Global or namespace-specific IP address pools of the VIP by CIDR or IP range.
 
-**Default value**: `{}`
+**Default value**: `'{}'`
 
 **Example**:
 
 ```json
-{
+'{
   "default": "172.16.0.0/24,172.16.1.0/24",
   "demo": "172.16.2.50-172.16.2.100,172.16.2.150-172.16.3.200"
-}
+}'
 ```
 
 ### `vm-force-reset-policy`
@@ -850,10 +850,10 @@ When the node becomes unavailable or is powered off, the VM only restarts and do
 **Example**:
 
 ```json
-{
+'{
   "enable": "true",
   "period": 300
-}
+}'
 ```
 
 ### `volume-snapshot-class`
