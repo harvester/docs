@@ -174,6 +174,28 @@ Setting a smaller value than the pre-defined value may cause the upgrade to fail
 
 :::
 
+The following sections describe solutions for issues related to this requirement.
+
+### Free System Partition Space Manually
+
+Harvester attempts to remove unnecessary container images after an upgrade is completed. However, this automatic image cleanup may not be performed for various reasons. You can use [this script](https://github.com/harvester/upgrade-helpers/blob/main/bin/harv-purge-images.sh) to manually remove images. For more information, see issue [#6620](https://github.com/harvester/harvester/issues/6620).
+
+### Set Up a Private Container Registry and Skip Image Preloading
+
+The system partition might still lack free space even after you remove images. To address this, set up a private container registry for both current and new images, and configure the setting [`upgrade-config`](advanced/settings.md#upgrade-config) with following value:
+
+```
+{"imagePreloadOption":{"strategy":{"type":"skip"}}, "restoreVM": false}
+```
+
+Harvester skips the upgrade image preloading process. When the deployments on the nodes are upgraded, the container runtime loads the images stored in the private container registry.
+
+:::caution
+
+Do not rely on the public container registry. Note any potential internet service interruptions and how close you are to reaching your [Docker Hub rate limit](https://www.docker.com/increase-rate-limits/). Failure to download any of the required images may cause the upgrade to fail and may leave the cluster in a middle state.
+
+:::
+
 ## Longhorn Manager Crashes Due to Backing Image Eviction
 
 :::caution
