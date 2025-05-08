@@ -186,7 +186,7 @@ When the current upgrade hits issues or is stucking, run below steps to stop the
 
 1. Click the upgrade button in the Harvester dashboard to start an upgrade again.
 
-    If you [Customize the Version](./automatic.md#customize-the-version) manually, you might need to create the version object again.
+    If you [Customize the Version](./automatic.md#customize-the-version) manually, you might need to [create the version object](./automatic.md#prepare-the-version) again.
 
 ### Download upgrade logs
 

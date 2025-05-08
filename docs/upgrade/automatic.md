@@ -130,17 +130,17 @@ Check out the available [`upgrade-config` setting](../advanced/settings.md#upgra
 
 #### Annotation minCertsExpirationInDay
 
-Harvester checkes the cert expiration days on each node. If any will expire in 7 days, an error is reported. This elimate the chance to hit cert experiation when upgrade is running.
+Harvester checkes the cert expiration days on each node. If any of them will expire in 7 days, an error is reported. This check eliminates the chance to hit cert experiation when upgrade is running.
 
-The `harvesterhci.io/minCertsExpirationInDay: "14"` sets the expiration days to 14.
+Example: The `harvesterhci.io/minCertsExpirationInDay: "14"` sets the check upon expiration days to 14.
 
-See [](advanced/index/#auto-rotate-rke2-certs) for more information.
+See [auto-rotate-rke2-certs](advanced/settings.md/#auto-rotate-rke2-certs) for more information.
 
 #### Annotation skipGarbageCollectionThresholdCheck
 
 Harvester checks the disk spaces on each node to ensure when upgrade preloads all the required images, it will not exceed kubelet image garbage collection threshold.
 
-The `harvesterhci.io/skipGarbageCollectionThresholdCheck: true` annotation skips the check.
+Example: The `harvesterhci.io/skipGarbageCollectionThresholdCheck: true` annotation skips the check.
 
 See [Free system partition space requirement](#free-system-partition-space-requirement) for more information.
 
