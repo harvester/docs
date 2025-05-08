@@ -52,7 +52,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install netlify-cli -g yarn
+          npm install netlify-cli@21.2.0 -g yarn
 
       - name: Download build from artifacts
         uses: actions/download-artifact@v4
