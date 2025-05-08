@@ -91,7 +91,7 @@ When [uploading a virtual machine image](../image/upload-image.md) using the Har
 
 ![create-image-with-nfs-csi](/img/v1.5/advanced/create-image-with-nfs-csi.png)
 
-Harvester stores the created the image in the external storage solution.
+Harvester stores the created image in the external storage solution.
 
 ![created-image-with-nfs-csi](/img/v1.5/advanced/created-image-with-nfs-csi.png) 
 
