@@ -102,7 +102,7 @@ $ kubectl logs -n harvester-system jobs/hvst-upgrade-9gmg2-post-drain-node2
 
 :::caution
 
-Please do not start over an upgrade if the upgrade fails at this phase.
+Please do not [Start over an Upgrade](#start-over-an-upgrade) if the upgrade fails at this phase.
 
 :::
 
@@ -113,10 +113,19 @@ The Harvester controller deletes the upgrade repository VM and all files that ar
 
 ## Common operations
 
-### Start over an upgrade
+### Stop the Current Upgrade
+
+:::caution
+
+If the current upgrade fails/is stucking at [Phase 4: Upgrade nodes](#phase-4-upgrade-nodes), check the reason first.
+
+:::
+
+When the current upgrade hits issues or is stucking, run below steps to stop the upgrade.
 
 1. Log in to a control plane node.
-2. List `Upgrade` CRs in the cluster:
+
+1. List `Upgrade` CRs in the cluster:
 
     ```
     # become root
@@ -128,13 +137,56 @@ The Harvester controller deletes the upgrade repository VM and all files that ar
     hvst-upgrade-9gmg2   10m
     ```
 
-3. Delete the Upgrade CR
+1. Delete the Upgrade CR
 
     ```
     $ kubectl delete upgrade.harvesterhci.io/hvst-upgrade-9gmg2 -n harvester-system
     ```
 
-4. Click the upgrade button in the Harvester dashboard to start an upgrade again.
+1. Resume the following Managedcharts
+
+    The upgrade pauses the managedchart to avoid data race between upgrade and others. When those managedcharts have been paused and later the upgrade is stopped, it is essential to resume them.
+
+    ```
+    cat > resumeallcharts.sh << 'FOE'
+    resume_all_charts() {
+
+      local patchfile="/tmp/charttmp.yaml"
+
+      cat >"$patchfile" << 'EOF'
+    spec:
+      paused: false
+    EOF
+      echo "the to-be-patched file"
+      cat "$patchfile"
+
+      local charts="harvester harvester-crd rancher-monitoring-crd rancher-logging-crd"
+
+      for chart in $charts; do
+        echo "unapuse managedchart $chart"
+        kubectl patch managedcharts.management.cattle.io $chart -n fleet-local --patch-file "$patchfile" --type merge || echo "failed, check reason"
+      done
+
+      rm "$patchfile"
+    }
+
+    resume_all_charts
+
+    FOE
+
+    chmod +x ./resumeallcharts.sh
+
+    ./resumeallcharts.sh
+
+    ```
+
+### Start over an Upgrade
+
+1. [Stop the Current upgrade](#stop-the-current-upgrade)
+
+1. Click the upgrade button in the Harvester dashboard to start an upgrade again.
+
+    If you [Customize the Version](./automatic.md#customize-the-version) manually, you might need to [create the version object](./automatic.md#prepare-the-version) again.
 
 ### Download upgrade logs
 

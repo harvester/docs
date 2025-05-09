@@ -89,20 +89,66 @@ Check out the available [`upgrade-config` setting](../advanced/settings.md#upgra
 
 :::
 
-- Make sure to read the Warning paragraph at the top of this document first.
-- Harvester checks if there are new upgradable versions periodically. If there are new versions, an upgrade button shows up on the Dashboard page.
+1. Make sure to read the Warning paragraph at the top of this document first.
+
+1. Harvester checks if there are new upgradable versions periodically. If there are new versions, an upgrade button shows up on the Dashboard page.
+
     - If the cluster is in an air-gapped environment, please see [Prepare an air-gapped upgrade](#prepare-an-air-gapped-upgrade) section first. You can also speed up the ISO download by using the approach in that section.
-- Navigate to Harvester GUI and click the upgrade button on the Dashboard page.
+
+1. Navigate to Harvester GUI and click the upgrade button on the Dashboard page.
 
     ![](/img/v1.2/upgrade/upgrade_button.png)
 
-- Select a version to start upgrading.
+1. Select a version to start upgrading. If you need to customize the version, refer [customization](#customize-the-version).
 
     ![](/img/v1.2/upgrade/upgrade_select_version.png)
 
-- Click the circle on the top to display the upgrade progress.
+1. Click the circle on the top to display the upgrade progress.
     ![](/img/v1.2/upgrade/upgrade_progress.png)
 
+### Customize the Version
+
+1. Download the version file from Harvester release pages, for example, `https://releases.rancher.com/harvester/{version}/version.yaml`.
+
+    Example: Harvester [v1.5.0 version file](https://releases.rancher.com/harvester/v1.5.0/version.yaml) is downloaded as `v1.5.0.yaml`.
+
+    ```
+    apiVersion: harvesterhci.io/v1beta1
+    kind: Version
+    metadata:
+      name: v1.5.0-customized # Changed, to avoid duplicated with the official version name
+      namespace: harvester-system
+    spec:
+      isoChecksum: 'df28e9bf8dc561c5c26dee535046117906581296d633eb2988e4f68390a281b6856a5a0bd2e4b5b988c695a53d0fc86e4e3965f19957682b74317109b1d2fe32'  # Don't change
+      isoURL: https://releases.rancher.com/harvester/v1.5.0/harvester-v1.5.0-amd64.iso # Official ISO path by default
+      releaseDate: '20250425'
+    ```
+
+1. Add following annotations on demand.
+
+1. Run `kubectl create -f v1.5.0.yaml` to create the version.
+
+#### Annotation minCertsExpirationInDay
+
+Harvester checkes the cert expiration days on each node. If any of them will expire in 7 days, an error is reported. This check eliminates the chance to hit cert experiation when upgrade is running.
+
+Example: The `harvesterhci.io/minCertsExpirationInDay: "14"` sets the check upon expiration days to 14.
+
+See [auto-rotate-rke2-certs](advanced/settings.md/#auto-rotate-rke2-certs) for more information.
+
+#### Annotation skipGarbageCollectionThresholdCheck
+
+Harvester checks the disk spaces on each node to ensure when upgrade preloads all the required images, it will not exceed kubelet image garbage collection threshold.
+
+Example: The `harvesterhci.io/skipGarbageCollectionThresholdCheck: true` annotation skips the check.
+
+See [Free system partition space requirement](#free-system-partition-space-requirement) for more information.
+
+:::caution
+
+When this check is skipped, the upgrade might fail due to some images are garbage collected. Do not set it in production environment.
+
+:::
 
 ## Prepare an air-gapped upgrade
 
@@ -112,9 +158,15 @@ Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section fir
 
 :::
 
-- Download a Harvester ISO file from [release pages](https://github.com/harvester/harvester/releases).
-- Save the ISO to a local HTTP server. Assume the file is hosted at `http://10.10.0.1/harvester.iso`.
-- Download the version file from release pages, for example, `https://releases.rancher.com/harvester/{version}/version.yaml`
+### Prepare the ISO File
+
+1. Download a Harvester ISO file from [release pages](https://github.com/harvester/harvester/releases).
+
+1. Save the ISO to a local HTTP server. Assume the file is hosted at `http://10.10.0.1/harvester.iso`.
+
+### Prepare the Version
+
+1. Download the version file from release pages, for example, `https://releases.rancher.com/harvester/{version}/version.yaml`
 
     - Replace `isoURL` value in the `version.yaml` file:
 
@@ -122,25 +174,44 @@ Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section fir
         apiVersion: harvesterhci.io/v1beta1
         kind: Version
         metadata:
-          name: v1.0.2
+          name: v1.5.0
           namespace: harvester-system
         spec:
           isoChecksum: <SHA-512 checksum of the ISO>
           isoURL: http://10.10.0.1/harvester.iso  # change to local ISO URL
-          releaseDate: '20220512'
+          releaseDate: '20250425'
         ```
 
     - Assume the file is hosted at `http://10.10.0.1/version.yaml`.
 
-- Log in to one of your control plane nodes.
-- Become root and create a version:
+    - If you need to customize the version, refer [customization](#customize-the-version)
+
+1. Log in to one of your control plane nodes.
+
+1. Become root and create a version object:
 
     ```
     rancher@node1:~> sudo -i
     rancher@node1:~> kubectl create -f http://10.10.0.1/version.yaml
     ```
 
-- An upgrade button should show up on the Harvester GUI Dashboard page.
+### Trigger the Upgrade
+
+1. An upgrade button should show up on the Harvester GUI Dashboard page.
+
+    Refresh the web page if the button does not appear.
+
+## Manually Start an Upgrade before the Harvester Official Upgrade is Available
+
+After a new Harvester version is released, the official upgrade is not available right now, you do not see the `upgrade` button on your cluster.
+
+When you want to upgrade your cluster to the new release, follow the steps on [Prepare an air-gapped upgrade](#prepare-an-air-gapped-upgrade).
+
+:::caution
+
+It is recommended to wait until the official upgrade is available for production environment.
+
+:::
 
 ## Free system partition space requirement
 
