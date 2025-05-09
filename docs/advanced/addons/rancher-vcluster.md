@@ -57,3 +57,7 @@ If you enable the addon again, the PVC is re-used, and Rancher will have the old
 If you want to wipe the data, ensure that the PVC is deleted.
 
 :::
+
+## Troubleshooting
+
+See [Importing of Harvester Clusters into Rancher](../../troubleshooting/rancher.md#importing-of-harvester-clusters-into-rancher).
