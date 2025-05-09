@@ -63,7 +63,7 @@ You can inject your access credentials via the Harvester dashboard as below:
 
 1. Select the VM and click `⋮` button.
 2. Click the `Edit Config` button and go to the `Access Credentials` tab.
-3. Click to add either basic auth credentials or ssh keys, (e.g., add `opensuse` as the user and select your ssh keys if your guest OS is OpenSUSE).
+3. Click to add either basic auth credentials or ssh keys. The user to be added must already exist in the guest OS. E.g., if using OpenSUSE, add `opensuse` as the user and select your ssh keys.
 4. Make sure your qemu guest agent is already installed and the VM should be restarted after the credentials are added.
 
 :::note
