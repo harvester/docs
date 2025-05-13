@@ -210,3 +210,32 @@ New images are loaded to each Harvester node during upgrades. When disk usage ex
 If you encounter the error message `Node xxx will reach xx.xx% storage space after loading new images. It's higher than kubelet image garbage collection threshold 85%.`, run `crictl rmi --prune` to clean up unused images before starting a new upgrade.
 
 ![Disk space not enough error message](/img/v1.4/upgrade/disk-space-not-enough-error-message.png)
+
+### How to check current upgrade status in the cluster
+
+If you find that upgrade gets stuck for a while without showing any error messages on GUI, please check it with following instructions in the cluster.
+
+Since Harvester uses `managedChart` to deploy resources and runs shell scripts to patch latest version to `managedChart`, so we need to check the status of scripts and `managedChart`.
+
+When Harvester upgrades, Harvester creates a lot of PODs. Please check those PODs by running `kubectl get pods -n harvester-system | grep upgrade`.
+
+The main script is in the `hvst-upgrade-xxxxx-apply-manifests-xxxxx` POD. If the logs keep showing following messages, that means Harvester's `managedChart` might have some issues.
+
+```
+Current version: x.x.x, Current state: WaitApplied, Current generation: x
+Sleep for 5 seconds to retry
+```
+
+Harvester uses `managedChart` to deploy resources, it'll create another resources called `bundle`. In order to quickly get all the information of `bundle`, please run `kubectl get bundles -A`. The folloing output is an example. 
+
+```
+NAMESPACE     NAME                                          BUNDLEDEPLOYMENTS-READY   STATUS
+fleet-local   fleet-agent-local                             1/1
+fleet-local   local-managed-system-agent                    1/1
+fleet-local   mcc-harvester                                 0/1                       Modified(1) [Cluster fleet-local/local]; kubevirt.kubevirt.io harvester-system/kubevirt modified {"spec":{"configuration":{"vmStateStorageClass":"vmstate-persistence"}}}
+fleet-local   mcc-harvester-crd                             1/1
+fleet-local   mcc-local-managed-system-upgrade-controller   1/1
+fleet-local   mcc-rancher-logging-crd                       1/1
+fleet-local   mcc-rancher-monitoring-crd                    1/1
+```
+
