@@ -5,7 +5,7 @@ title: "PCI Devices"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/advanced/addons/pcidevices"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/advanced/addons/pcidevices"/>
 </head>
 
 _Available as of v1.1.0_

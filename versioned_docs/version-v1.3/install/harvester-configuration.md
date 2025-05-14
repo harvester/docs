@@ -12,7 +12,7 @@ description: Harvester configuration file can be provided during manual or autom
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/install/harvester-configuration"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/install/harvester-configuration"/>
 </head>
 
 ## Configuration Example

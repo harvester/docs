@@ -16,7 +16,7 @@ description: Create one or more Windows virtual machines from the Virtual Machin
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/vm/create-windows-vm"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/vm/create-windows-vm"/>
 </head>
 
 Create one or more virtual machines from the **Virtual Machines** page.

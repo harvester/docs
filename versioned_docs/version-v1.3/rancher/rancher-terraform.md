@@ -12,6 +12,10 @@ keywords:
 description: Rancher Terraform allows administrators to create and manage RKE2 guest clusters using Terraform.
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/rancher/rancher-terraform"/>
+</head>
+
 [Rancher Terraform](https://registry.terraform.io/providers/rancher/rancher2/) is a terraform provider that allows administrators to create and manage RKE2 guest clusters using Terraform.
 
 ## Deploying

@@ -12,7 +12,7 @@ Description: Perform out-of-band operations on Harvester hosts via IPMI and disc
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/advanced/addons/seeder"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/advanced/addons/seeder"/>
 </head>
 
 The **harvester-seeder** add-on allows you to perform out-of-band operations on Harvester hosts using the Intelligent Platform Management Interface (IPMI).

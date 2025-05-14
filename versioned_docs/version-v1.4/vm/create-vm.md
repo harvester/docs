@@ -15,7 +15,7 @@ description: Create one or more virtual machines from the Virtual Machines page.
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/vm/index"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/vm/index"/>
 </head>
 
 ## How to Create a VM

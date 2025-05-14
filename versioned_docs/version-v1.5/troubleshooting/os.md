@@ -5,7 +5,7 @@ title: "Operating System"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/troubleshooting/os"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/troubleshooting/os"/>
 </head>
 
 Harvester runs on an OpenSUSE-based OS. The OS is an artifact produced by the [elemental-toolkit](https://github.com/rancher/elemental-toolkit). The following sections contain information and tips to help users troubleshoot OS-related issues.
