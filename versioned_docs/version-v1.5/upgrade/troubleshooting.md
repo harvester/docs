@@ -215,11 +215,13 @@ If you encounter the error message `Node xxx will reach xx.xx% storage space aft
 
 If you find that upgrade gets stuck for a while without showing any error messages on GUI, please check it with following instructions in the cluster.
 
-Since Harvester uses `managedChart` to deploy resources and runs shell scripts to patch latest version to `managedChart`, so we need to check the status of scripts and `managedChart`.
+1. Check the status of the `managedChart` CR and shell scripts.
 
-When Harvester upgrades, Harvester creates a lot of PODs. Please check those PODs by running `kubectl get pods -n harvester-system | grep upgrade`.
+  Harvester uses `managedChart` to deploy resources and runs shell scripts to patch the latest version of that CR.
 
-The main script is in the `hvst-upgrade-xxxxx-apply-manifests-xxxxx` POD. If the logs keep showing following messages, that means Harvester's `managedChart` might have some issues.
+1. Check the pods that were created during the upgrade process using the command `kubectl get pods -n harvester-system | grep upgrade`.
+
+  The main script is in the `hvst-upgrade-xxxxx-apply-manifests-xxxxx` pod. If the log records include the following messages, the `managedChart` CR might be causing issues.
 
 ```
 Current version: x.x.x, Current state: WaitApplied, Current generation: x
