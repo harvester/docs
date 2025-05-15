@@ -121,6 +121,26 @@ Please refer to the [Harvester & Rancher Support Matrix](https://www.suse.com/su
 </TabItem>
 </Tabs>
 
+### Upgrades
+
+To upgrade an imported Harvester cluster, you must upgrade Rancher, the Harvester UI Extension, and Harvester in a specific order. The [Harvester UI Extension](./harvester-ui-extension.md) is required to access the Harvester UI in Rancher v2.10.x and later versions.
+
+1. Check the [support matrix](./harvester-ui-extension.md#support-matrix) to determine the Rancher and Harvester UI Extension versions that match the Harvester cluster.
+
+1. Upgrade [Rancher](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/upgrades).
+
+1. Upgrade the [Harvester UI Extension](./harvester-ui-extension.md#upgrades).
+
+  For information about upgrading the extension in an air-gapped environment, see [Harvester UI extension with Rancher Integration](../airgap.md#harvester-ui-extension-with-rancher-integration).
+
+1. Upgrade [Harvester](../upgrade/automatic.md).
+
+  :::caution
+
+  Features in Harvester v1.5.0 and later versions are implemented in the Harvester UI Extension. If you do not upgrade Rancher and the Harvester UI Extension, these features may not be available.
+
+  :::
+
 ### Troubleshooting
 
 See [Importing of Harvester Clusters into Rancher](../troubleshooting/rancher.md#importing-of-harvester-clusters-into-rancher).
