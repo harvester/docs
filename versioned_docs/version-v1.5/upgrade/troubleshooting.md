@@ -226,7 +226,9 @@ Current version: x.x.x, Current state: WaitApplied, Current generation: x
 Sleep for 5 seconds to retry
 ```
 
-Harvester uses `managedChart` to deploy resources, it'll create another resources called `bundle`. In order to quickly get all the information of `bundle`, please run `kubectl get bundles -A`. The folloing output is an example. 
+1. Retrieve information about the `bundle` CR using the command `kubectl get bundles -A`.
+
+  Example:
 
 ```
 NAMESPACE     NAME                                          BUNDLEDEPLOYMENTS-READY   STATUS
