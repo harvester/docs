@@ -30,7 +30,9 @@ In the Rancher UI, administrators can configure resource quotas for namespaces t
   ![](/img/v1.3/rancher/create-project.png)
 
 :::note
-The **VM Default Resource Limit** name is inaccurate and is scheduled to be removed or renamed in a future version. "VM Default Resource Limit", Rancher sets `LimitRange` to related namespace. The config is set as `default` and `defaultRequest`, not `max` and `min`, so it only takes effect if a pod doesn't set related limit and request. Since a VM can not be created without setting CPU and Memory, the `LimitRange` will only be applicable for non VM workloads if provided.
+The "VM Default Resource Limit" is used to set default request/limit on compute resources for pods running within the namespace, using the Kubernetes [`LimitRange` API](https://kubernetes.io/docs/concepts/policy/limit-range/). The resource "reservation" and "limit" values correspond to the `defaultRequest` and `default` limits of the namespace's `LimitRange` configuration. These settings are applied to pod workloads only.
+
+These configuration will be removed in the future. See issue https://github.com/harvester/harvester/issues/5652.
 :::
 
 You can configure the **Namespace** limits as follows: 
