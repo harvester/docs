@@ -11,7 +11,7 @@ description: Harvester Net Install ISO is a minimal ISO that contains only the O
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/install/net-install"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/install/net-install"/>
 </head>
 
 The Harvester net install ISO is a minimal installation image that contains only the core OS components, allowing the installer to boot and then install the Harvester OS on a disk. After installation is completed, the Harvester OS pulls all required container images from the internet (mostly from Docker Hub).

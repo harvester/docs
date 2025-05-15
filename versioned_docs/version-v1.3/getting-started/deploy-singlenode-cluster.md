@@ -11,6 +11,10 @@ keywords:
 - virtual machine
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/getting-started/deploy-singlenode-cluster"/>
+</head>
+
 A [Harvester cluster](../getting-started/glossary.md#harvester-cluster) with three or more nodes is required to fully realize multi-node features such as high availability. Certain versions of Harvester allow you to create clusters with two management nodes and one [witness node](../advanced/witness.md) (and optionally, one or more worker nodes). You can also create [single-node clusters](../advanced/singlenodeclusters.md) that support most Harvester features (excluding high availability, multi-replica support, and live migration). 
 
 This guide walks you through the steps required to deploy a **single-node cluster** and virtual machines (VMs) that can host [guest clusters](../getting-started/glossary.md#guest-cluster--guest-kubernetes-cluster) and run custom workloads. 

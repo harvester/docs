@@ -8,7 +8,7 @@ description: The Harvester provides a virtual IP as the management address.
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/install/management-address"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/install/management-address"/>
 </head>
 
 Harvester provides a fixed virtual IP (VIP) as the management address, VIP must be different from any Node IP.  You can find the management address on the console dashboard after the installation.

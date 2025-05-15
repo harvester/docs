@@ -6,7 +6,7 @@ title: "FAQ"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/faq"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/faq"/>
 </head>
 
 This FAQ is a work in progress designed to answer the questions our users most frequently ask about Harvester.

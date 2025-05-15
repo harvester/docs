@@ -12,7 +12,7 @@ description: Install Harvester on diskless systems.
 
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/install/external-disk-support"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/install/external-disk-support"/>
 </head>
 
 _Available as of v1.4.0_

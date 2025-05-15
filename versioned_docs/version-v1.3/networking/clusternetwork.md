@@ -12,7 +12,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/networking/clusternetwork"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/networking/clusternetwork"/>
 </head>
 
 ## Concepts

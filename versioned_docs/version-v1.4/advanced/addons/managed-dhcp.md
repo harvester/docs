@@ -5,7 +5,7 @@ title: "Managed DHCP"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/advanced/addons/managed-dhcp"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/advanced/addons/managed-dhcp"/>
 </head>
 
 _Available as of v1.3.0_

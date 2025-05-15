@@ -12,7 +12,7 @@ description: Live migration means moving a virtual machine to a different host w
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/vm/live-migration"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/vm/live-migration"/>
 </head>
 
 Live migration means moving a virtual machine to a different host without downtime.

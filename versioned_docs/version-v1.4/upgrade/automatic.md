@@ -13,7 +13,7 @@ description: Harvester provides two ways to upgrade. Users can either upgrade us
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/upgrade/index"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/upgrade/index"/>
 </head>
 
 ## Upgrade support matrix

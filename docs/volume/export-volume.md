@@ -8,7 +8,7 @@ description: Export volume to image from the Volume page.
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/volume/export-volume"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/volume/export-volume"/>
 </head>
 
 You can select and export an existing volume to an image by following the steps below:

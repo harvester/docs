@@ -10,7 +10,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/monitoring/calculation-resource-metrics"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/monitoring/calculation-resource-metrics"/>
 </head>
 
 Harvester calculates resource metrics using data that is dynamically collected from the system. Host-level resource metrics are calculated and then aggregated to obtain the cluster-level metrics.

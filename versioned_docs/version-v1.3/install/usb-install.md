@@ -5,7 +5,7 @@ title: "USB Installation"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.1/install/usb-install"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/install/usb-install"/>
 </head>
 
 ## Create a bootable USB flash drive

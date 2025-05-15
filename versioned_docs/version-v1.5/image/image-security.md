@@ -12,7 +12,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/image/image-security"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/image/image-security"/>
 </head>
 
 _Available as of v1.4.0_

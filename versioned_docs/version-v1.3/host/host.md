@@ -6,7 +6,7 @@ title: "Host Management"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.4/host"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/host"/>
 </head>
 
 Users can view and manage Harvester nodes from the host page. The first node always defaults to be a management node of the cluster. When there are three or more nodes, the two other nodes that first joined are automatically promoted to management nodes to form a HA cluster.
