@@ -13,7 +13,7 @@ description: Post-installation steps.
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/install/post-install"/>
 </head>
 
-These optional post-installation procedures describe how to enhance Harvester security and performance.
+You can enhance the security and performance of your Harvester cluster by performing the following procedures after installation is completed.
 
 ## Disable SSH Password
 
