@@ -215,31 +215,27 @@ If you encounter the error message `Node xxx will reach xx.xx% storage space aft
 
 If the upgrade becomes stuck and the Harvester UI does not display any error messages, perform the following steps:
 
-1. Check the status of the `managedChart` CR and shell scripts.
-
-  Harvester uses `managedChart` to deploy resources and runs shell scripts to patch the latest version of that CR.
 
 1. Check the pods that were created during the upgrade process using the command `kubectl get pods -n harvester-system | grep upgrade`.
 
-  The main script is in the `hvst-upgrade-xxxxx-apply-manifests-xxxxx` pod. If the log records include the following messages, the `managedChart` CR might be causing issues.
+    The main script is in the `hvst-upgrade-xxxxx-apply-manifests-xxxxx` pod. If the log records include the following messages, the `managedChart` CR might be causing issues.
 
-```
-Current version: x.x.x, Current state: WaitApplied, Current generation: x
-Sleep for 5 seconds to retry
-```
+    ```
+    Current version: x.x.x, Current state: WaitApplied, Current generation: x
+    Sleep for 5 seconds to retry
+    ```
 
 1. Retrieve information about the `bundle` CR using the command `kubectl get bundles -A`.
 
-  Example:
+    Example:
 
-```
-NAMESPACE     NAME                                          BUNDLEDEPLOYMENTS-READY   STATUS
-fleet-local   fleet-agent-local                             1/1
-fleet-local   local-managed-system-agent                    1/1
-fleet-local   mcc-harvester                                 0/1                       Modified(1) [Cluster fleet-local/local]; kubevirt.kubevirt.io harvester-system/kubevirt modified {"spec":{"configuration":{"vmStateStorageClass":"vmstate-persistence"}}}
-fleet-local   mcc-harvester-crd                             1/1
-fleet-local   mcc-local-managed-system-upgrade-controller   1/1
-fleet-local   mcc-rancher-logging-crd                       1/1
-fleet-local   mcc-rancher-monitoring-crd                    1/1
-```
-
+    ```
+    NAMESPACE     NAME                                          BUNDLEDEPLOYMENTS-READY   STATUS
+    fleet-local   fleet-agent-local                             1/1
+    fleet-local   local-managed-system-agent                    1/1
+    fleet-local   mcc-harvester                                 0/1                       Modified(1) [Cluster fleet-local/local]; kubevirt.kubevirt.io harvester-system/kubevirt modified {"spec":{"configuration":{"vmStateStorageClass":"vmstate-persistence"}}}
+    fleet-local   mcc-harvester-crd                             1/1
+    fleet-local   mcc-local-managed-system-upgrade-controller   1/1
+    fleet-local   mcc-rancher-logging-crd                       1/1
+    fleet-local   mcc-rancher-monitoring-crd                    1/1
+    ```
