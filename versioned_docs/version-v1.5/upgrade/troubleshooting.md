@@ -211,9 +211,9 @@ If you encounter the error message `Node xxx will reach xx.xx% storage space aft
 
 ![Disk space not enough error message](/img/v1.4/upgrade/disk-space-not-enough-error-message.png)
 
-### How to check current upgrade status in the cluster
+### Check the Status of a Stuck Upgrade
 
-If you find that upgrade gets stuck for a while without showing any error messages on GUI, please check it with following instructions in the cluster.
+If the upgrade becomes stuck and the Harvester UI does not display any error messages, perform the following steps:
 
 1. Check the status of the `managedChart` CR and shell scripts.
 
