@@ -25,6 +25,10 @@ In the Rancher UI, administrators can configure resource quotas for namespaces t
 1. Specify the desired project **Name**. Next, go to the **Resource Quotas** tab and select the **Add Resource** option. Within the **Resource Type** field, select either **CPU Limit** or **Memory Limit** and define the **Project Limit** and **Namespace Default Limit** values.
   ![](/img/v1.2/rancher/create-project.png)
 
+:::note
+The **VM Default Resource Limit** name is inaccurate and is scheduled to be removed or renamed in a future version. "VM Default Resource Limit", Rancher sets `LimitRange` to related namespace. The config is set as `default` and `defaultRequest`, not `max` and `min`, so it only takes effect if a pod doesn't set related limit and request. Since a VM can not be created without setting CPU and Memory, the `LimitRange` will only be applicable for non VM workloads if provided.
+:::
+
 You can configure the **Namespace** limits as follows: 
 
 1. Find the newly created project, and select **Create Namespace**.
