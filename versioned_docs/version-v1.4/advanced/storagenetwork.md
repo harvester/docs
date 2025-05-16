@@ -147,7 +147,7 @@ Because of the design, Harvester will treat extra and insignificant characters i
 
 #### Change the MTU of the Storage Network
 
-Follow the instructions in [Change the MTU of a Network Configuration with an Attached Storage Network](./clusternetwork.md#change-the-mtu-of-a-network-configuration-with-an-attached-storage-network).
+Follow the instructions in [Change the MTU of a Network Configuration with an Attached Storage Network](../networking/clusternetwork.md#change-the-mtu-of-a-network-configuration-with-an-attached-storage-network).
 
 ### After Applying Harvester Storage Network Setting
 
