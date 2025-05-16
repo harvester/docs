@@ -12,6 +12,8 @@ keywords:
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/networking/deep-dive"/>
 </head>
 
+## Network Topology
+
 The network topology below reveals how we implement the Harvester network.
 
 ![](/img/v1.2/networking/topology.png)

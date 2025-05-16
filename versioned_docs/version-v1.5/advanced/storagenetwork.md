@@ -145,6 +145,10 @@ Because of the design, Harvester will treat extra and insignificant characters i
 
 :::
 
+#### Change the MTU of the Storage Network
+
+Follow the instructions in [Change the MTU of a Network Configuration with an Attached Storage Network](../networking/clusternetwork.md#change-the-mtu-of-a-network-configuration-with-an-attached-storage-network).
+
 ### After Applying Harvester Storage Network Setting
 
 After applying Harvester's Storage Network setting, Harvester will stop all pods that are related to Longhorn volumes. Currently, Harvester has some pods listed below that will be stopped during setting.
@@ -337,11 +341,11 @@ $ ip addr
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
 ...
-3: eth0@if2277: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default
+3: eth0@if2277: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default  // pod network link
     link/ether 0e:7c:d6:77:44:72 brd ff:ff:ff:ff:ff:ff link-netnsid 0
     inet 10.52.6.146/32 scope global eth0
 ...
-4: lhnet1@if2278: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+4: lhnet1@if2278: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default // storage network link, note the MTU value
     link/ether fe:92:4f:fb:dd:20 brd ff:ff:ff:ff:ff:ff link-netnsid 0
     inet 10.0.16.14/20 brd 10.0.31.255 scope global lhnet1
 ...
@@ -351,6 +355,12 @@ default via 169.254.1.1 dev eth0
 10.0.16.0/20 dev lhnet1 proto kernel scope link src 10.0.16.14
 169.254.1.1 dev eth0 scope link
 ```
+
+:::note
+
+The `storage network` link always inherites the `MTU` value from the attached [cluster-network](../networking/clusternetwork.md#cluster-network), no matter which [MTU value](../networking/clusternetwork.md#change-the-mtu-of-a-network-configuration-with-an-attached-storage-network) has been set.
+
+:::
 
 4.3 Start a simple HTTP server in one pod.
 
