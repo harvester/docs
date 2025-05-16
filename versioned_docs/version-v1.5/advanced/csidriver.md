@@ -12,16 +12,14 @@ _Available as of v1.5.0_
 
 Harvester now supports provisioning of root volumes and data volumes using external [Container Storage Interface (CSI)](https://kubernetes-csi.github.io/docs/introduction.html) drivers. This enhancement allows you to select drivers that meet specific requirements, such as performance optimization or seamless integration with existing internal storage solutions.
 
-:::important
-
-Harvester has validated the following CSI drivers:
+The Harvester engineering team has validated the following CSI drivers:
 
 - Longhorn V2 Data Engine: `driver.longhorn.io`
 - LVM: `lvm.driver.harvesterhci.io`
 - NFS: `nfs.csi.k8s.io`
 - Rook (RADOS Block Device): `rook-ceph.rbd.csi.ceph.com`
 
-The validated CSI drivers have the following capabilities:
+These validated CSI drivers have the following capabilities:
 
 | Storage Solution | VM Image | VM Rook Disk | VM Data Disk | Volume Export To VM Image | VM Template Generator | VM Live Migration | VM Snapshot | VM Backup |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -29,6 +27,12 @@ The validated CSI drivers have the following capabilities:
 | LVM | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; | &#10004; | &#10006; |
 | NFS | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; | &#10006; |
 | Rook (RBD) | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; |
+
+:::note
+
+Support for third-party storage equates to support for provisioning of root volumes and data volumes using external container storage interface (CSI) drivers. This means that storage vendors can validate their storage appliances with Harvester to ensure greater interoperability. 
+
+The Harvester engineering team exclusively validates internally developed storage solutions and select open-source projects. You can find information about enterprise-grade storage solutions that are certified to be compatible with Harvester in the SUSE Rancher Prime documentation, which is accessible through the [SUSE Customer Center](https://scc.suse.com/home).
 
 :::
 
