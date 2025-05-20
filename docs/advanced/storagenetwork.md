@@ -100,17 +100,29 @@ Please refer Networking page to configure `ClusterNetwork` and `VLAN Config` wit
 
 ### Harvester Storage Network Setting
 
-Harvester Storage Network setting will need `range`, `clusterNetwork`, `vlan` field to construct Multus NetworkAttachmentDefinition for Storage Network usage. You could apply this setting via Web UI or CLI.
+Harvester Storage Network has options to [enable](#enable-the-storage-network) and [disable](#disable-the-storage-network).
+
+When Storage Network is enabled, it needs `range`, `clusterNetwork`, `vlan` and `exclude` field to construct a Multus NetworkAttachmentDefinition. You could apply this setting via Web UI or CLI.
 
 #### Web UI
 
-Harvester Storage Network setting could be easily modified on the `Settings > storage-network` page.
+Harvester Storage Network setting can be easily modified on the `Settings > storage-network` page.
 
-![storagenetwork-ui.png](/img/v1.2/storagenetwork/storagenetwork-ui.png)
+##### Enable the Storage Network
+
+Click the `Enabled`, then fill other related fields and `Save`, the `storage network` is enabled.
+
+![storage-network-enabled.png](/img/v1.4/storagenetwork/storage-network-enabled.png)
+
+##### Disable the Storage Network
+
+Click the `Disabled` and then `Save`, the `storage network` is disabled and the Longhorn fallbacks to `pod network` for storge related operations.
+
+![storage-network-disabled.png](/img/v1.4/storagenetwork/storage-network-disabled.png)
 
 #### CLI
 
-Users could use this command to edit Harvester Storage Network setting.
+Users could use this command to edit Harvester [Storage Network setting](./settings.md#storage-network).
 
 ```bash
 kubectl edit settings.harvesterhci.io storage-network
@@ -139,9 +151,22 @@ metadata:
 value: '{"vlan":100,"clusterNetwork":"storage","range":"192.168.0.0/24", "exclude":["192.168.0.100/32"]}'
 ```
 
+When the Storage Network is disabled, the full configuration will be like this example.
+
+```yaml
+apiVersion: harvesterhci.io/v1beta1
+kind: Setting
+metadata:
+  name: storage-network
+```
+
 :::caution
 
-Because of the design, Harvester will treat extra and insignificant characters in JSON string as a different configuration.
+- Because of the design, Harvester will treat extra and insignificant characters in JSON string as a different configuration.
+
+- From CLI the deleted `value` field means `Disabled` and a valid non-empty `value` means `Enabled` Storage Network implicitly.
+
+- Recommend to use [Web UI](#web-ui) to set Storage Network.
 
 :::
 
