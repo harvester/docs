@@ -97,44 +97,42 @@ The [witness node](../advanced/witness.md) is generally not involved in the cust
 
 ### Create a New Cluster Network
 
-1. Go to **Networks > ClusterNetworks/Configs**, and then click **Create**.
-
-1. Specify a name for the network.
-
-   ![](/img/v1.2/networking/create-clusternetwork.png)
-
-1. Click the **Create Network Config** button on the right of the cluster network to create a new network configuration.
-
-   ![](/img/v1.2/networking/create-network-config-button.png)
-
-1. In the **Node Selector** tab, specify the name and choose one of the three methods to select nodes where the network configuration will apply. If you want to cover the unselected nodes, you can create another network configuration.
-
-   ![](/img/v1.2/networking/select-nodes.png)
-
-:::note
-
-The method **Select all nodes** works only when all nodes use the exact same dedicated NICs for this specific custom cluster network. In other situations (for example, when the cluster has a [witness node](../advanced/witness.md)), you must select either of the remaining methods.
-
-:::
-
-1. Click the **Uplink** tab to add the NICs, and configure the bond options and link attributes. The bond mode defaults to `active-backup`.
-
-   ![](/img/v1.2/networking/config-uplink.png)
-
-:::note
-
-- The NICs drop-down list shows all the common NICs on all the selected nodes. The drop-down list will change as you select different nodes.
-- The text `enp7s3 (1/3 Down)` in the NICs drop-down list indicates that the enp7s3 NIC is down in one of the three selected nodes. In this case, you need to find the NIC, set it up, and refresh this page. After this, it should be selectable.
-
-:::
-
-:::note
-
-Starting with Harvester v1.1.2, Harvester supports updating network configs. Make sure to stop all affected VMs before updating network configs.
+:::tip
 
 To simplify cluster maintenance, create one network configuration for each node or group of nodes. Without dedicated network configurations, certain maintenance tasks (for example, replacing old NICs with NICs in different slots) will require you to stop and/or migrate the affected VMs before updating the network configuration.
 
 :::
+
+1. Go to **Networks > ClusterNetworks/Configs**, and then click **Create**.
+
+1. Specify a name for the cluster network.
+
+    ![](/img/v1.2/networking/create-clusternetwork.png)
+
+1. On the **ClusterNetworks/Configs** screen, click the **Create Network Config** button of the cluster network you created.
+
+   ![](/img/v1.2/networking/create-network-config-button.png)
+
+1. On the **Network Config:Create** screen, specify a name for the configuration.
+
+1. On the **Node Selector** tab, select the method for defining the scope of this specific network configuration.
+
+   ![](/img/v1.2/networking/select-nodes.png)
+
+    :::note
+
+    - The method *Select all nodes* works only when all nodes use the exact same dedicated NICs for this specific custom cluster network. In other situations (for example, when the cluster has a [witness node](../advanced/witness.md)), you must select either of the remaining methods.
+    - If you want the configuration to apply to nodes that are not covered by the selected method, you must create another network configuration.
+
+    :::
+
+1. On the **Uplink** tab, configure the following settings:
+
+    - **NICs**: The list contains NICs that are common to all selected nodes. NICs that cannot be selected are unavailable on one or more nodes and must be configured. Once troubleshooting is completed, refresh the screen and verify that the NICs can be selected.
+    - **Bond Options**: The default value is **active-backup**.
+    - **Attributes**
+
+   ![](/img/v1.2/networking/config-uplink.png)
 
 ### Change a Network Configuration
 
@@ -187,43 +185,59 @@ If you must change the MTU, perform the following steps:
 
 1. Test the new MTU on Harvester nodes using commands such as `ping`. You must send the messages to a Harvester node with the new MTU or a node with an external IP.
 
-    Example:
+    In the following example, the network is `cn-data`, the CIDR is `192.168.100.0/24`, and the gateway is `192.168.100.1`.    
 
-    Suppose a CIDR `192.168.100.0/24` and gateway `192.168.100.1` is prepared for the cn-data network.
+    1. Set the IP `192.168.100.100` on the bridge device.
 
-    1. Set an IP 192.168.100.100 on bridge device
-
+        ```
         $ ip addr add dev cn-data-br 192.168.100.100/24
+        ```
 
-    1. Add a route for destination IP like `8.8.8.8` via the gateway
+    1. Add a route for the destination IP (for example, `8.8.8.8`) via the gateway.
 
+        ```
         $ ip route add 8.8.8.8 via 192.168.100.1 dev cn-data-br
+        ```
 
-    1. ping 8.8.8.8 from the new IP 192.168.100.100
+    1. Ping the destination IP from the new IP `192.168.100.100`.
 
+        ```
         $ ping 8.8.8.8 -I 192.168.100.100
         PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 56(84) bytes of data.
         64 bytes from 8.8.8.8: icmp_seq=1 ttl=59 time=8.52 ms
         64 bytes from 8.8.8.8: icmp_seq=2 ttl=59 time=8.90 ms
         ...
+        ```
 
-    1. ping with different size to validate new MTU
+    1. Ping the destination IP with a different packet size to validate the new MTU.
 
+        ```
         $ ping 8.8.8.8 -s 8800 -I 192.168.100.100
 
         PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 8800(8828) bytes of data
 
         The param `-s` specify the ping packet size, which can test if the new MTU really works
+        ```
 
-    1. Remove the added test route
+    1. Remove the route that you used for testing.
 
+        ```
         $ ip route delete 8.8.8.8 via 192.168.100.1 dev cn-data-br
+        ```
 
-    1. Remove the added test ip
+    1. Remove the IP that you used for testing.
 
+        ```
         $ ip addr delete 192.168.100.100/24 dev cn-data-br
+        ```
 
-1. Add back the network configurations that you removed, change the MTU in each one, and verify that the new MTU was applied.
+1. Add back the network configurations that you removed.
+
+    :::info important
+
+    You must change the MTU in each one, and verify that the new MTU was applied.
+
+    :::
 
 1. Edit the YAML of all virtual machine networks that are attached to the target cluster network.
 
@@ -268,7 +282,7 @@ If you must change the MTU, perform the following steps:
 
 1. Start all virtual machines that are attached to the target cluster network.
 
-    The virtual machines should have inherited the new MTU. You can verify this in the guest operating system using the Linux `ip link` command and `ping 8.8.8.8 -s 8800` command.
+    The virtual machines should have inherited the new MTU. You can verify this in the guest operating system using the commands `ip link` and `ping 8.8.8.8 -s 8800`.
 
 1. Verify that the virtual machine workloads are running normally.
 
@@ -313,7 +327,9 @@ If you must change the MTU, perform the following steps:
 
     :::
 
-1. Verify that the MTU was changed using the Linux `ip link` command. If the network configuration selects multiple Harvester nodes, run the command on each node.
+1. Verify that the MTU was changed using the Linux `ip link` command.
+
+    If the network configuration selects multiple Harvester nodes, run the command on each node.
 
     The output must show the new MTU of the related `*-br` device and the state `UP`. In the following example, the device is `cn-data-br` and the new MTU is `9000`.
 
@@ -331,49 +347,61 @@ If you must change the MTU, perform the following steps:
 
     :::
 
-1. Test the new MTU on Harvester nodes using commands such as `ping`. You must send the messages to a Harvester node with the new MTU or to a node with an external IP.
+1. Test the new MTU on Harvester nodes using commands such as `ping`.
 
-    Example:
+    You must send the messages to a Harvester node with the new MTU or to a node with an external IP.
 
-    Suppose a CIDR `192.168.100.0/24` and gateway `192.168.100.1` is prepared for the cn-data network.
+    In the following example, the network is `cn-data`, the CIDR is `192.168.100.0/24`, and the gateway is `192.168.100.1`.
 
-    1. Set an IP 192.168.100.100 on bridge device
+    1. Set the IP `192.168.100.100` on the bridge device.
 
+        ```
         $ ip addr add dev cn-data-br 192.168.100.100/24
+        ```
 
-    1. Add a route for destination IP like `8.8.8.8` via the gateway
+    1. Add a route for the destination IP (for example, `8.8.8.8`) via the gateway.
 
+        ```
         $ ip route add 8.8.8.8 via 192.168.100.1 dev cn-data-br
+        ```
 
-    1. ping 8.8.8.8 from the new IP 192.168.100.100
+    1. Ping the destination IP from the new IP `192.168.100.100`.
 
+        ```
         $ ping 8.8.8.8 -I 192.168.100.100
         PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 56(84) bytes of data.
         64 bytes from 8.8.8.8: icmp_seq=1 ttl=59 time=8.52 ms
         64 bytes from 8.8.8.8: icmp_seq=2 ttl=59 time=8.90 ms
         ...
+        ```
 
-    1. ping with different size to validate new MTU
+    1. Ping the destination IP with a different packet size to validate the new MTU.
 
+        ```
         $ ping 8.8.8.8 -s 8800 -I 192.168.100.100
 
         PING 8.8.8.8 (8.8.8.8) from 192.168.100.100 : 8800(8828) bytes of data
 
         The param `-s` specify the ping packet size, which can test if the new MTU really works
+        ```
 
-    1. Remove the added test route
+    1. Remove the route that you used for testing.
 
+        ```
         $ ip route delete 8.8.8.8 via 192.168.100.1 dev cn-data-br
+        ```
 
-    1. Remove the added test ip
+    1. Remove the IP that you used for testing.
 
+        ```
         $ ip addr delete 192.168.100.100/24 dev cn-data-br
+        ```
 
 1. Add back the network configurations that you removed, change the MTU in each one, and verify that the new MTU was applied.
 
 1. Enable and configure the Harvester [storage network setting](../advanced/storagenetwork.md#harvester-storage-network-setting), ensuring that the [prerequisites](../advanced/storagenetwork.md#prerequisites) are met.
 
-    Allow some time for the setting to be disabled, and then [verify that the change was applied](../advanced/storagenetwork.md#verify-configuration-is-completed).
+    Allow some time for the setting to be enabled, and then [verify that the change was applied](../advanced/storagenetwork.md#verify-configuration-is-completed).
 
 1. Edit the YAML of all virtual machine networks that are attached to the target cluster network.
 
