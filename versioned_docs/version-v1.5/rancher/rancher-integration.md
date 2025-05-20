@@ -114,6 +114,8 @@ This feature lets you deploy custom container workloads directly to the bare-met
 - It is essential not to deploy any workloads to the system namespaces `cattle-system`, `harvester-system`, or `longhorn-system`. Keeping your workloads in separate namespaces is crucial to maintaining clarity and preserving the integrity of the system components.
 - For best practices, we recommend deploying container and VM workloads in separate namespaces.
 
+:::
+
 ## Fleet Support (Experimental)
 
 _Available as of Harvester v1.3.0 + Rancher v2.7.9_
