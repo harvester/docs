@@ -140,6 +140,33 @@ To simplify cluster maintenance, create one network configuration for each node 
 
 Changes to existing network configurations may affect Harvester virtual machines and workloads, and external devices such as switches and routers. For more information, see [Network Topology](./deep-dive.md#network-topology).
 
+#### General Changes
+
+1. Find the target `Cluster Network` and `Network Configuration`.
+
+    Example: `Cluster Network` cn-data, `Network Configuration` nc-1.
+
+    ![](/img/v1.4/networking/network-configuration-1.png)
+
+1. Select **⋮ > Edit Config**, change related fields and save.
+
+    `Node Selector` page:
+
+    ![](/img/v1.4/networking/network-configuration-2.png)
+
+    `Uplink` page:
+
+    ![](/img/v1.4/networking/network-configuration-3.png)
+
+:::note
+
+- Besides the `Node Selector` and `NICs`, other parameters of `Network Configuration` under the same `Cluster Network` should be identical.
+
+- MTU is one of the `uplink` parameters.
+
+:::
+
+
 The following sections outline the steps you must perform to change the MTU of a network configuration. The sample cluster network used in these sections has `cn-data` that was built with a MTU value `1500` and is intended to be changed with value `9000`.
 
 ![](/img/v1.4/networking/set-a-new-mtu-value.png)
@@ -167,6 +194,14 @@ If you must change the MTU, perform the following steps:
 
     If multiple network configurations exist, record the node selector for each and remove configurations until only one remains.
 
+1. [Change the MTU](#general-changes) of the remaining network configuration.
+
+    :::info important
+
+    You must also change the MTU on the peer external switch or router.
+
+    :::
+
 1. Verify that the MTU was changed using the Linux `ip link` command. If the network configuration selects multiple Harvester nodes, run the command on each node.
 
     The output must show the new MTU of the related `*-br` device and the state `UP`. In the following example, the device is `cn-data-br` and the new MTU is `9000`.
@@ -174,7 +209,7 @@ If you must change the MTU, perform the following steps:
     ```
     Harvester node $ ip link show dev cn-data-br
 
-                                                  |new MTU|              |state UP|
+                                                    |new MTU|              |state UP|
     3: cn-data-br: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9000 qdisc noqueue state UP mode DEFAULT group default qlen 1000
         link/ether 52:54:00:6e:5c:2a brd ff:ff:ff:ff:ff:ff
     ```
@@ -297,7 +332,7 @@ If you must change the MTU, perform the following steps:
 
 1. Stop all the VMs.
 
-1. Disable the Harvester [Storage Network](../advanced/storagenetwork.md#harvester-storage-network-setting).
+1. Disable the Harvester [Storage Network](../advanced/storagenetwork.md#disable-the-storage-network).
 
     Allow some time for the setting to be disabled, and then [verify that the change was applied](../advanced/storagenetwork.md#verify-configuration-is-completed).
 
@@ -305,7 +340,7 @@ If you must change the MTU, perform the following steps:
 
     If multiple network configurations exist, record the node selector for each and remove configurations until only one remains.
 
-1. Change the MTU of the remaining network configuration.
+1. [Change the MTU](#general-changes) of the remaining network configuration.
 
     :::info important
 
@@ -320,7 +355,7 @@ If you must change the MTU, perform the following steps:
     ```
     Harvester node $ ip link show dev cn-data-br
 
-                                                  |new MTU|              |state UP|
+                                                    |new MTU|              |state UP|
     3: cn-data-br: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9000 qdisc noqueue state UP mode DEFAULT group default qlen 1000
         link/ether 52:54:00:6e:5c:2a brd ff:ff:ff:ff:ff:ff
     ```
@@ -371,7 +406,7 @@ If you must change the MTU, perform the following steps:
 
 1. Add back the network configurations that you removed, change the MTU in each one, and verify that the new MTU was applied.
 
-1. Enable and configure the Harvester [storage network setting](../advanced/storagenetwork.md#harvester-storage-network-setting), ensuring that the [prerequisites](../advanced/storagenetwork.md#prerequisites) are met.
+1. Enable and configure the Harvester [storage network setting](../advanced/storagenetwork.md#enable-the-storage-network), ensuring that the [prerequisites](../advanced/storagenetwork.md#prerequisites) are met.
 
     Allow some time for the setting to be disabled, and then [verify that the change was applied](../advanced/storagenetwork.md#verify-configuration-is-completed).
 
