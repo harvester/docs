@@ -65,7 +65,7 @@ Boot the VM up, and run `lspci` inside the VM, the attached PCI devices will sho
 
 ## Installing drivers for your PCI device inside the VM
 
-This is just like installing drivers in the host. The PCI passthrough feature will bind the host device to the `vfio-pci` driver, which gives VMs the ability to use their own drivers. [Here is a screenshot](https://tobilehman.com/posts/suse-harvester-pci/#toc) of NVIDIA drivers being installed in a VM. It includes a CUDA example that proves that the device drivers work.
+This is just like installing drivers in the host. The PCI passthrough feature will bind the host device to the `vfio-pci` driver, which gives VMs the ability to use their own drivers.
 
 ## SRIOV Network Devices
 _Available as of v1.2.0_
