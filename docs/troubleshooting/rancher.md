@@ -81,5 +81,5 @@ Follow the steps below to configure the different TLS setting options.
 
 Related issues:
 
-- Harvester: [#7105](https://github.com/harvester/harvester/issues/7105) and [#7284]https://github.com/harvester/harvester/issues/7284
+- Harvester: [#7105](https://github.com/harvester/harvester/issues/7105) and [#7284](https://github.com/harvester/harvester/issues/7284)
 - Rancher: [#45628](https://github.com/rancher/rancher/issues/45628)
