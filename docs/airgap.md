@@ -22,6 +22,14 @@ The Harvester ISO image contains all the packages to make it work in an air gapp
 
 In some environments, the connection to external services, from the servers or VMs, requires an HTTP(S) proxy.
 
+## Connecting to Rancher in airgap environment
+
+In an air-gapped network, HTTP(S) proxy settings must be configured so that Harvester and Rancher can still communicate. There are two common deployment topologies:
+
+- Rancher inside the same isolated network: Configure the proxy on the Harvester side through OS environment variables and Harvester’s http-proxy, https-proxy and no-proxy settings so that rancher-agent pods on each Harvester node can reach the Rancher server endpoint. Make sure the no-proxy list includes the Harvester cluster VIP or API server IP, Harvester service domains such as harvester-system.svc.cluster.local, and any relevant CIDR ranges.
+
+- Rancher outside the isolated network: Configure the proxy on the Rancher side using environment variables for the Rancher container or its Kubernetes deployment so Rancher can connect back to the Harvester API endpoint. Ensure the no-proxy list covers the Harvester VIP, service domains and internal CIDR ranges so internal traffic bypasses the proxy.
+
 ### Configure an HTTP Proxy During Installation
 
 You can configure the HTTP(S) proxy during the [ISO installation](./install/iso-install.md) as shown in picture below:

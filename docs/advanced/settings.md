@@ -191,9 +191,18 @@ Harvester sends a graceful shutdown signal to any VM that is stopped using the H
 
 **Definition**: HTTP proxy used to access external services, including downloading of images and backup to S3 services.
 
+When `httpProxy`, `httpsProxy`, and `noProxy` are configured, either during ISO-based installation or later on the host, these variables are automatically injected into every node-level process, including the kubernetes components, the container runtime that pulls Harvester’s system and VM-image containers, and other operating-system utilities.
+
+All control-plane components, such as the image-downloader fetching external VM images, the backup-restore controller communicating with S3 targets, the upgrade-checker polling Rancher’s release server, and the embedded Rancher agent, honor these proxy settings. As a result, outbound requests to public endpoints are routed through the configured proxy, while traffic to internal VIPs, service domains, and CIDR ranges bypasses it.
+
+Proxy settings are also useful for [Airgap environment](../airgap.md) setup.
+
 :::caution
 
 Changing this setting might cause single-node clusters to temporarily become unavailable or inaccessible.
+
+Proxies can rewrite or remove critical headers like `Host` or `Cache-Control`, breaking API requests or caching mechanism. Long-running operations such as large VM image downloads or backup restores can fail due to proxy-imposed timeouts on idle connections.
+Ensure preservation of necessary authentication headers, exempt internal addresses via `noProxy` and adjust proxy timeout settings for lengthy control-plane tasks.
 
 :::
 
