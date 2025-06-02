@@ -38,9 +38,15 @@ To resolve this issue, perform the following steps:
 1. Temporarily remove the PVC webhook rule.
 
    ```bash
-   kubectl patch validatingwebhookconfiguration longhorn-webhook-validator \
-     --type='json' \
-     -p='[{"op": "remove", "path": "/webhooks/0/rules/17"}]'
+   RULE_INDEX=$(kubectl get \
+     validatingwebhookconfiguration longhorn-webhook-validator -o json \
+     | jq '.webhooks[0].rules | map(.resources[0] == "persistentvolumeclaims") | index(true)')
+   
+   if [ -n "$RULE_INDEX" -a "$RULE_INDEX" != "null" ]; then
+     kubectl patch validatingwebhookconfiguration longhorn-webhook-validator \
+       --type='json' \
+       -p="[{'op': 'remove', 'path': '/webhooks/0/rules/$RULE_INDEX'}]"
+   fi
    ```
 
 1. Wait for the related PVC to be deleted.
