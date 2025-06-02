@@ -99,7 +99,7 @@ The [witness node](../advanced/witness.md) is generally not involved in the cust
 
 :::tip
 
-To simplify cluster maintenance, create one network configuration for each node or group of nodes. Without dedicated network configurations, certain maintenance tasks (for example, replacing old NICs with NICs in different slots) will require you to stop and/or migrate the affected VMs before updating the network configuration.
+To simplify cluster maintenance, create one network configuration for each node or group of nodes. Without dedicated network configurations, certain maintenance tasks (for example, replacing old NICs with NICs in different slots) will require you to stop and/or migrate the affected virtual machines before updating the network configuration.
 
 :::
 
