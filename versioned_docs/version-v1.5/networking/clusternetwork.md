@@ -290,7 +290,7 @@ If you must change the MTU, perform the following steps:
 
 1. Start all virtual machines that are attached to the target cluster network.
 
-    The virtual machines should have inherited the new MTU. You can verify this in the guest operating system using the Linux `ip link` command and `ping 8.8.8.8 -s 8800` command.
+    The virtual machines should have inherited the new MTU. You can verify this in the guest operating system using the commands `ip link` and `ping 8.8.8.8 -s 8800`.
 
 1. Verify that the virtual machine workloads are running normally.
 
@@ -335,7 +335,9 @@ If you must change the MTU, perform the following steps:
 
     :::
 
-1. Verify that the MTU was changed using the Linux `ip link` command. If the network configuration selects multiple Harvester nodes, run the command on each node.
+1. Verify that the MTU was changed using the Linux `ip link` command.
+
+    If the network configuration selects multiple Harvester nodes, run the command on each node.
 
     The output must show the new MTU of the related `*-br` device and the state `UP`. In the following example, the device is `cn-data-br` and the new MTU is `9000`.
 
