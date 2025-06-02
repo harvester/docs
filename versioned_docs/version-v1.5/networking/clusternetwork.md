@@ -111,13 +111,13 @@ To simplify cluster maintenance, create one network configuration for each node 
 
 1. On the **ClusterNetworks/Configs** screen, click the **Create Network Config** button of the cluster network you created.
 
-   ![](/img/v1.2/networking/create-network-config-button.png)
+    ![](/img/v1.2/networking/create-network-config-button.png)
 
 1. On the **Network Config:Create** screen, specify a name for the configuration.
 
 1. On the **Node Selector** tab, select the method for defining the scope of this specific network configuration.
 
-   ![](/img/v1.2/networking/select-nodes.png)
+    ![](/img/v1.2/networking/select-nodes.png)
 
     :::note
 
