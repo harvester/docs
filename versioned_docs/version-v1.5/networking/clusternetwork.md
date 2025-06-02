@@ -193,7 +193,7 @@ If you must change the MTU, perform the following steps:
 
 1. Test the new MTU on Harvester nodes using commands such as `ping`. You must send the messages to a Harvester node with the new MTU or a node with an external IP.
 
-    In the following example, the network is `cn-data`, the CIDR is `192.168.100.0/24`, and the gateway is `192.168.100.1`.    
+    In the following example, the network is `cn-data`, the CIDR is `192.168.100.0/24`, and the gateway is `192.168.100.1`.
 
     1. Set the IP `192.168.100.100` on the bridge device.
 
