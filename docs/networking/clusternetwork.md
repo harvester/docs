@@ -148,29 +148,29 @@ You must stop all affected virtual machines before changing a network configurat
 
 #### General Changes
 
-1. Find the target `Cluster Network` and `Network Configuration`.
+1. Locate the target cluster network and network configuration.
 
-    Example: `Cluster Network` cn-data, `Network Configuration` nc-1.
+    In the following example, the cluster network is `cn-data` and the network configuration is `nc-1`.
 
     ![](/img/v1.4/networking/network-configuration-1.png)
 
-1. Select **⋮ > Edit Config**, change related fields and save.
+1. Select **⋮ > Edit Config**, and then change the relevant fields.
 
-    `Node Selector` page:
+    - **Node Selector** tab:
 
     ![](/img/v1.4/networking/network-configuration-2.png)
 
-    `Uplink` page:
+    - **Uplink** tab:
 
     ![](/img/v1.4/networking/network-configuration-3.png)
 
-:::note
+    :::info important
 
-- Besides the `Node Selector` and `NICs`, other parameters of `Network Configuration` under the same `Cluster Network` should be identical.
+    You must use the same values for the **Bond Options** and **Attributes** fields in all network configurations of a custom cluster network.
 
-- MTU is one of the `uplink` parameters.
+    :::
 
-:::
+1. Click **Save**.
 
 The following sections outline the steps you must perform to change the MTU of a network configuration. The sample cluster network used in these sections has `cn-data` that was built with a MTU value `1500` and is intended to be changed with value `9000`.
 
@@ -353,7 +353,7 @@ If you must change the MTU, perform the following steps:
 
 1. Stop all virtual machines.
 
-1. Disable the Harvester [Storage Network](../advanced/storagenetwork.md#disable-the-storage-network).
+1. Disable the [storage network](../advanced/storagenetwork.md#disable-the-storage-network).
 
     Allow some time for the setting to be disabled, and then [verify that the change was applied](../advanced/storagenetwork.md#verify-configuration-is-completed).
 
