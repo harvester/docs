@@ -129,8 +129,8 @@ To simplify cluster maintenance, create one network configuration for each node 
 1. On the **Uplink** tab, configure the following settings:
 
     - **NICs**: The list contains NICs that are common to all selected nodes. NICs that cannot be selected are unavailable on one or more nodes and must be configured. Once troubleshooting is completed, refresh the screen and verify that the NICs can be selected.
-    - **Bond Options**: The default value is **active-backup**.
-    - **Attributes**
+    - **Bond Options**: The default bonding mode is **active-backup**.
+    - **Attributes**: You must use the same MTU across all network configurations of a custom cluster network. If you do not specify an MTU, the default value **1500** is used.
 
    ![](/img/v1.2/networking/config-uplink.png)
 
