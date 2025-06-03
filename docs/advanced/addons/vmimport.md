@@ -138,6 +138,7 @@ spec:
   defaultNetworkInterfaceModel: "virtio"
   skipPreflightChecks: false
   storageClass: "my-storage-class"
+  defaultDiskBusType: "scsi"
   sourceCluster: 
     name: vcsim
     namespace: default
@@ -168,6 +169,13 @@ If you do not specify a value, `virtio` is used by default.
 If a match is not found, each unmatched network interface is attached to the default `managementNetwork`.
 
 The `storageClass` field specifies the [StorageClass](../storageclass.md) to be used for images and provisioning persistent volumes during the import process. If not specified, the default StorageClass will be used.
+
+The `defaultDiskBusType` field allows you to specify the bus type for imported disks. Harvester uses this field in the following ways:
+
+- VMware sources: The value is used only if Harvester is unable to automatically detect the bus type.
+- OpenStack sources: The value is used for all imported disks.
+
+The valid values are `sata`, `scsi`, `usb`, and `virtio`. If you do not specify a value, `virtio` is used by default.
 
 By default, the vm-import-controller attempts to gracefully shut down the guest operating system of the source virtual machine before starting the import process. If the virtual machine is not gracefully shut down within a specific period, a hard power off is forced. You can adjust this time period for the graceful shutdown by changing the value of the `gracefulShutdownTimeoutSeconds` field, which is set to `60` seconds by default. A hard power off without attempting a graceful shutdown can be forced by setting the `forcePowerOff` field to `true`.
 
