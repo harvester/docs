@@ -88,7 +88,7 @@ The [Harvester network-controller](https://github.com/harvester/harvester-networ
     ![](/img/v1.2/networking/create-network-manual.png)
 
     :::info important
-    Harvester uses the information to verify that all nodes can access the VM network you are creating. If that is the case, the *Network connectivity* column on the **VM Networks** screen indicates that the network is active. Otherwise, the screen indicates that an error has occurred.
+    Harvester uses the information to verify that all nodes can access the VM network you are creating. If that is the case, the *Network connectivity* column on the **VM Networks** screen indicates that the network is active. Otherwise, the screen indicates that an error has occurred. For more information, see [the Route Connectivity section](#about-route-connectivity) for more details.
     :::
 
 ### Create a VM with VLAN Network
@@ -112,5 +112,37 @@ To create a new untagged network, go to the **Networks > VM Networks** page and 
 :::note
 
 Starting from Harvester v1.1.2, Harvester supports updating and deleting VM networks. Make sure to stop all affected VMs before updating or deleting VM networks.
+
+:::
+
+## About Route Connectivity
+
+![](/img/v1.3/networking/route-connectivity.png)
+
+Route connectivity for each VM Network can have any of the following states:
+
+- **Active**: Connectivity between the VM Network and Harvester hosts via the configured gateway is confirmed.
+
+- **Dhcp failed**: Harvester is unable to obtain route information via DHCP, so connectivity between the VM network and Harvester hosts cannot be confirmed. Ensure that the DHCP server is configured correctly and is L2-reachable within the VM network (or can be provided in other routable network, if a DHCP relay server is provided in the VM network). Otherwise, specify the gateway IP address when you create the VM network.
+
+- **Ping failed**: Harvester is unable to send ICMP Echo Request packets. This is a rare occurrence.
+
+- **Inactive**: Harvester hosts are unable to reach a VM network. In some cases, the VM network may be reachable but packet loss is greater than 20%. Ensure that the gateway is configured correctly and is reachable via the management network that the Harvester nodes are connected to.
+
+:::info important
+
+The [VM load balancer](./loadbalancer#vm-load-balancer) functions as intended only if the route connectivity state is **Active**.
+
+:::
+
+The Harvester network controller checks VM network connectivity. This check is essential because if a VM network is reachable from a Harvester node (via routers, if necessary), the VM network is suitable for running workloads that require connections to the Harvester node, especially the control plane. For example, the [Harvester cloud provider](../rancher/cloud-provider.md) that is running in the guest cluster must access the underlying Harvester and Kubernetes APIs to be able to calculate the node topology and provide the load balancer functionality.
+
+To check connectivity, the Harvester network controller must know the gateway IP address, which is not always specified by the user when the VM network is created. However, this address can still be obtained if a DHCP server that is configured with the gateway information is running on the VM network. To obtain the information, the network controller creates a helper job, which functions as a DHCP client, on the VM network. Once the gateway address is obtained, the network controller sends ICMP Echo Request packets from the management network to the gateway, and waits for responses.
+
+In summary, **route connectivity** represents connectivity between the VM network and the management network, which the Harvester nodes are connected to.
+
+:::note
+
+The states **Dhcp failed**, **Ping failed**, and **Inactive** do not imply that a VM network is completely unusable. For example, if you only want to isolate certain workloads from other networks (including the management network that the Harvester nodes are connected to), a VM network can still be used. Whether a VM network has internet connectivity is not the concern of the Harvester network controller.
 
 :::
