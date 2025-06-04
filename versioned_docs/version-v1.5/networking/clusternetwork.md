@@ -90,8 +90,6 @@ Certain [ARP settings](https://www.kernel.org/doc/Documentation/networking/ip-sy
 
 If more than one network interface is attached to each host, you can create custom cluster networks for better traffic isolation. Each cluster network must have at least one network configuration with a defined scope and bonding mode.
 
-Before creating a cluster network, ensure that the [hardware requirements](../install/requirements.md#hardware-requirements) are met.
-
 :::note
 
 The [witness node](../advanced/witness.md) is generally not involved in the custom cluster network.
@@ -107,6 +105,8 @@ The [witness node](../advanced/witness.md) is generally not involved in the cust
 To simplify cluster maintenance, create one network configuration for each node or group of nodes. Without dedicated network configurations, certain maintenance tasks (for example, replacing old NICs with NICs in different slots) will require you to stop and/or migrate the affected virtual machines before updating the network configuration.
 
 :::
+
+1. Ensure that the [hardware requirements](../install/requirements.md#hardware-requirements) are met.
 
 1. Go to **Networks > ClusterNetworks/Configs**, and then click **Create**.
 
