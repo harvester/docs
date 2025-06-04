@@ -42,7 +42,7 @@ Furthermore, the VIP's "gratuitous ARPs" may also be ineffective depending on yo
 
 To get the VIP MAC address, you can run the following command on the management node:
 ```shell
-$ kubectl get svc -n kube-system ingress-expose -ojsonpath='{.metadata.annotations}'
+$ kubectl get svc -n kube-system ingress-expose -ojsonpath='{.metadata.annotations.kube-vip\.io/hwaddr}'
 ```
 
 Example of output:
