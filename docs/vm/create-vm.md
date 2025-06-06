@@ -222,9 +222,10 @@ For instance, you can combine `Required` with `Affinity` to instruct the schedul
 See the [Kubernetes Pod Affinity and Anti-Affinity Documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity) for more details.
 
 ## Annotations
-Harvester allows you to attach custom metadata to virtual machines using annotations. These key-value pairs are mainly used by tools and systems to enable extended features or behaviors without modifying the core VM configuration.
 
-Harvester introduces a custom annotation, `harvesterhci.io/custom-ip`, that lets users **manually set an IP address** for display purposes in the UI. This is useful when the VM is unable to report its IP address (e.g., due to missing `qemu-guest-agent`).
+Harvester allows you to attach custom metadata to virtual machines using annotations. These key-value pairs enable extended features or behaviors without requiring changes to the core virtual machine configuration.
+
+You can use the `harvesterhci.io/custom-ip` annotation to set an IP address on the Harvester UI *for display purposes*. This is useful when the virtual machine is unable to report its IP address because of a missing `qemu-guest-agent` or other reasons.
 
 ## Advanced Options
 
