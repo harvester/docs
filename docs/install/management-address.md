@@ -34,7 +34,7 @@ The VIP can be assigned to any Harvester node management interface and can chang
 
 If you plan to host a Harvester cluster in a bare metal data center, the service provider will likely designate a "floating" or "reserved" IP address as the VIP that you can assign to one of your servers. Updating this assignment causes traffic to instantly start flowing to the new node it is assigned to. In these situations, Harvester is unable to update the floating/reserved IP assignment in your provider's systems when the VIP changes hosts.
 
-Furthermore, the VIP's "gratuitous ARPs" may also be ineffective depending on your provider's networking setup between your Harvester nodes (for example, if your Harvester hosts are not on the same layer-2 network). You must update the floating/reserved IP assignment manually when the VIP changes hosts to ensure that the cluster functions properly. For more information, see [Finding which node the VIP is on](#finding-which-node-the-vip-is-on).
+Furthermore, the VIP's "gratuitous ARPs" may also be ineffective depending on your provider's networking setup between your Harvester nodes (for example, if your Harvester hosts are not on the same layer-2 network). You must update the floating/reserved IP assignment manually when the VIP changes hosts to ensure that the cluster functions properly. For more information, see [Finding which node the VIP is on](#identifying-the-node-the-vip-is-assigned-to).
 
 :::
 
@@ -42,7 +42,7 @@ Furthermore, the VIP's "gratuitous ARPs" may also be ineffective depending on yo
 
 To get the VIP MAC address, you can run the following command on the management node:
 ```shell
-$ kubectl get svc -n kube-system ingress-expose -ojsonpath='{.metadata.annotations}'
+$ kubectl get svc -n kube-system ingress-expose -ojsonpath='{.metadata.annotations.kube-vip\.io/hwaddr}'
 ```
 
 Example of output:
