@@ -130,38 +130,7 @@ Check out the available [`upgrade-config` setting](../advanced/settings.md#upgra
       releaseDate: '20250425'
     ```
 
-1. Add the necessary annotations.
-
-    - [minCertsExpirationInDay Annotation](#mincertsexpirationinday-annotation)
-    - [skipGarbageCollectionThresholdCheck Annotation](skipgarbagecollectionthresholdcheck-annotation)
-
 1. Run `kubectl create -f v1.5.0.yaml` to create the version.
-
-#### minCertsExpirationInDay Annotation
-
-Harvester checks the validity period of certificates on each node. This check eliminates the possibility of certificates expiring while the upgrade is in progress. If a certificate will expire within 7 days, an error is returned.
-
-Example:
-
-`harvesterhci.io/minCertsExpirationInDay: "14"` - When this annotation is added, Harvester returns an error when it detects a certificate that will expire within 14 days.
-
-For more information, see [auto-rotate-rke2-certs](advanced/settings.md/#auto-rotate-rke2-certs).
-
-#### skipGarbageCollectionThresholdCheck Annotation
-
-Harvester checks the disk space on each node to ensure that the kubelet's image garbage collection threshold is not exceeded when the required images are loaded during upgrades.
-
-Example:
-
-`harvesterhci.io/skipGarbageCollectionThresholdCheck: true` - When this annotation is added, Harvester skips the check.
-
-:::caution
-
-Do not use this annotation in production environments. When the check is skipped, required images might be deleted, causing the upgrade to fail.
-
-:::
-
-For more information, see [Free system partition space requirement](#free-system-partition-space-requirement).
 
 ## Prepare an air-gapped upgrade
 
@@ -228,25 +197,27 @@ _Available as of v1.5.0_
 
 Harvester loads images on each node during upgrades. When disk usage exceeds the kubelet's garbage collection threshold, the kubelet deletes unused images to free up space. This may cause issues in airgapped environments because the images are not available on the node.
 
-Harvester v1.5.0 includes checks that ensure nodes do not trigger garbage collection after loading new images.
+Harvester includes checks that ensure nodes do not trigger garbage collection after loading new images.
 
-![](/img/v1.5/upgrade/upgrade_free_space_check.png)
-
-If you want to try upgrading even if the free system partition space is insufficient on some nodes, you can update the `harvesterhci.io/skipGarbageCollectionThresholdCheck: true` annotation of the `Version` object.
+When disk space is insufficient, Harvester blocks the upgrade and returns an error similar to the following:
 
 ```
+Node "harvester-node-0" will reach 92.84% storage space after loading new images. It's higher than kubelet image garbage collection threshold 85%.
+```
+
+If you want to try upgrading even if the free system partition space is insufficient on some nodes, you can update the `harvesterhci.io/skipGarbageCollectionThresholdCheck: true` annotation of the `Upgrade` object.
+
+```yaml
 apiVersion: harvesterhci.io/v1beta1
-kind: Version
+kind: Upgrade
 metadata:
   annotations:
     harvesterhci.io/skipGarbageCollectionThresholdCheck: true
-  name: 1.5.0
+  generateName: hvst-upgrade-
   namespace: harvester-system
 spec:
-  isoChecksum: <SHA-512 checksum of the ISO>
-  isoURL: http://192.168.0.181:8000/harvester-master-amd64.iso
-  minUpgradableVersion: 1.4.1
-  releaseDate: "20250630"
+  version: "1.6.0"
+  logEnabled: true
 ```
 
 :::caution
@@ -276,6 +247,31 @@ Harvester skips the upgrade image preloading process. When the deployments on th
 Do not rely on the public container registry. Note any potential internet service interruptions and how close you are to reaching your [Docker Hub rate limit](https://www.docker.com/increase-rate-limits/). Failure to download any of the required images may cause the upgrade to fail and may leave the cluster in a middle state.
 
 :::
+
+## Certificate Expiry Check
+
+_Available as of v1.5.0_
+
+Harvester checks the validity period of certificates on each node. This check eliminates the possibility of certificates expiring while the upgrade is in progress. If a certificate will expire within 7 days, an error is returned. This behavior can be overridden by setting the `harvesterhci.io/minCertsExpirationInDay` annotation.
+
+Example:
+
+```yaml
+apiVersion: harvesterhci.io/v1beta1
+kind: Upgrade
+metadata:
+  annotations:
+    harvesterhci.io/minCertsExpirationInDay: "14"
+  generateName: hvst-upgrade-
+  namespace: harvester-system
+spec:
+  version: "1.6.0"
+  logEnabled: true
+```
+
+When this annotation is added to the `Upgrade` object, Harvester returns an error when it detects a certificate that will expire within 14 days.
+
+For more information, see [auto-rotate-rke2-certs](advanced/settings.md/#auto-rotate-rke2-certs).
 
 ## VM Backup Compatibility
 
