@@ -39,7 +39,7 @@ Please refer to [this page](./create-windows-vm.md) for creating Windows virtual
     - **CPU** and **Memory**: You can allocate a maximum of **254** vCPUs. If virtual machines are not expected to fully consume the allocated resources most of the time, you can use the [`overcommit-config`](../advanced/settings.md#overcommit-config) setting to optimize physical resource allocation.
     - **SSHKey**: Select SSH keys or upload new keys.
 1. Select a custom VM image on the **Volumes** tab. The default disk will be the root disk. You can add more disks to the VM.
-1. To configure networks, go to the **Networks** tab. 
+1. To configure networks, go to the **Networks** tab.
     1. The **Management Network** is added by default, you can remove it if the VLAN network is configured.
     1. You can also add additional networks to the VMs using VLAN networks. You may configure the VLAN networks on **Advanced > Networks** first.
 1. (Optional) Set node affinity rules on the **Node Scheduling** tab.
@@ -181,8 +181,8 @@ A container disk is added when creating a VM by providing a Docker image. When c
 1. Add a **Docker Image**.
     - A disk image, with the format qcow2 or raw, must be placed into the `/disk` directory.
     - Raw and qcow2 formats are supported, but qcow2 is recommended in order to reduce the container image's size. If you use an unsupported image format, the VM will get stuck in a `Running` state.
-    - A container disk also allows you to store disk images in the `/disk` directory. An example of creating such a container image can be found [here](https://kubevirt.io/user-guide/virtual_machines/disks_and_volumes/#containerdisk-workflow-example). 
-1. Choose a **Bus** type.  
+    - A container disk also allows you to store disk images in the `/disk` directory. An example of creating such a container image can be found [here](https://kubevirt.io/user-guide/virtual_machines/disks_and_volumes/#containerdisk-workflow-example).
+1. Choose a **Bus** type.
   ![add-container-volume](/img/v1.2/vm/add-container-volume-2.png)
 
 ## Networks
@@ -220,6 +220,11 @@ See the [Kubernetes Node Affinity Documentation](https://kubernetes.io/docs/conc
 For instance, you can combine `Required` with `Affinity` to instruct the scheduler to place VMs from two services in the same zone, enhancing communication efficiency. Likewise, the use of `Preferred` with `Anti-Affinity` can help distribute VMs of a particular service across multiple zones for increased availability.
 
 See the [Kubernetes Pod Affinity and Anti-Affinity Documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity) for more details.
+
+## Annotations
+Harvester allows you to attach custom metadata to virtual machines using annotations. These key-value pairs are mainly used by tools and systems to enable extended features or behaviors without modifying the core VM configuration.
+
+Harvester introduces a custom annotation, `harvesterhci.io/custom-ip`, that lets users **manually set an IP address** for display purposes in the UI. This is useful when the VM is unable to report its IP address (e.g., due to missing `qemu-guest-agent`).
 
 ## Advanced Options
 
@@ -364,5 +369,3 @@ The following example describes how to install an ISO image using [openSUSE Leap
 7. Open the VM web-vnc you just created and follow the instructions given by the installer.
 8. After the installation is complete, reboot the VM  as instructed by the operating system (you can remove the installation media after booting the system).
 9. After the VM reboots, it will automatically boot from the disk volume and start the operating system.
-
-
