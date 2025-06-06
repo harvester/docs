@@ -59,7 +59,7 @@ kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/de
     - `backing-image-manager` pods: 1 IP per disk, similar to the instance manager pods. Two versions of these will coexist during an upgrade, and the old ones will be removed after the upgrade is completed.
     - The required number of IPs is calculated using a simple formula: `Required Number of IPs = (Number of Nodes * 2) + (Number of Disks * 2) + Number of Images to Download/Upload`
 	- Example: If a cluster has five nodes with two disks each, and ten images will be uploaded simultaneously, the IP range should be greater than or equal to `/26` (`(5 * 2) + (5 * 2) + 10 = 30`).
-  - Exclude IP addresses that Longhorn pods and the storage network must not use, such as addresses reserved for [Harvester CSI RWX support](../../../docs/rancher/csi-driver.md#rwx-volumes-support), the gateway, and other components.
+  - Exclude IP addresses that Longhorn pods and the storage network must not use, such as addresses reserved for [Harvester CSI RWX support](../rancher/csi-driver.md#rwx-volumes-support), the gateway, and other components.
 
 
 We will take the following configuration as an example to explain the details of the Storage Network
@@ -100,23 +100,51 @@ Please refer Networking page to configure `ClusterNetwork` and `VLAN Config` wit
 
 ### Harvester Storage Network Setting
 
-Harvester Storage Network setting will need `range`, `clusterNetwork`, `vlan` field to construct Multus NetworkAttachmentDefinition for Storage Network usage. You could apply this setting via Web UI or CLI.
+The [`storage-network` setting](./settings.md#storage-network) allows you to configure the network used to isolate in-cluster storage traffic when segregation is required.
+
+You can [enable](#enable-the-storage-network) and [disable](#disable-the-storage-network) the storage network using either the UI or the CLI. When the setting is enabled, you must construct a Multus `NetworkAttachmentDefinition` CRD by configuring certain fields.
 
 #### Web UI
 
-Harvester Storage Network setting could be easily modified on the `Settings > storage-network` page.
+:::tip
 
-![storagenetwork-ui.png](/img/v1.2/storagenetwork/storagenetwork-ui.png)
+Using the Harvester UI to configure the `storage-network` setting is strongly recommended.
+
+:::
+
+##### Enable the Storage Network
+
+1. Go to **Advanced > Settings > storage-network**.
+
+1. Select **Enabled**.
+
+1. Configure the **VLAN ID**, **Cluster Network**, **IP Range**, and **Exclude** fields to construct a Multus `NetworkAttachmentDefinition` CRD.
+
+1. Click **Save**.
+
+![storage-network-enabled.png](/img/v1.4/storagenetwork/storage-network-enabled.png)
+
+##### Disable the Storage Network
+
+1. Go to **Advanced > Settings > storage-network**.
+
+1. Select **Disabled**.
+
+1. Click **Save**.
+
+Once the storage network is disabled, Longhorn starts using the pod network for storage-related operations.
+
+![storage-network-disabled.png](/img/v1.4/storagenetwork/storage-network-disabled.png)
 
 #### CLI
 
-Users could use this command to edit Harvester Storage Network setting.
+You can use the following command to configure the [`storage-network` setting](./settings.md#storage-network).
 
 ```bash
 kubectl edit settings.harvesterhci.io storage-network
 ```
 
-The value format is JSON string or empty string as shown in below.
+The value format is JSON string or empty string as shown in below:
 
 ```json
 {
@@ -129,7 +157,7 @@ The value format is JSON string or empty string as shown in below.
 }
 ```
 
-The full configuration will be like this example.
+The full configuration is like this example:
 
 ```yaml
 apiVersion: harvesterhci.io/v1beta1
@@ -139,9 +167,20 @@ metadata:
 value: '{"vlan":100,"clusterNetwork":"storage","range":"192.168.0.0/24", "exclude":["192.168.0.100/32"]}'
 ```
 
+When the storage network is disabled, the full configuration is as follows:
+
+```yaml
+apiVersion: harvesterhci.io/v1beta1
+kind: Setting
+metadata:
+  name: storage-network
+```
+
 :::caution
 
-Because of the design, Harvester will treat extra and insignificant characters in JSON string as a different configuration.
+Harvester considers extra insignificant characters in a JSON string as a different configuration.
+
+Specifying a valid value in the `value` field enables the storage network. Deleting the `value` field disables the storage network.
 
 :::
 
