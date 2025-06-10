@@ -135,6 +135,7 @@ spec:
   - sourceNetwork: "dvSwitch 2"
     destinationNetwork: "default/vlan2"
   storageClass: "my-storage-class"
+  defaultDiskBusType: "scsi"
   sourceCluster: 
     name: vcsim
     namespace: default
@@ -153,6 +154,8 @@ The list of items in `networkMapping` will define how the source network interfa
 If a match is not found, each unmatched network interface is attached to the default `managementNetwork`.
 
 The `storageClass` field specifies the [StorageClass](../storageclass.md) to be used for images and provisioning persistent volumes during the import process. If not specified, the default StorageClass will be used.
+
+Use the `defaultDiskBusType` field to specify the bus type of the imported disks of the virtual machine. For VMware sources this field is used only if the auto-detection fails. For OpenStack sources, the specified bus type is used for all imported disks. The allowed values are `virtio`, `scsi`, `sata` and `usb`.  It defaults to `virtio` if not specified.
 
 Once the virtual machine has been imported successfully, the object will reflect the status:
 
