@@ -155,11 +155,11 @@ The support matrix of VMDP driver pack for Windows are as follows (assume the VM
 | Windows Server 2012 x86(x64) | Yes | `E:\win8-2012\x86(x64)\pvvx` |
 | Windows 8.1 x86(x64) | Yes | `E:\win8.1-2012r2\x86(x64)\pvvx` |
 | Windows Server 2012r2 x86(x64) | Yes | `E:\win8.1-2012r2\x86(x64)\pvvx` |
-| Windows 10 x86(x64) | Yes | `E:\win10-server\x86(x64)\pvvx` |
-| Windows Server 2016 x86(x64) | Yes | `E:\win10-server\x86(x64)\pvvx` |
-| Windows Server 2019 x86(x64) | Yes | `E:\win10-server\x86(x64)\pvvx` |
-| Windows 11 x86(x64) | Yes | `E:\win10-2004\x86(x64)\pvvx` |
-| Windows Server 2022 x86(x64) | Yes | `E:\win10-2004\x86(x64)\pvvx` |
+| Windows 10 x86(x64) | Yes | `E:\win10-11-server22\x86(x64)\pvvx` |
+| Windows Server 2016 x86(x64) | Yes | `E:\win10-server-16-19\x86(x64)\pvvx` |
+| Windows Server 2019 x86(x64) | Yes | `E:\win10-server-16-19\x86(x64)\pvvx` |
+| Windows 11 x86(x64) | Yes | `E:\win10-11-server22\x86(x64)\pvvx` |
+| Windows Server 2022 x86(x64) | Yes | `E:\win10-11-server22\x86(x64)\pvvx` |
 
 :::note
 
