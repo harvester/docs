@@ -29,6 +29,7 @@ To import virtual machine images in the **Images** page, enter a URL that can be
 
 - The image name will be auto-filled using the URL address's filename. You can customize the image name at any time.
 - Avoid using a daily build URL (for example, the [Ubuntu Jammy daily build](https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img)). When all replicas of a Longhorn backing image are lost, Longhorn attempts to download the file again for self-healing purposes. Using a daily build URL is problematic because the URL itself changes, causing a checksum mismatch and a conflict that results in lost replicas.
+- VM image cloning is supported only for images imported via URL.
 
 :::
 
