@@ -27,9 +27,9 @@ The Harvester controller downloads a release ISO file and uses it to provision a
 
 ![](/img/v1.2/upgrade/ts_status_phase1.png)
 
-Network speed and cluster resource utilization strongly influence the completion of this phase. Upgrades typically fail because of network speed issues.
+Network speed and cluster resource utilization influence the amount of time required to complete this phase. Upgrades typically fail because of network speed issues.
 
-If the upgrade fails at this point, check the status of the repository virtual machine and its corresponding pod before [restarting the upgrade](#restart-the-upgrade). You can check the status using the command `kubectl get vm -n harvester-system`.
+If the upgrade fails at this point, check the status of the repository virtual machine and its corresponding pod before restarting the upgrade. You can check the status using the command `kubectl get vm -n harvester-system`.
 
 Example:
 
@@ -50,7 +50,7 @@ Allow some time for the images to be downloaded and preloaded on all nodes.
 
 ![](/img/v1.2/upgrade/ts_status_phase2.png)
 
-If the upgrade fails at this point, check the job logs in the `cattle-system` namespace before [restarting the upgrade](#restart-the-upgrade). You can check the logs using the command `kubectl get jobs -n cattle-system | grep prepare`.
+If the upgrade fails at this point, check the job logs in the `cattle-system` namespace before restarting the upgrade. You can check the logs using the command `kubectl get jobs -n cattle-system | grep prepare`.
 
 Example:
 
@@ -84,7 +84,7 @@ $ kubectl logs jobs/hvst-upgrade-9gmg2-apply-manifests -n harvester-system
 
 :::caution
 
-If the upgrade fails at this point, you must generate a [support bundle](../troubleshooting/harvester.md#generate-a-support-bundle) before [restarting the upgrade](#restart-the-upgrade). The support bundle contains logs and resource manifests that can help identify the cause of the failure.
+If the upgrade fails at this point, you must generate a [support bundle](../troubleshooting/harvester.md#generate-a-support-bundle) before restarting the upgrade. The support bundle contains logs and resource manifests that can help identify the cause of the failure.
 
 :::
 
@@ -129,12 +129,6 @@ The Harvester controller deletes the repository virtual machine and all files th
 ## Common Operations
 
 ### Stop the Ongoing Upgrade
-
-:::warning
-
-If the ongoing upgrade fails in [Phase 4: Upgrade Nodes](#phase-4-upgrade-nodes), **DO NOT restart** the upgrade unless instructed by [SUSE support](https://www.suse.com/support/).
-
-:::
 
 You can stop the upgrade by performing the following steps:
 
