@@ -29,39 +29,39 @@ Once the StorageClass is created, you can only edit the description. All other s
 
 1. On the Harvester UI, go to **Advanced > StorageClasses**.
 
-  ![](/img/v1.2/storageclass/create_storageclasses_entry.png)
+    ![](/img/v1.2/storageclass/create_storageclasses_entry.png)
 
 1. In the general information section, configure the following settings:
 
-  - **Name**: Name of the StorageClass.
-  - **Description** (optional): Description of the StorageClass.
-  - **Provisioner**: Provisioner that determines the volume plugin to be used for provisioning volumes.
+    - **Name**: Name of the StorageClass.
+    - **Description** (optional): Description of the StorageClass.
+    - **Provisioner**: Provisioner that determines the volume plugin to be used for provisioning volumes.
 
 1. On the **Parameters** tab, configure the following settings:
 
-  - **Number of Replicas**: Number of replicas created for each Longhorn volume. The default value is `3`. 
-  - **Stale Replica Timeout**: Number of minutes Longhorn waits before cleaning up a replica with the status `ERROR`. The default value is `30`.
-  - **Node Selector** (optional): Node tags to be matched during volume scheduling. You can add node tags on the host configuration screen (**Host -> Edit Config**).
-  - **Disk Selector** (optional): Disk tags to be matched during volume scheduling. You can add disk tags on the host configuration screen (**Host -> Edit Config**).
-  - **Migratable**: Whether [Live Migration](../vm/live-migration.md) is supported. The default value is `Yes`.
+    - **Number of Replicas**: Number of replicas created for each Longhorn volume. The default value is `3`. 
+    - **Stale Replica Timeout**: Number of minutes Longhorn waits before cleaning up a replica with the status `ERROR`. The default value is `30`.
+    - **Node Selector** (optional): Node tags to be matched during volume scheduling. You can add node tags on the host configuration screen (**Host -> Edit Config**).
+    - **Disk Selector** (optional): Disk tags to be matched during volume scheduling. You can add disk tags on the host configuration screen (**Host -> Edit Config**).
+    - **Migratable**: Whether [Live Migration](../vm/live-migration.md) is supported. The default value is `Yes`.
 
 1. On the **Customize** tab, configure the following settings:
 
-  - **Reclaim Policy**: Volumes dynamically created by a StorageClass have the reclaim policy specified in the **Reclaim Policy** field of the StorageClass. The default value is `Delete`.
-    - `Delete`: Deletes volumes and the underlying devices when the volume claim is deleted.
-    - `Retain`: Retains the volume for manual cleanup.
+    - **Reclaim Policy**: Volumes dynamically created by a StorageClass have the reclaim policy specified in the **Reclaim Policy** field of the StorageClass. The default value is `Delete`.
+      - `Delete`: Deletes volumes and the underlying devices when the volume claim is deleted.
+      - `Retain`: Retains the volume for manual cleanup.
 
-  - **Allow Volume Expansion**: Volumes can be configured to be expandable. The default value is `Enabled`, which allows you to resize the volume by editing the corresponding PVC object.
+    - **Allow Volume Expansion**: Volumes can be configured to be expandable. The default value is `Enabled`, which allows you to resize the volume by editing the corresponding PVC object.
 
-    :::note
+      :::note
 
-    You can only use the volume expansion feature to increase the volume size.
+      You can only use the volume expansion feature to increase the volume size.
 
-    :::
+      :::
 
-  - **Volume Binding Mode**: You can specify when volume binding and dynamic provisioning should occur. The default value is `Immediate`.
-    - **Immediate**: Binds and provisions a volume once the PVC is created.
-    - **WaitForFirstConsumer**: Binds and provisions a volume once a virtual machine using the PVC is created.
+    - **Volume Binding Mode**: You can specify when volume binding and dynamic provisioning should occur. The default value is `Immediate`.
+      - **Immediate**: Binds and provisions a volume once the PVC is created.
+      - **WaitForFirstConsumer**: Binds and provisions a volume once a virtual machine using the PVC is created.
 
 1. Click **Create**.
 
@@ -129,12 +129,14 @@ Harvester currently supports the following options:
 - `best-effort`: When applied, Longhorn always attempts to schedule a replica on the same node as the pod that uses the volume. Longhorn does not stop the volume even when a local replica is unavailable because of an environmental limitation (for example, insufficient disk space or incompatible disk tags).
 
 :::note
+
 Longhorn provides a third option called `strict-local`, which forces Longhorn to keep only one replica on the same node as the pod that uses the volume. Harvester does not support this option because it can affect certain operations such as [VM Live Migration](../vm/live-migration.md)
+
 :::
 
 For more information, see [Data Locality](https://longhorn.io/docs/1.6.0/high-availability/data-locality/) in the Longhorn documentation.
 
-## Appendix - Use Case
+## Use Cases
 
 ### HDD Scenario
 
