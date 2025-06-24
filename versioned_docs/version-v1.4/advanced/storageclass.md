@@ -8,13 +8,21 @@ title: "StorageClass"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/advanced/storageclass"/>
 </head>
 
-A StorageClass allows administrators to describe the **classes** of storage they offer. Different Longhorn StorageClasses might map to replica policies, or to node schedule policies, or disk schedule policies determined by the cluster administrators. This concept is sometimes called **profiles** in other storage systems.
+Harvester uses StorageClasses to describe how Longhorn must provision volumes. Longhorn StorageClasses can map to replica policies, node schedule policies, or disk schedule policies created by the cluster administrators. This concept is referred to as *profiles* in other storage systems.
 
 :::note
 
-For information about leveraging external storage, see [Third-Party Storage Support](../advanced/csidriver.md)
+The default StorageClass `harvester-longhorn` has a replica count value of `3` for high availability. If you use `harvester-longhorn` in a single-node cluster, Longhorn is unable to create the default number of replicas, and volumes are marked as *Degraded* on the Harvester UI. 
+
+To avoid this issue, you can perform either of the following actions: 
+
+- Change the [replica count](../install/harvester-configuration/#installharvesterstorage_classreplica_count) of `harvester-longhorn` to `1` using a [Harvester configuration](../install/harvester-configuration.md) file. 
+
+- [Create a new StorageClass](../advanced/storageclass.md#creating-a-storageclass) with the **Number of Replicas** parameter set to `1`. Once created, locate the new StorageClass in the list and then select **⋮ > Set as Default**.
 
 :::
+
+For information about support for volume provisioning using external container storage interface (CSI) drivers, see [Third-Party Storage Support](../advanced/csidriver.md).
 
 ## Creating a StorageClass
 
@@ -31,27 +39,27 @@ Once the StorageClass is created, you can only edit the description. All other s
 
     ![](/img/v1.2/storageclass/create_storageclasses_entry.png)
 
-1. In the general information section, configure the following settings:
+1. In the general information section, configure the following:
 
     - **Name**: Name of the StorageClass.
     - **Description** (optional): Description of the StorageClass.
     - **Provisioner**: Provisioner that determines the volume plugin to be used for provisioning volumes.
 
-1. On the **Parameters** tab, configure the following settings:
+1. On the **Parameters** tab, configure the following:
 
     - **Number of Replicas**: Number of replicas created for each Longhorn volume. The default value is `3`. 
     - **Stale Replica Timeout**: Number of minutes Longhorn waits before cleaning up a replica with the status `ERROR`. The default value is `30`.
     - **Node Selector** (optional): Node tags to be matched during volume scheduling. You can add node tags on the host configuration screen (**Host -> Edit Config**).
     - **Disk Selector** (optional): Disk tags to be matched during volume scheduling. You can add disk tags on the host configuration screen (**Host -> Edit Config**).
-    - **Migratable**: Whether [Live Migration](../vm/live-migration.md) is supported. The default value is `Yes`.
+    - **Migratable**: Setting that enables [Live Migration](../vm/live-migration.md) for volumes created using the StorageClass. The default value is `Yes`.
 
-1. On the **Customize** tab, configure the following settings:
+1. On the **Customize** tab, configure the following:
 
-    - **Reclaim Policy**: Volumes dynamically created by a StorageClass have the reclaim policy specified in the **Reclaim Policy** field of the StorageClass. The default value is `Delete`.
+    - **Reclaim Policy**: Reclaim policy that applies to volumes created using the StorageClass. The default value is `Delete`.
       - `Delete`: Deletes volumes and the underlying devices when the volume claim is deleted.
       - `Retain`: Retains the volume for manual cleanup.
 
-    - **Allow Volume Expansion**: Volumes can be configured to be expandable. The default value is `Enabled`, which allows you to resize the volume by editing the corresponding PVC object.
+    - **Allow Volume Expansion**: Setting that allows volume expansion, which involves resizing of the block device and expansion of the filesystem. When the setting is enabled, you can increase the volume size by editing the corresponding PVC object. The default value is `Enabled`.
 
       :::note
 
@@ -59,7 +67,7 @@ Once the StorageClass is created, you can only edit the description. All other s
 
       :::
 
-    - **Volume Binding Mode**: You can specify when volume binding and dynamic provisioning should occur. The default value is `Immediate`.
+    - **Volume Binding Mode**: Setting that controls when volume binding and dynamic provisioning occur. The default value is `Immediate`.
       - **Immediate**: Binds and provisions a volume once the PVC is created.
       - **WaitForFirstConsumer**: Binds and provisions a volume once a virtual machine using the PVC is created.
 
