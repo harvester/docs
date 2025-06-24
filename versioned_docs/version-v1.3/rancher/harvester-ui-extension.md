@@ -26,10 +26,14 @@ The current [Harvester UI](https://github.com/harvester/dashboard) will continue
 
 Versions of the Harvester operating system and the Harvester UI Extension will align starting with v1.5.0.
 
+Harvester UI Extension is designed to **backward compatible** with the older versions of Harvester. We use feature flags to render the appropriate UI features based on Harvester cluster version. 
 
-| Harvester Cluster         | Harvester UI Extension          | Minimum supported Rancher  |
-| --------------------------| ------------------------------- | ------------------------   |
-| v1.3.0, v1.3.1, v1.3.2    | v1.0.2                          | Rancher 2.10.1             |
+Therefore, we recommend to install the latest Harvester UI Extension on your Rancher instance.
+
+| Harvester UI Extension          | Minimum supported Rancher  |
+ -------------------------------  | ------------------------   |
+| v1.0.x                          | Rancher 2.10.1             |
+| v1.5.x                          | Rancher 2.11.0             |
 
 Installing the extension over the network is not possible in air-gapped environments, so you must perform the workaround outlined in [Harvester UI Extension with Rancher Integration](/v1.3/airgap#harvester-ui-extension-with-rancher-integration).
 
