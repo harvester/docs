@@ -66,16 +66,15 @@ Skipping multiple Kubernetes minor versions is not supported upstream and is a k
 
 ## Rancher upgrade
 
-If you are using Rancher to manage your Harvester cluster, we recommend upgrading your Rancher server first. For more information, please refer to the [Rancher upgrade guide](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/upgrades).
+If you are using Rancher to manage your Harvester cluster, you must [upgrade Rancher](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/upgrades) *before* upgrading Harvester. 
 
-For the Harvester & Rancher support matrix, please visit our website [here](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/).
+:::info important
 
-:::note
-
-  - Upgrading Rancher will not automatically upgrade your Harvester cluster. You still need to upgrade your Harvester cluster after upgrading Rancher.
-  - Upgrading Rancher will not bring your Harvester cluster down. You can still access your Harvester cluster using its virtual IP.
+The Harvester and Rancher upgrade processes are independent of each other. During a Rancher upgrade, you can still access your Harvester cluster using its virtual IP. Harvester is not automatically upgraded.
 
 :::
+
+When a Rancher version reaches its End of Maintenance (EOM) date, Harvester only provides fixes for critical security-related issues that affect integration functions (Virtualization Management). For more information, see the [Harvester & Rancher Support Matrix](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/).
 
 ## Before starting an upgrade
 
