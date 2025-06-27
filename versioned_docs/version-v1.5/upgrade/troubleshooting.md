@@ -128,9 +128,23 @@ The Harvester controller deletes the repository virtual machine and all files th
 
 ## Common Operations
 
-### Stop the Ongoing Upgrade
+### Restart the Upgrade
 
-You can stop the upgrade by performing the following steps:
+:::warning
+
+If the ongoing upgrade fails or becomes stuck at [Phase 4: Upgrade Nodes](#phase-4-upgrade-nodes), **DO NOT restart** the upgrade unless instructed by [SUSE support](https://www.suse.com/support/).
+
+:::
+
+1. Generate a [support bundle](../troubleshooting/harvester.md#generate-a-support-bundle).
+
+1. [Stop the ongoing upgrade](#stop-the-ongoing-upgrade).
+
+1. Click the **Upgrade** button on the Harvester UI **Dashboard** screen.
+
+    If you [customized the version](./automatic.md#customize-the-version), you might need to [create the version object](./automatic.md#prepare-the-version) again.
+
+### Stop the Ongoing Upgrade
 
 1. Log in to a control plane node.
 
@@ -188,20 +202,6 @@ You can stop the upgrade by performing the following steps:
     ./resumeallcharts.sh
 
     ```
-
-### Restart the Upgrade
-
-:::warning
-
-If the ongoing upgrade fails or becomes stuck at [Phase 4: Upgrade Nodes](#phase-4-upgrade-nodes), **DO NOT restart** the upgrade unless instructed by [SUSE support](https://www.suse.com/support/).
-
-:::
-
-1. [Stop the ongoing upgrade](#stop-the-ongoing-upgrade).
-
-1. Click the **Upgrade** button on the Harvester UI **Dashboard** screen.
-
-    If you [customized the version](./automatic.md#customize-the-version), you might need to [create the version object](./automatic.md#prepare-the-version) again.
 
 ### Download Upgrade Logs
 
