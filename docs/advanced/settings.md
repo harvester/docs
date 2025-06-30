@@ -806,6 +806,8 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
 - `restoreVM`: Option that enables Harvester to automatically restore running VMs after a single-node cluster is upgraded. The default value is `false`, which causes all VMs to be stopped after the upgrade is completed. When set to `true`, Harvester restarts VMs that were running before the upgrade was started. VMs that were paused before the upgrade are not restarted.
 
+- `logReadyTimeout`: Option that sets duration for which Upgrade waits for the UpgradeLog logging infrastructure to get ready; times out after that. The default value is 10 minutes. Allowed time range is 1 to 20 minutes.
+
 **Example**:
 
 ```json
