@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          yarn install --frozen-lockfile
+          PUPPETEER_DOWNLOAD_BASE_URL=https://storage.googleapis.com/chrome-for-testing-public yarn install --frozen-lockfile
 
       - name: Ignore OpenAPI
         run: |
