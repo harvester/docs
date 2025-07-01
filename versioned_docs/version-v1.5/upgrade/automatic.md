@@ -16,34 +16,65 @@ description: Harvester provides two ways to upgrade. Users can either upgrade us
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/upgrade/index"/>
 </head>
 
-## Upgrade support matrix
+Harvester is adopting a new lifecycle strategy that simplifies version management and upgrades. This strategy includes the following:
 
-The following table shows the upgrade path of all supported versions.
-
-| Upgrade from version | Supported new version(s) |
-|----------------------|--------------------------|
-| [v1.4.2/v1.4.3](./v1-4-2-to-v1-5-0.md) | v1.5.0        |
-| [v1.4.1/v1.4.2](./v1-4-1-to-v1-4-3.md) | v1.4.3        |
-| [v1.4.1](./v1-4-1-to-v1-4-2.md) | v1.4.2        |
-| [v1.4.0](./v1-4-0-to-v1-4-1.md) | v1.4.1        |
-| [v1.3.2](./v1-3-2-to-v1-4-0.md) | v1.4.0        |
-| [v1.3.1](./v1-3-1-to-v1-3-2.md) | v1.3.2        |
-| [v1.2.2/v1.3.0](./v1-2-2-to-v1-3-1.md) | v1.3.1        |
-| [v1.2.1](./v1-2-1-to-v1-2-2.md) | v1.2.2        |
-| [v1.1.2/v1.1.3/v1.2.0](./v1-2-0-to-v1-2-1.md) | v1.2.1              |
-
-## Rancher upgrade
-
-If you are using Rancher to manage your Harvester cluster, we recommend upgrading your Rancher server first. For more information, please refer to the [Rancher upgrade guide](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/upgrades).
-
-For the Harvester & Rancher support matrix, please visit our website [here](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/).
+- Four-month minor release cadence (April, August, and December)
+- Two-month patch release cadence (best effort)
+- Component adoption policy
 
 :::note
 
-  - Upgrading Rancher will not automatically upgrade your Harvester cluster. You still need to upgrade your Harvester cluster after upgrading Rancher.
-  - Upgrading Rancher will not bring your Harvester cluster down. You can still access your Harvester cluster using its virtual IP.
+Harvester does not support downgrades. This restriction helps prevent unexpected system behavior and issues associated with function incompatibility, deprecation, and removal.
 
 :::
+
+## Upgrade paths
+
+The following table outlines the supported upgrade paths.
+
+| Installed Version | Supported Upgrade Versions |
+| --- | --- |
+| v1.4.2/v1.4.3 | [v1.5.0](./v1-4-2-to-v1-5-0.md) and [v1.5.1](./v1-4-2-to-v1-5-1.md) |
+| v1.4.1/v1.4.2 | [v1.4.3](./v1-4-1-to-v1-4-3.md) |
+| v1.4.1 | [v1.4.2](./v1-4-1-to-v1-4-2.md) |
+| v1.4.0 | [v1.4.1](./v1-4-0-to-v1-4-1.md) |
+| v1.3.2 | [v1.4.0](./v1-3-2-to-v1-4-0.md) |
+| v1.3.1 | [v1.3.2](./v1-3-1-to-v1-3-2.md) |
+| v1.2.2/v1.3.0 | [v1.3.1](./v1-2-2-to-v1-3-1.md) |
+| v1.2.1 | [v1.2.2](./v1-2-1-to-v1-2-2.md) |
+| v1.1.2/v1.1.3/v1.2.0 | [v1.2.1](./v1-2-0-to-v1-2-1.md) |
+
+Harvester v1.5.x and later versions allow the following:
+
+- Upgrading from one minor version to the next (for example, from v1.4.2 to v1.5.1) without needing to install the patches released in between the two versions. This is possible because Harvester allows a maximum of one minor version upgrade for underlying components.
+- Upgrading to a later patch version (for example, from v1.5.0 to v1.5.1), assuming that the same component versions are used across the releases for a given minor version.
+
+The following table outlines the components used in these versions:
+
+| Components | Harvester v1.4.2 and v1.4.3 | Harvester v1.5.x |
+| --- | --- | --- |
+| KubeVirt | v1.3 | v1.4 |
+| Longhorn | v1.7 | v1.8 |
+| Rancher | v2.10 | v2.11 |
+| RKE2 | v1.31 | v1.32 |
+
+:::note
+
+Skipping multiple Kubernetes minor versions is not supported upstream and is a key reason behind the limited upgrade paths. For more information, see [Version Skew Policy](https://kubernetes.io/releases/version-skew-policy) in the Kubernetes documentation.
+
+:::
+
+## Rancher upgrade
+
+If you are using Rancher to manage your Harvester cluster, you must [upgrade Rancher](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/upgrades) *before* upgrading Harvester. 
+
+:::info important
+
+The Harvester and Rancher upgrade processes are independent of each other. During a Rancher upgrade, you can still access your Harvester cluster using its virtual IP. Harvester is not automatically upgraded.
+
+:::
+
+When a Rancher version reaches its End of Maintenance (EOM) date, Harvester only provides fixes for critical security-related issues that affect integration functions (Virtualization Management). For more information, see the [Harvester & Rancher Support Matrix](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/).
 
 ## Before starting an upgrade
 
