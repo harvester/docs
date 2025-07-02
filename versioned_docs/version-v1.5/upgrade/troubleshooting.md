@@ -15,20 +15,23 @@ Here are some tips to troubleshoot a failed upgrade:
 - Check [version-specific upgrade notes](./automatic.md#upgrade-support-matrix). You can click the version in the support matrix table to see if there are any known issues.
 - Dive into the upgrade [design proposal](https://github.com/harvester/harvester/blob/master/enhancements/20220413-zero-downtime-upgrade.md). The following section briefly describes phases within an upgrade and possible diagnostic methods.
 
-## Investigate the Upgrade Flow
+## Upgrade Flow
 
-The Harvester upgrade process includes several phases.
-    ![](/img/v1.2/upgrade/ts_upgrade_phases.png)
+The Harvester upgrade process involves several phases.
 
-### Phase 1: Provision upgrade repository VM.
+![](/img/v1.2/upgrade/ts_upgrade_phases.png)
 
-The Harvester controller downloads a Harvester release ISO file and uses it to provision a VM. During this phase you can see the upgrade status windows show:
+### Phase 1: Provision an Upgrade Repository Virtual Machine
+
+The Harvester controller downloads a release ISO file and uses it to provision a repository virtual machine. The virtual machine name uses the format `upgrade-repo-hvst-xxxx`.
 
 ![](/img/v1.2/upgrade/ts_status_phase1.png)
 
-The time to complete the phase depends on the user's network speed and cluster resource utilization. We see failures in this phase due to network speed. If this happens, the user can [start over the upgrade](#start-over-an-upgrade) again.
+Network speed and cluster resource utilization influence the amount of time required to complete this phase. Upgrades typically fail because of network speed issues.
 
-We can also check the repository VM (named with the format `upgrade-repo-hvst-xxxx`) status and its corresponding pod:
+If the upgrade fails at this point, check the status of the repository virtual machine and its corresponding pod before [restarting the upgrade](#restart-the-upgrade). You can check the status using the command `kubectl get vm -n harvester-system`.
+
+Example:
 
 ```
 $ kubectl get vm -n harvester-system
@@ -39,15 +42,17 @@ $ kubectl get pods -n harvester-system | grep upgrade-repo-hvst
 virt-launcher-upgrade-repo-hvst-upgrade-9gmg2-4mnmq     1/1     Running     0          4m44s
 ```
 
-### Phase 2: Preload container images
+### Phase 2: Preload Container Images
 
-The Harvester controller creates jobs on each Harvester node to download images from the repository VM and preload them. These are the container images required for the next release.
+The Harvester controller creates jobs that download and preload container images from the repository virtual machine. These images are required for the next release.
 
-During this stage you can see the upgrade status windows shows:
+Allow some time for the images to be downloaded and preloaded on all nodes.
 
 ![](/img/v1.2/upgrade/ts_status_phase2.png)
 
-It will take a while for all nodes to preload images. If the upgrade fails at this phase, the user can check job logs in the `cattle-system` namespace:
+If the upgrade fails at this point, check the job logs in the `cattle-system` namespace before [restarting the upgrade](#restart-the-upgrade). You can check the logs using the command `kubectl get jobs -n cattle-system | grep prepare`.
+
+Example:
 
 ```
 $ kubectl get jobs -n cattle-system | grep prepare
@@ -58,13 +63,15 @@ $ kubectl logs jobs/apply-hvst-upgrade-9gmg2-prepare-on-node1-with-2bbea1599a-f0
 ...
 ```
 
-It's also safe to [start over the upgrade](#start-over-an-upgrade) if an upgrade fails at this phase.
+### Phase 3: Upgrade System Services
 
-### Phase 3: Upgrade system services
+The Harvester controller creates a job that upgrades component Helm charts.
 
 ![](/img/v1.2/upgrade/ts_status_phase3.png)
 
-In this phase, Harvester controller upgrades component Helm charts with a job. The user can check the `apply-manifest` job with the following command:
+You can check the `apply-manifest` job using the command `$ kubectl get jobs -n harvester-system -l harvesterhci.io/upgradeComponent=manifest`.
+
+Example:
 
 ```
 $ kubectl get jobs -n harvester-system -l harvesterhci.io/upgradeComponent=manifest
@@ -75,18 +82,27 @@ $ kubectl logs jobs/hvst-upgrade-9gmg2-apply-manifests -n harvester-system
 ...
 ```
 
-### Phase 4: Upgrade nodes
+:::caution
+
+If the upgrade fails at this point, you must generate a [support bundle](../troubleshooting/harvester.md#generate-a-support-bundle) before [restarting the upgrade](#restart-the-upgrade). The support bundle contains logs and resource manifests that can help identify the cause of the failure.
+
+:::
+
+### Phase 4: Upgrade Nodes
+
+The Harvester controller creates the following jobs on each node:
+
+- Multi-node clusters:
+  - `pre-drain` job: Live-migrates or shuts down virtual machines on the node. Once completed, the embedded Rancher service upgrades the RKE2 runtime on the node.
+  - `post-drain` job: Upgrades and reboots the operating system.
+- Single-node clusters:
+  - `single-node-upgrade` job: Upgrades the operating system and RKE2 runtime. The job name uses the format `hvst-upgrade-xxx-single-node-upgrade-<hostname>`.
 
 ![](/img/v1.2/upgrade/ts_status_phase4.png)
 
-The Harvester controller creates jobs on each node (one by one) to upgrade nodes' OSes and RKE2 runtime. For multi-node clusters, there are two kinds of jobs to update a node:
+You can check the jobs running on each node by running the command `kubectl get jobs -n harvester-system -l harvesterhci.io/upgradeComponent=node`.
 
-- **pre-drain** job: live-migrate or shutdown VMs on a node. When the job completes, the embedded Rancher service upgrades RKE2 runtime on a node.
-- **post-drain** job: upgrade OS and reboot.
-
-For single-node clusters, there is only one `single-node-upgrade` type job for each node (named with the format `hvst-upgrade-xxx-single-node-upgrade-<hostname>`).
-
-The user can check node jobs by:
+Example:
 
 ```
 $ kubectl get jobs -n harvester-system -l harvesterhci.io/upgradeComponent=node
@@ -100,28 +116,35 @@ $ kubectl logs -n harvester-system jobs/hvst-upgrade-9gmg2-post-drain-node2
 ...
 ```
 
-:::caution
+:::warning
 
-Do not [restart the upgrade](#restart-an-upgrade) if the process fails at this point. Identify the cause first, ask help from [Community](https://github.com/harvester/harvester?tab=readme-ov-file#community) or [SUSE support](https://www.suse.com/support/) if necessary.
+If the upgrade fails at this point, **DO NOT restart** the upgrade unless instructed by [SUSE support](https://www.suse.com/support/).
 
 :::
 
-### Phase 5: Clean-up
+### Phase 5: Cleanup
 
-The Harvester controller deletes the upgrade repository VM and all files that are no longer needed.
+The Harvester controller deletes the repository virtual machine and all files that are no longer necessary.
 
+## Common Operations
 
-## Common operations
+### Restart the Upgrade
+
+:::warning
+
+If the ongoing upgrade fails or becomes stuck at [Phase 4: Upgrade Nodes](#phase-4-upgrade-nodes), **DO NOT restart** the upgrade unless instructed by [SUSE support](https://www.suse.com/support/).
+
+:::
+
+1. Generate a [support bundle](../troubleshooting/harvester.md#generate-a-support-bundle).
+
+1. [Stop the ongoing upgrade](#stop-the-ongoing-upgrade).
+
+1. Click the **Upgrade** button on the Harvester UI **Dashboard** screen.
+
+    If you [customized the version](./automatic.md#customize-the-version), you might need to [create the version object](./automatic.md#prepare-the-version) again.
 
 ### Stop the Ongoing Upgrade
-
-:::caution
-
-If an ongoing upgrade fails or becomes stuck at [Phase 4: Upgrade nodes](#phase-4-upgrade-nodes), identify the cause first.
-
-:::
-
-You can stop the upgrade by performing the following steps:
 
 1. Log in to a control plane node.
 
@@ -137,7 +160,7 @@ You can stop the upgrade by performing the following steps:
     hvst-upgrade-9gmg2   10m
     ```
 
-1. Delete the Upgrade CR
+1. Delete the `Upgrade` CR.
 
     ```
     $ kubectl delete upgrade.harvesterhci.io/hvst-upgrade-9gmg2 -n harvester-system
@@ -180,17 +203,9 @@ You can stop the upgrade by performing the following steps:
 
     ```
 
-### Restart an Upgrade
+### Download Upgrade Logs
 
-1. [Stop the ongoing upgrade](#stop-the-ongoing-upgrade).
-
-1. Click the **Upgrade** button on the Harvester UI **Dashboard** screen.
-
-    If you [customized the version](./automatic.md#customize-the-version), you might need to [create the version object](./automatic.md#prepare-the-version) again.
-
-### Download upgrade logs
-
-We have designed and implemented a mechanism to automatically collect all the upgrade-related logs and display the upgrade procedure. By default, this is enabled. You can also choose to opt out of such behavior.
+Harvester automatically collects all the upgrade-related logs and display the upgrade procedure. By default, this is enabled. You can also choose to opt out of such behavior.
 
 ![The "Enable Logging" checkbox on the upgrade confirmation dialog](/img/v1.2/upgrade/enable_logging.png)
 
@@ -202,7 +217,7 @@ Log entries will be collected as files for each upgrade-related Pod, even for in
 
 ![The upgrade log archive contains all the logs generated by the upgrade-related Pods](/img/v1.2/upgrade/upgradelog_archive.png)
 
-After the upgrade ended, Harvester stops collecting the upgrade logs to avoid occupying the disk space. In addition, you can click the **Dismiss it** button to purge the upgrade logs.
+After the upgrade ends, Harvester stops collecting the upgrade logs to avoid occupying the disk space. In addition, you can click the **Dismiss it** button to purge the upgrade logs.
 
 ![The upgrade log archive contains all the logs generated by the upgrade-related Pods](/img/v1.2/upgrade/dismiss_upgrade_to_remove_upgradelog.png)
 
@@ -210,46 +225,47 @@ For more details, please refer to the [upgrade log HEP](https://github.com/harve
 
 :::caution
 
-The storage volume for storing upgrade-related logs is 1GB by default. If an upgrade went into issues, the logs may consume all the available space of the volume. To work around such kind of incidents, try the following steps:
+The default size of the volume that stores upgrade-related logs is 1 GB. When errors occur, these logs may completely consume the volume's available space. To work around this issue, you can perform the following steps:
 
-1. Detach the `log-archive` Volume by scaling down the `fluentd` StatefulSet and `downloader` Deployment.
+1. Detach the `log-archive` volume by scaling down the `fluentd` StatefulSet and `downloader` deployment.
 
-```
-# Locate the StatefulSet and Deployment
-$ kubectl -n harvester-system get statefulsets -l harvesterhci.io/upgradeLogComponent=aggregator
-NAME                                               READY   AGE
-hvst-upgrade-xxxxx-upgradelog-infra-fluentd   1/1     43s
+    ```
+    # Locate the StatefulSet and Deployment
+    $ kubectl -n harvester-system get statefulsets -l harvesterhci.io/upgradeLogComponent=aggregator
+    NAME                                               READY   AGE
+    hvst-upgrade-xxxxx-upgradelog-infra-fluentd   1/1     43s
 
-$ kubectl -n harvester-system get deployments -l harvesterhci.io/upgradeLogComponent=downloader
-NAME                                            READY   UP-TO-DATE   AVAILABLE   AGE
-hvst-upgrade-xxxxx-upgradelog-downloader   1/1     1            1           38s
+    $ kubectl -n harvester-system get deployments -l harvesterhci.io/upgradeLogComponent=downloader
+    NAME                                            READY   UP-TO-DATE   AVAILABLE   AGE
+    hvst-upgrade-xxxxx-upgradelog-downloader   1/1     1            1           38s
 
+    # Scale down the resources to terminate any Pods using the volume
+    $ kubectl -n harvester-system scale statefulset hvst-upgrade-xxxxx-upgradelog-infra-fluentd --replicas=0
+    statefulset.apps/hvst-upgrade-xxxxx-upgradelog-infra-fluentd scaled
 
-# Scale down the resources to terminate any Pods using the volume
-$ kubectl -n harvester-system scale statefulset hvst-upgrade-xxxxx-upgradelog-infra-fluentd --replicas=0
-statefulset.apps/hvst-upgrade-xxxxx-upgradelog-infra-fluentd scaled
+    $ kubectl -n harvester-system scale deployment hvst-upgrade-xxxxx-upgradelog-downloader --replicas=0
+    deployment.apps/hvst-upgrade-xxxxx-upgradelog-downloader scaled
+    ```
 
-$ kubectl -n harvester-system scale deployment hvst-upgrade-xxxxx-upgradelog-downloader --replicas=0
-deployment.apps/hvst-upgrade-xxxxx-upgradelog-downloader scaled
-```
+1. Expand the volume size using the Longhorn UI.
 
-2. Expand the volume size via Longhorn dashboard. For more details, please refer to [the volume expansion guide](https://longhorn.io/docs/1.3.2/volumes-and-nodes/expansion/).
+    ```
+    # Here's how to find out the actual name of the target volume
+    $ kubectl -n harvester-system get pvc -l harvesterhci.io/upgradeLogComponent=log-archive -o jsonpath='{.items[].spec.volumeName}'
+    pvc-63355afb-ce61-46c4-8781-377cf962278a
+    ```
 
-```
-# Here's how to find out the actual name of the target volume
-$ kubectl -n harvester-system get pvc -l harvesterhci.io/upgradeLogComponent=log-archive -o jsonpath='{.items[].spec.volumeName}'
-pvc-63355afb-ce61-46c4-8781-377cf962278a
-```
+    For more information, see [Volume Expansion](https://longhorn.io/docs/1.8.1/nodes-and-volumes/volumes/expansion/) in the Longhorn documentation.
 
-3. Recover the `fluentd` StatefulSet and `downloader` Deployment.
+1. Recover the `fluentd` StatefulSet and `downloader` deployment.
 
-```
-$ kubectl -n harvester-system scale statefulset hvst-upgrade-xxxxx-upgradelog-infra-fluentd --replicas=1
-statefulset.apps/hvst-upgrade-xxxxx-upgradelog-infra-fluentd scaled
+    ```
+    $ kubectl -n harvester-system scale statefulset hvst-upgrade-xxxxx-upgradelog-infra-fluentd --replicas=1
+    statefulset.apps/hvst-upgrade-xxxxx-upgradelog-infra-fluentd scaled
 
-$ kubectl -n harvester-system scale deployment hvst-upgrade-xxxxx-upgradelog-downloader --replicas=1
-deployment.apps/hvst-upgrade-xxxxx-upgradelog-downloader scaled
-```
+    $ kubectl -n harvester-system scale deployment hvst-upgrade-xxxxx-upgradelog-downloader --replicas=1
+    deployment.apps/hvst-upgrade-xxxxx-upgradelog-downloader scaled
+    ```
 
 :::
 
