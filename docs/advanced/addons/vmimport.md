@@ -134,6 +134,8 @@ spec:
     destinationNetwork: "default/vlan1"
   - sourceNetwork: "dvSwitch 2"
     destinationNetwork: "default/vlan2"
+    networkInterfaceModel: "e1000"
+  defaultNetworkInterfaceModel: "virtio"
   storageClass: "my-storage-class"
   sourceCluster: 
     name: vcsim
@@ -149,6 +151,12 @@ This can take a while based on the size of the virtual machine, but users should
 If the source virtual machine is placed in a folder, you can specify the folder name in the optional `folder` field.
 
 The list of items in `networkMapping` will define how the source network interfaces are mapped to the Harvester Networks.
+If needed, you can specify the network interface model per item with the `networkInterfaceModel` field. With this you can override the auto-detected model for VMware sources or the default model for OpenStack sources. The values `e1000`, `e1000e`, `ne2k_pci`, `pcnet`, `rtl8139` and `virtio` are allowed.
+
+With the `defaultNetworkInterfaceModel` field, you can specify the network interface model which is used in the following cases:
+- Auto-detection of the model from the imported network interfaces fails (OpenStack source client does not have auto-detection, therefore this field is used for every network interface).
+- No network mapping is provided and the "pod-network" network interface is auto-created.
+It defaults to `virtio` if not specified.
 
 If a match is not found, each unmatched network interface is attached to the default `managementNetwork`.
 
