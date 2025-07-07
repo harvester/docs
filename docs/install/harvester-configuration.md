@@ -258,7 +258,7 @@ Refer to the following example config for installing an RPM package in Harvester
 os:
   after_install_chroot_commands:
     - rpm -ivh <the url of rpm package>
-  
+
 ```
 
 DNS resolution is unavailable in the `after-install-chroot stage`, and the `nameserver` might not be available. If you need to access a domain name to install a package using an URL, create a temporary `/etc/resolv.conf` file first. For example:
@@ -470,15 +470,15 @@ install:
 
 ### `install.automatic`
 
-**Definition**: Setting that forces the installer to skip the interactive steps in the installation process. 
+**Definition**: Setting that forces the installer to skip the interactive steps in the installation process.
 
 When enabled, the configuration is either retrieved from the value of `harvester.install.config_url` or defined individually using kernel parameters.
 
-### `install.data_disk` 
+### `install.data_disk`
 
-**Versions**: v1.0.1 and later 
+**Versions**: v1.0.1 and later
 
-**Definition**: Default device for storing VM data. 
+**Definition**: Default device for storing VM data.
 
 When installing via PXE, use `/dev/disk/by-id/$id` or `/dev/disk/by-path/$path` to specify the storage device if the server contains multiple physical volumes.
 
@@ -491,15 +491,15 @@ install:
   data_disk: /dev/sdb
 ```
 
-### `install.debug` 
+### `install.debug`
 
-**Definition**: Setting that enables additional logging and debugging during installation. 
+**Definition**: Setting that enables additional logging and debugging during installation.
 
-### `install.device` 
+### `install.device`
 
-**Definition**: Device on which the Harvester OS is installed. 
+**Definition**: Device on which the Harvester OS is installed.
 
-When installing via PXE, use `/dev/disk/by-id/$id` or `/dev/disk/by-path/$path` to specify the storage device if the server contains multiple physical volumes. 
+When installing via PXE, use `/dev/disk/by-id/$id` or `/dev/disk/by-path/$path` to specify the storage device if the server contains multiple physical volumes.
 
 ### `install.force_efi`
 
@@ -574,7 +574,7 @@ install:
 
 ### `install.management_interface`
 
-**Definition**: Network interfaces for the host machine. 
+**Definition**: Network interfaces for the host machine.
 
 Harvester uses the [systemd net naming scheme](https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html). Ensure that the interface name is present on the target machine before installation.
 
@@ -632,7 +632,7 @@ Definition: Setting that prevents partitioning and formatting of the installatio
 
 ### `install.persistent_partition_size`
 
-**Definition**: Size of the partition COS_PERSISTENT in Gi or Mi. 
+**Definition**: Size of the partition COS_PERSISTENT in Gi or Mi.
 
 This partition stores data such as system packages and container images. The minimum value is 150 Gi.
 
@@ -696,7 +696,7 @@ install:
 
 ### `install.vip`
 
-**Definition**: VIP of the Harvester management endpoint. 
+**Definition**: VIP of the Harvester management endpoint.
 
 After installation, you can access the Harvester UI at `https://<VIP>`.
 
@@ -718,7 +718,7 @@ install:
 
 ### `install.vip_hw_addr`
 
-**Definition**: Hardware address corresponding to the VIP. 
+**Definition**: Hardware address corresponding to the VIP.
 
 You must configure an on-premises DHCP server to offer the configured VIP. This field is required when the value of `install.vip_mode` is `dhcp`. For more information, see [Management Address](./management-address.md).
 
@@ -790,11 +790,11 @@ The installer sends HTTP requests to the specified URL. Multiple requests can be
 
 **Fields**:
 
-- `event`: Event type that triggers an HTTP action on the webhook. 
+- `event`: Event type that triggers an HTTP action on the webhook.
   - `STARTED`: The installation has started.
   - `SUCCEEDED`: The installation was completed without errors.
   - `FAILED`: The installation was unsuccessful.
-- `method`: HTTP method 
+- `method`: HTTP method
 - `url`: URL to which HTTP requests are sent
 - `insecure`: When set to `true`, Harvester does not verify the server's certificate. The default value is `false`.
 - `basicAuth`: When set to `true`, Harvester uses the "Basic" HTTP authentication scheme.
@@ -866,4 +866,64 @@ system_settings:
   containerd-registry: '{"Mirrors": {"docker.io": {"Endpoints": ["https://myregistry.local:5000"]}}, "Configs": {"myregistry.local:5000": {"Auth": {"Username": "testuser", "Password": "testpassword"}, "TLS": {"InsecureSkipVerify": false}}}}'
   http-proxy: '{"httpProxy": "http://my.proxy", "httpsProxy": "https://my.proxy", "noProxy": "some.internal.svc"}'
   ui-source: auto
+```
+
+---
+<p>&nbsp;</p>
+
+### `sans`
+
+#### Definition
+
+Add additional hostnames or IPv4/IPv6 addresses as Subject Alternative Names on the server TLS cert.
+
+#### Example
+
+The example below adds `example.com` to X509v3 Subject Alternative Names.
+
+```yaml
+sans:
+  - example.com
+```
+
+Check the certificate to validate it.
+
+```
+> openssl x509 -in /var/lib/rancher/rke2/server/tls/serving-kube-apiserver.crt -text -noout
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 927360019122894648 (0xcdea50626b83738)
+        Signature Algorithm: ecdsa-with-SHA256
+        Issuer: CN = rke2-server-ca@1740650146
+        Validity
+            Not Before: Feb 27 09:55:46 2025 GMT
+            Not After : Feb 27 09:55:46 2026 GMT
+        Subject: CN = kube-apiserver
+        Subject Public Key Info:
+            Public Key Algorithm: id-ecPublicKey
+                Public-Key: (256 bit)
+                pub:
+                    04:23:6a:e5:22:52:d0:82:3b:48:64:e4:1c:72:11:
+                    c9:b4:96:b5:ae:de:82:a3:e3:a5:fe:e5:b3:21:04:
+                    43:32:f6:f2:7e:54:73:99:e9:65:80:07:82:54:fb:
+                    33:45:b7:e1:4a:1e:30:4f:be:7f:b8:60:cc:86:54:
+                    f6:39:0c:7d:94
+                ASN1 OID: prime256v1
+                NIST CURVE: P-256
+        X509v3 extensions:
+            X509v3 Key Usage: critical
+                Digital Signature, Key Encipherment
+            X509v3 Extended Key Usage:
+                TLS Web Server Authentication
+            X509v3 Authority Key Identifier:
+                keyid:02:33:86:86:97:C3:32:3C:16:E0:C6:66:19:59:0B:93:C9:A0:5B:B5
+
+            X509v3 Subject Alternative Name:
+                DNS:kubernetes, DNS:kubernetes.default, DNS:kubernetes.default.svc, DNS:kubernetes.default.svc.cluster.local, DNS:example.com, DNS:localhost, DNS:harvester-node-0, IP Address:192.168.3.131, IP Address:127.0.0.1, IP Address:0:0:0:0:0:0:0:1, IP Address:192.168.3.30, IP Address:10.53.0.1
+    Signature Algorithm: ecdsa-with-SHA256
+         30:46:02:21:00:af:b7:81:97:f4:d1:fe:bb:62:a1:46:48:30:
+         ab:e8:02:ae:32:44:d8:cb:96:87:e5:85:33:ce:7c:83:cb:c7:
+         48:02:21:00:ac:93:b4:62:f6:65:0a:42:8b:9c:69:51:54:47:
+         6a:1d:12:96:4a:bd:e9:5e:4e:eb:a4:55:a2:39:bd:b3:48:80
 ```
