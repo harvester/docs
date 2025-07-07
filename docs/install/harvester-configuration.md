@@ -871,22 +871,22 @@ system_settings:
 ---
 <p>&nbsp;</p>
 
-### `sans`
+### `sans` (Subject Alternative Names)
 
 #### Definition
 
-Add additional hostnames or IPv4/IPv6 addresses as Subject Alternative Names on the server TLS cert.
+Additional hostnames and IP addresses (IPv4 or IPv6) that are to be associated with the public key in a server's TLS certificate.
 
 #### Example
 
-The example below adds `example.com` to X509v3 Subject Alternative Names.
+`example.com` is added as a Subject Alternative Name.
 
 ```yaml
 sans:
   - example.com
 ```
 
-Check the certificate to validate it.
+To validate this, you can print the certificate information and search for `example.com` in the `X509v3 Subject Alternative Name` field.
 
 ```
 > openssl x509 -in /var/lib/rancher/rke2/server/tls/serving-kube-apiserver.crt -text -noout
