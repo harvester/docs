@@ -34,16 +34,39 @@ Backup support is currently limited to Longhorn V1 Data Engine volumes. Harveste
 
 A backup target is an endpoint used to access a backup store in Harvester. A backup store is an NFS server or S3 compatible server that stores the backups of VM volumes. The backup target can be set at `Settings > backup-target`.
 
+Common Parameters:
+
+| Parameter              | Type    | Description                                                                                                                                               |
+| :--------------------- | :------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Type                   | string  | Choose S3 or NFS                                                                                                                                          |
+| Refresh Interval       | integer | The interval at which the backups will be synced with the backup target. If `0`, backups will only be synced iff all backup volumes are in `ready` state. |
+
+<Tabs>
+<TabItem value="s3" label="S3" default>
+
+| Parameter          | Type   | Description                                                                                    |
+| :----------------- | :----- | :--------------------------------------------------------------------------------------------- |
+| Endpoint           | string | A hostname or an IP address. It can be left empty for AWS S3.                                  |
+| BucketName         | string | Name of the bucket                                                                             |
+| BucketRegion       | string | Region of the bucket                                                                           |
+| AccessKeyID        | string | A user-id that uniquely identifies your account                                                |
+| SecretAccessKey    | string | The password to your account                                                                   |
+| Certificate        | string | Paste to use a self-signed SSL certificate of your S3 server                                   |
+| VirtualHostedStyle | bool   | Use virtual host style URLs of the form `bucket.example.com`; e.g., Alibaba Cloud (Aliyun) OSS |
+
+![backuptarget-s3.png](/img/backuptarget-s3.png)
+
+</TabItem>
+<TabItem value="nfs" label="NFS">
+
 | Parameter          | Type   | Description                                                                              |
 | :----------------- | :----- | :--------------------------------------------------------------------------------------- |
-| Type               | string | Choose S3 or NFS                                                                         |
-| Endpoint           | string | A hostname or an IP address. It can be left empty for AWS S3.                |
-| BucketName         | string | Name of the bucket                                                                       |
-| BucketRegion       | string | Region of the bucket                                                                     |
-| AccessKeyID        | string | A user-id that uniquely identifies your account                     |
-| SecretAccessKey    | string | The password to your account                                         |
-| Certificate        | string | Paste to use a self-signed SSL certificate of your S3 server |
-| VirtualHostedStyle | bool   | Use `VirtualHostedStyle` access only; e.g., Alibaba Cloud (Aliyun) OSS                    |
+| Endpoint           | string | The URL of the NFS server. [More info](https://longhorn.io/docs/1.6.0/snapshots-and-backups/backup-and-restore/set-backup-target/#set-up-nfs-backupstore) |
+
+![backuptarget-nfs.png](/img/backuptarget-nfs.png)
+
+</TabItem>
+</Tabs>
 
 ### Create a VM backup
 
