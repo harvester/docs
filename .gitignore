@@ -27,4 +27,6 @@ yarn-error.log*
 package-lock.json
 
 docs/api/*
-versioned_docs/*/api
+versioned_docs/*/api/*
+!docs/api/_category_.json
+!versioned_docs/*/api/_category_.json
