@@ -806,6 +806,11 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
 - `restoreVM`: Option that enables Harvester to automatically restore running VMs after a single-node cluster is upgraded. The default value is `false`, which causes all VMs to be stopped after the upgrade is completed. When set to `true`, Harvester restarts VMs that were running before the upgrade was started. VMs that were paused before the upgrade are not restarted.
 
+- `logReadyTimeout`: Number of minutes Harvester allows for the creation of the upgrade logging infrastructure. You can specify a value (enclosed in double quotes) from `"1"` to `"20"`. The default value is `"5"`.
+
+  - **Default value**: `"5"`
+  - **Valid values**: `""`, `"1"` to `"20"`
+
 **Example**:
 
 ```json
@@ -816,7 +821,8 @@ https://your.upgrade.checker-url/v99/checkupgrade
       "concurrency": 2
     }
   },
-  "restoreVM": true
+  "restoreVM": true,
+  "logReadyTimeout": "5"
 }
 ```
 
