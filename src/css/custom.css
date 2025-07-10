@@ -141,7 +141,7 @@ a.btn.navbar__github::before {
   top: 10px;
 }
 
-.sidebar-apis {
+.hidden {
   display: none !important;
 }
 
