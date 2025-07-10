@@ -80,3 +80,53 @@ With these configurations in place, your Harvester cluster is ready to make the 
 
 - [Use Rook Ceph External Storage with Harvester](https://harvesterhci.io/kb/use_rook_ceph_external_storage)
 - [Using NetApp Storage on Harvester](https://harvesterhci.io/kb/install_netapp_trident_csi)
+
+## Known Issues
+
+### 1. Multipath support
+_Available as of v1.4.3_
+
+Certain 3rd party CSI may need multipath to be enabled.
+
+By default `multipathd` is disabled in Harvester. Users can enable this post installation by simply logging into the individual nodes and running the following commands:
+
+```
+systemctl enable multipathd
+systemctl start multipathd
+```
+
+This can also be executed by dropping an elemental cloud-init file such as `/oem/99-start-multipathd.yaml` with the following contents
+
+```
+stages:
+   default:
+   - name: "start multipathd"
+     systemctl:
+       enable:
+         - multipathd
+       start:
+         - multipathd
+```
+
+Users wishing to automate this further can leverage the `CloudInit CRD` to apply the same instructions to a set of hosts
+
+```
+apiVersion: node.harvesterhci.io/v1beta1
+kind: CloudInit
+metadata:
+  name: start-mutlitpathd
+spec:
+  matchSelector:
+    harvesterhci.io/managed: "true"
+  filename: 99-start-mutlitpathd
+  contents: |
+    stages:
+      default:
+        - name: "start multipathd"
+          systemctl:
+            enable:
+              - multipathd
+            start:
+              - multipathd
+  paused: false
+```

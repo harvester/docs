@@ -257,3 +257,51 @@ Increasing the overhead value does not affect the image PVC size. The scratch vo
 :::
 
 Related issue: [#7993](https://github.com/harvester/harvester/issues/7993) (See this [comment](https://github.com/harvester/harvester/issues/7993#issuecomment-2790260841).)
+
+### 2. Multipath support
+_Available as of v1.4.3_
+
+Certain 3rd party CSI may need multipath to be enabled.
+
+By default `multipathd` is disabled in Harvester. Users can enable this post installation by simply logging into the individual nodes and running the following commands:
+
+```
+systemctl enable multipathd
+systemctl start multipathd
+```
+
+This can also be executed by dropping an elemental cloud-init file such as `/oem/99-start-multipathd.yaml` with the following contents
+
+```
+stages:
+   default:
+   - name: "start multipathd"
+     systemctl:
+       enable:
+         - multipathd
+       start:
+         - multipathd
+```
+
+Users wishing to automate this further can leverage the `CloudInit CRD` to apply the same instructions to a set of hosts
+
+```
+apiVersion: node.harvesterhci.io/v1beta1
+kind: CloudInit
+metadata:
+  name: start-mutlitpathd
+spec:
+  matchSelector:
+    harvesterhci.io/managed: "true"
+  filename: 99-start-mutlitpathd
+  contents: |
+    stages:
+      default:
+        - name: "start multipathd"
+          systemctl:
+            enable:
+              - multipathd
+            start:
+              - multipathd
+  paused: false
+```
