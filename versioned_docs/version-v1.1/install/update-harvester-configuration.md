@@ -44,6 +44,14 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
     ```
     cat /etc/resolv.conf
     ```
+1. Restart rke2-coredns:
+    ```
+    kubectl rollout restart deployment/rke2-coredns-rke2-coredns -n kube-system
+    ```
+1. Confirm rke2-coredns was rolled out successfully:
+    ```
+    kubectl rollout status deployment/rke2-coredns-rke2-coredns -n kube-system
+    ```
 
 ### Configuration persistence
 
