@@ -880,6 +880,30 @@ When the node becomes unavailable or is powered off, the VM only restarts and do
 }
 ```
 
+### `vm-migration-network`
+
+**Definition**: Segregated network for VM migration traffic.
+
+By default, VM migration uses the management network, which is limited to a single interface and shared with cluster-wide workloads. If your implementation requires network segregation, you can use a [vm migration network](./vm-migration-network.md) to isolate VM migration in-cluster data traffic.
+
+:::info important
+
+Specify an IP range in the IPv4 CIDR format. The number of IPs must be equal to or large than the number of your cluster nodes.
+
+:::
+
+**Default value**: ""
+
+**Example**:
+
+```
+{
+  "vlan": 100,
+  "clusterNetwork": "vm-migration",
+  "range": "192.168.1.0/24"
+}
+```
+
 ### `volume-snapshot-class`
 
 **Definition**: VolumeSnapshotClassName for the VolumeSnapshot and VolumeSnapshotContent when restoring a VM to a namespace that does not contain the source VM.
