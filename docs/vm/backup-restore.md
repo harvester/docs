@@ -36,23 +36,23 @@ A backup target is an endpoint used to access a backup store in Harvester. A bac
 
 The following table outlines the parameters that are common to all backup targets.
 
-| Parameter        | Type    | Description                                                                                                                                               |
-| :--------------- | :------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Type             | string  | Type of server that stores the backups of volumes used by virtual machines. You can select either `NFS` or `S3`.                                          |
+| Parameter        | Type    | Description                                                                                                                                                                        |
+| :--------------- | :------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Type             | string  | Type of server that stores the backups of volumes used by virtual machines. You can select either `NFS` or `S3`.                                                                   |
 | Refresh Interval | integer | Number of seconds that Harvester waits before syncing backups with the backupstore. When the value is `0`, backups are synced only if all backup volumes are in the `Ready` state. |
 
 <Tabs>
 <TabItem value="s3" label="S3" default>
 
-| Parameter          | Type   | Description                                                                                                                            |
-| :----------------- | :----- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| Endpoint           | string | (Optional) Hostname or IP address of the endpoint used to access the S3 server                                                         |
-| BucketName         | string | Name of the S3 bucket                                                                                                                  |
-| BucketRegion       | string | AWS Region in which the S3 bucket was created                                                                                          |
-| AccessKeyID        | string | First part of the access key you use to authenticate requests to AWS services (for example, AKIAIOSFODNN7EXAMPLE)                      |
-| SecretAccessKey    | string | Second part of the access key you use to authenticate requests to AWS services (for example, wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY) |
-| Certificate        | string | Paste to use a self-signed SSL certificate of your S3 server                                                                           |
-| VirtualHostedStyle | bool   | Use virtual host style URLs of the form `bucket.example.com`; e.g., Alibaba Cloud (Aliyun) OSS                                         |
+| Parameter          | Type    | Description                                                                                                                            |
+| :----------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------- |
+| Endpoint           | string  | (Optional) Hostname or IP address of the endpoint used to access the S3 server                                                         |
+| BucketName         | string  | Name of the S3 bucket                                                                                                                  |
+| BucketRegion       | string  | AWS Region in which the S3 bucket was created                                                                                          |
+| AccessKeyID        | string  | First part of the access key you use to authenticate requests to AWS services (for example, AKIAIOSFODNN7EXAMPLE)                      |
+| SecretAccessKey    | string  | Second part of the access key you use to authenticate requests to AWS services (for example, wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY) |
+| Certificate        | string  | Self-signed SSL certificate of the S3 server                                                                                           |
+| VirtualHostedStyle | boolean | Option to use virtual-hosted–style URLs, wherein the bucket name is part of the domain name in the URL (`bucket.example.com`)          |
 
 ![backuptarget-s3.png](/img/backuptarget-s3.png)
 
