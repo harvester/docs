@@ -37,6 +37,35 @@ The vm-dhcp-controller add-on is not packed into the Harvester ISO, but you can 
 kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/main/harvester-vm-dhcp-controller/harvester-vm-dhcp-controller.yaml
 ```
 
+:::note
+
+The vm-dhcp-controller add-on cannot dynamically detect cluster-specific service CIDRs and uses `10.53.0.0/16` by default.
+
+When your cluster uses a different service CIDR, you must configure it explicitly in the `valuesContent` section of the `Addon` CR to prevent issues. Specifically, attempts to create IP pool resources (IPPools) can fail when CIDRs overlap with the default `10.53.0.0/16` service CIDR.
+
+Example:
+
+```yaml
+apiVersion: harvesterhci.io/v1beta1
+kind: Addon
+metadata:
+  ...
+  name: harvester-vm-dhcp-controller
+  namespace: harvester-system
+spec:
+  ...
+  valuesContent: |
+    serviceCIDR: <your-cluster-service-cidr> # for instance, 10.96.0.0/16
+```
+
+You can check your cluster's service CIDR using the following command:
+
+```bash
+kubectl -n kube-system get pods -l component=kube-apiserver -o yaml | grep "service-cluster-ip-range"
+```
+
+:::
+
 After installation, enable the add-on on the **Dashboard** screen of the Harvester UI or using the command-line tool kubectl.
 
 ![](/img/v1.3/vm-dhcp-controller/enable-addon.png)
