@@ -39,7 +39,11 @@ kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons
 
 :::note
 
-The vm-dhcp-controller add-on defaults to service CIDR `10.53.0.0/16` and cannot dynamically detect cluster-specific service CIDRs. When your cluster uses a different service CIDR, configure it explicitly in the Addon CR `valuesContent` section:
+The vm-dhcp-controller add-on cannot dynamically detect cluster-specific service CIDRs and uses `10.53.0.0/16` by default.
+
+When your cluster uses a different service CIDR, you must configure it explicitly in the `valuesContent` section of the `Addon` CR to prevent issues. Specifically, attempts to create IP pool resources (IPPools) can fail when CIDRs overlap with the default `10.53.0.0/16` service CIDR.
+
+Example:
 
 ```yaml
 apiVersion: harvesterhci.io/v1beta1
@@ -54,13 +58,11 @@ spec:
     serviceCIDR: <your-cluster-service-cidr> # for instance, 10.96.0.0/16
 ```
 
-Check your cluster's service CIDR with:
+You can check your cluster's service CIDR using the following command:
 
 ```bash
 kubectl -n kube-system get pods -l component=kube-apiserver -o yaml | grep "service-cluster-ip-range"
 ```
-
-This prevents IPPool creation failures when CIDRs overlap with the default `10.53.0.0/16` assumption.
 
 :::
 
