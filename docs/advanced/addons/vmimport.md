@@ -134,6 +134,7 @@ spec:
     destinationNetwork: "default/vlan1"
   - sourceNetwork: "dvSwitch 2"
     destinationNetwork: "default/vlan2"
+  skipPreflightChecks: false
   storageClass: "my-storage-class"
   sourceCluster: 
     name: vcsim
@@ -144,7 +145,9 @@ spec:
 
 This will trigger the controller to export the VM named "alpine-export-test" on the VMware source cluster to be exported, processed and recreated into the Harvester cluster.
 
-This can take a while based on the size of the virtual machine, but users should see `VirtualMachineImages` created for each disk in the defined virtual machine.
+The controller checks the configuration before starting the import process, and cancels the import when it detects errors such as unknown [StorageClasses](../storageclass.md) or networks. These checks are enabled by default, but can be disabled by setting `skipPreflightChecks` to `true`.
+
+The duration of the import process depends on the size of the virtual machine. While the import process may take some time, you should see `VirtualMachineImages` created for each disk in the defined virtual machine.
 
 If the source virtual machine is placed in a folder, you can specify the folder name in the optional `folder` field.
 
