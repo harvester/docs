@@ -6,30 +6,34 @@ keywords:
 - Harvester
 - documentation
 - conventions
-- labels
+- release types
+- release labels
+- feature labels
+- admonitions
 ---
 
 <head>
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/getting-started/document-conventions"/>
 </head>
 
+## Release Types
+
+The terms "Community" and "Prime" are used to differentiate the releases intended for community users and SUSE customers. "Prime" refers to SUSE Rancher Prime, which is SUSE's enterprise container management platform.
+
+| Release Type | Versioning Convention | Example | Support Lifecycle |
+| --- | --- | --- | --- |
+| Community | x.y.z | v1.5.0 | Support for each community release ends when version x.(y+1).1 is released. |
+| Prime | x.y.[1-z] | v1.5.1 | Prime releases receive 6 months of active support. This is followed by 12 months of maintenance support, which covers critical security-related issues. |
+
 ## Release Labels
 
-Harvester has a 26-week release cycle and an N - 1 support policy. Each release is supported for 14 months (12 months of support and 2 months for upgrades). Only the two most recent minor versions receive security and bug fixes.
+The Harvester documentation uses the following labels to describe releases of the software.
 
-- **Dev**: The software is under active development and has not been thoroughly tested. Upgrading from earlier releases or to later releases is not supported. "Dev" releases typically occur at the end of a sprint, and may occur when other definitions of done are met. Given the unofficial nature of the release, use the software only for testing purposes.
+- **Dev**: The software is under active development and has not been thoroughly tested. Upgrading from earlier releases or to later releases is not supported.
 
-- **Latest**: The software has passed all stages of verification and testing. All remaining known issues are considered acceptable. Use the software only for testing purposes.
+- **Latest**: The software has passed all stages of verification and testing. All remaining known issues are considered acceptable.
 
-- **Stable**: The software is considered reliable and free of critical issues. This release is recommended for general use.
-
-- **EOL**: The software has reached the end of its useful life and no further code-level maintenance is provided. You may continue to use the software within the terms of the licensing agreement. Upgrading to a stable release is recommended.
-
-:::note
-
-Harvester provides documentation for major and minor releases. Information about enhancements and bug fixes implemented in patch releases is added to the minor release documentation.
-
-:::
+- **EOL**: The software has reached the end of its useful life and no further code-level maintenance is provided. You may continue to use the software within the terms of the licensing agreement.
 
 ## Feature Labels
 
@@ -54,7 +58,7 @@ These features have the following limitations:
 
 ## Admonitions
 
-Admonitions are text blocks that provide additional or important information. Each text block is marked with a special label and icon.
+Admonitions are text blocks that provide additional or important information. Each text block is marked with a special label and icon. The Harvester documentation uses the following conventions to help you interpret information.
 
 - **Note**: Additional information that is useful but not critical.
 
