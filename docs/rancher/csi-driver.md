@@ -29,6 +29,14 @@ This issue was fixed in v0.1.21. If your system is affected, you can follow the 
 
 The Harvester Container Storage Interface (CSI) Driver provides a standard CSI interface used by guest Kubernetes clusters in Harvester. It connects to the host cluster and hot-plugs host volumes to the virtual machines (VMs) to provide native storage performance.
 
+The Harvester CSI driver supports the following features:
+
+| Harvester CSI Driver Version | Harvester Version | Storage Tiering | RWX Volumes | Online Resizing | Third-Party Storage | Snapshots and Backups |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0.1.15 | All versions | &#10004; | &#10006; | &#10006; | &#10006; | &#10006; |
+| 0.1.20 | v1.4 and later | &#10004; | &#10004; | &#10006; | &#10006; | &#10006; |
+| 0.1.24 | v1.6 and later | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; |
+
 ## Deploying
 
 ### Prerequisites
