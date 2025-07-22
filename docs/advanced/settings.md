@@ -804,7 +804,13 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
   :::
 
-- `restoreVM`: Option that enables Harvester to automatically restore running VMs after a single-node cluster is upgraded. The default value is `false`, which causes all VMs to be stopped after the upgrade is completed. When set to `true`, Harvester restarts VMs that were running before the upgrade was started. VMs that were paused before the upgrade are not restarted.
+- `restoreVM`: Option that enables Harvester to automatically restore non-migratable running VMs after the cluster is **successfully** upgraded. The default value is `false`. When set to `false`, in a multi-node environment, users must stop all non-migratable VMs for the upgrade to proceed, and the VMs will not be restarted after upgrade finished. When set to `true`, Harvester will automatically shut down non-migratable VMs during each node upgrade and restart the running VMs once the node upgrade is **successfully** completed. Note that non-migratable paused VMs before the node upgrade will be shut down and remain stopped after the node upgrade is finished.
+
+  :::note
+
+  In a single-node environment, all VMs are considered non-migratable.
+
+  :::
 
 **Example**:
 
