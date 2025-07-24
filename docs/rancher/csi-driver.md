@@ -477,6 +477,15 @@ You can follow the same steps to create an RWX PVC on the guest cluster and then
 
 :::
 
+## Online Volume Resizing
+
+If the underlying storage provider supports [online volume expansion](../volume/edit-volume.md#online-volume-expansion), you can expand a ReadWriteOnce (RWO) volume in the guest cluster even while it is attached to a running workload.
+
+### Prerequisites
+
+- Harvester v1.6 or later
+- Harvester CSI Driver v0.1.24 or later
+
 ## Upgrade the CSI Driver
 
 ### Upgrade RKE2
