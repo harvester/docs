@@ -177,6 +177,20 @@ You must configure the following information before using features related to ba
 }
 ```
 
+### `csi-online-expand-validation`
+
+**Versions**: v1.6.0 and later
+
+**Definition**: Setting that allows you to mark storage providers with confirmed support for online volume expansion as validated.
+
+Depending on the underlying storage provider, you may need to take extra steps to use the online volume expansion feature.
+
+- **Longhorn**: Harvester considers Longhorn to have support for online volume expansion, even if differences exist between versions of the Longhorn Data Engine. Currently, the V1 Data Engine fully supports online volume expansion, while the V2 Data Engine does not support volume expansion at all (regardless of the volume's attachment state). The Harvester webhook manages the differences between these versions.
+
+- **Third-party storage**: Harvester rejects online volume expansion requests for third-party storage by default. If you have confirmed that your storage provider supports online volume expansion, you can use this setting to mark that storage provider as validated and force Harvester to allow associated online expansion requests.
+
+**Default value**: `{"driver.longhorn.io":true}`
+
 ### `default-vm-termination-grace-period-seconds`
 
 **Versions**: v1.2.0 and later
