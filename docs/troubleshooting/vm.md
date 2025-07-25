@@ -454,3 +454,76 @@ After deleting the directory, you must restart the virtual machine so that cloud
 ### Related Issue
 
 https://github.com/harvester/harvester/issues/6644
+
+## Virtual Machine is Unschedulable due to the Unsatisfied Affinity Rules
+
+One VM shows `unscheduable`.
+
+![](/img/v1.5/troubleshooting/unschedulable-vm.png)
+
+Check the VM definition, it has below `Affinity` rule.
+
+```
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: vm100
+  namespace: default
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: network.harvesterhci.io/cn2
+                    operator: In
+                    values:
+                      - 'true'
+```
+
+The POD status is `Pending`, the detailed error shows that no node can meet the `Affinity` rule.
+
+```
+$ kubectl get pods
+NAME                        READY   STATUS    RESTARTS   AGE
+virt-launcher-vm100-f4nh4   0/2     Pending   0          5m12s
+
+$ kubectl get pods virt-launcher-vm100-f4nh4 -oyaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: virt-launcher-vm100-f4nh4
+  namespace: default
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: network.harvesterhci.io/cn2
+            operator: In
+            values:
+            - "true"
+
+...
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2025-07-28T16:21:56Z"
+    message: '0/2 nodes are available: 1 node(s) didn''t match Pod''s node affinity/selector,
+      1 node(s) had untolerated taint {node.kubernetes.io/unreachable: }. preemption:
+      0/2 nodes are available: 2 Preemption is not helpful for scheduling.'
+    reason: Unschedulable
+    status: "False"
+    type: PodScheduled
+...
+
+```
+
+### Root cause
+
+Based on the definition of VM, Harvester [applies some Affinity rules automatically](../vm/create-vm.md#automatically-applied-affinity-rules). In the above example, the VM attaches to cluster network `cn2`, then Harvester applies `Affifnity` rule `network.harvesterhci.io/cn2`. But there is no node meets this rule and hence the VM is not schedulable.
+
+### Workaround
+
+Ensure there are active nodes which has already setup the cluster network `cn2`, then the node has the label `network.harvesterhci.io/cn2` and can schedule the pending pod.

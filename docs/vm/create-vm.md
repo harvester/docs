@@ -221,6 +221,106 @@ For instance, you can combine `Required` with `Affinity` to instruct the schedul
 
 See the [Kubernetes Pod Affinity and Anti-Affinity Documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity) for more details.
 
+### Automatically Applied Affinity Rules
+
+Based on the definition of VM, Harvester applies some `Affinity` rules automatically. These rules can affect the list of eligible virtual machine scheduling/migration target nodes. In some cases, scheduling/migration fails due to no target node can satisfy the affinity constraints.
+
+For more information, see [Virtual Machine is Unschedulable due to the unsatisfied Affinity Rules](../troubleshooting/vm.md#virtual-machine-is-unschedulable-due-to-the-unsatisfied-affinity-rules).
+
+:::note
+
+Do not edit those automatically applied rules, the manual changes get reverted by Harvester webhook.
+
+:::
+
+#### Cluster Network Related
+
+When a VM attaches to some [Secondary Networks](#secondary-network), Harvester ensures it like following example:
+
+1. One [Cluster Network](../networking/clusternetwork.md#cluster-network) `cn2` is created.
+1. One [Network Configuration](../networking/clusternetwork.md#network-configuration) `cn2-vc1` is created to set up the `uplink` and other parameters, it selects `node1` and `node2` on the cluster.
+1. One [VM Network](../networking/harvester-network.md#create-a-vm-network) `cn2-nad-100` is created with `vlan id 100`.
+
+1. A `VM vm1` attaches to [Secondary Network](#secondary-network) `cn2-nad-100`.
+
+Validation:
+
+1. Kubernetes `node` objects are labled by Harvester controller automatically.
+
+`kubectl get node node1 -oyaml`
+
+```
+...
+metadata:
+  labels:
+    network.harvesterhci.io/cn2: "true"
+    network.harvesterhci.io/mgmt: "true"
+    network.harvesterhci.io/vlanconfig: cn2-vc1
+...
+```
+
+1. `virtualmachine` object is updated by Harvester webhook automatically.
+
+```
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: network.harvesterhci.io/cn2
+                    operator: In
+                    values:
+                      - 'true'
+```
+
+1. When the VM runs, it will be scheduled to `node1` or `node2`, not others.
+
+:::note
+
+1. When a VM attaches to multi `Secondary Networks`, and they are backed by mutli `Cluster Network`, then multi `Affinity` rules are applied. All of those rules work together to determin the final schedulable target nodes.
+
+1. The [Built-in Cluster Network `mgmt`](../networking/clusternetwork.md#built-in-cluster-network) covers all nodes by default, when a vm attaches to `VM Networks` which are backed by `mgmt` cluster network, they are not converted to `Affinity` rules. All nodes are schedulable target nodes.
+
+:::
+
+#### CPU Pinning Related
+
+1. Enable the [cpu-manager](./cpu-pinning.md#enable-and-disable-cpu-manager) on some/all nodes.
+
+After the enablement is successfully done, the `node` object has below label.
+
+```
+...
+metadata:
+  labels:
+    cpumanager: "true"
+...
+```
+
+2. Enable the [CPU Pinning](./cpu-pinning.md#enable-cpu-pinning-on-a-new-vm)  on VM
+
+When `CPU Pinning` selection box is ticked while creating a VM, Harvester applies another `Affinity` rule automatically.
+
+```
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: cpumanager
+                    operator: In
+                    values:
+                      - 'true'
+```
+
+This `Affinity` rule ensures that the VM is only scheduled to those nodes which has already enabled the `cpu manager`.
+
 ## Annotations
 
 Harvester allows you to attach custom metadata to virtual machines using annotations. These key-value pairs enable extended features or behaviors without requiring changes to the core virtual machine configuration.
