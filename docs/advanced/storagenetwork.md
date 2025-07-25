@@ -10,7 +10,7 @@ title: "Storage Network"
 
 Harvester uses Longhorn as its built-in storage system to provide block device volumes for VMs and Pods. If the user wishes to isolate Longhorn replication traffic from the Kubernetes cluster network (i.e. the management network) or other cluster-wide workloads. Users can allocate a dedicated storage network for Longhorn replication traffic to get better network bandwidth and performance.
 
-For more information, please see [Longhorn Storage Network](https://longhorn.io/docs/1.8.1/advanced-resources/deploy/storage-network/)
+For more information, see [Longhorn Storage Network](https://longhorn.io/docs/1.8.1/advanced-resources/deploy/storage-network/).
 
 :::note
 
@@ -21,53 +21,61 @@ For more information, please see [Longhorn Storage Network](https://longhorn.io/
 
 ## Prerequisites
 
-There are some prerequisites before configuring the Harvester Storage Network setting.
+Before you begin configuring the storage network, ensure that the following requirements are met:
 
-- Well-configured Cluster Network and VLAN Config.
-    - Users have to ensure the Cluster Network is configured and VLAN Config will cover all nodes and ensure the network connectivity is working and expected in all nodes. 
-- All VMs should be stopped.
-    - We recommend checking the VM status with the following command and should get an empty result.
-    - `kubectl get -A vmi`
-- All pods that are attached to Longhorn Volumes should be stopped.
-- All ongoing image uploads or downloads should be either completed or deleted.
+- The network switches are correctly configured, and a dedicated VLAN ID is assigned to the storage network.
 
-:::caution
+- The [cluster network](../networking/clusternetwork.md) and [VLAN network](../networking/harvester-network.md) are configured correctly. Ensure that both networks cover all nodes and are accessible.
 
-If the Harvester cluster was upgraded from v1.0.3, please check if Whereabouts CNI is installed properly before you move on to the next step. We will always recommend following this guide to check. [Issue 3168](https://github.com/harvester/harvester/issues/3168) describes that the Harvester cluster will not always install Whereabouts CNI properly.
+- The IP range of the storage network has the following characteristics:
 
-- Verify the `ippools.whereabouts.cni.cncf.io` CRD exists with the following command.
-    - `kubectl get crd ippools.whereabouts.cni.cncf.io`
-- If the Harvester cluster doesn't have `ippools.whereabouts.cni.cncf.io`, please add [these two CRDs](https://github.com/harvester/harvester/tree/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds) before configuring `storage-network` setting.
-```
-kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds/whereabouts.cni.cncf.io_ippools.yaml
-kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds/whereabouts.cni.cncf.io_overlappingrangeipreservations.yaml
-```
+    - Uses the IPv4 CIDR format
+    
+    - Does not conflict or overlap with Kubernetes cluster networks
+    
+      The following addresses are reserved: `10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16`, and `10.53.0.0/16`.
 
-:::
+    - Covers the requirements of the cluster
+    
+      The required number of IP addresses is calculated using the following formula: `Required number of IPs = (Number of nodes * 2) + (Number of disks * 2) + Number of images to be downloaded or uploaded`
+    
+      Example: If a cluster has five nodes with two disks each, and ten images are to be uploaded simultaneously, the IP range should be greater than or equal to `/26` (calculation: (5 * 2) + (5 * 2) + 10 = 30).
 
-## Configuration Example
+    - Excludes IP addresses that Longhorn pods and the storage network must not use, such as addresses reserved for [RWX volumes](../rancher/csi-driver.md#rwx-volumes-support), the gateway, and other components.
 
-- VLAN ID
-	- Please check with your network switch setting, and provide a dedicated VLAN ID for Storage Network.
-- Well-configured Cluster Network and VLAN Config
-	- Please refer Networking page for more details and configure `Cluster Network` and `VLAN Config` but not `Networks`.
-- IP range for Storage Network
-	- IP range should not conflict or overlap with Kubernetes cluster networks(`10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16` and `10.53.0.0/16` are reserved).
-	- IP range should be in IPv4 CIDR format and Longhorn pods use Storage Network as follows:
-    - `instance-manager` pods: Longhorn Instance Manager components were [consolidated in Longhorn v1.5.0](https://longhorn.io/docs/1.5.0/deploy/important-notes/#instance-managers-consolidated). The Engine Instance Manager and Replica Instance Manager are now deprecated. One IP is required for each node. During an upgrade, two versions of these pods will exist (old and new), and the old version will be deleted once the upgrade is successful.
-    - `backing-image-ds` pods: These are employed to process on-the-fly uploads and downloads of backing image data sources. These pods will be removed once the image uploads or downloads are completed.
-    - `backing-image-manager` pods: 1 IP per disk, similar to the instance manager pods. Two versions of these will coexist during an upgrade, and the old ones will be removed after the upgrade is completed.
-    - The required number of IPs is calculated using a simple formula: `Required Number of IPs = (Number of Nodes * 2) + (Number of Disks * 2) + Number of Images to Download/Upload`
-	- Example: If a cluster has five nodes with two disks each, and ten images will be uploaded simultaneously, the IP range should be greater than or equal to `/26` (`(5 * 2) + (5 * 2) + 10 = 30`).
-  - Exclude IP addresses that Longhorn pods and the storage network must not use, such as addresses reserved for [Harvester CSI RWX support](../rancher/csi-driver.md#rwx-volumes-support), the gateway, and other components.
+      Longhorn pods use the storage network as follows:
 
+      - `instance-manager` pods: Longhorn Instance Manager components were [consolidated in Longhorn v1.5.0](https://longhorn.io/docs/1.5.0/deploy/important-notes/#instance-managers-consolidated). Each node requires one IP address. During an upgrade, both old and new versions of these pods exist, and the old version is deleted once the upgrade is completed.
 
-We will take the following configuration as an example to explain the details of the Storage Network
+      - `backing-image-ds` pods: These pods process on-the-fly uploads and downloads of backing image data sources, and are removed once the image uploads and downloads are completed.
+    
+      - `backing-image-manager` pods: Each disk requires one IP address. During an upgrade, both old and new versions of these pods exist, and the old version is deleted once the upgrade is completed.
 
-- VLAN ID for Storage Network: `100`
-- Cluster Network: `storage`
-- IP range: `192.168.0.0/24`
-- Exclude Address: `192.168.0.1/32`
+- The Whereabouts CNI is installed correctly.
+
+    You can check if the `ippools.whereabouts.cni.cncf.io` CRD exists in the cluster using the command `kubectl get crd ippools.whereabouts.cni.cncf.io`.
+  
+    If an empty string is returned, add the CRDs in [this directory](https://github.com/harvester/harvester/tree/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds) using the following commands:
+
+    ```
+    kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds/whereabouts.cni.cncf.io_ippools.yaml
+
+    kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds/whereabouts.cni.cncf.io_overlappingrangeipreservations.yaml
+    ```
+
+    :::note
+
+    The Whereabouts CNI is not installed correctly in certain [upgrade scenarios](https://github.com/harvester/harvester/issues/3168).
+
+    :::
+
+- All virtual machines are stopped.
+
+    You can check the status of virtual machines using the command `kubectl get -A vmi`, which should return an empty string.
+
+- All pods that are attached to Longhorn volumes are stopped.
+
+- All ongoing image uploads and downloads are either completed or deleted.
 
 ## Configuration Process
 
@@ -89,7 +97,6 @@ Please refer Networking page to configure `ClusterNetwork` and `VLAN Config` wit
 
 ![storagenetwork-same.png](/img/v1.2/storagenetwork/storagenetwork-same.png)
 
-
 #### Different Physical Interfaces
 
 `eth2` and `eth3` are for VM VLAN Traffic. `eth4` and `eth5` are for Longhorn Storage Network.
@@ -98,13 +105,21 @@ Please refer Networking page to configure `ClusterNetwork` and `VLAN Config` wit
 
 ![storagenetwork-diff.png](/img/v1.2/storagenetwork/storagenetwork-diff.png)
 
-### Harvester Storage Network Setting
+### `storage-network` Setting
 
-The [`storage-network` setting](./settings.md#storage-network) allows you to configure the network used to isolate in-cluster storage traffic when segregation is required.
+The [`storage-network`](./settings.md#storage-network) setting allows you to configure the network used to isolate in-cluster storage traffic when segregation is required.
 
 You can [enable](#enable-the-storage-network) and [disable](#disable-the-storage-network) the storage network using either the UI or the CLI. When the setting is enabled, you must construct a Multus `NetworkAttachmentDefinition` CRD by configuring certain fields.
 
-#### Web UI
+Harvester stops the following pods when you configure the `storage-network` setting:
+
+- Prometheus
+- Grafana
+- Alertmanager
+- VM Import Controller
+
+<Tabs>
+<TabItem value="ui" label="UI" default>
 
 :::tip
 
@@ -112,7 +127,7 @@ Using the Harvester UI to configure the `storage-network` setting is strongly re
 
 :::
 
-##### Enable the Storage Network
+#### Enable the Storage Network
 
 1. Go to **Advanced > Settings > storage-network**.
 
@@ -124,7 +139,7 @@ Using the Harvester UI to configure the `storage-network` setting is strongly re
 
 ![storage-network-enabled.png](/img/v1.4/storagenetwork/storage-network-enabled.png)
 
-##### Disable the Storage Network
+#### Disable the Storage Network
 
 1. Go to **Advanced > Settings > storage-network**.
 
@@ -136,70 +151,71 @@ Once the storage network is disabled, Longhorn starts using the pod network for 
 
 ![storage-network-disabled.png](/img/v1.4/storagenetwork/storage-network-disabled.png)
 
-#### CLI
+</TabItem>
+<TabItem value="cli" label="CLI">
 
-You can use the following command to configure the [`storage-network` setting](./settings.md#storage-network).
+You can use the following command to configure the [`storage-network`](./settings.md#storage-network) setting.
 
 ```bash
 kubectl edit settings.harvesterhci.io storage-network
 ```
 
-The value format is JSON string or empty string as shown in below:
+The storage network is automatically enabled in the following situations:
 
-```json
-{
-    "vlan": 100,
-    "clusterNetwork": "storage",
-    "range": "192.168.0.0/24",
-    "exclude":[
-      "192.168.0.100/32"
-    ]
-}
-```
+- The value field contains a valid JSON string.
 
-The full configuration is like this example:
+    Example:
 
-```yaml
-apiVersion: harvesterhci.io/v1beta1
-kind: Setting
-metadata:
-  name: storage-network
-value: '{"vlan":100,"clusterNetwork":"storage","range":"192.168.0.0/24", "exclude":["192.168.0.100/32"]}'
-```
+    ```yaml
+    apiVersion: harvesterhci.io/v1beta1
+    kind: Setting
+    metadata:
+    name: storage-network
+    value: '{"vlan":100,"clusterNetwork":"storage","range":"192.168.0.0/24", "exclude":["192.168.0.100/32"]}'
+    ```
 
-When the storage network is disabled, the full configuration is as follows:
+- The value field is empty.
 
-```yaml
-apiVersion: harvesterhci.io/v1beta1
-kind: Setting
-metadata:
-  name: storage-network
-```
+    ```yaml
+    apiVersion: harvesterhci.io/v1beta1
+    kind: Setting
+    metadata:
+      name: storage-network
+    value: ''
+    ```
+
+The storage network is disabled when you remove the value field.
+
+    ```yaml
+    apiVersion: harvesterhci.io/v1beta1
+    kind: Setting
+    metadata:
+      name: storage-network
+    ```
 
 :::caution
 
 Harvester considers extra insignificant characters in a JSON string as a different configuration.
 
-Specifying a valid value in the `value` field enables the storage network. Deleting the `value` field disables the storage network.
-
 :::
+
+</TabItem>
+</Tabs>
 
 #### Change the MTU of the Storage Network
 
 Follow the instructions in [Change the MTU of a Network Configuration with an Attached Storage Network](../networking/clusternetwork.md#change-the-mtu-of-a-network-configuration-with-an-attached-storage-network).
 
 ### After Applying Harvester Storage Network Setting
+REMOVE HEADING
 
-After applying Harvester's Storage Network setting, Harvester will stop all pods that are related to Longhorn volumes. Currently, Harvester has some pods listed below that will be stopped during setting.
+The following occur once the `storage-network` setting is applied:
 
-- Prometheus
-- Grafana
-- Alertmanager
-- VM Import Controller
+- Harvester stops all pods that are related to Longhorn volumes.
 
-Harvester will also create a new NetworkAttachmentDefinition and update the Longhorn Storage Network setting.
+- Harvester creates a new `NetworkAttachmentDefinition` and updates the Longhorn Storage Network setting.
 
-Once the Longhorn setting is updated, Longhorn will restart all `instance-manager-r`, `instance-manager-e`, and `backing-image-manager` pods to apply the new network configuration, and Harvester will restart the pods.
+- Longhorn restarts all `instance-manager-r`, `instance-manager-e`, and `backing-image-manager` pods to apply the new network configuration.
 
 :::note
 
@@ -207,136 +223,123 @@ Harvester will not start VM automatically. Users should check whether the config
 
 :::
 
-### Verify Configuration is Completed
+### Post-Configuration Steps
 
-#### Step 1
+1. Verify that the `storage-network` setting's status is `True` and the type is `configured` using the following command:
 
-Check if Harvester Storage Network setting's status is `True` and the type is `configured`.
+    ```bash
+    kubectl get settings.harvesterhci.io storage-network -o yaml
+    ```
 
-```bash
-kubectl get settings.harvesterhci.io storage-network -o yaml
-```
+    Example:
 
-Completed Setting Example:
+    ```yaml
+    apiVersion: harvesterhci.io/v1beta1
+    kind: Setting
+    metadata:
+      annotations:
+        storage-network.settings.harvesterhci.io/hash: da39a3ee5e6b4b0d3255bfef95601890afd80709
+        storage-network.settings.harvesterhci.io/net-attach-def: ""
+        storage-network.settings.harvesterhci.io/old-net-attach-def: ""
+      creationTimestamp: "2022-10-13T06:36:39Z"
+      generation: 51
+      name: storage-network
+      resourceVersion: "154638"
+      uid: 2233ad63-ee52-45f6-a79c-147e48fc88db
+    status:
+      conditions:
+      - lastUpdateTime: "2022-10-13T13:05:17Z"
+        reason: Completed
+        status: "True"
+        type: configured
+    ```
 
-```yaml
-apiVersion: harvesterhci.io/v1beta1
-kind: Setting
-metadata:
-  annotations:
-    storage-network.settings.harvesterhci.io/hash: da39a3ee5e6b4b0d3255bfef95601890afd80709
-    storage-network.settings.harvesterhci.io/net-attach-def: ""
-    storage-network.settings.harvesterhci.io/old-net-attach-def: ""
-  creationTimestamp: "2022-10-13T06:36:39Z"
-  generation: 51
-  name: storage-network
-  resourceVersion: "154638"
-  uid: 2233ad63-ee52-45f6-a79c-147e48fc88db
-status:
-  conditions:
-  - lastUpdateTime: "2022-10-13T13:05:17Z"
-    reason: Completed
-    status: "True"
-    type: configured
-```
+1. Verify that Longhorn `instance-manager-e`, `instance-manager-r`, and `backing-image-manager` pods are ready and that their networks are correctly configured.
 
-#### Step 2
+    You can inspect pod details using the following command:
 
-Verify the readiness of all Longhorn `instance-manager-e`, `instance-manager-r`, and `backing-image-manager` pods, and confirm that their networks are correctly configured.
+    ```bash
+    kubectl -n longhorn-system describe pod <pod-name>
+    ```
 
-Execute the following command to inspect a pod's details:
+    Errors similar to the following indicate that the storage network has exhausted its available IP addresses. You must reconfigure the storage network with a sufficient IP range.
 
+    ```bash
+    Events:
+      Type     Reason                  Age                    From     Message
+      ----     ------                  ----                   ----     -------
+      ....
 
-```bash
-kubectl -n longhorn-system describe pod <pod-name>
-```
+      Warning  FailedCreatePodSandBox  2m58s                  kubelet  Failed to create pod sandbox: rpc error: code = Unknown desc = failed to setup network for
+    sandbox "04e9bc160c4f1da612e2bb52dadc86702817ac557e641a3b07b7c4a340c9fc48": plugin type="multus" name="multus-cni-network" failed (add): [longhorn-system/backing-image-ds-default-image-lxq7r/7d6995ee-60a6-4f67-b9ea-246a73a4df54:storagenetwork-sdfg8]: error adding container to network "storagenetwork-sdfg8": error at storage engine: Could not allocate IP in range: ip: 172.16.0.1 / - 172.16.0.6 / range: net.IPNet{IP:net.IP{0xac, 0x10, 0x0, 0x0}, Mask:net.IPMask{0xff,0xff, 0xff, 0xf8}}
+    ....
+    ```
 
-If you encounter an event resembling the following one, the Storage Network might have run out of its available IPs:
+    :::note
 
-```bash
-Events:
-  Type     Reason                  Age                    From     Message
-  ----     ------                  ----                   ----     -------
-  ....
+    If the storage network has exhausted its available IP addresses, you might encounter similar errors when you upload or download images. You must delete the affected images and reconfigure the storage network with a sufficient IP range.
 
-  Warning  FailedCreatePodSandBox  2m58s                  kubelet  Failed to create pod sandbox: rpc error: code = Unknown desc = failed to setup network for
- sandbox "04e9bc160c4f1da612e2bb52dadc86702817ac557e641a3b07b7c4a340c9fc48": plugin type="multus" name="multus-cni-network" failed (add): [longhorn-system/ba
-cking-image-ds-default-image-lxq7r/7d6995ee-60a6-4f67-b9ea-246a73a4df54:storagenetwork-sdfg8]: error adding container to network "storagenetwork-sdfg8": erro
-r at storage engine: Could not allocate IP in range: ip: 172.16.0.1 / - 172.16.0.6 / range: net.IPNet{IP:net.IP{0xac, 0x10, 0x0, 0x0}, Mask:net.IPMask{0xff,
-0xff, 0xff, 0xf8}}
+    :::
 
-  ....
-```
+1. Check the `k8s.v1.cni.cncf.io/network-status` annotations and verify that an interface named `lhnet1` exists. The IP address of this interface must be within the designated IP range.
 
-Please reconfigure the Storage Network with a sufficient IP range.
+    You can retrieve the list of Longhorn Instance Manager pods using the following command:
 
-:::note
+    ```bash
+    kubectl get pods -n longhorn-system -l longhorn.io/component=instance-manager -o yaml
+    ```
 
-If the Storage Network has run out of IPs, you might encounter the same error when you upload/download images. Please delete the related images and reconfigure the Storage Network with a sufficient IP range.
+    Example:
 
-:::
+    ```yaml
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      annotations:
+        cni.projectcalico.org/containerID: 2518b0696f6635896645b5546417447843e14208525d3c19d7ec6d7296cc13cd
+        cni.projectcalico.org/podIP: 10.52.2.122/32
+        cni.projectcalico.org/podIPs: 10.52.2.122/32
+        k8s.v1.cni.cncf.io/network-status: |-
+          [{
+              "name": "k8s-pod-network",
+              "ips": [
+                  "10.52.2.122"
+              ],
+              "default": true,
+              "dns": {}
+          },{
+              "name": "harvester-system/storagenetwork-95bj4",
+              "interface": "lhnet1",
+              "ips": [
+                  "192.168.0.3"
+              ],
+              "mac": "2e:51:e6:31:96:40",
+              "dns": {}
+          }]
+        k8s.v1.cni.cncf.io/networks: '[{"namespace": "harvester-system", "name": "storagenetwork-95bj4",
+          "interface": "lhnet1"}]'
+        k8s.v1.cni.cncf.io/networks-status: |-
+          [{
+              "name": "k8s-pod-network",
+              "ips": [
+                  "10.52.2.122"
+              ],
+              "default": true,
+              "dns": {}
+          },{
+              "name": "harvester-system/storagenetwork-95bj4",
+              "interface": "lhnet1",
+              "ips": [
+                  "192.168.0.3"
+              ],
+              "mac": "2e:51:e6:31:96:40",
+              "dns": {}
+          }]
+        kubernetes.io/psp: global-unrestricted-psp
+        longhorn.io/last-applied-tolerations: '[{"key":"kubevirt.io/drain","operator":"Exists","effect":"NoSchedule"}]'
 
-#### Step 3
-
-Check the `k8s.v1.cni.cncf.io/network-status` annotations and ensure that an interface named `lhnet1` exists, with an IP address within the designated IP range.
-
-Users could use the following command to show all Longhorn Instance Manager to verify.
-
-```bash
-kubectl get pods -n longhorn-system -l longhorn.io/component=instance-manager -o yaml
-```
-
-Correct Network Example:
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  annotations:
-    cni.projectcalico.org/containerID: 2518b0696f6635896645b5546417447843e14208525d3c19d7ec6d7296cc13cd
-    cni.projectcalico.org/podIP: 10.52.2.122/32
-    cni.projectcalico.org/podIPs: 10.52.2.122/32
-    k8s.v1.cni.cncf.io/network-status: |-
-      [{
-          "name": "k8s-pod-network",
-          "ips": [
-              "10.52.2.122"
-          ],
-          "default": true,
-          "dns": {}
-      },{
-          "name": "harvester-system/storagenetwork-95bj4",
-          "interface": "lhnet1",
-          "ips": [
-              "192.168.0.3"
-          ],
-          "mac": "2e:51:e6:31:96:40",
-          "dns": {}
-      }]
-    k8s.v1.cni.cncf.io/networks: '[{"namespace": "harvester-system", "name": "storagenetwork-95bj4",
-      "interface": "lhnet1"}]'
-    k8s.v1.cni.cncf.io/networks-status: |-
-      [{
-          "name": "k8s-pod-network",
-          "ips": [
-              "10.52.2.122"
-          ],
-          "default": true,
-          "dns": {}
-      },{
-          "name": "harvester-system/storagenetwork-95bj4",
-          "interface": "lhnet1",
-          "ips": [
-              "192.168.0.3"
-          ],
-          "mac": "2e:51:e6:31:96:40",
-          "dns": {}
-      }]
-    kubernetes.io/psp: global-unrestricted-psp
-    longhorn.io/last-applied-tolerations: '[{"key":"kubevirt.io/drain","operator":"Exists","effect":"NoSchedule"}]'
-
-Omitted...
-```
+    Omitted...
+    ```
 
 #### Step 4
 
