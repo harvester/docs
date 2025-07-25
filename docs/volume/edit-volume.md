@@ -15,10 +15,30 @@ After creating a volume, you can edit your volume by clicking the `⋮` button a
 
 ## Expand a Volume
 
-You can expand a volume by increasing the value of the `Size` parameter directly.
-To prevent the expansion from interference by unexpected data R/W, Harvester supports `offline` expansion only. You must shut down the VM or detach the volume first if it is attached to a VM, and the detached volume will automatically attach to a random node with [maintenance mode](https://longhorn.io/docs/1.3.2/concepts/#22-reverting-volumes-in-maintenance-mode) to expand automatically.
+Harvester supports offline volume expansion, provided that the underlying storage provider supports volume resizing. You can increase the size of a volume when the associated virtual machine is powered off or when the volume is detached from the virtual machine.
 
 ![expand-volume](/img/v1.2/volume/expand-volume.png)
+
+### Online Volume Expansion
+
+_Available as of v1.6.0_
+
+To minimize downtime, Harvester allows you to expand volumes that are attached to a running virtual machine or have a PVC that is attached to a running pod in the guest cluster. Depending on the underlying storage provider, you may need to take extra steps to use this feature.
+
+- **Longhorn**: Harvester considers Longhorn to have support for online volume expansion, even if differences exist between versions of the Longhorn Data Engine. Currently, the V1 Data Engine fully supports online volume expansion, while the V2 Data Engine does not support volume expansion at all (regardless of the volume's attachment state).
+
+- **Third-party storage**: Harvester rejects online volume expansion requests for third-party storage by default. If you have confirmed that your storage provider supports online volume expansion, you can use the [`csi-online-expand-validation`](../advanced/settings.md#csi-online-expand-validation) setting to mark that storage provider as validated.
+
+![](/img/csi-online-expand-validation.png)
+
+:::info important
+
+Online resizing of hotplugged filesystem volumes is not supported. When a filesystem volume is bind-mounted in the `virt-launcher` pod, hotplugging a new filesystem volume triggers `NodeUnPublish` and `NodeUnstage` operations on the previous volume, which prevents further resizing.
+
+Additionally, you cannot use the [Edit Config](../vm/edit-vm.md) feature on the Harvester UI **Virtual Machines** screen to resize a volume while the virtual machine is running. Certain limitations prevent the current UI from accurately displaying the results of volume expansion operations. For more information, see [issue #8669](https://github.com/harvester/harvester/issues/8669).
+
+:::
+
 
 ## Cancel a Failed Volume Expansion
 
