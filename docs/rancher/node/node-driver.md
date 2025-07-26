@@ -79,9 +79,6 @@ setting to 30 days and 90 days respectively.
 
 **Last updated**: 2024-05-21
 
-## RKE1 Kubernetes cluster
-Click to learn [how to create RKE1 Kubernetes Clusters](./rke1-cluster.md).
-
 ## RKE2 Kubernetes cluster
 Click to learn [how to create RKE2 Kubernetes Clusters](./rke2-cluster.md).
 
