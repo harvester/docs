@@ -58,12 +58,6 @@ For in-depth insights, please refer to the [virtualization management](./virtual
 
 You can launch a Kubernetes cluster from Rancher using the [Harvester node driver](./node/node-driver.md). When Rancher deploys Kubernetes onto these nodes, choose RKE2.
 
-:::note
-
-Rancher Kubernetes Engine (RKE) will reach the end of its life on **July 31, 2025**. Harvester **v1.6.0** and later versions will not support RKE. Using RKE2, which provides a more secure and efficient environment, is recommended.
-
-:::
-
 One benefit of installing Kubernetes on node pools hosted by the node driver is that if a node loses connectivity with the cluster, Rancher can automatically create another node to join the cluster to ensure that the count of the node pool is as expected.
 
 Starting from Rancher version `v2.6.1`, the Harvester node driver is included by default. You can refer to the [node-driver](./node/node-driver.md) page for more details.

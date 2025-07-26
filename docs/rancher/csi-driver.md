@@ -50,25 +50,6 @@ Currently, the Harvester CSI driver only supports single-node read-write(RWO) vo
 
 :::
 
-### Deploying with Harvester RKE1 node driver
-
-:::caution
-
-Rancher Kubernetes Engine (RKE) will reach the end of its life on **July 31, 2025**. Harvester **v1.6.0** and later versions will not support RKE. Switching to RKE2, which provides a more secure and efficient environment, is recommended.
-
-In-place upgrades are not an option, so you must [create new RKE2 clusters](./node/rke2-cluster.md) and migrate the workloads from your existing RKE clusters (known as replatforming). For more information, see [RKE End of Life](https://www.suse.com/support/kb/doc/?id=000021513).
-
-:::
-
-- Select the `Harvester(Out-of-tree)` option.
-
-    ![](/img/v1.2/rancher/rke-cloud-provider.png)
-
-- Install `Harvester CSI Driver` from the Rancher marketplace.
-
-    ![](/img/v1.2/rancher/install-harvester-csi-driver.png)
-
-
 ### Deploying with Harvester RKE2 node driver
 
 When spinning up a Kubernetes cluster using Rancher RKE2 node driver, the Harvester CSI driver will be deployed automatically when Harvester cloud provider is selected.
@@ -208,12 +189,7 @@ Beginning with Harvester CSI driver v0.1.15, it's possible to create a Persisten
 
 :::note
 
-Harvester CSI driver v0.1.15 is supported out of the box starting with the following RKE2 versions. For RKE1, manual installation of the CSI driver chart is required:
-- v1.23.16+rke2r1 and later
-- v1.24.10+rke2r1 and later
-- v1.25.6+rke2r1 and later
-- v1.26.1+rke2r1 and later
-- v1.27.1+rke2r1 and later
+A compatible Harvester CSI driver is built-in out of the box in each supported RKE2 version.
 
 :::
 
@@ -508,11 +484,11 @@ To upgrade the CSI driver, use the Rancher UI to upgrade RKE2. Ensure the new RK
 
 1. Click **Save**.
 
-### Upgrade RKE and K3s
+### Upgrade K3s
 
-You can upgrade RKE and K3s using the Rancher UI.
+You can upgrade K3s using the Rancher UI.
 
-1. Go to **☰** > **RKE/K3s Cluster** > **Apps** > **Installed Apps**.
+1. Go to **☰** > **K3s Cluster** > **Apps** > **Installed Apps**.
 
 1. Find the CSI driver chart and select **⋮** > **Edit/Upgrade**.
 
