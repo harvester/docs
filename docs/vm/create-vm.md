@@ -223,29 +223,39 @@ See the [Kubernetes Pod Affinity and Anti-Affinity Documentation](https://kubern
 
 ### Automatically Applied Affinity Rules
 
-Based on the definition of VM, Harvester applies some `Affinity` rules automatically. These rules can affect the list of eligible virtual machine scheduling/migration target nodes. In some cases, scheduling/migration fails due to no target node can satisfy the affinity constraints.
+Harvester might automatically apply certain affinity rules based on the definition of virtual machine. These rules dictate which nodes are eligible as scheduling/migration targets. If no nodes meet the criteria, the virtual machine fails to be scheduled/migrated.
 
-For more information, see [Virtual Machine is Unschedulable due to the unsatisfied Affinity Rules](../troubleshooting/vm.md#virtual-machine-is-unschedulable-due-to-the-unsatisfied-affinity-rules).
+For more information, see [Unschedulable Virtual Machine](../troubleshooting/vm.md#unschedulable-virtual-machine).
 
-:::note
+:::info important
 
-Do not edit those automatically applied rules, the manual changes get reverted by Harvester webhook.
+The Harvester webhook reverts manual changes to automatically applied rules.
 
 :::
 
-#### Cluster Network Related
+#### Related Networking Concepts
 
-When a VM attaches to some [Secondary Networks](#secondary-network), Harvester ensures it like following example:
+The general process to set up network for virtual machine.
 
-1. One [Cluster Network](../networking/clusternetwork.md#cluster-network) `cn2` is created.
-1. One [Network Configuration](../networking/clusternetwork.md#network-configuration) `cn2-vc1` is created to set up the `uplink` and other parameters, it selects `node1` and `node2` on the cluster.
-1. One [VM Network](../networking/harvester-network.md#create-a-vm-network) `cn2-nad-100` is created with `vlan id 100`.
+- A [cluster network](../networking/clusternetwork.md#cluster-network) and a corresponding [network configuration](../networking/clusternetwork.md#network-configuration) are created. Only nodes that are covered by the network configuration set up the network devices.
 
-1. A `VM vm1` attaches to [Secondary Network](#secondary-network) `cn2-nad-100`.
+- A [VM network](../networking/harvester-network.md#create-a-vm-network) is created with a specific VLAN ID.
 
-Validation:
 
-1. Kubernetes `node` objects are labled by Harvester controller automatically.
+Following example lists the processes to set up a cluster network and define a virtual machine which connects to this cluster network.
+
+- A cluster network named `cn2` is created.
+
+- A network configuration named `cn2-vc1` is created. `cn2-vc1` covers `node1` and `node2`.
+
+- A VM network named `cn2-nad-100` is created with the VLAN ID `vlan id 100`.
+
+- A virtual machine named `VM vm1` attaches to a secondary network named `cn2-nad-100`.
+
+
+Harvester ensures the following:
+
+- The Harvester controller automatically labels Kubernetes `node` objects.
 
 `kubectl get node node1 -oyaml`
 
@@ -259,7 +269,7 @@ metadata:
 ...
 ```
 
-1. `virtualmachine` object is updated by Harvester webhook automatically.
+- The Harvester webhook automatically updates the `virtualmachine` object.
 
 ```
 spec:
@@ -276,21 +286,19 @@ spec:
                       - 'true'
 ```
 
-1. When the VM runs, it will be scheduled to `node1` or `node2`, not others.
+- The virtual machine is scheduled only on `node1` or `node2`.
 
-:::note
+:::info important
 
-1. When a VM attaches to multi `Secondary Networks`, and they are backed by mutli `Cluster Network`, then multi `Affinity` rules are applied. All of those rules work together to determin the final schedulable target nodes.
+Harvester applies multiple affinity rules when a virtual machine connects to multiple VM networks that are backed by multi cluster networks. The applied rules collectively determine the nodes that are eligible as scheduling/migration targets.
 
-1. The [Built-in Cluster Network `mgmt`](../networking/clusternetwork.md#built-in-cluster-network) covers all nodes by default, when a vm attaches to `VM Networks` which are backed by `mgmt` cluster network, they are not converted to `Affinity` rules. All nodes are schedulable target nodes.
+No affinity rules are applied when a virtual machine connects to VM networks that are backed by [`mgmt`](../networking/clusternetwork.md#built-in-cluster-network) (the built-in cluster network). `mgmt` covers all nodes by default, so all nodes are eligible as scheduling/migration targets.
 
 :::
 
-#### CPU Pinning Related
+#### Related CPU Pinning Concepts
 
-1. Enable the [cpu-manager](./cpu-pinning.md#enable-and-disable-cpu-manager) on some/all nodes.
-
-After the enablement is successfully done, the `node` object has below label.
+When you enable the [CPU Manager](./cpu-pinning.md#enable-and-disable-cpu-manager) on nodes, Harvester applies the following label to related `node` objects.
 
 ```
 ...
@@ -300,9 +308,7 @@ metadata:
 ...
 ```
 
-2. Enable the [CPU Pinning](./cpu-pinning.md#enable-cpu-pinning-on-a-new-vm)  on VM
-
-When `CPU Pinning` selection box is ticked while creating a VM, Harvester applies another `Affinity` rule automatically.
+When you enable  [CPU Pinning](./cpu-pinning.md#enable-cpu-pinning-on-a-new-vm) during virtual machine creation, Harvester applies an affinity rule that ensures the virtual machine is scheduled only on nodes where CPU Manager is enabled.
 
 ```
 spec:
@@ -318,8 +324,6 @@ spec:
                     values:
                       - 'true'
 ```
-
-This `Affinity` rule ensures that the VM is only scheduled to those nodes which has already enabled the `cpu manager`.
 
 ## Annotations
 

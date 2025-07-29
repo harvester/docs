@@ -455,13 +455,13 @@ After deleting the directory, you must restart the virtual machine so that cloud
 
 https://github.com/harvester/harvester/issues/6644
 
-## Virtual Machine is Unschedulable due to the Unsatisfied Affinity Rules
+## Unschedulable Virtual Machine
 
-One VM shows `unscheduable`.
+The state of a virtual machine is `Unschedulable` because of an unsatisfied affinity rule.
 
 ![](/img/v1.5/troubleshooting/unschedulable-vm.png)
 
-Check the VM definition, it has below `Affinity` rule.
+The `VirtualMachine` object contains an affinity rule similar to the following:
 
 ```
 apiVersion: kubevirt.io/v1
@@ -481,7 +481,7 @@ metadata:
                       - 'true'
 ```
 
-The POD status is `Pending`, the detailed error shows that no node can meet the `Affinity` rule.
+The pod status is `Pending`, and the error message indicates that no node meets the affinity rule's criteria.
 
 ```
 $ kubectl get pods
@@ -520,10 +520,10 @@ status:
 
 ```
 
-### Root cause
+### Root Cause
 
-Based on the definition of VM, Harvester [applies some Affinity rules automatically](../vm/create-vm.md#automatically-applied-affinity-rules). In the above example, the VM attaches to cluster network `cn2`, then Harvester applies `Affifnity` rule `network.harvesterhci.io/cn2`. But there is no node meets this rule and hence the VM is not schedulable.
+Harvester migtht [automatically apply affinity rules](../vm/create-vm.md#automatically-applied-affinity-rules) based on the definition of a virtual machine. In the above example, the virtual machine `vm100` attaches to the cluster network `cn2`, and Harvester applies the affinity rule `network.harvesterhci.io/cn2`. However, no nodes meet the rule's criteria, so the virtual machine cannot be scheduled.
 
-### Workaround
+### Solution
 
-Ensure there are active nodes which has already setup the cluster network `cn2`, then the node has the label `network.harvesterhci.io/cn2` and can schedule the pending pod.
+Ensure there are active nodes which sets up the cluster network `cn2` successfully, then these nodes are labeled with `network.harvesterhci.io/cn2`, finally the pending pod can be scheduled to them.
