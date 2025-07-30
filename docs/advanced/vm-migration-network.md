@@ -159,15 +159,13 @@ status:
     type: configured
 ```
 
-#### Step 2
+1. Verify that all KubeVirt `virt-handler` pods are ready and that their networks are correctly configured.
 
-Verify the readiness of all KubeVirt `virt-handler` pods, and confirm that their networks are correctly configured.
+    You can inspect pod details using the following command:
 
-Execute the following command to inspect a pod's details:
-
-```bash
-kubectl -n harvester-system describe pod <pod-name>
-```
+    ```bash
+    kubectl -n harvester-system describe pod <pod-name>
+    ```
 
 #### Step 3
 
