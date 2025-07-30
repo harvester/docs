@@ -122,11 +122,10 @@ Harvester considers extra insignificant characters in a JSON string as a differe
 </TabItem>
 </Tabs>
 
-### After Applying Harvester VM Migration Network Setting
+The following occur once the `vm-migration-network` setting is applied:
 
-Harvester will create a new NetworkAttachmentDefinition and update the KubeVirt configuration.
-
-Once the KubeVirt configuration is updated, KubeVirt will restart all `virt-handler` pods to apply the new network configuration.
+- Harvester creates a new `NetworkAttachmentDefinition` and updates the KubeVirt configuration.
+- KubeVirt restarts all `virt-handler` pods to apply the new network configuration.
 
 ### Verify Configuration is Completed
 
