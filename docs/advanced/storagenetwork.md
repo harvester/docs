@@ -29,49 +29,49 @@ Before you begin configuring the storage network, ensure that the following requ
 
 - The IP range of the storage network has the following characteristics:
 
-    - Uses the IPv4 CIDR format
+  - Uses the IPv4 CIDR format
     
-    - Does not conflict or overlap with Kubernetes cluster networks
+  - Does not conflict or overlap with Kubernetes cluster networks
     
-      The following addresses are reserved: `10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16`, and `10.53.0.0/16`.
+    The following addresses are reserved: `10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16`, and `10.53.0.0/16`.
 
-    - Covers the requirements of the cluster
+  - Covers the requirements of the cluster
     
-      The required number of IP addresses is calculated using the following formula: `Required number of IPs = (Number of nodes * 2) + (Number of disks * 2) + Number of images to be downloaded or uploaded`
+    The required number of IP addresses is calculated using the following formula: `Required number of IPs = (Number of nodes * 2) + (Number of disks * 2) + Number of images to be downloaded or uploaded`
     
-      Example: If a cluster has five nodes with two disks each, and ten images are to be uploaded simultaneously, the IP range should be greater than or equal to `/26` (calculation: (5 * 2) + (5 * 2) + 10 = 30).
+    Example: If a cluster has five nodes with two disks each, and ten images are to be uploaded simultaneously, the IP range should be greater than or equal to `/26` (calculation: (5 x 2) + (5 x 2) + 10 = 30).
 
-    - Excludes IP addresses that Longhorn pods and the storage network must not use, such as addresses reserved for [RWX volumes](../rancher/csi-driver.md#rwx-volumes-support), the gateway, and other components.
+  - Excludes IP addresses that Longhorn pods and the storage network must not use, such as addresses reserved for [RWX volumes](../rancher/csi-driver.md#rwx-volumes-support), the gateway, and other components.
 
-      Longhorn pods use the storage network as follows:
+    Longhorn pods use the storage network as follows:
 
-      - `instance-manager` pods: Longhorn Instance Manager components were [consolidated in Longhorn v1.5.0](https://longhorn.io/docs/1.5.0/deploy/important-notes/#instance-managers-consolidated). Each node requires one IP address. During an upgrade, both old and new versions of these pods exist, and the old version is deleted once the upgrade is completed.
+    - `instance-manager` pods: Longhorn Instance Manager components were [consolidated in Longhorn v1.5.0](https://longhorn.io/docs/1.5.0/deploy/important-notes/#instance-managers-consolidated). Each node requires one IP address. During an upgrade, both old and new versions of these pods exist, and the old version is deleted once the upgrade is completed.
 
-      - `backing-image-ds` pods: These pods process on-the-fly uploads and downloads of backing image data sources, and are removed once the image uploads and downloads are completed.
+    - `backing-image-ds` pods: These pods process on-the-fly uploads and downloads of backing image data sources, and are removed once the image uploads and downloads are completed.
     
-      - `backing-image-manager` pods: Each disk requires one IP address. During an upgrade, both old and new versions of these pods exist, and the old version is deleted once the upgrade is completed.
+    - `backing-image-manager` pods: Each disk requires one IP address. During an upgrade, both old and new versions of these pods exist, and the old version is deleted once the upgrade is completed.
 
 - The Whereabouts CNI is installed correctly.
 
-    You can check if the `ippools.whereabouts.cni.cncf.io` CRD exists in the cluster using the command `kubectl get crd ippools.whereabouts.cni.cncf.io`.
+  You can check if the `ippools.whereabouts.cni.cncf.io` CRD exists in the cluster using the command `kubectl get crd ippools.whereabouts.cni.cncf.io`.
   
-    If an empty string is returned, add the CRDs in [this directory](https://github.com/harvester/harvester/tree/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds) using the following commands:
+  If an empty string is returned, add the CRDs in [this directory](https://github.com/harvester/harvester/tree/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds) using the following commands:
 
-    ```
-    kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds/whereabouts.cni.cncf.io_ippools.yaml
+  ```
+  kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds/whereabouts.cni.cncf.io_ippools.yaml
 
-    kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds/whereabouts.cni.cncf.io_overlappingrangeipreservations.yaml
-    ```
+  kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds/whereabouts.cni.cncf.io_overlappingrangeipreservations.yaml
+  ```
 
-    :::note
+  :::note
 
-    The Whereabouts CNI is not installed correctly in certain [upgrade scenarios](https://github.com/harvester/harvester/issues/3168).
+  The Whereabouts CNI is not installed correctly in certain [upgrade scenarios](https://github.com/harvester/harvester/issues/3168).
 
-    :::
+  :::
 
 - All virtual machines are stopped.
 
-    You can check the status of virtual machines using the command `kubectl get -A vmi`, which should return an empty string.
+  You can check the status of virtual machines using the command `kubectl get -A vmi`, which should return an empty string.
 
 - All pods that are attached to Longhorn volumes are stopped.
 
@@ -164,34 +164,34 @@ The storage network is automatically enabled in the following situations:
 
 - The value field contains a valid JSON string.
 
-    Example:
+  Example:
 
-    ```yaml
-    apiVersion: harvesterhci.io/v1beta1
-    kind: Setting
-    metadata:
-    name: storage-network
-    value: '{"vlan":100,"clusterNetwork":"storage","range":"192.168.0.0/24", "exclude":["192.168.0.100/32"]}'
-    ```
+  ```yaml
+  apiVersion: harvesterhci.io/v1beta1
+  kind: Setting
+  metadata:
+  name: storage-network
+  value: '{"vlan":100,"clusterNetwork":"storage","range":"192.168.0.0/24", "exclude":["192.168.0.100/32"]}'
+  ```
 
 - The value field is empty.
 
-    ```yaml
-    apiVersion: harvesterhci.io/v1beta1
-    kind: Setting
-    metadata:
-      name: storage-network
-    value: ''
-    ```
+  ```yaml
+  apiVersion: harvesterhci.io/v1beta1
+  kind: Setting
+  metadata:
+    name: storage-network
+  value: ''
+  ```
 
 The storage network is disabled when you remove the value field.
 
-    ```yaml
-    apiVersion: harvesterhci.io/v1beta1
-    kind: Setting
-    metadata:
-      name: storage-network
-    ```
+  ```yaml
+  apiVersion: harvesterhci.io/v1beta1
+  kind: Setting
+  metadata:
+    name: storage-network
+  ```
 
 :::caution
 
@@ -206,17 +206,6 @@ Harvester considers extra insignificant characters in a JSON string as a differe
 
 Follow the instructions in [Change the MTU of a Network Configuration with an Attached Storage Network](../networking/clusternetwork.md#change-the-mtu-of-a-network-configuration-with-an-attached-storage-network).
 
-### After Applying Harvester Storage Network Setting
-REMOVE HEADING
-
-The following occur once the `storage-network` setting is applied:
-
-- Harvester stops all pods that are related to Longhorn volumes.
-
-- Harvester creates a new `NetworkAttachmentDefinition` and updates the Longhorn Storage Network setting.
-
-- Longhorn restarts all `instance-manager-r`, `instance-manager-e`, and `backing-image-manager` pods to apply the new network configuration.
-
 :::note
 
 Harvester will not start VM automatically. Users should check whether the configuration is completed or not in the next section and start VM manually on demand.
@@ -224,6 +213,14 @@ Harvester will not start VM automatically. Users should check whether the config
 :::
 
 ### Post-Configuration Steps
+
+The following occur once the `storage-network` setting is applied:
+
+- Harvester stops all pods that are related to Longhorn volumes.
+- Harvester creates a new `NetworkAttachmentDefinition` and updates the Longhorn Storage Network setting.
+- Longhorn restarts all `instance-manager-r`, `instance-manager-e`, and `backing-image-manager` pods to apply the new network configuration.
+
+Perform the following steps to ensure that the configuration is correct and does not cause issues:
 
 1. Verify that the `storage-network` setting's status is `True` and the type is `configured` using the following command:
 
@@ -281,9 +278,9 @@ Harvester will not start VM automatically. Users should check whether the config
 
     :::
 
-1. Check the `k8s.v1.cni.cncf.io/network-status` annotations and verify that an interface named `lhnet1` exists. The IP address of this interface must be within the designated IP range.
+1. Verify that an interface named `lhnet1` exists in the `k8s.v1.cni.cncf.io/network-status` annotations. The IP address of this interface must be within the designated IP range.
 
-    You can retrieve the list of Longhorn Instance Manager pods using the following command:
+    You can retrieve the list of Longhorn `instance-manager` pods using the following command:
 
     ```bash
     kubectl get pods -n longhorn-system -l longhorn.io/component=instance-manager -o yaml
@@ -341,107 +338,98 @@ Harvester will not start VM automatically. Users should check whether the config
     Omitted...
     ```
 
-#### Step 4
+1. Test the communication between Longhorn pods.
 
-The storage network is dedicated to [internal communication between Longhorn pods](#same-physical-interfaces), resulting in high performance and reliability. However, the storage network still relies on the [external network infrastructure](../networking/deep-dive.md#external-networking) for connectivity (similar to how the [VM VLAN network](../networking/harvester-network.md#create-a-vm-with-vlan-network) functions). When the external network is not connected and configured correctly, you may encounter the following issues:
+    The storage network is dedicated to [internal communication between Longhorn pods](#same-physical-interfaces), resulting in high performance and reliability. However, the storage network still relies on the [external network infrastructure](../networking/deep-dive.md#external-networking) for connectivity (similar to how the [virtual machine VLAN network](../networking/harvester-network.md#create-a-vm-with-vlan-network) functions). When the external network is not connected and configured correctly, you may encounter the following issues:
 
-- The newly created VM becomes stuck at the `Not-Ready` state.
+    - The newly created VM becomes stuck at the `Not-Ready` state.
+    - The `longhorn-manager` pod logs include error messages.
 
-- The `longhorn-manager` pod logs include error messages.
+    Example:
 
-Example:
+    ```
+    longhorn-manager-j6dhh/longhorn-manager.log:2024-03-20T16:25:24.662251001Z time="2024-03-20T16:25:24Z" level=error msg="Failed rebuilding of replica 10.0.16.26:10000" controller=longhorn-engine engine=pvc-0a151c59-ffa9-4938-9c86-59ebb296bc88-e-c2a7fe77 error="proxyServer=10.52.6.33:8501 destination=10.0.16.23:10000: failed to add replica tcp://10.0.16.26:10000 for volume: rpc error: code = Unknown desc = failed to get replica 10.0.16.26:10000: rpc error: code = Unavailable desc = all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 10.0.16.26:10000: connect: no route to host\"" node=oml-harvester-9 volume=pvc-0a151c59-ffa9-4938-9c86-59ebb296bc88
+    ```
 
-```
-longhorn-manager-j6dhh/longhorn-manager.log:2024-03-20T16:25:24.662251001Z time="2024-03-20T16:25:24Z" level=error msg="Failed rebuilding of replica 10.0.16.26:10000" controller=longhorn-engine engine=pvc-0a151c59-ffa9-4938-9c86-59ebb296bc88-e-c2a7fe77 error="proxyServer=10.52.6.33:8501 destination=10.0.16.23:10000: failed to add replica tcp://10.0.16.26:10000 for volume: rpc error: code = Unknown desc = failed to get replica 10.0.16.26:10000: rpc error: code = Unavailable desc = all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 10.0.16.26:10000: connect: no route to host\"" node=oml-harvester-9 volume=pvc-0a151c59-ffa9-4938-9c86-59ebb296bc88
-```
+    To test the communication between Longhorn pods, perform the following steps:
 
-To test the communication between Longhorn pods, perform the following steps:
+    1. Obtain the storage network IP of each Longhorn Instance Manager pod identified in the previous step.
 
-4.1 Obtain the storage network IP of each Longhorn Instance Manager pod identified in the previous step.
+      Example:
 
-Example:
+      ```
+      instance-manager-r-43f1624d14076e1d95cd72371f0316e2
+      storage network IP: 10.0.16.8
 
-```
-instance-manager-r-43f1624d14076e1d95cd72371f0316e2
-storage network IP: 10.0.16.8
+      instance-manager-e-ba38771e483008ce61249acf9948322f
+      storage network IP: 10.0.16.14
+      ```
 
-instance-manager-e-ba38771e483008ce61249acf9948322f
-storage network IP: 10.0.16.14
-```
+    1. Log in to those pods.
 
-4.2 Log in to those pods.
+      When you run the command `ip addr`, the output includes IPs that are identical to IPs in the pod annotations. In the following example, one IP is for the pod network, while the other is for the storage network.
 
-When you run the command `ip addr`, the output includes IPs that are identical to IPs in the pod annotations. In the following example, one IP is for the pod network, while the other is for the storage network.
+      Example:
 
-Example:
+      ```
+      $ kubectl exec -i -t -n longhorn-system instance-manager-e-ba38771e483008ce61249acf9948322f -- /bin/sh
+      
+      $ ip addr
+      1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+          link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+          inet 127.0.0.1/8 scope host lo
+      ...
+      3: eth0@if2277: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default  // pod network link
+          link/ether 0e:7c:d6:77:44:72 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+          inet 10.52.6.146/32 scope global eth0
+      ...
+      4: lhnet1@if2278: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default // storage network link, note the MTU value
+          link/ether fe:92:4f:fb:dd:20 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+          inet 10.0.16.14/20 brd 10.0.31.255 scope global lhnet1
+      ...
 
-```
-$ kubectl exec -i -t -n longhorn-system instance-manager-e-ba38771e483008ce61249acf9948322f -- /bin/sh
+      $ ip route
+      default via 169.254.1.1 dev eth0
+      10.0.16.0/20 dev lhnet1 proto kernel scope link src 10.0.16.14
+      169.254.1.1 dev eth0 scope link
+      ```
 
-$ ip addr
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-...
-3: eth0@if2277: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default  // pod network link
-    link/ether 0e:7c:d6:77:44:72 brd ff:ff:ff:ff:ff:ff link-netnsid 0
-    inet 10.52.6.146/32 scope global eth0
-...
-4: lhnet1@if2278: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default // storage network link, note the MTU value
-    link/ether fe:92:4f:fb:dd:20 brd ff:ff:ff:ff:ff:ff link-netnsid 0
-    inet 10.0.16.14/20 brd 10.0.31.255 scope global lhnet1
-...
+      :::note
 
-$ ip route
-default via 169.254.1.1 dev eth0
-10.0.16.0/20 dev lhnet1 proto kernel scope link src 10.0.16.14
-169.254.1.1 dev eth0 scope link
-```
+      The storage network link always inherits the MTU value from the attached [cluster network](../networking/clusternetwork.md#cluster-network), regardless of the [configured MTU value](../networking/clusternetwork.md#change-the-mtu-of-a-network-configuration-with-an-attached-storage-network).
 
-:::note
+      :::
 
-The `storage network` link always inherites the `MTU` value from the attached [cluster-network](../networking/clusternetwork.md#cluster-network), no matter which [MTU value](../networking/clusternetwork.md#change-the-mtu-of-a-network-configuration-with-an-attached-storage-network) has been set.
+    1. Start a simple HTTP server in one pod.
+    
+      You must explicitly bind this HTTP server to the storage network IP.
 
-:::
+      Example:
 
-4.3 Start a simple HTTP server in one pod.
+      ```
+      $ python3 -m http.server 8000 --bind 10.0.16.14 (replace with your pod storage network IP)
+      ```
 
-Example:
+    1. Test the HTTP server in another pod.
 
-```
-$ python3 -m http.server 8000 --bind 10.0.16.14 (replace with your pod storage network IP)
-```
+      Example:
 
-:::note
+      ```
+      From instance-manager-r-43f1624d14076e1d95cd72371f0316e2 (IP 10.0.16.8)
 
-Explicitly bind the simple HTTP server to the storage network IP.
+      $ curl http://10.0.16.14:8000
+      ```
 
-:::
+      When the storage network is functioning correctly, the `curl` command returns a list of files on the HTTP server.
 
-4.4 Test the HTTP server in another pod.
+    1. (Optional) Troubleshoot issues.
 
-Example:
+      The storage network may malfunction because of issues with the external network, such as the following:
 
-```
-From instance-manager-r-43f1624d14076e1d95cd72371f0316e2 (IP 10.0.16.8)
+      - Physical NICs (installed on Harvester nodes) that are associated with the storage network were not added to the same VLAN in the external switches.
+      - The external switches are not correctly connected and configured.
 
-$ curl http://10.0.16.14:8000
-```
-
-When the storage network is functioning correctly, the `curl` command returns a list of files on the HTTP server.
-
-4.5 (Optional) Troubleshoot issues.
-
-The storage network may malfunction because of issues with the external network, such as the following:
-
-- Physical NICs (installed on Harvester nodes) that are associated with the storage network were not added to the same VLAN in the external switches.
-
-- The external switches are not correctly connected and configured.
-
-
-### Start VM Manually
-
-After verifying the configuration, users could start VM manually on demand.
+Once the configuration is verified, you can manually start virtual machines when necessary.
 
 ## Best Practices
 
