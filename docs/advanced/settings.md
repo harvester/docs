@@ -882,13 +882,13 @@ When the node becomes unavailable or is powered off, the VM only restarts and do
 
 ### `vm-migration-network`
 
-**Definition**: Segregated network for VM migration traffic.
+**Definition**: Segregated network for virtual machine migration traffic.
 
-By default, VM migration uses the management network, which is limited to a single interface and shared with cluster-wide workloads. If your implementation requires network segregation, you can use a [vm migration network](./vm-migration-network.md) to isolate VM migration in-cluster data traffic.
+By default, Harvester uses the built-in cluster network `mgmt` for virtual machine migration. `mgmt` is limited to a single interface and is shared with cluster-wide workloads. If your implementation requires network segregation, you can use a [VM migration network](./vm-migration-network.md) to isolate migration traffic.
 
 :::info important
 
-Specify an IP range in the IPv4 CIDR format. The number of IPs must be equal to or large than the number of your cluster nodes.
+Specify an IP range in the IPv4 CIDR format. The number of IP addresses must be larger than or equal to the number of your cluster nodes.
 
 :::
 
