@@ -29,6 +29,14 @@ This issue was fixed in v0.1.21. If your system is affected, you can follow the 
 
 The Harvester Container Storage Interface (CSI) Driver provides a standard CSI interface used by guest Kubernetes clusters in Harvester. It connects to the host cluster and hot-plugs host volumes to the virtual machines (VMs) to provide native storage performance.
 
+The Harvester CSI driver supports the following features:
+
+| Harvester CSI Driver Version | Harvester Version | Storage Tiering | RWX Volumes | Online Resizing | Third-Party Storage | Snapshots and Backups |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0.1.15 | All versions | &#10004; | &#10006; | &#10006; | &#10006; | &#10006; |
+| 0.1.20 | v1.4 and later | &#10004; | &#10004; | &#10006; | &#10006; | &#10006; |
+| 0.1.24 | v1.6 and later | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; |
+
 ## Deploying
 
 ### Prerequisites
@@ -476,6 +484,15 @@ RWX volumes currently only work with a dedicated storage network. [GitHub issue 
 You can follow the same steps to create an RWX PVC on the guest cluster and then use it on pods that require RWX volumes.
 
 :::
+
+## Online Volume Resizing
+
+If the underlying storage provider supports [online volume expansion](../volume/edit-volume.md#online-volume-expansion), you can expand a ReadWriteOnce (RWO) volume in the guest cluster even while it is attached to a running workload.
+
+### Prerequisites
+
+- Harvester v1.6 or later
+- Harvester CSI Driver v0.1.24 or later
 
 ## Upgrade the CSI Driver
 
