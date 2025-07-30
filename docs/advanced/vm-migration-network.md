@@ -39,7 +39,8 @@ The [`vm-migration-network`](./settings.md#vm-migration-network) setting allows 
 
 You can [enable](#enable-the-vm-migration-network) and [disable](#disable-the-vm-migration-network) the VM migration network using either the UI or the CLI. When the setting is enabled, you must construct a Multus `NetworkAttachmentDefinition` CRD by configuring certain fields.
 
-#### Web UI
+<Tabs>
+<TabItem value="ui" label="UI" default>
 
 :::tip
 
@@ -47,7 +48,7 @@ Using the Harvester UI to configure the `vm-migration-network` setting is strong
 
 :::
 
-##### Enable the VM Migration Network
+#### Enable the VM Migration Network
 
 1. Go to **Advanced > Settings > vm-migration-network**.
 
@@ -59,7 +60,7 @@ Using the Harvester UI to configure the `vm-migration-network` setting is strong
 
 ![storage-network-enabled.png](/img/v1.4/storagenetwork/storage-network-enabled.png)
 
-##### Disable the VM Migration Network
+#### Disable the VM Migration Network
 
 1. Go to **Advanced > Settings > vm-migration-network**.
 
@@ -67,9 +68,11 @@ Using the Harvester UI to configure the `vm-migration-network` setting is strong
 
 1. Click **Save**.
 
-Once the VM migration network is disabled, KubeVirt starts using the mgmt network for VM migration related operations.
+Once the VM migration network is disabled, KubeVirt starts using `mgmt` for VM migration-related operations.
 
 ![storage-network-disabled.png](/img/v1.4/storagenetwork/storage-network-disabled.png)
+
+</TabItem>
 
 #### CLI
 
