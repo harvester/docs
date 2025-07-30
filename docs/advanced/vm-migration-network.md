@@ -26,13 +26,6 @@ Before you begin configuring the VM migration network, ensure that the following
 
 - The IP range of the VM migration network is in the IPv4 CIDR format and must neither conflict nor overlap with Kubernetes cluster networks. You must exclude IP addresses that KubeVirt pods and the VM migration network must not use. The following addresses are reserved: `10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16` and `10.53.0.0/16`.
 
-We will take the following configuration as an example to explain the details of the VM Migration Network
-
-- VLAN ID for VM Migration Network: `100`
-- Cluster Network: `vm-migration`
-- IP range: `192.168.1.0/24`
-- Exclude Address: `192.168.1.1/32`
-
 ### `vm-migration-network` Setting
 
 The [`vm-migration-network`](./settings.md#vm-migration-network) setting allows you to configure the network used to isolate in-cluster VM migration traffic when segregation is required.
@@ -58,7 +51,7 @@ Using the Harvester UI to configure the `vm-migration-network` setting is strong
 
 1. Click **Save**.
 
-![storage-network-enabled.png](/img/v1.4/storagenetwork/storage-network-enabled.png)
+![vm-migration-network-enabled.png](/img/v1.6/vm-migration-network/vm-migration-network-enabled.png)
 
 #### Disable the VM Migration Network
 
@@ -70,7 +63,7 @@ Using the Harvester UI to configure the `vm-migration-network` setting is strong
 
 Once the VM migration network is disabled, KubeVirt starts using `mgmt` for VM migration-related operations.
 
-![storage-network-disabled.png](/img/v1.4/storagenetwork/storage-network-disabled.png)
+![vm-migration-network-disabled.png](/img/v1.6/vm-migration-network/vm-migration-network-disabled.png)
 
 </TabItem>
 
