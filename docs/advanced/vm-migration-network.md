@@ -24,16 +24,7 @@ Before you begin configuring the VM migration network, ensure that the following
 
 - The `ippools.whereabouts.cni.cncf.io` CRD exists. You can check this using the command `kubectl get crd ippools.whereabouts.cni.cncf.io`. In certain [upgrade scenarios](https://github.com/harvester/harvester/issues/3168), the Whereabouts CNI is not installed correctly.
 
-## Configuration Example
-
-- VLAN ID
-	- Please check with your network switch setting, and provide a dedicated VLAN ID for VM Migration Network.
-- Well-configured Cluster Network and VLAN Config
-	- Please refer Networking page for more details and configure [Cluster Network](../networking/clusternetwork.md) and [VLAN Config](../networking/harvester-network.md).
-- IP range for VM Migration Network
-	- IP range should not conflict or overlap with Kubernetes cluster networks(`10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16` and `10.53.0.0/16` are reserved).
-	- IP range should be in IPv4 CIDR format.
-  - Exclude IP addresses that KubeVirt pods and the VM migration network must not use.
+- The IP range of the VM migration network is in the IPv4 CIDR format and must neither conflict nor overlap with Kubernetes cluster networks. You must exclude IP addresses that KubeVirt pods and the VM migration network must not use. The following addresses are reserved: `10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16` and `10.53.0.0/16`.
 
 We will take the following configuration as an example to explain the details of the VM Migration Network
 
