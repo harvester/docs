@@ -165,47 +165,44 @@ The following occur once the `vm-migration-network` setting is applied:
     kubectl -n harvester-system describe pod <pod-name>
     ```
 
-#### Step 3
+1. Check the `k8s.v1.cni.cncf.io/network-status` annotations and verify that an interface named `migration0` exists. The IP address of this interface must be within the designated IP range.
 
-Check the `k8s.v1.cni.cncf.io/network-status` annotations and ensure that an interface named `migration0` exists, with an IP address within the designated IP range.
+    You can retrieve a list of `virt-handler` pods using the following command:
 
-Users could use the following command to show all `virt-handler` pods to verify.
+    ```bash
+    kubectl get pods -n harvester-system -l kubevirt.io=virt-handler -o yaml
+    ```
 
-```bash
-kubectl get pods -n harvester-system -l kubevirt.io=virt-handler -o yaml
-```
+    Example:
 
-Correct Network Example:
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  annotations:
-    cni.projectcalico.org/containerID: 004522bc8468ea707038b43813cce2fba144f0e97551d2d358808d57caf7b543
-    cni.projectcalico.org/podIP: 10.52.2.122/32
-    cni.projectcalico.org/podIPs: 10.52.2.122/32
-    k8s.v1.cni.cncf.io/network-status: |-
-      [{
-          "name": "k8s-pod-network",
-          "ips": [
-              "10.52.2.122"
-          ],
-          "default": true,
-          "dns": {}
-      },{
-          "name": "harvester-system/vm-migration-network-6flk7",
-          "interface": "migration0",
-          "ips": [
-              "10.1.2.1"
-          ],
-          "mac": "c6:30:6f:02:52:3e",
-          "dns": {}
-      }]
-    k8s.v1.cni.cncf.io/networks: vm-migration-network-6flk7@migration0
-
-Omitted...
-```
+    ```yaml
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      annotations:
+        cni.projectcalico.org/containerID: 004522bc8468ea707038b43813cce2fba144f0e97551d2d358808d57caf7b543
+        cni.projectcalico.org/podIP: 10.52.2.122/32
+        cni.projectcalico.org/podIPs: 10.52.2.122/32
+        k8s.v1.cni.cncf.io/network-status: |-
+          [{
+              "name": "k8s-pod-network",
+              "ips": [
+                  "10.52.2.122"
+              ],
+              "default": true,
+              "dns": {}
+          },{
+              "name": "harvester-system/vm-migration-network-6flk7",
+              "interface": "migration0",
+              "ips": [
+                  "10.1.2.1"
+              ],
+              "mac": "c6:30:6f:02:52:3e",
+              "dns": {}
+          }]
+        k8s.v1.cni.cncf.io/networks: vm-migration-network-6flk7@migration0
+    Omitted...
+    ```
 
 ## Best Practices
 
