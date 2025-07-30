@@ -831,7 +831,33 @@ install:
 
 ### `install.wipedisks`
 
+(Deprecated in 1.6.0. See [`install.wipe_all_disks`](#installwipe_all_disks) and [`install.wipe_disks_list`](#installwipe_disks_list))
+
 **Definition**: Setting that clears all disk partitions on the host using the `sgdisk` command.
+
+### `install.wipe_all_disks`
+
+Definition: Setting that clears all disk partitions with the `COS_OEM` labels on the host using the `sgdisk` command.
+
+Example:
+
+```yaml
+install:
+  wipe_all_disks: true
+```
+
+### `install.wipe_disks_list`
+
+Definition: Setting that clears a list of disk partitions with the `COS_OEM` labels on the host using the `sgdisk` command.
+
+Example:
+
+```yaml
+install:
+  wipe_disks_list:
+    - /dev/sda
+    - /dev/sdb
+```
 
 ### `install.with-net-images`
 
