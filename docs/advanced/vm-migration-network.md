@@ -127,37 +127,35 @@ The following occur once the `vm-migration-network` setting is applied:
 - Harvester creates a new `NetworkAttachmentDefinition` and updates the KubeVirt configuration.
 - KubeVirt restarts all `virt-handler` pods to apply the new network configuration.
 
-### Verify Configuration is Completed
+### Post-Configuration Steps
 
-#### Step 1
+1. Verify that the setting's status is `True` and the type is `configured` using the following command:
 
-Check if Harvester VM Migration Network setting's status is `True` and the type is `configured`.
+    ```bash
+    kubectl get settings.harvesterhci.io vm-migration-network -o yaml
+    ```
 
-```bash
-kubectl get settings.harvesterhci.io vm-migration-network -o yaml
-```
+    Example:
 
-Completed Setting Example:
-
-```yaml
-apiVersion: harvesterhci.io/v1beta1
-kind: Setting
-metadata:
-  annotations:
-    vm-migration-network.settings.harvesterhci.io/hash: ec8322fb6b741f94739cbb904fc73c3fda864d6d
-    vm-migration-network.settings.harvesterhci.io/net-attach-def: harvester-system/vm-migration-network-6flk7
-  creationTimestamp: "2022-10-13T06:36:39Z"
-  generation: 51
-  name: storage-network
-  resourceVersion: "154638"
-  uid: 2233ad63-ee52-45f6-a79c-147e48fc88db
-status:
-  conditions:
-  - lastUpdateTime: "2022-10-13T13:05:17Z"
-    reason: Completed
-    status: "True"
-    type: configured
-```
+    ```yaml
+    apiVersion: harvesterhci.io/v1beta1
+    kind: Setting
+    metadata:
+      annotations:
+        vm-migration-network.settings.harvesterhci.io/hash: ec8322fb6b741f94739cbb904fc73c3fda864d6d
+        vm-migration-network.settings.harvesterhci.io/net-attach-def: harvester-system/vm-migration-network-6flk7
+      creationTimestamp: "2022-10-13T06:36:39Z"
+      generation: 51
+      name: storage-network
+      resourceVersion: "154638"
+      uid: 2233ad63-ee52-45f6-a79c-147e48fc88db
+    status:
+      conditions:
+      - lastUpdateTime: "2022-10-13T13:05:17Z"
+        reason: Completed
+        status: "True"
+        type: configured
+    ```
 
 1. Verify that all KubeVirt `virt-handler` pods are ready and that their networks are correctly configured.
 
