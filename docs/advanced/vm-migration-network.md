@@ -33,9 +33,9 @@ We will take the following configuration as an example to explain the details of
 - IP range: `192.168.1.0/24`
 - Exclude Address: `192.168.1.1/32`
 
-### Harvester VM Migration Network Setting
+### `vm-migration-network` Setting
 
-The [`vm-migration-network` setting](./settings.md#vm-migration-network) allows you to configure the network used to isolate in-cluster VM migration traffic when segregation is required.
+The [`vm-migration-network`](./settings.md#vm-migration-network) setting allows you to configure the network used to isolate in-cluster VM migration traffic when segregation is required.
 
 You can [enable](#enable-the-vm-migration-network) and [disable](#disable-the-vm-migration-network) the VM migration network using either the UI or the CLI. When the setting is enabled, you must construct a Multus `NetworkAttachmentDefinition` CRD by configuring certain fields.
 
