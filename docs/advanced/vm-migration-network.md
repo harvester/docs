@@ -14,20 +14,15 @@ Avoid configuring KubeVirt settings directly, as this can result in unexpected o
 
 ## Prerequisites
 
-There are some prerequisites before configuring the Harvester VM Migration Network setting.
+Before you begin configuring the VM migration network, ensure that the following requirements are met:
 
-- Well-configured Cluster Network and VLAN Config.
-    - Users have to ensure the Cluster Network is configured and VLAN Config will cover all nodes and ensure the network connectivity is working and expected in all nodes.
-- No VM Migration in progress before configuring the VM Migration Network setting.
+- The network switches are correctly configured, and a dedicated VLAN ID is assigned to the VM migration network.
 
-:::caution
+- The [cluster network](../networking/clusternetwork.md) and [VLAN network](../networking/harvester-network.md) are configured correctly. Ensure that both networks cover all nodes and are accessible.
 
-If the Harvester cluster was upgraded from v1.0.3, please check if Whereabouts CNI is installed properly before you move on to the next step. We will always recommend following this guide to check. [Issue 3168](https://github.com/harvester/harvester/issues/3168) describes that the Harvester cluster will not always install Whereabouts CNI properly.
+- No virtual machines are being migrated.
 
-- Verify the `ippools.whereabouts.cni.cncf.io` CRD exists with the following command.
-    - `kubectl get crd ippools.whereabouts.cni.cncf.io`
-
-:::
+- The `ippools.whereabouts.cni.cncf.io` CRD exists. You can check this using the command `kubectl get crd ippools.whereabouts.cni.cncf.io`. In certain [upgrade scenarios](https://github.com/harvester/harvester/issues/3168), the Whereabouts CNI is not installed correctly.
 
 ## Configuration Example
 
