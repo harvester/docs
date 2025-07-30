@@ -4,11 +4,11 @@ sidebar_label: VM Migration Network
 title: "VM Migration Network"
 ---
 
-If the user wishes to isolate VM migration traffic from the Kubernetes cluster network (i.e. the management network) or other cluster-wide workloads. Users can allocate a dedicated vm migration network to get better network bandwidth and performance.
+A VM migration network is useful for isolating migration traffic from cluster traffic on `mgmt` and other cluster-wide workloads. Using a VM migration network results in better network bandwidth and performance.
 
 :::note
 
-- Avoid configuring KubeVirt configuration directly, as this can result in unexpected or unwanted system behavior.
+Avoid configuring KubeVirt settings directly, as this can result in unexpected or unwanted system behavior.
 
 :::
 
