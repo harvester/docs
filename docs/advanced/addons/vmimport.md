@@ -136,6 +136,7 @@ spec:
     destinationNetwork: "default/vlan2"
   skipPreflightChecks: false
   storageClass: "my-storage-class"
+  defaultDiskBusType: "scsi"
   sourceCluster: 
     name: vcsim
     namespace: default
@@ -156,6 +157,13 @@ The list of items in `networkMapping` will define how the source network interfa
 If a match is not found, each unmatched network interface is attached to the default `managementNetwork`.
 
 The `storageClass` field specifies the [StorageClass](../storageclass.md) to be used for images and provisioning persistent volumes during the import process. If not specified, the default StorageClass will be used.
+
+The `defaultDiskBusType` field allows you to specify the bus type for imported disks. Harvester uses this field in the following ways:
+
+- VMware sources: The value is used only if Harvester is unable to automatically detect the bus type.
+- OpenStack sources: The value is used for all imported disks.
+
+The valid values are `sata`, `scsi`, `usb`, and `virtio`. If you do not specify a value, `virtio` is used by default.
 
 Once the virtual machine has been imported successfully, the object will reflect the status:
 
