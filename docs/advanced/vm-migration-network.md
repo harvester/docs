@@ -104,22 +104,23 @@ The VM migration network is automatically enabled in the following situations:
   value: ''
   ```
 
-When the VM migration network is disabled, the full configuration is as follows:
+The VM migration network is disabled when you remove the value field.
 
-```yaml
-apiVersion: harvesterhci.io/v1beta1
-kind: Setting
-metadata:
-  name: vm-migration-network
-```
+  ```yaml
+  apiVersion: harvesterhci.io/v1beta1
+  kind: Setting
+  metadata:
+    name: vm-migration-network
+  ```
 
 :::caution
 
 Harvester considers extra insignificant characters in a JSON string as a different configuration.
 
-Specifying a valid value in the `value` field enables the storage network. Deleting the `value` field disables the storage network.
-
 :::
+
+</TabItem>
+</Tabs>
 
 ### After Applying Harvester VM Migration Network Setting
 
