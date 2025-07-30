@@ -74,36 +74,35 @@ Once the VM migration network is disabled, KubeVirt starts using `mgmt` for VM m
 
 </TabItem>
 
-#### CLI
+<TabItem value="cli" label="CLI">
 
-You can use the following command to configure the [`vm-migration-network` setting](./settings.md#vm-migration-network).
+You can use the following command to configure the [`vm-migration-network`](./settings.md#vm-migration-network) setting.
 
 ```bash
 kubectl edit settings.harvesterhci.io vm-migration-network
 ```
 
-The value format is JSON string or empty string as shown in below:
+The VM migration network is automatically enabled in the following situations:
 
-```json
-{
-    "vlan": 100,
-    "clusterNetwork": "vm-migration",
-    "range": "192.168.1.0/24",
-    "exclude":[
-      "192.168.1.100/32"
-    ]
-}
-```
+- The value field contains a valid JSON string.
 
-The full configuration is like this example:
+  ```yaml
+  apiVersion: harvesterhci.io/v1beta1
+  kind: Setting
+  metadata:
+    name: vm-migration-network
+  value: '{"vlan":100,"clusterNetwork":"vm-migration","range":"192.168.1.0/24", "exclude":["192.168.1.100/32"]}'
+  ```
 
-```yaml
-apiVersion: harvesterhci.io/v1beta1
-kind: Setting
-metadata:
-  name: vm-migration-network
-value: '{"vlan":100,"clusterNetwork":"vm-migration","range":"192.168.1.0/24", "exclude":["192.168.1.100/32"]}'
-```
+- The value field is empty.
+
+  ```yaml
+  apiVersion: harvesterhci.io/v1beta1
+  kind: Setting
+  metadata:
+    name: vm-migration-network
+  value: ''
+  ```
 
 When the VM migration network is disabled, the full configuration is as follows:
 
