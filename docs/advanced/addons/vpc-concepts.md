@@ -229,19 +229,20 @@ vm1-vswitch1 will send traffic via 172.20.10.1 through enp1s0.
 vm1-vswitch2 will send traffic via 172.20.20.1 through enp1s0.
 
 **This setup allows traffic to be forwarded properly through their gateways, enabling end-to-end connectivity.** 
+
 \------------------------------------------------------------------------------------------------------------------------
 ### ***Private Subnet***
 ***Test steps:***
 
-Open the **VPC** page, go to **vswitch1-subnet -> Edit Config**, and enable the **Private Subnet** setting.
+- **Open the **VPC** page, go to **vswitch1-subnet -> Edit Config**, and enable the **Private Subnet** setting.**\
 
-Open the **serial console** of **vm1-vswitch1 (172.20.10.6)** and ping **vm1-vswitch2 (172.20.20.3)**. At this point, the ping fails.
+- **Open the **serial console** of **vm1-vswitch1 (172.20.10.6)** and ping **vm1-vswitch2 (172.20.20.3)**. At this point, the ping fails.**\
 
-Go back to **vswitch1-subnet -> Edit Config**, and add **172.20.20.0/24** to the **Allow Subnets** field.
+- **Go back to **vswitch1-subnet -> Edit Config**, and add **172.20.20.0/24** to the **Allow Subnets** field.**\
 
-Open the **serial console** of **vm1-vswitch1 (172.20.10.6)** again and ping **vm1-vswitch2 (172.20.20.3)**. This time, the ping succeeds.
+- **Open the **serial console** of **vm1-vswitch1 (172.20.10.6)** again and ping **vm1-vswitch2 (172.20.20.3)**. This time, the ping succeeds.**\
 
-This verifies that the **Private Subnet** feature is working as expected.
+- **This verifies that the **Private Subnet** feature is working as expected.**\
 
 \------------------------------------------------------------------------------------------------------------------------
 
