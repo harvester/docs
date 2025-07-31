@@ -21,7 +21,11 @@ We abstract the following elements as key components within a VPC:
 |**Security Group**|Virtual firewall that controls inbound/outbound traffic per instance|
 |**VPC Peering / VPN**|Optional peering or hybrid connections between different VPCs or on-prem networks|
 
-*Note:You must first deploy kubeovn-operator under Advanced -> Add-ons in the menu; only then will Virtual Private Cloud appear under the Networks menu.* 
+*Note:You must enable `kubeovn-operator` to deploy Kube-OVN to a Harvester cluster for advanced SDN capabilities such as virtual private cloud (VPC) and subnets for virtual machine workloads.
+
+1. On the Harvester UI, go to **Advanced** > **Add-ons**.
+
+2. Select **kubeovn-operator (Experimental)**, and then select **⋮** > **Enable**.* 
 
 ***VPC Creation*** 
 
