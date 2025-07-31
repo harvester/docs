@@ -8,14 +8,14 @@ title: "Storage Network"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/advanced/storagenetwork"/>
 </head>
 
-Harvester uses Longhorn as its built-in storage system to provide block device volumes for virtual machines and Pods. If the user wishes to isolate Longhorn replication traffic from the Kubernetes cluster network (i.e. the management network) or other cluster-wide workloads. Users can allocate a dedicated storage network for Longhorn replication traffic to get better network bandwidth and performance.
+Harvester uses Longhorn to provide block device volumes for virtual machines and pods. If you want to isolate Longhorn replication traffic from `mgmt` (the built-in cluster network) or other cluster-wide workloads, you can use a dedicated storage network for better network bandwidth and performance.
 
 For more information, see [Longhorn Storage Network](https://longhorn.io/docs/1.8.1/advanced-resources/deploy/storage-network/).
 
 :::note
 
 - Avoid configuring Longhorn settings directly, as this can result in unexpected or unwanted system behavior.
-- You can only use the Longhorn Storage Network with the default Longhorn V1 Data Engine. Usage with the V2 Data Engine is not yet supported.
+- You can only use the Longhorn storage network with the Longhorn V1 Data Engine. Usage with the V2 Data Engine is not yet supported.
 
 :::
 
@@ -77,35 +77,31 @@ Before you begin configuring the storage network, ensure that the following requ
 
 - All ongoing image uploads and downloads are either completed or deleted.
 
-## Configuration Process
+## Longhorn Replication Traffic Routing
 
-Harvester will create Multus NetworkAttachmentDefinition from the configuration, stop pods related to Longhorn Volume, update Longhorn setting, and restart previous pods.
+The routing of Longhorn replication traffic depends on whether virtual machine VLAN traffic and the Longhorn storage network share the same physical interfaces or use different ones.
 
-### Before Applying Harvester Storage Network Setting
+- **Same physical interfaces**: In the following example, both `eth2` and `eth3` are used for virtual machine VLAN traffic and the Longhorn storage network. The red line indicates that Longhorn sends replication traffic through `eth3`.
 
-Here we have two cases.
-- Expect that virtual machine VLAN traffic and Longhorn Storage Network use the same group of physical interfaces.
-- Expect that virtual machine VLAN traffic and Longhorn Storage Network use different physical interfaces.
+  ![storagenetwork-same.png](/img/v1.2/storagenetwork/storagenetwork-same.png)
 
-Longhorn will send replication traffic through the specific interfaces shown as the red line in the figure.
+  :::note
 
-#### Same Physical Interfaces
+  You must include `eth2` and `eth3` in the cluster network and VLAN network configuration.
 
-Take `eth2` and `eth3` as an example for virtual machine VLAN traffic and Longhorn Storage Network simultaneously.
+  :::
 
-Please refer Networking page to configure `ClusterNetwork` and `VLAN Config` with `eth2` and `eth3` and remember the `ClusterNetwork` name for the further step.
+- **Different physical interfaces**: In the following example, `eth2` and `eth3` are used for virtual machine VLAN traffic, while `eth4` and `eth5` are used for the Longhorn storage network. The red line indicates that Longhorn sends replication traffic through `eth4`.
 
-![storagenetwork-same.png](/img/v1.2/storagenetwork/storagenetwork-same.png)
+  ![storagenetwork-diff.png](/img/v1.2/storagenetwork/storagenetwork-diff.png)
 
-#### Different Physical Interfaces
+  :::note
 
-`eth2` and `eth3` are for virtual machine VLAN Traffic. `eth4` and `eth5` are for Longhorn Storage Network.
+  You must include `eth4` and `eth5` in the cluster network and VLAN network configuration.
 
-Please refer Networking page to configure `ClusterNetwork` and `VLAN Config` with `eth4` and `eth5` for Storage Network and remember the `ClusterNetwork` name for the further step.
+  :::
 
-![storagenetwork-diff.png](/img/v1.2/storagenetwork/storagenetwork-diff.png)
-
-### `storage-network` Setting
+## `storage-network` Setting
 
 The [`storage-network`](./settings.md#storage-network) setting allows you to configure the network used to isolate in-cluster storage traffic when segregation is required.
 
@@ -116,6 +112,8 @@ The following occur once the `storage-network` setting is applied:
 - Harvester stops all pods that are related to Longhorn volumes, Prometheus, Grafana, Alertmanager, and the VM Import Controller.
 - Harvester creates a new `NetworkAttachmentDefinition` and updates the Longhorn Storage Network setting.
 - Longhorn restarts all `instance-manager-r`, `instance-manager-e`, and `backing-image-manager` pods to apply the new network configuration.
+
+### Configuration Steps
 
 <Tabs>
 <TabItem value="ui" label="UI" default>
@@ -242,7 +240,7 @@ Harvester does not start virtual machines automatically. You must ensure that th
         type: configured
     ```
 
-1. Verify that Longhorn `instance-manager-e`, `instance-manager-r`, and `backing-image-manager` pods are ready and that their networks are correctly configured.
+1. Verify that the Longhorn pods (`instance-manager-e`, `instance-manager-r`, and `backing-image-manager`) are ready and that their networks are correctly configured.
 
     You can inspect each pod using the following command:
 
@@ -331,7 +329,7 @@ Harvester does not start virtual machines automatically. You must ensure that th
 
 1. Test the communication between the Longhorn pods.
 
-    The storage network is dedicated to [internal communication between Longhorn pods](#same-physical-interfaces), resulting in high performance and reliability. However, the storage network still relies on the [external network infrastructure](../networking/deep-dive.md#external-networking) for connectivity (similar to how the [virtual machine VLAN network](../networking/harvester-network.md#create-a-vm-with-vlan-network) functions). When the external network is not connected and configured correctly, you may encounter the following issues:
+    The storage network is dedicated to internal communication between Longhorn pods, resulting in high performance and reliability. However, the storage network still relies on the [external network infrastructure](../networking/deep-dive.md#external-networking) for connectivity (similar to how the [virtual machine VLAN network](../networking/harvester-network.md#create-a-vm-with-vlan-network) functions). When the external network is not connected and configured correctly, you may encounter the following issues:
 
     - The newly created virtual machine becomes stuck at the `Not-Ready` state.
     
