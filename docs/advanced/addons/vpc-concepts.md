@@ -203,9 +203,9 @@ Open the **serial console** of **vm1-vswitch1 (172.20.10.6)** and ping **vm1-vsw
 It shows: **ping: connect: Network is unreachable.**
 
 **Adds a default route :**
-
-**sudo ip route add default via 172.20.10.1 dev enp1s0**
-
+```
+#sudo ip route add default via 172.20.10.1 dev enp1s0
+```
 **note: For any network traffic that doesn't match a more specific route, send it to the gateway 172.20.10.1 using the network interface enp1s0.** 
 
 Open the **serial console** of **vm1-vswitch2 (172.20.20.3)** and ping **vm1-vswitch1 (172.20.10.6)**.
