@@ -454,3 +454,76 @@ After deleting the directory, you must restart the virtual machine so that cloud
 ### Related Issue
 
 https://github.com/harvester/harvester/issues/6644
+
+## Unschedulable Virtual Machine
+
+The state of a virtual machine is `Unschedulable` because of an unsatisfied affinity rule.
+
+![](/img/v1.5/troubleshooting/unschedulable-vm.png)
+
+The `VirtualMachine` object contains an affinity rule similar to the following:
+
+```
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: vm100
+  namespace: default
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: network.harvesterhci.io/cn2
+                    operator: In
+                    values:
+                      - 'true'
+```
+
+The pod status is `Pending`, and the error message indicates that no node meets the affinity rule's criteria.
+
+```
+$ kubectl get pods
+NAME                        READY   STATUS    RESTARTS   AGE
+virt-launcher-vm100-f4nh4   0/2     Pending   0          5m12s
+
+$ kubectl get pods virt-launcher-vm100-f4nh4 -oyaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: virt-launcher-vm100-f4nh4
+  namespace: default
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: network.harvesterhci.io/cn2
+            operator: In
+            values:
+            - "true"
+
+...
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2025-07-28T16:21:56Z"
+    message: '0/2 nodes are available: 1 node(s) didn''t match Pod''s node affinity/selector,
+      1 node(s) had untolerated taint {node.kubernetes.io/unreachable: }. preemption:
+      0/2 nodes are available: 2 Preemption is not helpful for scheduling.'
+    reason: Unschedulable
+    status: "False"
+    type: PodScheduled
+...
+
+```
+
+### Root Cause
+
+Harvester migtht [automatically apply affinity rules](../vm/create-vm.md#automatically-applied-affinity-rules) based on the definition of a virtual machine. In the above example, the virtual machine `vm100` attaches to the cluster network `cn2`, and Harvester applies the affinity rule `network.harvesterhci.io/cn2`. However, no nodes meet the rule's criteria, so the virtual machine cannot be scheduled.
+
+### Solution
+
+Ensure there are active nodes which sets up the cluster network `cn2` successfully, then these nodes are labeled with `network.harvesterhci.io/cn2`, finally the pending pod can be scheduled to them.
