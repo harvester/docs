@@ -229,7 +229,7 @@ vm1-vswitch1 will send traffic via 172.20.10.1 through enp1s0.
 vm1-vswitch2 will send traffic via 172.20.20.1 through enp1s0.
 
 **This setup allows traffic to be forwarded properly through their gateways, enabling end-to-end connectivity.** 
-
+\------------------------------------------------------------------------------------------------------------------------
 ### ***Private Subnet***
 ***Test steps:***
 
