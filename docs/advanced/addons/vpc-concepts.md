@@ -69,7 +69,7 @@ Image:Enter your cloudimg, for example: noble-server-cloudimg-amd64
 Network: default/vswitch1
 
 **Advanced Options**
-
+```
 users:
 
 `  `- name: ubuntu
@@ -95,7 +95,7 @@ chpasswd:
 `  `expire: false
 
 ssh\_pwauth: true
-
+```
 **Name: vm2-vswitch1**
 
 **Basic**
@@ -116,7 +116,7 @@ Image:Enter your cloudimg, for example: noble-server-cloudimg-amd64
 Network: default/vswitch1
 
 **Advanced Options**
-
+```
 users:
 
 `  `- name: ubuntu
@@ -142,7 +142,7 @@ chpasswd:
 `  `expire: false
 
 ssh\_pwauth: true
-
+```
 **Name: vm1-vswitch2**
 
 **Basic**
@@ -163,7 +163,7 @@ Image:Enter your cloudimg, for example: noble-server-cloudimg-amd64
 Network: default/vswitch1
 
 **Advanced Options**
-
+```
 users:
 
 `  `- name: ubuntu
@@ -189,7 +189,7 @@ chpasswd:
 `  `expire: false
 
 ssh\_pwauth: true
-
+```
 **Note: Once the VM is running, you will see the Node displaying the NTP server -> 0.suse.pool.ntp.org and the IP address.** 
 
 **5.**
@@ -281,7 +281,7 @@ Image:Enter your cloudimg, for example: noble-server-cloudimg-amd64
 Network: default/vswitch-external
 
 **Advanced Options**
-
+```
 users:
 
 `  `- name: ubuntu
@@ -307,7 +307,7 @@ chpasswd:
 `  `expire: false
 
 ssh\_pwauth: true
-
+```
 4\.Open the serial console of vm-external (172.20.30.2) and ping 8.8.8.8.
 
 It shows: ping: connect: Network is unreachable.
@@ -424,7 +424,7 @@ Image:Enter your cloudimg, for example: noble-server-cloudimg-amd64
 Network: default/vswitch3
 
 **Advanced Options**
-
+```
 users:
 
 `  `- name: ubuntu
@@ -450,7 +450,7 @@ chpasswd:
 `  `expire: false
 
 ssh\_pwauth: true
-
+```
 **Name: vm2-vpcpeer2**
 
 **Basic**
@@ -471,7 +471,7 @@ Image:Enter your cloudimg, for example: noble-server-cloudimg-amd64
 Network: default/vswitch4
 
 **Advanced Options**
-
+```
 users:
 
 `  `- name: ubuntu
@@ -497,7 +497,7 @@ chpasswd:
 `  `expire: false
 
 ssh\_pwauth: true
-
+```
 note: An 'Unschedulable' error typically indicates insufficient memory. Please stop other virtual machines before attempting to start this one again. 
 
 **6.**
