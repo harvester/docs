@@ -92,8 +92,43 @@ You can safely remove a control plane node depending on the quantity and availab
 
   Removing a control plane node in this situation is not recommended because etcd data is not replicated in a single-node cluster. Failure of a single node can cause etcd to lose its quorum and shut the cluster down.
 
+### 2. Check the Status of Backing Images
 
-### 2. Check the status of volumes.
+**Starting with Longhorn v1.7 (Harvester v1.4),** Longhorn supports [High Availability (HA) Backing Images](https://github.com/longhorn/longhorn/blob/master/enhancements/20240426-backing-image-enhancement.md). In these versions, simply evicting the node is sufficient to maintain backing image integrity during node removal.
+
+**For Longhorn versions prior to v1.7:**  
+If the node or disk being removed contains the only healthy replica of a backing image, that image will be lost from the cluster. To prevent data loss, you must ensure that every backing image has at least one healthy replica on another node or disk before proceeding.
+
+#### Steps to Verify and Protect Backing Images
+
+1. **Check Backing Image Replicas**
+
+   Use the following command to inspect the status of a specific backing image:
+
+   ```sh
+   kubectl -n longhorn-system get backingimages.longhorn.io <backingimage-name> -o yaml
+   ```
+
+   - `spec.disks`: Lists the disks that should contain a copy of the backing image.
+   - `status.diskFileStatusMap`: Shows the state of the backing image file on each disk.
+
+2. **Add Replicas if Needed**
+
+   If a backing image has its only healthy replica on the node or disk you plan to remove, you must add another disk to its `spec.disks` and wait for the new replica to become ready.
+
+   To get the UUIDs of all disks on a specific node, run:
+
+   ```sh
+   kubectl -n longhorn-system get nodes.longhorn.io <node-name> -o json | jq -r '.status.diskStatus[] | .diskUUID'
+   ```
+
+   Add the UUID of a suitable disk to the `spec.disks` field of the backing image's custom resource, and monitor `status.diskFileStatusMap` until the new replica is reported as ready.
+
+3. **Reference**
+
+   For more details and troubleshooting, see the [Longhorn Knowledge Base: Resolving Backing Image Unavailability](https://longhorn.io/kb/troubleshooting-resolving-backing-image-unavailability-issue/).
+
+### 3. Check the status of volumes.
 
 1. Access the [embedded Longhorn UI](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards).
 
@@ -101,7 +136,7 @@ You can safely remove a control plane node depending on the quantity and availab
 
 1. Verify that the state of all volumes is **Healthy**.
 
-### 3. Evict replicas from the node to be removed.
+### 4. Evict replicas from the node to be removed.
 
 1. Access the [embedded Longhorn UI](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards).
 
@@ -122,7 +157,7 @@ You can safely remove a control plane node depending on the quantity and availab
 Eviction cannot be completed if the remaining nodes cannot accept replicas from the node to be removed. In this case, some volumes will remain in the **Degraded** state until you add more nodes to the cluster.
 :::
 
-### 4. Manage non-migratable VMs.
+### 5. Manage non-migratable VMs.
 
 [Live migration](../vm/live-migration.md) cannot be performed for VMs with certain properties.
 
@@ -142,7 +177,7 @@ Eviction cannot be completed if the remaining nodes cannot accept replicas from 
 Create a backup or snapshot for each non-migratable VM before modifying the settings that bind it to the node that you want to remove.
 :::
 
-### 5. Evict workloads from the node to be removed.
+### 6 Evict workloads from the node to be removed.
 
 If your cluster is running Harvester v1.1.2 or later, you can enable [Maintenance Mode](./host.md#node-maintenance) on the node to automatically live-migrate VMs and workloads. You can also [manually live-migrate](/vm/live-migration.md#starting-a-migration) VMs to other nodes.
 
@@ -160,7 +195,7 @@ kubectl drain <node_name> --force --ignore-daemonsets --delete-local-data --pod-
 Again, removing a control plane node in this situation is **not recommended** because etcd data is not replicated. Failure of a single node can cause etcd to lose its quorum and shut the cluster down.
 :::
 
-### 6. Delete RKE2 services and shut down the node.
+### 7. Delete RKE2 services and shut down the node.
 
 1. Log in to the node using the root account.
 
@@ -175,7 +210,7 @@ Once resolved, you can skip this step.
 
 :::
 
-### 7. Remove the node.
+### 8. Remove the node.
 
 1. On the Harvester UI, go to the **Hosts** screen.
 
