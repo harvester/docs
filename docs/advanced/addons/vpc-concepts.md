@@ -213,9 +213,9 @@ Open the **serial console** of **vm1-vswitch2 (172.20.20.3)** and ping **vm1-vsw
 It shows: **ping: connect: Network is unreachable.**
 
 **Adds a default route :**
-
-**sudo ip route add default via 172.20.20.1 dev enp1s0**
-
+```
+#sudo ip route add default via 172.20.10.1 dev enp1s0
+```
 **note: For any network traffic that doesn't match a more specific route, send it to the gateway** 172.20.20.1 **using the network interface** enp1s0**.** 
 
 Use vm1-vswitch2 (172.20.20.3) to ping vm1-vswitch1 (172.20.10.6) to verify connectivity. 
@@ -317,9 +317,9 @@ ssh\_pwauth: true
 It shows: ping: connect: Network is unreachable.
 
 Adds a default route :
-
-sudo ip route add default via 172.20.30.1 dev enp1s0
-
+```
+#sudo ip route add default via 172.20.30.1 dev enp1s0
+```
 Still no response from 8.8.8.8 when pinged again. 
 
 5\.Navigate to the Virtual Private Cloud Page\
@@ -507,14 +507,14 @@ note: An 'Unschedulable' error typically indicates insufficient memory. Please s
 **6.**
 
 - Open the serial console of vm1-vpcpeer1 (10.0.0.2) and adds a default route :
-
-  sudo ip route add default via 10.0.0.1 dev enp1s0
-
+```
+  #sudo ip route add default via 172.20.10.1 dev enp1s0
+```
 - Check if 20.0.0.2 can be pinged successfully. 
 - Open the serial console of vm1-vpcpeer1 (20.0.0.2) and adds a default route :
-
-  sudo ip route add default via 20.0.0.1 dev enp1s0
-
+```
+  #sudo ip route add default via 20.0.0.1 dev enp1s0
+```
 - Check if 10.0.0.2 can be pinged successfully. 
 
 **VPC Peering allows secure, private, and efficient communication between two separate VPCs without exposing them to the public internet.** 
