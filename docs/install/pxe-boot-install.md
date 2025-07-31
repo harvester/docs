@@ -425,6 +425,30 @@ boot
 
 The parameter `initrd=harvester-<version>-initrd` is required.
 
+## Tagged VLAN Network Boot
+
+To perform PXE boot over tagged VLAN network, the Harvester hosts must be configured with the following BIOS/UEFI settings:
+
+- VLAN ID is set to the network identity
+- Boot protocol is set to `PXE`
+- DHCP is enabled
+
+:::note important
+
+Depending on the host's machine specification, additional settings may need to be changed for a successful network boot.
+
+The mechanism to make these changes may also vary. For example, on an HPE ProLiant DL360 Gen9 server, changes to the boot protocol and VLAN ID can only be made on the NIC firmware.
+
+Please consult your machine documentation.
+
+:::
+
+The `os.after_install_chroot_commands` Harvester configuration must also be updated to include the following GRUB command to ensure that Harvester retains its network connectivity on first boot:
+
+```sh
+grub2-editenv /oem/grubenv set extra_cmdline="ifname=netboot:%s"
+```
+
 ## Useful Kernel Parameters
 
 Besides the Harvester configuration, you can also specify other kernel parameters that are useful in different scenarios.
