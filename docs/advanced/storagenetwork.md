@@ -421,7 +421,7 @@ Once the configuration is verified, you can manually start virtual machines when
 
 ## Best Practices
 
-- When configuring an [IP range](#configuration-example) for the storage network, ensure that the allocated IP addresses can service the future needs of the cluster. This is important because Longhorn pods (`instance-manager` and `backing-image-manager`) stop running when new nodes are added to the cluster or more disks are added to a node after the storage network is configured, and when the required number of IPs exceeds the allocated IPs. Resolving the issue involves reconfiguring the storage network with the correct IP range.
+- When configuring an [IP range](#prerequisites) for the storage network, ensure that the allocated IP addresses can service the future needs of the cluster. This is important because Longhorn pods (`instance-manager` and `backing-image-manager`) stop running when new nodes are added to the cluster or more disks are added to a node after the storage network is configured, and when the required number of IPs exceeds the allocated IPs. Resolving the issue involves reconfiguring the storage network with the correct IP range.
 
     Longhorn pods use the storage network as follows:
 
