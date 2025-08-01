@@ -43,14 +43,6 @@ Before you begin configuring the storage network, ensure that the following requ
 
   - Excludes IP addresses that Longhorn pods and the storage network must not use, such as addresses reserved for [RWX volumes](../rancher/csi-driver.md#rwx-volumes-support), the gateway, and other components.
 
-    Longhorn pods use the storage network as follows:
-
-    - `instance-manager` pods: Longhorn Instance Manager components were [consolidated in Longhorn v1.5.0](https://longhorn.io/docs/1.5.0/deploy/important-notes/#instance-managers-consolidated). Each node requires one IP address. During an upgrade, both old and new versions of these pods exist, and the old version is deleted once the upgrade is completed.
-
-    - `backing-image-ds` pods: These pods process on-the-fly uploads and downloads of backing image data sources, and are removed once the image uploads and downloads are completed.
-    
-    - `backing-image-manager` pods: Each disk requires one IP address. During an upgrade, both old and new versions of these pods exist, and the old version is deleted once the upgrade is completed.
-
 - The Whereabouts CNI is installed correctly.
 
   You can check if the `ippools.whereabouts.cni.cncf.io` CRD exists in the cluster using the command `kubectl get crd ippools.whereabouts.cni.cncf.io`.
@@ -72,6 +64,12 @@ Before you begin configuring the storage network, ensure that the following requ
 - All virtual machines are stopped.
 
   You can check the status of virtual machines using the command `kubectl get -A vmi`, which should return an empty string.
+
+  :::caution
+
+  Harvester sends a graceful shutdown signal to virtual machines that are stopped using the Harvester UI. However, workloads are interrupted and remain unavailable until you manually start the virtual machines after confirming that the storage network configuration was applied successfully.
+
+  :::
 
 - All pods that are attached to Longhorn volumes are stopped.
 
@@ -424,5 +422,13 @@ Once the configuration is verified, you can manually start virtual machines when
 ## Best Practices
 
 - When configuring an [IP range](#configuration-example) for the storage network, ensure that the allocated IP addresses can service the future needs of the cluster. This is important because Longhorn pods (`instance-manager` and `backing-image-manager`) stop running when new nodes are added to the cluster or more disks are added to a node after the storage network is configured, and when the required number of IPs exceeds the allocated IPs. Resolving the issue involves reconfiguring the storage network with the correct IP range.
+
+    Longhorn pods use the storage network as follows:
+
+    - `instance-manager` pods: Longhorn Instance Manager components were [consolidated in Longhorn v1.5.0](https://longhorn.io/docs/1.5.0/deploy/important-notes/#instance-managers-consolidated). Each node requires one IP address. During an upgrade, both old and new versions of these pods exist, and the old version is deleted once the upgrade is completed.
+
+    - `backing-image-ds` pods: These pods process on-the-fly uploads and downloads of backing image data sources, and are removed once the image uploads and downloads are completed.
+    
+    - `backing-image-manager` pods: Each disk requires one IP address. During an upgrade, both old and new versions of these pods exist, and the old version is deleted once the upgrade is completed.
 
 - Configure the storage network on a non-`mgmt` cluster network to ensure complete separation of the Longhorn replication traffic from the Kubernetes control plane traffic. Using `mgmt` is possible but not recommended because of the negative impact (resource and bandwidth contention) on the control plane network performance. Use `mgmt` only if your cluster has NIC-related constraints and if you can completely segregate the traffic.
