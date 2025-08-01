@@ -433,17 +433,15 @@ To perform PXE boot over tagged VLAN network, the Harvester hosts must be config
 - Boot protocol is set to `PXE`
 - DHCP is enabled
 
-:::note important
+:::info important
 
-Depending on the host's machine specification, additional settings may need to be changed for a successful network boot.
+A successful network boot may require additional configuration changes depending on the host's specifications. The method for making these changes can also vary. For example, on an HPE ProLiant DL360 Gen9 server, you can only change the boot protocol and VLAN ID through the NIC firmware.
 
-The mechanism to make these changes may also vary. For example, on an HPE ProLiant DL360 Gen9 server, changes to the boot protocol and VLAN ID can only be made on the NIC firmware.
-
-Please consult your machine documentation.
+For more information, consult your server's documentation.
 
 :::
 
-The `os.after_install_chroot_commands` Harvester configuration must also be updated to include the following GRUB command to ensure that Harvester retains its network connectivity on first boot:
+To ensure that Harvester has network connectivity on its first boot, you must update the `os.after_install_chroot_commands` setting in the Harvester configuration file to include the following GRUB command:
 
 ```sh
 grub2-editenv /oem/grubenv set extra_cmdline="ifname=netboot:%s"
