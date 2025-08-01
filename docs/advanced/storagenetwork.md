@@ -25,7 +25,7 @@ Before you begin configuring the storage network, ensure that the following requ
 
 - The network switches are correctly configured, and a dedicated VLAN ID is assigned to the storage network.
 
-- The [cluster network](../networking/clusternetwork.md) and [VLAN network](../networking/harvester-network.md) are configured correctly. Ensure that both networks cover all nodes and are accessible.
+- The [cluster network](../networking/clusternetwork.md) and [VLAN network](../networking/harvester-network.md#vlan-network) are configured correctly. Ensure that both networks cover all nodes and are accessible.
 
 - The IP range of the storage network has the following characteristics:
 
