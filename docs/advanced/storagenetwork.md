@@ -46,7 +46,7 @@ Before you begin configuring the storage network, ensure that the following requ
 - The Whereabouts CNI is installed correctly.
 
   You can check if the `ippools.whereabouts.cni.cncf.io` CRD exists in the cluster using the command `kubectl get crd ippools.whereabouts.cni.cncf.io`.
-  
+
   If an empty string is returned, add the CRDs in [this directory](https://github.com/harvester/harvester/tree/v1.1.0/deploy/charts/harvester/dependency_charts/whereabouts/crds) using the following commands:
 
   ```
@@ -302,23 +302,6 @@ Harvester does not start virtual machines automatically. You must ensure that th
           }]
         k8s.v1.cni.cncf.io/networks: '[{"namespace": "harvester-system", "name": "storagenetwork-95bj4",
           "interface": "lhnet1"}]'
-        k8s.v1.cni.cncf.io/networks-status: |-
-          [{
-              "name": "k8s-pod-network",
-              "ips": [
-                  "10.52.2.122"
-              ],
-              "default": true,
-              "dns": {}
-          },{
-              "name": "harvester-system/storagenetwork-95bj4",
-              "interface": "lhnet1",
-              "ips": [
-                  "192.168.0.3"
-              ],
-              "mac": "2e:51:e6:31:96:40",
-              "dns": {}
-          }]
         kubernetes.io/psp: global-unrestricted-psp
         longhorn.io/last-applied-tolerations: '[{"key":"kubevirt.io/drain","operator":"Exists","effect":"NoSchedule"}]'
 

@@ -25,7 +25,7 @@ Before you begin configuring the storage network, ensure that the following requ
 
 - The network switches are correctly configured, and a dedicated VLAN ID is assigned to the storage network.
 
-- The [cluster network](../networking/clusternetwork.md) and [VLAN network](../networking/harvester-network.md) are configured correctly. Ensure that both networks cover all nodes and are accessible.
+- The [cluster network](../networking/clusternetwork.md) and [VLAN network](../networking/harvester-network.md#vlan-network) are configured correctly. Ensure that both networks cover all nodes and are accessible.
 
 - The IP range of the storage network has the following characteristics:
 
@@ -302,23 +302,6 @@ Harvester does not start virtual machines automatically. You must ensure that th
           }]
         k8s.v1.cni.cncf.io/networks: '[{"namespace": "harvester-system", "name": "storagenetwork-95bj4",
           "interface": "lhnet1"}]'
-        k8s.v1.cni.cncf.io/networks-status: |-
-          [{
-              "name": "k8s-pod-network",
-              "ips": [
-                  "10.52.2.122"
-              ],
-              "default": true,
-              "dns": {}
-          },{
-              "name": "harvester-system/storagenetwork-95bj4",
-              "interface": "lhnet1",
-              "ips": [
-                  "192.168.0.3"
-              ],
-              "mac": "2e:51:e6:31:96:40",
-              "dns": {}
-          }]
         kubernetes.io/psp: global-unrestricted-psp
         longhorn.io/last-applied-tolerations: '[{"key":"kubevirt.io/drain","operator":"Exists","effect":"NoSchedule"}]'
 
@@ -421,7 +404,7 @@ Once the configuration is verified, you can manually start virtual machines when
 
 ## Best Practices
 
-- When configuring an [IP range](#configuration-example) for the storage network, ensure that the allocated IP addresses can service the future needs of the cluster. This is important because Longhorn pods (`instance-manager` and `backing-image-manager`) stop running when new nodes are added to the cluster or more disks are added to a node after the storage network is configured, and when the required number of IPs exceeds the allocated IPs. Resolving the issue involves reconfiguring the storage network with the correct IP range.
+- When configuring an [IP range](#prerequisites) for the storage network, ensure that the allocated IP addresses can service the future needs of the cluster. This is important because Longhorn pods (`instance-manager` and `backing-image-manager`) stop running when new nodes are added to the cluster or more disks are added to a node after the storage network is configured, and when the required number of IPs exceeds the allocated IPs. Resolving the issue involves reconfiguring the storage network with the correct IP range.
 
     Longhorn pods use the storage network as follows:
 
