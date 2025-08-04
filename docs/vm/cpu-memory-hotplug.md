@@ -26,11 +26,15 @@ _Available as of v1.6.0_
 
 Harvester supports CPU and memory hotplug for virtual machines. This feature allows you to increase the CPU and memory resources of a running virtual machine without requiring a reboot.
 
-## Create VM with CPU / Memory Hotplug
+## Enable CPU and Memory Hotplug During Virtual Machine Creation
 
-1. On VM creation page, click `Enable CPU and memory hotplug` checkbox.
+1. On the **Virtual Machine:Create** screen, specify the number of CPU cores and memory to be allocated.
 
-1. Edit Maximum CPU and Memory values as needed. This is maximum number of CPU cores and memory that can be dynamically adjusted for the VM.
+  ![Enable CPU and Memory Hotplug](/img/v1.6/cpu-memory-hotplug/enable-cpu-and-memory-hotplug.png)
+
+1. Select **Enable CPU and memory hotplug**.
+
+  Harvester automatically populates the **Maximum CPU** and **Maximum Memory** fields based on the `max-hotplug-ratio` setting. These values represent the maximum amount of CPU and memory resources that are available to the virtual machine during runtime. You can change these values, if necessary.
 
 1. Complete the rest of the VM creation process as usual.
 
