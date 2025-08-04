@@ -78,7 +78,7 @@ For more information, see the **Certificate Rotation** section of the [Rancher](
 
 ### `backup-target`
 
-**Definition**: Custom backup target used to store VM backups. 
+**Definition**: Custom backup target used to store VM backups.
 
 For more information, see the [Longhorn documentation](https://longhorn.io/docs/1.6.0/snapshots-and-backups/backup-and-restore/set-backup-target/#set-up-aws-s3-backupstore).
 
@@ -122,7 +122,7 @@ https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhr
 
 ### `containerd-registry`
 
-**Definition**: Configuration of a private registry created for the Harvester cluster. 
+**Definition**: Configuration of a private registry created for the Harvester cluster.
 
 The value is stored in the `registries.yaml` file of each node (path: `/etc/rancher/rke2/registries.yaml`). For more information, see [Containerd Registry Configuration](https://docs.rke2.io/install/private_registry) in the RKE2 documentation.
 
@@ -219,7 +219,7 @@ Changing this setting might cause single-node clusters to temporarily become una
 - Proxy URL for HTTPS requests: `"httpsProxy": "https://<username>:<pswd>@<ip>:<port>"`
 - Comma-separated list of hostnames and/or CIDRs: `"noProxy": "<hostname | CIDR>"`
 
-You must specify key information in the `noProxy` field if you configured the following options or settings: 
+You must specify key information in the `noProxy` field if you configured the following options or settings:
 
 | Configured option/setting | Required value in `noProxy` | Reason |
 | --- | --- | --- |
@@ -266,7 +266,7 @@ debug
 
 **Definition**: Setting that enables and disables the Longhorn V2 Data Engine.
 
-When set to `true`, Harvester automatically loads the kernel modules required by the Longhorn V2 Data Engine, and attempts to allocate 1024 × 2 MiB-sized huge pages (for example, 2 GiB of RAM) on all nodes. 
+When set to `true`, Harvester automatically loads the kernel modules required by the Longhorn V2 Data Engine, and attempts to allocate 1024 × 2 MiB-sized huge pages (for example, 2 GiB of RAM) on all nodes.
 
 Changing this setting automatically restarts RKE2 on all nodes but does not affect running virtual machine workloads.
 
@@ -275,7 +275,7 @@ Changing this setting automatically restarts RKE2 on all nodes but does not affe
 If you encounter error messages that include the phrase "not enough hugepages-2Mi capacity", allow some time for the error to be resolved. If the error persists, reboot the affected nodes.
 
 To disable the Longhorn V2 Data Engine on specific nodes (for example, nodes with less processing and memory resources), go to the **Hosts** screen and add the following label to the target nodes:
-  
+
 - label: `node.longhorn.io/disable-v2-data-engine`
 - value: `true`
 
@@ -320,7 +320,7 @@ Changes to the server address list are applied to all nodes.
 
 **Definition**: Percentage of physical compute, memory, and storage resources that can be allocated for VM use.
 
-Overcommitting is used to optimize physical resource allocation, particularly when VMs are not expected to fully consume the allocated resources most of the time. Setting values greater than 100% allows scheduling of multiple VMs even when physical resources are notionally fully allocated. 
+Overcommitting is used to optimize physical resource allocation, particularly when VMs are not expected to fully consume the allocated resources most of the time. Setting values greater than 100% allows scheduling of multiple VMs even when physical resources are notionally fully allocated.
 
 **Default values**: `{ "cpu":1600, "memory":150, "storage":200 }`
 
@@ -529,7 +529,7 @@ If you misconfigure this setting and are unable to access the Harvester UI and A
 
 **Supported options and values**:
 
-- `protocols`: Enabled protocols. 
+- `protocols`: Enabled protocols.
 - `ciphers`: Enabled ciphers.
 
 For more information about the supported options, see [`ssl-protocols`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-protocols) and [`ssl-ciphers`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#ssl-ciphers) in the Ingress-Nginx Controller documentation.
@@ -700,7 +700,7 @@ When the cluster is upgraded in the future, the contents of the `value` field ma
 
 **Versions**: v1.2.0 and later
 
-**Definition**: Additional namespaces that you can use when [generating a support bundle](../troubleshooting/harvester.md#generate-a-support-bundle). 
+**Definition**: Additional namespaces that you can use when [generating a support bundle](../troubleshooting/harvester.md#generate-a-support-bundle).
 
 By default, the support bundle only collects resources from the following predefined namespaces:
 
@@ -743,7 +743,7 @@ You can specify a value greater than or equal to 0. When the value is 0, Harvest
 
 **Versions**: v1.3.1 and later
 
-**Definition**: Number of minutes Harvester allows for collection of logs and configurations (Harvester) on the nodes for the support bundle. 
+**Definition**: Number of minutes Harvester allows for collection of logs and configurations (Harvester) on the nodes for the support bundle.
 
 If the collection process is not completed within the allotted time, Harvester still allows you to download the support bundle (without the uncollected data). You can specify a value greater than or equal to 0. When the value is 0, Harvester uses the default value.
 
@@ -784,7 +784,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
 **Supported options and fields**:
 
 - `imagePreloadOption`: Options for the image preloading phase.
-  
+
   The full ISO contains the core operating system components and all required container images. Harvester can preload these container images to each node during installation and upgrades. When workloads are scheduled to management and worker nodes, the container images are ready to use.
 
 - `strategy`: Image preload strategy.
@@ -800,10 +800,10 @@ https://your.upgrade.checker-url/v99/checkupgrade
       If you decide to use `skip`, ensure that the following requirements are met:
 
       - You have a private container registry that contains all required images.
-      - Your cluster has high-speed internet access and is able to pull all images from Docker Hub when necessary. 
-        
+      - Your cluster has high-speed internet access and is able to pull all images from Docker Hub when necessary.
+
       Note any potential internet service interruptions and how close you are to reaching your [Docker Hub rate limit](https://www.docker.com/increase-rate-limits/). Failure to download any of the required images may cause the upgrade to fail and may leave the cluster in a middle state.
-    
+
       :::
 
     - `parallel` (**experimental**): Nodes preload images in batches. You can adjust this using the `concurrency` option.
@@ -853,7 +853,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
 ### `vm-force-reset-policy`
 
-**Definition**: Setting that allows you to force rescheduling of a VM when the node that it is running on becomes unavailable. 
+**Definition**: Setting that allows you to force rescheduling of a VM when the node that it is running on becomes unavailable.
 
 When the state of the node changes to `Not Ready`, the VM is force deleted and rescheduled to an available node after the configured number of seconds.
 
@@ -879,6 +879,25 @@ When the node becomes unavailable or is powered off, the VM only restarts and do
 **Example**:
 
 `longhorn`
+
+### `max-hotplug-ratio`
+
+**Definition**: Setting that determines the default maximum amount of CPU and memory resources that are available to a running virtual machine. This ratio is multiplied by the amount of CPU and memory resources that you allocated when you created the virtual machine.
+
+> Maximum available resource at runtime = Resource allocated during virtual machine creation x `max-hotplug-ratio` value
+
+**Default value**: `4`
+
+**Supported values**: `1` to `20`
+
+**Example**:
+
+The `max-hotplug-ratio` is set to `4`.
+
+| Resource | Allocated Amount | Maximum Available Amount |
+| --- | --- | --- |
+| CPU cores | `1` | `4` |
+| Memory (Gi) | `2` | `8` |
 
 ---
 <p>&nbsp;</p>
