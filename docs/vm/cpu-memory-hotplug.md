@@ -24,7 +24,7 @@ description: Create VM with CPU / Memory Hotplug
 
 _Available as of v1.6.0_
 
-Harvester supports CPU and memory hotplug for VMs. This feature allows you to dynamically add CPU cores and memory from a running VM without requiring a reboot.
+Harvester supports CPU and memory hotplug for virtual machines. This feature allows you to increase the CPU and memory resources of a running virtual machine without requiring a reboot.
 
 ## Create VM with CPU / Memory Hotplug
 
