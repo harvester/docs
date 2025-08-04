@@ -44,8 +44,21 @@ After the virtual machine is created, you can dynamically add CPU and memory res
 
 Once you click **Apply**, Harvester migrates the virtual machine to a node with the configured CPU and memory amounts.
 
-## `max-hotplug-ratio` settings
+## `max-hotplug-ratio` setting
 
-The `max-hotplug-ratio` setting is a global setting. The default value is `4`. It defines the default maximum CPU and memory. For example, if the `max-hotplug-ratio` is set to `4` and the VM CPU is `1` and memory is `2Gi`, the maximum CPU and memory that can be hotplugged are `4` and `8Gi`, respectively.
+`max-hotplug-ratio` is a global setting that determines the default maximum amount of CPU and memory resources that are available to a running virtual machine. This ratio is multiplied by the amount of CPU and memory resources that you allocated when you created the virtual machine.
+
+> Maximum available resource at runtime = Resource allocated during virtual machine creation x `max-hotplug-ratio` value
+
+You can specify a value from `1` to `20`. The default value is `4`.
+
+Example:
+
+The `max-hotplug-ratio` is set to `4`.
+
+| Resource | Allocated Amount | Maximum Available Amount |
+| --- | --- | --- |
+| CPU cores | `1` | `4` |
+| Memory (Gi) | `2` | `8` |
 
 ![Edit max-hotplug-ratio](/img/v1.6/cpu-memory-hotplug/edit-max-hotplug-ratio.png)
