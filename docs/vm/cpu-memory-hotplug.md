@@ -1,7 +1,7 @@
 ---
 sidebar_position: 12
-sidebar_label: CPU / Memory Hotplug
-title: "CPU / Memory Hotplug"
+sidebar_label: CPU and Memory Hotplug
+title: "CPU and Memory Hotplug"
 keywords:
   - Harvester
   - harvester
