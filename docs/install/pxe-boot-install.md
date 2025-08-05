@@ -441,10 +441,19 @@ For more information, consult your server's documentation.
 
 :::
 
-To ensure that Harvester has network connectivity on its first boot, you must update the `os.after_install_chroot_commands` setting in the Harvester configuration file to include the following GRUB command:
+To ensure that the correct network interface is used at boot time, update the iPXE `kernel` command with the following dracut parameters:
+
+- `BOOTIF=<mac_address>` - use the interface named `<interface_name>`
+- `ifname=<interface_name>:<mac_address>` - assign the network device name `<interface_name>` to the interface with MAC `<mac_address>`
+- `vlan=<vlan_id>:<interface_name>` - set up the VLAN device named `<vlan_id>` on `<interface_name>`
+
+For example, the iPXE script given above can be updated as follows:
 
 ```sh
-grub2-editenv /oem/grubenv set extra_cmdline="ifname=netboot:%s"
+#!ipxe
+kernel harvester-<version>-vmlinuz ip=dhcp net.ifnames=1 rd.cos.disable rd.noverifyssl console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml BOOTIF=<mac_address> ifname=<interface_name>:<mac_address> vlan=<vlan_id>:<interface_name>
+initrd harvester-<version>-initrd
+boot
 ```
 
 ## Useful Kernel Parameters
