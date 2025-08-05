@@ -446,3 +446,19 @@ Installation is stopped if the hardware checks fail (because the minimum require
 ### `harvester.install.with_net_images=true`
 
 The installer does not preload images during installation and instead pulls all required images from the internet after installation is completed. Usage of this parameter is not recommended in most cases. For more information, see [Net Install ISO](./net-install.md).
+
+### `harvester.install.mode=install` 
+
+Automatically starts the installer in install mode at boot. 
+
+### `console=tty1` 
+
+Specifies the console teletype to activate at boot. 
+
+### `harvester.install.tty=tty1`
+
+Specifies what teletype console to start the installer on.
+
+### `net.ifnames=1`
+
+Enables predictable network interface names in the installer, which will match the system default after harvester is installed. This allows the system to utilize the correct interfaces.
