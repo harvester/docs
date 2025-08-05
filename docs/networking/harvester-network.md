@@ -114,3 +114,30 @@ To create a new untagged network, go to the **Networks > VM Networks** page and 
 Starting from Harvester v1.1.2, Harvester supports updating and deleting VM networks. Make sure to stop all affected VMs before updating or deleting VM networks.
 
 :::
+
+##  Overlay Network
+
+The [Harvester network-controller](https://github.com/harvester/harvester-network-controller) leverages the [kube-ovn] (https://github.com/kubeovn/kube-ovn) to create OVN-based Virtualized Network and provide a bridge for connection. It helps to connect your VMs to the virtualized network which supports the VPC (Virtual Private Cloud) and Subnet to provide SDN features like Multi-Tenancy, Micro-Segmentation, Isolation...etc. The overlay network can be attached to the Subnet created in Virtual Private Cloud so that VM can access the internal virtualized network and reach the external network. However, the VM can not be accessed by external network like VLAN and Untagged network due to the current limitation of the Virtual Private Cloud.
+
+
+### How to use overlay network
+To create a new overlay network, go to the **Networks > VM Networks** page and click the **Create** button. You have to specify the name, select the type `OverlayNetwork`. You don't need to specify the cluster network since the overlay network is only enabled on the default management network.
+
+The overlay network will act as the `Provider` of the Subnet which is created in `Virtual Private Cloud`. Each Subnet must be mapped to exactly one Overlay Network, and vice versa (1:1 relationship). 
+
+:::note
+Current limitation in Harvester 1.6
+• Overlay networks backed by Kube-OVN can only be created on the default cluster - management network.
+• Creating an overlay network on any newly created ClusterNetwork is not supported in this release.
+• VMs attached to a Kube-OVN overlay subnet must manually add the subnet’s gateway IP as their default route; the DHCP offer does not automatically install the route, so external access fails until the user fixes it inside the guest OS.
+• Underlay networking is not yet implemented, so there is no way to map a subnet directly to a physical network. Consequently, external hosts cannot reach VMs that live on an overlay subnet.
+• Any subnet created in a user-defined VPC has natOutgoing: false by default. The field must be manually set to true; otherwise, VMs on the subnet will not be able to reach the Internet even when the gateway is correctly configured.
+
+Future roadmap
+• Support for provisioning overlay networks on user-defined ClusterNetworks is targeted for a later release.
+• DHCP default-route injection
+• Underlay networking support
+• Outbound-NAT default policy in user VPCs
+:::
+
+![](/img/kubeovn-harvester-topology.png)
