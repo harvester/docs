@@ -144,6 +144,63 @@ Longhorn provides a third option called `strict-local`, which forces Longhorn to
 
 For more information, see [Data Locality](https://longhorn.io/docs/1.6.0/high-availability/data-locality/) in the Longhorn documentation.
 
+## CDI Settings
+
+Harvester integrates with CDI ([Containerized Data Importer](https://kubevirt.io/user-guide/storage/containerized_data_importer/)) to handle VM image management for supported storage classes:
+
+- **Longhorn v2** (Longhorn v1 is not supported)
+- **LVM storage**
+- **Other third-party storage** (UI support not yet available)
+
+To enable editing of CDI settings for day-2 operations, Harvester introduces 4 attributes to the StorageClass that automatically update the underlying CDI settings.
+
+![](/img/v1.6/storageclass/cdi-settings.png)
+
+Each field in the above image corresponds to an annotation in the StorageClass:
+
+- **Volume Mode / Access Modes** - `cdi.harvesterhci.io/storageProfileVolumeModeAccessModes`: Specifies the default PVC volume mode and access modes.
+- **Volume Snapshot Class** - `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: Sets the Volume Snapshot Class name to be used when taking snapshots of PVCs under this StorageClass. This setting only applies when using the `snapshot` clone strategy. If the user has already set `volumeSnapshotClassName` in the `csi-driver-config` setting for the corresponding provisioner, that value will be used as the default.
+- **Clone Strategy** - `cdi.harvesterhci.io/storageProfileCloneStrategy`: Defines the clone strategy to use for volumes created with VM images using this StorageClass:
+  - **copy**: Copies blocks of data over the network
+  - **snapshot**: Clones the volume by creating a temporary VolumeSnapshot and restoring it to a new PVC
+  - **csi-clone**: Clones the volume using a CSI clone operation
+- **File System Overhead** - `cdi.harvesterhci.io/filesystemOverhead`: Specifies the percentage of filesystem overhead to consider when calculating PVC size.
+
+Here is an example of a StorageClass YAML configuration:
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: lvm
+  annotations:
+    cdi.harvesterhci.io/storageProfileCloneStrategy: snapshot
+    cdi.harvesterhci.io/storageProfileVolumeModeAccessModes: '{"Block":["ReadWriteOnce"]}'
+    cdi.harvesterhci.io/storageProfileVolumeSnapshotClass: lvm-snapshot
+    cdi.harvesterhci.io/filesystemOverhead: '0.05'
+```
+
+:::note
+
+This is a one-way synchronization. If you directly update the StorageProfile or CDI settings, the changes will not be reflected in the StorageClass annotations.
+
+:::
+
+### Default Values
+
+The following are the default values for Longhorn v2 and LVM storage classes:
+
+**Longhorn V2:**
+- `cdi.harvesterhci.io/storageProfileCloneStrategy`: `"copy"`
+- `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: `"longhorn-snapshot"`
+
+**LVM:**
+- `cdi.harvesterhci.io/storageProfileVolumeModeAccessModes`: `'{"Block":["ReadWriteOnce"]}'`
+- `cdi.harvesterhci.io/storageProfileCloneStrategy`: `"snapshot"`
+- `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: `"lvm-snapshot"`
+
+For other third-party storage default values: please refer to https://github.com/kubevirt/containerized-data-importer/blob/v1.61.1/pkg/storagecapabilities/storagecapabilities.go#L35-L127
+
 ## Use Cases
 
 ### HDD Scenario
