@@ -19,7 +19,7 @@ description: The Harvester cloud provider used by the guest cluster in Harvester
 
 In this page we will learn:
 
-- How to deploy the Harvester cloud provider in both and RKE2 cluster.
+- How to deploy the Harvester cloud provider in an RKE2 cluster
 - How to use the [Harvester load balancer](#load-balancer-support).
 
 ### Backward Compatibility Notice
