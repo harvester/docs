@@ -134,6 +134,8 @@ spec:
     destinationNetwork: "default/vlan1"
   - sourceNetwork: "dvSwitch 2"
     destinationNetwork: "default/vlan2"
+    networkInterfaceModel: "e1000"
+  defaultNetworkInterfaceModel: "virtio"
   skipPreflightChecks: false
   storageClass: "my-storage-class"
   sourceCluster: 
@@ -154,6 +156,14 @@ The duration of the import process depends on the size of the virtual machine. W
 If the source virtual machine is placed in a folder, you can specify the folder name in the optional `folder` field.
 
 The list of items in `networkMapping` will define how the source network interfaces are mapped to the Harvester Networks.
+If necessary, you can specify the model of each source network interface individually using the `networkInterfaceModel` field. The valid values are `e1000`, `e1000e`, `ne2k_pci`, `pcnet`, `rtl8139` and `virtio`.
+
+Specifying the default interface model using the `defaultNetworkInterfaceModel` field is particularly useful in the following situations:
+
+- You want to override the default model used when the automatic detection does not work for VMware imports or the default model used for all network interfaces for OpenStack imports.
+- No network mapping is provided and the `pod-network` network interface is automatically created.
+
+If you do not specify a value, `virtio` is used by default.
 
 If a match is not found, each unmatched network interface is attached to the default `managementNetwork`.
 
