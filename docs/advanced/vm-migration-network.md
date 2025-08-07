@@ -22,9 +22,7 @@ Before you begin configuring the VM migration network, ensure that the following
 
 - No virtual machines are being migrated.
 
-- The `ippools.whereabouts.cni.cncf.io` CRD exists. You can check this using the command `kubectl get crd ippools.whereabouts.cni.cncf.io`. In certain [upgrade scenarios](https://github.com/harvester/harvester/issues/3168), the Whereabouts CNI is not installed correctly.
-
-- The IP range of the VM migration network is in the IPv4 CIDR format and must neither conflict nor overlap with Kubernetes cluster networks. You must exclude IP addresses that KubeVirt pods and the VM migration network must not use. The following addresses are reserved: `10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16` and `10.53.0.0/16`.
+- The IP range of the VM migration network is in the IPv4 CIDR format and must neither conflict nor overlap with Kubernetes cluster networks. The following addresses are reserved: `10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16` and `10.53.0.0/16`.
 
 ### `vm-migration-network` Setting
 
@@ -87,7 +85,14 @@ The VM migration network is automatically enabled in the following situations:
   value: '{"vlan":100,"clusterNetwork":"vm-migration","range":"192.168.1.0/24", "exclude":["192.168.1.100/32"]}'
   ```
 
-- The value field is empty.
+The VM migration network is disabled when you remove the value field or set it to an empty string.
+
+  ```yaml
+  apiVersion: harvesterhci.io/v1beta1
+  kind: Setting
+  metadata:
+    name: vm-migration-network
+  ```
 
   ```yaml
   apiVersion: harvesterhci.io/v1beta1
@@ -95,15 +100,6 @@ The VM migration network is automatically enabled in the following situations:
   metadata:
     name: vm-migration-network
   value: ''
-  ```
-
-The VM migration network is disabled when you remove the value field.
-
-  ```yaml
-  apiVersion: harvesterhci.io/v1beta1
-  kind: Setting
-  metadata:
-    name: vm-migration-network
   ```
 
 :::caution
@@ -137,14 +133,14 @@ The following occur once the `vm-migration-network` setting is applied:
       annotations:
         vm-migration-network.settings.harvesterhci.io/hash: ec8322fb6b741f94739cbb904fc73c3fda864d6d
         vm-migration-network.settings.harvesterhci.io/net-attach-def: harvester-system/vm-migration-network-6flk7
-      creationTimestamp: "2022-10-13T06:36:39Z"
+      creationTimestamp: "2025-06-13T06:36:39Z"
       generation: 51
-      name: storage-network
+      name: vm-migration--network
       resourceVersion: "154638"
       uid: 2233ad63-ee52-45f6-a79c-147e48fc88db
     status:
       conditions:
-      - lastUpdateTime: "2022-10-13T13:05:17Z"
+      - lastUpdateTime: "2025-06-13T13:05:17Z"
         reason: Completed
         status: "True"
         type: configured
