@@ -146,7 +146,7 @@ For more information, see [Data Locality](https://longhorn.io/docs/1.6.0/high-av
 
 ## CDI Settings
 
-Harvester integrates with CDI ([Containerized Data Importer](https://kubevirt.io/user-guide/storage/containerized_data_importer/)) to handle VM image management for supported storage classes:
+Harvester integrates with Containerized Data Importer ([CDI](https://kubevirt.io/user-guide/storage/containerized_data_importer/)) to handle VM image management for supported storage classes:
 
 - **Longhorn v2** (Longhorn v1 is not supported)
 - **LVM storage**
