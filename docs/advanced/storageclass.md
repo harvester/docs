@@ -159,7 +159,7 @@ To enable editing of CDI settings for day-2 operations, Harvester introduces 4 a
 Each field in the above image corresponds to an annotation in the StorageClass:
 
 - **Volume Mode / Access Modes** - `cdi.harvesterhci.io/storageProfileVolumeModeAccessModes`: Specifies the default PVC volume mode and access modes.
-- **Volume Snapshot Class** - `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: Sets the Volume Snapshot Class name to be used when taking snapshots of PVCs under this StorageClass. This setting only applies when using the `snapshot` clone strategy. If the user has already set `volumeSnapshotClassName` in the `csi-driver-config` setting for the corresponding provisioner, that value will be used as the default.
+- **Volume Snapshot Class** - `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: Sets the Volume Snapshot Class name to be used when taking snapshots of virtual machine images under this StorageClass. This setting only applies when using the `snapshot` clone strategy. If the user has already set `volumeSnapshotClassName` in the `csi-driver-config` setting for the corresponding provisioner, that value will be used as the default.
 - **Clone Strategy** - `cdi.harvesterhci.io/storageProfileCloneStrategy`: Defines the clone strategy to use for volumes created with VM images using this StorageClass:
   - **copy**: Copies blocks of data over the network
   - **snapshot**: Clones the volume by creating a temporary VolumeSnapshot and restoring it to a new PVC
