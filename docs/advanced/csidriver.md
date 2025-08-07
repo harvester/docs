@@ -159,6 +159,12 @@ For more information, see [Storage Profiles](https://github.com/kubevirt/contain
 
 You can define the above fields to override the default configuration showing on the status.
 
+:::caution
+
+It’s recommended to let the Harvester controller synchronize and persist storage profile configurations by using the [Harvester CDI annotations](./storageclass.md#cdi-settings) on the `StorageClass`, rather than modifying the storage profile directly.
+
+:::
+
 ### Limitations
 
 - Backup support is currently limited to Longhorn V1 Data Engine volumes. Harvester is unable to create backups of volumes in external storage. 
