@@ -1,11 +1,13 @@
 ---
 sidebar_position: 3
-sidebar_label: KubeOVN Subnet ACLs
-title: "KubeOVN Subnet ACLs"
+sidebar_label: Kube-OVN Subnet ACLs
+title: "Kube-OVN Subnet ACLs"
 keywords:
 - Harvester
-- KubeOVN
-- Subnet ACLs
+- networking
+- Kube-OVN
+- access control list
+- subnet ACL
 ---
 
 ## Micro segmentation between VMs:
