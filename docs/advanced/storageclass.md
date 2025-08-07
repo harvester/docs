@@ -158,11 +158,11 @@ The Harvester UI currently does not support the use of CDI with third-party stor
 
 :::
 
-To enable editing of CDI settings for day-2 operations, Harvester introduces 4 attributes to the StorageClass that automatically update the underlying CDI settings.
+To enable editing of CDI settings for day-2 operations, Harvester provides StorageClass attributes that automatically update the underlying CDI settings.
 
 ![](/img/v1.6/storageclass/cdi-settings.png)
 
-Each field in the above image corresponds to an annotation in the StorageClass:
+Each field on the **CDI Settings** screen corresponds to an annotation in the StorageClass.
 
 | Configuration | Annotation | Description | Supported Values | Example |
 |---------------|------------|-------------|------------------|---------|
