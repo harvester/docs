@@ -73,9 +73,9 @@ You can use the following command to configure the [`vm-migration-network`](./se
 kubectl edit settings.harvesterhci.io vm-migration-network
 ```
 
-The VM migration network is automatically enabled in the following situations:
+The VM migration network is automatically enabled when the value field contains a valid JSON string.
 
-- The value field contains a valid JSON string.
+Example:
 
   ```yaml
   apiVersion: harvesterhci.io/v1beta1
