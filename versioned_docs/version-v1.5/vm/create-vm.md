@@ -39,7 +39,7 @@ Please refer to [this page](./create-windows-vm.md) for creating Windows virtual
     - **CPU** and **Memory**: You can allocate a maximum of **254** vCPUs. If virtual machines are not expected to fully consume the allocated resources most of the time, you can use the [`overcommit-config`](../advanced/settings.md#overcommit-config) setting to optimize physical resource allocation.
     - **SSHKey**: Select SSH keys or upload new keys.
 1. Select a custom VM image on the **Volumes** tab. The default disk will be the root disk. You can add more disks to the VM.
-1. To configure networks, go to the **Networks** tab. 
+1. To configure networks, go to the **Networks** tab.
     1. The **Management Network** is added by default, you can remove it if the VLAN network is configured.
     1. You can also add additional networks to the VMs using VLAN networks. You may configure the VLAN networks on **Advanced > Networks** first.
 1. (Optional) Set node affinity rules on the **Node Scheduling** tab.
@@ -181,8 +181,8 @@ A container disk is added when creating a VM by providing a Docker image. When c
 1. Add a **Docker Image**.
     - A disk image, with the format qcow2 or raw, must be placed into the `/disk` directory.
     - Raw and qcow2 formats are supported, but qcow2 is recommended in order to reduce the container image's size. If you use an unsupported image format, the VM will get stuck in a `Running` state.
-    - A container disk also allows you to store disk images in the `/disk` directory. An example of creating such a container image can be found [here](https://kubevirt.io/user-guide/virtual_machines/disks_and_volumes/#containerdisk-workflow-example). 
-1. Choose a **Bus** type.  
+    - A container disk also allows you to store disk images in the `/disk` directory. An example of creating such a container image can be found [here](https://kubevirt.io/user-guide/virtual_machines/disks_and_volumes/#containerdisk-workflow-example).
+1. Choose a **Bus** type.
   ![add-container-volume](/img/v1.2/vm/add-container-volume-2.png)
 
 ## Networks
@@ -220,6 +220,116 @@ See the [Kubernetes Node Affinity Documentation](https://kubernetes.io/docs/conc
 For instance, you can combine `Required` with `Affinity` to instruct the scheduler to place VMs from two services in the same zone, enhancing communication efficiency. Likewise, the use of `Preferred` with `Anti-Affinity` can help distribute VMs of a particular service across multiple zones for increased availability.
 
 See the [Kubernetes Pod Affinity and Anti-Affinity Documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity) for more details.
+
+### Automatically Applied Affinity Rules
+
+Harvester might automatically apply certain affinity rules based on the definition of virtual machine. These rules dictate which nodes are eligible as scheduling/migration targets. If no nodes meet the criteria, the virtual machine fails to be scheduled/migrated.
+
+For more information, see [Unschedulable Virtual Machine](../troubleshooting/vm.md#unschedulable-virtual-machine).
+
+:::info important
+
+The Harvester webhook reverts manual changes to automatically applied rules.
+
+:::
+
+#### Related Networking Concepts
+
+The general process to set up network for virtual machine.
+
+- A [cluster network](../networking/clusternetwork.md#cluster-network) and a corresponding [network configuration](../networking/clusternetwork.md#network-configuration) are created. Only nodes that are covered by the network configuration set up the network devices.
+
+- A [VM network](../networking/harvester-network.md#create-a-vm-network) is created with a specific VLAN ID.
+
+
+Following example lists the processes to set up a cluster network and define a virtual machine which connects to this cluster network.
+
+- A cluster network named `cn2` is created.
+
+- A network configuration named `cn2-vc1` is created. `cn2-vc1` covers `node1` and `node2`.
+
+- A VM network named `cn2-nad-100` is created with the VLAN ID `vlan id 100`.
+
+- A virtual machine named `VM vm1` attaches to a secondary network named `cn2-nad-100`.
+
+
+Harvester ensures the following:
+
+- The Harvester controller automatically labels Kubernetes `node` objects.
+
+`kubectl get node node1 -oyaml`
+
+```
+...
+metadata:
+  labels:
+    network.harvesterhci.io/cn2: "true"
+    network.harvesterhci.io/mgmt: "true"
+    network.harvesterhci.io/vlanconfig: cn2-vc1
+...
+```
+
+- The Harvester webhook automatically updates the `virtualmachine` object.
+
+```
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: network.harvesterhci.io/cn2
+                    operator: In
+                    values:
+                      - 'true'
+```
+
+- The virtual machine is scheduled only on `node1` or `node2`.
+
+:::info important
+
+Harvester applies multiple affinity rules when a virtual machine connects to multiple VM networks that are backed by multi cluster networks. The applied rules collectively determine the nodes that are eligible as scheduling/migration targets.
+
+No affinity rules are applied when a virtual machine connects to VM networks that are backed by [`mgmt`](../networking/clusternetwork.md#built-in-cluster-network) (the built-in cluster network). `mgmt` covers all nodes by default, so all nodes are eligible as scheduling/migration targets.
+
+:::
+
+#### Related CPU Pinning Concepts
+
+When you enable the [CPU Manager](./cpu-pinning.md#enable-and-disable-cpu-manager) on nodes, Harvester applies the following label to related `node` objects.
+
+```
+...
+metadata:
+  labels:
+    cpumanager: "true"
+...
+```
+
+When you enable  [CPU Pinning](./cpu-pinning.md#enable-cpu-pinning-on-a-new-vm) during virtual machine creation, Harvester applies an affinity rule that ensures the virtual machine is scheduled only on nodes where CPU Manager is enabled.
+
+```
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: cpumanager
+                    operator: In
+                    values:
+                      - 'true'
+```
+
+## Annotations
+
+Harvester allows you to attach custom metadata to virtual machines using annotations. These key-value pairs enable extended features or behaviors without requiring changes to the core virtual machine configuration.
+
+You can use the `harvesterhci.io/custom-ip` annotation to set an IP address on the Harvester UI *for display purposes*. This is useful when the virtual machine is unable to report its IP address because of a missing `qemu-guest-agent` or other reasons.
 
 ## Advanced Options
 
@@ -364,5 +474,3 @@ The following example describes how to install an ISO image using [openSUSE Leap
 7. Open the VM web-vnc you just created and follow the instructions given by the installer.
 8. After the installation is complete, reboot the VM  as instructed by the operating system (you can remove the installation media after booting the system).
 9. After the VM reboots, it will automatically boot from the disk volume and start the operating system.
-
-
