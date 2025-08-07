@@ -158,13 +158,12 @@ To enable editing of CDI settings for day-2 operations, Harvester introduces 4 a
 
 Each field in the above image corresponds to an annotation in the StorageClass:
 
-- **Volume Mode / Access Modes** - `cdi.harvesterhci.io/storageProfileVolumeModeAccessModes`: Specifies the default PVC volume mode and access modes.
-- **Volume Snapshot Class** - `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: Sets the Volume Snapshot Class name to be used when taking snapshots of virtual machine images under this StorageClass. This setting only applies when using the `snapshot` clone strategy. If the user has already set `volumeSnapshotClassName` in the `csi-driver-config` setting for the corresponding provisioner, that value will be used as the default.
-- **Clone Strategy** - `cdi.harvesterhci.io/storageProfileCloneStrategy`: Defines the clone strategy to use for volumes created with VM images using this StorageClass:
-  - **copy**: Copies blocks of data over the network
-  - **snapshot**: Clones the volume by creating a temporary VolumeSnapshot and restoring it to a new PVC
-  - **csi-clone**: Clones the volume using a CSI clone operation
-- **File System Overhead** - `cdi.harvesterhci.io/filesystemOverhead`: Specifies the percentage of filesystem overhead to consider when calculating PVC size.
+| Configuration | Annotation | Description | Supported Values | Example |
+|---------------|------------|-------------|------------------|---------|
+| **Volume Mode / Access Modes** | `cdi.harvesterhci.io/storageProfileVolumeModeAccessModes` | Specifies the default PVC volume mode and access modes. | JSON object with volume modes and access modes | `'{"Block":["ReadWriteOnce"]}'` |
+| **Volume Snapshot Class** | `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass` | Sets the Volume Snapshot Class name to be used when taking snapshots of virtual machine images under this StorageClass. This setting only applies when using the `snapshot` clone strategy. If the user has already set `volumeSnapshotClassName` in the `csi-driver-config` setting for the corresponding provisioner, that value will be used as the default. | Valid VolumeSnapshotClass name | `lvm-snapshot`, `longhorn-snapshot` |
+| **Clone Strategy** | `cdi.harvesterhci.io/storageProfileCloneStrategy` | Defines the clone strategy to use for volumes created with VM images using this StorageClass. See the table below for available options. | `copy`: Copies blocks of data over the network<br/>`snapshot`: Clones the volume by creating a temporary VolumeSnapshot and restoring it to a new PVC<br/>`csi-clone`: Clones the volume using a CSI clone operation | `snapshot` |
+| **File System Overhead** | `cdi.harvesterhci.io/filesystemOverhead` | Specifies the percentage of filesystem overhead to consider when calculating PVC size. | Decimal value between 0 and 1, up to 3 digits | `0.05` |
 
 Here is an example of a StorageClass YAML configuration:
 
