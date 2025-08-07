@@ -114,7 +114,7 @@ Edit the subnet spec with acls to apply ingress/egress allow/drop rules per subn
     vpc: vpc1
   ```
 
-- **Example 3:** Block traffic only at one direction. VM with `172.20.10.2` will be able to communicate with other VMs, but other VMs will not be able to communicate with `172.20.10.2`
+- Example 3: Virtual machines with the address `172.20.10.2` are allowed to communicate with other virtual machines. However, traffic in the opposite direction is blocked. No virtual machines are allowed to communicate with `172.20.10.2`.
 
   ```yaml
   apiVersion: kubeovn.io/v1
