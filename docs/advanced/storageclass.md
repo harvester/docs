@@ -191,20 +191,18 @@ Avoid changing the storage profile or CDI directly. Instead, allow the Harvester
 
 :::
 
-### Default Values
+The following are the default values for the supported StorageClasses:
 
-The following are the default values for Longhorn v2 and LVM storage classes:
+- Longhorn V2 Data Engine
+    - `cdi.harvesterhci.io/storageProfileCloneStrategy`: `"copy"`
+    - `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: `"longhorn-snapshot"`
 
-**Longhorn V2:**
-- `cdi.harvesterhci.io/storageProfileCloneStrategy`: `"copy"`
-- `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: `"longhorn-snapshot"`
+- LVM
+    - `cdi.harvesterhci.io/storageProfileVolumeModeAccessModes`: `'{"Block":["ReadWriteOnce"]}'`
+    - `cdi.harvesterhci.io/storageProfileCloneStrategy`: `"snapshot"`
+    - `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: `"lvm-snapshot"`
 
-**LVM:**
-- `cdi.harvesterhci.io/storageProfileVolumeModeAccessModes`: `'{"Block":["ReadWriteOnce"]}'`
-- `cdi.harvesterhci.io/storageProfileCloneStrategy`: `"snapshot"`
-- `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: `"lvm-snapshot"`
-
-For other third-party storage default values, please refer to [CDI Storage Capability](https://github.com/kubevirt/containerized-data-importer/blob/v1.61.1/pkg/storagecapabilities/storagecapabilities.go#L35-L127).
+- Third-party storage: See [`storagecapabilities.go`](https://github.com/kubevirt/containerized-data-importer/blob/v1.61.1/pkg/storagecapabilities/storagecapabilities.go#L35-L127) in the CDI repository.
 
 ## Use Cases
 
