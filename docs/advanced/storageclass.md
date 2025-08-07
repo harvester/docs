@@ -199,7 +199,7 @@ The following are the default values for Longhorn v2 and LVM storage classes:
 - `cdi.harvesterhci.io/storageProfileCloneStrategy`: `"snapshot"`
 - `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: `"lvm-snapshot"`
 
-For other third-party storage default values: please refer to https://github.com/kubevirt/containerized-data-importer/blob/v1.61.1/pkg/storagecapabilities/storagecapabilities.go#L35-L127
+For other third-party storage default values, please refer to https://github.com/kubevirt/containerized-data-importer/blob/v1.61.1/pkg/storagecapabilities/storagecapabilities.go#L35-L127
 
 ## Use Cases
 
