@@ -46,8 +46,9 @@ Edit the subnet spec with acls to apply ingress/egress allow/drop rules per subn
 
 - Deleting ACLs involves removing the contents of the `.spec.acls` field.
 
-#### Examples
-- **Example 1:** Block traffic from VMs with `172.20.10.0/30` for the `vswitch1` subnet. All VMs within subnet `172.20.10.0/24` except `172.20.10.2`, `172.20.10.3` will be able to communicate with each other.
+## Examples
+
+- Example 1: Traffic from virtual machines with the IP address `172.20.10.0/30` is blocked for the `vswitch1` subnet. All virtual machines within the `172.20.10.0/24` subnet, except those with the addresses `172.20.10.2` and `172.20.10.3`, are allowed to communicate with each other.
 
   ```yaml
   apiVersion: kubeovn.io/v1
