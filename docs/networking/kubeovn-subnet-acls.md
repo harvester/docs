@@ -139,7 +139,7 @@ Edit the subnet spec with acls to apply ingress/egress allow/drop rules per subn
     vpc: vpc1
   ```
 
-- **Example 4:** Block or allow traffic by combining rules.VMs carrying tcp traffic with source port 9501 will be blocked within the `vswitch1` subnet.
+- Example 4: TCP traffic originating from port `9501` is blocked on the `vswitch1` subnet (through a combination of rules).
 
   ```yaml
   apiVersion: kubeovn.io/v1
