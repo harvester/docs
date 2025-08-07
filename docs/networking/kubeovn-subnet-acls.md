@@ -32,21 +32,19 @@ Edit the subnet spec with acls to apply ingress/egress allow/drop rules per subn
   - type: integer
      value: 0 to 32767
 
-### Features 
+## Features 
 
-- Subnet ACLs is an array of rules within the subnet
+- Subnet ACLs consist of an array of rules within the subnet.
 
-- The match condition in subnet acl is derived using the following logic
+- The most important components of the `match` expression are comparisons between symbols and constants (for example, `ip4.dst = 192.168.0.1`, `ip.proto = 6`, `arp.op = 1`, `eth.type = 0x800`, `eth.src = 0a:8f:0a:ec:01:7c`, and `tcp.dst = 9501`).
+  
+  You can use the logical AND operator `&&` and the logical OR operator `||` to combine comparisons into a larger expression. For more information, see the [Open vSwitch Manual](https://www.ovn.org/support/dist-docs/ovn-sb.5.html).
 
-  The most important components of match expression are comparisons between symbols and constants, e.g.ip4.dst = 192.168.0.1,  
-  ip.proto = 6, arp.op = 1, eth.type = 0x800, eth.src = 0a:8f:0a:ec:01:7c,tcp.dst = 9501. The logical AND operator && and logical OR operator ||  can  combine
-  comparisons into a larger expression.Reference: https://www.ovn.org/support/dist-docs/ovn-sb.5.html      
+- ACL rules are evaluated and enforced based on their priority. The higher the priority number, the more precedence the rule takes.
 
-- Higher the priority, higher the precedence for order of evaluation of rules.
+- You can update ACLs on subnets that are used by running virtual machines.
 
-- ACLs can be updated on subnets used by running VMs
-
-- To delete ACLs, remove acls hierarchy under the subnet spec
+- Deleting ACLs involves removing the contents of the `.spec.acls` field.
 
 #### Examples
 - **Example 1:** Block traffic from VMs with `172.20.10.0/30` for the `vswitch1` subnet. All VMs within subnet `172.20.10.0/24` except `172.20.10.2`, `172.20.10.3` will be able to communicate with each other.
