@@ -182,7 +182,7 @@ metadata:
 
 :::note
 
-This is a one-way synchronization. If you directly update the StorageProfile or CDI settings, the changes will not be reflected in the StorageClass annotations.
+It's recommended to let the Harvester controller synchronize and persist these storage profile configuration by utilizing the Harvester CDI annotations, instead of changing the storage profile or CDI directly.
 
 :::
 
