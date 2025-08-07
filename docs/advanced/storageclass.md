@@ -148,9 +148,15 @@ For more information, see [Data Locality](https://longhorn.io/docs/1.6.0/high-av
 
 Harvester integrates with the [Containerized Data Importer](https://kubevirt.io/user-guide/storage/containerized_data_importer) (CDI) to handle VM image management for the following StorageClasses:
 
-- **Longhorn v2** (Longhorn v1 is not supported)
-- **LVM storage**
-- **Other third-party storage** (UI support not yet available)
+- Longhorn V2 Data Engine
+- LVM
+- Third-party storage
+
+:::note
+
+The Harvester UI currently does not support the use of CDI with third-party storage.
+
+:::
 
 To enable editing of CDI settings for day-2 operations, Harvester introduces 4 attributes to the StorageClass that automatically update the underlying CDI settings.
 
