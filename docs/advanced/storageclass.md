@@ -185,9 +185,9 @@ metadata:
     cdi.harvesterhci.io/filesystemOverhead: '0.05'
 ```
 
-:::note
+:::caution
 
-It's recommended to let the Harvester controller synchronize and persist these storage profile configuration by utilizing the Harvester CDI annotations, instead of changing the storage profile or CDI directly.
+Avoid changing the storage profile or CDI directly. Instead, allow the Harvester controller to synchronize and persist the storage profile configuration through the use of CDI annotations.
 
 :::
 
