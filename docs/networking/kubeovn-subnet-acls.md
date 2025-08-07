@@ -77,8 +77,7 @@ Edit the subnet spec with acls to apply ingress/egress allow/drop rules per subn
     vpc: vpc1
   ```
 
-- **Example 2:** Order of execution of acl rules based on priority. All VMs within subnet `172.20.10.0/24` except `172.20.10.3` will be able to communicate with each other.
-                 Since priority of 1006 is executed first, `172.20.10.2` still allowed not blocked by rule with priority 1005.
+- Example 2: All virtual machines within the `172.20.10.0/24` subnet, except those with the address `172.20.10.3`, are allowed to communicate with each other. Virtual machines with the address `172.20.10.2` are allowed to communicate because ACL rule execution is based on priority. For this subnet, rules with a priority value of `1006` are executed before `1005`.
 
 ```yaml
   apiVersion: kubeovn.io/v1
