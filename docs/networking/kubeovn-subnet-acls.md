@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 8
 sidebar_label: Kube-OVN Subnet ACLs
 title: "Kube-OVN Subnet ACLs"
 keywords:
@@ -10,45 +10,14 @@ keywords:
 - subnet ACL
 ---
 
-## Micro segmentation between VMs:
+Isolation between virtual machines is typically achieved using either VLANs (in traditional networks) or virtual switches (in Kube-OVN). If you want to isolate virtual machines within the same virtual switch network, you can enable access control lists (ACLs) on subnets to achieve the required micro-segmentation.
 
-Isolation between VMs could be achieved using VLANs traditionally or using virtual switches in KubeOVN.
-Enabling  Access Control Lists on subnets further allow micro segmentation of VMs by isolating VMs within the same Virtual Switch Network.
-
-### KubeOVN Subnet ACLs
-
-Edit the subnet spec with acls to apply ingress/egress allow/drop rules per subnet
-
-- match 
-  - type: string
-    values: source mac address ,destination mac address,source ip address,destination ip address,ip protocol,application port numbers
-- action
-  - type: string
-    value: allow-stateless,allow-related,allow,drop,reject
-- direction
-  - type: string
-    value: from-lport,to-lport
-- priority
-  - type: integer
-     value: 0 to 32767
-
-## Features 
-
-- Subnet ACLs consist of an array of rules within the subnet.
-
-- The most important components of the `match` expression are comparisons between symbols and constants (for example, `ip4.dst = 192.168.0.1`, `ip.proto = 6`, `arp.op = 1`, `eth.type = 0x800`, `eth.src = 0a:8f:0a:ec:01:7c`, and `tcp.dst = 9501`).
-  
-  You can use the logical AND operator `&&` and the logical OR operator `||` to combine comparisons into a larger expression. For more information, see the [Open vSwitch Manual](https://www.ovn.org/support/dist-docs/ovn-sb.5.html).
-
-- ACL rules are evaluated and enforced based on their priority. The higher the priority number, the more precedence the rule takes.
-
-- You can update ACLs on subnets that are used by running virtual machines.
-
-- Deleting ACLs involves removing the contents of the `.spec.acls` field.
+For more information on using Kube-OVN Subnet ACL and its schema, refer https://kubeovn.github.io/docs/v1.13.x/en/guide/subnet/#subnet-acl https://kubeovn.github.io/docs/v1.13.x/en/reference/kube-ovn-api/#acl
 
 ## Examples
 
-- Example 1: Traffic from virtual machines with the IP address `172.20.10.0/30` is blocked for the `vswitch1` subnet. All virtual machines within the `172.20.10.0/24` subnet, except those with the addresses `172.20.10.2` and `172.20.10.3`, are allowed to communicate with each other.
+- Example 1: All virtual machines within the `172.20.10.0/24` subnet, except those with the addresses `172.20.10.2` and `172.20.10.3` in the subnet range `172.20.10.0/30`, are allowed to communicate with each other.
+             GW IP `172.20.10.1` is automatically added to the excludeIps list by kubeovn so it is not assigned to any of the VMs,but communication from and towards the GW IP is also affected.
 
   ```yaml
   apiVersion: kubeovn.io/v1
@@ -78,6 +47,7 @@ Edit the subnet spec with acls to apply ingress/egress allow/drop rules per subn
   ```
 
 - Example 2: All virtual machines within the `172.20.10.0/24` subnet, except those with the address `172.20.10.3`, are allowed to communicate with each other. Virtual machines with the address `172.20.10.2` are allowed to communicate because ACL rule execution is based on priority. For this subnet, rules with a priority value of `1006` are executed before `1005`.
+             GW IP `172.20.10.1` is automatically added to the excludeIps list by kubeovn so it is not assigned to any of the VMs,but communication from and towards the GW IP is also affected.
 
 ```yaml
   apiVersion: kubeovn.io/v1
@@ -92,7 +62,7 @@ Edit the subnet spec with acls to apply ingress/egress allow/drop rules per subn
       priority: 1006
     - action: allow
       direction: from-lport
-      match: ip4.dst == 172.20.10.2
+      match: ip4.src == 172.20.10.2
       priority: 1006
     - action: drop
       direction: to-lport
@@ -139,7 +109,7 @@ Edit the subnet spec with acls to apply ingress/egress allow/drop rules per subn
     vpc: vpc1
   ```
 
-- Example 4: TCP traffic originating from port `9501` is blocked on the `vswitch1` subnet (through a combination of rules).
+- Example 4: TCP traffic originating from port `9501` and ip address `172.20.10.6` is blocked on the `vswitch1` subnet.
 
   ```yaml
   apiVersion: kubeovn.io/v1
@@ -149,12 +119,8 @@ Edit the subnet spec with acls to apply ingress/egress allow/drop rules per subn
   spec:
     acls:
     - action: drop
-      direction: to-lport
-      match: ip4.dst == 172.20.10.2 && tcp.src = 9501
-      priority: 1005
-    - action: drop
       direction: from-lport
-      match: ip4.src == 172.20.10.2 && tcp.src = 9501
+      match: ip4.src == 172.20.10.6 && tcp.src == 9501
       priority: 1005
     cidrBlock: 172.20.10.0/24
     excludeIps:
