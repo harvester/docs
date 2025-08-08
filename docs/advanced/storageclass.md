@@ -154,7 +154,7 @@ Harvester integrates with the [Containerized Data Importer](https://kubevirt.io/
 
 :::note
 
-The Harvester UI currently does not support the use of CDI with third-party storage.
+The Harvester UI currently does not support the use of CDI with third-party storage. Instead, apply the Harvester CDI annotations directly to the third-party storage class.
 
 :::
 
