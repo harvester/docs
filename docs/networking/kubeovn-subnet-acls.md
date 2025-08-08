@@ -82,7 +82,7 @@ For more information on using Kube-OVN Subnet ACL and its schema, refer to its [
     vpc: vpc1
   ```
 
-- Example 3: Virtual machines with the address `172.20.10.2` are allowed to communicate with other virtual machines. However, traffic in the opposite direction is blocked. No virtual machines are allowed to communicate with `172.20.10.2`.
+- Example 3: Virtual machines with the address `172.20.10.2` are allowed to communicate with other virtual machines. However, no virtual machines are allowed to communicate with `172.20.10.2`.
 
   ```yaml
   apiVersion: kubeovn.io/v1
