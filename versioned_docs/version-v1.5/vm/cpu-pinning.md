@@ -75,6 +75,12 @@ Allow some time for Harvester to apply the corresponding CPU Manager policy.
 
 1. Verify that CPU Manager is enabled on one or more nodes.
 
+  :::note important
+
+  Ensure that at least one node has CPU Manager enabled. Otherwise, the VM will be stuck in the `unschedulable` state after startup. For more information, see [Node Affinity Rules](./create-vm.md#related-cpu-pinning-concepts).
+
+  :::
+
 1. Go to **Virtual Machines**.
 
 1. Click **Create**.
