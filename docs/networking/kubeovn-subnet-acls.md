@@ -45,7 +45,7 @@ For more information on using Kube-OVN Subnet ACL and its schema, refer to its [
     vpc: vpc1
   ```
 
-- Example 2: All virtual machines within the `172.20.10.0/24` subnet, except those with the address `172.20.10.1`,`172.20.10.3`, are allowed to communicate with each other. Virtual machines with the address `172.20.10.2` are allowed to communicate because ACL rule execution is based on priority. For this subnet, rules with a priority value of `1006` are executed before `1005`.
+- Example 2: All virtual machines within the `172.20.10.0/24` subnet, except those with the address `172.20.10.1`,`172.20.10.3`, are allowed to communicate with each other. Virtual machines with the address `172.20.10.2` are allowed to communicate because the ACL rules with priority value `1006` takes precedence over that with priority `1005`.
 
 ```yaml
   apiVersion: kubeovn.io/v1
