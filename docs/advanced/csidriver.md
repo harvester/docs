@@ -161,7 +161,7 @@ You can define the above fields to override the default configuration showing on
 
 :::caution
 
-Avoid changing the storage profile or CDI directly. Instead, allow the Harvester controller to synchronize and persist the storage profile configuration through the use of CDI annotations.
+Avoid changing the storage profile or CDI directly. Instead, allow the Harvester controller to synchronize and persist the storage profile configuration through the use of [CDI annotations](../advanced/storageclass.md##containerized-data-importer-cdi-settings).
 
 :::
 
