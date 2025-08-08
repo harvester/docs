@@ -308,7 +308,7 @@ metadata:
 ...
 ```
 
-When you enable  [CPU Pinning](./cpu-pinning.md#enable-cpu-pinning-on-a-new-vm) during virtual machine creation, Harvester applies an affinity rule that ensures the virtual machine is scheduled only on nodes where CPU Manager is enabled.
+When you enable [CPU Pinning](./cpu-pinning.md#enable-cpu-pinning-on-a-new-vm) during virtual machine creation, Harvester applies an affinity rule that ensures the virtual machine is scheduled only on nodes where CPU Manager is enabled.
 
 ```
 spec:
