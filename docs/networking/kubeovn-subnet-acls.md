@@ -12,7 +12,7 @@ keywords:
 
 Isolation between virtual machines is typically achieved using either VLANs (in traditional networks) or virtual switches (in Kube-OVN). If you want to isolate virtual machines within the same virtual switch network, you can enable access control lists (ACLs) on subnets to achieve the required micro-segmentation.
 
-For more information on using Kube-OVN Subnet ACL and its schema, refer https://kubeovn.github.io/docs/v1.13.x/en/guide/subnet/#subnet-acl https://kubeovn.github.io/docs/v1.13.x/en/reference/kube-ovn-api/#acl
+For more information on using Kube-OVN Subnet ACL and its schema, refer to its [usage](https://kubeovn.github.io/docs/v1.13.x/en/guide/subnet/#subnet-acl) and [API reference](https://kubeovn.github.io/docs/v1.13.x/en/reference/kube-ovn-api/#acl) documentation.
 
 ## Examples
 
