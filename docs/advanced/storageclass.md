@@ -152,6 +152,8 @@ Harvester integrates with the [Containerized Data Importer](https://kubevirt.io/
 - LVM
 - Third-party storage
 
+You can use the Harvester UI or CDI annotations to override the default settings of a storage class CDI attributes.
+
 :::note
 
 The Harvester UI currently does not support the use of CDI with third-party storage. Instead, apply the Harvester CDI annotations directly to the third-party storage class.
@@ -202,7 +204,7 @@ The following are the default values for the supported StorageClasses:
     - `cdi.harvesterhci.io/storageProfileCloneStrategy`: `"snapshot"`
     - `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: `"lvm-snapshot"`
 
-- Third-party storage: See [`storagecapabilities.go`](https://github.com/kubevirt/containerized-data-importer/blob/v1.61.1/pkg/storagecapabilities/storagecapabilities.go#L35-L127) in the CDI repository.
+- Third-party storage: See [`storagecapabilities.go`](https://github.com/kubevirt/containerized-data-importer/blob/v1.61.1/pkg/storagecapabilities/storagecapabilities.go#L35-L127) in the CDI repository. If the provisioner is not listed, you must specify the `cdi.harvesterhci.io/storageProfileVolumeModeAccessModes` annotation.
 
 ## Use Cases
 
