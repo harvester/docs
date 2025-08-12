@@ -461,4 +461,4 @@ Specifies what teletype console to start the installer on.
 
 ### `net.ifnames=1`
 
-Enables predictable network interface names in the installer, which will match the system default after harvester is installed. This allows the system to utilize the correct interfaces.
+Enables predictable network interface names in the installer, which will match the system default after Harvester is installed. This allows the system to utilize the correct interfaces.
