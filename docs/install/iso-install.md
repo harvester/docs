@@ -85,6 +85,8 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 	default via 192.168.122.1 dev mgmt-br proto dhcp
 	```
 	For more information, see [DHCP Server Configuration](./pxe-boot-install.md#dhcp-server-configuration).
+
+	The MTU of the bonded nic defaults to 1500. If you need to customize the MTU value, set the [management interface](./harvester-configuration.md#installmanagement_interface) on a Harvester configuration file.
 	:::
 
 1. (Optional) Configure the CIDRs for the cluster pods and services.

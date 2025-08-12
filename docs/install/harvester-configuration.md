@@ -591,8 +591,10 @@ Harvester uses the [systemd net naming scheme](https://www.freedesktop.org/softw
 - `bond_options`: Options for [bonded interfaces](https://www.kernel.org/doc/Documentation/networking/bonding.txt). When unspecified, the following options are used:
   - `mode`: balance-tlb
   - `miimon`: 100
-- `mtu`: Maximum transmission unit (MTU) for the interface.
-- `vlan_id`: VLAN ID for the interface.
+- `mtu`: Maximum transmission unit (MTU) for the interface. Defaults to 1500.
+- `vlan_id`: VLAN ID for the interface. Defaults to 0, means it works in un-tag mode.
+
+See [Change the MTU value of mgmt Network after Installation](../networking/clusternetwork.md#change-the-mtu-value-of-mgmt-network-after-installation) for additional information.
 
 **Example**:
 
