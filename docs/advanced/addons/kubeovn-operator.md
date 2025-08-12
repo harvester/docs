@@ -179,9 +179,9 @@ spec:
     ovsVSCtlConcurrency: 100
 ```
 
-:::note
+:::info important
 
-Please ensure that the kubeovn ipv4 pod and service cidr blocks do not overlap with the Harvester pod and service cidr blocks
+Ensure that the Kube-OVN IPv4 pod and service CIDR blocks do not overlap with the Harvester pod and service CIDR blocks.
 
 :::
 
@@ -248,6 +248,6 @@ for ns in $(kubectl get ns -o name | awk -F/ '{print $2}'); do
 done
 ```
 
-To complete the un-install, each node needs to be rebooted.
+You must reboot each node to complete the uninstallation process.
 
-After completing node reboot, users can disable the `kubeovn-operator` add-on from the Harvester UI.
+Once the nodes are rebooted, you can disable the `kubeovn-operator` add-on from the Harvester UI.
