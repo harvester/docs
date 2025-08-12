@@ -91,9 +91,9 @@ spec:
     joinCIDR: 100.64.0.0/16
     pingerExternalAddress: 1.1.1.1
     pingerExternalDomain: google.com.
-    podCIDR: 10.52.0.0/16
-    podGateway: 10.52.0.1
-    serviceCIDR: 10.52.0.1
+    podCIDR: 10.54.0.0/16
+    podGateway: 10.54.0.1
+    serviceCIDR: 10.55.0.1
   ipv6:
     joinCIDR: fd00:100:64::/112
     pingerExternalAddress: 2606:4700:4700::1111
@@ -178,6 +178,13 @@ spec:
     inspectInterval: 20
     ovsVSCtlConcurrency: 100
 ```
+
+:::note
+
+Please ensure that the kubeovn ipv4 pod and service cidr blocks do not overlap with the Harvester pod and service cidr blocks
+
+:::
+
 :::caution
 
 This `Configuration` object has been validated against Harvester installations. You can fine-tune the object by editing the `kubeovn-operator` add-on YAML, but exercise caution when making changes to the `configurationSpec` field.
