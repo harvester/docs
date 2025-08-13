@@ -15,7 +15,15 @@ description: Live migration means moving a virtual machine to a different host w
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/vm/live-migration"/>
 </head>
 
-Live migration means moving a virtual machine to a different host without downtime.
+Live migration means moving a virtual machine to a different host without downtime. A couple of comprehensive processes and tasks are done under the hood to fulfill the live migration.
+
+The general requirements are:
+
+- The cluster has at least one additional scheduable node which can meet all the scheduling rules of the VM besides the current host node.
+
+- The destination node has enough spare resources to host the VM.
+
+- The requested CPU, memory, [volumes](./create-vm.md#volumes), devices and other resources of the VM can be copied or rebuilt on the destination host while the source VM is still running.
 
 ## Non-migratable VMs
 
@@ -30,6 +38,12 @@ Remove the related device or add more schedulable nodes can make the VM live-mig
 - The VM has any volume of the `Container Disk` type.
 
 - The VM has any volume with `volumeAccessMode` `ReadWriteOnce`.
+
+- The VM has any volume and it's parent `StorageClass` has `replica 1`.
+
+  ::caution
+  This condition is not detected on all cases.
+  ::
 
 - The VM has `PCI passthrough` or `vGPU` devices.
 
@@ -48,6 +62,10 @@ Following conditions are checked on the runtime (e.g. before an upgrade) to mark
   See [Automatically Applied Affinity Rules](./create-vm.md#related-cpu-pinning-concepts) for more details.
 
 - Other [node scheduling](./create-vm.md#node-scheduling) rules.
+
+## Live-migratable VMs
+
+Besides `non-migratable VMs`, the rest of the running VMs are considered `live-migratable`.
 
 ## How Migration Works
 
@@ -100,9 +118,25 @@ When you have [node scheduling rules](./create-windows-vm.md#node-scheduling-tab
 
 - The `Abort Migration` menu is available when the VM already has a running or pending migration process.
 
-- Don't click `Abort Migration` if it is triggered by the [Harvester upgrade](../upgrade/automatic.md#live-migratable-vms) or [node maintenance](../host/host.md#node-maintenance).
+- Don't click `Abort Migration` if it is created by the [batch-migrations](#automatically-triggered-batch-migrations)
 
 :::
+
+## Automatically triggered batch-migrations
+
+Both [Harvester upgrade](../upgrade/automatic.md#live-migratable-vms) and [node maintenance](../host/host.md#node-maintenance) benefit from the **Live Migration**, and the process is slightly different with above [Starting a Migration](#starting-a-migration). It is called `batch-migrations`.
+
+The general process is:
+
+1. The controller watchs a dedicated taint on the node object.
+
+1. The controller creates a `virtualmachineinstancemigration` object for each [live-migratable VM](#live-migratable-vms) on the current node.
+
+1. The migrations are queued, scheduled internally, and are process in batch mode. UI shows `Pending migration` or `Migrating` according to their status.
+
+1. The controller monitors the processing and waits until all of them are done or time-out.
+
+![batch-migrations](/img/v1.6/vm/batch-migrations.png)
 
 ## Migration Timeouts
 

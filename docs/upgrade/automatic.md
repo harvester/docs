@@ -81,7 +81,7 @@ When a Rancher version reaches its End of Maintenance (EOM) date, Harvester only
 
 ### Live-migratable VMs
 
-Those VMs are migrated to other nodes automatically when the hosting node is to be upgraded, they have zero down-time through the upgrade.
+Those [live-migratable VMs](../vm/live-migration.md#live-migratable-vms) are live migrated to other nodes automatically via [batch-migrations](../vm/live-migration.md#automatically-triggered-batch-migrations) when the hosting node is to be upgraded, they have zero down-time through the upgrade.
 
 ### Non-migratable VMs
 

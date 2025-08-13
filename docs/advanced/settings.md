@@ -818,7 +818,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
   :::
 
-- `restoreVM`: Option that enables Harvester to automatically restore previously running non-migratable virtual machines after the upgrade is *successfully* completed. You can specify either of the following values:
+- `restoreVM`: Option that enables Harvester to automatically restore previously running [non-migratable virtual machines](../vm/live-migration.md#non-migratable-vms) after the upgrade is *successfully* completed. You can specify either of the following values:
 
   - `true`: Harvester forcibly shuts down *running* and *paused* non-migratable virtual machines on each node. After the upgrade is completed, the previously running virtual machines are automatically restarted, while the paused virtual machines remain shut down.
   
