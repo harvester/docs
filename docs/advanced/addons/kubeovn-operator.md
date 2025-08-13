@@ -91,9 +91,9 @@ spec:
     joinCIDR: 100.64.0.0/16
     pingerExternalAddress: 1.1.1.1
     pingerExternalDomain: google.com.
-    podCIDR: 10.52.0.0/16
-    podGateway: 10.52.0.1
-    serviceCIDR: 10.52.0.1
+    podCIDR: 10.54.0.0/16
+    podGateway: 10.54.0.1
+    serviceCIDR: 10.55.0.1
   ipv6:
     joinCIDR: fd00:100:64::/112
     pingerExternalAddress: 2606:4700:4700::1111
@@ -178,6 +178,13 @@ spec:
     inspectInterval: 20
     ovsVSCtlConcurrency: 100
 ```
+
+:::info important
+
+Ensure that the Kube-OVN IPv4 pod and service CIDR blocks do not overlap with the Harvester pod and service CIDR blocks.
+
+:::
+
 :::caution
 
 This `Configuration` object has been validated against Harvester installations. You can fine-tune the object by editing the `kubeovn-operator` add-on YAML, but exercise caution when making changes to the `configurationSpec` field.
@@ -189,12 +196,15 @@ This `Configuration` object has been validated against Harvester installations. 
 
 Ensure that no virtual machines are using VM Networks backed by Kube-OVN SDN components.
 
+Disabling the kubeovn-operator is a disruptive process
 :::
 
 You can disable `kubeovn-operator` using the following commands:
 
 ```
-kubectl delete validatingwebhookconfiguration kube-ovn-webhook
+kubectl delete configuration kubeovn -n kube-system --wait=false
+
+kubectl delete validatingwebhookconfiguration  kube-ovn-webhook
 
 kubectl delete ips --all
 
@@ -202,8 +212,42 @@ kubectl delete subnets join ovn-default
 
 kubectl delete vpc ovn-cluster
 
-kubectl delete configuration kubeovn -n kube-system
+# Remove annotations/labels in namespaces and nodes
+kubectl annotate node --all ovn.kubernetes.io/cidr-
+kubectl annotate node --all ovn.kubernetes.io/gateway-
+kubectl annotate node --all ovn.kubernetes.io/ip_address-
+kubectl annotate node --all ovn.kubernetes.io/logical_switch-
+kubectl annotate node --all ovn.kubernetes.io/mac_address-
+kubectl annotate node --all ovn.kubernetes.io/port_name-
+kubectl annotate node --all ovn.kubernetes.io/allocated-
+kubectl annotate node --all ovn.kubernetes.io/chassis- 
+kubectl label node --all kube-ovn/role-
 
+kubectl annotate ns --all ovn.kubernetes.io/cidr-
+kubectl annotate ns --all ovn.kubernetes.io/exclude_ips-
+kubectl annotate ns --all ovn.kubernetes.io/gateway-
+kubectl annotate ns --all ovn.kubernetes.io/logical_switch-
+kubectl annotate ns --all ovn.kubernetes.io/private-
+kubectl annotate ns --all ovn.kubernetes.io/allow-
+kubectl annotate ns --all ovn.kubernetes.io/allocated-
+
+# Remove annotations in all pods of all namespaces
+for ns in $(kubectl get ns -o name | awk -F/ '{print $2}'); do
+  echo "annotating pods in namespace $ns"
+  kubectl annotate pod --all -n $ns ovn.kubernetes.io/cidr-
+  kubectl annotate pod --all -n $ns ovn.kubernetes.io/gateway-
+  kubectl annotate pod --all -n $ns ovn.kubernetes.io/ip_address-
+  kubectl annotate pod --all -n $ns ovn.kubernetes.io/logical_switch-
+  kubectl annotate pod --all -n $ns ovn.kubernetes.io/mac_address-
+  kubectl annotate pod --all -n $ns ovn.kubernetes.io/port_name-
+  kubectl annotate pod --all -n $ns ovn.kubernetes.io/allocated-
+  kubectl annotate pod --all -n $ns ovn.kubernetes.io/routed-
+  kubectl annotate pod --all -n $ns ovn.kubernetes.io/vlan_id-
+  kubectl annotate pod --all -n $ns ovn.kubernetes.io/network_type-
+  kubectl annotate pod --all -n $ns ovn.kubernetes.io/provider_network-
+done
 ```
 
-When the `Configuration` object is deleted, all Kube-OVN components are also deleted from the Harvester cluster. This process typically takes a few minutes. Once completed, you can disable the `kubeovn-operator` add-on from the Harvester UI.
+You must reboot each node to complete the uninstallation process.
+
+Once the nodes are rebooted, you can disable the `kubeovn-operator` add-on from the Harvester UI.

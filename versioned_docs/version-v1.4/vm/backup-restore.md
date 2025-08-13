@@ -58,6 +58,73 @@ The `State` will be set to `Ready` once the backup is complete.
 
 Users can either restore a new VM or replace an existing VM using this backup.
 
+#### Filesystem Freeze Error in a RHEL 9 Virtual Machine
+
+When a data disk is mounted on a running Red Hat Enterprise Linux 9 virtual machine, attempts to create a backup or snapshot of the virtual machine may fail because of a `Failed to freeze filesystem` error.
+
+![fs-freeze-fail.png](/img/fs-freeze-fail.png)
+
+##### Cause: QEMU Guest Agent Access Denied
+
+This issue is typically caused by SELinux denying read access to the QEMU Guest Agent (`qemu-ga`). You can verify this using the following steps:
+
+1. Access the virtual machine's virt-launcher `compute` container.
+
+  ```bash
+  POD=$(kubectl get pods -n default \
+    -l vm.kubevirt.io/name=vm1 \
+    -o jsonpath='{.items[0].metadata.name}')
+  kubectl exec -it $POD -n default -c compute -- bash
+  ```
+
+1. Attempt to freeze the filesystem using the [virt-freezer](https://github.com/kubevirt/kubevirt/blob/main/docs/freeze.md#virt-freezer) application, which is available in the `compute` container.
+
+  ```bash
+  virt-freezer --freeze --namespace <VM namespace> --name <VM name>
+  ```
+
+1. Check for SELinux `Permission denied` errors.
+
+  If you see a message similar to the following, SELinux is blocking the required access.
+
+  ```
+  {"component":"freezer","level":"error","msg":"Freezing VMI failed","reason":"server error. command Freeze failed: \"LibvirtError(Code=1, Domain=10, Message='internal error: unable to execute QEMU agent command 'guest-fsfreeze-freeze': failed to open /data: Permission denied')\""}
+  ```
+
+##### Solution: Generate a SELinux Policy to Allow QEMU Guest Agent Access
+
+Harvester does not manage guest virtual machine configuration. To resolve the issue, you must create and install a custom SELinux policy module.
+
+:::caution
+
+Using `audit2allow` may grant broad permissions, as it allows all actions found in the logs. Review the policy carefully, or consider mounting the volume with an appropriate SELinux label for tighter security.
+
+:::
+
+1. Generate a custom SELinux policy module from audit logs.
+
+  ```bash
+  grep qemu-ga /var/log/audit/audit.log | audit2allow -M my_qemu_ga
+  ```
+
+1. Install the generated policy module.
+
+  ```bash
+  semodule -i my_qemu_ga.pp
+  ```
+
+1. Repeat steps 1 and 2 until virt-freezer can successfully freeze the filesystems.
+
+:::info important
+
+You must unfreeze the virtual machine filesystems before performing other operations.
+
+```bash
+virt-freezer --unfreeze --namespace <VM namespace> --name <VM name>
+```
+
+:::
+
 ### Restore a new VM using a backup
 
 To restore a new VM from a backup, follow these steps:
@@ -173,6 +240,12 @@ The `State` will be set to `Ready` once the snapshot is complete.
 ![vm-snapshot-results.png](/img/v1.2/vm/vm-snapshot-results.png)
 
 Users can either restore a new VM or replace an existing VM using this snapshot.
+
+:::note
+
+VM snapshots may encounter a `filesystem freeze failed` error when performed on a running RHEL9 guest VM. For troubleshooting steps and solutions, see [Failed to Freeze Filesystem for a Running RHEL9 Guest VM](./backup-restore.md#failed-to-freeze-filesystem-for-a-running-rhel9-guest-vm)
+
+:::
 
 ### Restore a new VM using a snapshot
 
