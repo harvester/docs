@@ -425,6 +425,37 @@ boot
 
 The parameter `initrd=harvester-<version>-initrd` is required.
 
+## Tagged VLAN Network Boot
+
+To perform PXE boot over tagged VLAN network, the Harvester hosts must be configured with the following BIOS/UEFI settings:
+
+- VLAN ID is set to the network identity
+- Boot protocol is set to `PXE`
+- DHCP is enabled
+
+:::info important
+
+A successful network boot may require additional configuration changes depending on the host's specifications. The method for making these changes can also vary. For example, on an HPE ProLiant DL360 Gen9 server, you can only change the boot protocol and VLAN ID through the NIC firmware.
+
+For more information, consult your server's documentation.
+
+:::
+
+To ensure that the correct network interface is used at boot time, update the iPXE `kernel` command with the following dracut parameters:
+
+- `BOOTIF=<mac_address>` - use the interface named `<interface_name>`
+- `ifname=<interface_name>:<mac_address>` - assign the network device name `<interface_name>` to the interface with MAC `<mac_address>`
+- `vlan=<vlan_id>:<interface_name>` - set up the VLAN device named `<vlan_id>` on `<interface_name>`
+
+For example, the iPXE script given above can be updated as follows:
+
+```sh
+#!ipxe
+kernel harvester-<version>-vmlinuz ip=dhcp net.ifnames=1 rd.cos.disable rd.noverifyssl console=tty1 root=live:http://10.100.0.10/harvester/rootfs.squashfs harvester.install.automatic=true harvester.install.config_url=http://10.100.0.10/harvester/config-create.yaml BOOTIF=<mac_address> ifname=<interface_name>:<mac_address> vlan=<vlan_id>:<interface_name>
+initrd harvester-<version>-initrd
+boot
+```
+
 ## Useful Kernel Parameters
 
 Besides the Harvester configuration, you can also specify other kernel parameters that are useful in different scenarios.

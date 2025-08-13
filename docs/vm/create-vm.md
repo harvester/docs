@@ -221,6 +221,110 @@ For instance, you can combine `Required` with `Affinity` to instruct the schedul
 
 See the [Kubernetes Pod Affinity and Anti-Affinity Documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity) for more details.
 
+### Automatically Applied Affinity Rules
+
+Harvester might automatically apply certain affinity rules based on the definition of virtual machine. These rules dictate which nodes are eligible as scheduling/migration targets. If no nodes meet the criteria, the virtual machine fails to be scheduled/migrated.
+
+For more information, see [Unschedulable Virtual Machine](../troubleshooting/vm.md#unschedulable-virtual-machine).
+
+:::info important
+
+The Harvester webhook reverts manual changes to automatically applied rules.
+
+:::
+
+#### Related Networking Concepts
+
+The general process to set up network for virtual machine.
+
+- A [cluster network](../networking/clusternetwork.md#cluster-network) and a corresponding [network configuration](../networking/clusternetwork.md#network-configuration) are created. Only nodes that are covered by the network configuration set up the network devices.
+
+- A [VM network](../networking/harvester-network.md#create-a-vm-network) is created with a specific VLAN ID.
+
+
+Following example lists the processes to set up a cluster network and define a virtual machine which connects to this cluster network.
+
+- A cluster network named `cn2` is created.
+
+- A network configuration named `cn2-vc1` is created. `cn2-vc1` covers `node1` and `node2`.
+
+- A VM network named `cn2-nad-100` is created with the VLAN ID `vlan id 100`.
+
+- A virtual machine named `VM vm1` attaches to a secondary network named `cn2-nad-100`.
+
+
+Harvester ensures the following:
+
+- The Harvester controller automatically labels Kubernetes `node` objects.
+
+`kubectl get node node1 -oyaml`
+
+```
+...
+metadata:
+  labels:
+    network.harvesterhci.io/cn2: "true"
+    network.harvesterhci.io/mgmt: "true"
+    network.harvesterhci.io/vlanconfig: cn2-vc1
+...
+```
+
+- The Harvester webhook automatically updates the `virtualmachine` object.
+
+```
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: network.harvesterhci.io/cn2
+                    operator: In
+                    values:
+                      - 'true'
+```
+
+- The virtual machine is scheduled only on `node1` or `node2`.
+
+:::info important
+
+Harvester applies multiple affinity rules when a virtual machine connects to multiple VM networks that are backed by multi cluster networks. The applied rules collectively determine the nodes that are eligible as scheduling/migration targets.
+
+No affinity rules are applied when a virtual machine connects to VM networks that are backed by [`mgmt`](../networking/clusternetwork.md#built-in-cluster-network) (the built-in cluster network). `mgmt` covers all nodes by default, so all nodes are eligible as scheduling/migration targets.
+
+:::
+
+#### Related CPU Pinning Concepts
+
+When you enable the [CPU Manager](./cpu-pinning.md#enable-and-disable-cpu-manager) on nodes, Harvester applies the following label to related `node` objects.
+
+```
+...
+metadata:
+  labels:
+    cpumanager: "true"
+...
+```
+
+When you enable [CPU Pinning](./cpu-pinning.md#enable-cpu-pinning-on-a-new-vm) during virtual machine creation, Harvester applies an affinity rule that ensures the virtual machine is scheduled only on nodes where CPU Manager is enabled.
+
+```
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: cpumanager
+                    operator: In
+                    values:
+                      - 'true'
+```
+
 ## Annotations
 
 Harvester allows you to attach custom metadata to virtual machines using annotations. These key-value pairs enable extended features or behaviors without requiring changes to the core virtual machine configuration.

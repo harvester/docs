@@ -346,7 +346,7 @@ A VM that is configured to use 2 CPUs (equivalent to 2,000 milliCPU) can consume
 
 **Definition**: The ratio to futher tune the VM `memory overhead`.
 
-Each VM is configured with a memory value, this memory is targeted for the VM guest OS to see and use. In Harvester, the VM run in a virt-launcher pod. CPU/VM resource limits are translated and applied to the launcher pod [Resource requests and limits of Pod and container](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container). Kubevirt ensures certain amount of memory is reserved in the pod for managing the virtualization process. Harvester and KubeVirt summarize such additional memory as the VM `Memory Overhead`. The `Memory Overhead` is computed by a complex formula formula. However, sometimes the OOM(Out Of Memory) can still happen and the related VM is killed by the Harvester OS, the direct cause is that the whole POD/Container exceeds its memory limits. From practice, the `Memory Overhead` varies on different kinds of VM, different kinds of VM operating system, and also depends on the running workloads on the VM.
+Each VM is configured with a memory value, this memory is targeted for the VM guest OS to see and use. In Harvester, the VM run in a virt-launcher pod. CPU/VM resource limits are translated and applied to the launcher pod [Resource requests and limits of Pod and container](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container). Kubevirt ensures certain amount of memory is reserved in the pod for managing the virtualization process. Harvester and KubeVirt summarize such additional memory as the VM `Memory Overhead`. The `Memory Overhead` is computed by a complex formula. However, sometimes the OOM(Out Of Memory) can still happen and the related VM is killed by the Harvester OS, the direct cause is that the whole POD/Container exceeds its memory limits. From practice, the `Memory Overhead` varies on different kinds of VM, different kinds of VM operating system, and also depends on the running workloads on the VM.
 
 This setting is for more flexibly tuning the VM `Memory Overhead`.
 
@@ -877,6 +877,30 @@ When the node becomes unavailable or is powered off, the VM only restarts and do
 {
   "enable": "true",
   "period": 300
+}
+```
+
+### `vm-migration-network`
+
+**Definition**: Segregated network for virtual machine migration traffic.
+
+By default, Harvester uses the built-in cluster network `mgmt` for virtual machine migration. `mgmt` is limited to a single interface and is shared with cluster-wide workloads. If your implementation requires network segregation, you can use a [VM migration network](./vm-migration-network.md) to isolate migration traffic.
+
+:::info important
+
+Specify an IP range in the IPv4 CIDR format. The number of IP addresses must be larger than or equal to the number of your cluster nodes.
+
+:::
+
+**Default value**: ""
+
+**Example**:
+
+```
+{
+  "vlan": 100,
+  "clusterNetwork": "vm-migration",
+  "range": "192.168.1.0/24"
 }
 ```
 
