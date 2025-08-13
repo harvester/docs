@@ -21,7 +21,7 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 ## Node Maintenance
 
-Admin users can enable Maintenance Mode (select **⋮ > Enable Maintenance Mode**) to automatically evict all virtual machines from a node. This mode leverages the **live migration** feature to migrate the virtual machines to other nodes, which is useful when you need to reboot, upgrade firmware, or replace hardware components. At least two active nodes are required to use this feature.
+Admin users can enable Maintenance Mode (select **⋮ > Enable Maintenance Mode**) to automatically evict all virtual machines from a node. This mode leverages the [batch-migrations](../vm/live-migration.md#automatically-triggered-batch-migrations) feature to migrate the [live-migratable virtual machines](../vm/live-migration.md#live-migratable-vms) to other nodes, which is useful when you need to reboot, upgrade firmware, or replace hardware components. At least two active nodes are required to use this feature.
 
 Check if there are any [non-migratable VMs](../vm/live-migration.md#non-migratable-vms) and take essential actions.
 
@@ -29,7 +29,7 @@ Check if there are any [non-migratable VMs](../vm/live-migration.md#non-migratab
 
 A [bug](https://github.com/harvester/harvester/issues/7128) may cause an I/O error to occur in virtual machines while Maintenance Mode is enabled on the underlying node. To mitigate the issue, you can set a taint on the node before enabling Maintenance Mode.
 
-1. Set the taint on the target node.
+1. Set the taint on the target node. It triggers the [batch-migrations](../vm/live-migration.md#automatically-triggered-batch-migrations) automatically.
 
     ```sh
     kubectl taint node <NODE> --overwrite kubevirt.io/drain=draining:NoSchedule
