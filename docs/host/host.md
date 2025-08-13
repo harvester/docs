@@ -23,6 +23,8 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 Admin users can enable Maintenance Mode (select **⋮ > Enable Maintenance Mode**) to automatically evict all virtual machines from a node. This mode leverages the **live migration** feature to migrate the virtual machines to other nodes, which is useful when you need to reboot, upgrade firmware, or replace hardware components. At least two active nodes are required to use this feature.
 
+Check if there are any [non-migratable VMs](../vm/live-migration.md#non-migratable-vms) and take essential actions.
+
 :::warning
 
 A [bug](https://github.com/harvester/harvester/issues/7128) may cause an I/O error to occur in virtual machines while Maintenance Mode is enabled on the underlying node. To mitigate the issue, you can set a taint on the node before enabling Maintenance Mode.
@@ -135,19 +137,7 @@ Eviction cannot be completed if the remaining nodes cannot accept replicas from 
 
 ### 4. Manage non-migratable VMs.
 
-[Live migration](../vm/live-migration.md) cannot be performed for VMs with certain properties.
-
-- The VM has PCI passthrough devices or vGPU devices.
-
-  A PCI device is bound to a node. You must remove the PCI device from the VM, or delete the VM and then create a new VM from a backup or snapshot.
-
-- The VM has a node selector or affinity rules that bind it to the node to be removed.
-
-  You must change the node selector or affinity rules.
-
-- The VM is on a VM network that binds it to the node to be removed.
-
-  You must select a different VM network.
+Check if there are any [non-migratable VMs](../vm/live-migration.md#non-migratable-vms) and take essential actions.
 
 :::tip
 Create a backup or snapshot for each non-migratable VM before modifying the settings that bind it to the node that you want to remove.

@@ -17,15 +17,37 @@ description: Live migration means moving a virtual machine to a different host w
 
 Live migration means moving a virtual machine to a different host without downtime.
 
-:::note
+## Non-migratable VMs
 
-- Live migration is not allowed when the virtual machine is using a management network of bridge interface type.
-- Live migration is not allowed when the virtual machine has any volume of the `CD-ROM` type. Such volumes should be ejected before live migration.
-- Live migration is not allowed when the virtual machine has any volume of the `Container Disk` type. Such volumes should be removed before live migration.
-- Live migration is not allowed when the virtual machine has any `PCIDevice` passthrough enabled. Such devices need to be removed before live migration.
-- Live migration is not allowed when the volumeAccessMode of any volume in the virtual machine is `ReadWriteOnce`. Such volumes should be removed before live migration.
+The definitions of VM are versatile, a VM cannot perform live migration when one or more of following conditions are met.
 
-:::
+Remove the related device or add more schedulable nodes can make the VM live-migratable.
+
+### Has non-migratable devices or node-selector
+
+- The VM has any volume of the `CD-ROM` type.
+
+- The VM has any volume of the `Container Disk` type.
+
+- The VM has any volume with `volumeAccessMode` `ReadWriteOnce`.
+
+- The VM has `PCI passthrough` or `vGPU` devices.
+
+- The VM has a [node selector](./create-vm.md#node-scheduling) that binds it to a specific node.
+
+### Has scheduling rules which can only match one node
+
+Following conditions are checked on the runtime (e.g. before an upgrade) to mark the VM is non-migratable if only one node matches.
+
+- The VM is on a `cluster network` which spreads to only one node.
+
+  See [Automatically Applied Affinity Rules](./create-vm.md#related-networking-concepts) for more details.
+
+- The VM has `cpu-pinning` enabled and there is only one node enables `CPU Manager`.
+
+  See [Automatically Applied Affinity Rules](./create-vm.md#related-cpu-pinning-concepts) for more details.
+
+- Other [node scheduling](./create-vm.md#node-scheduling) rules.
 
 ## How Migration Works
 
@@ -51,6 +73,18 @@ However, `host-model` only allows migration of the VM to a node with same CPU mo
 
 ![](/img/v1.2/vm/migrate-action.png)
 
+:::note
+
+The `Migrate` menu is not available when:
+
+- This is a single-node cluster.
+
+- The VM is `non-migratable` due to it [has non-migratable devices or node-selector](#has-non-migratable-devices-or-node-selector).
+
+- The VM already has a running or pending migration process.
+
+:::
+
 When you have [node scheduling rules](./create-windows-vm.md#node-scheduling-tab) configured for a VM, you must ensure that the target nodes you are migrating to meet the VM's runtime requirements. The list of nodes you get to search and select from will be generated based on:
 - VM scheduling rules.
 - Possibly node rules from the network configuration.
@@ -61,6 +95,14 @@ When you have [node scheduling rules](./create-windows-vm.md#node-scheduling-tab
 
 1. Go to the **Virtual Machines** page.
 1. Find the virtual machine in migrating status that you want to abort. Select **⋮ > Abort Migration**.
+
+:::note
+
+- The `Abort Migration` menu is available when the VM already has a running or pending migration process.
+
+- Don't click `Abort Migration` if it is triggered by the [Harvester upgrade](../upgrade/automatic.md#live-migratable-vms) or [node maintenance](../host/host.md#node-maintenance).
+
+:::
 
 ## Migration Timeouts
 
