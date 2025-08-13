@@ -108,9 +108,6 @@ const config = {
         gtag: {
           trackingID: "GTM-57KS2MW", // Global site tag for Google Analytics
           anonymizeIP: true,
-        },        
-        googleTagManager: {
-          containerId: 'GTM-57KS2MW',
         },
       }),
     ],
