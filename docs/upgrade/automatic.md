@@ -77,6 +77,22 @@ The Harvester and Rancher upgrade processes are independent of each other. Durin
 
 When a Rancher version reaches its End of Maintenance (EOM) date, Harvester only provides fixes for critical security-related issues that affect integration functions (Virtualization Management). For more information, see the [Harvester & Rancher Support Matrix](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/).
 
+## VM management through the upgrade
+
+### Live-migratable VMs
+
+Those VMs are migrated to other nodes automatically when the hosting node is to be upgraded, they have zero down-time through the upgrade.
+
+### Non-migratable VMs
+
+When an upgrade is triggered, Harvester does a couple of checks, and depends on the value of [upgrade-config setting option `restoreVM`](../advanced/settings.md#upgrade-config):
+
+- False: Harvester refuses the upgrade when any [non-migratable VM](../vm/live-migration.md#non-migratable-vms) is still running. You need to power off them manually.
+
+- True: Harvester will power off those [non-migratable VM](../vm/live-migration.md#non-migratable-vms) when the node is upgraded and then restore them after the node is rebooted.
+
+See [Phase 4: Upgrade Nodes](./troubleshooting.md#phase-4-upgrade-nodes) for more details.
+
 ## Before starting an upgrade
 
 Check out the available [`upgrade-config` setting](../advanced/settings.md#upgrade-config) to tweak the upgrade strategies and behaviors that best suit your cluster environment.

@@ -209,7 +209,47 @@ It is also possible to connect VMs using additional networks with Harvester's bu
 In bridge VLAN, virtual machines are connected to the host network through a linux `bridge`. The network IPv4 address is delegated to the virtual machine via DHCPv4. The virtual machine should be configured to use DHCP to acquire IPv4 addresses.
 
 ## Node Scheduling
+
 `Node Scheduling` allows you to constrain which nodes your VMs can be scheduled on based on node labels.
+
+![vm-node-scheduling](/img/v1.6/vm/vm-node-scheduling.png)
+
+There are three options:
+
+- Run virtual machine on any aviailable node
+
+- Run virtual machine on specific node
+
+  Following example shows the VM targets a node with `hostname harv21`:
+
+  ```
+        nodeSelector:
+          kubernetes.io/hostname: harv21
+  ```
+
+- Run virtual machine on node(s) matching scheduling rules
+
+  A flexiable option to customize the VM to be scheduled to a group of nodes. Following example shows the VM targets those nodes with label key `harvesterhci.io/group` and value `engineering` or `qa`.
+
+  ```
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: harvesterhci.io/group
+                      operator: In
+                      values:
+                        - engineering
+                        - qa
+  ```
+
+:::note
+
+The VM might be [non-migratable](./live-migration.md#non-migratable-vms) when `Run virtual machine on specific node` is selected.
+
+:::
 
 See the [Kubernetes Node Affinity Documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity) for more details.
 
@@ -296,6 +336,12 @@ No affinity rules are applied when a virtual machine connects to VM networks tha
 
 :::
 
+:::note
+
+The VM might be [non-migratable](./live-migration.md#non-migratable-vms) when there is only one node participates in the `cluster network`.
+
+:::
+
 #### Related CPU Pinning Concepts
 
 When you enable the [CPU Manager](./cpu-pinning.md#enable-and-disable-cpu-manager) on nodes, Harvester applies the following label to related `node` objects.
@@ -324,6 +370,12 @@ spec:
                     values:
                       - 'true'
 ```
+
+:::note
+
+The VM might be [non-migratable](./live-migration.md#non-migratable-vms) when the `CPU Manager` is only enabled on one node.
+
+:::
 
 ## Annotations
 
