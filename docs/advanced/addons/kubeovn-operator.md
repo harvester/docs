@@ -204,13 +204,13 @@ You can disable `kubeovn-operator` using the following commands:
 ```
 kubectl delete configuration kubeovn -n kube-system --wait=false
 
-kubectl delete validatingwebhookconfiguration  kube-ovn-webhook
+kubectl delete validatingwebhookconfiguration  kube-ovn-webhook --ignore-not-found
 
-kubectl delete ips --all
+kubectl delete ips --all 
 
-kubectl delete subnets join ovn-default
+kubectl delete subnets join ovn-default --ignore-not-found
 
-kubectl delete vpc ovn-cluster
+kubectl delete vpc ovn-cluster --ignore-not-found
 
 # Remove annotations/labels in namespaces and nodes
 kubectl annotate node --all ovn.kubernetes.io/cidr-
