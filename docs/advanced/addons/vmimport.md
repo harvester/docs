@@ -169,7 +169,14 @@ If a match is not found, each unmatched network interface is attached to the def
 
 The `storageClass` field specifies the [StorageClass](../storageclass.md) to be used for images and provisioning persistent volumes during the import process. If not specified, the default StorageClass will be used.
 
-By default, the vm-import-controller attempts to graceful shut down the guest operating system of the source virtual machine before starting the import process. If the virtual machine is not gracefully shut down within a specific period, a hard power off is forced. You can adjust this time period for the graceful shutdown by changing the value of the `gracefulShutdownTimeoutSeconds` field, which is set to `60` seconds by default. A hard power off without attempting a graceful shutdown can be forced by setting the `forcePowerOff` field to `true`. To note, the graceful shutdown via VMware based VMs can only be obtained by having "VMware Tools" installed on the virtual machine that you are attempting to import.  If "VMware Tools" is not installed on the source VM that you are importing and graceful shutdown is preferred, the vm-import-controller will likely have logs that resemble something like: `handler virtualmachine-import-job-change: failed to shutdown the guest OS of the source VM: ServerFaultCode: Cannot complete operation because VMware Tools is not running in this virtual machine., requeuing` , this is an expected behavior.
+By default, the vm-import-controller attempts to gracefully shut down the guest operating system of the source virtual machine before starting the import process. If the virtual machine is not gracefully shut down within a specific period, a hard power off is forced. You can adjust this time period for the graceful shutdown by changing the value of the `gracefulShutdownTimeoutSeconds` field, which is set to `60` seconds by default. A hard power off without attempting a graceful shutdown can be forced by setting the `forcePowerOff` field to `true`.
+
+If you are importing a VMware-based virtual machine, the vm-import-controller's behavior depends on whether [VMware Tools](https://knowledge.broadcom.com/external/article/315382/overview-of-vmware-tools.html) is installed on the virtual machine.
+
+| VMware Tools Status | vm-import-controller Behavior |
+| --- | --- |
+| Installed | Attempts the described graceful shutdown before starting the import process. |
+| Not installed | Displays logs similar to `handler virtualmachine-import-job-change: failed to shutdown the guest OS of the source VM: ServerFaultCode: Cannot complete operation because VMware Tools is not running in this virtual machine., requeuing` |
 
 :::note
 The vm-import-controller only supports the `forcePowerOff` and `gracefulShutdownTimeoutSeconds` fields for VMware because OpenStack automatically performs a combination of graceful shutdown and hard power off.
