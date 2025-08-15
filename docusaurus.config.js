@@ -274,12 +274,12 @@ const config = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        redirects: [
-          { // Redirects for links in the Harvester README.md file
-            to: '/v1.5/install/pxe-boot-install',
-            from: '/latest/install/pxe-boot-install'
-          },
-        ],
+        createRedirects(existingPath) {
+          if (existingPath.includes('/v1.5')) {
+            return [existingPath.replace('/v1.5', '/latest')];
+          }
+          return undefined;
+        },
       },
     ],
     [
