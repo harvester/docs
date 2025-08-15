@@ -217,8 +217,11 @@ spec:
 OpenStack allows users to have multiple instances with the same name. In such a scenario, users are advised to use the Instance ID. The reconciliation logic tries to perform a name-to-ID lookup when a name is used.
 :::
 
-#### Known issues
-* **Source virtual machine name is not RFC1123 compliant**: When creating a virtual machine object, the vm-import-controller add-on uses the name of the source virtual machine, which may not meet the Kubernetes object [naming criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names). You may need to rename the source virtual machine to allow successful completion of the import.
+#### Known Issues
+
+##### Source Virtual Machine Name Is Not RFC1123-Compliant
+
+When creating a virtual machine object, the vm-import-controller add-on uses the name of the source virtual machine, which may not meet the Kubernetes object [naming criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names). You may need to rename the source virtual machine to allow successful completion of the import.
 ##### VMware-Based Virtual Machine Without VMware Tools Is Not Migrated
 
 When you attempt to import a VMware-based virtual machine in Harvester v1.6.0, the following occur if [VMware Tools](https://knowledge.broadcom.com/external/article/315382/overview-of-vmware-tools.html) is not installed on the virtual machine:
