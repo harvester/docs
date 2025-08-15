@@ -219,7 +219,16 @@ OpenStack allows users to have multiple instances with the same name. In such a 
 
 #### Known issues
 * **Source virtual machine name is not RFC1123 compliant**: When creating a virtual machine object, the vm-import-controller add-on uses the name of the source virtual machine, which may not meet the Kubernetes object [naming criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names). You may need to rename the source virtual machine to allow successful completion of the import.
-* **v1.6.0 vm-import-controller gracefulShutdownTimeoutSeconds, once it is exceeded a forceful shutdown is not performed and VM never migrates from VMware**: When creating a VirtualMachineImport and using a VMware source, if VMware Tools are not present on the VM a graceful shutdown can not be completed, the VM will not migrate. You will be required to one of the following as a work-around:
-  * shutdown the VM yourself prior to migration to Harvester 
-  * provide the `forcePowerOff: true` in your VirtualMachineImport spec 
-  * install VMware Tools, or [open-vm-tools, as highlighted in this Broadcom knowledge base doc](https://knowledge.broadcom.com/external/article?legacyId=2073803)
+##### VMware-Based Virtual Machine Without VMware Tools Is Not Migrated
+
+When you attempt to import a VMware-based virtual machine in Harvester v1.6.0, the following occur if [VMware Tools](https://knowledge.broadcom.com/external/article/315382/overview-of-vmware-tools.html) is not installed on the virtual machine:
+
+- The vm-import-controller does not gracefully shut down the guest operating system.
+- When the graceful shutdown period (`gracefulShutdownTimeoutSeconds`) lapses, the vm-import-controller does not force a hard poweroff.
+- The virtual machine is not migrated from VMware.
+
+To address the issue, perform one of the following workarounds:
+
+- Shut down the virtual machine before migrating it to Harvester 
+- In the `VirtualMachineImport` CRD spec, set the `forcePowerOff` field to `true`.  
+- Install VMware Tools or [open-vm-tools](https://knowledge.broadcom.com/external/article?legacyId=2073803).
