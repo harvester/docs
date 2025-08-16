@@ -114,3 +114,47 @@ To create a new untagged network, go to the **Networks > VM Networks** page and 
 Starting from Harvester v1.1.2, Harvester supports updating and deleting VM networks. Make sure to stop all affected VMs before updating or deleting VM networks.
 
 :::
+
+##  Overlay Network [Experimental]
+
+The [Harvester network-controller](https://github.com/harvester/harvester-network-controller) leverages [Kube-OVN] (https://github.com/kubeovn/kube-ovn) to create an OVN-based virtualized network that supports advanced SDN capabilities such as virtual private cloud (VPC) and subnets for virtual machine workloads.
+
+An overlay network represents a virtual layer 2 switch that encapsulates and forwards traffic between virtual machines. This network can be linked to the subnet created in the VPC so that virtual machines can access the internal virtualized network and also reach the external network. However, the same virtual machines cannot be accessed by external networks such as VLANs and untagged networks because of current VPC limitations.
+
+![](/img/kubeovn-harvester-topology.png)
+
+### Create an Overlay Network
+1. Go to **Networks > Virtual Machine Networks**, and then click **Create**.
+
+2. On the **Virtual Machine Network:Create** screen, specify a name for the network.
+
+3. On the **Basics** tab, select `OverlayNetwork` as the network type.
+
+  Specifying a cluster network is not required because the overlay network is only enabled on `mgmt` (the built-in management network).
+
+4. Click **Create**.
+
+
+### How to use overlay network
+To create a new overlay network, go to the **Networks > VM Networks** page and click the **Create** button. You have to specify the name, select the type `OverlayNetwork`. You don't need to specify the cluster network since the overlay network is only enabled on the default management network.
+
+The overlay network functions as the provider of the subnet that is created in the virtual private cloud. Because of this, each subnet must be mapped to only one overlay network, and each overlay network can be used by only one subnet. This one-to-one relationship ensures that routing behavior is clear and predictable, subnets are isolated, and routing conflicts and traffic leakage are avoided.
+
+
+
+![](/img/create_vm_networks.png)
+
+![](/img/create_vpc.png)
+
+![](/img/create_subnet.png)
+
+### Limitations
+The overlay network implementation in Harvester v1.6 has the following limitations:
+- Overlay networks that are backed by Kube-OVN can only be created on `mgmt` (the built-in management network).
+- If a virtual machine is attached to a Kube-OVN overlay subnet, you must manually add the subnet’s gateway IP as the virtual machine's default route. Attempts to access external destinations fail until you add the route from within the guest operating system.
+- Underlay networking is still unavailable. Consequently, you cannot directly map a subnet to a physical network, and external hosts cannot reach virtual machines that live on an overlay subnet.
+- The `natOutgoing` field is set to `false` by default in all subnets whether they are created in the default VPC or in a user-defined VPC. If you do not change the value to `true`, virtual machines on the subnet are unable to reach the internet even when the gateway is correctly configured.
+- Static IP defined in cloud-init is ignored for Overlay NICs; the interface will always receive an auto-assigned address from the Subnet’s CIDR.
+- When multiple NICs are attached and the Overlay NIC is not the primary interface, the user must manually bring it up inside the VM (ip link set up) and run DHCP (dhclient ) to obtain its IP.
+- Peering does **not** work between a **default VPC** and a **custom VPC**. It only works between **custom VPCs**.
+
