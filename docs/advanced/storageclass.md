@@ -31,7 +31,9 @@ For information about support for volume provisioning using external container s
 
 :::caution
 
-Once the StorageClass is created, you can only edit the description. All other settings are fixed.
+- Once the StorageClass is created, you can only edit the description. All other settings are fixed.
+
+- If the `replica` of `StorageClass` is `1` and a [volume](../volume/create-volume.md#create-an-empty-volume) is created based on it and attached to a VM, then the VM is [non-migratable](../vm/live-migration.md#non-migratable-vms).
 
 :::
 
@@ -47,7 +49,7 @@ Once the StorageClass is created, you can only edit the description. All other s
 
 1. On the **Parameters** tab, configure the following:
 
-    - **Number of Replicas**: Number of replicas created for each Longhorn volume. The default value is `3`. 
+    - **Number of Replicas**: Number of replicas created for each Longhorn volume. The default value is `3`. See above `caution` when you want to set it as `1`.
     - **Stale Replica Timeout**: Number of minutes Longhorn waits before cleaning up a replica with the status `ERROR`. The default value is `30`.
     - **Node Selector** (optional): Node tags to be matched during volume scheduling. You can add node tags on the host configuration screen (**Host -> Edit Config**).
     - **Disk Selector** (optional): Disk tags to be matched during volume scheduling. You can add disk tags on the host configuration screen (**Host -> Edit Config**).
