@@ -78,13 +78,110 @@ A cluster network called `mgmt` is automatically created when a Harvester cluste
 
 When a Harvester cluster is deployed, a cluster network named `mgmt` is automatically created for intra-cluster communications. `mgmt` consists of the same bridge, bond, and NICs as the external infrastructure network to which each Harvester host attaches with management NICs. Because of this design, `mgmt` also allows virtual machines to be accessed from the external infrastructure network for cluster management purposes.
 
-`mgmt` does not require a network configuration and is always enabled on all hosts. You cannot disable and delete `mgmt`.
+The `mgmt` network does not require a network configuration and is always enabled on all hosts. You cannot disable and delete `mgmt`.
+
+The `mgmt` network uses the default MTU 1500 when you do not input another value other than 0 or 1500 for [management interface](../install/harvester-configuration.md#installmanagement_interface) while installing the cluster.
+
+When a non-default MTU value is set, follow [Annotate the non-default MTU value on mgmt Network after Installation](#annotate-the-non-default-mtu-value-on-mgmt-network-after-installation) right after the cluster is up.
 
 :::caution
 
-Certain [ARP settings](https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt) can break cluster communications. With `arp_ignore=2`, for example, replies are sent only if the sender IP address is in the same subnet as the target IP address for which the MAC address is requested. This is not the case in a Harvester cluster, so using `arp_ignore=2` on all interfaces results in failed connectivity checks and prevents Longhorn pods (specifically, `backing-image` and `instance-manager`) from transitioning to the `Ready` state. Volumes cannot be attached to virtual machines if these Longhorn pods are not ready.
+- Certain [ARP settings](https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt) can break cluster communications. With `arp_ignore=2`, for example, replies are sent only if the sender IP address is in the same subnet as the target IP address for which the MAC address is requested. This is not the case in a Harvester cluster, so using `arp_ignore=2` on all interfaces results in failed connectivity checks and prevents Longhorn pods (specifically, `backing-image` and `instance-manager`) from transitioning to the `Ready` state. Volumes cannot be attached to virtual machines if these Longhorn pods are not ready.
+
+- Due to the limitations on installation stage, you need to ensure each node to have the same MTU value, Harvester is not able to detect the differences on MTU values when a new node is joining the cluster. Different MTU values might cause unexpected results.
 
 :::
+
+#### Annotate the non-default MTU value on mgmt Network after Installation
+
+_Available as of v1.6.0_
+
+When your cluster is installed with a non-default MTU value like 9000, you need to annotate this value to the `mgmt` clusternetwork object. All the following created [VM network](./harvester-network.md#create-a-vm-network) inheriates this annotated MTU value automatically. Without it, the created `VM network` still defaults the MTU value to 1500.
+
+```
+
+$ kubectl annotate clusternetwork mgmt network.harvesterhci.io/uplink-mtu="9000"
+
+```
+
+:::caution
+
+- You need to ensure the annotation MTU value is same with the MTU value on [management interface](../install/harvester-configuration.md#installmanagement_interface) while installing the cluster.
+
+- You need to ensure all nodes are having the same MTU values.
+
+- For the default MTU value 1500, it does not matter to annotate or not.
+
+:::
+
+#### Change the MTU value of mgmt Network after Installation
+
+The MTU of the mgmt network is saved on an internal file `/oem/90_custom.yaml` on each node. The file stores a lot of basic configuration of the system.
+
+:::caution
+
+- Backup the file first.
+
+- Be very carefuly to change this file.
+
+- Don't touch unrelated contents. Don't remove blank lines.
+
+- Don't change the formats of this yaml file to avoid breaking the system accidentally.
+
+- Run `yq -e /oem/90_custom.yaml` to check the format is valid after the change, fix or restore the file if any error is reported.
+
+- Restore the backup file when the node cannot reboot successfully.
+
+:::
+
+
+1. Stop all virtual machines that are attached to the `mgmt` network.
+
+1. (optional) Disable the [storage network](../advanced/storagenetwork.md#disable-the-storage-network) when it is enabled and locates on `mgmt` network.
+
+1. Change the MTU value via edit below file on each node, and reboot the node to apply the updated change.
+
+    Search the `path: /etc/sysconfig/network/ifcfg-mgmt-bo` and `path: /etc/sysconfig/network/ifcfg-mgmt-br` on `/oem/90_custom.yaml`, change their `MTU=1500` to the target value.
+
+    ```
+    - path: /etc/sysconfig/network/ifcfg-mgmt-bo
+    permissions: 384
+    owner: 0
+    group: 0
+    content: |+
+      MTU=1500     // MTU is the last under the content, and might be a blank line, add or change it
+    encoding: ""
+    ownerstring: ""
+    - path: /etc/sysconfig/network/ifcfg-mgmt-br
+    permissions: 384
+    owner: 0
+    group: 0
+    content: |+
+      MTU=1500     // MTU is the last under the content, and might be a blank line, add or change it
+    encoding: ""
+    ownerstring: ""
+
+    ```
+
+1. After all nodes are rebooted, check the MTU values via `ip link` command.
+
+1. Annotate the `mgmt` clusternetwork object with new MTU value.
+
+    ```
+
+    $ kubectl annotate clusternetwork mgmt network.harvesterhci.io/uplink-mtu="9000"
+
+    ```
+
+1. All virtual machine networks that are attached to the target cluster network are updated automatically with the new MTU.
+
+1. (optional) Enable the [storage network](../advanced/storagenetwork.md#disable-the-storage-network) when it is previously enabled and locates on `mgmt` network.
+
+1. Start all virtual machines that are attached to the `mgmt` network.
+
+1. Verify that the virtual machine workloads are running normally.
+
+For more detailed steps and validations, see [Change the MTU of a Network Configuration with an Attached Storage Network](#change-the-mtu-of-a-network-configuration-with-an-attached-storage-network).
 
 ### Custom Cluster Network
 
@@ -135,7 +232,7 @@ To simplify cluster maintenance, create one network configuration for each node 
 
     - **NICs**: The list contains NICs that are common to all selected nodes. NICs that cannot be selected are unavailable on one or more nodes and must be configured. Once troubleshooting is completed, refresh the screen and verify that the NICs can be selected.
     - **Bond Options**: The default bonding mode is **active-backup**.
-    - **Attributes**: You must use the same MTU across all network configurations of a custom cluster network. If you do not specify an MTU, the default value **1500** is used.
+    - **Attributes**: You must use the same MTU across all network configurations of a custom cluster network. If you do not specify an MTU, the default value **1500** is used. Harvester webhook denies the new network configuration when it has a different MTU with the existing ones.
 
    ![](/img/v1.2/networking/config-uplink.png)
 
@@ -188,7 +285,7 @@ In this scenario, the [storage network](../advanced/storagenetwork.md#harvester-
 :::caution
 
 - The MTU affects Harvester nodes and networking devices such as switches and routers. Careful planning and testing are required to ensure that changing the MTU does not adversely affect the system. For more information, see [Network Topology](./deep-dive.md#network-topology).
-- You must use the same MTU across all network configurations of a custom cluster network. You must also manually update the MTU on existing virtual machine networks.
+- You must use the same MTU across all network configurations of a custom cluster network.
 - Cluster operations are interrupted during the configuration change.
 - The information in this section does not apply to the built-in `mgmt` cluster network.
 
@@ -282,25 +379,13 @@ If you must change the MTU, perform the following steps:
 
     :::info important
 
-    You must change the MTU in each one, and verify that the new MTU was applied.
+    You must change the MTU in each one, and verify that the new MTU was applied. Harvester webhook denies the new network configuration when it has a different MTU with the existing ones.
 
     :::
 
-1. Edit the YAML of all virtual machine networks that are attached to the target cluster network.
+1. All virtual machine networks that are attached to the target cluster network are updated automatically with the new MTU value.
 
-    On the Harvester UI **Virtual Machine Networks** screen, perform the following steps for each attached network:
-
-    1. Select **⋮ > Edit YAML**.
-
-        ![](/img/v1.4/networking/edit-vm-networks.png)
-
-    1. Change the MTU.
-
-        ![](/img/v1.4/networking/edit-vm-network-mtu.png)
-
-    1. Click **Save**.
-
-    You can also use `kubectl` to change the MTU. In the following example, the network name is `vm100`. To edit the YAML of this network, run the command `kubectl edit NetworkAttachmentDefinition.k8s.cni.cncf.io vm100`.
+    In the following example, the network name is `vm100`. Run the command `kubectl get NetworkAttachmentDefinition.k8s.cni.cncf.io vm100 -oyaml` to see that the MTU value is updated.
 
     ```
     apiVersion: k8s.cni.cncf.io/v1
@@ -324,7 +409,7 @@ If you must change the MTU, perform the following steps:
       uid: 8dacf415-ce90-414a-a11b-48f041d46b42
     spec:
       config: >-
-        {"cniVersion":"0.3.1","name":"vm100","type":"bridge","bridge":"cn-data-br","promiscMode":true,"vlan":100,"ipam":{},"mtu":1500}
+        {"cniVersion":"0.3.1","name":"vm100","type":"bridge","bridge":"cn-data-br","promiscMode":true,"vlan":100,"ipam":{},"mtu":9000}
     ```
 
 1. Start all virtual machines that are attached to the target cluster network.
@@ -348,7 +433,7 @@ The storage network is used by `driver.longhorn.io`, which is Harvester's defaul
 :::caution
 
 - The MTU affects Harvester nodes and networking devices such as switches and routers. Careful planning and testing are required to ensure that changing the MTU does not adversely affect the system. For more information, see [Network Topology](./deep-dive.md#network-topology).
-- You must use the same MTU across all network configurations of a custom cluster network. You must also manually update the MTU on existing virtual machine networks.
+- You must use the same MTU across all network configurations of a custom cluster network.
 - All cluster operations are interrupted during the configuration change.
 - The information in this section does not apply to the built-in `mgmt` cluster network.
 
@@ -446,29 +531,17 @@ If you must change the MTU, perform the following steps:
 
     :::info important
 
-    You must change the MTU in each one, and verify that the new MTU was applied.
+    You must change the MTU in each one, and verify that the new MTU was applied. Harvester webhook denies the new network configuration when it has a different MTU with the existing ones.
 
     :::
 
 1. Enable and configure the Harvester [storage network setting](../advanced/storagenetwork.md#enable-the-storage-network), ensuring that the [prerequisites](../advanced/storagenetwork.md#prerequisites) are met.
 
-1. Allow some time for the setting to be enabled, and then [verify that the change was applied](../advanced/storagenetwork.md#verify-configuration-is-completed).
+1. Allow some time for the setting to be enabled, and then [verify that the change was applied](../advanced/storagenetwork.md#verify-configuration-is-completed). It runs with the new MTU.
 
-1. Edit the YAML of all virtual machine networks that are attached to the target cluster network.
+1. All virtual machine networks that are attached to the target cluster network are updated automatically with the new MTU value.
 
-    On the Harvester UI **Virtual Machine Networks** screen, perform the following steps for each attached network:
-
-    1. Select **⋮ > Edit YAML**.
-
-        ![](/img/v1.4/networking/edit-vm-networks.png)
-
-    1. Change the MTU.
-
-        ![](/img/v1.4/networking/edit-vm-network-mtu.png)
-
-    1. Click **Save**.
-
-    You can also use `kubectl` to change the MTU. In the following example, the network name is `vm100`. To edit the YAML of this network, run the command `kubectl edit NetworkAttachmentDefinition.k8s.cni.cncf.io vm100`.
+    In the following example, the network name is `vm100`. Run the command `kubectl get NetworkAttachmentDefinition.k8s.cni.cncf.io vm100 -oyaml` to see that the MTU value is updated.
 
     ```
     apiVersion: k8s.cni.cncf.io/v1
@@ -492,7 +565,7 @@ If you must change the MTU, perform the following steps:
       uid: 8dacf415-ce90-414a-a11b-48f041d46b42
     spec:
       config: >-
-        {"cniVersion":"0.3.1","name":"vm100","type":"bridge","bridge":"cn-data-br","promiscMode":true,"vlan":100,"ipam":{},"mtu":1500}
+        {"cniVersion":"0.3.1","name":"vm100","type":"bridge","bridge":"cn-data-br","promiscMode":true,"vlan":100,"ipam":{},"mtu":9000}
     ```
 
 1. Start all virtual machines that are attached to the target cluster network.
