@@ -31,7 +31,9 @@ description: Create a volume from the Volume page.
 
 :::caution
 
-If the `replica` of the referring `StorageClass` is `1` and this volume is attached to a VM, then the VM is [non-migratable](../vm/live-migration.md#non-migratable-vms).
+- If the replica count of the selected StorageClass is `1` and the volume is attached to a virtual machine, then the virtual machine is considered [non-migratable](../vm/live-migration.md#non-migratable-virtual-machines).
+
+- When a volume is created, it copied the related parameters from the selected `StorageClass` to itself. If you change the parameters of the `StorageClass` later, it does not write back to the volume.
 
 :::
 

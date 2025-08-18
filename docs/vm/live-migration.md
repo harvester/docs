@@ -17,19 +17,17 @@ description: Live migration means moving a virtual machine to a different host w
 
 Live migration means moving a virtual machine to a different host without downtime. A couple of comprehensive processes and tasks are done under the hood to fulfill the live migration.
 
-The general requirements are:
+## Prerequisites
 
-- The cluster has at least one additional scheduable node which can meet all the scheduling rules of the VM besides the current host node.
+- The cluster has at least one schedulable node (in addition to the current node) that matches all of the virtual machine's scheduling rules.
 
-- The destination node has enough spare resources to host the VM.
+- The migration target node has enough available resources to host the virtual machine.
 
-- The requested CPU, memory, [volumes](./create-vm.md#volumes), devices and other resources of the VM can be copied or rebuilt on the destination host while the source VM is still running.
+- The CPU, memory, [volumes](./create-vm.md#volumes), devices, and other resources requested by the virtual machine can be copied or rebuilt on the migration target node while the source virtual machine is still running.
 
-## Non-migratable VMs
+## Non-Migratable Virtual Machines
 
-The definitions of VM are versatile, a VM cannot perform live migration when one or more of following conditions are met.
-
-Remove the related device or add more schedulable nodes can make the VM live-migratable.
+A virtual machine is considered non-migratable if it has one or more of the following:
 
 ### Has non-migratable devices or node-selector
 
@@ -93,13 +91,11 @@ However, `host-model` only allows migration of the VM to a node with same CPU mo
 
 :::note
 
-The `Migrate` menu is not available when:
+The **Migrate** menu option is not available in the following situations:
 
-- This is a single-node cluster.
-
-- The VM is `non-migratable` due to it [has non-migratable devices or node-selector](#has-non-migratable-devices-or-node-selector).
-
-- The VM already has a running or pending migration process.
+- The cluster has only one node.
+- The virtual machine is [non-migratable](#non-migratable-virtual-machines) because of certain devices or a node selector that binds the virtual machine to a specific node.
+- The virtual machine already has a running or pending migration process.
 
 :::
 
@@ -116,7 +112,7 @@ When you have [node scheduling rules](./create-windows-vm.md#node-scheduling-tab
 
 :::note
 
-- The `Abort Migration` menu is available when the VM already has a running or pending migration process.
+- The **Abort Migration** menu item is available when the virtual machine already has a running or pending migration process.
 
 - Don't click `Abort Migration` if it is created by the [batch-migrations](#automatically-triggered-batch-migrations)
 

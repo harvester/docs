@@ -29,14 +29,6 @@ For information about support for volume provisioning using external container s
 <Tabs>
 <TabItem value="ui" label="UI" default>
 
-:::caution
-
-- Once the StorageClass is created, you can only edit the description. All other settings are fixed.
-
-- If the `replica` of `StorageClass` is `1` and a [volume](../volume/create-volume.md#create-an-empty-volume) is created based on it and attached to a VM, then the VM is [non-migratable](../vm/live-migration.md#non-migratable-vms).
-
-:::
-
 1. On the Harvester UI, go to **Advanced > StorageClasses**.
 
     ![](/img/v1.2/storageclass/create_storageclasses_entry.png)
@@ -49,11 +41,17 @@ For information about support for volume provisioning using external container s
 
 1. On the **Parameters** tab, configure the following:
 
-    - **Number of Replicas**: Number of replicas created for each Longhorn volume. The default value is `3`. See above `caution` when you want to set it as `1`.
+    - **Number of Replicas**: Number of replicas created for each Longhorn volume. The default value is `3`.
     - **Stale Replica Timeout**: Number of minutes Longhorn waits before cleaning up a replica with the status `ERROR`. The default value is `30`.
     - **Node Selector** (optional): Node tags to be matched during volume scheduling. You can add node tags on the host configuration screen (**Host -> Edit Config**).
     - **Disk Selector** (optional): Disk tags to be matched during volume scheduling. You can add disk tags on the host configuration screen (**Host -> Edit Config**).
     - **Migratable**: Setting that enables [Live Migration](../vm/live-migration.md) for volumes created using the StorageClass. The default value is `Yes`.
+
+    :::caution
+
+    If a StorageClass with a replica count of `1` is used to create a volume that is attached to a virtual machine, that virtual machine is considered [non-migratable](../vm/live-migration.md#non-migratable-virtual-machines).
+
+    :::
 
 1. On the **Customize** tab, configure the following:
 

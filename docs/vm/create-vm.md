@@ -214,22 +214,28 @@ In bridge VLAN, virtual machines are connected to the host network through a lin
 
 ![vm-node-scheduling](/img/v1.6/vm/vm-node-scheduling.png)
 
-There are three options:
+You can choose to run virtual machines on the following:
 
-- Run virtual machine on any aviailable node
+- Any available node
 
-- Run virtual machine on specific node
+- A specific node
 
-  Following example shows the VM targets a node with `hostname harv21`:
+  In the following example, the target node has the hostname `harv21`.
 
   ```
         nodeSelector:
           kubernetes.io/hostname: harv21
   ```
 
-- Run virtual machine on node(s) matching scheduling rules
+ :::note
 
-  A flexiable option to customize the VM to be scheduled to a group of nodes. Following example shows the VM targets those nodes with label key `harvesterhci.io/group` and value `engineering` or `qa`.
+ The virtual machine may be [non-migratable](./live-migration.md#non-migratable-virtual-machines) if you limit scheduling to a specific node.
+
+ :::
+
+- Nodes that match scheduling rules
+
+  You gain greater flexibility by scheduling a virtual machine on a group of nodes. In the following example, the virtual machine can be scheduled on nodes with a specific label. The key is `harvesterhci.io/group` and the value can be either `engineering` or `qa`.
 
   ```
       spec:
@@ -244,12 +250,6 @@ There are three options:
                         - engineering
                         - qa
   ```
-
-:::note
-
-The VM might be [non-migratable](./live-migration.md#non-migratable-vms) when `Run virtual machine on specific node` is selected.
-
-:::
 
 See the [Kubernetes Node Affinity Documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity) for more details.
 
@@ -338,7 +338,7 @@ No affinity rules are applied when a virtual machine connects to VM networks tha
 
 :::note
 
-The VM might be [non-migratable](./live-migration.md#non-migratable-vms) when there is only one node participates in the `cluster network`.
+The virtual machine is [non-migratable](./live-migration.md#non-migratable-virtual-machines) when there is only one node in the cluster network.
 
 :::
 
@@ -373,7 +373,7 @@ spec:
 
 :::note
 
-The VM might be [non-migratable](./live-migration.md#non-migratable-vms) when the `CPU Manager` is only enabled on one node.
+The virtual machine is [non-migratable](./live-migration.md#non-migratable-virtual-machines) if CPU Manager is enabled on only one node.
 
 :::
 
