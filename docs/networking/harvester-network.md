@@ -40,7 +40,7 @@ Since the management network is built-in and doesn't require extra operations, y
 
 :::info important
 
-The management network is using the default MTU 1500 when you do not input another value other than 0 or 1500 for [management interface](../install/harvester-configuration.md#installmanagement_interface) while installing the cluster. Then the network interfaces of VMs connected to the management network have an [MTU value of `1450`](https://docs.tigera.io/calico/latest/networking/configuring/mtu#determine-mtu-size). This is because a VXLAN overlay network typically has a slightly higher per-packet overhead.
+`mgmt` uses the default MTU value `1500` if you do not specify a value other than `0` or `1500` in the [`install.management_interface`](../install/harvester-configuration.md#installmanagement_interface) setting during installation. However, the network interfaces of virtual machines connected to `mgmt` have a MTU value of [`1450`](https://docs.tigera.io/calico/latest/networking/configuring/mtu#determine-mtu-size). This is because Harvester adopts `Calico & Flannel CNI` which has a 50-byte per-packet overhead to carry the in-cluster overlay network, and hence the VM has the MTU value `1450`.
 
 ![](/img/v1.3/networking/management-network-mtu.png)
 
@@ -78,7 +78,7 @@ The [Harvester network-controller](https://github.com/harvester/harvester-networ
 
   When you change the MTU on the physical NICs of cluster network uplink, the newly created virtual machine networks automatically inherit the new MTU. The existing virtual machine networks are also updated automatically. For more information, see [Change the MTU of a Network Configuration with an Attached Storage Network](./clusternetwork.md#change-the-mtu-of-a-network-configuration-with-an-attached-storage-network) and [Change the MTU of a Network Configuration with No Attached Storage Network](./clusternetwork.md#change-the-mtu-of-a-network-configuration-with-no-attached-storage-network).
 
-  You cann't change the MTU on the virtual machine networks directly, the operation is denied by webhook.
+  The Harvester webhook does not allow you to directly change the MTU on VM networks.
 
   :::
 
@@ -88,7 +88,7 @@ The [Harvester network-controller](https://github.com/harvester/harvester-networ
 
     ![](/img/v1.2/networking/create-network-auto.png)
 
-    - Manual: Specify the CIDR and gateway addresses. 
+    - Manual: Specify the CIDR and gateway addresses.
 
     ![](/img/v1.2/networking/create-network-manual.png)
 

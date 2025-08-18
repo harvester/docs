@@ -589,12 +589,12 @@ Harvester uses the [systemd net naming scheme](https://www.freedesktop.org/softw
   - `interfaces.name`: Name of a slave interface.
   - `interfaces.hwAddr`: Hardware MAC address of a slave interface. This field is optional.
 - `bond_options`: Options for [bonded interfaces](https://www.kernel.org/doc/Documentation/networking/bonding.txt). When unspecified, the following options are used:
-  - `mode`: balance-tlb
-  - `miimon`: 100
-- `mtu`: Maximum transmission unit (MTU) for the interface. Defaults to 1500.
-- `vlan_id`: VLAN ID for the interface. Defaults to 0, means it works in un-tag mode.
+  - `mode`: Bond mode. The default value is `active-backup`.
+  - `miimon`: Specifies the MII link monitoring frequency in milliseconds. The default value is `100`.
+- `mtu`: Maximum transmission unit (MTU) for the interface. The default value is `1500`.
+- `vlan_id`: VLAN ID for the interface. The default value is `0`, which means that the interface is in untagged mode.
 
-See [Change the MTU value of mgmt Network after Installation](../networking/clusternetwork.md#change-the-mtu-value-of-mgmt-network-after-installation) for additional information.
+For more information, see [Change the MTU Value of `mgmt` After Installation](../networking/clusternetwork.md#change-the-mtu-value-of-mgmt-after-installation).
 
 **Example**:
 
