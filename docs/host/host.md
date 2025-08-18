@@ -23,7 +23,7 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 Admin users can enable Maintenance Mode (select **⋮ > Enable Maintenance Mode**) to automatically evict all virtual machines from a node. This mode leverages the [batch-migrations](../vm/live-migration.md#automatically-triggered-batch-migrations) feature to migrate the [live-migratable virtual machines](../vm/live-migration.md#live-migratable-vms) to other nodes, which is useful when you need to reboot, upgrade firmware, or replace hardware components. At least two active nodes are required to use this feature.
 
-Check if there are any [non-migratable VMs](../vm/live-migration.md#non-migratable-vms) and take essential actions.
+Check if there are any [non-migratable virutal machines](../vm/live-migration.md#non-migratable-virtual-machines) and take essential actions.
 
 :::warning
 
@@ -135,12 +135,12 @@ You can safely remove a control plane node depending on the quantity and availab
 Eviction cannot be completed if the remaining nodes cannot accept replicas from the node to be removed. In this case, some volumes will remain in the **Degraded** state until you add more nodes to the cluster.
 :::
 
-### 4. Manage non-migratable VMs.
+### 4. Manage non-migratable Virtual Machines.
 
-Check if there are any [non-migratable VMs](../vm/live-migration.md#non-migratable-vms) and take essential actions.
+Check if there are any [non-migratable virutal machines](../vm/live-migration.md#non-migratable-virtual-machines) and take essential actions.
 
 :::tip
-Create a backup or snapshot for each non-migratable VM before modifying the settings that bind it to the node that you want to remove.
+Create a backup or snapshot for each non-migratable virutal machine before modifying the settings that bind it to the node that you want to remove.
 :::
 
 ### 5. Evict workloads from the node to be removed.

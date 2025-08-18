@@ -29,6 +29,12 @@ For information about support for volume provisioning using external container s
 <Tabs>
 <TabItem value="ui" label="UI" default>
 
+:::caution
+
+Once the StorageClass is created, fileds under **Parameters** are immutable, and most of other options are also immutable.
+
+:::
+
 1. On the Harvester UI, go to **Advanced > StorageClasses**.
 
     ![](/img/v1.2/storageclass/create_storageclasses_entry.png)

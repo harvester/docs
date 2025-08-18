@@ -19,49 +19,44 @@ Live migration means moving a virtual machine to a different host without downti
 
 ## Prerequisites
 
+Live migration can occur when the following requirements are met:
+
 - The cluster has at least one schedulable node (in addition to the current node) that matches all of the virtual machine's scheduling rules.
 
 - The migration target node has enough available resources to host the virtual machine.
 
-- The CPU, memory, [volumes](./create-vm.md#volumes), devices, and other resources requested by the virtual machine can be copied or rebuilt on the migration target node while the source virtual machine is still running.
+- The CPU, memory, [volumes](./create-vm.md#volumes), devices and other resources requested by the virtual machine can be copied or rebuilt on the migration target node while the source virtual machine is still running.
 
-## Non-Migratable Virtual Machines
+## Non-migratable Virtual Machines
 
 A virtual machine is considered non-migratable if it has one or more of the following:
 
-### Has non-migratable devices or node-selector
+- Volume with the following properties:
 
-- The VM has any volume of the `CD-ROM` type.
+    - Type: `CD-ROM` or `Container Disk`
+    - Access mode: `ReadWriteOnce`
+    - StorageClass replica count: `1` (This is not detected in all cases.)
 
-- The VM has any volume of the `Container Disk` type.
+- Host devices passthrough such as `PCI` and `vGPU`
 
-- The VM has any volume with `volumeAccessMode` `ReadWriteOnce`.
+- [Node selector](./create-vm.md#node-scheduling) that binds the virtual machine to a specific node
 
-- The VM has any volume and it's parent `StorageClass` has `replica 1`.
+- [Scheduling rules](./create-vm.md#node-scheduling) that match only one node
 
-  ::caution
-  This condition is not detected on all cases.
-  ::
+  The following are examples of rule conditions that are checked at runtime. For more information, see [Automatically Applied Affinity Rules](./create-vm.md#related-networking-concepts).
 
-- The VM has `PCI passthrough` or `vGPU` devices.
+    - The virtual machine is attached to a cluster network that covers only one node.
 
-- The VM has a [node selector](./create-vm.md#node-scheduling) that binds it to a specific node.
+    - CPU pinning is enabled on the virtual machine, and CPU Manager is only enabled on one node.
 
-### Has scheduling rules which can only match one node
 
-Following conditions are checked on the runtime (e.g. before an upgrade) to mark the VM is non-migratable if only one node matches.
+:::note
 
-- The VM is on a `cluster network` which spreads to only one node.
+To live-migrate the virtual machine, you must first remove non-migratable devices and add schedulable nodes.
 
-  See [Automatically Applied Affinity Rules](./create-vm.md#related-networking-concepts) for more details.
+:::
 
-- The VM has `cpu-pinning` enabled and there is only one node enables `CPU Manager`.
-
-  See [Automatically Applied Affinity Rules](./create-vm.md#related-cpu-pinning-concepts) for more details.
-
-- Other [node scheduling](./create-vm.md#node-scheduling) rules.
-
-## Live-migratable VMs
+## Live-migratable Virtual Machines
 
 Besides `non-migratable VMs`, the rest of the running VMs are considered `live-migratable`.
 
@@ -94,14 +89,10 @@ However, `host-model` only allows migration of the VM to a node with same CPU mo
 The **Migrate** menu option is not available in the following situations:
 
 - The cluster has only one node.
-- The virtual machine is [non-migratable](#non-migratable-virtual-machines) because of certain devices or a node selector that binds the virtual machine to a specific node.
+- The virtual machine is [non-migratable](#non-migratable-virtual-machines).
 - The virtual machine already has a running or pending migration process.
 
 :::
-
-When you have [node scheduling rules](./create-windows-vm.md#node-scheduling-tab) configured for a VM, you must ensure that the target nodes you are migrating to meet the VM's runtime requirements. The list of nodes you get to search and select from will be generated based on:
-- VM scheduling rules.
-- Possibly node rules from the network configuration.
 
 ![](/img/v1.2/vm/migrate.png)
 
@@ -114,7 +105,7 @@ When you have [node scheduling rules](./create-windows-vm.md#node-scheduling-tab
 
 - The **Abort Migration** menu item is available when the virtual machine already has a running or pending migration process.
 
-- Don't click `Abort Migration` if it is created by the [batch-migrations](#automatically-triggered-batch-migrations)
+- Don't click `Abort Migration` if it is created by the [batch-migrations](#automatically-triggered-batch-migrations). See [How to Differentiate the Migrations](#how-to-differentiate-the- migrations) for more details.
 
 :::
 
@@ -133,6 +124,40 @@ The general process is:
 1. The controller monitors the processing and waits until all of them are done or time-out.
 
 ![batch-migrations](/img/v1.6/vm/batch-migrations.png)
+
+## How to Differentiate the Migrations
+
+### The `VirtualMachineInstanceMigration` Object
+
+When a migration is triggered, one `VirtualMachineInstanceMigration` object is created. The cross-referrence between`VirtualMachineInstanceMigration` and `VirtualMachineInstance` are:
+
+`VirtualMachineInstance` .status.migrationState.migrationUID = `VirtualMachineInstanceMigration`.UID
+
+`VirtualMachineInstanceMigration` .spec.VMIName = `VirtualMachineInstance`.Name
+
+And the `VirtualMachineInstanceMigration` object's name varies:
+
+#### Manually triggered
+
+When a migration is triggered from the [**Migrate** menu item](#starting-a-migration), the format of `VirtualMachineInstanceMigration` object's name is:
+
+- `Virtual machine name` + `-` + `a random string`
+
+  Example: vm1-a3d1f
+
+#### Automatically triggered
+
+When a migration is triggered [automatically](#automatically-triggered-batch-migrations), the format of `VirtualMachineInstanceMigration` object's name is:
+
+- `kubevirt-evacuation-` + `a random string`
+
+  Example: kubevirt-evacuation-9c485
+
+:::note
+
+Harvester UI does not provide direct information about the source of the migration, you need to check the name of `VirtualMachineInstanceMigration` object.
+
+:::
 
 ## Migration Timeouts
 
