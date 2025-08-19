@@ -58,9 +58,45 @@ To live-migrate the virtual machine, you must first remove non-migratable device
 
 ## Live-migratable Virtual Machines
 
-Besides `non-migratable VMs`, the rest of the running VMs are considered `live-migratable`.
+Besides the `non-migratable virtual machines`, the rest of the running virtual machines are considered `live-migratable`.
 
 ## How Migration Works
+
+### The `VirtualMachineInstanceMigration` Object
+
+When a virtual machine migration action is triggered, a `VirtualMachineInstanceMigration` object is created. The controller works on this object.
+
+The cross-referrences between the `VirtualMachineInstanceMigration` and `VirtualMachineInstance` objects are:
+
+`VirtualMachineInstance` .status.migrationState.migrationUID = `VirtualMachineInstanceMigration`.UID
+
+`VirtualMachineInstanceMigration` .spec.VMIName = `VirtualMachineInstance`.Name
+
+The `VirtualMachineInstanceMigration` object's name varies:
+
+#### When the Migration is Manually Triggered
+
+When a migration is triggered from the **Migrate** [menu item](#starting-a-migration), the format of `VirtualMachineInstanceMigration` object's name is:
+
+- `Virtual machine name` + `-` + `a random string`
+
+  Example: `vm1-a3d1f`
+
+### When the Migration is Automatically Triggered
+
+When a migration is triggered [automatically](#automatically-triggered-batch-migrations), the format of `VirtualMachineInstanceMigration` object's name is:
+
+- `kubevirt-evacuation-` + `a random string`
+
+  Example: `kubevirt-evacuation-9c485`
+
+:::note
+
+Harvester UI does not provide direct information about the source of the migration, you need to check the name of `VirtualMachineInstanceMigration` object to know the action source of a migration.
+
+:::
+
+### CPU Models Matching
 
 Each node has multiple CPU models that are labeled with different keys.
 
@@ -68,7 +104,7 @@ Each node has multiple CPU models that are labeled with different keys.
 - Supported CPU models: `cpu-model.node.kubevirt.io/{cpu-model}`
 - Supported CPU models for migration: `cpu-model-migration.node.kubevirt.io/{cpu-model}`
 
-During live migration, the system checks the value of `spec.domain.cpu.model` in the VirtualMachineInstance (VMI) CR, which is derived from `spec.template.spec.domain.cpu.model` in the VirtualMachine (VM) CR. If the value of `spec.template.spec.domain.cpu.model` is not set, the system uses the default value `host-model`.
+During live migration, the controller checks the value of `spec.domain.cpu.model` in the VirtualMachineInstance (VMI) CR, which is derived from `spec.template.spec.domain.cpu.model` in the VirtualMachine (VM) CR. If the value of `spec.template.spec.domain.cpu.model` is not set, the controller uses the default value `host-model`.
 
 When `host-model` is used, the process fetches the value of the primary CPU model and fills `spec.NodeSelectors` of the newly created pod with the label `cpu-model-migration.node.kubevirt.io/{cpu-model}`. 
 
@@ -105,7 +141,7 @@ The **Migrate** menu option is not available in the following situations:
 
 - The **Abort Migration** menu item is available when the virtual machine already has a running or pending migration process.
 
-- Don't click `Abort Migration` if it is created by the [batch-migrations](#automatically-triggered-batch-migrations). See [How to Differentiate the Migrations](#how-to-differentiate-the- migrations) for more details.
+- Don't click `Abort Migration` if it is created by the [batch-migrations](#automatically-triggered-batch-migrations). See [The `VirtualMachineInstanceMigration` Object](#the-virtualmachineinstancemigration-object) for more details.
 
 :::
 
@@ -117,47 +153,13 @@ The general process is:
 
 1. The controller watchs a dedicated taint on the node object.
 
-1. The controller creates a `virtualmachineinstancemigration` object for each [live-migratable VM](#live-migratable-vms) on the current node.
+1. The controller creates a `VirtualMachineInstanceMigration` object for each [live-migratable virtual machine](#live-migratable-virtual-machines) on the current node.
 
 1. The migrations are queued, scheduled internally, and are process in batch mode. UI shows `Pending migration` or `Migrating` according to their status.
 
 1. The controller monitors the processing and waits until all of them are done or time-out.
 
 ![batch-migrations](/img/v1.6/vm/batch-migrations.png)
-
-## How to Differentiate the Migrations
-
-### The `VirtualMachineInstanceMigration` Object
-
-When a migration is triggered, one `VirtualMachineInstanceMigration` object is created. The cross-referrence between`VirtualMachineInstanceMigration` and `VirtualMachineInstance` are:
-
-`VirtualMachineInstance` .status.migrationState.migrationUID = `VirtualMachineInstanceMigration`.UID
-
-`VirtualMachineInstanceMigration` .spec.VMIName = `VirtualMachineInstance`.Name
-
-And the `VirtualMachineInstanceMigration` object's name varies:
-
-#### Manually triggered
-
-When a migration is triggered from the [**Migrate** menu item](#starting-a-migration), the format of `VirtualMachineInstanceMigration` object's name is:
-
-- `Virtual machine name` + `-` + `a random string`
-
-  Example: vm1-a3d1f
-
-#### Automatically triggered
-
-When a migration is triggered [automatically](#automatically-triggered-batch-migrations), the format of `VirtualMachineInstanceMigration` object's name is:
-
-- `kubevirt-evacuation-` + `a random string`
-
-  Example: kubevirt-evacuation-9c485
-
-:::note
-
-Harvester UI does not provide direct information about the source of the migration, you need to check the name of `VirtualMachineInstanceMigration` object.
-
-:::
 
 ## Migration Timeouts
 
