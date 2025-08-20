@@ -64,31 +64,34 @@ Besides the `non-migratable virtual machines`, the rest of the running virtual m
 
 ### The `VirtualMachineInstanceMigration` Object
 
-When a virtual machine migration action is triggered, a `VirtualMachineInstanceMigration` object is created. The controller works on this object.
+When a virtual machine migration action is triggered, a `VirtualMachineInstanceMigration` object is created to track the state and progress of the operation. The Harvester controller correlates the `VirtualMachineInstanceMigration` object with the `VirtualMachineInstance` object by ensuring the instance object's identity are reflected in the migration object.
 
-The cross-referrences between the `VirtualMachineInstanceMigration` and `VirtualMachineInstance` objects are:
+For example, during the migration of a virtual machine named `demo`, the associated migration object's UID is added to the instance object's `.status.migrationState.migrationUID` property:
 
-`VirtualMachineInstance` .status.migrationState.migrationUID = `VirtualMachineInstanceMigration`.UID
+```sh
 
-`VirtualMachineInstanceMigration` .spec.VMIName = `VirtualMachineInstance`.Name
+$ kubectl get vmi demo -ojsonpath={.status.migrationState.migrationUID}
 
-The `VirtualMachineInstanceMigration` object's name varies:
+1d6d7273-275d-48e0-bb76-62e240b42aaf
 
-#### When the Migration is Manually Triggered
+```
 
-When a migration is triggered from the **Migrate** [menu item](#starting-a-migration), the format of `VirtualMachineInstanceMigration` object's name is:
+Conversely, the instance object's name is added to the migration object's `.spec.vmiName` property:
 
-- `Virtual machine name` + `-` + `a random string`
+```sh
 
-  Example: `vm1-a3d1f`
+$ kubectl get vmim demo-6crrk -ojsonpath={.spec.vmiName}
 
-### When the Migration is Automatically Triggered
+demo
 
-When a migration is triggered [automatically](#automatically-triggered-batch-migrations), the format of `VirtualMachineInstanceMigration` object's name is:
+```
 
-- `kubevirt-evacuation-` + `a random string`
+The format of the `VirtualMachineInstanceMigration` object's name varies depending on whether the migration is manually or automatically triggered.
 
-  Example: `kubevirt-evacuation-9c485`
+When a migration is triggered from the **Migrate** [menu item](#starting-a-migration), the `VirtualMachineInstanceMigration` object's name is prefixed with the virtual 
+machine's name followed by a random string. For example, `vm1-a3d1f`.
+
+When a migration is triggered [automatically](#automatically-triggered-batch-migrations), the `VirtualMachineInstanceMigration` object's name is prefixed with `kubevirt-evacuation-` followed by a random string. For example, `kubevirt-evacuation-9c485`.
 
 :::note
 
@@ -147,7 +150,7 @@ The **Migrate** menu option is not available in the following situations:
 
 ## Automatically triggered batch-migrations
 
-Both [Harvester upgrade](../upgrade/automatic.md#live-migratable-vms) and [node maintenance](../host/host.md#node-maintenance) benefit from the **Live Migration**, and the process is slightly different with above [Starting a Migration](#starting-a-migration). It is called `batch-migrations`.
+Both [Harvester upgrade](../upgrade/automatic.md#virtual-machine-management-through-the-upgrade) and [node maintenance](../host/host.md#node-maintenance) benefit from the **Live Migration**, and the process is slightly different with above [Starting a Migration](#starting-a-migration). It is called `batch-migrations`.
 
 The general process is:
 
@@ -189,7 +192,7 @@ Migrating a VM with `host-model` is not possible because the values of `host-mod
 - Cluster level: Run `kubectl edit kubevirts.kubevirt.io -n harvester-system` and add `spec.configuration.cpuModel: "123"`. This change also affects newly created VMs.
 - Individual VMs: Modify the VM configuration to include `spec.template.spec.domain.cpu.model: "123"`.
 
-Both methods require the restarting the VMs. If you are certain that all nodes in the cluster support a specific CPU model, you can define this at the cluster level before creating any VMs. In doing so, you eliminate the need to restart the VMs (to assign the CPU model) during live migration.
+Both methods require to restart the VMs. If you are certain that all nodes in the cluster support a specific CPU model, you can define this at the cluster level before creating any VMs. In doing so, you eliminate the need to restart the VMs (to assign the CPU model) during live migration.
 
 ### Network Outages
 

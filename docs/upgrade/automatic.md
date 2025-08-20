@@ -77,19 +77,31 @@ The Harvester and Rancher upgrade processes are independent of each other. Durin
 
 When a Rancher version reaches its End of Maintenance (EOM) date, Harvester only provides fixes for critical security-related issues that affect integration functions (Virtualization Management). For more information, see the [Harvester & Rancher Support Matrix](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/).
 
-## Virtual Machine management through the upgrade
+## Virtual Machine Management through the Upgrade
 
 ### Live-migratable Virtual Machines
 
-Those [live-migratable virtual machines](../vm/live-migration.md#live-migratable-virtual-machines) are live migrated to other nodes automatically via [batch-migrations](../vm/live-migration.md#automatically-triggered-batch-migrations) when the hosting node is to be upgraded, they have zero down-time through the upgrade.
+Those [live-migratable virtual machines](../vm/live-migration.md#live-migratable-virtual-machines) are live migrated to other nodes automatically via [batch-migrations](../vm/live-migration.md#automatically-triggered-batch-migrations) when the hosting node is to be upgraded.
+
+:::info
+
+The live-migratable virtual machines will experience zero downtime.
+
+:::
 
 ### Non-migratable Virtual Machines
 
 When an upgrade is triggered, Harvester does a couple of checks, and depends on the value of [upgrade-config setting option `restoreVM`](../advanced/settings.md#upgrade-config):
 
-- False: Harvester refuses the upgrade when any [non-migratable virtual machine](./live-migration.md#non-migratable-virtual-machines) is still running. You need to power off them manually.
+- False: Harvester refuses the upgrade when any [non-migratable virtual machine](../vm/live-migration.md#non-migratable-virtual-machines) is still running. You need to power off them manually.
 
-- True: Harvester will power off those [non-migratable virtual machines](./live-migration.md#non-migratable-virtual-machines) when the node is upgraded and then restore them after the node is rebooted.
+- True: Harvester will power off those [non-migratable virtual machines](../vm/live-migration.md#non-migratable-virtual-machines) when the node is upgraded and then restore them after the node is rebooted.
+
+:::caution
+
+The non-migratable virtual machines will experience unavoidable downtime.
+
+:::
 
 See [Phase 4: Upgrade Nodes](./troubleshooting.md#phase-4-upgrade-nodes) for more details.
 
