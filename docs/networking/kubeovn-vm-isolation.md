@@ -147,7 +147,10 @@ For more information, see [Network Policies](https://kubernetes.io/docs/concepts
 
 :::caution
 
-Network Policy rules are deny by default unless allowed traffic is specified in the rule.Make sure to add all required match conditions to the policy and isolate traffic using pod selectors and namespaces so traffic from other pods are not affected.
+NetworkPolicy rules deny traffic by default. To avoid affecting other pods, ensure the following:
+
+- All required match conditions are added to the policy.
+- Traffic is isolated using pod selectors and namespaces.
 
 :::
 
