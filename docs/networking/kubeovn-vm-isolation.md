@@ -52,7 +52,9 @@ For more information about the schema and usage guidelines, see [Subnet ACL](htt
     vpc: vpc1
   ```
 
-- Example 2: All virtual machines within the `172.20.10.0/24` subnet, except those with the address `172.20.10.3`, are allowed to communicate with each other. Virtual machines with the address `172.20.10.2` are allowed to communicate because ACL rule execution is based on priority. For this subnet, rules with a priority value of `1006` are executed before `1005`.GW IP `172.20.10.1` is automatically added to the excludeIps list by kubeovn so it is not assigned to any of the VMs,but communication from and towards the GW IP is also affected.
+- Example 2: All virtual machines within the `172.20.10.0/24` subnet, except those with the address `172.20.10.3`, are allowed to communicate with each other. Virtual machines with the address `172.20.10.2` are allowed to communicate because ACL rule execution is based on priority. For this subnet, rules with a priority value of `1006` are executed before `1005`.
+
+  Kube-OVN automatically adds the gateway address `172.20.10.1` to the `excludeIps` list, preventing it from being assigned to any virtual machines. However, communication to and from the gateway address is also affected.
 
 ```yaml
   apiVersion: kubeovn.io/v1
