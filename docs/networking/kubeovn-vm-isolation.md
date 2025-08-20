@@ -158,8 +158,15 @@ The examples in this document focus on achieving isolation between VMs within th
 
 ### Examples
 
-Create 5 VMs in namespace `default` and attach to Overlay Network created for subnet range `172.20.10.0/24`
-VM1 - 172.20.10.2,VM2 - 172.20.10.3,VM3 - 172.20.10.4,VM4 - 172.20.10.5,VM5 - 172.20.10.6,
+The following virtual machines are created in the `default` namespace and are attached to the overlay network created for the subnet range `172.20.10.0/24`.
+
+| Virtual Machine | IP Address |
+| --- | --- |
+| VM1 | `172.20.10.2` |
+| VM2 | `172.20.10.3` |
+| VM3 | `172.20.10.4` |
+| VM4 | `172.20.10.5` |
+| VM5 | `172.20.10.6` |
 
 - Example 1: Only VM1 and VM2 are allowed to communicate with each other since they have ip within the subnet range `172.20.10.0/30`.All other traffic from and towards VM3,VM4,VM5 and other VMs within the namespace `default` is blocked.
 
