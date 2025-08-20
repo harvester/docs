@@ -11,10 +11,10 @@ keywords:
 - network policy
 ---
 
-Isolation between virtual machines is typically achieved using either VLANs (in traditional networks) or virtual switches (in Kube-OVN). If you want to isolate virtual machines within the same virtual switch network, you can enable access control lists (ACLs) on subnets or network policies provided by Kubernetes to achieve the required micro-segmentation.
+Isolation between virtual machines is typically achieved using either VLANs (in traditional networks) or virtual switches (in Kube-OVN). If you want to isolate virtual machines within the same virtual switch network, you can use either of the following to achieve the required micro-segmentation:
 
-- Use Subnet ACLs to apply rules to a subnet used by VMs
-- Use K8s Network Policies to apply rules within network namespaces and using pod selectors.
+- Subnet access control lists (ACLs): Apply rules to a subnet used by virtual machines.
+- Kubernetes network policies: Apply rules within network namespaces and using pod selectors.
 
 ## Subnet ACLs
 
