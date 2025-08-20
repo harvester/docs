@@ -18,7 +18,7 @@ Isolation between virtual machines is typically achieved using either VLANs (in 
 
 ## Subnet ACLs
 
-For more information on using Kube-OVN Subnet ACL and its schema, refer https://kubeovn.github.io/docs/v1.13.x/en/guide/subnet/#subnet-acl https://kubeovn.github.io/docs/v1.13.x/en/reference/kube-ovn-api/#acl
+For more information about the schema and usage guidelines, see [Subnet ACL](https://kubeovn.github.io/docs/v1.13.x/en/guide/subnet/#subnet-acl) and [ACL API Reference](https://kubeovn.github.io/docs/v1.13.x/en/reference/kube-ovn-api/#acl) in the Kube-OVN documentation.
 
 ### Examples
 
