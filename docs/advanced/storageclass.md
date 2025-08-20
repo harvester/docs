@@ -31,7 +31,7 @@ For information about support for volume provisioning using external container s
 
 :::caution
 
-Once the StorageClass is created, fileds under **Parameters** are immutable, and most of other options are also immutable.
+Once the StorageClass is created, fields under **Parameters** are immutable, and most of other options are also immutable.
 
 :::
 

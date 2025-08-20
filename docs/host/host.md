@@ -140,7 +140,7 @@ Eviction cannot be completed if the remaining nodes cannot accept replicas from 
 Check if there are any [non-migratable virutal machines](../vm/live-migration.md#non-migratable-virtual-machines) and take essential actions.
 
 :::tip
-Create a backup or snapshot for each non-migratable virutal machine before modifying the settings that bind it to the node that you want to remove.
+Create a backup or snapshot for each non-migratable virtual machine before modifying the settings that bind it to the node that you want to remove.
 :::
 
 ### 5. Evict workloads from the node to be removed.
