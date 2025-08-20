@@ -209,7 +209,7 @@ The following virtual machines are created in the `default` namespace and are at
   - Ingress
   ```
 
-- Example 3: VM1 and VM2 are allowed to communicate with each other but not with other VMs in the subnet `172.20.10.0/24`.But other VMs in the subnet `172.20.10.0/24` can communicate with VM1,VM2 as traffic towards `172.20.10.0/30` is allowed due to the policy applied at the egress direction.
+- Example 3: VM1 and VM2 are allowed to communicate with each other, but not with other virtual machines in the subnet `172.20.10.0/24`. The other virtual machines in the same subnet can communicate with VM1 and VM2. This is because the egress policy allows traffic to be sent to `172.20.10.0/30`.
 
   ```yaml
   apiVersion: networking.k8s.io/v1
