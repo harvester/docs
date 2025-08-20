@@ -168,7 +168,7 @@ The following virtual machines are created in the `default` namespace and are at
 | VM4 | `172.20.10.5` |
 | VM5 | `172.20.10.6` |
 
-- Example 1: Only VM1 and VM2 are allowed to communicate with each other since they have ip within the subnet range `172.20.10.0/30`.All other traffic from and towards VM3,VM4,VM5 and other VMs within the namespace `default` is blocked.
+- Example 1: VM1 and VM2 are allowed to communicate with each other because their addresses are within the subnet `172.20.10.0/30`. All other traffic in the `default` namespace, including traffic to and from VM3, VM4, and VM5, is blocked.
 
   ```yaml
   apiVersion: networking.k8s.io/v1
