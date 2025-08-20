@@ -74,7 +74,7 @@ Live migration will be aborted if it exceeds the completion timeout of 800s per 
 
 Live migration will also be aborted when copying memory doesn't make any progress in 150s.
 
-## Limitation
+## Limitations
 
 ### CPU Models
 
@@ -94,17 +94,21 @@ Both methods require the restarting the VMs. If you are certain that all nodes i
 
 ### Network Outages
 
-Regardless of whether you use a [dedicated migration network](./../advanced/vm-migration-network.md) or the management network, live migration is sensitive to network outages. If the network connection between the source and target nodes is interrupted during migration, it can lead to various outcomes:
+Live migration is highly sensitive to network outages. Any interruption to the network connection between the source and target nodes during migration can have a variety of outcomes.
 
-#### Using Management Network
+#### `mgmt` Network Outages
 
-When the management network is used for live migration, the process relies on the availability of the management interface on both the source and target nodes. Management network outages are considered critical, as they not only affect the migration process but also the overall management of the nodes.
+Live migration via `mgmt` (the built-in cluster network) relies on the availability of the management interfaces on the source and target nodes. `mgmt` network outages are considered critical because they not only disrupt the migration process but also affect overall node management.
 
-#### Using Dedicated Migration Network
+#### VM Migration Network Outages
 
-When a dedicated migration network is configured, it isolates the migration traffic from other network activities. This setup can help improve migration performance and reliability, especially in environments with high network traffic. However, it also introduces a dependency on the dedicated migration network's availability. If the dedicated migration network goes down, the migration process can be affected in the following ways:
+A [VM migration network](./../advanced/vm-migration-network.md) isolates migration traffic from other network activities. While this setup improves migration performance and reliability, especially in environments with high network traffic, it also makes the migration process dependent on the availability of that specific network.
 
-- If the interface is down for an extended period, the migration operation will time out and fail. The source VM remains running normally on the source node.
-- A short-lived interruption may cause the migration process to halt. Once the migration network is restored, the process resumes and can be completed successfully, albeit with a delay.
+An outage on the VM migration network can affect the migration process in the following ways:
 
-Technically, the migration process runs in the peer-to-peer mode, meaning that the libvirtd on the source node controls the migration by calling the destination daemon directly. Besides, a built-in keepalive mechanism is used to ensure that the client connection remains active during the migration process. If the connection remains inactive for a specific period, it is closed, and the migration process is aborted. By default, the keepalive interval is set to 5 seconds, and the retry count is set to 5. This means that if the connection is inactive for 30 seconds, the migration process will be aborted. Note that this is a deduction based on the default values of the keepalive interval and retry count; the migration may fail earlier or later, depending on the actual cluster conditions.
+- Brief interruption: The migration process abruptly stops. Once connectivity is restored, the process resumes and can be completed successfully, albeit with a delay.
+- Extended outage: The migration operation times out and fails. The source virtual machine continues to run normally on the source node.
+
+The migration process runs in peer-to-peer mode, which means that the libvirt daemon (libvirtd) on the source node controls the migration by calling the destination daemon directly. In addition, a built-in keepalive mechanism ensures that the client connection remains active during the migration process. If the connection remains inactive for a specific period, it is closed, and the migration process is aborted.
+
+By default, the keepalive interval is set to 5 seconds, and the retry count is set to 5. Given these default values, the migration process is aborted if the connection is inactive for 30 seconds. However, the migration may fail earlier or later, depending on the actual cluster conditions.
