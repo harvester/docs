@@ -23,7 +23,9 @@ For more information about the schema and usage guidelines, see [Subnet ACL](htt
 ### Examples
 
 - Example 1: All virtual machines within the `172.20.10.0/24` subnet, except those with the addresses `172.20.10.2` and `172.20.10.3` in the subnet range `172.20.10.0/30`, are allowed to communicate with each other.
-             GW IP `172.20.10.1` is automatically added to the excludeIps list by kubeovn so it is not assigned to any of the VMs,but communication from and towards the GW IP is also affected.
+
+  Kube-OVN automatically adds the gateway address `172.20.10.1` to the `excludeIps` list, preventing it from being assigned to any virtual machines. However, communication to and from the gateway address is also affected.
+
 
   ```yaml
   apiVersion: kubeovn.io/v1
@@ -174,7 +176,6 @@ The following virtual machines are created in the `default` namespace and are at
   apiVersion: networking.k8s.io/v1
   kind: NetworkPolicy
   metadata:
-    annotations:
     name: ip-block
     namespace: default
   spec:
@@ -197,7 +198,6 @@ The following virtual machines are created in the `default` namespace and are at
   apiVersion: networking.k8s.io/v1
   kind: NetworkPolicy
   metadata:
-    annotations:
     name: ip-block
     namespace: default
   spec:
@@ -215,7 +215,6 @@ The following virtual machines are created in the `default` namespace and are at
   apiVersion: networking.k8s.io/v1
   kind: NetworkPolicy
   metadata:
-    annotations:
     name: ip-block
     namespace: default
   spec:
@@ -227,13 +226,12 @@ The following virtual machines are created in the `default` namespace and are at
   - egress
   ```
 
-- Example 4: With podSelector applied for VM2,only VM2 is blocked for communication with other VMs except for VM1 in the subnet `172.20.10.0/24` in both ingress and egress direction.All other VMs in the subnet `172.20.10.0/24` can communicate with each other and with VM1.
+- Example 4: VM2 is allowed to communicate with VM1, but not with other virtual machines in the subnet `172.20.10.0/24`. This is because a pod selector label is applied to VM2. All other virtual machines in the same subnet can communicate with VM1 and each other.
 
  ```yaml
   apiVersion: networking.k8s.io/v1
   kind: NetworkPolicy
   metadata:
-    annotations:
     name: ip-block
     namespace: default
   spec:
