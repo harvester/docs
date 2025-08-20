@@ -40,7 +40,7 @@ Since the management network is built-in and doesn't require extra operations, y
 
 :::info important
 
-`mgmt` uses the default MTU value `1500` if you do not specify a value other than `0` or `1500` in the [`install.management_interface`](../install/harvester-configuration.md#installmanagement_interface) setting during installation. However, the network interfaces of virtual machines connected to `mgmt` have a MTU value of [`1450`](https://docs.tigera.io/calico/latest/networking/configuring/mtu#determine-mtu-size). This is because Harvester adopts `Calico & Flannel CNI` which has a 50-byte per-packet overhead to carry the in-cluster overlay network, and hence the VM has the MTU value `1450`.
+`mgmt` uses the default MTU value `1500` if you do not specify a value other than `0` or `1500` in the [`install.management_interface`](../install/harvester-configuration.md#installmanagement_interface) setting during installation. However, the network interfaces of virtual machines connected to `mgmt` have an MTU value of [`1450`](https://docs.tigera.io/calico/latest/networking/configuring/mtu#determine-mtu-size). This is because Harvester uses the **Calico and Flannel CNI**, which has an overhead of 50 bytes per packet, to carry the in-cluster overlay network.
 
 ![](/img/v1.3/networking/management-network-mtu.png)
 

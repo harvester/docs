@@ -163,7 +163,7 @@ Exercise extreme caution when editing `/oem/90_custom.yaml`. Do not change other
 
     ```
 
-1. Verify that the file's formatting is still valid using the `yq -e /oem/90_custom.yaml` command. The command prints the file's content if no error happens.
+1. Verify that the file's formatting is still valid using the `yq -e /oem/90_custom.yaml` command. This command prints the file's contents unless an error occurs.
 
 1. Reboot each node to apply the change.
 
@@ -238,7 +238,7 @@ To simplify cluster maintenance, create one network configuration for each node 
 
     - **NICs**: The list contains NICs that are common to all selected nodes. NICs that cannot be selected are unavailable on one or more nodes and must be configured. Once troubleshooting is completed, refresh the screen and verify that the NICs can be selected.
     - **Bond Options**: The default bonding mode is **active-backup**.
-    - **Attributes**: You must use the same MTU across all network configurations of a custom cluster network. If you do not specify an MTU, the default value **1500** is used. The Harvester webhook rejects a new network configuration if it's MTU does not match the MTU of existing network configurations.
+    - **Attributes**: You must use the same MTU across all network configurations of a custom cluster network. If you do not specify an MTU, the default value **1500** is used. The Harvester webhook rejects a new network configuration if its MTU does not match the MTU of existing network configurations.
 
    ![](/img/v1.2/networking/config-uplink.png)
 
@@ -385,7 +385,7 @@ If you must change the MTU, perform the following steps:
 
     :::info important
 
-    You must change the MTU in each one, and verify that the new MTU was applied. The Harvester webhook rejects a new network configuration if it's MTU does not match the MTU of existing network configurations.
+    You must change the MTU in each one, and verify that the new MTU was applied. The Harvester webhook rejects a new network configuration if its MTU does not match the MTU of existing network configurations.
 
     :::
 
@@ -537,7 +537,7 @@ If you must change the MTU, perform the following steps:
 
     :::info important
 
-    You must change the MTU in each one, and verify that the new MTU was applied. The Harvester webhook rejects a new network configuration if it's MTU does not match the MTU of existing network configurations.
+    You must change the MTU in each one, and verify that the new MTU was applied. The Harvester webhook rejects a new network configuration if its MTU does not match the MTU of existing network configurations.
 
     :::
 
