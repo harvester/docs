@@ -143,7 +143,7 @@ For more information about the schema and usage guidelines, see [Subnet ACL](htt
 
 ## Network Policies
 
-For more information on using Kubernetes Network Policy, refer https://kubernetes.io/docs/concepts/services-networking/network-policies/ and for enabling Network Policy logging refer https://kubeovn.github.io/docs/v1.13.x/en/guide/networkpolicy-log/
+For more information, see [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) in the Kubernetes documentation and [NetworkPolicy Logging](https://kubeovn.github.io/docs/v1.13.x/en/guide/networkpolicy-log/) in the Kube-OVN documentation.
 
 :::caution
 
