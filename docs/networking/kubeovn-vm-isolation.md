@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
-sidebar_label: Kube-OVN VM Isolation
-title: "Kube-OVN VM Isolation"
+sidebar_label: Kube-OVN Virtual Machine Isolation
+title: "Kube-OVN Virtual Machine Isolation"
 keywords:
 - Harvester
 - networking
