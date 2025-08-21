@@ -167,7 +167,7 @@ Before any action is taken, it is important to collect the current network infor
 
 1. [Enable maintenance mode](../host/host.md#node-maintenance) on the target node to automatically migrate all VMs to other nodes.
 
-- Wait for everything to become ready, and then repeat the steps in the [Pre-check](#pre-check) section.
+- Wait for everything to become ready, and then repeat the steps in the [Pre-Replacement Checks](#pre-replacement-checks) section.
 
 - Manually stop a VM in the following situations:
 
