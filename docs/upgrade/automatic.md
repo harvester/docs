@@ -168,7 +168,7 @@ Check out the available [`upgrade-config` setting](../advanced/settings.md#upgra
 
 :::caution
 
-Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section first about upgradable versions.
+Make sure to check [Upgrade paths](#upgrade-paths) section first about upgradable versions.
 
 :::
 

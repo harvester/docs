@@ -199,7 +199,7 @@ For more information, see [Free system partition space requirement](#free-system
 
 :::caution
 
-Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section first about upgradable versions.
+Make sure to check [Upgrade paths](#upgrade-paths) section first about upgradable versions.
 
 :::
 

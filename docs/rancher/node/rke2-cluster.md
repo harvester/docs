@@ -17,7 +17,7 @@ You can now provision RKE2 Kubernetes clusters on top of the Harvester cluster i
 - [VLAN network](../../networking/harvester-network.md#vlan-network) is required for Harvester node driver.
 - Provisioning RKE2 Kubernetes clusters involves configuring the IP address of the underlying virtual machines. You can do this using a DHCP server on the VLAN network that the virtual machines are attached to. If such a server does not exist on the network, you can use the [Managed DHCP](../../advanced/addons/managed-dhcp.md) feature to configure the IP address.
 - Harvester node driver only supports cloud images.
-- For the port requirements of the guest clusters deployed within Harvester, please refer to the doc [here](../../install/requirements.md#port-requirements-for-k3s-or-rkerke2-clusters).
+- For the port requirements of the guest clusters deployed within Harvester, please refer to the doc [here](../../install/requirements.md#port-requirements-for-k3s-or-rke2-clusters).
 - For RKE2 with Harvester cloud provider support matrix, please refer to the website [here](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/).
 
 :::
