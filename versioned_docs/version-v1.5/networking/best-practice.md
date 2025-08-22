@@ -179,7 +179,7 @@ Before any action is taken, it is important to collect the current network infor
 
 ### (Optional) Update the Network Config
 
-There are one or more [Network Config](./clusternetwork.md#how-to-create-a-new-cluster-network) under every [Cluster Network](./clusternetwork.md#cluster-network) on Harvester. Each `Network Config` is backed by a `VlanConfig` CRD object.
+There are one or more [Network Config](./clusternetwork.md#create-a-new-cluster-network) under every [Cluster Network](./clusternetwork.md#cluster-network) on Harvester. Each `Network Config` is backed by a `VlanConfig` CRD object.
 
 :::info important
 
