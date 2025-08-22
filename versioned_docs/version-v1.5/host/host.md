@@ -23,34 +23,6 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 Admin users can enable Maintenance Mode (select **⋮ > Enable Maintenance Mode**) to automatically evict all virtual machines from a node. This mode leverages the **live migration** feature to migrate the virtual machines to other nodes, which is useful when you need to reboot, upgrade firmware, or replace hardware components. At least two active nodes are required to use this feature.
 
-:::warning
-
-A [bug](https://github.com/harvester/harvester/issues/7128) may cause an I/O error to occur in virtual machines while Maintenance Mode is enabled on the underlying node. To mitigate the issue, you can set a taint on the node before enabling Maintenance Mode.
-
-1. Set the taint on the target node.
-
-    ```sh
-    kubectl taint node <NODE> --overwrite kubevirt.io/drain=draining:NoSchedule
-    ```
-
-1. Wait for all virtual machines to be live-migrated out of the node.
-
-1. On the **Hosts** screen, select the target node, and then select **⋮ -> Enable Maintenance Mode**.
-
-Once the maintenance tasks are completed, perform the following steps to allow scheduling of workloads on the node.
-
-1. Remove the taint on the node.
-
-    ```sh
-    kubectl taint node <NODE> kubevirt.io/drain-
-    ```
-
-1. On the **Hosts** screen, select the node, and then select **⋮ -> Disable Maintenance Mode**.
-
-For more information, see [Issue #7128](https://github.com/harvester/harvester/issues/7128).
-
-:::
-
 If you want to force individual VMs to shut down instead of migrating to other nodes, add the label `harvesterhci.io/maintain-mode-strategy` and one of the following values to those VMs:
 
 - `Migrate`: Live-migrates the VM to another node in the cluster. This is the default behavior if the label `harvesterhci.io/maintain-mode-strategy` is not set.
