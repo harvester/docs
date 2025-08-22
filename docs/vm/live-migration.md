@@ -74,6 +74,10 @@ Live migration will be aborted if it exceeds the completion timeout of 800s per 
 
 Live migration will also be aborted when copying memory doesn't make any progress in 150s.
 
+## Monitoring
+
+For information about viewing real-time metrics, see [Live Migration Status and Metrics](../monitoring/harvester-monitoring.md#live-migration-status-and-metrics)
+
 ## Limitations
 
 ### CPU Models
