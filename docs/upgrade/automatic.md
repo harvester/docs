@@ -79,31 +79,25 @@ When a Rancher version reaches its End of Maintenance (EOM) date, Harvester only
 
 ## Virtual Machine Management through the Upgrade
 
-### Live-migratable Virtual Machines
+### Live-Migratable Virtual Machines
 
-Those [live-migratable virtual machines](../vm/live-migration.md#live-migratable-virtual-machines) are live migrated to other nodes automatically via [batch-migrations](../vm/live-migration.md#automatically-triggered-batch-migrations) when the hosting node is to be upgraded.
+[Live-migratable virtual machines](../vm/live-migration.md#live-migratable-virtual-machines) are automatically migrated to other nodes via [batch migration](../vm/live-migration.md#automatically-triggered-batch-migration) before the current node is upgraded. These virtual machines experience zero downtime during migration.
 
-:::info
+### Non-Migratable Virtual Machines
 
-The live-migratable virtual machines will experience zero downtime.
+When an upgrade is triggered, Harvester performs certain actions depending on the value of the [`upgrade-config`](../advanced/settings.md#upgrade-config) setting's `restoreVM` option.
 
-:::
+- `false`: Harvester does not perform the upgrade when [non-migratable virtual machines](../vm/live-migration.md#non-migratable-virtual-machines) are still running. You must manually power off the virtual machines.
 
-### Non-migratable Virtual Machines
-
-When an upgrade is triggered, Harvester does a couple of checks, and depends on the value of [upgrade-config setting option `restoreVM`](../advanced/settings.md#upgrade-config):
-
-- False: Harvester refuses the upgrade when any [non-migratable virtual machine](../vm/live-migration.md#non-migratable-virtual-machines) is still running. You need to power off them manually.
-
-- True: Harvester will power off those [non-migratable virtual machines](../vm/live-migration.md#non-migratable-virtual-machines) when the node is upgraded and then restore them after the node is rebooted.
+- `true`: Harvester automatically powers off non-migratable virtual machines when the node is upgraded and then restores them after the node is rebooted.
 
 :::caution
 
-The non-migratable virtual machines will experience unavoidable downtime.
+Non-migratable virtual machines experience downtime during migration.
 
 :::
 
-See [Phase 4: Upgrade Nodes](./troubleshooting.md#phase-4-upgrade-nodes) for more details.
+For more information, see [Phase 4: Upgrade Nodes](./troubleshooting.md#phase-4-upgrade-nodes).
 
 ## Before starting an upgrade
 

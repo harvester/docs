@@ -21,9 +21,9 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 ## Node Maintenance
 
-Admin users can enable Maintenance Mode (select **⋮ > Enable Maintenance Mode**) to automatically evict all virtual machines from a node. This mode leverages the [batch-migrations](../vm/live-migration.md#automatically-triggered-batch-migrations) feature to migrate the [live-migratable virtual machines](../vm/live-migration.md#live-migratable-virtual-machines) to other nodes, which is useful when you need to reboot, upgrade firmware, or replace hardware components. At least two active nodes are required to use this feature.
+Admin users can enable Maintenance Mode (select **⋮ > Enable Maintenance Mode**) to automatically evict all virtual machines from a node. This mode leverages [batch migration](../vm/live-migration.md#automatically-triggered-batch-migration) to move the [live-migratable virtual machines](../vm/live-migration.md#live-migratable-virtual-machines) to other nodes, which is useful when you need to reboot, upgrade firmware, or replace hardware components. At least two active nodes are required to use this feature.
 
-[Non-migratable virtual machines](../vm/live-migration.md#non-migratable-virtual-machines) can block the node from activating the maintenance mode. When that happens, identify and manually shut down the non-migratable virtual machines. See [Live Migration](../vm/live-migration.md) for more information.
+[Non-migratable virtual machines](../vm/live-migration.md#non-migratable-virtual-machines) can prevent the node from activating Maintenance Mode. When this occurs, you must identify and manually shut down those virtual machines. For more information, see [Live Migration](../vm/live-migration.md).
 
 If you want to force individual VMs to shut down instead of migrating to other nodes, add the label `harvesterhci.io/maintain-mode-strategy` and one of the following values to those VMs:
 

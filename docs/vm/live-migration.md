@@ -27,7 +27,7 @@ Live migration can occur when the following requirements are met:
 
 - The CPU, memory, [volumes](./create-vm.md#volumes), devices and other resources requested by the virtual machine can be copied or rebuilt on the migration target node while the source virtual machine is still running.
 
-## Non-migratable Virtual Machines
+## Non-Migratable Virtual Machines
 
 A virtual machine is considered non-migratable if it has one or more of the following:
 
@@ -56,17 +56,17 @@ To live-migrate the virtual machine, you must first remove non-migratable device
 
 :::
 
-## Live-migratable Virtual Machines
+## Live-Migratable Virtual Machines
 
-Besides the `non-migratable virtual machines`, the rest of the running virtual machines are considered `live-migratable`.
+Virtual machines that do not have the properties of non-migratable virtual machines can be live-migrated.
 
 ## How Migration Works
 
-### The `VirtualMachineInstanceMigration` Object
+### `VirtualMachineInstanceMigration` Object
 
-When a virtual machine migration action is triggered, a `VirtualMachineInstanceMigration` object is created to track the state and progress of the operation. The Harvester controller correlates the `VirtualMachineInstanceMigration` object with the `VirtualMachineInstance` object by ensuring the instance object's identity are reflected in the migration object.
+When a virtual machine migration action is triggered, a `VirtualMachineInstanceMigration` object is created to track the state and progress of the operation. The Harvester controller correlates the `VirtualMachineInstanceMigration` object with the `VirtualMachineInstance` object by ensuring the instance object's identity is reflected in the migration object.
 
-For example, during the migration of a virtual machine named `demo`, the associated migration object's UID is added to the instance object's `.status.migrationState.migrationUID` property:
+In the following example, the virtual machine named `demo` has an associated migration object. The UID of this object is added to the instance object's `.status.migrationState.migrationUID` property during migration.
 
 ```sh
 
@@ -76,7 +76,7 @@ $ kubectl get vmi demo -ojsonpath={.status.migrationState.migrationUID}
 
 ```
 
-Conversely, the instance object's name is added to the migration object's `.spec.vmiName` property:
+The instance object's name is added to the migration object's `.spec.vmiName` property.
 
 ```sh
 
@@ -89,17 +89,17 @@ demo
 The format of the `VirtualMachineInstanceMigration` object's name varies depending on whether the migration is manually or automatically triggered.
 
 When a migration is triggered from the **Migrate** [menu item](#starting-a-migration), the `VirtualMachineInstanceMigration` object's name is prefixed with the virtual 
-machine's name followed by a random string. For example, `vm1-a3d1f`.
+machine's name and a random string (for example, `vm1-a3d1f`).
 
-When a migration is triggered [automatically](#automatically-triggered-batch-migrations), the `VirtualMachineInstanceMigration` object's name is prefixed with `kubevirt-evacuation-` followed by a random string. For example, `kubevirt-evacuation-9c485`.
+When a migration is triggered [automatically](#automatically-triggered-batch-migration), the `VirtualMachineInstanceMigration` object's name is prefixed with `kubevirt-evacuation-` and a random string (for example, `kubevirt-evacuation-9c485`).
 
 :::note
 
-Harvester UI does not provide direct information about the source of the migration, you need to check the name of `VirtualMachineInstanceMigration` object to know the action source of a migration.
+The Harvester UI does not specify the source of the migration. You must check the name of `VirtualMachineInstanceMigration` object to retrieve this information.
 
 :::
 
-### CPU Models Matching
+### CPU Model Matching
 
 Each node has multiple CPU models that are labeled with different keys.
 
@@ -113,7 +113,7 @@ When `host-model` is used, the process fetches the value of the primary CPU mode
 
 Alternatively, you can customize the CPU model in `spec.domain.cpu.model`. For example, if the CPU model is `XYZ`, the process fills `spec.NodeSelectors` of the newly created pod with the label `cpu-model.node.kubevirt.io/XYZ`.
 
-However, `host-model` only allows migration of the VM to a node with same CPU model. For more information, see [Limitations](#limitation).
+However, `host-model` only allows migration of the VM to a node with same CPU model. For more information, see [Limitations](#limitations).
 
 ## Starting a Migration
 
@@ -142,25 +142,23 @@ The **Migrate** menu option is not available in the following situations:
 
 :::note
 
-- The **Abort Migration** menu item is available when the virtual machine already has a running or pending migration process.
+The **Abort Migration** menu item is available when the virtual machine already has a running or pending migration process.
 
-- Don't click `Abort Migration` if it is created by the [batch-migrations](#automatically-triggered-batch-migrations). See [The `VirtualMachineInstanceMigration` Object](#the-virtualmachineinstancemigration-object) for more details.
+Do not use this UI feature if the migration process was created using [batch migration](#automatically-triggered-batch-migration). For more information, see [`VirtualMachineInstanceMigration` Object](#virtualmachineinstancemigration-object).
 
 :::
 
-## Automatically triggered batch-migrations
+## Automatically Triggered Batch Migration
 
-Both [Harvester upgrade](../upgrade/automatic.md#virtual-machine-management-through-the-upgrade) and [node maintenance](../host/host.md#node-maintenance) benefit from the **Live Migration**, and the process is slightly different with above [Starting a Migration](#starting-a-migration). It is called `batch-migrations`.
+[Harvester upgrades](../upgrade/automatic.md#live-migratable-virtual-machines) and [node maintenance](../host/host.md#node-maintenance) both benefit from live migration. The underlying process, which is called *batch migration*, is slightly different from the one described in [Starting a Migration](#starting-a-migration). This process involves the following steps:
 
-The general process is:
-
-1. The controller watchs a dedicated taint on the node object.
+1. The controller watches a dedicated taint on the node object.
 
 1. The controller creates a `VirtualMachineInstanceMigration` object for each [live-migratable virtual machine](#live-migratable-virtual-machines) on the current node.
 
-1. The migrations are queued, scheduled internally, and are process in batch mode. UI shows `Pending migration` or `Migrating` according to their status.
+1. The migrations are queued, scheduled internally, and processed in batches. The Harvester UI shows the statuses **Pending migration** and **Migrating** to indicate progress.
 
-1. The controller monitors the processing and waits until all of them are done or time-out.
+1. The controller monitors the processing and waits until all are completed or have timed out.
 
 ![batch-migrations](/img/v1.6/vm/batch-migrations.png)
 
@@ -192,7 +190,7 @@ Migrating a VM with `host-model` is not possible because the values of `host-mod
 - Cluster level: Run `kubectl edit kubevirts.kubevirt.io -n harvester-system` and add `spec.configuration.cpuModel: "123"`. This change also affects newly created VMs.
 - Individual VMs: Modify the VM configuration to include `spec.template.spec.domain.cpu.model: "123"`.
 
-Both methods require to restart the VMs. If you are certain that all nodes in the cluster support a specific CPU model, you can define this at the cluster level before creating any VMs. In doing so, you eliminate the need to restart the VMs (to assign the CPU model) during live migration.
+Both methods require you to restart the VMs. If you are certain that all nodes in the cluster support a specific CPU model, you can define this at the cluster level before creating any VMs. In doing so, you eliminate the need to restart the VMs (to assign the CPU model) during live migration.
 
 ### Network Outages
 
@@ -204,7 +202,7 @@ Live migration via `mgmt` (the built-in cluster network) relies on the availabil
 
 #### VM Migration Network Outages
 
-A [VM migration network](./../advanced/vm-migration-network.md) isolates migration traffic from other network activities. While this setup improves migration performance and reliability, especially in environments with high network traffic, it also makes the migration process dependent on the availability of that specific network.
+A [VM migration network](../advanced/vm-migration-network.md) isolates migration traffic from other network activities. While this setup improves migration performance and reliability, especially in environments with high network traffic, it also makes the migration process dependent on the availability of that specific network.
 
 An outage on the VM migration network can affect the migration process in the following ways:
 
