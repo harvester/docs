@@ -77,6 +77,28 @@ The Harvester and Rancher upgrade processes are independent of each other. Durin
 
 When a Rancher version reaches its End of Maintenance (EOM) date, Harvester only provides fixes for critical security-related issues that affect integration functions (Virtualization Management). For more information, see the [Harvester & Rancher Support Matrix](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/).
 
+## Virtual Machine Management through the Upgrade
+
+### Live-Migratable Virtual Machines
+
+[Live-migratable virtual machines](../vm/live-migration.md#live-migratable-virtual-machines) are automatically migrated to other nodes via [batch migration](../vm/live-migration.md#automatically-triggered-batch-migration) before the current node is upgraded. These virtual machines experience zero downtime during migration.
+
+### Non-Migratable Virtual Machines
+
+When an upgrade is triggered, Harvester performs certain actions depending on the value of the [`upgrade-config`](../advanced/settings.md#upgrade-config) setting's `restoreVM` option.
+
+- `false`: Harvester does not perform the upgrade when [non-migratable virtual machines](../vm/live-migration.md#non-migratable-virtual-machines) are still running. You must manually power off the virtual machines.
+
+- `true`: Harvester automatically powers off non-migratable virtual machines when the node is upgraded and then restores them after the node is rebooted.
+
+:::caution
+
+Non-migratable virtual machines experience downtime during migration.
+
+:::
+
+For more information, see [Phase 4: Upgrade Nodes](./troubleshooting.md#phase-4-upgrade-nodes).
+
 ## Before starting an upgrade
 
 Check out the available [`upgrade-config` setting](../advanced/settings.md#upgrade-config) to tweak the upgrade strategies and behaviors that best suit your cluster environment.
@@ -168,7 +190,7 @@ Check out the available [`upgrade-config` setting](../advanced/settings.md#upgra
 
 :::caution
 
-Make sure to check [Upgrade support matrix](#upgrade-support-matrix) section first about upgradable versions.
+Make sure to check [Upgrade paths](#upgrade-paths) section first about upgradable versions.
 
 :::
 

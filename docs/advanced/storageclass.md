@@ -31,7 +31,7 @@ For information about support for volume provisioning using external container s
 
 :::caution
 
-Once the StorageClass is created, you can only edit the description. All other settings are fixed.
+After a StorageClass is created, the fields in the **Parameters** section and most of the other options become immutable.
 
 :::
 
@@ -47,11 +47,17 @@ Once the StorageClass is created, you can only edit the description. All other s
 
 1. On the **Parameters** tab, configure the following:
 
-    - **Number of Replicas**: Number of replicas created for each Longhorn volume. The default value is `3`. 
+    - **Number of Replicas**: Number of replicas created for each Longhorn volume. The default value is `3`.
     - **Stale Replica Timeout**: Number of minutes Longhorn waits before cleaning up a replica with the status `ERROR`. The default value is `30`.
     - **Node Selector** (optional): Node tags to be matched during volume scheduling. You can add node tags on the host configuration screen (**Host -> Edit Config**).
     - **Disk Selector** (optional): Disk tags to be matched during volume scheduling. You can add disk tags on the host configuration screen (**Host -> Edit Config**).
     - **Migratable**: Setting that enables [Live Migration](../vm/live-migration.md) for volumes created using the StorageClass. The default value is `Yes`.
+
+    :::caution
+
+    If a StorageClass with a replica count of `1` is used to create a volume that is attached to a virtual machine, that virtual machine is considered [non-migratable](../vm/live-migration.md#non-migratable-virtual-machines).
+
+    :::
 
 1. On the **Customize** tab, configure the following:
 

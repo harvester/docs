@@ -29,6 +29,14 @@ description: Create a volume from the Volume page.
 
 ![create-empty-volume](/img/v1.2/volume/create-empty-volume.png)
 
+:::caution
+
+- If the replica count of the selected StorageClass is `1` and the volume is attached to a virtual machine, then the virtual machine is considered [non-migratable](../vm/live-migration.md#non-migratable-virtual-machines).
+
+- When a volume is created, it copied the related parameters from the selected `StorageClass` to itself. If you change the parameters of the `StorageClass` later, it does not write back to the volume.
+
+:::
+
 ### Oversized Volumes
 
 In Harvester v1.5.0, which uses Longhorn v1.8.1, oversized volumes (for example, 999999 Gi in size) are marked **Not Ready** and cannot be deleted.
