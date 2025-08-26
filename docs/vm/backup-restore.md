@@ -304,7 +304,7 @@ The restored virtual machine retains the machine ID of the original virtual mach
 
 :::note
 
-VM snapshots may encounter a `filesystem freeze failed` error when performed on a running RHEL9 guest VM. For troubleshooting steps and solutions, see [Failed to Freeze Filesystem for a Running RHEL9 Guest VM](./backup-restore.md#failed-to-freeze-filesystem-for-a-running-rhel9-guest-vm)
+VM snapshots may encounter a `filesystem freeze failed` error when performed on a running RHEL9 guest VM. For troubleshooting steps and solutions, see [Failed to Freeze Filesystem for a Running RHEL9 Guest VM](#filesystem-freeze-error-in-a-rhel-9-virtual-machine)
 
 :::
 
