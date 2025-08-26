@@ -38,11 +38,19 @@ Harvester supports CPU and memory hotplug for virtual machines. This feature all
 
 1. Complete the rest of the virtual machine creation steps.
 
+## Trigger CPU and Memory Hotplug Action
+
 After the virtual machine is created, you can dynamically add CPU and memory resources using the **Edit CPU and Memory** button.
 
 ![Edit CPU and Memory](/img/v1.6/cpu-memory-hotplug/edit-cpu-and-memory.png)
 
-Once you click **Apply**, Harvester migrates the virtual machine to a node with the configured CPU and memory amounts.
+Once you click **Apply**, Harvester [migrates the virtual machine](./live-migration.md#prerequisites) to a node with the configured CPU and memory amounts.
+
+:::note
+
+The virtual machine must be [live-migratable](./live-migration.md#live-migratable-virtual-machines).
+
+:::
 
 ## `max-hotplug-ratio` setting
 

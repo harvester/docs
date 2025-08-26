@@ -93,7 +93,7 @@ If the upgrade fails at this point, you must generate a [support bundle](../trou
 The Harvester controller creates the following jobs on each node:
 
 - Multi-node clusters:
-  - `pre-drain` job: Live-migrates or shuts down virtual machines on the node. Once completed, the embedded Rancher service upgrades the RKE2 runtime on the node.
+  - `pre-drain` job: [Live-migrates or shuts down virtual machines](./automatic.md#virtual-machine-management-through-the-upgrade) on the node. Once completed, the embedded Rancher service upgrades the RKE2 runtime on the node.
   - `post-drain` job: Upgrades and reboots the operating system.
 - Single-node clusters:
   - `single-node-upgrade` job: Upgrades the operating system and RKE2 runtime. The job name uses the format `hvst-upgrade-xxx-single-node-upgrade-<hostname>`.
