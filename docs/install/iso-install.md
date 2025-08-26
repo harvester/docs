@@ -64,7 +64,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 	![choose-installation-target-data-disk.png](/img/v1.2/install/choose-installation-target-data-disk.png)
 
 	- `Installation disk`: The disk to install the Harvester cluster on.
-	- `Data disk`: The disk to store VM data on. Choosing a separate disk to store VM data is recommended.
+	- `Data disk`: The disk to store VM data on. Choosing a separate disk to store VM data is recommended. Not applicable for witness nodes.
 	- `Persistent size`: If you only have one disk or use the same disk for both OS and VM data, you need to configure persistent partition size to store system packages and container images. The default and minimum persistent partition size is 150 GiB. You can specify a size like 200Gi or 153600Mi.
 
 1. Configure the `HostName` of the node.
