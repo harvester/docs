@@ -5,7 +5,7 @@ title: "Storage Network"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/advanced/storagenetwork"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/storagenetwork"/>
 </head>
 
 Harvester uses Longhorn to provide block device volumes for virtual machines and pods. If you want to isolate Longhorn replication traffic from `mgmt` (the built-in cluster network) or other cluster-wide workloads, you can use a dedicated storage network for better network bandwidth and performance.

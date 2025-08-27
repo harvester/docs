@@ -11,6 +11,10 @@ keywords:
 - network policy
 ---
 
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/networking/kubeovn-vm-isolation"/>
+</head>
+
 Isolation between virtual machines is typically achieved using either VLANs (in traditional networks) or virtual switches (in Kube-OVN). If you want to isolate virtual machines within the same virtual switch network, you can use either of the following to achieve the required micro-segmentation:
 
 - Subnet access control lists (ACLs): Apply rules to a subnet used by virtual machines.

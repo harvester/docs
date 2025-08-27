@@ -15,7 +15,7 @@ description: Starting from version `0.2.0`, Harvester can be installed automatic
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/install/pxe-boot-install"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/install/pxe-boot-install"/>
 </head>
 
 Starting from version `0.2.0`, Harvester can be installed automatically. This document provides an example to do an automatic installation with PXE boot.

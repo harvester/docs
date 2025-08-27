@@ -13,7 +13,7 @@ description: Harvester provides two ways to upgrade. Users can either upgrade us
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/upgrade/index"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/upgrade/index"/>
 </head>
 
 Harvester is adopting a new lifecycle strategy that simplifies version management and upgrades. This strategy includes the following:

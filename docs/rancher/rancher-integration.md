@@ -12,7 +12,7 @@ description: Rancher is an open source multi-cluster management platform. Harves
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/rancher/rancher-integration"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/rancher/rancher-integration"/>
 </head>
 
 [Rancher](https://github.com/rancher/rancher) is an open-source multi-cluster management platform. Starting with Rancher v2.6.1, Rancher has integrated Harvester by default to centrally manage VMs and containers.

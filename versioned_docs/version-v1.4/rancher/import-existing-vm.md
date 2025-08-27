@@ -10,7 +10,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/rancher/import-existing-vm"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/rancher/import-existing-vm"/>
 </head>
 
 Rancher allows you to import existing Harvester VMs in which you installed Kubernetes.
