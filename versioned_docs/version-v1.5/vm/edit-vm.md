@@ -14,7 +14,7 @@ description: Edit Virtual Machines from the Harvester VM page.
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/vm/edit-vm"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/vm/edit-vm"/>
 </head>
 
 ## How to Edit a VM

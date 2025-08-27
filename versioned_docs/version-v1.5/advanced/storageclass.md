@@ -5,7 +5,7 @@ title: "StorageClass"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/advanced/storageclass"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/storageclass"/>
 </head>
 
 Harvester uses StorageClasses to describe how Longhorn must provision volumes. Longhorn StorageClasses can map to replica policies, node schedule policies, or disk schedule policies created by the cluster administrators. This concept is referred to as *profiles* in other storage systems.

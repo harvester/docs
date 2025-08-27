@@ -5,7 +5,7 @@ title: "CloudInit CRD"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/advanced/cloudinitcrd"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/cloudinitcrd"/>
 </head>
 
 _Available as of v1.3.0_
