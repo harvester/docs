@@ -187,9 +187,9 @@ The following virtual machines are created in the `default` namespace and are at
     - from:
       - ipBlock:
           cidr: 172.20.10.0/30
-  policyTypes:
-  - Ingress
-  - Egress
+    policyTypes:
+    - Ingress
+    - Egress
   ```
 
 - Example 2: VM1 and VM2 are allowed to communicate with each other and with other virtual machines in the subnet `172.20.10.0/24`. However, other virtual machines in that subnet cannot communicate with VM1, VM2, and each other. This is because the ingress policy only allows traffic originating from `172.20.10.0/30`.
@@ -205,8 +205,8 @@ The following virtual machines are created in the `default` namespace and are at
     - from:
       - ipBlock:
           cidr: 172.20.10.0/30
-  policyTypes:
-  - Ingress
+    policyTypes:
+    - Ingress
   ```
 
 - Example 3: VM1 and VM2 are allowed to communicate with each other, but not with other virtual machines in the subnet `172.20.10.0/24`. The other virtual machines in the same subnet can communicate with VM1 and VM2. This is because the egress policy allows traffic to be sent to `172.20.10.0/30`.
@@ -222,8 +222,8 @@ The following virtual machines are created in the `default` namespace and are at
     - to:
       - ipBlock:
           cidr: 172.20.10.0/30
-  policyTypes:
-  - egress
+    policyTypes:
+    - egress
   ```
 
 - Example 4: VM2 is allowed to communicate with VM1, but not with other virtual machines in the subnet `172.20.10.0/24`. This is because a pod selector label is applied to VM2. All other virtual machines in the same subnet can communicate with VM1 and each other.
@@ -246,7 +246,7 @@ The following virtual machines are created in the `default` namespace and are at
     - from:
       - ipBlock:
           cidr: 172.20.10.0/30
-  policyTypes:
-  - Ingress
-  - Egress
+    policyTypes:
+    - Ingress
+    - Egress
   ```
