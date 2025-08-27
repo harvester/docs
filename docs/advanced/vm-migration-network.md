@@ -195,6 +195,6 @@ The following occur once the `vm-migration-network` setting is applied:
 
 ## Best Practices
 
-- When configuring an [IP range](#prerequisites) for the VM migration network, ensure that the allocated IP addresses can service the future needs of the cluster. This is important because KubeVirt pods (`virt-handler`) stop running when new nodes are added to the cluster after the VM migration network is configured, and when the required number of IPs exceeds the allocated IPs. Resolving the issue involves reconfiguring the storage network with the correct IP range.
+- When configuring an [IP range](#prerequisites) for the VM migration network, ensure that the allocated IP addresses can service the future needs of the cluster. This is important because KubeVirt pods (`virt-handler`) stop running when new nodes are added to the cluster after the VM migration network is configured, and when the required number of IPs exceeds the allocated IPs. Resolving the issue involves reconfiguring the VM migration network with the correct IP range.
 
 - Configure the VM migration network on a non-`mgmt` cluster network to ensure complete separation of the VM migration traffic from the Kubernetes control plane traffic. Using `mgmt` is possible but not recommended because of the negative impact (resource and bandwidth contention) on the control plane network performance. Use `mgmt` only if your cluster has NIC-related constraints and if you can completely segregate the traffic.

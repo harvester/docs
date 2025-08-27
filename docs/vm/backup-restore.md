@@ -34,16 +34,39 @@ Backup support is currently limited to Longhorn V1 Data Engine volumes. Harveste
 
 A backup target is an endpoint used to access a backup store in Harvester. A backup store is an NFS server or S3 compatible server that stores the backups of VM volumes. The backup target can be set at `Settings > backup-target`.
 
-| Parameter          | Type   | Description                                                                              |
-| :----------------- | :----- | :--------------------------------------------------------------------------------------- |
-| Type               | string | Choose S3 or NFS                                                                         |
-| Endpoint           | string | A hostname or an IP address. It can be left empty for AWS S3.                |
-| BucketName         | string | Name of the bucket                                                                       |
-| BucketRegion       | string | Region of the bucket                                                                     |
-| AccessKeyID        | string | A user-id that uniquely identifies your account                     |
-| SecretAccessKey    | string | The password to your account                                         |
-| Certificate        | string | Paste to use a self-signed SSL certificate of your S3 server |
-| VirtualHostedStyle | bool   | Use `VirtualHostedStyle` access only; e.g., Alibaba Cloud (Aliyun) OSS                    |
+The following table outlines the parameters that are common to all backup targets.
+
+| Parameter        | Type    | Description                                                                                                                                                                        |
+| :--------------- | :------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Type             | string  | Type of server that stores the backups of volumes used by virtual machines. You can select either `NFS` or `S3`.                                                                   |
+| Refresh Interval | integer | Number of seconds that Harvester waits before syncing backups with the backupstore. When the value is `0`, backups are synced only if all backup volumes are in the `Ready` state. |
+
+<Tabs>
+<TabItem value="s3" label="S3" default>
+
+| Parameter          | Type    | Description                                                                                                                            |
+| :----------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------- |
+| Endpoint           | string  | (Optional) Hostname or IP address of the endpoint used to access the S3 server                                                         |
+| BucketName         | string  | Name of the S3 bucket                                                                                                                  |
+| BucketRegion       | string  | AWS Region in which the S3 bucket was created                                                                                          |
+| AccessKeyID        | string  | First part of the access key you use to authenticate requests to AWS services (for example, AKIAIOSFODNN7EXAMPLE)                      |
+| SecretAccessKey    | string  | Second part of the access key you use to authenticate requests to AWS services (for example, wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY) |
+| Certificate        | string  | Self-signed SSL certificate of the S3 server                                                                                           |
+| VirtualHostedStyle | boolean | Option to use virtual-hosted–style URLs, wherein the bucket name is part of the domain name in the URL (`bucket.example.com`)          |
+
+![backuptarget-s3.png](/img/backuptarget-s3.png)
+
+</TabItem>
+<TabItem value="nfs" label="NFS">
+
+| Parameter          | Type   | Description                                                                                                                                |
+| :----------------- | :----- | :----------------------------------------------------------------------------------------------------------------------------------------- |
+| Endpoint           | string | URL of the [NFS server](https://longhorn.io/docs/1.8.0/snapshots-and-backups/backup-and-restore/set-backup-target/#set-up-nfs-backupstore) |
+
+![backuptarget-nfs.png](/img/backuptarget-nfs.png)
+
+</TabItem>
+</Tabs>
 
 ### Create a VM backup
 
@@ -281,7 +304,7 @@ The restored virtual machine retains the machine ID of the original virtual mach
 
 :::note
 
-VM snapshots may encounter a `filesystem freeze failed` error when performed on a running RHEL9 guest VM. For troubleshooting steps and solutions, see [Failed to Freeze Filesystem for a Running RHEL9 Guest VM](./backup-restore.md#failed-to-freeze-filesystem-for-a-running-rhel9-guest-vm)
+VM snapshots may encounter a `filesystem freeze failed` error when performed on a running RHEL9 guest VM. For troubleshooting steps and solutions, see [Failed to Freeze Filesystem for a Running RHEL9 Guest VM](#filesystem-freeze-error-in-a-rhel-9-virtual-machine)
 
 :::
 

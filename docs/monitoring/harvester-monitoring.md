@@ -60,6 +60,15 @@ Swap:            0B          0B          0B
 
 The corresponding `Memory Usage` is `(1 - 4.6/7.7) * 100%`, roughly `40%`.
 
+## Live Migration Status And Metrics
+_Available as of v1.6.0_
+
+Live migration is a critical feature for ensuring workload uptime. The Harvester UI displays key data and metrics regarding the progress of the live migration operation via the [rancher-monitoring](../advanced/addons.md) add-on. When the add-on is enabled, you can view real-time metrics on the **Migration** tab of the virtual machine details screen.
+
+1. Enable the **rancher-monitoring** add-on.
+1. Go to **Virtual Machines**.
+1. Locate the virtual machine in the list, and then click the name to view its details.
+1. Go to the **Migration** tab.
 
 ## How to Configure Monitoring Settings
 

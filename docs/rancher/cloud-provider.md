@@ -5,8 +5,6 @@ title: "Harvester Cloud Provider"
 keywords:
   - Harvester
   - harvester
-  - RKE
-  - rke
   - RKE2
   - rke2
   - Harvester Cloud Provider
@@ -17,11 +15,11 @@ description: The Harvester cloud provider used by the guest cluster in Harvester
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/rancher/cloud-provider"/>
 </head>
 
-[RKE1](./node/rke1-cluster.md) and [RKE2](./node/rke2-cluster.md) clusters can be provisioned in Rancher using the built-in Harvester Node Driver. Harvester provides [load balancer](#load-balancer-support) and Harvester cluster [storage passthrough](./csi-driver.md) support to the guest Kubernetes cluster.
+[RKE2](./node/rke2-cluster.md) clusters can be provisioned in Rancher using the built-in Harvester Node Driver. Harvester provides [load balancer](#load-balancer-support) and Harvester cluster [storage passthrough](./csi-driver.md) support to the guest Kubernetes cluster.
 
 In this page we will learn:
 
-- How to deploy the Harvester cloud provider in both RKE1 and RKE2 cluster.
+- How to deploy the Harvester cloud provider in an RKE2 cluster
 - How to use the [Harvester load balancer](#load-balancer-support).
 
 ### Backward Compatibility Notice
@@ -61,27 +59,6 @@ By default, the `macvlan` kernel module is not included in SUSE Linux Enterprise
 To eliminate the need for manual intervention after the guest cluster is provisioned, build your own cloud images using the openSUSE Build Service (OBS). You must remove the `kernel-default-base` package and add the `kernel-default` package in the `Minimal.kiwi` file to ensure that the resulting cloud image includes the `macvlan` kernel module. For more information, see [Custom SUSE VM Images](../advanced/customsuseimages.md).
 
 :::
-
-### Deploying to the RKE1 Cluster with Harvester Node Driver
-
-:::caution
-
-Rancher Kubernetes Engine (RKE) will reach the end of its life on **July 31, 2025**. Harvester **v1.6.0** and later versions will not support RKE. Switching to RKE2, which provides a more secure and efficient environment, is recommended.
-
-In-place upgrades are not an option, so you must [create new RKE2 clusters](./node/rke2-cluster.md) and migrate the workloads from your existing RKE clusters (known as replatforming). For more information, see [RKE End of Life](https://www.suse.com/support/kb/doc/?id=000021513).
-
-:::
-
-When spinning up an RKE cluster using the Harvester node driver, you can perform two steps to deploy the `Harvester` cloud provider:
-
-1. Select `Harvester(Out-of-tree)` option.
-
-    ![](/img/v1.2/rancher/rke-cloud-provider.png)
-
-2. Install `Harvester Cloud Provider` from the Rancher marketplace.
-
-    ![](/img/v1.2/rancher/install-harvester-cloud-provider.png)
-
 
 ### Deploying to the RKE2 Cluster with Harvester Node Driver
 
@@ -382,9 +359,9 @@ The cloud provider can be upgraded by upgrading the RKE2 version. You can upgrad
 3. Select **Kubernetes Version**.
 4. Click **Save**.
 
-### Upgrade RKE/K3s
-RKE/K3s upgrade cloud provider via the Rancher UI, as follows:
-1. Click **☰ > RKE/K3s Cluster > Apps > Installed Apps**.
+### Upgrade K3s
+K3s upgrade cloud provider via the Rancher UI, as follows:
+1. Click **☰ > K3s Cluster > Apps > Installed Apps**.
 2. Find the cloud provider chart and select ⋮ **> Edit/Upgrade**.
 3. Select **Version**.
 4. Click **Next > Update**.

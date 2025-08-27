@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 3
 sidebar_label: Creating an K3s Kubernetes Cluster
 title: "Creating an K3s Kubernetes Cluster"
 ---
@@ -18,7 +18,7 @@ You can now provision K3s Kubernetes clusters on top of the Harvester cluster in
 - Provisioning K3s Kubernetes clusters involves configuring the IP address of the underlying virtual machines. You can do this using a DHCP server on the VLAN network that the virtual machines are attached to. If such a server does not exist on the network, you can use the [Managed DHCP](../../advanced/addons/managed-dhcp.md) feature to configure the IP address.
 - [VLAN network](../../networking/harvester-network.md#vlan-network) is required for Harvester node driver.
 - Harvester node driver only supports cloud images.
-- For the port requirements of the guest clusters deployed within Harvester, please refer to the [port requirements for guest clusters](../../install/requirements.md#port-requirements-for-k3s-or-rkerke2-clusters).
+- For the port requirements of the guest clusters deployed within Harvester, please refer to the [port requirements for guest clusters](../../install/requirements.md#port-requirements-for-k3s-or-rke2-clusters).
 
 :::
 

@@ -25,19 +25,22 @@ Harvester also introduced storage networking to separate the storage traffic fro
 
 
 ## Management Network
+
 Harvester uses [Canal](https://projectcalico.docs.tigera.io/getting-started/kubernetes/flannel/flannel) as its default management network. It is a built-in network that can be used directly from the cluster.
+
 By default, the management network IP of a VM can only be accessed within the cluster nodes, and the management network IP will change after the VM reboot. This is non-typical behaviour that needs to be taken note of since VM IPs are expected to remain unchanged after a reboot.
 
 However, you can leverage the Kubernetes [service object](https://kubevirt.io/user-guide/virtual_machines/service_objects/) to create a stable IP for your VMs with the management network.
 
 ### How to use management network
+
 Since the management network is built-in and doesn't require extra operations, you can add it directly when configuring the VM network.
 
 ![](/img/v1.2/networking/management-network.png)
 
 :::info important
 
-Network interfaces of VMs connected to the management network have an [MTU value of `1450`](https://docs.tigera.io/calico/latest/networking/configuring/mtu#determine-mtu-size). This is because a VXLAN overlay network typically has a slightly higher per-packet overhead.
+`mgmt` uses the default MTU value `1500` if you do not specify a value other than `0` or `1500` in the [`install.management_interface`](../install/harvester-configuration.md#installmanagement_interface) setting during installation. However, the network interfaces of virtual machines connected to `mgmt` have an MTU value of [`1450`](https://docs.tigera.io/calico/latest/networking/configuring/mtu#determine-mtu-size). This is because Harvester uses the **Calico and Flannel CNI**, which has an overhead of 50 bytes per packet, to carry the in-cluster overlay network.
 
 ![](/img/v1.3/networking/management-network-mtu.png)
 
@@ -73,7 +76,9 @@ The [Harvester network-controller](https://github.com/harvester/harvester-networ
 
   Virtual machine networks inherit the MTU from the network configuration of the associated cluster network. This ensures that virtual machines benefit from the best possible hardware performance. You cannot set a different MTU for virtual machine networks.
 
-  When you change the MTU on the physical NICs, the newly created virtual machine networks automatically inherit the new MTU. The existing virtual machine networks need to be updated manually. For more information, see [Change the MTU of a Network Configuration with an Attached Storage Network](./clusternetwork.md#change-the-mtu-of-a-network-configuration-with-an-attached-storage-network) and [Change the MTU of a Network Configuration with No Attached Storage Network](./clusternetwork.md#change-the-mtu-of-a-network-configuration-with-no-attached-storage-network).
+  When you change the MTU on the physical NICs of cluster network uplink, the newly created virtual machine networks automatically inherit the new MTU. The existing virtual machine networks are also updated automatically. For more information, see [Change the MTU of a Network Configuration with an Attached Storage Network](./clusternetwork.md#change-the-mtu-of-a-network-configuration-with-an-attached-storage-network) and [Change the MTU of a Network Configuration with No Attached Storage Network](./clusternetwork.md#change-the-mtu-of-a-network-configuration-with-no-attached-storage-network).
+
+  The Harvester webhook does not allow you to directly change the MTU on VM networks.
 
   :::
 
@@ -83,7 +88,7 @@ The [Harvester network-controller](https://github.com/harvester/harvester-networ
 
     ![](/img/v1.2/networking/create-network-auto.png)
 
-    - Manual: Specify the CIDR and gateway addresses. 
+    - Manual: Specify the CIDR and gateway addresses.
 
     ![](/img/v1.2/networking/create-network-manual.png)
 
@@ -103,7 +108,7 @@ You can now create a new VM using the VLAN network configured above:
 As is known, the traffic under a VLAN network has a VLAN ID tag and we can use the VLAN network with `PVID` (default 1) to communicate with any normal untagged traffic. However, some network devices may not expect to receive an explicitly tagged VLAN ID that matches the native VLAN on the switch the uplink belongs to. That's the reason why we provide the untagged network.
 
 ### How to use untagged network
-The usage of untagged network is similar to [the VLAN network](./harvester-network.md#how-to-use-vlan-network).
+The usage of untagged network is similar to [the VLAN network](#vlan-network).
 
 To create a new untagged network, go to the **Networks > VM Networks** page and click the **Create** button. You have to specify the name, select the type `Untagged Network` and choose the cluster network.
 

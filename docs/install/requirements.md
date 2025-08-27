@@ -26,7 +26,7 @@ Harvester nodes have the following hardware requirements and recommendations for
 | :--- | :--- | :--- |
 | CPU | ARM64 or x86_64 (with hardware-assisted virtualization); 8 cores minimum | ARM64 or x86_64 (with hardware-assisted virtualization); 16 cores minimum |
 | Memory | 32 GB minimum | 64 GB minimum |
-| Disk capacity	| 250 GB minimum (180 GB minimum when using multiple disks) | 500 GB minimum, 1 TB or more recommended |
+| Disk capacity	| 250 GB minimum (180 GB minimum for [witness nodes](../advanced/witness.md) or when using multiple disks) | 500 GB minimum, 1 TB or more recommended |
 | Disk performance | 5,000+ random IOPS per disk (SSD/NVMe); management node storage must meet [etcd](https://www.suse.com/support/kb/doc/?id=000020100) speed requirements. Only local disks and hardware RAID are supported. | 5,000+ random IOPS per disk (SSD/NVMe); management node storage must meet [etcd](https://www.suse.com/support/kb/doc/?id=000020100) speed requirements. Only local disks and hardware RAID are supported. |
 | Network card count | Management cluster network: 1 NIC required, 2 NICs recommended; VM workload network: 1 NIC required, at least 2 NICs recommended (does not apply to the [witness node](../advanced/witness.md)) | Management cluster network: 1 NIC required, 2 NICs recommended; VM workload network: 1 NIC required, at least 2 NICs recommended (does not apply to the [witness node](../advanced/witness.md)) |
 | Network card speed | 1 Gbps Ethernet minimum | 10 Gbps Ethernet minimum |
@@ -97,12 +97,11 @@ If you want to [integrate Harvester with Rancher](../rancher/rancher-integration
 
 When provisioning VMs with Kubernetes clusters from Rancher into Harvester, you need to be able to connect to TCP port **443** of the Rancher load balancer. Otherwise, the cluster won't be manageable by Rancher. For more information, refer to [Rancher Architecture](https://ranchermanager.docs.rancher.com/v2.7/reference-guides/rancher-manager-architecture/communicating-with-downstream-user-clusters).
 
-### Port Requirements for K3s or RKE/RKE2 Clusters
+### Port Requirements for K3s or RKE2 Clusters
 
 For the port requirements for guest clusters deployed inside Harvester VMs, refer to the following links:
 
 - [K3s Networking](https://rancher.com/docs/k3s/latest/en/installation/installation-requirements/#networking)
-- [RKE Ports](https://rancher.com/docs/rke/latest/en/os/#ports)
 - [RKE2 Networking](https://docs.rke2.io/install/requirements#networking)
 
 ## Time Requirements

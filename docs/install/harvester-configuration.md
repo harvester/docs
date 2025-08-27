@@ -589,10 +589,12 @@ Harvester uses the [systemd net naming scheme](https://www.freedesktop.org/softw
   - `interfaces.name`: Name of a slave interface.
   - `interfaces.hwAddr`: Hardware MAC address of a slave interface. This field is optional.
 - `bond_options`: Options for [bonded interfaces](https://www.kernel.org/doc/Documentation/networking/bonding.txt). When unspecified, the following options are used:
-  - `mode`: balance-tlb
-  - `miimon`: 100
-- `mtu`: Maximum transmission unit (MTU) for the interface.
-- `vlan_id`: VLAN ID for the interface.
+  - `mode`: Bond mode. The default value is `active-backup`.
+  - `miimon`: MII link monitoring frequency in milliseconds. The default value is `100`.
+- `mtu`: Maximum transmission unit (MTU) for the interface. The default value is `1500`.
+- `vlan_id`: VLAN ID for the interface. The default value is `0`, which means that the interface is in untagged mode.
+
+For more information, see [Change the MTU Value of `mgmt` After Installation](../networking/clusternetwork.md#change-the-mtu-value-of-mgmt-after-installation).
 
 **Example**:
 
@@ -831,7 +833,7 @@ install:
 
 ### `install.wipedisks`
 
-(Deprecated in 1.6.0. See [`install.wipe_all_disks`](#installwipe_all_disks) and [`install.wipe_disks_list`](#installwipe_disks_list))
+(Removed in 1.5.0. See [`install.wipe_all_disks`](#installwipe_all_disks) and [`install.wipe_disks_list`](#installwipe_disks_list))
 
 **Definition**: Setting that clears all disk partitions on the host using the `sgdisk` command.
 
