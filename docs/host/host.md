@@ -21,7 +21,7 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 :::info
 
-Harvester reserves CPU resources for system-level operations on each node. For more information, see [Calculation of Shared CPU Pool](../vm/cpu-pinning.md#calculation-of-shared-cpu-pool).
+Harvester reserves CPU resources for system-level operations on each node. For more information, see [Calculation of Shared CPU Pool](../vm/cpu-pinning.md#calculation-of-shared-cpu-pool). This is why the total cores shown on the CPU column is slightly less than the real CPU cores on each node.
 
 :::
 ## Node Maintenance
