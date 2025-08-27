@@ -9,7 +9,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/networking/deep-dive"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/networking/deep-dive"/>
 </head>
 
 ## Network Topology

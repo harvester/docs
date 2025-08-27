@@ -13,7 +13,7 @@ description: To get the Harvester ISO, download it from the Github releases. Dur
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/install/index"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/install/index"/>
 </head>
 
 Harvester ships as a bootable appliance image, you can install it directly on a bare metal server with the ISO image. To get the ISO image, download **💿 harvester-v1.x.x-amd64.iso** from the [Harvester releases](https://github.com/harvester/harvester/releases) page.
