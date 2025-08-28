@@ -60,15 +60,20 @@ const config = {
           showLastUpdateTime: true,
           editUrl: "https://github.com/harvester/docs/edit/main/",
           docItemComponent: "@theme/ApiItem",
-          lastVersion: 'v1.5',
+          lastVersion: 'v1.6',
           versions: {
             current: {
-              label: 'v1.6 (Dev)',
+              label: 'v1.7 (Dev)',
+              path: 'v1.7',
+            },
+            "v1.6": {
+              label: 'v1.6 (Latest)',
               path: 'v1.6',
             },
             "v1.5": {
-              label: 'v1.5 (Latest)',
+              label: 'v1.5',
               path: 'v1.5',
+              banner: `none`
             },
             "v1.4": {
               label: 'v1.4',
@@ -275,8 +280,8 @@ const config = {
       '@docusaurus/plugin-client-redirects',
       {
         createRedirects(existingPath) {
-          if (existingPath.includes('/v1.5')) {
-            return [existingPath.replace('/v1.5', '/latest')];
+          if (existingPath.includes('/v1.6')) {
+            return [existingPath.replace('/v1.6', '/latest')];
           }
           return undefined;
         },
@@ -299,6 +304,12 @@ const config = {
             label: "dev", // Current version label
             baseUrl: "/dev/api", // Leading slash is important
             versions: {
+              "v1.6": {
+                specPath: "api/v1.6-swagger.json",
+                outputDir: "versioned_docs/version-v1.6/api", // No trailing slash
+                label: "v1.6",
+                baseUrl: "/v1.6/api", // Leading slash is important
+              },              
               "v1.5": {
                 specPath: "api/v1.5-swagger.json",
                 outputDir: "versioned_docs/version-v1.5/api", // No trailing slash
