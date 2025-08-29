@@ -138,6 +138,87 @@ By default, subnets in a custom VPC cannot directly communicate with subnets in 
 
 ![](/img/vpcpeer.png)
 
+### Creating a VPC
+
+Perform the following steps to create and configure a VPC.
+
+1. Enable [kubeovn-operator](../advanced/addons/kubeovn-operator.md).
+
+    The kubeovn-operator add-on deploys Kube-OVN to the Harvester cluster.
+
+    ![](/img/kubeovn-operator.png)
+
+1. Create overlay networks.
+
+    You must create a separate overlay network for each subnet that you plan to create.
+
+    1. Go to **Networks > Virtual Machine Networks**, and then click **Create**.
+
+    1. On the **Virtual Machine Network:Create** screen, configure the following settings:
+
+      - **Name**: Specify a unique name for the network.
+      - **Type**: Select `OverlayNetwork`.
+
+    1. Click **Create**.
+
+1. Create a VPC.
+
+    1. Go to **Networks > Virtual Private Cloud**, and then click **Create**.
+
+    1. On the **Virtual Machine Network:Create** screen, specify a unique name for the VPC.
+
+    1. Click **Create**.
+
+1. Create subnets and link each to a dedicated overlay network.
+
+    1. Go to **Networks > Virtual Private Cloud**.
+
+    1. Locate the VPC you created, and then click **Create Subnet**.
+
+    1. On the **Subnet:Create** screen, configure the following settings:
+
+      - **Name**: Specify a unique name for the subnet.
+      - **CIDR Block**: Specify the destination IP address range for the route.
+      - **Protocol**: Specify the network protocol version used for this subnet (IPv4 or IPv6).
+      - **Provider**: Select the corresponding overlay network. The Harvester UI only shows overlay networks that are not linked to other subnets, automatically enforcing the one-to-one mapping.
+      - **Gateway IP**: Specify the IP address that acts as the default gateway for virtual machines in the subnet.
+
+    1. Click **Edit as YAML**.
+
+    1. Under `spec`, add `enableDHCP: true`. 
+    
+      This ensures that virtual machines connected to the subnet can obtain the correct default route options.
+
+    1. Click **Create**.
+
+1. Create virtual machines.
+
+    1. Configure the settings that are relevant to each virtual machine.
+
+      :::info important
+      
+      On the **Networks** tab, you must select the correct overlay network in the **Network** field.
+
+      :::
+
+    1. Click **Create**.
+
+      The virtual machine obtains its IP address from the subnet that it is connected to.
+    
+    1. Select **⋮ > Edit YAML**.
+
+    1. Change the value of `spec.domain.devices.interface.binding.name` to `managedtap`.
+
+       This ensures that the virtual machine obtains the correct DHCP options from the subnet instead of using the default DHCP server from KubeVirt.
+
+      :::caution
+
+      If you do not perform this step, the virtual machine will not have a default route. Attempts to access external destinations fail until the default route is correctly configured on the guest operating system.
+
+      :::
+
+    1. Restart each virtual machine.
+
 ### Sample VPC Configuration and Verification
 
 1. Create virtual machine networks with the following settings:
