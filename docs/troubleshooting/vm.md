@@ -455,6 +455,78 @@ After deleting the directory, you must restart the virtual machine so that cloud
 
 https://github.com/harvester/harvester/issues/6644
 
+## Virtual Machine IP Address Flapping
+
+### Issue Description
+
+The IP address field of the Virtual Machines screen on the Harvester UI flaps for a newly created Virtual Machine.
+
+## Issue Analysis
+
+Qemu guest agent is responsible for notifying the interface details and guest os info from the vm guest os to the Virtual Machine Instance which is displayed by the Harvester UI.
+During the issue, qemu guest agent is able to get the network information and update the status to the Virtual Machine Instance but sometimes domain Info holding the network interface details becomes empty during the updates.
+This problem is due to an upstream kubevirt issue occuring spcifically on alma linux 9 and rocky linux 9 guest os version.
+
+This happens whenever there are frequent updates from qemu-ga on any of the guest commands polled from virt-launcher.This is seen with alma-linux/rocky linux guest OSs in particular because there are frequent changes in the information shared
+from qemu-ga of alma-linux especially the file system info.This issue is possible on any vm guest os which will have frequent updates from qemu-ga to the virt-launcher during the polling thread.
+
+To reproduce the issue, execute the following command and the output of the ipAddress field will be empty intermittently.
+
+```shell
+$ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].ipAddress}'
+```
+
+### Workaround
+
+There is no workaround for this issue.But the following upstream fix has optimized the code to avoid unnecessary updates from qemu guest agent which could possibly avoid happening of this issue.
+https://github.com/kubevirt/kubevirt/pull/13624
+
+
+### Related Issue
+
+https://github.com/harvester/harvester/issues/3990
+
+https://github.com/kubevirt/kubevirt/issues/12698
+
+## Virtual Machine IP Address not displayed when VM Pod Interface has IPv6 address
+
+### Issue Description
+
+The IP address field of the Virtual Machines screen on the Harvester UI is not displayed when VM pod interface acquires a IPv6 link local address.
+
+## Issue Analysis
+
+Qemu guest agent is responsible for notifying the interface details and guest os info from the vm guest os to the Virtual Machine Instance which is displayed to the Harvester UI.
+During the issue, the VM pod interface gets a IPv6 link local address and if this address is updated to the Virtual Machine Instance first, then IPv4 address from qemu guest agent will not be
+updated to the Virtual Machine Instance due to an upstream kubevirt bug.You can check the ip address of the interface using the following output which will only display the ipv6 link local 
+address.Harvester UI filters out only IPv4 address and displays nothing on the screen in this case.
+
+
+```shell
+$ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].ipAddress}'
+```
+
+Check the ip address on the pod interface of the VM created using the following command which matches the ipv6 address updated in the Virtual Machine Instance.
+
+```shell
+$ kubectl exec -it -n <PODNAMESPACE> <PODNAME> -- /bin/bash
+$ ip a
+```
+
+### Workaround
+
+The workaround is to disable ipv6 in the kernel parameters of Harvester using the following.
+https://docs.harvesterhci.io/v1.6/troubleshooting/os/#how-to-permanently-edit-kernel-parameters
+
+In the above example, in place of nomodeset, add ipv6.disable=1 and reboot the nodes to prevent VM pod interfaces from acquiring a link local IPv6 address.
+
+
+### Related Issue
+
+https://github.com/harvester/harvester/issues/6955
+
+https://github.com/kubevirt/kubevirt/issues/12697
+
 ## Unschedulable Virtual Machine
 
 The state of a virtual machine is `Unschedulable` because of an unsatisfied affinity rule.
