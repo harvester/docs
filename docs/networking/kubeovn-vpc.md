@@ -304,43 +304,19 @@ The `natOutgoing` setting enables network address translation (NAT) for traffic 
 
 ### VPC Peering
 
-VPC Peering is a networking connection that allows two Virtual Private Clouds (VPCs) to communicate with each other privately, as if they were on the same network.
+VPC peering is a networking connection that enables virtual machines in different VPCs to communicate using *private IP addresses*.
 
-By default, each VPC is an isolated network environment. Virtual machines (VMs) or services in different VPCs cannot communicate with each other.
+Each VPC is a separate network namespace with its own CIDR block, routing table, and isolation boundary. Without VPC peering, virtual machines are isolated even when they are hosted within the same Harvester cluster. Once a peering connection is established, routing rules are automatically updated to allow virtual machines to communicate privately.
 
-When you configure VPC Peering, a private route is established between the two VPCs, allowing instances to communicate using their private IP addresses.
+VPC peering offers the following key benefits:
 
-This communication happens without using public IPs or VPNs, ensuring both security and efficiency.
+- The VPCs remain logically and administratively isolated. This is ideal for multi-tenant setups that require strong network isolation with optional connectivity. You can organize workloads by team, function, or environment (for example, development vs. production).
 
-Within the Harvester network architecture, Multi-VPC support is designed to offer flexible and isolated networking environments. 
+- Traffic between VPCs does not traverse the public internet, reducing exposure. You can also use route tables and firewall rules to tightly control network access.
 
-Here's how it works:
+- Keeping traffic within the internal cloud network not only improves performance but also lowers costs, providing a significant advantage over using the public internet or VPNs.
 
-- Each VPC is a separate network namespace:
-
-    - By default, VMs in different VPCs cannot reach each other.
-
-    - Each VPC has its own CIDR block, routing table, and isolation boundary.
-
-- Communication via VPC Peering:
-
-    - To enable communication between VMs across different VPCs, you need to configure a VPC Peering connection.
-
-    - Once Peering is established, routing rules are automatically updated to allow private IP communication between the two VPCs.
-
-    - Without Peering, even if VMs are hosted within the same Harvester cluster, they remain isolated.
-
-- Use cases:
-
-    - Different departments or teams using separate VPCs.
-
-    - Isolated environments (e.g., dev/test vs. production) that occasionally need controlled access.
-
-    - Multi-tenant setups that require strong network isolation with optional connectivity.
-
-    - This structure ensures clear routing, secure segmentation, and flexible multi-subnet design.
-
-The diagram illustrates how multiple VPCs and subnets in Kube-OVN map to Harvester’s overlay networks and virtual machines, enabling scalable, isolated L3 and L2 network structures across the cluster.
+The following diagram shows how VPCs and subnets in Kube-OVN map to overlay networks and virtual machines in Harvester. This architecture enables you to create scalable and isolated L3 and L2 network structures across the cluster.
 
 ```
 
@@ -378,19 +354,6 @@ The diagram illustrates how multiple VPCs and subnets in Kube-OVN map to Harvest
 VM launched and managed by Harvester
 
 ```
-
-Connected via vswitch1 (Overlay)
-
-***VPC peering***
-
-- **Enable Private Communication Between VPCs**
-  VPC Peering allows virtual machines in different VPCs to communicate with each other **using private IP addresses**, as if they were on the same internal network.
-- **Maintain Network Isolation with Controlled Access**
-  Even though the VPCs can communicate, they are still logically and administratively **isolated**, which is useful for organizing workloads by team, function, or environment (e.g., dev, prod).
-- **Improve Performance and Reduce Costs**
-  Since traffic stays within the internal cloud network, it's **faster**, **more secure**, and typically **cheaper** than going over public internet or VPNs.
-- **Enhanced Security**
-  Traffic between VPCs via peering doesn't traverse the public internet, reducing exposure and risk. Access can also be tightly controlled with route tables and firewall rules.
 
 #### VPC Peering Configuration Examples
 
