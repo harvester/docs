@@ -156,8 +156,8 @@ Perform the following steps to create and configure a VPC.
 
     1. On the **Virtual Machine Network:Create** screen, configure the following settings:
 
-      - **Name**: Specify a unique name for the network.
-      - **Type**: Select `OverlayNetwork`.
+        - **Name**: Specify a unique name for the network.
+        - **Type**: Select `OverlayNetwork`.
 
     1. Click **Create**.
 
@@ -169,25 +169,25 @@ Perform the following steps to create and configure a VPC.
 
     1. Click **Create**.
 
-1. Create subnets and link each to a dedicated overlay network.
+1. Create subnets.
 
     1. Go to **Networks > Virtual Private Cloud**.
 
     1. Locate the VPC you created, and then click **Create Subnet**.
 
-    1. On the **Subnet:Create** screen, configure the following settings:
+    1. On the **Subnet:Create** screen, configure the [settings](#subnet-settings) that are relevant to your environment. 
 
-      - **Name**: Specify a unique name for the subnet.
-      - **CIDR Block**: Specify the destination IP address range for the route.
-      - **Protocol**: Specify the network protocol version used for this subnet (IPv4 or IPv6).
-      - **Provider**: Select the corresponding overlay network. The Harvester UI only shows overlay networks that are not linked to other subnets, automatically enforcing the one-to-one mapping.
-      - **Gateway IP**: Specify the IP address that acts as the default gateway for virtual machines in the subnet.
+        :::note
+
+        You must link each subnet to a dedicated overlay network. In the **Provider** field, the Harvester UI only shows overlay networks that are not linked to other subnets, automatically enforcing the one-to-one mapping.
+
+        :::
 
     1. Click **Edit as YAML**.
 
     1. Under `spec`, add `enableDHCP: true`. 
     
-      This ensures that virtual machines connected to the subnet can obtain the correct default route options.
+        This ensures that virtual machines connected to the subnet can obtain the correct default route options.
 
     1. Click **Create**.
 
@@ -195,27 +195,29 @@ Perform the following steps to create and configure a VPC.
 
     1. Configure the settings that are relevant to each virtual machine.
 
-      :::info important
+        :::info important
       
-      On the **Networks** tab, you must select the correct overlay network in the **Network** field.
+        On the **Networks** tab, you must select the correct overlay network in the **Network** field.
 
-      :::
+        :::
 
     1. Click **Create**.
 
-      The virtual machine obtains its IP address from the subnet that it is connected to.
+        The virtual machine obtains its IP address from the subnet that it is connected to.
     
     1. Select **⋮ > Edit YAML**.
 
     1. Change the value of `spec.domain.devices.interface.binding.name` to `managedtap`.
 
-       This ensures that the virtual machine obtains the correct DHCP options from the subnet instead of using the default DHCP server from KubeVirt.
+        This ensures that the virtual machine obtains the correct DHCP options from the subnet instead of using the default DHCP server from KubeVirt.
 
-      :::caution
+        :::caution
 
-      If you do not perform this step, the virtual machine will not have a default route. Attempts to access external destinations fail until the default route is correctly configured on the guest operating system.
+        If you do not perform this step, the virtual machine will not have a default route. Attempts to access external destinations fail until the default route is correctly configured on the guest operating system.
 
-      :::
+        For more information, see [Overlay Network Limitations](./harvester-network.md#overlay-network-experimental).
+
+        :::
 
     1. Restart each virtual machine.
 
@@ -265,10 +267,13 @@ Perform the following steps to create and configure a VPC.
 1. Open the serial consoles of `vm1-vswitch1` and `vm1-vswitch2`, and then add a default route on each (if none exists) using the following commands:
 
     - `vm1-vswitch1` (`172.20.10.6`):
+    
       ```
       #sudo ip route add default via 172.20.10.1 dev enp1s0
       ```
+    
     - `vm1-vswitch2` (`172.20.20.3`)
+    
       ```
       #sudo ip route add default via 172.20.20.1 dev enp1s0
       ```
@@ -280,7 +285,7 @@ Perform the following steps to create and configure a VPC.
     - Use `vm1-vswitch1` (`172.20.10.6`) to ping `vm1-vswitch2` (`172.20.20.3`).
     - Use `vm1-vswitch2` (`172.20.20.3`) to ping `vm1-vswitch1` (`172.20.10.6`).
 
-    `vm1-vswitch1` and `vm1-vswitch2` connects to the same subnet should be reachable to each other.
+    Since `vm1-vswitch1` and `vm1-vswitch2` are on the same subnet, they can communicate with each other.
 
     If no default route exists on the virtual machine before you run the ping command, the console displays the message `ping: connect: Network is unreachable.`.
 
@@ -514,10 +519,13 @@ For more information about VPC peering prerequisites and configuration, see [VPC
 1. Open the serial consoles of `vm1-vpcpeer1` and `vm1-vpcpeer2`, and then add a default route on each (if none exists) using the following commands:
 
     - `vm1-vpcpeer1` (`10.0.0.2`)
+      
       ```
       #sudo ip route add default via 10.0.0.1 dev enp1s0
       ```
+    
     - `vm1-vpcpeer2` (`20.0.0.2`)
+      
       ```
       #sudo ip route add default via 20.0.0.1 dev enp1s0
       ```
@@ -579,12 +587,7 @@ For more information about VPC peering prerequisites and configuration, see [VPC
     - Secure for internal use
     - Commonly used by cloud platforms (including AWS and Alibaba Cloud) for internal networking purposes such as VPC peering and metadata access
 
-#### VPC Peering Limitations
+#### VPC Peering Limitation
 
-Peering only works between custom VPCs. When static routes and peering addresses are correctly configured, the peering connection is established and the VPCs can communicate as expected.
+Peering only works between custom VPCs. Any attempt to establish a peering connection between the default VPC (`ovn-cluster`) and a custom VPC will fail.
 
-:::caution
-
-Attempts to establish a peering connection between the default VPC (`ovn-cluster`) and a custom VPC will fail.
-
-:::
