@@ -577,4 +577,3 @@ For more information about VPC peering prerequisites and configuration, see [VPC
 #### VPC Peering Limitation
 
 Peering only works between custom VPCs. Any attempt to establish a peering connection between the default VPC (`ovn-cluster`) and a custom VPC will fail.
-
