@@ -19,6 +19,11 @@ Because Harvester is built on top of Kubernetes and uses etcd as its database, t
 
 ![host.png](/img/v1.2/host/host.png)
 
+:::info
+
+Harvester reserves CPU resources for system-level operations on each node. For more information, see [Calculation of Shared CPU Pool](../vm/cpu-pinning.md#calculation-of-shared-cpu-pool). This is why the total cores shown on the CPU column is slightly less than the real CPU cores on each node.
+
+:::
 ## Node Maintenance
 
 Admin users can enable Maintenance Mode (select **⋮ > Enable Maintenance Mode**) to automatically evict all virtual machines from a node. This mode leverages the **live migration** feature to migrate the virtual machines to other nodes, which is useful when you need to reboot, upgrade firmware, or replace hardware components. At least two active nodes are required to use this feature.
