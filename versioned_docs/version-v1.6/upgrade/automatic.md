@@ -402,3 +402,64 @@ If you [disabled the RKE2 ingress-nginx admission webhooks](https://harvesterhci
   NAME                                  READY   STATUS    RESTARTS   AGE
   rke2-ingress-nginx-controller-l2cxz   1/1     Running   0          94s
   ```
+
+## Upgrade is Stuck in the "Pre-drained" State
+
+The upgrade process may become stuck in the "Pre-drained" state. Kubernetes is supposed to drain the workload on the node, but some factors may cause the process to stall.
+
+![](/img/v1.2/upgrade/known_issues/3730-stuck.png)
+
+A possible cause is processes related to orphan engines of the Longhorn Instance Manager. To determine if this applies to your situation, perform the following steps:
+
+1. Check the name of the `instance-manager` pod on the stuck node.
+
+    Example:
+
+    The stuck node is `harvester-node-1`, and the name of the Instance Manager pod is `instance-manager-d80e13f520e7b952f4b7593fc1883e2a`.
+
+    ```
+    $ kubectl get pods -n longhorn-system --field-selector spec.nodeName=harvester-node-1 | grep instance-manager
+    instance-manager-d80e13f520e7b952f4b7593fc1883e2a          1/1     Running   0              3d8h
+    ```
+
+1. Check the Longhorn Manager logs for informational messages.
+
+    Example:
+
+    ```
+    $ kubectl -n longhorn-system logs daemonsets/longhorn-manager
+    ...
+    time="2025-01-14T00:00:01Z" level=info msg="Node instance-manager-d80e13f520e7b952f4b7593fc1883e2a is marked unschedulable but removing harvester-node-1 PDB is blocked: some volumes are still attached InstanceEngines count 1 pvc-9ae0e9a5-a630-4f0c-98cc-b14893c74f9e-e-0" func="controller.(*InstanceManagerController).syncInstanceManagerPDB" file="instance_manager_controller.go:823" controller=longhorn-instance-manager node=harvester-node-1
+    ```
+
+    The `instance-manager` pod cannot be drained because of the engine `pvc-9ae0e9a5-a630-4f0c-98cc-b14893c74f9e-e-0`.
+
+1. Check if the engine is still running on the stuck node.
+
+    Example:
+
+    ```
+    $ kubectl -n longhorn-system get engines.longhorn.io pvc-9ae0e9a5-a630-4f0c-98cc-b14893c74f9e-e-0 -o jsonpath='{"Current state: "}{.status.currentState}{"\nNode ID: "}{.spec.nodeID}{"\n"}'
+    Current state: stopped
+    Node ID:
+    ```
+
+    The issue likely exists if the output shows that the engine is not running or even the engine is not found.
+
+1. Check if all volumes are healthy.
+
+    ```
+    kubectl get volumes -n longhorn-system -o yaml | yq '.items[] | select(.status.state == "attached")| .status.robustness'
+    ```
+
+    All volumes must be marked `healthy`. If this is not the case, please help to report the issue.
+
+1. Remove the `instance-manager` pod's PodDisruptionBudget (PDB) .
+
+    Example:
+
+    ```
+    kubectl delete pdb instance-manager-d80e13f520e7b952f4b7593fc1883e2a -n longhorn-system
+    ```
+
+Related issues: [#7366](https://github.com/harvester/harvester/issues/7366), [#6764](https://github.com/longhorn/longhorn/issues/6764), [#8977](https://github.com/harvester/harvester/issues/8977) and [#11605](https://github.com/longhorn/longhorn/issues/11605)
