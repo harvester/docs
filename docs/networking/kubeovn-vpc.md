@@ -32,7 +32,7 @@ The following table outlines the key components of a VPC:
 
 ## Harvester + Kube-OVN Integration Architecture
 
-The following diagram illustrates how VPCs, subnets, overlay networks, and virtual machines are logically connected in Harvester with Kube-OVN. This architecture includes public and private subnets, allowing separation of internet-facing traffic from internal resources.
+The following diagram illustrates how VPCs, subnets, overlay networks, and virtual machines are logically connected in Harvester with Kube-OVN. This architecture includes public and private subnets, allowing separation of internet-facing traffic from internal resources. Moreover, this architecture enables scalable, isolated L3 and L2 network structures across the cluster.
 
 ```
                                  [ VPC: vpc-1 ]
@@ -52,14 +52,12 @@ IP: 172.20.10.X     IP: 172.20.10.Y                    IP: 172.20.20.Z
 
 ```
 
-Multiple VPCs and subnets in Kube-OVN can map to overlay networks and virtual machines in Harvester. This architecture enables scalable, isolated L3 and L2 network structures across the cluster.
-
 | Component | Platform | Logical Responsibility |
 | --- | --- | --- |
-| VPC | Kube-OVN | Top-level L3 domain, manages subnet groupings |
-| Subnet | Kube-OVN | CIDR assignment, routing, gateway, firewall rules |
-| Overlay network | Harvester | L2 virtual switch (OVS bridge), mapped to subnet |
-| Virtual machine | Harvester | Runs compute workloads, connected to overlay |
+| [VPC](#vpc-settings) | Kube-OVN | Top-level L3 domain, manages subnet groupings |
+| [subnet](#subnet-settings) | Kube-OVN | CIDR assignment, routing, gateway, firewall rules |
+| [overlay network](./harvester-network.md#overlay-network-experimental) | Harvester | L2 virtual switch (OVS bridge), mapped to subnet |
+| virtual machine | Harvester | Runs compute workloads, connected to overlay network |
 
 This architecture has the following key characteristics:
 
@@ -111,7 +109,7 @@ When creating custom VPCs, you must configure settings related to the routes def
 
 ### Subnet Settings
 
-Each subnet defines a CIDR block and gateway, and is mapped to a Harvester overlay network (virtual switch). It also includes controls for NAT and access rules.
+Each subnet defines a CIDR block and gateway, and is mapped to a Harvester [overlay network](./harvester-network.md#overlay-network-experimental) (virtual switch). It also includes controls for NAT and access rules.
 
 When creating subnets, you must configure settings that are relevant to your use case. In most cases, you can get started by just configuring the **CIDR Block**, **Gateway**, and **Provider**. The following table outlines the settings on the **Subnet** details screen:
 
@@ -130,15 +128,15 @@ When creating subnets, you must configure settings that are relevant to your use
 
 ![](/img/create_subnet.png)
 
-Each created subnet has a setting called `natOutgoing`, which enables network address translation (NAT) for traffic leaving the subnet and going to destinations outside the VPC. This setting is disabled by default. To enable it, you must edit the subnet's YAML configuration and set the value to `natOutgoing: true`.
+Each created subnet has a setting called [`natOutgoing`](#natoutgoing-setting), which enables network address translation (NAT) for traffic leaving the subnet and going to destinations outside the VPC. This setting is disabled by default. To enable it, you must edit the subnet's YAML configuration and set the value to `natOutgoing: true`.
 
 ![](/img/customize_nat_outgoing.png)
 
-By default, subnets in a custom VPC cannot directly communicate with subnets in the default `ovn-cluster` VPC. You must establish a VPC peering connection to enable secure and controlled communication between VPCs. Without VPC peering, subnet traffic in each VPC remains isolated.
+By default, subnets in a custom VPC cannot directly communicate with subnets in the default `ovn-cluster` VPC. You must establish a [VPC peering](#vpc-peering) connection to enable secure and controlled communication between VPCs. Without VPC peering, subnet traffic in each VPC remains isolated.
 
 ![](/img/vpcpeer.png)
 
-### Creating a VPC
+### Create a VPC
 
 Perform the following steps to create and configure a VPC.
 
@@ -148,18 +146,9 @@ Perform the following steps to create and configure a VPC.
 
     ![](/img/kubeovn-operator.png)
 
-1. Create overlay networks.
+1. [Create overlay networks](./harvester-network.md#create-an-overlay-network).
 
     You must create a separate overlay network for each subnet that you plan to create.
-
-    1. Go to **Networks > Virtual Machine Networks**, and then click **Create**.
-
-    1. On the **Virtual Machine Network:Create** screen, configure the following settings:
-
-        - **Name**: Specify a unique name for the network.
-        - **Type**: Select `OverlayNetwork`.
-
-    1. Click **Create**.
 
 1. Create a VPC.
 
@@ -223,14 +212,12 @@ Perform the following steps to create and configure a VPC.
 
 ### Sample VPC Configuration and Verification
 
-1. Create virtual machine networks with the following settings:
+1. [Create overlay networks](./harvester-network.md#create-an-overlay-network) with the following settings:
 
     - **Name**: `vswitch1` and `vswitch2`
     - **Type**: `OverlayNetwork`
 
 1. Create a VPC named `vpc-1`.
-
-    Harvester creates an isolated network space that is ready for subnet creation. 
 
 1. Create two subnets in `vpc-1` with the following settings:
 
@@ -324,9 +311,9 @@ The following are the benefits of enabling the **Private Subnet** setting:
 
 The `natOutgoing` setting enables network address translation (NAT) for traffic leaving the subnet and going to destinations outside the VPC. This setting is disabled by default. To enable it, you must edit the subnet's YAML configuration and set the value to `natOutgoing: true`.
 
-#### Sample `natOutgoing` Verification
+#### Sample `natOutgoing` Configuration and Verification
 
-1. Create a virtual machine network with the following settings:
+1. [Create an overlay network](./harvester-network.md#create-an-overlay-network) with the following settings:
 
     - **Name**: `vswitch-external`
     - **Type**: `OverlayNetwork`
@@ -474,9 +461,9 @@ If a subnet uses a specific range that is not covered by the VPC CIDR, the assoc
 
 For more information about VPC peering prerequisites and configuration, see [VPC Peering](https://kubeovn.github.io/docs/v1.13.x/en/vpc/vpc-peering) in the Kube-OVN documentation.
 
-#### Sample VPC Peering Verification
+#### Sample VPC Peering Configuration and Verification
 
-1. Create two virtual machine networks with the following settings:
+1. [Create two overlay networks](./harvester-network.md#create-an-overlay-network) with the following settings:
 
     - **Name**: `vswitch3` and `vswitch4`
     - **Type**: `OverlayNetwork`
