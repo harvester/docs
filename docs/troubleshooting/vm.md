@@ -461,7 +461,7 @@ https://github.com/harvester/harvester/issues/6644
 
 #### Description
 
-The IP address field of the Virtual Machines screen on the Harvester UI is not displayed whenever VM pod interface named podxxxx acquires a IPv6 link local address.
+The IP address of the virtual machine is missing from the Harvester UI whenever the `pod` network interface of the `virt-launcher` pod acquires a IPv6 link local address.
 
 #### Analysis
 
