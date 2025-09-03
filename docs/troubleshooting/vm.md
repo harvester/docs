@@ -508,7 +508,7 @@ However, there are cases where this issue may affect integration with Rancher, w
 
 ### Issue Description
 
-The IP address field of the Virtual Machines screen on the Harvester UI disappers and appears intermittently at regular intervals for a newly created Virtual Machine.
+The IP address of the newly created virtual machines disappear and appear intermittently at regular intervals on the Harvester UI.
 
 ### Issue Analysis
 
