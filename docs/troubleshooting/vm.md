@@ -487,7 +487,7 @@ $ ip a
 The workaround is to disable ipv6 in the kernel parameters of Harvester using the following.
 https://docs.harvesterhci.io/v1.6/troubleshooting/os/#how-to-permanently-edit-kernel-parameters
 
-In the above example, in place of nomodeset, add ipv6.disable=1 and reboot the nodes to prevent VM pod interfaces from acquiring a link local IPv6 address.
+In the above example, add `ipv6.disable=1` and reboot the nodes to prevent VM pod interfaces from acquiring a link local IPv6 address.
 
 
 #### Related Issue
