@@ -468,19 +468,26 @@ The IP address of the virtual machine is missing from the Harvester UI whenever 
 QEMU guest agent is responsible for reporting the interface details and OS information from the vm guest OS to the Virtual Machine Instance which is displayed in the Harvester UI.
 During the issue, the VM pod interface gets a IPv6 link local address and if this address is updated to the Virtual Machine Instance first, then IPv4 address from QEMU guest agent will not be
 updated to the Virtual Machine Instance due to an upstream kubevirt bug. You can check the IP address of the interface using the following output which will only display the IPv6 link local
-address.Harvester UI filters out only IPv4 address and displays nothing on the screen in this case.
+address:
 
 
 ```shell
 $ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].ipAddress}'
 ```
 
-Check the ip address on the pod interface named podxxxx of the VM created using the following command which matches the ipv6 address updated in the Virtual Machine Instance.
+Check the ip address on the `pod` interface of the VM using the following command which matches the ipv6 address updated in the Virtual Machine Instance.
 
 ```shell
-$ kubectl exec -it -n <PODNAMESPACE> <PODNAME> -- /bin/bash
-$ ip a
+$ kubectl exec -it -n <namespace> <pod-name> -- /bin/bash -c "ip a show label pod\*"
 ```
+:::info
+
+Generally, this is a UI issue with no impact on the virtual machine operation and uptime. The virtual machine is still accessible via SSH.
+To get the IPv4 address assigned to the VM from guest OS, `Open in Serial Console` next to the VM in Harvester UI and execute `ip a` inside the guest OS.
+
+However, there are cases where this issue may affect integration with Rancher, where the provisioning and joining of the nodes in the guest cluster times out.
+
+:::
 
 #### Workaround
 
@@ -489,28 +496,19 @@ https://docs.harvesterhci.io/v1.6/troubleshooting/os/#how-to-permanently-edit-ke
 
 In the above example, add `ipv6.disable=1` and reboot the nodes to prevent VM pod interfaces from acquiring a link local IPv6 address.
 
-
 #### Related Issue
 
 https://github.com/harvester/harvester/issues/6955
 
 https://github.com/kubevirt/kubevirt/issues/12697
 
-:::info
-
-Generally, this is an UI issue with no impact on the virtual machine operation and uptime. The virtual machine is still accessible via SSH.
-
-However, there are cases where this issue may affect integration with Rancher, where the provisioning and joining of the nodes in the guest cluster timed out.
-
-:::
-
 ### Virtual Machine IP Address Not Displayed Intermittently
 
-### Issue Description
+#### Description
 
 The IP address of the newly created virtual machines disappear and appear intermittently at regular intervals on the Harvester UI.
 
-### Issue Analysis
+#### Analysis
 
 QEMU guest agent is responsible for reporting the interface details and guest OS information from the vm guest OS to the Virtual Machine Instance which is displayed by the Harvester UI.
 This issue happens when the virtual machine instance is updated with domain data containing empty network interfaces due to an upstream KubeVirt issue.
@@ -525,24 +523,23 @@ To reproduce the issue, execute the following command and the output of the ipAd
 ```shell
 $ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].ipAddress}'
 ```
+:::info
 
-### Workaround
+The issue does not impact the operation and uptime of the virtual machine. Users can still SSH into the VM using the IPv4 address assigned to the VM’s network interface within the guest OS.
+To get the IPv4 address assigned to the VM from guest OS, `Open in Serial Console` next to the VM in Harvester UI and execute `ip a` inside the guest OS.
+
+:::
+
+#### Workaround
 
 There is no workaround for this issue.But the following upstream fix has optimized the code to avoid unnecessary updates from qemu guest agent which could possibly avoid happening of this issue.
 https://github.com/kubevirt/kubevirt/pull/13624
 
-
-### Related Issue
+#### Related Issue
 
 https://github.com/harvester/harvester/issues/3990
 
 https://github.com/kubevirt/kubevirt/issues/12698
-
-:::info
-
-The issue does not impact the operation and uptime of the virtual machine. Users can still SSH into the VM using the IPv4 address assigned to the VM’s network interface within the guest OS.
-
-:::
 
 ## Unschedulable Virtual Machine
 
