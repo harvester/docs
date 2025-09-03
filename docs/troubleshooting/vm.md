@@ -498,7 +498,9 @@ https://github.com/kubevirt/kubevirt/issues/12697
 
 :::info
 
-Sometimes, the issue is limited to Harvester not displaying the IP address in the UI. Other times, it also affects Rancher, which may fail or timeout to provision the nodes in the cluster when Harvester is missing the ipv4 address. Despite this, users can still SSH into the VM using the IPv4 address assigned to the VM’s network interface within the guest OS.
+Generally, this is an UI issue with no impact on the virtual machine operation and uptime. The virtual machine is still accessible via SSH.
+
+However, there are cases where this issue may affect integration with Rancher, where the provisioning and joining of the nodes in the guest cluster timed out.
 
 :::
 
