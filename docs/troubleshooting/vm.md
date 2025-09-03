@@ -540,7 +540,7 @@ https://github.com/kubevirt/kubevirt/issues/12698
 
 :::info
 
-The issue is limited to Harvester not displaying the IP address intermittently in the UI. Users can still SSH into the VM using the IPv4 address assigned to the VM’s network interface within the guest OS.
+The issue does not impact the operation and uptime of the virtual machine. Users can still SSH into the VM using the IPv4 address assigned to the VM’s network interface within the guest OS.
 
 :::
 
