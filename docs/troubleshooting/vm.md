@@ -457,7 +457,7 @@ After deleting the directory, you must restart the virtual machine so that cloud
 
 https://github.com/harvester/harvester/issues/6644
 
-### Issue 2
+### IPv6 Race Condition Between virt-launcher Pod and Guest OS
 
 #### Description
 
