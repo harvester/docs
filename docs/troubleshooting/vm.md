@@ -417,7 +417,7 @@ https://github.com/longhorn/longhorn/issues/8009
 
 ## Virtual Machine IP Address Not Displayed
 
-### Issue 1
+### The `qemu-guest-agent` Package Is Not Installed
 
 #### Description
 
