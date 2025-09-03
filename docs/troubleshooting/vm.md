@@ -512,7 +512,7 @@ The IP address of the newly created virtual machines disappear and appear interm
 
 ### Issue Analysis
 
-Qemu guest agent is responsible for notifying the interface details and guest os info from the vm guest os to the Virtual Machine Instance which is displayed by the Harvester UI.
+QEMU guest agent is responsible for reporting the interface details and guest OS information from the vm guest OS to the Virtual Machine Instance which is displayed by the Harvester UI.
 During the issue, qemu guest agent is able to get the network information and update the status to the Virtual Machine Instance but sometimes domain Info holding the network interface details becomes empty during the updates.
 This problem is due to an upstream kubevirt issue occuring specifically on alma linux 9 and rocky linux 9 guest os version.
 
