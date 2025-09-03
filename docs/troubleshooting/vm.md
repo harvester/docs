@@ -504,7 +504,7 @@ However, there are cases where this issue may affect integration with Rancher, w
 
 :::
 
-## Virtual Machine IP Address Not Displayed intermittently
+### Virtual Machine IP Address Not Displayed Intermittently
 
 ### Issue Description
 
