@@ -513,8 +513,9 @@ The IP address of the newly created virtual machines disappear and appear interm
 ### Issue Analysis
 
 QEMU guest agent is responsible for reporting the interface details and guest OS information from the vm guest OS to the Virtual Machine Instance which is displayed by the Harvester UI.
-During the issue, qemu guest agent is able to get the network information and update the status to the Virtual Machine Instance but sometimes domain Info holding the network interface details becomes empty during the updates.
-This problem is due to an upstream kubevirt issue occuring specifically on alma linux 9 and rocky linux 9 guest os version.
+This issue happens when the virtual machine instance is updated with domain data containing empty network interfaces due to an upstream KubeVirt issue.
+
+This is more commonly seen in Alma Linux 9 and Rocky Linux 9 where there are frequent file system information updates from `qemu-ga` in respond to polling threads from the `virt-launcher` pod.
 
 This happens whenever there are frequent updates from qemu-ga on any of the guest commands polled from virt-launcher.This is seen with alma-linux/rocky linux guest OSs in particular because there are frequent changes in the information shared
 from qemu-ga of alma-linux especially the file system info.This issue is possible on any vm guest os which will have frequent updates from qemu-ga to the virt-launcher during the polling thread.
