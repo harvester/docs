@@ -72,7 +72,7 @@ Before you can make use of Harvester's **Backup & Snapshot** features, you need 
 
 Backup currently only works with the Longhorn v1 Data Engine. If you are using other storage providers, you can skip the **Backup VolumeSnapshot Class Name** configuration.
 
-For more information, see [VM Backup Compatibility](../../versioned_docs/version-v1.4/advanced/csidriver.md#vm-backup-compatibility).
+For more information, see [VM Backup Compatibility](https://docs.harvesterhci.io/v1.4/advanced/csidriver#vm-backup-compatibility).
 
 :::
 
