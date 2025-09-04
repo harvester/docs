@@ -329,7 +329,7 @@ For more information, see [auto-rotate-rke2-certs](advanced/settings.md/#auto-ro
 
 ## VM Backup Compatibility
 
-In Harvester v1.4.2 and later versions, you may encounter certain limitations when creating and restoring [backups that involve external storage](../../versioned_docs/version-v1.4/advanced/csidriver.md#vm-backup-compatibility)
+In Harvester v1.4.2 and later versions, you may encounter certain limitations when creating and restoring [backups that involve external storage](https://docs.harvesterhci.io/v1.4/advanced/csidriver#vm-backup-compatibility)
 
 ## Longhorn Manager Crashes Due to Backing Image Eviction
 
