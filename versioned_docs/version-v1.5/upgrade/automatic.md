@@ -165,7 +165,7 @@ Check out the available [`upgrade-config` setting](../advanced/settings.md#upgra
 1. Add the necessary annotations.
 
     - [minCertsExpirationInDay Annotation](#mincertsexpirationinday-annotation)
-    - [skipGarbageCollectionThresholdCheck Annotation](skipgarbagecollectionthresholdcheck-annotation)
+    - [skipGarbageCollectionThresholdCheck Annotation](#skipgarbagecollectionthresholdcheck-annotation)
 
 1. Run `kubectl create -f v1.5.0.yaml` to create the version.
 
