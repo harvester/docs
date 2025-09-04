@@ -436,7 +436,7 @@ There is no `one-fit-all` solution.
 
 :::important
 
-If you have set the `Reserved Memory` field for each VM and plan to keep the legacy [Reserved Memory](../../versioned_docs/version-v1.3/vm/create-vm.md#reserved-memory), after the cluster is upgraded to Harvester v1.4.0, you can set the `additional-guest-memory-overhead-ratio` setting to `"0"`.
+If you have set the `Reserved Memory` field for each VM and plan to keep the legacy [Reserved Memory](https://docs.harvesterhci.io/v1.3/vm/index#reserved-memory), after the cluster is upgraded to Harvester v1.4.0, you can set the `additional-guest-memory-overhead-ratio` setting to `"0"`.
 
 Changing the `additional-guest-memory-overhead-ratio` setting affects the VMs per following rules:
 
