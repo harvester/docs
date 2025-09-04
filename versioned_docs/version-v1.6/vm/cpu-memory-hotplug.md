@@ -26,7 +26,7 @@ _Available as of v1.6.0_
 
 :::note
 
-For ARM64, only Memory Hotplug is supported, a CPU Hotplug operation will require a restart.
+ARM64 architecture only supports memory hotplug. CPU hotplug operations require you to restart the virtual machine.
 
 :::
 
