@@ -465,11 +465,9 @@ The Harvester UI does not display the IP address of the virtual machine whenever
 
 #### Analysis
 
-QEMU guest agent is responsible for reporting the interface details and OS information from the vm guest OS to the Virtual Machine Instance which is displayed in the Harvester UI.
-During the issue, the VM pod interface gets a IPv6 link local address and if this address is updated to the Virtual Machine Instance first, then IPv4 address from QEMU guest agent will not be
-updated to the Virtual Machine Instance due to an upstream kubevirt bug. You can check the IP address of the interface using the following output which will only display the IPv6 link local
-address:
+The QEMU guest agent is responsible for reporting information about the guest operating system, including interface details, to the virtual machine instance for displaying on the Harvester UI. The issue occurs when the virtual machine's pod interface acquires an IPv6 link-local address and reports it to the virtual machine instance before the QEMU guest agent can provide its own information. Once this happens, the IPv4 address from the QEMU guest agent is never reported due to a bug in KubeVirt.
 
+You can check the IP address of the interface using the following steps:
 
 ```shell
 $ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].ipAddress}'
