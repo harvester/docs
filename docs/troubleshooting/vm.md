@@ -528,10 +528,11 @@ $ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].ipAdd
 ```
 
 The `ipAddress` field may be empty when you run the command.
-:::info
+To retrieve the assigned IPv4 address, open the virtual machine's serial console and run `ip a` inside the guest operating system.
 
-The issue does not impact the operation and uptime of the virtual machine. Users can still SSH into the VM using the IPv4 address assigned to the VM’s network interface within the guest OS.
-To get the IPv4 address assigned to the VM from guest OS, `Open in Serial Console` next to the VM in Harvester UI and execute `ip a` inside the guest OS.
+:::note
+
+This issue generally does not affect the virtual machine's operations and uptime. You can still access the virtual machine using SSH and its network interface's IPv4 address.
 
 :::
 
