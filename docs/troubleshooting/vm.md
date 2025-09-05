@@ -514,10 +514,9 @@ The IP address of new virtual machines intermittently disappears and reappears o
 
 #### Analysis
 
-QEMU guest agent is responsible for reporting the interface details and guest OS information from the vm guest OS to the Virtual Machine Instance which is displayed by the Harvester UI.
-This issue happens when the virtual machine instance is updated with domain data containing empty network interfaces due to an upstream KubeVirt issue.
+The QEMU guest agent is responsible for reporting information about the guest operating system, including interface details, to the virtual machine instance for displaying on the Harvester UI. The issue occurs when the virtual machine instance is updated with domain data that contain empty network interfaces, which is caused by an upstream KubeVirt issue.
 
-This is more commonly seen in Alma Linux 9 and Rocky Linux 9 where there are frequent file system information updates from `qemu-ga` in respond to polling threads from the `virt-launcher` pod.
+This behavior is more commonly observed in Alma Linux 9 and Rocky Linux 9, wherein the QEMU guest agent frequently updates file system information in response to polling threads from the `virt-launcher` pod.
 
 This happens whenever there are frequent updates from qemu-ga on any of the guest commands polled from virt-launcher.This is seen with alma-linux/rocky linux guest OSs in particular because there are frequent changes in the information shared
 from qemu-ga of alma-linux especially the file system info.This issue is possible on any vm guest os which will have frequent updates from qemu-ga to the virt-launcher during the polling thread.
