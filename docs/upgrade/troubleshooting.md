@@ -1,18 +1,18 @@
 ---
-sidebar_position: 14
+sidebar_position: 15
 sidebar_label: Troubleshooting
 title: "Troubleshooting"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/upgrade/troubleshooting"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/upgrade/troubleshooting"/>
 </head>
 
 ## Overview
 
 Here are some tips to troubleshoot a failed upgrade:
 
-- Check [version-specific upgrade notes](./automatic.md#upgrade-support-matrix). You can click the version in the support matrix table to see if there are any known issues.
+- Check [version-specific upgrade notes](./automatic.md#upgrade-paths). You can click the version in the support matrix table to see if there are any known issues.
 - Dive into the upgrade [design proposal](https://github.com/harvester/harvester/blob/master/enhancements/20220413-zero-downtime-upgrade.md). The following section briefly describes phases within an upgrade and possible diagnostic methods.
 
 ## Upgrade Flow
@@ -93,7 +93,7 @@ If the upgrade fails at this point, you must generate a [support bundle](../trou
 The Harvester controller creates the following jobs on each node:
 
 - Multi-node clusters:
-  - `pre-drain` job: Live-migrates or shuts down virtual machines on the node. Once completed, the embedded Rancher service upgrades the RKE2 runtime on the node.
+  - `pre-drain` job: [Live-migrates or shuts down virtual machines](./automatic.md#virtual-machine-management-through-the-upgrade) on the node. Once completed, the embedded Rancher service upgrades the RKE2 runtime on the node.
   - `post-drain` job: Upgrades and reboots the operating system.
 - Single-node clusters:
   - `single-node-upgrade` job: Upgrades the operating system and RKE2 runtime. The job name uses the format `hvst-upgrade-xxx-single-node-upgrade-<hostname>`.

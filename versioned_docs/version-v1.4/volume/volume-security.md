@@ -8,7 +8,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/volume/volume-security"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/volume/volume-security"/>
 </head>
 
 _Available as of v1.4.0_
@@ -46,7 +46,7 @@ Prepare the following resources:
 
   :::
 
-- StorageClass: Images are encrypted using Longhorn, so required fields must be passed to the Longhorn CSI Driver. You can specify the encryption secret when creating a StorageClass. For more information, see [Image StorageClass](./upload-image#image-storageclass). 
+- StorageClass: Images are encrypted using Longhorn, so required fields must be passed to the Longhorn CSI Driver. You can specify the encryption secret when creating a StorageClass. For more information, see [Image StorageClass](../image/upload-image.md#image-storageclass). 
 
   ![](/img/v1.4/image/create-storage-class.png)
 

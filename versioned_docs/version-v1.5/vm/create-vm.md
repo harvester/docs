@@ -15,7 +15,7 @@ description: Create one or more virtual machines from the Virtual Machines page.
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/vm/index"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/vm/index"/>
 </head>
 
 ## How to Create a VM
@@ -36,7 +36,7 @@ Please refer to [this page](./create-windows-vm.md) for creating Windows virtual
 1. The VM Name is a required field.
 1. (Optional) VM template is optional, you can choose `iso-image`, `raw-image` or `windows-iso-image` template to speed up your VM instance creation.
 1. On the **Basics** tab, configure the following settings:
-    - **CPU** and **Memory**: You can allocate a maximum of **254** vCPUs. If virtual machines are not expected to fully consume the allocated resources most of the time, you can use the [`overcommit-config`](../advanced/settings.md#overcommit-config) setting to optimize physical resource allocation.
+    - **CPU** and **Memory**: You can allocate a maximum of **254** vCPUs. If virtual machines are not expected to fully consume the allocated resources most of the time, you can use the [`overcommit-config`](../advanced/settings.md#overcommit-config) setting to optimize physical resource allocation. As a best practice, the number of virtual CPUs (vCPUs) allocated per virtual machine should not exceed the physical processor threads available on the host.
     - **SSHKey**: Select SSH keys or upload new keys.
 1. Select a custom VM image on the **Volumes** tab. The default disk will be the root disk. You can add more disks to the VM.
 1. To configure networks, go to the **Networks** tab.

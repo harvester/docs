@@ -5,7 +5,7 @@ title: "Monitoring"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/troubleshooting/monitoring"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/troubleshooting/monitoring"/>
 </head>
 
 The following sections contain tips to troubleshoot Harvester Monitoring.
@@ -652,7 +652,7 @@ The Harvester pod logs ('harvester-system/harvester' deployment) indicate that t
 
 ### Root Cause
 
-When you make changes to the [storage-network](../advanced/storagenetwork.md#harvester-storage-network-setting) setting, the Harvester controller waits for the attached volumes to be detached before applying the changes. In addition, the controller automatically terminates the pods related to Prometheus, Alertmanager, and Grafana because those pods use volumes to store data.
+When you make changes to the [storage-network](../advanced/storagenetwork.md#storage-network-setting) setting, the Harvester controller waits for the attached volumes to be detached before applying the changes. In addition, the controller automatically terminates the pods related to Prometheus, Alertmanager, and Grafana because those pods use volumes to store data.
 
 This process usually takes a short time to complete, but can be disrupted when the following occur:
 
@@ -664,7 +664,7 @@ This process usually takes a short time to complete, but can be disrupted when t
 
 1. Disable the `rancher-monitoring` add-on.
 
-1. Check if the [storage-network](../advanced/storagenetwork.md#harvester-storage-network-setting) setting is enabled or disabled.
+1. Check if the [storage-network](../advanced/storagenetwork.md#storage-network-setting) setting is enabled or disabled.
 
 1. Check for error indicators in the Harvester pod logs. If volumes are still attached, stop the related virtual machines until no errors appear after the `storage network change` message.
 

@@ -10,8 +10,9 @@ modifying the correct files:
 
 | Path                                 | Version       | URL         |
 | ------------------------------------ | ------------- | ----------- |
-| docs/hello.md                        | v1.6 (Dev)    | /v1.6/hello |
-| versioned_docs/version-v1.5/hello.md | v1.5 (Latest) | /v1.5/hello |
+| docs/hello.md                        | v1.7 (Dev)    | /v1.7/hello |
+| versioned_docs/version-v1.6/hello.md | v1.6 (Latest) | /v1.6/hello |
+| versioned_docs/version-v1.5/hello.md | v1.5          | /v1.5/hello |
 | versioned_docs/version-v1.4/hello.md | v1.4          | /v1.4/hello |
 | versioned_docs/version-v1.3/hello.md | v1.3          | /v1.3/hello |
 | versioned_docs/version-v1.2/hello.md | v1.2          | /v1.2/hello |
@@ -110,6 +111,12 @@ docs:
             label: "dev", // Current version label
             baseUrl: "/dev/api", // Leading slash is important
             versions: {
+              "v1.6": {
+                specPath: "api/v1.6-swagger.json",
+                outputDir: "versioned_docs/version-v1.6/api", // No trailing slash
+                label: "v1.6",
+                baseUrl: "/v1.6/api", // Leading slash is important
+              },
               "v1.5": {
                 specPath: "api/v1.5-swagger.json",
                 outputDir: "versioned_docs/version-v1.5/api", // No trailing slash

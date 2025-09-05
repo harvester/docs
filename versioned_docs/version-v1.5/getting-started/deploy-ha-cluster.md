@@ -12,7 +12,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/getting-started/deploy-ha-cluster"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/getting-started/deploy-ha-cluster"/>
 </head>
 
 A [Harvester cluster](../getting-started/glossary.md#harvester-cluster) with three or more nodes is required to fully realize multi-node features such as high availability. Certain versions of Harvester allow you to create clusters with two management nodes and one [witness node](../advanced/witness.md) (and optionally, one or more worker nodes). You can also create [single-node clusters](../advanced/singlenodeclusters.md) that support most Harvester features (excluding high availability, multi-replica support, and live migration). 
@@ -80,7 +80,7 @@ Networking in Harvester involves three major concepts:
     
     Each VM network is linked to a specific cluster network, which is used for transmission of VM traffic. You can create either a [VLAN network](../networking/harvester-network.md#vlan-network) or an [untagged network](../networking/harvester-network.md#untagged-network) based on your requirements, such as traffic isolation, network segmentation, ease of management, or alignment with the external network environment. 
 
-Before you create VMs, create the necessary networks. If more than one network interface is attached to each cluster node, consider [creating custom cluster networks](../networking/clusternetwork.md#how-to-create-a-new-cluster-network) and network configurations for better traffic isolation. Otherwise, you can only use the management network for transmission of VM traffic. Next, [create a VM network](../networking/harvester-network.md#create-a-vm-network) that is linked to either `mgmt` or any of the custom cluster networks that you created. 
+Before you create VMs, create the necessary networks. If more than one network interface is attached to each cluster node, consider [creating custom cluster networks](../networking/clusternetwork.md#create-a-new-cluster-network) and network configurations for better traffic isolation. Otherwise, you can only use the management network for transmission of VM traffic. Next, [create a VM network](../networking/harvester-network.md#create-a-vm-network) that is linked to either `mgmt` or any of the custom cluster networks that you created. 
 
 ## 8. Import VM images. 
 

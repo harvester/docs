@@ -5,7 +5,7 @@ title: "vGPU Support"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/advanced/vgpusupport"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/vgpusupport"/>
 </head>
 
 _Available as of v1.3.0_

@@ -12,7 +12,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/networking/index"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/networking/index"/>
 </head>
 
 ## Concepts
@@ -183,7 +183,7 @@ The following sections outline the steps you must perform to change the MTU of a
 
 #### Change the MTU of a Network Configuration with No Attached Storage Network
 
-In this scenario, the [storage network](../advanced/storagenetwork.md#harvester-storage-network-setting) is neither enabled nor attached to the target cluster network.
+In this scenario, the [storage network](../advanced/storagenetwork.md#storage-network-setting) is neither enabled nor attached to the target cluster network.
 
 :::caution
 
@@ -341,7 +341,7 @@ Harvester cannot be held responsible for any damage or loss of data that may occ
 
 #### Change the MTU of a Network Configuration with an Attached Storage Network
 
-In this scenario, the [storage network](../advanced/storagenetwork.md#harvester-storage-network-setting) is enabled and attached to the target cluster network.
+In this scenario, the [storage network](../advanced/storagenetwork.md#storage-network-setting) is enabled and attached to the target cluster network.
 
 The storage network is used by `driver.longhorn.io`, which is Harvester's default CSI driver. Longhorn is responsible for provisioning [root volumes](../vm/create-vm.md#volumes), so changing the MTU affects all virtual machines.
 
@@ -360,7 +360,7 @@ If you must change the MTU, perform the following steps:
 
 1. Disable the [storage network](../advanced/storagenetwork.md#disable-the-storage-network).
 
-    Allow some time for the setting to be disabled, and then [verify that the change was applied](../advanced/storagenetwork.md#verify-configuration-is-completed).
+    Allow some time for the setting to be disabled, and then [verify that the change was applied](../advanced/storagenetwork.md#post-configuration-steps).
 
 1. Check the network configurations of the target cluster network.
 
@@ -452,7 +452,7 @@ If you must change the MTU, perform the following steps:
 
 1. Enable and configure the Harvester [storage network setting](../advanced/storagenetwork.md#enable-the-storage-network), ensuring that the [prerequisites](../advanced/storagenetwork.md#prerequisites) are met.
 
-1. Allow some time for the setting to be enabled, and then [verify that the change was applied](../advanced/storagenetwork.md#verify-configuration-is-completed).
+1. Allow some time for the setting to be enabled, and then [verify that the change was applied](../advanced/storagenetwork.md#post-configuration-steps).
 
 1. Edit the YAML of all virtual machine networks that are attached to the target cluster network.
 

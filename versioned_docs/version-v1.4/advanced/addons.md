@@ -5,7 +5,7 @@ title: "Addons"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/advanced/addons"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/addons"/>
 </head>
 
 Harvester makes optional functionality available as Addons.

@@ -5,7 +5,7 @@ title: "Local Storage Support"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.5/advanced/addons/lvm-local-storage"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/addons/lvm-local-storage"/>
 </head>
 
 _Available as of v1.4.0_
@@ -155,7 +155,7 @@ You can also create a new virtual machine with the volume of the LVM StorageClas
 
   ![](/img/v1.2/advanced/csi-driver-config-external.png)
 
-In Harvester v1.4.2 and later versions, you may encounter certain limitations when creating and restoring [backups that involve external storage](../../version-v1.4/advanced/csidriver.md#vm-backup-compatibility)
+In Harvester v1.4.2 and later versions, you may encounter certain limitations when creating and restoring [backups that involve external storage](./../csidriver.md#vm-backup-compatibility)
 
 1. On the **Virtual Machines** screen, select the target virtual machine, and then select **⋮** > **Take Virtual Machine Snapshot**.
 
