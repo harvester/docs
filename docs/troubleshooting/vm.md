@@ -521,11 +521,13 @@ This behavior is more commonly observed in Alma Linux 9 and Rocky Linux 9, where
 This happens whenever there are frequent updates from qemu-ga on any of the guest commands polled from virt-launcher.This is seen with alma-linux/rocky linux guest OSs in particular because there are frequent changes in the information shared
 from qemu-ga of alma-linux especially the file system info.This issue is possible on any vm guest os which will have frequent updates from qemu-ga to the virt-launcher during the polling thread.
 
-To reproduce the issue, execute the following command and the output of the ipAddress field will be empty intermittently.
+To check if the issue exists in your environment, run the following command at different times:
 
 ```shell
 $ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].ipAddress}'
 ```
+
+The `ipAddress` field may be empty when you run the command.
 :::info
 
 The issue does not impact the operation and uptime of the virtual machine. Users can still SSH into the VM using the IPv4 address assigned to the VM’s network interface within the guest OS.
