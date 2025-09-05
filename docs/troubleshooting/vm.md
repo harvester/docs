@@ -467,7 +467,7 @@ The Harvester UI does not display the IP address of the virtual machine whenever
 
 The QEMU guest agent is responsible for reporting information about the guest operating system, including interface details, to the virtual machine instance for displaying on the Harvester UI. The issue occurs when the virtual machine's pod interface acquires an IPv6 link-local address and reports it to the virtual machine instance before the QEMU guest agent can provide its own information. Once this happens, the IPv4 address from the QEMU guest agent is never reported due to a bug in KubeVirt.
 
-You can check the IP address of the interface using the following steps:
+You can check the IP address of the pod interface and the virtual machine instance using the following steps:
 
 1. Retrieve the IP address of the virtual machine instance.
 
@@ -484,13 +484,12 @@ You can check the IP address of the interface using the following steps:
   ```
 
   The output matches the IPv6 address from the virtual machine instance.
-:::info
 
 To retrieve the assigned IPv4 address, open the virtual machine's serial console and run `ip a` inside the guest operating system.
 
 :::note
 
-This issue generally does not affect the virtual machine's operations and uptime. You can still access the virtual machine via SSH.
+This issue generally does not affect the virtual machine's operations and uptime. You can still access the virtual machine via SSH using its network interface's IPv4 address.
 
 In some cases, this issue may impact Rancher integration, causing the provisioning and joining of nodes in the guest cluster to time out.
 
@@ -516,10 +515,7 @@ The IP address of new virtual machines intermittently disappears and reappears o
 
 The QEMU guest agent is responsible for reporting information about the guest operating system, including interface details, to the virtual machine instance for displaying on the Harvester UI. The issue occurs when the virtual machine instance is updated with domain data that contain empty network interfaces, which is caused by an upstream KubeVirt issue.
 
-This behavior is more commonly observed in Alma Linux 9 and Rocky Linux 9, wherein the QEMU guest agent frequently updates file system information in response to polling threads from the `virt-launcher` pod.
-
-This happens whenever there are frequent updates from qemu-ga on any of the guest commands polled from virt-launcher.This is seen with alma-linux/rocky linux guest OSs in particular because there are frequent changes in the information shared
-from qemu-ga of alma-linux especially the file system info.This issue is possible on any vm guest os which will have frequent updates from qemu-ga to the virt-launcher during the polling thread.
+This behavior is more commonly observed in Alma Linux 9 and Rocky Linux 9, wherein the QEMU guest agent frequently updates file system information to the virtual machine instance.
 
 To check if the issue exists in your environment, run the following command at different times:
 
@@ -528,24 +524,22 @@ $ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].ipAdd
 ```
 
 The `ipAddress` field may be empty when you run the command.
+
 To retrieve the assigned IPv4 address, open the virtual machine's serial console and run `ip a` inside the guest operating system.
 
 :::note
 
-This issue generally does not affect the virtual machine's operations and uptime. You can still access the virtual machine using SSH and its network interface's IPv4 address.
+This issue generally does not affect the virtual machine's operations and uptime. You can still access the virtual machine via SSH using its network interface's IPv4 address.
 
 :::
 
 #### Workaround
 
-There is no workaround for this issue.But the following upstream fix has optimized the code to avoid unnecessary updates from qemu guest agent which could possibly avoid happening of this issue.
-https://github.com/kubevirt/kubevirt/pull/13624
+While no direct workaround is available for this issue, an [upstream fix](https://github.com/kubevirt/kubevirt/pull/13624) has optimized the code to reduce unnecessary updates from the QEMU guest agent. This enhancement may prevent the issue from occurring.
 
-#### Related Issue
+#### Related Issues
 
-https://github.com/harvester/harvester/issues/3990
-
-https://github.com/kubevirt/kubevirt/issues/12698
+[#3990](https://github.com/harvester/harvester/issues/3990) and [#12698](https://github.com/kubevirt/kubevirt/issues/12698)
 
 ## Unschedulable Virtual Machine
 
