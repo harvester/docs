@@ -498,10 +498,9 @@ In some cases, this issue may impact Rancher integration, causing the provisioni
 
 #### Workaround
 
-The workaround is to disable ipv6 in the kernel parameters of Harvester using the following.
-https://docs.harvesterhci.io/v1.6/troubleshooting/os/#how-to-permanently-edit-kernel-parameters
+The workaround is to disable IPv6 in the [kernel parameters](./os.md#how-to-permanently-edit-kernel-parameters) of Harvester.
 
-In the above example, add `ipv6.disable=1` and reboot the nodes to prevent VM pod interfaces from acquiring a link local IPv6 address.
+In the above example, you must add `ipv6.disable=1` and reboot the nodes to prevent virtual machine pod interfaces from acquiring an IPv6 link-local address.
 
 #### Related Issue
 
