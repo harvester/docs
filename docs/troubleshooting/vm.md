@@ -506,11 +506,11 @@ In the above example, you must add `ipv6.disable=1` and reboot the nodes to prev
 
 [#6955](https://github.com/harvester/harvester/issues/6955) and [#12697](https://github.com/kubevirt/kubevirt/issues/12697)
 
-### Virtual Machine IP Address Not Displayed Intermittently
+### Virtual Machine IP Address Intermittently Not Displayed
 
 #### Description
 
-The IP address of the newly created virtual machines disappear and appear intermittently at regular intervals on the Harvester UI.
+The IP address of new virtual machines intermittently disappears and reappears on the Harvester UI.
 
 #### Analysis
 
