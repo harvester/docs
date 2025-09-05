@@ -457,11 +457,11 @@ After deleting the directory, you must restart the virtual machine so that cloud
 
 https://github.com/harvester/harvester/issues/6644
 
-### IPv6 Race Condition Between virt-launcher Pod and Guest OS
+### IPv6 Race Condition Between virt-launcher Pod and Guest Operating System
 
 #### Description
 
-The IP address of the virtual machine is missing from the Harvester UI whenever the `pod` network interface of the `virt-launcher` pod acquires a IPv6 link local address.
+The Harvester UI does not display the IP address of the virtual machine whenever the `virt-launcher` pod's network interface acquires an IPv6 link-local address.
 
 #### Analysis
 
