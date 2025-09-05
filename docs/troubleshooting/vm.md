@@ -469,9 +469,13 @@ The QEMU guest agent is responsible for reporting information about the guest op
 
 You can check the IP address of the interface using the following steps:
 
-```shell
-$ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].ipAddress}'
-```
+1. Retrieve the IP address of the virtual machine instance.
+
+  ```shell
+  $ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].ipAddress}'
+  ```
+
+  The output only shows the IPv6 link-local address.
 
 Check the ip address on the `pod` interface of the VM using the following command which matches the ipv6 address updated in the Virtual Machine Instance.
 
