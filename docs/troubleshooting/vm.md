@@ -484,10 +484,13 @@ $ kubectl exec -it -n <namespace> <pod-name> -- /bin/bash -c "ip a show label po
 ```
 :::info
 
-Generally, this is a UI issue with no impact on the virtual machine operation and uptime. The virtual machine is still accessible via SSH.
-To get the IPv4 address assigned to the VM from guest OS, `Open in Serial Console` next to the VM in Harvester UI and execute `ip a` inside the guest OS.
+To retrieve the assigned IPv4 address, open the virtual machine's serial console and run `ip a` inside the guest operating system.
 
-However, there are cases where this issue may affect integration with Rancher, where the provisioning and joining of the nodes in the guest cluster times out.
+:::note
+
+This issue generally does not affect the virtual machine's operations and uptime. You can still access the virtual machine via SSH.
+
+In some cases, this issue may impact Rancher integration, causing the provisioning and joining of nodes in the guest cluster to time out.
 
 :::
 
