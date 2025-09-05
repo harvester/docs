@@ -454,3 +454,129 @@ After deleting the directory, you must restart the virtual machine so that cloud
 ### Related Issue
 
 https://github.com/harvester/harvester/issues/6644
+
+## Virtual Machine IP Address Not Displayed
+
+### The `qemu-guest-agent` Package Is Not Installed
+
+#### Description
+
+The **Virtual Machines** screen on the Harvester UI does not display the IP address of a newly created or imported virtual machine.
+
+#### Analysis
+
+This issue usually occurs when the `qemu-guest-agent` package is not installed on the virtual machine. To determine if this is the root cause, check the status of the `VirtualMachineInstance` object.
+
+```shell
+$ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].infoSource}'
+```
+
+The output does not contain the string `guest-agent` when the `qemu-guest-agent` package is not installed.
+
+#### Workaround
+
+You can [install the QEMU guest agent](../vm/create-vm.md#installing-the-qemu-guest-agent) by editing the virtual machine configuration.
+
+1. On the Harvester UI, go to **Virtual Machines**.
+
+1. Locate the affected virtual machine, and then select **⋮ > Edit Config**.
+
+1. On the **Advanced Options** tab, under **Cloud Config**, select **Install guest agent**.
+
+1. Click **Save**.
+
+However, cloud-init is run only once (when the virtual machine is started for the first time). To apply new **Cloud Config** settings, you must delete the cloud-init directory in the virtual machine.
+
+```shell
+$ sudo rm -rf /var/lib/cloud/*
+```
+
+After deleting the directory, you must restart the virtual machine so that cloud-init is run again and the `qemu-guest-agent` package is installed.
+
+#### Related Issue
+
+https://github.com/harvester/harvester/issues/6644
+
+### IPv6 Race Condition Between virt-launcher Pod and Guest Operating System
+
+#### Description
+
+The Harvester UI does not display the IP address of the virtual machine whenever the `virt-launcher` pod's network interface acquires an IPv6 link-local address.
+
+#### Analysis
+
+The QEMU guest agent is responsible for reporting information about the guest operating system, including interface details, to the virtual machine instance for displaying on the Harvester UI. The issue occurs when the virtual machine's pod interface acquires an IPv6 link-local address and reports it to the virtual machine instance before the QEMU guest agent can provide its own information. Once this happens, the IPv4 address from the QEMU guest agent is never reported due to a bug in KubeVirt.
+
+You can check the IP address of the pod interface and the virtual machine instance using the following steps:
+
+1. Retrieve the IP address of the virtual machine instance.
+
+  ```shell
+  $ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].ipAddress}'
+  ```
+
+  The output only shows the IPv6 link-local address.
+
+1. Retrieve the IP address of the pod interface.
+
+  ```shell
+  $ kubectl exec -it -n <namespace> <pod-name> -- /bin/bash -c "ip a show label pod\*"
+  ```
+
+  The output matches the IPv6 address from the virtual machine instance.
+
+To retrieve the assigned IPv4 address, open the virtual machine's serial console and run `ip a` inside the guest operating system.
+
+:::note
+
+This issue generally does not affect the virtual machine's operations and uptime. You can still access the virtual machine via SSH using its network interface's IPv4 address.
+
+In some cases, this issue may impact Rancher integration, causing the provisioning and joining of nodes in the guest cluster to time out.
+
+:::
+
+#### Workaround
+
+The workaround is to disable IPv6 in the [kernel parameters](./os.md#how-to-permanently-edit-kernel-parameters) of Harvester.
+
+In the above example, you must add `ipv6.disable=1` and reboot the nodes to prevent virtual machine pod interfaces from acquiring an IPv6 link-local address.
+
+#### Related Issues
+
+[#6955](https://github.com/harvester/harvester/issues/6955) and [#12697](https://github.com/kubevirt/kubevirt/issues/12697)
+
+### Virtual Machine IP Address Intermittently Not Displayed
+
+#### Description
+
+The IP address of new virtual machines intermittently disappears and reappears on the Harvester UI.
+
+#### Analysis
+
+The QEMU guest agent is responsible for reporting information about the guest operating system, including interface details, to the virtual machine instance for displaying on the Harvester UI. The issue occurs when the virtual machine instance is updated with domain data that contain empty network interfaces, which is caused by an upstream KubeVirt issue.
+
+This behavior is more commonly observed in Alma Linux 9 and Rocky Linux 9, wherein the QEMU guest agent frequently updates file system information to the virtual machine instance.
+
+To check if the issue exists in your environment, run the following command at different times:
+
+```shell
+$ kubectl get vmi -n <NAMESPACE> <NAME> -ojsonpath='{.status.interfaces[0].ipAddress}'
+```
+
+The `ipAddress` field may be empty when you run the command.
+
+To retrieve the assigned IPv4 address, open the virtual machine's serial console and run `ip a` inside the guest operating system.
+
+:::note
+
+This issue generally does not affect the virtual machine's operations and uptime. You can still access the virtual machine via SSH using its network interface's IPv4 address.
+
+:::
+
+#### Workaround
+
+While no direct workaround is available for this issue, an [upstream fix](https://github.com/kubevirt/kubevirt/pull/13624) has optimized the code to reduce unnecessary updates from the QEMU guest agent. This enhancement may prevent the issue from occurring.
+
+#### Related Issues
+
+[#3990](https://github.com/harvester/harvester/issues/3990) and [#12698](https://github.com/kubevirt/kubevirt/issues/12698)
