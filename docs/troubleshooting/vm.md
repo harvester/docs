@@ -477,11 +477,13 @@ You can check the IP address of the interface using the following steps:
 
   The output only shows the IPv6 link-local address.
 
-Check the ip address on the `pod` interface of the VM using the following command which matches the ipv6 address updated in the Virtual Machine Instance.
+1. Retrieve the IP address of the pod interface.
 
-```shell
-$ kubectl exec -it -n <namespace> <pod-name> -- /bin/bash -c "ip a show label pod\*"
-```
+  ```shell
+  $ kubectl exec -it -n <namespace> <pod-name> -- /bin/bash -c "ip a show label pod\*"
+  ```
+
+  The output matches the IPv6 address from the virtual machine instance.
 :::info
 
 To retrieve the assigned IPv4 address, open the virtual machine's serial console and run `ip a` inside the guest operating system.
