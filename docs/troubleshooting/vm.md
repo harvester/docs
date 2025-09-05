@@ -502,11 +502,9 @@ The workaround is to disable IPv6 in the [kernel parameters](./os.md#how-to-perm
 
 In the above example, you must add `ipv6.disable=1` and reboot the nodes to prevent virtual machine pod interfaces from acquiring an IPv6 link-local address.
 
-#### Related Issue
+#### Related Issues
 
-https://github.com/harvester/harvester/issues/6955
-
-https://github.com/kubevirt/kubevirt/issues/12697
+[#6955](https://github.com/harvester/harvester/issues/6955) and [#12697](https://github.com/kubevirt/kubevirt/issues/12697)
 
 ### Virtual Machine IP Address Not Displayed Intermittently
 
