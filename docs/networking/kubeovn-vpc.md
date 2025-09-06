@@ -30,10 +30,9 @@ The following table outlines the key components of a VPC:
 | security group | Virtual firewall that controls inbound and outbound traffic per instance |
 | VPC peering | Optional peering or hybrid connections between different VPCs or on-premises networks |
 
-
 ## Harvester + Kube-OVN Integration Architecture
-The following diagram illustrates how VPCs, subnets, overlay networks, and virtual machines are logically connected in Harvester with Kube-OVN. This architecture includes public and private subnets, allowing separation of internet-facing traffic from internal resources.
 
+The following diagram illustrates how VPCs, subnets, overlay networks, and virtual machines are logically connected in Harvester with Kube-OVN. This architecture includes public and private subnets, allowing separation of internet-facing traffic from internal resources. Moreover, this architecture enables scalable, isolated L3 and L2 network structures across the cluster.
 
 ```
                                  [ VPC: vpc-1 ]
@@ -51,18 +50,14 @@ The following diagram illustrates how VPCs, subnets, overlay networks, and virtu
 [VM: vm1-vswitch1] [VM: vm2-vswitch1]                [VM: vm1-vswitch2]
 IP: 172.20.10.X     IP: 172.20.10.Y                    IP: 172.20.20.Z
 
-
-
 ```
-
-Multiple VPCs and subnets in Kube-OVN can map to overlay networks and virtual machines in Harvester. This architecture enables scalable, isolated L3 and L2 network structures across the cluster.
 
 | Component | Platform | Logical Responsibility |
 | --- | --- | --- |
-| VPC | Kube-OVN | Top-level L3 domain, manages subnet groupings |
-| Subnet | Kube-OVN | CIDR assignment, routing, gateway, firewall rules |
-| Overlay network | Harvester | L2 virtual switch (OVS bridge), mapped to subnet |
-| Virtual machine | Harvester | Runs compute workloads, connected to overlay |
+| [VPC](#vpc-settings) | Kube-OVN | Top-level L3 domain, manages subnet groupings |
+| [subnet](#subnet-settings) | Kube-OVN | CIDR assignment, routing, gateway, firewall rules |
+| [overlay network](./harvester-network.md#overlay-network-experimental) | Harvester | L2 virtual switch (OVS bridge), mapped to subnet |
+| virtual machine | Harvester | Runs compute workloads, connected to overlay network |
 
 This architecture has the following key characteristics:
 
@@ -93,7 +88,7 @@ This architecture has the following benefits:
 
 ### VPC Settings
 
-In Harvester, a VPC (Virtual Private Cloud) is a logical network container that helps manage and isolate subnets and traffic. It defines routing, NAT, and network segmentation.
+In Harvester, a virtual private cloud (VPC) is a logical network container that helps manage and isolate subnets and traffic. It defines routing, NAT, and network segmentation.
 
 Harvester provides a default VPC named `ovn-cluster`, and two associated subnets named `ovn-default` and `join` for internal Kube-OVN operations. You can create additional VPCs by clicking **Create** on the **Virtual Private Cloud** screen.
 
@@ -107,14 +102,14 @@ When creating custom VPCs, you must configure settings related to the routes def
 | General information | **Description** | Description of the VPC |
 | **Static Routes** tab | **CIDR** | Destination IP address range for the route (for example, `192.168.1.0/24`) |
 | **Static Routes** tab | **Next Hop IP** | IP address to which traffic for the CIDR should be forwarded (for example, the gateway or router IP address) |
-| **VPC Peerings** tab | **Local Connect IP** | IP address on the local VPC to be used for the peering connection. |
-| **VPC Peerings** tab | **Remote VPC** | Target remote VPC that is peered with the local VPC. |
+| **VPC Peerings** tab | **Local Connect IP** | IP address on the local VPC to be used for the peering connection |
+| **VPC Peerings** tab | **Remote VPC** | Target remote VPC that is peered with the local VPC |
 
 ![](/img/create_vpc.png)
 
 ### Subnet Settings
 
-Each subnet defines a CIDR block and gateway, and is mapped to a Harvester overlay network (virtual switch). It also includes controls for NAT and access rules.
+Each subnet defines a CIDR block and gateway, and is mapped to a Harvester [overlay network](./harvester-network.md#overlay-network-experimental) (virtual switch). It also includes controls for NAT and access rules.
 
 When creating subnets, you must configure settings that are relevant to your use case. In most cases, you can get started by just configuring the **CIDR Block**, **Gateway**, and **Provider**. The following table outlines the settings on the **Subnet** details screen:
 
@@ -123,48 +118,116 @@ When creating subnets, you must configure settings that are relevant to your use
 | General information | **Name** | Name of the subnet |
 | General information | **Description** | Description of the subnet |
 | **Basic** | **CIDR Block** | IP address range assigned to the subnet (for example, `172.20.10.0/24`) |
-| **Basic** tab | **Protocol** | The network protocol version used for this subnet (IPv4/IPv6) |
+| **Basic** tab | **Protocol** | Network protocol version used for this subnet (IPv4 or IPv6) |
 | **Basic** tab | **Provider** | Overlay network (virtual switch) to which the subnet is bound |
-| **Basic** tab | **Virtual Private Cloud** | The virtual private cloud that the subnet belongs to |
+| **Basic** tab | **Virtual Private Cloud** | Virtual private cloud that the subnet belongs to |
 | **Basic** tab | **Gateway** | IP address that acts as the default gateway for virtual machines in the subnet |
 | **Basic** tab | **Private Subnet** | Setting that restricts access to the subnet and ensures network isolation |
 | **Basic** tab | **Allow Subnets** | CIDRs that are allowed to access the subnet when **Private Subnet** is enabled |
-| **Basic** tab | **Exclude IPs** | A list of IP addresses that should not be automatically assigned |
+| **Basic** tab | **Exclude IPs** | List of IP addresses that should not be automatically assigned |
 
 ![](/img/create_subnet.png)
 
-Each created subnet comes with the `natOutgoing` as false by default and need to be changed manually. You need to edit its YAML configuration to set `natOutgoing: true` when required.
+Each created subnet has a setting called [`natOutgoing`](#natoutgoing-setting), which enables network address translation (NAT) for traffic leaving the subnet and going to destinations outside the VPC. This setting is disabled by default. To enable it, you must edit the subnet's YAML configuration and set the value to `natOutgoing: true`.
 
 ![](/img/customize_nat_outgoing.png)
 
-In a custom VPC, the subnets created are basically not able to communicate directly with the subnets under the default VPC ovn-cluster.
-Unless a VPC peering connection is properly set up between the two VPCs, enabling secure and controlled network communication between them, cross-VPC subnet communication is not possible.
-
-In other words, without VPC peering configured, subnet traffic in different VPCs is isolated and cannot exchange data directly.
+By default, subnets in a custom VPC cannot directly communicate with subnets in the default `ovn-cluster` VPC. You must establish a [VPC peering](#vpc-peering) connection to enable secure and controlled communication between VPCs. Without VPC peering, subnet traffic in each VPC remains isolated.
 
 ![](/img/vpcpeer.png)
 
+### Create a VPC
+
+Perform the following steps to create and configure a VPC.
+
+1. Enable [kubeovn-operator](../advanced/addons/kubeovn-operator.md).
+
+    The kubeovn-operator add-on deploys Kube-OVN to the Harvester cluster.
+
+    ![](/img/kubeovn-operator.png)
+
+1. [Create overlay networks](./harvester-network.md#create-an-overlay-network).
+
+    You must create a separate overlay network for each subnet that you plan to create.
+
+1. Create a VPC.
+
+    1. Go to **Networks > Virtual Private Cloud**, and then click **Create**.
+
+    1. On the **Virtual Machine Network:Create** screen, specify a unique name for the VPC.
+
+    1. Click **Create**.
+
+1. Create subnets.
+
+    1. Go to **Networks > Virtual Private Cloud**.
+
+    1. Locate the VPC you created, and then click **Create Subnet**.
+
+    1. On the **Subnet:Create** screen, configure the [settings](#subnet-settings) that are relevant to your environment. 
+
+        :::note
+
+        You must link each subnet to a dedicated overlay network. In the **Provider** field, the Harvester UI only shows overlay networks that are not linked to other subnets, automatically enforcing the one-to-one mapping.
+
+        :::
+
+    1. Click **Edit as YAML**.
+
+    1. Under `spec`, add `enableDHCP: true`. 
+    
+        This ensures that virtual machines connected to the subnet can obtain the correct default route options.
+
+    1. Click **Create**.
+
+1. Create virtual machines.
+
+    1. Configure the settings that are relevant to each virtual machine.
+
+        :::info important
+      
+        On the **Networks** tab, you must select the correct overlay network in the **Network** field.
+
+        :::
+
+    1. Click **Create**.
+
+        The virtual machine obtains its IP address from the subnet that it is connected to.
+    
+    1. Select **⋮ > Edit YAML**.
+
+    1. Change the value of `spec.domain.devices.interface.binding.name` to `managedtap`.
+
+        This ensures that the virtual machine obtains the correct DHCP options from the subnet instead of using the default DHCP server from KubeVirt.
+
+        :::caution
+
+        If you do not perform this step, the virtual machine will not have a default route. Attempts to access external destinations fail until the default route is correctly configured on the guest operating system.
+
+        For more information, see [Overlay Network Limitations](./harvester-network.md#overlay-network-experimental).
+
+        :::
+
+    1. Restart each virtual machine.
 
 ### Sample VPC Configuration and Verification
 
-1. Creat Virtual Machine Networks
+1. [Create overlay networks](./harvester-network.md#create-an-overlay-network) with the following settings:
 
-    - **Name**: `vswitch1`, `vswitch2`
+    - **Name**: `vswitch1` and `vswitch2`
     - **Type**: `OverlayNetwork`
 
-2. Creat VPC
+1. Create a VPC named `vpc-1`.
 
-    - **Name**: `vpc-1`
-
-3. Create two subnets with the following settings in `vpc-1`:
+1. Create two subnets in `vpc-1` with the following settings:
 
     | Name | CIDR | Provider | Gateway IP |
     | --- | --- | --- | --- |
     | `vswitch1-subnet` | `172.20.10.0/24`| `default/vswitch1` | `172.20.10.1` |
     | `vswitch2-subnet` | `172.20.20.0/24`| `default/vswitch2` | `172.20.20.1` |
 
+1. Create three virtual machines (`vm1-vswitch1`, `vm2-vswitch1`, and `vm1-vswitch2`) with the following settings:
 
-4. Create three virtual machines (`vm1-vswitch1`, `vm2-vswitch1`, and `vm1-vswitch2`) with the following settings:
     - **Basics** tab
       - **CPU**: `1`
       - **Memory**: `2`
@@ -181,33 +244,37 @@ In other words, without VPC peering configured, subnet traffic in different VPCs
       `    `sudo: ALL=(ALL) NOPASSWD:ALL
       `    `lock\_passwd: false
       ```
+
     :::note
 
     Once the virtual machines start running, the node displays the NTP server `0.suse.pool.ntp.org` and the IP address.
 
     :::
 
+1. Open the serial consoles of `vm1-vswitch1` and `vm1-vswitch2`, and then add a default route on each (if none exists) using the following commands:
 
-5. Open the serial consoles of `vm1-vswitch1` (`172.20.10.6`) and `vm1-vswitch2` (`172.20.20.3`), and then add a default route on each (if none exists) using the following commands:
-
-    - `vm1-vswitch1`:
+    - `vm1-vswitch1` (`172.20.10.6`):
+    
       ```
       #sudo ip route add default via 172.20.10.1 dev enp1s0
       ```
-    - `vm1-vswitch2`
+    
+    - `vm1-vswitch2` (`172.20.20.3`)
+    
       ```
       #sudo ip route add default via 172.20.20.1 dev enp1s0
       ```
 
-    If a virtual machine wants to send traffic to an unknown network (not in the local subnet), the traffic must be forwarded to the specified gateway IP configured for the connected subnet using the specified network interface. In this example, `vm1-vswitch1` must forward traffic via `172.20.10.1`, while `vm1-vswitch2` must forward traffic via `172.20.20.1`. Both virtual machines use the network interface `enp1s0` and `vm1-vswitch2` need to forward traffic via `172.20.20.1`.
+    If a virtual machine wants to send traffic to an unknown network (not in the local subnet), the traffic must be forwarded to the specified gateway IP configured for the connected subnet using the specified network interface. In this example, `vm1-vswitch1` must forward traffic via `172.20.10.1`, while `vm1-vswitch2` must forward traffic via `172.20.20.1`. Both virtual machines use the network interface `enp1s0`.
 
+1. Verify connectivity using the `ping` command.
 
-6. Verify connectivity using the `ping` command.
-    - `vm1-vswitch1` and `vm1-vswitch2` connects to the same subnet should be reachable to each other.
     - Use `vm1-vswitch1` (`172.20.10.6`) to ping `vm1-vswitch2` (`172.20.20.3`).
     - Use `vm1-vswitch2` (`172.20.20.3`) to ping `vm1-vswitch1` (`172.20.10.6`).
-    
-    If no default route exists on the VM before running the ping command, the console displays the message `ping: connect: Network is unreachable.`.
+
+    Since `vm1-vswitch1` and `vm1-vswitch2` are on the same subnet, they can communicate with each other.
+
+    If no default route exists on the virtual machine before you run the ping command, the console displays the message `ping: connect: Network is unreachable.`.
 
 ### Private Subnet Setting
 
@@ -224,44 +291,41 @@ The following are the benefits of enabling the **Private Subnet** setting:
 
 1. Go to **Networks > Virtual Private Cloud**.
 
-2. Locate `vswitch1-subnet`, and then select **⋮ > Edit Config**.
+1. Locate `vswitch1-subnet`, and then select **⋮ > Edit Config**.
 
-3. Enable the **Private Subnet** setting.
+1. Enable the **Private Subnet** setting.
 
-4. Open the serial console of `vm1-vswitch1` (`172.20.10.6`), and then ping `vm1-vswitch2` (`172.20.20.3`).
+1. Open the serial console of `vm1-vswitch1` (`172.20.10.6`), and then ping `vm1-vswitch2` (`172.20.20.3`).
 
     The ping attempt fails because the virtual machines are in different subnets.
 
-5. Return to the **Virtual Private Cloud** screen, locate `vswitch1-subnet`, and then select **⋮ > Edit Config**.
+1. Return to the **Virtual Private Cloud** screen, locate `vswitch1-subnet`, and then select **⋮ > Edit Config**.
 
-6. Add `172.20.20.0/24` to the **Allow Subnets** field.
+1. Add `172.20.20.0/24` to the **Allow Subnets** field.
 
-7. Open the serial console of `vm1-vswitch1` (`172.20.10.6`), and then ping `vm1-vswitch2` (`172.20.20.3`).
+1. Open the serial console of `vm1-vswitch1` (`172.20.10.6`), and then ping `vm1-vswitch2` (`172.20.20.3`).
 
     The ping attempt is successful.
-
-
 
 ### `natOutgoing` Setting
 
 The `natOutgoing` setting enables network address translation (NAT) for traffic leaving the subnet and going to destinations outside the VPC. This setting is disabled by default. To enable it, you must edit the subnet's YAML configuration and set the value to `natOutgoing: true`.
 
+#### Sample `natOutgoing` Configuration and Verification
 
-#### Sample `natOutgoing` Verification
-
-1. Create a virtual machine network with the following settings:
+1. [Create an overlay network](./harvester-network.md#create-an-overlay-network) with the following settings:
 
     - **Name**: `vswitch-external`
     - **Type**: `OverlayNetwork`
 
-2. In the `ovn-cluster` VPC, create a subnet with the following settings:
+1. In the `ovn-cluster` VPC, create a subnet with the following settings:
 
     - **Name**: `external-subnet`
     - **CIDR Block**: `172.20.30.0/24`
     - **Provider**: `default/vswitch-external`
     - **Gateway IP**: `172.20.30.1`
 
-3. Create a virtual machine with the following settings:
+1. Create a virtual machine with the following settings:
 
     - **Name**: `vm-external`
 
@@ -285,11 +349,11 @@ The `natOutgoing` setting enables network address translation (NAT) for traffic 
       `    `lock\_passwd: false
       ```
 
-4. Open the serial console of `vm-external` (`172.20.30.2`), and then ping `8.8.8.8`.
+1. Open the serial console of `vm-external` (`172.20.30.2`), and then ping `8.8.8.8`.
 
     The console displays the message `ping: connect: Network is unreachable.`.
 
-5. Add a default route using the following command:
+1. Add a default route using the following command:
 
     ```
     #sudo ip route add default via 172.20.30.1 dev enp1s0
@@ -297,63 +361,35 @@ The `natOutgoing` setting enables network address translation (NAT) for traffic 
 
     Again, the ping attempt fails.
 
-6. Go to the **Virtual Private Cloud** screen.
+1. Go to the **Virtual Private Cloud** screen.
 
-7. Locate `external-subnet`, and then select **⋮ > Edit Config**.
+1. Locate `external-subnet`, and then select **⋮ > Edit Config**.
 
-8. Click **Edit as YAML**.
+1. Click **Edit as YAML**.
 
-9. Locate the `natOutgoing` field, and then change the value to `true`.
+1. Locate the `natOutgoing` field, and then change the value to `true`.
 
-10. Click **Save**.
+1. Click **Save**.
 
-11. Open the serial console of `vm-external` (`172.20.30.2`), and then ping `8.8.8.8`.
+1. Open the serial console of `vm-external` (`172.20.30.2`), and then ping `8.8.8.8`.
 
     The ping attempt is successful.
 
+### VPC Peering
 
-### ***What is VPC Peering?***
+VPC peering is a networking connection that enables virtual machines in different VPCs to communicate using *private IP addresses*.
 
-VPC Peering is a networking connection that allows two Virtual Private Clouds (VPCs) to communicate with each other privately, as if they were on the same network.
+Each VPC is a separate network namespace with its own CIDR block, routing table, and isolation boundary. Without VPC peering, virtual machines are isolated even when they are hosted within the same Harvester cluster. Once a peering connection is established, routing rules are automatically updated to allow virtual machines to communicate privately.
 
-By default, each VPC is an isolated network environment. Virtual machines (VMs) or services in different VPCs cannot communicate with each other.
+VPC peering offers the following key benefits:
 
-When you configure VPC Peering, a private route is established between the two VPCs, allowing instances to communicate using their private IP addresses.
+- The VPCs remain logically and administratively isolated. This is ideal for multi-tenant setups that require strong network isolation with optional connectivity. You can organize workloads by team, function, or environment (for example, development vs. production).
 
-This communication happens without using public IPs or VPNs, ensuring both security and efficiency.
+- Traffic between VPCs does not traverse the public internet, reducing exposure. You can also use route tables and firewall rules to tightly control network access.
 
-Within the Harvester network architecture, Multi-VPC support is designed to offer flexible and isolated networking environments. 
+- Keeping traffic within the internal cloud network not only improves performance but also lowers costs, providing a significant advantage over using the public internet or VPNs.
 
-
-Here's how it works:
-
-1. Each VPC is a separate network namespace:
-
-    - **By default, VMs in different VPCs cannot reach each other.**
-
-    - **Each VPC has its own CIDR block, routing table, and isolation boundary.**
-
-
-2. Communication via VPC Peering:
-
-    - **To enable communication between VMs across different VPCs, you need to configure a VPC Peering connection.**
-
-    - **Once Peering is established, routing rules are automatically updated to allow private IP communication between the two VPCs.**
-
-    - **Without Peering, even if VMs are hosted within the same Harvester cluster, they remain isolated.**
-
-3. Use cases:
-
-    - **Different departments or teams using separate VPCs.**
-
-    - **Isolated environments (e.g., dev/test vs. production) that occasionally need controlled access.**
-
-    - **Multi-tenant setups that require strong network isolation with optional connectivity.**
-
-    - **This structure ensures clear routing, secure segmentation, and flexible multi-subnet design.**
-
-
-The diagram illustrates how multiple VPCs and subnets in Kube-OVN map to Harvester’s overlay networks and virtual machines, enabling scalable, isolated L3 and L2 network structures across the cluster.
+The following diagram shows how VPCs and subnets in Kube-OVN map to overlay networks and virtual machines in Harvester. This architecture enables you to create scalable and isolated L3 and L2 network structures across the cluster.
 
 ```
 
@@ -365,11 +401,11 @@ The diagram illustrates how multiple VPCs and subnets in Kube-OVN map to Harvest
          ┌──────────────────────────────────────────────────────┴──────────────────────────────────────────────────────────┐
          │                                                      │                                                          │
  ┌──────────────┐                                       ┌──────────────┐                                           ┌──────────────┐
- │  VPC: vpc-1  │                                       │VPC: vpcpeer-1│     ◀────────── peering ──────────▶      │VPC: vpcpeer-2│
+ │  VPC: vpc-1  │                                       │VPC: vpcpeer-1│      ◀────────── peering ──────────▶      │VPC: vpcpeer-2│
  └──────────────┘                                       └──────────────┘                                           └──────────────┘
         │                                                       │                                                         │
         ▼                                                       ▼                                                         ▼
-┌──────────────────────────────                  ┌──────────────────────────────┐                    ┌──────────────────────────────┐
+┌──────────────────────────────┐                 ┌──────────────────────────────┐                    ┌──────────────────────────────┐
 │ Subnet: vswitch1-subnet      │                 │ Subnet: vswitch3-subnet      │                    │ Subnet: vswitch4-subnet      │
 │ CIDR: 172.20.10.0/24         │                 │ CIDR: 10.0.0.0/24            │                    │ CIDR: 20.0.0.0/24            │
 │ Gateway: 172.20.10.1         │                 │ Gateway: 10.0.0.1            │                    │ Gateway: 20.0.0.1            │
@@ -384,87 +420,13 @@ The diagram illustrates how multiple VPCs and subnets in Kube-OVN map to Harvest
             ▼                                                   ▼                                                    ▼
 ┌──────────────────────┐                            ┌──────────────────────┐                              ┌──────────────────────┐
 │   VM: vm1-vswitch1   │                            │   VM: vm1-vswitch3   │                              │   VM: vm1-vswitch4   │
-│   IP: 172.20.10.5    │  ◀ ──────── X ──────── ▶  │   IP: 10.0.0.2       │     ◀── Connected via ──▶   │   IP: 20.0.0.2       │
-└──────────────────────┘                            └──────────────────────┘       vswitch(Overley)       └──────────────────────┘
+│   IP: 172.20.10.5    │   ◀ ──────── X ──────── ▶  │   IP: 10.0.0.2       │     ◀── Connected via ──▶    │   IP: 20.0.0.2       │
+└──────────────────────┘                            └──────────────────────┘       vswitch (overlay)      └──────────────────────┘
             ▲
             │
-  VM launched and managed by Harvester
+VM launched and managed by Harvester
 
 ```
-
-Connected via vswitch1 (Overlay)
-
-***VPC peering***
-
-- **Enable Private Communication Between VPCs**\
-  VPC Peering allows virtual machines in different VPCs to communicate with each other **using private IP addresses**, as if they were on the same internal network.
-- **Maintain Network Isolation with Controlled Access**\
-  Even though the VPCs can communicate, they are still logically and administratively **isolated**, which is useful for organizing workloads by team, function, or environment (e.g., dev, prod).
-- **Improve Performance and Reduce Costs**\
-  Since traffic stays within the internal cloud network, it's **faster**, **more secure**, and typically **cheaper** than going over public internet or VPNs.
-- **Enhanced Security**\
-  Traffic between VPCs via peering doesn't traverse the public internet, reducing exposure and risk. Access can also be tightly controlled with route tables and firewall rules.
-
-#### Sample VPC Peering Verification
-1. Create two virtual machine networks with the following settings:
-
-    - **Name**: `vswitch3` and `vswitch4`
-    - **Type**: `OverlayNetwork`
-
-2. Create two VPCs named `vpcpeer-1` and `vpcpeer-2`.
-
-    Harvester creates two isolated network spaces that are ready for subnet creation.
-
-3. Create one subnet in each VPC with the following settings:
-
-    | VPC Name | Subnet Name | CIDR Block | Provider | Gateway IP |
-    | --- | --- | --- | --- | --- |
-    | `vpcpeer-1` | `subnet1` | `10.0.0.0/24` | `default/vswitch3` | `10.0.0.1` |
-    | `vpcpeer-2` | `subnet2` | `20.0.0.0/24` | `default/vswitch4` | `20.0.0.1` |
-
-4. Edit the configuration of both VPCs.
-
-    - `vpcpeer-1`
-      | Section | Setting | Value |
-      | --- | --- | --- |
-      | **VPC Peering** tab | **Local Connect IP** | 169.254.0.1/30 |
-      | **VPC Peering** tab | **Remote VPC** | vpcpeer-2 |
-      | **Static Routes** tab | **CIDR** | 20.0.0.0/16 |
-      | **Static Routes** tab | **Next Hop IP** | 169.254.0.2 |
-
-    - `vpcpeer-2`
-      | Section | Setting | Value |
-      | --- | --- | --- |
-      | **VPC Peering** tab | **Local Connect IP** | 169.254.0.2/30 |
-      | **VPC Peering** tab | **Remote VPC** | vpcpeer-1 |
-      | **Static Routes** tab | **CIDR** | 10.0.0.0/16 |
-      | **Static Routes** tab | **Next Hop IP** | 169.254.0.1 |
-
-5. Create virtual machines.
-
-    An `Unschedulable` error typically indicates insufficient memory. Stop other virtual machines before attempting to create new ones.
-
-6. Open the serial consoles of `vm1-vpcpeer1` (`10.0.0.2`) and `vm1-vpcpeer2` (`20.0.0.2`), and then add a default route on each (if none exists) using the following commands:
-
-    - `vm1-vpcpeer1`:
-      ```
-      #sudo ip route add default via 10.0.0.1 dev enp1s0
-      ```
-    - `vm1-vpcpeer2`
-      ```
-      #sudo ip route add default via 20.0.0.1 dev enp1s0
-      ```
-
-7. Test cross-VPC communication using the `ping` command.
-
-    - Use `vm1-vpcpeer1` (`10.0.0.2`) to ping `vm1-vpcpeer2` (`20.0.0.2`).
-    - Use `vm1-vpcpeer2` (`20.0.0.2`) to ping `vm1-vpcpeer1` (`10.0.0.2`).
-
-    :::info important
-
-    Communication between virtual machines in different VPCs relies on static routes that define how traffic is forwarded to the remote VPC. For these routes to work correctly, the static route destination CIDR must fall within the remote VPC’s main CIDR range.
-
-    :::
 
 #### VPC Peering Configuration Examples
 
@@ -497,10 +459,76 @@ If a subnet uses a specific range that is not covered by the VPC CIDR, the assoc
 
 :::
 
+For more information about VPC peering prerequisites and configuration, see [VPC Peering](https://kubeovn.github.io/docs/v1.13.x/en/vpc/vpc-peering) in the Kube-OVN documentation.
 
-#### The configuration can refer to (https://kubeovn.github.io/docs/v1.13.x/en/vpc/vpc-peering/#prerequisites).
+#### Sample VPC Peering Configuration and Verification
 
-### Guidelines for Local Connect IP and CIDR Configuration
+1. [Create two overlay networks](./harvester-network.md#create-an-overlay-network) with the following settings:
+
+    - **Name**: `vswitch3` and `vswitch4`
+    - **Type**: `OverlayNetwork`
+
+1. Create two VPCs named `vpcpeer-1` and `vpcpeer-2`.
+
+    Harvester creates two isolated network spaces that are ready for subnet creation.
+
+1. Create one subnet in each VPC with the following settings:
+
+    | VPC Name | Subnet Name | CIDR Block | Provider | Gateway IP |
+    | --- | --- | --- | --- | --- |
+    | `vpcpeer-1` | `subnet1` | `10.0.0.0/24` | `default/vswitch3` | `10.0.0.1` |
+    | `vpcpeer-2` | `subnet2` | `20.0.0.0/24` | `default/vswitch4` | `20.0.0.1` |
+
+1. Edit the configuration of both VPCs.
+
+    - `vpcpeer-1`
+
+      | Section | Setting | Value |
+      | --- | --- | --- |
+      | **VPC Peering** tab | **Local Connect IP** | 169.254.0.1/30 |
+      | **VPC Peering** tab | **Remote VPC** | vpcpeer-2 |
+      | **Static Routes** tab | **CIDR** | 20.0.0.0/16 |
+      | **Static Routes** tab | **Next Hop IP** | 169.254.0.2 |
+
+    - `vpcpeer-2`
+    
+      | Section | Setting | Value |
+      | --- | --- | --- |
+      | **VPC Peering** tab | **Local Connect IP** | 169.254.0.2/30 |
+      | **VPC Peering** tab | **Remote VPC** | vpcpeer-1 |
+      | **Static Routes** tab | **CIDR** | 10.0.0.0/16 |
+      | **Static Routes** tab | **Next Hop IP** | 169.254.0.1 |
+
+1. Create virtual machines.
+
+    An `Unschedulable` error typically indicates insufficient memory. Stop other virtual machines before attempting to create new ones.
+
+1. Open the serial consoles of `vm1-vpcpeer1` and `vm1-vpcpeer2`, and then add a default route on each (if none exists) using the following commands:
+
+    - `vm1-vpcpeer1` (`10.0.0.2`)
+      
+      ```
+      #sudo ip route add default via 10.0.0.1 dev enp1s0
+      ```
+    
+    - `vm1-vpcpeer2` (`20.0.0.2`)
+      
+      ```
+      #sudo ip route add default via 20.0.0.1 dev enp1s0
+      ```
+
+1. Test cross-VPC communication using the `ping` command.
+
+    - Use `vm1-vpcpeer1` (`10.0.0.2`) to ping `vm1-vpcpeer2` (`20.0.0.2`).
+    - Use `vm1-vpcpeer2` (`20.0.0.2`) to ping `vm1-vpcpeer1` (`10.0.0.2`).
+
+    :::info important
+
+    Communication between virtual machines in different VPCs relies on static routes that define how traffic is forwarded to the remote VPC. For these routes to work correctly, the static route destination CIDR must fall within the remote VPC’s main CIDR range.
+
+    :::
+
+#### Local Connect IP and CIDR Configuration
 
 | Question | Answer |
 | --- | --- |
@@ -524,7 +552,6 @@ If a subnet uses a specific range that is not covered by the VPC CIDR, the assoc
     | 169.254.0.2 | Used by VPC B |
     | 169.254.0.3 | Broadcast (optional) |
 
-
 - What is the recommended subnet size?
 
     `/30` provides *exactly two usable IP addresses*, which fulfills the requirement of point-to-point VPC peering.
@@ -535,7 +562,6 @@ If a subnet uses a specific range that is not covered by the VPC CIDR, the assoc
     | `/30` | 2 | Yes |
     | `/29` | 6 | No |
     | `/28` | 14 | No |
-
 
 - Why use `169.254.x.x/30` instead of private addresses?
 
@@ -548,23 +574,6 @@ If a subnet uses a specific range that is not covered by the VPC CIDR, the assoc
     - Secure for internal use
     - Commonly used by cloud platforms (including AWS and Alibaba Cloud) for internal networking purposes such as VPC peering and metadata access
 
+#### VPC Peering Limitation
 
-###  Summary Table
-
-| Question                            | Answer                                                 |
-|-------------------------------------|--------------------------------------------------------|
-| Is Local Connect IP a CIDR block?   |  Yes, e.g., `169.254.0.1/30`                           |
-| Recommended subnet size?            |  `/30` (2 usable IPs)                                  |
-| Can I use private IPs (RFC1918)?    |  Not recommended for peering links                     |
-| Why use `169.254.x.x`?              |  Link-local, safe, not internet-routable, widely used  |
-
-
-### VPC Peering Limitations
-
-Peering only works between custom VPCs. When static routes and peering addresses are correctly configured, the peering connection is established and the VPCs can communicate as expected.
-
-:::caution
-
-Attempts to establish a peering connection between the default VPC (`ovn-cluster`) and a custom VPC will fail.
-
-:::
+Peering only works between custom VPCs. Any attempt to establish a peering connection between the default VPC (`ovn-cluster`) and a custom VPC will fail.
