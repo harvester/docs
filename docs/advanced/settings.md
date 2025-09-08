@@ -1002,8 +1002,8 @@ Scenario 2: The value of `ui-index` points to a page that is unavailable or non-
 **Supported values**:
 
 - `auto`: Automatically detects whether to use the bundled UI or not.
-- `external`: Uses the external UI source.
-- `bundled`: Uses the bundled UI source.
+- `external`: Uses the external UI source from ui-index URL.
+- `bundled`: Uses the bundled UI source from the local Harvester server.
 
 **Example**:
 
