@@ -325,18 +325,6 @@ IP 范围格式是 IPv4 CIDR，而且是集群节点数的 4 倍。
 https://your.static.dashboard-ui/index.html
 ```
 
-## `ui-plugin-index`
-
-为 Harvester 插件配置 JS 地址 (从 Rancher 中访问 Harvester 时使用)。
-
-默认值：`https://releases.rancher.com/harvester-ui/plugin/harvester-latest/harvester-latest.umd.min.js`
-
-#### 示例
-
-```
-https://your.static.dashboard-ui/*.umd.min.js
-```
-
 ## `ui-source`
 
 配置如何加载 UI 源。

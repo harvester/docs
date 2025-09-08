@@ -993,18 +993,6 @@ Scenario 1: The value of `ui-path` is `/home/samplefolder`. Whenever you access 
 
 Scenario 2: The value of `ui-index` points to a page that is unavailable or non-existent (for example, `notexist-example.com/index.html`). When you access the Harvester UI for the first time, the content of `/home/samplefolder/index.html` is displayed. However, if you modify the `ui-index` setting to use the default value and access the Harvester UI again, the content of `/home/samplefolder/index.html` is still displayed (even if the new `ui-index` value points to an available page). For more information, see [Issue #6066](https://github.com/harvester/harvester/issues/6066).
 
-### `ui-plugin-index`
-
-**Definition**: JavaScript address for the Harvester plugin (when accessing Harvester from Rancher).
-
-**Default value**: `https://releases.rancher.com/harvester-ui/plugin/harvester-latest/harvester-latest.umd.min.js`
-
-**Example**:
-
-```
-https://your.static.dashboard-ui/*.umd.min.js
-```
-
 ### `ui-source`
 
 **Definition**: Setting that allows you to configure how to load the UI source.
