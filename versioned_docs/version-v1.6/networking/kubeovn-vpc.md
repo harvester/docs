@@ -109,7 +109,7 @@ When creating custom VPCs, you must configure settings related to the routes def
 
 ### Subnet Settings
 
-Each subnet defines a CIDR block and gateway, and is mapped to a Harvester [overlay network](./harvester-network.md#overlay-network-experimental) (virtual switch). It also includes controls for NAT and access rules.
+Each subnet defines a CIDR block and gateway, and is mapped to a Harvester [overlay network](./harvester-network.md#overlay-network-experimental) (virtual switch). It also includes controls for NAT and [access rules](./kubeovn-vm-isolation.md#subnet-acls).
 
 When creating subnets, you must configure settings that are relevant to your use case. In most cases, you can get started by just configuring the **CIDR Block**, **Gateway**, and **Provider**. The following table outlines the settings on the **Subnet** details screen:
 
@@ -124,7 +124,7 @@ When creating subnets, you must configure settings that are relevant to your use
 | **Basic** tab | **Gateway** | IP address that acts as the default gateway for virtual machines in the subnet |
 | **Basic** tab | **Private Subnet** | Setting that restricts access to the subnet and ensures network isolation |
 | **Basic** tab | **Allow Subnets** | CIDRs that are allowed to access the subnet when **Private Subnet** is enabled |
-| **Basic** tab | **Exclude IPs** | List of IP addresses that should not be automatically assigned |
+| **Basic** tab | **Exclude IPs** | List of IP addresses that should not be automatically assigned to virtual machines |
 
 ![](/img/create_subnet.png)
 
@@ -132,7 +132,13 @@ Each created subnet has a setting called [`natOutgoing`](#natoutgoing-setting), 
 
 ![](/img/customize_nat_outgoing.png)
 
-By default, subnets in a custom VPC cannot directly communicate with subnets in the default `ovn-cluster` VPC. You must establish a [VPC peering](#vpc-peering) connection to enable secure and controlled communication between VPCs. Without VPC peering, subnet traffic in each VPC remains isolated.
+By default, subnets in different VPCs are unable to communicate directly. To enable secure and controlled communication between them, you must establish a [VPC peering](#vpc-peering) connection. Without it, subnet traffic in each VPC remains completely isolated.
+
+:::note
+
+VPC peering connections can only be established between custom VPCs.
+
+:::
 
 ![](/img/vpcpeer.png)
 
@@ -154,7 +160,7 @@ Perform the following steps to create and configure a VPC.
 
     1. Go to **Networks > Virtual Private Cloud**, and then click **Create**.
 
-    1. On the **Virtual Machine Network:Create** screen, specify a unique name for the VPC.
+    1. On the **Virtual Private Cloud:Create** screen, specify a unique name for the VPC.
 
     1. Click **Create**.
 
@@ -202,7 +208,7 @@ Perform the following steps to create and configure a VPC.
 
         :::caution
 
-        If you do not perform this step, the virtual machine will not have a default route. Attempts to access external destinations fail until the default route is correctly configured on the guest operating system.
+        If you do not perform this step, the virtual machine will not have a default route. Until the default route is properly configured on the guest operating system, attempts to access external destinations and virtual machines on different subnets will fail.
 
         For more information, see [Overlay Network Limitations](./harvester-network.md#overlay-network-experimental).
 
@@ -272,7 +278,7 @@ Perform the following steps to create and configure a VPC.
     - Use `vm1-vswitch1` (`172.20.10.6`) to ping `vm1-vswitch2` (`172.20.20.3`).
     - Use `vm1-vswitch2` (`172.20.20.3`) to ping `vm1-vswitch1` (`172.20.10.6`).
 
-    Since `vm1-vswitch1` and `vm1-vswitch2` are on the same subnet, they can communicate with each other.
+    Since `vm1-vswitch1` and `vm1-vswitch2` are on the same subnet, they can communicate with each other without any default route settings.
 
     If no default route exists on the virtual machine before you run the ping command, the console displays the message `ping: connect: Network is unreachable.`.
 
@@ -297,7 +303,7 @@ The following are the benefits of enabling the **Private Subnet** setting:
 
 1. Open the serial console of `vm1-vswitch1` (`172.20.10.6`), and then ping `vm1-vswitch2` (`172.20.20.3`).
 
-    The ping attempt fails because the virtual machines are in different subnets.
+    The ping attempt fails because `vm1-vswitch1` is isolated. Enabling the **Private Subnet** setting on `vswitch1-subnet` prohibits `vm1-vswitch1` from communicating with virtual machines in other subnets.
 
 1. Return to the **Virtual Private Cloud** screen, locate `vswitch1-subnet`, and then select **⋮ > Edit Config**.
 
