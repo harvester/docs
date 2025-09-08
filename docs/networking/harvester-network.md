@@ -138,8 +138,6 @@ An overlay network represents a virtual layer 2 switch that encapsulates and for
 
 1. On the **Basics** tab, select `OverlayNetwork` as the network type.
 
-  Specifying a cluster network is not required because the overlay network is only enabled on `mgmt` (the built-in management network).
-
 1. Click **Create**.
 
 ### Limitations
@@ -173,8 +171,6 @@ The overlay network implementation in Harvester v1.6 has the following limitatio
 - When multiple NICs are attached and the overlay NIC is not the primary interface, you must manually initialize the overlay NIC within the guest operating system (IP link setup) and run the DHCP client (dhclient) command to obtain the NIC's IP address.
 
 - Peering only works between custom VPCs. Attempts to establish a peering connection between the default VPC and a custom VPC will fail.
-
-- Kube-OVN native LBs are not integrated yet because Kube-OVN is designed and implemented as the primary CNI plug-in for a cluster. This requires fundamental changes to the upstream codebase.
 
 - Virtual machine load balancers, which are provided by the Harvester Load Balancer, are not compatible with Kube-OVN overlay networks. You can only use these load balancers with VLAN networks.
 
