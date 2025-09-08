@@ -24,6 +24,12 @@ description: Create VM with CPU / Memory Hotplug
 
 _Available as of v1.6.0_
 
+:::note
+
+ARM64 architecture only supports memory hotplug. CPU hotplug operations require you to restart the virtual machine.
+
+:::
+
 Harvester supports CPU and memory hotplug for virtual machines. This feature allows you to increase the CPU and memory resources of a running virtual machine without requiring a reboot.
 
 ## Enable CPU and Memory Hotplug During Virtual Machine Creation

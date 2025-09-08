@@ -55,7 +55,7 @@ spec:
   checksum: 80c27afb7cd791ac86ee1b0b0c572a242f6142579db5beac841e71151d370cd6
 ```
 
-For more information, see the [API reference](./api/create-namespaced-virtual-machine-image).
+For more information, see the [API reference](https://docs.harvesterhci.io/v1.4/api/create-namespaced-virtual-machine-image).
 
 </TabItem>
 <TabItem value="terraform" label="Terraform">

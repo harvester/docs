@@ -155,7 +155,7 @@ You can also create a new virtual machine with the volume of the LVM StorageClas
 
   ![](/img/v1.2/advanced/csi-driver-config-external.png)
 
-In Harvester v1.4.2 and later versions, you may encounter certain limitations when creating and restoring [backups that involve external storage](../../version-v1.4/advanced/csidriver.md#vm-backup-compatibility)
+In Harvester v1.4.2 and later versions, you may encounter certain limitations when creating and restoring [backups that involve external storage](./../csidriver.md#vm-backup-compatibility)
 
 1. On the **Virtual Machines** screen, select the target virtual machine, and then select **⋮** > **Take Virtual Machine Snapshot**.
 
