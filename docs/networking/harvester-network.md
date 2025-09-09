@@ -120,34 +120,38 @@ Starting from Harvester v1.1.2, Harvester supports updating and deleting VM netw
 
 :::
 
-##  Overlay Network [Experimental]
+##  Overlay Network (Experimental)
 
-The [Harvester network-controller](https://github.com/harvester/harvester-network-controller) leverages [Kube-OVN] (https://github.com/kubeovn/kube-ovn) to create an OVN-based virtualized network that supports advanced SDN capabilities such as virtual private cloud (VPC) and subnets for virtual machine workloads.
+The [Harvester network-controller](https://github.com/harvester/harvester-network-controller) leverages [Kube-OVN](https://github.com/kubeovn/kube-ovn) to create an OVN-based virtualized network that supports advanced SDN capabilities such as [virtual private clouds (VPCs) and subnets](./kubeovn-vpc.md) for virtual machine workloads.
 
 An overlay network represents a virtual layer 2 switch that encapsulates and forwards traffic between virtual machines. This network can be linked to the subnet created in the VPC so that virtual machines can access the internal virtualized network and also reach the external network. However, the same virtual machines cannot be accessed by external networks such as VLANs and untagged networks because of current VPC limitations.
 
 ![](/img/kubeovn-harvester-topology.png)
 
 ### Create an Overlay Network
+
 1. Go to **Networks > Virtual Machine Networks**, and then click **Create**.
 
     ![](/img/create_vm_networks.png)
 
-2. On the **Virtual Machine Network:Create** screen, specify a name for the network.
+1. On the **Virtual Machine Network:Create** screen, specify a name for the network.
 
-3. On the **Basics** tab, select `OverlayNetwork` as the network type.
+1. On the **Basics** tab, select `OverlayNetwork` as the network type.
 
-  Specifying a cluster network is not required because the overlay network is only enabled on `mgmt` (the built-in management network).
-
-4. Click **Create**.
+1. Click **Create**.
 
 ### Limitations
+
 The overlay network implementation in Harvester v1.6 has the following limitations:
+
 - Overlay networks that are backed by Kube-OVN can only be created on `mgmt` (the built-in management network).
+
 - By default, the `enableDHCP` and `dhcpV4Options` settings are not configured, so no default route exists on virtual machines that are attached to a Kube-OVN overlay subnet. Attempts to access external destinations fail until the default route is correctly configured on the guest operating system. You can perform either of the following workarounds:
 
     - Manually add the subnet’s gateway IP as the virtual machine's default route.
+
     - Use the `managedTap` binding: Edit the YAML configuration of the attached subnet, and verify that the field `.spec.enableDHCP` is set to `true`. Next, edit the YAML configuration of the virtual machine, and modify the interface definition to use binding.
+
       ```
             interfaces:
             - binding:
@@ -156,14 +160,20 @@ The overlay network implementation in Harvester v1.6 has the following limitatio
               name: default
       ```
 
-- Kube-OVN "native" load balancers are not integrated yet because this requires fundamental changes to the upstream codebase. Kube-OVN currently functions as the primary CNI plug-in for each cluster.
+- Kube-OVN "native" load balancers (LBs) are not integrated yet because this requires fundamental changes to the upstream codebase. Kube-OVN currently functions as the primary CNI plug-in for each cluster.
+
 - Underlay networking is still unavailable. Consequently, you cannot directly map a subnet to a physical network, and external hosts cannot reach virtual machines that live on an overlay subnet.
+
 - The `natOutgoing` field is set to `false` by default in all subnets (in both default and custom VPCs). Only subnets that belong to the default VPC can reach the internet after you change the value to `true` and configure the default route. Subnets created in custom VPCs are unable to access the internet without `VpcNatGateway` support.
-- The static IP in cloud-init appears to be ignored for overlay NICs. In practice, the static IP works *only if it matches the exact address Kube-OVN has reserved* for the virtual machine. Any other. value breaks connectivity.
+
+- The static IP in cloud-init appears to be ignored for overlay NICs. In practice, the static IP works *only if it matches the exact address Kube-OVN has reserved* for the virtual machine. Any other value breaks connectivity.
+
 - When multiple NICs are attached and the overlay NIC is not the primary interface, you must manually initialize the overlay NIC within the guest operating system (IP link setup) and run the DHCP client (dhclient) command to obtain the NIC's IP address.
+
 - Peering only works between custom VPCs. Attempts to establish a peering connection between the default VPC and a custom VPC will fail.
-- Kube-OVN native LBs are not integrated yet because Kube-OVN is designed and implemented as the primary CNI plug-in for a cluster. This requires fundamental changes to the upstream codebase.
+
 - Virtual machine load balancers, which are provided by the Harvester Load Balancer, are not compatible with Kube-OVN overlay networks. You can only use these load balancers with VLAN networks.
+
 - Cluster load balancers, which are provided by the Harvester Cloud Provider and the Harvester Load Balancer, do not function properly with guest clusters on Kube-OVN overlay networks. The compatibility issues are caused by the following:
 
     - `Pool` IPAM: Kube-OVN is unaware that the load balancer's front-end IP addresses are allocated from pools managed by the Harvester Load Balancer. This can lead to IP address conflicts.
@@ -173,4 +183,5 @@ The overlay network implementation in Harvester v1.6 has the following limitatio
 - Rancher integration (specifically, downstream cluster creation using the Harvester Node Driver) only works on Kube-OVN overlay networks within the default VPC. To ensure successful cluster creation, you must perform the following actions:
 
     - Enable the DHCP service for the overlay network. You must set a valid default gateway.
+
     - Manually update the underlying virtual machine spec to adapt the `managedTap` binding interface for the downstream cluster during the cluster provision period.
