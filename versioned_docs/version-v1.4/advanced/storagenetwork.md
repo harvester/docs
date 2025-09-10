@@ -199,7 +199,7 @@ After applying Harvester's Storage Network setting, Harvester will stop all pods
 
 Harvester will also create a new NetworkAttachmentDefinition and update the Longhorn Storage Network setting.
 
-Once the Longhorn setting is updated, Longhorn will restart all `instance-manager-r`, `instance-manager-e`, and `backing-image-manager` pods to apply the new network configuration, and Harvester will restart the pods.
+Once the Longhorn setting is updated, Longhorn will restart all `instance-manager` and `backing-image-manager` pods to apply the new network configuration, and Harvester will restart the pods.
 
 :::note
 
@@ -242,7 +242,7 @@ status:
 
 #### Step 2
 
-Verify the readiness of all Longhorn `instance-manager-e`, `instance-manager-r`, and `backing-image-manager` pods, and confirm that their networks are correctly configured.
+Verify the readiness of all Longhorn `instance-manager` and `backing-image-manager` pods, and confirm that their networks are correctly configured.
 
 Execute the following command to inspect a pod's details:
 
@@ -354,15 +354,15 @@ longhorn-manager-j6dhh/longhorn-manager.log:2024-03-20T16:25:24.662251001Z time=
 
 To test the communication between Longhorn pods, perform the following steps:
 
-4.1 Obtain the storage network IP of each Longhorn Instance Manager pod identified in the previous step.
+4.1 Obtain the storage network IP of each Longhorn Instance Manager pod (we have one per node) identified in the previous step.
 
 Example:
 
 ```
-instance-manager-r-43f1624d14076e1d95cd72371f0316e2
+instance-manager-43f1624d14076e1d95cd72371f0316e2
 storage network IP: 10.0.16.8
 
-instance-manager-e-ba38771e483008ce61249acf9948322f
+instance-manager-ba38771e483008ce61249acf9948322f
 storage network IP: 10.0.16.14
 ```
 
@@ -373,7 +373,7 @@ When you run the command `ip addr`, the output includes IPs that are identical t
 Example:
 
 ```
-$ kubectl exec -i -t -n longhorn-system instance-manager-e-ba38771e483008ce61249acf9948322f -- /bin/sh
+$ kubectl exec -i -t -n longhorn-system instance-manager-ba38771e483008ce61249acf9948322f -- /bin/sh
 
 $ ip addr
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
@@ -420,7 +420,7 @@ Explicitly bind the simple HTTP server to the storage network IP.
 Example:
 
 ```
-From instance-manager-r-43f1624d14076e1d95cd72371f0316e2 (IP 10.0.16.8)
+From instance-manager-43f1624d14076e1d95cd72371f0316e2 (IP 10.0.16.8)
 
 $ curl http://10.0.16.14:8000
 ```
