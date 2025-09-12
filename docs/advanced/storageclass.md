@@ -210,8 +210,6 @@ The following are the default values for the supported StorageClasses:
     - `cdi.harvesterhci.io/storageProfileCloneStrategy`: `"snapshot"`
     - `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: `"lvm-snapshot"`
 
-- Third-party storage: See [`storagecapabilities.go`](https://github.com/kubevirt/containerized-data-importer/blob/v1.61.1/pkg/storagecapabilities/storagecapabilities.go#L35-L127) in the CDI repository. If the provisioner is not listed, you must specify the `cdi.harvesterhci.io/storageProfileVolumeModeAccessModes` annotation.
-
 ## Use Cases
 
 ### HDD Scenario
