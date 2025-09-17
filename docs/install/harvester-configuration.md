@@ -545,6 +545,27 @@ For more information about how to set the correct value, see [Guaranteed Instanc
         guaranteedInstanceManagerCPU: 6
 ```
 
+### `install.harvester.longhorn.default_settings.storageReservedPercentageForDefaultDisk`
+
+**Versions**: v1.7.0 and later
+
+**Definition**: Percentage of disk space that will not be allocated to the default disk on each new Longhorn node.
+
+Harvester creates a dedicated partition on the boot disk for the Longhorn default disk, so you do not need to reserve any space for it on the root disk.
+
+**Default value**: 0
+
+**Supported values**: 0 to 30. All other values are considered 30.
+
+**Example**:
+
+```
+  harvester:
+    longhorn:
+      default_settings:
+        storageReservedPercentageForDefaultDisk: 15
+```
+
 ### `install.harvester.storage_class.replica_count`
 
 **Versions**: v1.1.2 and later
