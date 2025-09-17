@@ -551,9 +551,7 @@ For more information about how to set the correct value, see [Guaranteed Instanc
 
 **Definition**: Percentage of disk space that will not be allocated to the default disk on each new Longhorn node.
 
-Harvester creates a separate partition on the boot disk for the Longhorn default disk. Reserving space on the default root disk for longhorn is redundant in that case.
-
-For more information, see [Storage Reserved Percentage For Default Disk](https://longhorn.io/docs/1.9.1/references/settings/#storage-reserved-percentage-for-default-disk) in the Longhorn documentation.
+Harvester creates a dedicated partition on the boot disk for the Longhorn default disk, so you do not need to reserve any space for it on the root disk.
 
 **Default value**: 0
 
