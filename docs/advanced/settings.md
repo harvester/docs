@@ -830,6 +830,11 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
   :::
 
+- `logReadyTimeout`: Number of minutes Harvester allows for the creation of the upgrade logging infrastructure. You can specify a value (enclosed in double quotes) from `"1"` to `"20"`. The default value is `"5"`.
+
+  - **Default value**: `"5"`
+  - **Valid values**: `""`, `"1"` to `"20"`
+
 **Example**:
 
 ```json
@@ -840,7 +845,8 @@ https://your.upgrade.checker-url/v99/checkupgrade
       "concurrency": 2
     }
   },
-  "restoreVM": true
+  "restoreVM": true,
+  "logReadyTimeout": "5"
 }
 ```
 
