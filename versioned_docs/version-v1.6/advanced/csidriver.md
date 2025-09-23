@@ -76,6 +76,14 @@ For more information, see [VM Backup Compatibility](https://docs.harvesterhci.io
 
 :::
 
+:::note
+
+If the StorageClass provisioner is not in the CDI's list of [provisioners with default access and volume modes](https://github.com/kubevirt/containerized-data-importer/blob/v1.61.1/pkg/storagecapabilities/storagecapabilities.go#L35-L127), you must annotate the StorageClass with `cdi.harvesterhci.io/storageProfileVolumeModeAccessModes`. Without this annotation, the Helm installation may fail. Check the CSI driver's Helm chart documentation for instructions on how to annotate the StorageClass.
+
+For more information, see [Containerized Data Importer (CDI) Settings](./storageclass.md#containerized-data-importer-cdi-settings)
+
+:::
+
 1. Login to the Harvester UI, then navigate to **Advanced** > **Settings**.
 1. Find and select **csi-driver-config**, and then select **⋮** > **Edit Setting** to access the configuration options.
 1. Set the **Provisioner** to the third-party CSI driver in the settings.
