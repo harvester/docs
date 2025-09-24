@@ -264,7 +264,7 @@ If a job is failed, you can check `Failed` condition reason and message for more
 
 ### ManagedChart CRD
 
-For `ManagedChart` items, Rancher relies on [Fleet](https://fleet.rancher.io/) in install charts on target clusters. There is only one target cluster (`fleet-local/local`) in Harveter. Based on the `cluster.fleet.cattle.io`, the Fleet deploys agent on the target clusters via `helm install`, so you can find `fleet-agent-local` chart by `helm list -A`. The `cluster.fleet.cattle.io` contains the agent status.
+For `ManagedChart` items, Rancher relies on [Fleet](https://fleet.rancher.io/) in install charts on target clusters. There is only one target cluster (`fleet-local/local`) in Harvester. Based on the `cluster.fleet.cattle.io`, the Fleet deploys an agent on the target clusters via `helm install`, so you can find `fleet-agent-local` chart by `helm list -A`. The `cluster.fleet.cattle.io` contains the agent status.
 
 ```yaml
 apiVersion: fleet.cattle.io/v1alpha1
