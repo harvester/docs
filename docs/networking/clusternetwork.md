@@ -80,6 +80,11 @@ When a Harvester cluster is deployed, a cluster network named `mgmt` is automati
 
 `mgmt` does not require a network configuration and is always enabled on all hosts. You cannot disable and delete `mgmt`.
 
+_Change in behaviour as of v1.6.0_
+
+Starting from v1.6.0, only primary vlan configured during installation will be added to `mgmt-br` bridge and `mgmt-bo` instead of all 2-4094 vlans.Users can check this info using `bridge vlan show` command on the host.
+Any additional vlans required on the `mgmt-br` bridge and `mgmt-bo` must be explicitly configured using `bridge vlan add vid <vlan-id> dev mgmt-br self` and `bridge vlan add vid <vlan-id> dev mgmt-bo` commands on the Harvester host.
+
 During installation of the first cluster node, you can configure the MTU value for `mgmt` using the [`install.management_interface`](../install/harvester-configuration.md#installmanagement_interface) setting. The default value of the `mtu` field is `1500`, which is what `mgmt` typically uses. However, if you specify an MTU value other than `0` or `1500`, you must [add a corresponding annotation](#annotate-a-non-default-mtu-value-to-mgmt-after-installation) after the cluster is deployed.
 
 :::caution
