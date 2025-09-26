@@ -54,6 +54,20 @@ os:
     topology.kubernetes.io/zone: zone1
     foo: bar
     mylabel: myvalue
+  externalStorageConfig:
+    enabled: true
+    multiPathConfig:
+      blacklist:
+      - vendor: "!QEMU"
+        product: "!QEMU HARDDISK"
+      blacklistWwids:
+      - ".*"
+      blacklistExceptions:
+      - vendor: "DELL"
+        product: "POWERVAULT"
+      blacklistExceptionWwids:
+      - "^0QEMU_QEMU_HARDDISK_disk[0-9]+"
+  additionalKernelArguments: "multipath=on"
 install:
   mode: create
   management_interface:
@@ -425,6 +439,66 @@ os:
     topology.kubernetes.io/zone: zone1
     foo: bar
     mylabel: myvalue
+```
+
+### `os.externalStorageConfig`
+
+#### Definition
+
+Configuration for external storage devices, particularly for multipath storage setups. This setting enables support for external storage devices such as SAN (Storage Area Network) storage and configures multipath device handling. The multipath configuration allows you to define which devices should be blacklisted or whitelisted based on vendor, product names, or World Wide Identifiers (WWIDs).
+
+When enabled, this configuration generates the `/etc/multipath.conf` file with the specified settings to control which storage devices are managed by the multipath daemon.
+
+#### Example
+
+```yaml
+os:
+  externalStorageConfig:
+    enabled: true
+    multiPathConfig:
+      blacklist:
+      - vendor: "!QEMU"
+        product: "!QEMU HARDDISK"
+      blacklistWwids:
+      - ".*"
+      blacklistExceptions:
+      - vendor: "DELL"
+        product: "POWERVAULT"
+      blacklistExceptionWwids:
+      - "^0QEMU_QEMU_HARDDISK_disk[0-9]+"
+```
+
+The above configuration will generate the following `/etc/multipath.conf` file:
+
+```conf
+blacklist {
+    device {
+        vendor "!QEMU"
+        product "!QEMU HARDDISK"
+    }
+    wwid ".*"
+}
+
+blacklist_exceptions {
+    device {
+        vendor "DELL"
+        product "POWERVAULT"
+    }
+    wwid "^0QEMU_QEMU_HARDDISK_disk[0-9]+"
+}
+```
+
+### `os.additionalKernelArguments`
+
+#### Definition
+
+Additional kernel parameters to be passed to the Linux kernel at boot time. These arguments are appended to the default kernel command line and can be used to enable specific kernel features, configure hardware settings, or modify kernel behavior. Common use cases include enabling multipath support, configuring hardware-specific settings, or debugging options.
+
+#### Example
+
+```yaml
+os: 
+  additionalKernelArguments: "multipath=on"
 ```
 
 ### `os.sshd.sftp`
