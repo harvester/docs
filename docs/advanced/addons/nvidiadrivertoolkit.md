@@ -33,3 +33,17 @@ Once the addon is enabled, a nvidia-driver-toolkit daemonset is deployed to the 
 On pod startup, the entrypoint script will download the nvidia driver from the speificied `Driver Location`, install the driver and load the kernel drivers.
 
 The `PCIDevices` addon can now leverage this addon to manage the lifecycle of the vGPU devices on nodes containing supported GPU [devices](../vgpusupport.md).
+
+## Install Customized NVIDIA Driver
+
+_Available as of v1.7.0_
+
+Harvester introduces a new feature that allows users to install different NVIDIA driver versions on different nodes.
+
+Before starting the nvidia-driver-toolkit, annotate the node where you want to install a specific driver version:
+
+- `kubectl annotate nodes {node name} sriovgpu.harvesterhci.io/custom-driver=https://[driver location]`
+
+Then, start the nvidia-driver-toolkit. It will install the specified driver version.
+
+For users who have previously installed an NVIDIA driver version, you need to restart the pod to trigger the installation process again.
