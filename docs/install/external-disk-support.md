@@ -75,8 +75,16 @@ os:
   externalStorageConfig:
     enabled: true
     multiPathConfig:
-    - vendor: "IET"
-      product: "MediaFiles"
+      blacklist:
+      - vendor: "!QEMU"
+        product: "!QEMU HARDDISK"
+      blacklistWwids:
+      - ".*"
+      blacklistExceptions:
+      - vendor: "DELL"
+        product: "POWERVAULT"
+      blacklistExceptionWwids:
+      - "^0QEMU_QEMU_HARDDISK_disk[0-9]+"
   additionalKernelArguments: "rd.iscsi.firmware vlan=enp4s0f0.2017:enp4s0f0 ip=10.115.48.10::10.115.55.254:255.255.248.0::enp4s0f0.2017:none"
 ``` 
 
