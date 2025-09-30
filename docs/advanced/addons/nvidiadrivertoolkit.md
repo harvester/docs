@@ -30,7 +30,7 @@ To enable the addon, users need to perform the following:
 
 Once the addon is enabled, a nvidia-driver-toolkit daemonset is deployed to the cluster.
 
-On pod startup, the entrypoint script will download the nvidia driver from the speificied `Driver Location`, install the driver and load the kernel drivers.
+On pod startup, the ENTRYPOINT script will download the NVIDIA driver from the specified `Driver Location`. Install the driver and load the kernel drivers.
 
 The `PCIDevices` addon can now leverage this addon to manage the lifecycle of the vGPU devices on nodes containing supported GPU [devices](../vgpusupport.md).
 
