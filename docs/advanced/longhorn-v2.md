@@ -33,7 +33,6 @@ Every node with an active Longhorn V2 Data Engine requires the following dedicat
 The Longhorn V2 Data Engine currently does not support the following operations:
 
 - Backing image creation and usage
-- Storage network
 - Volume cloning
 - Volume encryption
 - Volume expansion
