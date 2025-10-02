@@ -32,6 +32,12 @@ To import virtual machine images in the **Images** page, enter a URL that can be
 
 :::
 
+::: caution
+
+When using 3rd-party storage classes with download URLs hosted on HTTP servers that don't support Range requests (e.g., Python's `http.server`), Harvester may encounter memory issues with large image files. Use nginx or Apache for reliable downloads. This issue has been fixed in v1.6.1.
+
+:::
+
 ![](/img/v1.2/upload-image.png)
 
 </TabItem>
