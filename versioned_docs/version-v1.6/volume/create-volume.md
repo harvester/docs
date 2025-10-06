@@ -95,6 +95,12 @@ spec:
   volumeName: pvc-my-vol
 ```
 
+:::caution
+
+Do not use the `vmstate-persistence` and `longhorn-static` StorageClasses when creating new volumes. `vmstate-persistence` is used for TPM and UEFI persistence, while `longhorn-static` is used for for management of existing Longhorn volumes.
+
+:::
+
 </TabItem>
 <TabItem value="terraform" label="Terraform">
 
