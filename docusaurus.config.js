@@ -346,6 +346,20 @@ const config = {
       },
     ],
   ],
+  scripts: [
+    {
+      src: 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
+      type:'text/javascript',
+      charset: 'UTF-8',
+      'data-domain-script': '0f98beb0-fc4c-417d-a42e-564e2cae42d2',
+      async: true
+    },
+    {
+      src: '/scripts/optanonwrapper.js',
+      type:'text/javascript',
+      async: true
+    },
+  ],
 };
 
 module.exports = config;
