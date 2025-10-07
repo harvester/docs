@@ -80,21 +80,15 @@ When a Harvester cluster is deployed, a cluster network named `mgmt` is automati
 
 `mgmt` does not require a network configuration and is always enabled on all hosts. You cannot disable and delete `mgmt`.
 
-_Change in behaviour as of v1.6.0_
+:::note
 
-Starting from v1.6.0, only primary vlan configured during installation will be added to `mgmt-br` bridge and `mgmt-bo` instead of all 2-4094 vlans.Users can check this info using `bridge vlan show` command on the host.
-Any additional vlans required on the `mgmt-br` bridge and `mgmt-bo` must be explicitly configured using the following, and repeat below for every secondary `vlan-id` or vlan range the user requires.
+In Harvester v1.5.x and earlier versions, the entire VLAN ID range (2 to 4094) was assigned to the `mgmt` interfaces. However, this exceeded the upper limit of supported VLANs on certain network cards, so hardware VLAN offloading stopped working correctly.
 
-Add the following under contents of /etc/wicked/scripts/setup_bond.sh in /oem/90_custom.yaml
-```
-bridge vlan add vid <vlan-id> dev $INTERFACE
-```
+For more information, see [issue #7650](https://github.com/harvester/harvester/issues/7650).
 
-Add the following under contents of /etc/wicked/scripts/setup_bridge.sh in /oem/90_custom.yaml
-```
-bridge vlan add vid <vlan-id> dev $INTERFACE self
-bridge vlan add vid <vlan-id> dev mgmt-bo
-```
+:::
+
+As of v1.6.0,only the [primary VLAN ID](https://docs.harvesterhci.io/latest/install/harvester-configuration#installmanagement_interface) provided during installation is automatically added to the `mgmt-br` bridge and the `mgmt-bo` interface. You can [add secondary VLAN interfaces](#add-secondary-vlan-interfaces) after installation is completed.
 
 During installation of the first cluster node, you can configure the MTU value for `mgmt` using the [`install.management_interface`](../install/harvester-configuration.md#installmanagement_interface) setting. The default value of the `mtu` field is `1500`, which is what `mgmt` typically uses. However, if you specify an MTU value other than `0` or `1500`, you must [add a corresponding annotation](#annotate-a-non-default-mtu-value-to-mgmt-after-installation) after the cluster is deployed.
 
@@ -103,6 +97,29 @@ During installation of the first cluster node, you can configure the MTU value f
 - Certain [ARP settings](https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt) can break cluster communications. With `arp_ignore=2`, for example, replies are sent only if the sender IP address is in the same subnet as the target IP address for which the MAC address is requested. This is not the case in a Harvester cluster, so using `arp_ignore=2` on all interfaces results in failed connectivity checks and prevents Longhorn pods (specifically, `backing-image` and `instance-manager`) from transitioning to the `Ready` state. Volumes cannot be attached to virtual machines if these Longhorn pods are not ready.
 
 - All nodes in a Harvester cluster must use the same MTU value. Because Harvester does not automatically detect discrepancies when nodes join, you must manually ensure that the values are identical to prevent unexpected system behavior.
+
+:::
+
+### Add Secondary VLAN Interfaces
+
+Add the following commands to the `/oem/90_custom.yaml` file and reboot the node.
+
+- `/etc/wicked/scripts/setup_bond.sh` section
+
+    ```
+    bridge vlan add vid <vlan-id> dev $INTERFACE
+    ```
+
+- `/etc/wicked/scripts/setup_bridge.sh` section
+
+    ```
+    bridge vlan add vid <vlan-id> dev $INTERFACE self
+    bridge vlan add vid <vlan-id> dev mgmt-bo
+    ```
+
+:::info important
+
+You must include a separate command for each distinct VLAN ID. Ensure that the `vlan-id` placeholder is replaced with the actual ID.
 
 :::
 
