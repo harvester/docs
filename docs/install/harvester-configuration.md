@@ -445,9 +445,9 @@ os:
 
 #### Definition
 
-Configuration for external storage devices, particularly for multipath storage setups. This setting enables support for external storage devices such as SAN (Storage Area Network) storage and configures multipath device handling. The multipath configuration allows you to define which devices should be blacklisted or whitelisted based on vendor, product names, or World Wide Identifiers (WWIDs).
+Setting that enables support for external storage devices (for example, storage area network (SAN) devices) that use multipath I/O (MPIO). In the multipath configuration (`multiPathConfig`), you can add devices to the blacklist and whitelist based on specific criteria: vendor, product names, or World Wide Identifiers (WWIDs).
 
-When enabled, this configuration generates the `/etc/multipath.conf` file with the specified settings to control which storage devices are managed by the multipath daemon.
+When the setting is enabled, Harvester generates the `/etc/multipath.conf` file with the specified configuration, which the multipath daemon uses to manage storage devices.
 
 #### Example
 
@@ -468,7 +468,7 @@ os:
       - "^0QEMU_QEMU_HARDDISK_disk[0-9]+"
 ```
 
-The above configuration will generate the following `/etc/multipath.conf` file:
+This configuration generates the following `/etc/multipath.conf` file:
 
 ```conf
 blacklist {

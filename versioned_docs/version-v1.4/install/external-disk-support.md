@@ -80,9 +80,9 @@ os:
   additionalKernelArguments: "rd.iscsi.firmware vlan=enp4s0f0.2017:enp4s0f0 ip=10.115.48.10::10.115.55.254:255.255.248.0::enp4s0f0.2017:none"
 ``` 
 
-:::warning
+:::info important
 
-The `multiPathConfig` structure has changed since v1.7.0. Check the [latest configuration](/v1.7/install/harvester-configuration#osexternalstorageconfig) to set up your multipath configuration for fresh installations. This change will not impact upgrades.
+The multiPathConfig structure changed starting in v1.7.0. While this change does not affect upgrades, you must review the [`os.externalStorageConfig`](/v1.7/install/harvester-configuration#osexternalstorageconfig) documentation before performing a fresh installation of v1.7.0 or later versions.
 
 :::
 
