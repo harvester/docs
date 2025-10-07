@@ -82,19 +82,15 @@ When a Harvester cluster is deployed, a cluster network named `mgmt` is automati
 
 _Change in behaviour as of v1.6.0_
 
-Starting from v1.6.0, only primary vlan configured during installation will be added to `mgmt-br` bridge and `mgmt-bo` instead of all 2-4094 vlans.Users can check this info using `bridge vlan show` command on the host.
-Any additional vlans required on the `mgmt-br` bridge and `mgmt-bo` must be explicitly configured using the following, and repeat below for every secondary `vlan-id` or vlan range the user requires.
+The [primary VLAN ID](https://docs.harvesterhci.io/latest/install/harvester-configuration#installmanagement_interface) provided during installation is automatically added to the `mgmt-br` bridge and the `mgmt-bo` interface. You can [add secondary VLAN interfaces](#add-secondary-vlan-interfaces) after installation is completed.
 
-Add the following under contents of /etc/wicked/scripts/setup_bond.sh in /oem/90_custom.yaml
-```
-bridge vlan add vid <vlan-id> dev $INTERFACE
-```
+::: note
 
-Add the following under contents of /etc/wicked/scripts/setup_bridge.sh in /oem/90_custom.yaml
-```
-bridge vlan add vid <vlan-id> dev $INTERFACE self
-bridge vlan add vid <vlan-id> dev mgmt-bo
-```
+In Harvester v1.5.0 and earlier versions, the entire VLAN ID range (2 to 4094) was assigned to the `mgmt` interfaces. This prevented hardware VLAN offloading from functioning correctly on certain network cards.
+
+For more information, see [issue #7650](https://github.com/harvester/harvester/issues/7650).
+
+:::
 
 During installation of the first cluster node, you can configure the MTU value for `mgmt` using the [`install.management_interface`](../install/harvester-configuration.md#installmanagement_interface) setting. The default value of the `mtu` field is `1500`, which is what `mgmt` typically uses. However, if you specify an MTU value other than `0` or `1500`, you must [add a corresponding annotation](#annotate-a-non-default-mtu-value-to-mgmt-after-installation) after the cluster is deployed.
 
