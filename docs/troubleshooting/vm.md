@@ -613,3 +613,58 @@ Harvester migtht [automatically apply affinity rules](../vm/create-vm.md#automat
 ### Solution
 
 Ensure there are active nodes which sets up the cluster network `cn2` successfully, then these nodes are labeled with `network.harvesterhci.io/cn2`, finally the pending pod can be scheduled to them.
+
+## Unintentional Template Update via VM Cloud Config YAML
+
+### Root Cause
+
+The issue stems from a flaw where configuration inheritance is not properly dissociated when a VM's Cloud Config is created through the raw **YAML editor**. The system treats the configuration as still linked to the template, resulting in an overwrite of the source template's data.
+
+### How to avoid
+
+**Do not** use the **"Edit as YAML"** feature when creating a VM, especially for VMs created from a template. Create it using the UI Form Editor and then modify it using **"Edit as YAML"**.
+
+### Mitigation Steps
+
+1.  **Identify the VM and its current Cloud Config Secret:**
+    * Find the name of the Secret currently linked to the VM.
+    * *(Replace `<VM_NAME>` and `<VM_NAMESPACE>` with your values, e.g., `vm1` and `default`)*
+    ```bash
+    # Get the current Secret name linked to the VM's cloudInitNoCloud volume source:
+    VM_NAME=<VM_NAME>
+    VM_NAMESPACE=<VM_NAMESPACE>
+
+    SECRET=$(kubectl get vm $VM_NAME -n $VM_NAMESPACE -o jsonpath='{.spec.template.spec.volumes[?(@.cloudInitNoCloud)].cloudInitNoCloud.secretRef.name}')
+    SECRET_NAMESPACE=$(kubectl get secret -A | grep $SECRET  | awk '{print $1}')
+    echo "Current Secret: $SECRET_NAMESPACE -> $SECRET"
+    ```
+
+2.  **Clone the Secret:**
+    * Export the current Secret, strip its identifying metadata, rename it, and apply it to create an independent copy.
+    ```bash
+    # Define a new, unique name for the secret
+    NEW_SECRET="$VM_NAME-$(date +%s)"
+
+    # Export, clean, rename, and create the new Secret
+    kubectl get secret $SECRET -n $SECRET_NAMESPACE -o json | \
+      jq 'del(.metadata.creationTimestamp, .metadata.resourceVersion, .metadata.uid, .metadata.ownerReferences, .metadata.annotations["kubectl.kubernetes.io/last-applied-configuration"], .metadata.selfLink)' | \
+      jq '.metadata.name = "'"$NEW_SECRET"'"' | \
+      jq '.metadata.namespace = "'"$VM_NAMESPACE"'"' | \
+      kubectl apply -n $VM_NAMESPACE -f -
+    ```
+
+3.  **Update the VM to use the New Secret:**
+    * Patch the VM to point its `cloudInitNoCloud` volume source to the newly created Secret.
+    ```bash
+    # Patch the VM to replace the secretRef name
+    VOLUME_INDEX=$(kubectl get vm $VM_NAME -n $NAMESPACE -o json | jq '.spec.template.spec.volumes |  to_entries[] |    select(.value.cloudInitNoCloud != null) | .key')
+
+    kubectl patch vm $VM_NAME -n $VM_NAMESPACE --type='json' \
+      -p='[{"op": "replace", "path": "/spec/template/spec/volumes/'$VOLUME_INDEX'/cloudInitNoCloud/secretRef/name", "value": "'"$NEW_SECRET"'"}, {"op": "replace", "path": "/spec/template/spec/volumes/'$VOLUME_INDEX'/cloudInitNoCloud/networkDataSecretRef/name", "value": "'"$NEW_SECRET"'"}]'
+    ```
+
+After these steps, the VM's Cloud Config is backed by a unique Secret, allowing you to safely edit the VM's configuration via the YAML editor without affecting the original VM Template.
+
+
+### Related Issue
+https://github.com/harvester/harvester/issues/9207
