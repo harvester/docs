@@ -53,12 +53,12 @@ Harvester v1.5.x and later versions allow the following:
 
 The following table outlines the components used in these versions:
 
-| Components | Harvester v1.4.2 and v1.4.3 | Harvester v1.5.x |
+| Components | Harvester v1.5.x | Harvester v1.6.0 |
 | --- | --- | --- |
-| KubeVirt | v1.3 | v1.4 |
-| Longhorn | v1.7 | v1.8 |
-| Rancher | v2.10 | v2.11 |
-| RKE2 | v1.31 | v1.32 |
+| KubeVirt | v1.4 | v1.5.2 |
+| Longhorn | v1.8 | v1.9.1 |
+| Rancher | v2.11 | v2.12.0 |
+| RKE2 | v1.32 | v1.33.3 |
 
 :::note
 
