@@ -42,6 +42,13 @@ Please refer to [this page](./create-windows-vm.md) for creating Windows virtual
 1. To configure networks, go to the **Networks** tab.
     1. The **Management Network** is added by default, you can remove it if the VLAN network is configured.
     1. You can also add additional networks to the VMs using VLAN networks. You may configure the VLAN networks on **Advanced > Networks** first.
+
+    :::note
+
+        If the virtual machine has one interface connected to the `mgmt` network and another connected to a VLAN network, the node may be unable to reach the virtual machine's `mgmt` IP address. This connection issue occurs when the other network's gateway overrides the virtual machine's default route, resulting in routing that prefers the VLAN network for all inbound and outbound traffic, even traffic destined for the `mgmt` network.
+
+    :::
+
 1. (Optional) Set node affinity rules on the **Node Scheduling** tab.
 1. (Optional) Set workload affinity rules on the **VM Scheduling** tab.
 1. Advanced options such as run strategy, os type and cloud-init data are optional. You may configure these in the **Advanced Options** section when applicable.
