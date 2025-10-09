@@ -41,6 +41,8 @@ You can add additional VLAN networks to your VM instances after booting, the `ma
 
 Additional NICs are not enabled by default unless you configure them manually in the guest OS, e.g. using [wicked for your OpenSUSE Server](https://doc.opensuse.org/documentation/leap/reference/html/book-reference/cha-network.html#sec-network-manconf) or [netplan for your Ubuntu Server](https://ubuntu.com/server/docs/network-configuration).
 
+When adding NICs, if one is connected to the Management Network, its IP may not be reachable from the node. This can happen if the VM's default route is overridden by the gateway of another network (e.g., a VLAN).
+
 ![edit-vm](/img/v1.2/vm/edit-vm-networks.png)
 
 For more details about the network implementation, please refer to the [Networking](../networking/harvester-network.md) page.
