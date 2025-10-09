@@ -80,6 +80,12 @@ os:
   additionalKernelArguments: "rd.iscsi.firmware vlan=enp4s0f0.2017:enp4s0f0 ip=10.115.48.10::10.115.55.254:255.255.248.0::enp4s0f0.2017:none"
 ``` 
 
+:::warning
+
+The `multiPathConfig` structure has changed since v1.7.0. Check the [latest configuration](/v1.7/install/harvester-configuration#osexternalstorageconfig) to set up your multipath configuration for fresh installations. This change will not impact upgrades.
+
+:::
+
 The test setup uses multiple tagged VLANs, such as VLAN 2017 (used for connecting with the iSCSI volume) and VLAN 2011 (used for the Harvester management interface).
 
 The kernel argument `vlan=enp4s0f0.2017:enp4s0f0 ip=10.115.48.10::10.115.55.254:255.255.248.0::enp4s0f0.2017:none` is necessary only if the iSCSI volume is accessible via an interface on a tagged VLAN. The arguments ensure that an additional tagged interface is created during boot and that a static address is allocated to the interface. See [dracut.cmdline](https://manpages.opensuse.org/Tumbleweed/dracut/dracut.cmdline.7.en.html) for more information about configuring the kernel arguments to match your use case.
