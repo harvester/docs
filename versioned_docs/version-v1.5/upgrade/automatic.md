@@ -445,3 +445,9 @@ A possible cause is processes related to orphan engines of the Longhorn Instance
     ```
 
 Related issues: [#7366](https://github.com/harvester/harvester/issues/7366), [#6764](https://github.com/longhorn/longhorn/issues/6764), [#8977](https://github.com/harvester/harvester/issues/8977) and [#11605](https://github.com/longhorn/longhorn/issues/11605)
+
+## Recurring Longhorn Snapshots and Backups are Unsupported
+
+[Recurring Longhorn snapshots and backups](https://longhorn.io/docs/1.10.0/snapshots-and-backups/scheduling-backups-and-snapshots) are not integrated into Harvester. If you decide to use this feature, you must disable all **recurring snapshot and backup jobs in Longhorn** before starting the upgrade.
+
+For more information about the incompatibility, see [Scheduling Virtual Machine Backups and Snapshots](../vm/backup-restore.md#scheduling-virtual-machine-backups-and-snapshots).

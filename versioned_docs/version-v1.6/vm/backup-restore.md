@@ -477,3 +477,11 @@ Before you upgrade Harvester, ensure that no virtual machine backups or snapshot
   ![upgrade-svmbackup.png](/img/v1.4/vm/upgrade-svmbackup.png)
 
 To avoid such issues, the Harvester team plans to implement automatic suspension of all virtual machine schedules before the upgrade process is started. The suspended schedules will also be automatically resumed after the upgrade is completed. For more information, see [Issue #6759](https://github.com/harvester/harvester/issues/6759).
+
+:::caution
+
+Longhorn has a similar feature called [recurring snapshots and backups](https://longhorn.io/docs/1.10.0/snapshots-and-backups/scheduling-backups-and-snapshots/), which uses recurring jobs to create periodic snapshots or backups of Longhorn volumes. This feature is not integrated into Harvester because it conflicts with certain Harvester operations (for example, virtual machine attachment and cluster upgrades). Recurring Longhorn snapshot and backup jobs can also generate heavy I/O without Harvester's awareness, and in some cases, even destabilize the cluster.
+
+For best results, use the [scheduled virtual machine backups and snapshots](#scheduling-virtual-machine-backups-and-snapshots) feature in Harvester, which has safeguard mechanisms that mitigate heavy I/O when possible. Again, Harvester does not support recurring Longhorn snapshots and backups.
+
+:::
