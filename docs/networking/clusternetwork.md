@@ -102,6 +102,15 @@ During installation of the first cluster node, you can configure the MTU value f
 
 ### Add Secondary VLAN Interfaces
 
+:::info DOCS TODO
+
+figure out how to do this. It probably means:
+- Add a new connection based on vlan-mgmt
+- Add the VLAN id to vlans in bridge-mgmt connection profile
+- Add the VLAN id to bridge-port in bond-mgmt connection profile
+
+:::
+
 Add the following commands to the `/oem/90_custom.yaml` file and reboot the node.
 
 - `/etc/wicked/scripts/setup_bond.sh` section
@@ -166,6 +175,12 @@ Exercise extreme caution when editing `/oem/90_custom.yaml`. Do not change other
 1. (Optional) Disable the [storage network](../advanced/storagenetwork.md#disable-the-storage-network) if it uses `mgmt` and is enabled.
 
 1. Change the MTU value in the `/oem/90_custom.yaml` file on each node.
+
+    :::info DOCS TODO
+
+    files are `/etc/NetworkManager/system-connections/{bond-mgmt,bridge-mgmt,vlan-mgmt}.nmconnection`, and you need to add the line `mtu=whatever` to the `[ethernet]` section if it's not already present (it won't be in the default case of 1500)
+
+    :::
 
     Locate the following paths, and then change the value in `MTU=1500`.
 

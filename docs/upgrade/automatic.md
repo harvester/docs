@@ -28,6 +28,16 @@ Harvester does not support downgrades. This restriction helps prevent unexpected
 
 :::
 
+:::info DOCS TODO
+
+Add information about NetworkManager migration when upgrading from v1.6.x to v1.7.0,
+notably that configuration will be generated based on `/oem/harvester.config` and will
+be saved in /oem/91_networkmanager.yaml. See https://github.com/harvester/harvester/pull/9039
+for more information.
+
+:::
+
+
 ## Upgrade paths
 
 The following table outlines the supported upgrade paths.
