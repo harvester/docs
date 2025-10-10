@@ -16,6 +16,15 @@ Clusters running v1.6.x can upgrade to v1.7.x directly because Harvester allows 
 
 For information about upgrading Harvester in air-gapped environments, see [Prepare an air-gapped upgrade](./automatic.md#prepare-an-air-gapped-upgrade).
 
+:::info DOCS TODO
+
+Add information about NetworkManager migration when upgrading from v1.6.x to v1.7.0,
+notably that configuration will be generated based on `/oem/harvester.config` and will
+be saved in /oem/91_networkmanager.yaml. See https://github.com/harvester/harvester/pull/9039
+for more information.
+
+:::
+
 :::info important
 If you are using DHCP to configure your host IP addresses, it's possible the IP addresses may change during upgrade, which will prevent the cluster from starting correctly. This requires manual intervention to remedy. For full details see [Host IP address may change during upgrade when using DHCP](#1-host-ip-address-may-change-during-upgrade-when-using-dhcp).
 
