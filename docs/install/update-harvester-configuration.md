@@ -122,6 +122,21 @@ You can update the slave interfaces of Harvester's management bonding interface 
 
 ### Runtime change
 
+:::info DOCS TODO
+
+Procedure is to add a new NM connection profile for the new interface, e.g.: `/etc/NetworkManager/system-connections`, with content:
+```
+[connection]
+id=bond-slave-eno50
+type=ethernet
+interface-name=eno50
+master=mgmt-bo
+slave-type=bond
+```
+...then `nmcli con reload` and probably `nmcli device reapply mgmt-bo`.
+
+:::
+
 1. Log in to a Harvester node and become root. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-in-to-a-harvester-node) for more details.
 1. Identify the interface names with the following command:
 
@@ -151,6 +166,11 @@ You can update the slave interfaces of Harvester's management bonding interface 
 
 ### Configuration persistence
 
+:::info DOCS TODO
+
+Files as in above TODO, and note `/oem/91_networkmanager.yaml` for pre v1.7.0 systems
+
+:::
 
 1. Backup the elemental cloud-init file `/oem/90_custom.yaml` as follows:
 
