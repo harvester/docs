@@ -20,6 +20,8 @@ This page describes how to edit some of the most-requested Harvester configurati
 
 If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples will be `/oem/99_custom.yaml`. Please substitute the value if needed.
 
+If you upgrade from a version before `v1.7.0`, any changes to network and DNS configuration need to be made in the `/oem/91_networkmanager.yaml` file. Please substitute the value if needed.
+
 :::
 
 ## DNS servers
@@ -27,16 +29,16 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
 ### Runtime change
 
 1. Log in to a Harvester node and become root. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-in-to-a-harvester-node) for more details.
-1. Edit `/etc/sysconfig/network/config` and update the following line. Use a space to separate DNS server addresses if there are multiple servers.
+1. If the management interface _is not_ configured to use a VLAN, run the following command:
 
     ```
-    NETCONFIG_DNS_STATIC_SERVERS="8.8.8.8 1.1.1.1"
+    nmcli con modify bridge-mgmt ipv4.dns 8.8.8.8,1.1.1.1 && nmcli device reapply mgmt-br
     ```
 
-1. Update and reload the configuration with the following command:
+1. If the management interface _is_ configured to use a VLAN, run the following commands. Replace `VLAN_ID` with the actal ID of the VLAN. If in doubt, run `nmcli con` to see the configured connections and devices.
 
     ```
-    netconfig update
+    nmcli con modify vlan-mgmt ipv4.dns 8.8.8.8,1.1.1.1 && nmcli device reapply mgmt-br.VLAN_ID
     ```
 
 1. Confirm the file `/etc/resolv.conf` contains the correct DNS servers with the `cat` command:
@@ -59,24 +61,35 @@ Beginning with v1.1.2, the persistent name of the cloud-init file is `/oem/90_cu
 
 When upgrading from an earlier version to `v1.1.2` or later, Harvester retains the old file name (`/oem/99_custom.yaml`) to avoid confusion. You can manually rename the file to `/oem/90_custom.yaml` if necessary.
 
+If you have upgraded from a version before `v1.7.0`, the changes below need to be made in the `/oem/91_networkmanager.yaml` file.
+
 1. Backup the elemental `cloud-init` file `/oem/90_custom.yaml` as follows:
 
     ```
     cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
     ```
 
-1. Edit `/oem/90_custom.yaml` and update the value under the yaml path `stages.initramfs[0].commands`. The `commands` array must contain a line to manipulate the `NETCONFIG_DNS_STATIC_SERVERS` config. Add the line if the line doesn't exist. 
+1. Edit `/oem/90_custom.yaml` and update the value under the yaml path `stages.network[0].commands`. The `commands` array must contain a line to manipulate the NetworkManager DNS configuration for the management interface. This is the exact same command used above when making the change at runtime. Add the line if the line doesn't exist.
 
-    The following example adds a line to change the `NETCONFIG_DNS_STATIC_SERVERS` config:
+    The following example adds a line to configure DNS servers when not using a VLAN on the management interface:
 
     ```
     stages:
-      initramfs:
+      network:
         - commands:
-            - sed -i 's/^NETCONFIG_DNS_STATIC_SERVERS.*/NETCONFIG_DNS_STATIC_SERVERS="8.8.8.8 1.1.1.1"/' /etc/sysconfig/network/config
+            - nmcli con modify bridge-mgmt ipv4.dns 8.8.8.8,1.1.1.1 && nmcli device reapply mgmt-br
     ```
 
-    Replace the DNS server addresses and save the file. Harvester sets up new servers after rebooting.
+    The following example adds a line to configure DNS servers when using VLAN 2017 on the management interface:
+
+    ```
+    stages:
+      network:
+        - commands:
+            - nmcli con modify vlan-mgmt ipv4.dns 8.8.8.8,1.1.1.1 && nmcli device reapply mgmt-br.2017
+    ```
+
+    Replace the DNS server addresses and VLAN ID if applicable and save the file. Harvester sets up new servers after rebooting.
 
 
 ## NTP servers
