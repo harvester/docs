@@ -47,6 +47,7 @@ In Harvester's practice, the `Logging`, `Audit` and `Event` shares one architect
 The Harvester logging infrastructure allows you to aggregate Harvester logs into an external service such as [Graylog](https://www.graylog.org), [Elasticsearch](https://www.elastic.co/elasticsearch/), [Splunk](https://www.splunk.com/), [Grafana Loki](https://grafana.com/oss/loki/) and others.
 
 ### Collected Logs
+
 See below for a list logs that are collected:
  - Logs from all cluster `Pods`
  - Kernel logs from each `node`
@@ -55,7 +56,7 @@ See below for a list logs that are collected:
    - `rke2-agent`
    - `rancherd`
    - `rancher-system-agent`
-   - `wicked`
+   - `NetworkManager`
    - `iscsid`
 
 :::note

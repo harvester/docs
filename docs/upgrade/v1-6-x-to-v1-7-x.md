@@ -16,6 +16,12 @@ Clusters running v1.6.x can upgrade to v1.7.x directly because Harvester allows 
 
 For information about upgrading Harvester in air-gapped environments, see [Prepare an air-gapped upgrade](./automatic.md#prepare-an-air-gapped-upgrade).
 
+:::caution
+
+Harvester v1.7.x uses NetworkManager instead of wicked, which was used in earlier versions of Harvester. If you have made changes to Harvester's network configuration since it was first installed there are additional manual steps required to ensure a smooth upgrade. For details, see [Migration from wicked to NetworkManager](#migration-from-wicked-to-networkmanager)
+
+:::
+
 :::info important
 
 Host IP addresses configured via DHCP may change during upgrades. This prevents the cluster from starting correctly and requires manual recovery steps. For details, see [Host IP address may change during upgrade when using DHCP](#1-host-ip-address-may-change-during-upgrade-when-using-dhcp).
@@ -37,6 +43,25 @@ You must use a compatible version (v1.7.x) of the Harvester UI Extension to impo
 1. Select a compatible version, and then click **Update**.
 
 1. Allow some time for the extension to be updated and then refresh the screen.
+
+### Migration from wicked to NetworkManager
+
+Harvester v1.7.x uses NetworkManager instead of wicked, which was used in earlier versions of Harvester. There is no straightforward 1:1 mapping between the old `ifcfg` style configuration files and NetworkManager's connection profiles. This means that the existing network configuration cannot be automatically migrated in-place. Instead, during upgrade, new NetworkManager connection profiles will generated based on the configuration in `/oem/harvester.config`, i.e. the network configuration as specified when Harvester was originally installed.
+
+If you started with Harvester v1.1 or newer, and have _not_ made any manual changes to network configuration since inital installation, no special action is required.
+
+If you have made manual changes to network configuration after installation, for example adding bonding slaves to the management interface, or adjusing DNS servers, these changes will not be picked up automatically during upgrade. You will need to either:
+
+1. Preferably, before upgrade, edit `/oem/harvester.config` on each node to specify the desired network configuration, or,
+2. After upgrade, make the required changes to the generated NetworkManager connection profiles using the `nmcli` tool.
+
+The important things to check in `/oem/harvester.config` before upgrade are `os.dns_nameservers` and `install.management_interface`. Pay particular attention to the latter if you started with Harvester v1.0, as the format of this file changed between Harvester v1.0 and v1.1. For a full reference, see [Harvester configuration](../install/harvester-configuration.md).
+
+If a node gets stuck in "Waiting Reboot" state part way through upgrade, log in via the console and verify the network configuration with `nmcli`.  If necessary you can make manual changes to the configuration at this point, then reboot the node and the upgrade will continue.
+
+If you run into trouble with manual configuration changes and wish to revert back to the automatically generated NetworkManager connection profiles, you can run the `harvester-installer generate-network-config` command. This will re-create the NetworkManager connection profiles in `/etc/NetworkManager/system-connections/` based on the configuration specified in `/oem/harvester.config`.
+
+For further details see the [Migrate from Wicked to NetworkManager HEP](https://github.com/harvester/harvester/pull/9039).
 
 ---
 
