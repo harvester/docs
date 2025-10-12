@@ -15,7 +15,6 @@ For more information, see [Longhorn Storage Network](https://longhorn.io/docs/1.
 :::note
 
 - Avoid configuring Longhorn settings directly, as this can result in unexpected or unwanted system behavior.
-- You can only use the Longhorn storage network with the Longhorn V1 Data Engine. Usage with the V2 Data Engine is not yet supported.
 
 :::
 
