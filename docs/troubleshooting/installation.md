@@ -151,10 +151,11 @@ Harvester uses the following chart CRDs:
     - `harvester-crd`
     - `harvester`
 
-You can use `helm` command to list all the installed charts:
+You can use the `helm list -A` command to retrieve a list of installed charts.
+
+Example of output:
 
 ```shell
-$ helm list -A
 NAME                                       	NAMESPACE                      	REVISION	UPDATED                                	STATUS  	CHART                                                                                   	APP VERSION
 fleet                                      	cattle-fleet-system            	4       	2025-09-24 09:07:10.801764068 +0000 UTC	deployed	fleet-107.0.0+up0.13.0                                                                  	0.13.0
 fleet-agent-local                          	cattle-fleet-local-system      	1       	2025-09-24 08:59:28.686781982 +0000 UTC	deployed	fleet-agent-local-v0.0.0+s-d4f65a6f642cca930c78e6e2f0d3f9bbb7d3ba47cf1cce34ac3d6b8770ce5
