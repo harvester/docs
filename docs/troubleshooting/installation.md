@@ -132,22 +132,24 @@ Please include the following information in a bug report when reporting a failed
 
 ## Check Charts Status
 
-There are two kind of charts CRD in Harvester. One is `HelmChart`, and the other is `ManagedChart`. The `HelmChart` maintains RKE2 charts:
+Harvester uses the following chart CRDs:
 
-* rke2-runtimeclasses
-* rke2-multus
-* rke2-metrics-server
-* rke2-ingress-nginx
-* rke2-coredns
-* rke2-cannal
+- `HelmChart`: Maintains RKE2 charts.
 
-The `ManagedChart` manages Rancher and Harvester charts:
+    - `rke2-runtimeclasses`
+    - `rke2-multus`
+    - `rke2-metrics-server`
+    - `rke2-ingress-nginx`
+    - `rke2-coredns`
+    - `rke2-cannal`
 
-* rancher-monitoring-crd
-* rancher-logging-crd
-* kubeovn-operator-crd
-* harvester-crd
-* harvester
+- `ManagedChart`: Manages Rancher and Harvester charts.
+
+    - `rancher-monitoring-crd`
+    - `rancher-logging-crd`
+    - `kubeovn-operator-crd`
+    - `harvester-crd`
+    - `harvester`
 
 You can use `helm` command to list all the installed charts:
 
