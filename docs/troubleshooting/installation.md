@@ -455,7 +455,9 @@ Status:
     Message:
 ```
 
-If you change the `harvester-system/harvester` deployment image, the Fleet agent will detect the change and update the corresponding `BundleDeployment` status.
+If you change the `harvester-system/harvester` deployment image, the Fleet agent detects the change and updates the corresponding status in the `BundleDeployment` resource.
+
+Example:
 
 ```yaml
 status:
