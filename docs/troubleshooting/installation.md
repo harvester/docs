@@ -267,7 +267,10 @@ Status:
 JobName: helm-install-rke2-runtimeclasses
 ```
 
-If a job is failed, you can check the `Failed` condition reason and message for more details. If you want to rerun the job, you can remove the `Status` in `HelmChart` and the controller will deploy a new job.
+You can use the information in the following ways:
+
+- Determine the cause of a failed job: Check the `Reason` and `Message` values of the `Failed` condition.
+- Rerun a job: Remove the `Status` field for that specific job from the `HelmChart` CRD. The controller deploys a new job.
 
 ### ManagedChart CRD
 
