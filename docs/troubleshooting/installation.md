@@ -274,7 +274,9 @@ You can use the information in the following ways:
 
 ### ManagedChart CRD
 
-For `ManagedChart` items, Rancher relies on [Fleet](https://fleet.rancher.io/) in install charts on target clusters. There is only one target cluster (`fleet-local/local`) in Harvester. Based on the `cluster.fleet.cattle.io`, the Fleet deploys an agent on the target clusters via `helm install`, so you can find `fleet-agent-local` chart by `helm list -A`. The `cluster.fleet.cattle.io` contains the agent status.
+Rancher uses [Fleet](https://fleet.rancher.io/) to install charts on target clusters. Harvester has only one target cluster (`fleet-local/local`).
+
+Fleet deploys an agent on each target cluster via `helm install`, so you can find the `fleet-agent-local` chart using the `helm list -A` command. The `cluster.fleet.cattle.io` CRD contains the agent's status.
 
 ```yaml
 apiVersion: fleet.cattle.io/v1alpha1
