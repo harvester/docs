@@ -179,11 +179,15 @@ rke2-runtimeclasses                        	kube-system                    	1   
 
 ### HelmChart CRD
 
-For `HelmChart` items, they are installed by jobs. You can find the job name and status by running the following command on the Harvester node:
+`HelmChart` items are installed by jobs. You can determine the name and status of each job by running the following command on the Harvester node:
 
 ```shell
 $ kubectl get helmcharts -A -o jsonpath='{range .items[*]}{"Namespace: "}{.metadata.namespace}{"\nName: "}{.metadata.name}{"\nStatus:\n"}{range .status.conditions[*]}{"  - Type: "}{.type}{"\n    Status: "}{.status}{"\n    Reason: "}{.reason}{"\n    Message: "}{.message}{"\n"}{end}{"JobName: "}{.status.jobName}{"\n\n"}{end}'
+```
 
+Example of output:
+
+```shell
 Namespace: kube-system
 Name: rke2-canal
 Status:
