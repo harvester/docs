@@ -327,9 +327,9 @@ status:
     type: Ready
 ```
 
-The Fleet controller doesn't push data to the agent. The agent polls `Bundle` data from the cluster on which the Fleet controller is installed. In Harvester, both the Fleet controller and agent are on the same cluster, so there is no network issue.
+Rancher converts the `ManagedChart` CRD into a `Bundle` resource with an `mcc-` prefix. The Fleet agent watches for `Bundle` resources and deploys them to the target cluster. The `BundleDeployment` resource contains the deployment status.
 
-Rancher converts the `ManagedChart` into `Bundle` with an `mcc-` prefix. The Fleet agent watches `Bundle` resources and deploys them to the target cluster. Each deployment status is kept in `BundleDeployment`.
+The Fleet controller does not push data to the agent. Instead, the agent polls `Bundle` resource data from the cluster on which the Fleet controller is installed. In Harvester, the Fleet controller and agent are on the same cluster, so network issues are not a concern.
 
 ```shell
 $ kubectl get bundledeployments -A -o jsonpath='{range .items[*]}{"Namespace: "}{.metadata.namespace}{"\nName: "}{.metadata.name}{"\nStatus:\n"}{range .status.conditions[*]}{"  - Type: "}{.type}{"\n    Status: "}{.status}{"\n    Reason: "}{.reason}{"\n    Message: "}{.message}{"\n"}{end}{"\n"}{end}'
