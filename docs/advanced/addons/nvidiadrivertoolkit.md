@@ -30,6 +30,20 @@ To enable the addon, users need to perform the following:
 
 Once the addon is enabled, a nvidia-driver-toolkit daemonset is deployed to the cluster.
 
-On pod startup, the entrypoint script will download the nvidia driver from the speificied `Driver Location`, install the driver and load the kernel drivers.
+On pod startup, the ENTRYPOINT script will download the NVIDIA driver from the specified `Driver Location`. Install the driver and load the kernel drivers.
 
 The `PCIDevices` addon can now leverage this addon to manage the lifecycle of the vGPU devices on nodes containing supported GPU [devices](../vgpusupport.md).
+
+## Install Different NVIDIA Driver Versions
+
+_Available as of v1.7.0_
+
+NVIDIA driver versions can vary across cluster nodes. If you want to install a specific driver version on a node, you must annotate the node before starting the nvidia-driver-toolkit add-on.
+
+```
+kubectl annotate nodes {node name} sriovgpu.harvesterhci.io/custom-driver=https://[driver location]
+```
+
+The nvidia-driver-toolkit installs the specified driver version upon starting.
+
+If an NVIDIA driver was previously installed, you must restart the pod to trigger the installation process again.
