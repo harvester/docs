@@ -614,21 +614,24 @@ Harvester migtht [automatically apply affinity rules](../vm/create-vm.md#automat
 
 Ensure there are active nodes which sets up the cluster network `cn2` successfully, then these nodes are labeled with `network.harvesterhci.io/cn2`, finally the pending pod can be scheduled to them.
 
-## Unintentional Template Update via VM Cloud Config YAML
+## Unintentional Virtual Machine Template Modification via Cloud Config YAML
 
-### Root Cause
+When you use a template to create a virtual machine and then modify that virtual machine's user data using the **Edit as YAML** feature, the source template may be unintentionally modified once you save the changes.
 
-The issue stems from a flaw where configuration inheritance is not properly dissociated when a VM's Cloud Config is created through the raw **YAML editor**. The system treats the configuration as still linked to the template, resulting in an overwrite of the source template's data.
+This issue occurs because the system does not properly dissociate the configuration inheritance. Because the new configuration remains linked to the source template, saving the changes automatically overwrites the template's data.
 
-### How to avoid
+:::tip
 
-**Do not** use the **"Edit as YAML"** feature when creating a VM, especially for VMs created from a template. Create it using the UI Form Editor and then modify it using **"Edit as YAML"**.
+Avoid using the **Edit as YAML** feature when creating virtual machines, especially when using a template. Instead, use the dedicated fields and options available on the **Virtual Machine: Create** screen.
 
-### Mitigation Steps
+:::
 
-1.  **Identify the VM and its current Cloud Config Secret:**
-    * Find the name of the Secret currently linked to the VM.
-    * *(Replace `<VM_NAME>` and `<VM_NAMESPACE>` with your values, e.g., `vm1` and `default`)*
+To mitigate the issue, perform the following steps:
+
+1. Identify the name and namespace of the affected virtual machine.
+
+1. Identify the Cloud Config secret associated with the affected virtual machine.
+
     ```bash
     # Get the current Secret name linked to the VM's cloudInitNoCloud volume source:
     VM_NAME=<VM_NAME>
@@ -639,8 +642,9 @@ The issue stems from a flaw where configuration inheritance is not properly diss
     echo "Current Secret: $SECRET_NAMESPACE -> $SECRET"
     ```
 
-2.  **Clone the Secret:**
-    * Export the current Secret, strip its identifying metadata, rename it, and apply it to create an independent copy.
+1. Create an independent copy of the secret.
+
+    Export the current secret, remove the identifying metadata, assign a unique name, and then apply the secret.
     ```bash
     # Define a new, unique name for the secret
     NEW_SECRET="$VM_NAME-$(date +%s)"
@@ -653,8 +657,9 @@ The issue stems from a flaw where configuration inheritance is not properly diss
       kubectl apply -n $VM_NAMESPACE -f -
     ```
 
-3.  **Update the VM to use the New Secret:**
-    * Patch the VM to point its `cloudInitNoCloud` volume source to the newly created Secret.
+1. Update the virtual machine configuration to use the new secret.
+
+    Point the virtual machine's `cloudInitNoCloud` volume source to the new secret.
     ```bash
     # Patch the VM to replace the secretRef name
     VOLUME_INDEX=$(kubectl get vm $VM_NAME -n $NAMESPACE -o json | jq '.spec.template.spec.volumes |  to_entries[] |    select(.value.cloudInitNoCloud != null) | .key')
@@ -663,8 +668,7 @@ The issue stems from a flaw where configuration inheritance is not properly diss
       -p='[{"op": "replace", "path": "/spec/template/spec/volumes/'$VOLUME_INDEX'/cloudInitNoCloud/secretRef/name", "value": "'"$NEW_SECRET"'"}, {"op": "replace", "path": "/spec/template/spec/volumes/'$VOLUME_INDEX'/cloudInitNoCloud/networkDataSecretRef/name", "value": "'"$NEW_SECRET"'"}]'
     ```
 
-After these steps, the VM's Cloud Config is backed by a unique Secret, allowing you to safely edit the VM's configuration via the YAML editor without affecting the original VM Template.
+Once the Cloud Config is backed by a unique secret, you can use the Harvester UI's YAML editor to edit the virtual machine configuration without affecting the source template.
 
 
-### Related Issue
-https://github.com/harvester/harvester/issues/9207
+Related issue: [#9207](https://github.com/harvester/harvester/issues/9207)
