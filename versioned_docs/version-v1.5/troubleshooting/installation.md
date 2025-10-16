@@ -104,6 +104,36 @@ you can run the following command to only display the token's value:
 $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
 ```
 
+## Check status of harvester components
+
+Before checking the status of the harvester components, acquire the kubeconfig following preferrably [the second step in the FAQ](../faq.md#how-can-i-access-the-kubeconfig-file-of-the-harvester-cluster).
+
+Once you acquire the kubeconfig run the following commands against the cluster to know its ready state. All `kubectl` commands should return `True` if the component is ready.
+
+### To check if the Harvester pods are ready
+```shell
+$ kubectl -n harvester-system get pods -l app.kubernetes.io/name=harvester -l app.kubernetes.io/component=apiserver --no-headers -o custom-columns="STATUS:status.conditions[?(@.type=='Ready')].status"
+```
+
+### To check if the Harvester webhook pods are ready
+```shell
+$ kubectl -n harvester-system get pods -l app.kubernetes.io/name=harvester -l app.kubernetes.io/component=webhook-server --no-headers -o custom-columns="STATUS:status.conditions[?(@.type=='Ready')].status"
+```
+
+### To check if the Rancher pods are ready
+```shell
+$ kubectl -n cattle-system get pods -l app=rancher --no-headers -o custom-columns="STATUS:status.conditions[?(@.type=='Ready')].status"
+```
+
+### To check if the API is ready
+```shell
+$ curl -fk https://<VIP>/version
+```
+
+:::note
+
+To take the VIP follow the [installation instructions](../install/management-address.md#how-to-get-the-vip-mac-address).
+
 :::
 
 ## Collecting troubleshooting information
