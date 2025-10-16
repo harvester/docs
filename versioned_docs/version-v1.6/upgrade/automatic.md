@@ -34,6 +34,7 @@ The following table outlines the supported upgrade paths.
 
 | Installed Version | Supported Upgrade Versions |
 | --- | --- |
+| v1.6.0 | [v1.6.1](./v1-6-0-to-v1-6-1.md) |
 | v1.5.0/v1.5.1/v1.5.2 | [v1.6.0](./v1-5-x-to-v1-6-0.md) |
 | v1.5.0 | [v1.5.1](./v1-5-0-to-v1-5-1.md) |
 | v1.4.2/v1.4.3 | [v1.5.0](./v1-4-2-to-v1-5-0.md) and [v1.5.1](./v1-4-2-to-v1-5-1.md) |
@@ -46,14 +47,14 @@ The following table outlines the supported upgrade paths.
 | v1.2.1 | [v1.2.2](./v1-2-1-to-v1-2-2.md) |
 | v1.1.2/v1.1.3/v1.2.0 | [v1.2.1](./v1-2-0-to-v1-2-1.md) |
 
-Harvester v1.5.x and later versions allow the following:
+The latest Harvester versions allow the following:
 
-- Upgrading from one minor version to the next (for example, from v1.4.2 to v1.5.1) without needing to install the patches released in between the two versions. This is possible because Harvester allows a maximum of one minor version upgrade for underlying components.
-- Upgrading to a later patch version (for example, from v1.5.0 to v1.5.1), assuming that the same component versions are used across the releases for a given minor version.
+- Upgrading from one minor version to the next (for example, from v1.5.2 to v1.6.1) without needing to install the patches released in between the two versions. This is possible because Harvester allows a maximum of one minor version upgrade for underlying components.
+- Upgrading to a later patch version (for example, from v1.6.0 to v1.6.1), assuming that the same component versions are used across the releases for a given minor version.
 
 The following table outlines the components used in these versions:
 
-| Components | Harvester v1.5.x | Harvester v1.6.0 |
+| Components | Harvester v1.5.x | Harvester v1.6.x |
 | --- | --- | --- |
 | KubeVirt | v1.4 | v1.5.2 |
 | Longhorn | v1.8 | v1.9.1 |
