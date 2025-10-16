@@ -45,28 +45,40 @@ Before any action is taken, it is important to collect the current network infor
     Example: A NIC named `ens3` was added to the `mgmt-bo` bond interface.
 
     ```
-    - path: /etc/sysconfig/network/ifcfg-mgmt-bo
+    - path: /etc/NetworkManager/system-connections/bond-mgmt.nmconnection
       permissions: 384
       owner: 0
       group: 0
-      content: |+
-        STARTMODE='onboot'
-        BONDING_MASTER='yes'
-        BOOTPROTO='none'
-        POST_UP_SCRIPT="wicked:setup_bond.sh"
-        BONDING_SLAVE_0='ens3'
-        BONDING_MODULE_OPTS='miimon=100 mode=active-backup '
-        DHCLIENT_SET_DEFAULT_ROUTE='no'
+      content: |-
+        [connection]
+        id=bond-mgmt
+        type=bond
+        interface-name=mgmt-bo
+        master=mgmt-br
+        slave-type=bridge
+
+        [ethernet]
+
+        [bond]
+        miimon=100
+        mode=active-backup
+
+        [bridge-port]
+        vlans=1 pvid untagged
       encoding: ""
       ownerstring: ""
 
-    - path: /etc/sysconfig/network/ifcfg-ens3
+    - path: /etc/NetworkManager/system-connections/bond-slave-ens3.nmconnection
       permissions: 384
       owner: 0
       group: 0
       content: |
-        STARTMODE='hotplug'
-        BOOTPROTO='none'
+        [connection]
+        id=bond-slave-ens3
+        type=ethernet
+        interface-name=ens3
+        master=mgmt-bo
+        slave-type=bond
       encoding: ""
       ownerstring: ""
     ```
