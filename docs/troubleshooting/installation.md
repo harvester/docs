@@ -106,6 +106,46 @@ $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
 
 :::
 
+## Check the status of Harvester components
+
+Before checking the status of Harvester components, obtain a copy of the Harvester cluster's kubeconfig file using either of the following methods:
+
+- On the Harvester UI, go to the **Harvester Support** screen and then click **Download KubeConfig**.
+
+- Run the following commands on any of the management nodes:
+  ```shell
+  $ sudo su
+  $ cat /etc/rancher/rke2/rke2.yaml
+  ```
+
+After you obtain a copy of the kubeconfig file, run the following commands against the cluster to check the readiness of each component. A return value of `True` indicates that the component is ready.
+
+- Harvester pods
+  ```shell
+  $ kubectl -n harvester-system get pods -l app.kubernetes.io/name=harvester -l app.kubernetes.io/component=apiserver --no-headers -o custom-columns="STATUS:status.conditions[?(@.type=='Ready')].status"
+  ```
+  
+- Harvester webhook pods
+  ```shell
+  $ kubectl -n harvester-system get pods -l app.kubernetes.io/name=harvester -l app.kubernetes.io/component=webhook-server --no-headers -o custom-columns="STATUS:status.conditions[?(@.type=='Ready')].status"
+  ```
+
+- Rancher pods
+  ```shell
+  $ kubectl -n cattle-system get pods -l app=rancher --no-headers -o custom-columns="STATUS:status.conditions[?(@.type=='Ready')].status"
+  ```
+
+- API
+  ```shell
+  $ curl -fk https://<VIP>/version
+  ```
+
+  :::note
+
+  You must replace <VIP\> with the [VIP MAC address](../install/management-address.md#how-to-get-the-vip-mac-address).
+
+  :::
+
 ## Collecting troubleshooting information
 
 Please include the following information in a bug report when reporting a failed installation:
