@@ -104,37 +104,45 @@ you can run the following command to only display the token's value:
 $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
 ```
 
-## Check status of harvester components
+## Check the status of Harvester components
 
-Before checking the status of the harvester components, acquire the kubeconfig following preferrably [the second step in the FAQ](../faq.md#how-can-i-access-the-kubeconfig-file-of-the-harvester-cluster).
+Before checking the status of Harvester components, obtain a copy of the Harvester cluster's kubeconfig file using either of the following methods:
 
-Once you acquire the kubeconfig run the following commands against the cluster to know its ready state. All `kubectl` commands should return `True` if the component is ready.
+- On the Harvester UI, go to the **Harvester Support** screen and then click **Download KubeConfig**.
 
-### To check if the Harvester pods are ready
-```shell
-$ kubectl -n harvester-system get pods -l app.kubernetes.io/name=harvester -l app.kubernetes.io/component=apiserver --no-headers -o custom-columns="STATUS:status.conditions[?(@.type=='Ready')].status"
-```
+- Run the following commands on any of the management nodes:
+  ```shell
+  $ sudo su
+  $ cat /etc/rancher/rke2/rke2.yaml
+  ```
 
-### To check if the Harvester webhook pods are ready
-```shell
-$ kubectl -n harvester-system get pods -l app.kubernetes.io/name=harvester -l app.kubernetes.io/component=webhook-server --no-headers -o custom-columns="STATUS:status.conditions[?(@.type=='Ready')].status"
-```
+After you obtain a copy of the kubeconfig file, run the following commands against the cluster to check the readiness of each component. A return value of `True` indicates that the component is ready.
 
-### To check if the Rancher pods are ready
-```shell
-$ kubectl -n cattle-system get pods -l app=rancher --no-headers -o custom-columns="STATUS:status.conditions[?(@.type=='Ready')].status"
-```
+- Harvester pods
+  ```shell
+  $ kubectl -n harvester-system get pods -l app.kubernetes.io/name=harvester -l app.kubernetes.io/component=apiserver --no-headers -o custom-columns="STATUS:status.conditions[?(@.type=='Ready')].status"
+  ```
+  
+- Harvester webhook pods
+  ```shell
+  $ kubectl -n harvester-system get pods -l app.kubernetes.io/name=harvester -l app.kubernetes.io/component=webhook-server --no-headers -o custom-columns="STATUS:status.conditions[?(@.type=='Ready')].status"
+  ```
 
-### To check if the API is ready
-```shell
-$ curl -fk https://<VIP>/version
-```
+- Rancher pods
+  ```shell
+  $ kubectl -n cattle-system get pods -l app=rancher --no-headers -o custom-columns="STATUS:status.conditions[?(@.type=='Ready')].status"
+  ```
 
-:::note
+- API
+  ```shell
+  $ curl -fk https://<VIP>/version
+  ```
 
-To take the VIP follow the [installation instructions](../install/management-address.md#how-to-get-the-vip-mac-address).
+  :::note
 
-:::
+  You must replace <VIP\> with the [VIP MAC address](../install/management-address.md#how-to-get-the-vip-mac-address).
+
+  :::
 
 ## Collecting troubleshooting information
 
