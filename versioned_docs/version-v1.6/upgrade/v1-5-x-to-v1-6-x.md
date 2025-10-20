@@ -1,18 +1,18 @@
 ---
 sidebar_position: 3
-sidebar_label: Upgrade from v1.5.x to v1.6.0
-title: "Upgrade from v1.5.x to v1.6.0"
+sidebar_label: Upgrade from v1.5.x to v1.6.x
+title: "Upgrade from v1.5.x to v1.6.x"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/upgrade/v1-5-x-to-v1-6-0"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/upgrade/v1-5-x-to-v1-6-x"/>
 </head>
 
 ## General Information
 
 An **Upgrade** button appears on the **Dashboard** screen whenever a new Harvester version that you can upgrade to becomes available. For more information, see [Start an upgrade](./automatic.md#start-an-upgrade).
 
-Clusters running v1.5.0 and v1.5.1 can upgrade to v1.6.x directly because Harvester allows a maximum of one minor version upgrade for underlying components. Harvester v1.5.0, v1.5.1, and v1.5.2 use the same minor version of RKE2 (v1.32), while Harvester v1.6.0 uses the next minor version (v1.33). For more information, see [Upgrade paths](./automatic.md#upgrade-paths).
+Clusters running v1.5.x can upgrade to v1.6.x directly because Harvester allows a maximum of one minor version upgrade for underlying components. Harvester v1.5.0, v1.5.1, and v1.5.2 use the same minor version of RKE2 (v1.32), while Harvester v1.6.0 and v1.6.1 use the next minor version (v1.33). For more information, see [Upgrade paths](./automatic.md#upgrade-paths).
 
 :::note
 
@@ -24,7 +24,7 @@ For information about upgrading Harvester in air-gapped environments, see [Prepa
 
 ### Update Harvester UI Extension on Rancher v2.12.0
 
-You must use **v1.6.0** of the Harvester UI Extension to import Harvester v1.6.0 clusters on Rancher v2.12.0.
+You must use **v1.6.0** of the Harvester UI Extension to import Harvester v1.6.x clusters on Rancher v2.12.0.
 
 1. On the Rancher UI, go to **local > Apps > Repositories**.
 
@@ -182,15 +182,15 @@ After upgrading to v1.6.x, perform the following steps:
    The above outputs only the primary vlan part of `mgmt-br` and `mgmt-bo`
 
 1. Manually add the required secondary VLANs to the `mgmt-br` bridge and the `mgmt-bo` interface by adding the following commands to the `/oem/90_custom.yaml` file:
-
+  
     - `/etc/wicked/scripts/setup_bond.sh` section
-
+  
     ```
     bridge vlan add vid <vlan-id> dev $INTERFACE
     ```
 
     - `/etc/wicked/scripts/setup_bridge.sh` section
-
+  
     ```
     bridge vlan add vid <vlan-id> dev $INTERFACE self
     bridge vlan add vid <vlan-id> dev mgmt-bo
