@@ -460,6 +460,8 @@ Changing the `additional-guest-memory-overhead-ratio` setting affects the VMs pe
 
 - When the value changes between `"0"` and the range `["", "1.0" .. "10.0"]`, the existing VMs which have the `100Mi default Reserved Memory` will keep it, the existing VMs which do not have `100Mi default Reserved Memory` will not get it automatically.
 
+- When [ResourceQuota](../rancher/resource-quota.md#set-resourcequota-via-rancher) is configured on namespaces, the new ratio is taken into account when VMs are migrated or started. You need to tune those two parameters to ensure the `ResourceQuota` can accommodate the original number of VMs which will have the new amount of overhead memory.
+
 :::
 
 ### `release-download-url`
