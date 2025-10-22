@@ -106,10 +106,7 @@ $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
 
 ## Check the status of Harvester components
 
-Before checking the status of Harvester components, obtain a copy of the Harvester cluster's kubeconfig file through `ssh` on any of the management nodes:
-```shell
-$ sudo -i cat /etc/rancher/rke2/rke2.yaml
-```
+Before checking the status of Harvester components, obtain a copy of the Harvester cluster's kubeconfig file following the [guide](../faq.md#how-can-i-access-the-kubeconfig-file-of-the-harvester-cluster).
 
 After you obtain a copy of the kubeconfig file, run the following script against the cluster to check the readiness of each component.
 
