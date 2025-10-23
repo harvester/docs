@@ -174,6 +174,7 @@ The `defaultDiskBusType` field allows you to specify the bus type for imported d
 
 - VMware sources: The value is used only if Harvester is unable to automatically detect the bus type.
 - OpenStack sources: The value is used for all imported disks.
+- OVA sources: The value is used only if Harvester is unable to automatically detect the bus type.
 
 The valid values are `sata`, `scsi`, `usb`, and `virtio`. If you do not specify a value, `virtio` is used by default.
 
