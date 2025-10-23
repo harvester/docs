@@ -10,7 +10,7 @@ title: "VM Import"
 
 _Available as of v1.1.0_
 
-With the vm-import-controller addon users can import their virtual machines from VMware and OpenStack into Harvester.
+With the vm-import-controller addon, users can import their virtual machines from VMware, OpenStack and Open Virtual Appliance (OVA) package into Harvester.
 
 To use the VM import feature, users need to enable the vm-import-controller addon.
 
@@ -29,6 +29,7 @@ To avoid this, users are advised to enable PVC-backed storage and customize the 
 Currently, the following source providers are supported:
 * VMware
 * OpenStack
+* Open Virtual Appliance (OVA)
 
 ## API
 The vm-import-controller introduces two CRDs.
@@ -71,7 +72,7 @@ Once this check is passed, the source is marked as ready and can be used for VM 
 
 ```shell
 $ kubectl get vmwaresource.migration 
-NAME      STATUS
+NAME    STATUS
 vcsim   clusterReady
 ```
 
@@ -110,9 +111,49 @@ stringData:
 The OpenStack source reconciliation process attempts to list VMs in the project and marks the source as ready.
 
 ```shell
-$ kubectl get opestacksource.migration
+$ kubectl get openstacksource.migration
 NAME       STATUS
 devstack   clusterReady
+```
+
+For OVA-based sources, an example definition is as follows:
+
+```yaml
+apiVersion: migration.harvesterhci.io/v1beta1
+kind: OvaSource
+metadata:
+  name: example
+  namespace: default
+spec:
+  url: "http://192.168.0.1:8080/example.ova"
+  httpTimeoutSeconds: 300
+  credentials:
+    name: example-ova-credentials
+    namespace: default
+```
+
+Specifying the optional `httpTimeoutSeconds` field allows users to customize the timeout for HTTP requests. The timeout includes connection time, any redirects, and reading the response body. A timeout of zero means no timeout. The default value is 10 minutes.
+
+The secret may optionally include credentials for basic authentication of the URL, as well as a CA certificate if HTTPS is used:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata: 
+  name: example-ova-credentials
+  namespace: default
+stringData:
+  "username": "user"
+  "password": "password"
+  "ca.crt": "pem-encoded-ca-cert"
+```
+
+As part of reconciliation, OvaSource issues a HEAD request to the specified URL to confirm its validity before marking the source as ready.
+
+```shell
+$ kubectl get ovasource.migration
+NAME      STATUS
+example   clusterReady
 ```
 
 ### VirtualMachineImport
@@ -174,6 +215,7 @@ The `defaultDiskBusType` field allows you to specify the bus type for imported d
 
 - VMware sources: The value is used only if Harvester is unable to automatically detect the bus type.
 - OpenStack sources: The value is used for all imported disks.
+- Open Virtual Appliance (OVA) sources: The value is used only if Harvester is unable to automatically detect the bus type.
 
 The valid values are `sata`, `scsi`, `usb`, and `virtio`. If you do not specify a value, `virtio` is used by default.
 
@@ -232,7 +274,7 @@ OpenStack allows users to have multiple instances with the same name. In such a 
 When creating a virtual machine object, the vm-import-controller add-on uses the name of the source virtual machine, which may not meet the Kubernetes object [naming criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names). You may need to rename the source virtual machine to allow successful completion of the import.
 ##### VMware-Based Virtual Machine Without VMware Tools Is Not Migrated
 
-When you attempt to import a VMware-based virtual machine in Harvester v1.6.0, the following occur if [VMware Tools](https://knowledge.broadcom.com/external/article/315382/overview-of-vmware-tools.html) is not installed on the virtual machine:
+When you attempt to import a VMware-based virtual machine in Harvester v1.6.0, the following occurs if [VMware Tools](https://knowledge.broadcom.com/external/article/315382/overview-of-vmware-tools.html) is not installed on the virtual machine:
 
 - The vm-import-controller does not gracefully shut down the guest operating system.
 - When the graceful shutdown period (`gracefulShutdownTimeoutSeconds`) lapses, the vm-import-controller does not force a hard poweroff.
