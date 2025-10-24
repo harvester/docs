@@ -148,7 +148,7 @@ After you obtain a copy of the kubeconfig file, run the following script against
 
   :::note
   
-  You must replace <VIP\> with the [real VIP](../install/management-address.md#how-to-get-the-vip-mac-address) which is the value of `kube-vip.io/requestedIP` in the link.
+  You must replace <VIP\> with the [real VIP](../install/management-address.md#how-to-get-the-vip-mac-address), which is the value of `kube-vip.io/requestedIP` in the link.
 
   :::
 
