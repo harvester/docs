@@ -23,6 +23,7 @@ In Harvester, ResourceQuota can define usage limits for the following resources:
 - **Storage:** Limits the usage of storage resources.
 
 ## Set ResourceQuota via Rancher
+
 In the Rancher UI, administrators can configure resource quotas for namespaces through the following steps:
 
 1. Click the hamburger menu and choose the **Virtualization Management** tab.
@@ -31,11 +32,10 @@ In the Rancher UI, administrators can configure resource quotas for namespaces t
   ![](/img/v1.4/rancher/create-project.png)
 
 :::note
-The "VM Default Resource Limit" is used to set default request/limit on compute resources for pods running within the namespace, using the Kubernetes [`LimitRange` API](https://kubernetes.io/docs/concepts/policy/limit-range/). The resource "reservation" and "limit" values correspond to the `defaultRequest` and `default` limits of the namespace's `LimitRange` configuration. These settings are applied to pod workloads only.
+The `VM Default Resource Limit` is used to set default request/limit on compute resources for pods running within the namespace, using the Kubernetes [`LimitRange` API](https://kubernetes.io/docs/concepts/policy/limit-range/). The resource `reservation` and `limit` values correspond to the `defaultRequest` and `default` limits of the namespace's `LimitRange` configuration. These settings are applied to pod workloads only.
 
-These configuration will be removed in the future. See issue https://github.com/harvester/harvester/issues/5652. 
+These configuration will be removed in the future. See issue https://github.com/harvester/harvester/issues/5652.
 :::
-
 
 You can configure the **Namespace** limits as follows: 
 
@@ -50,11 +50,14 @@ Attempts to provision VMs for guest clusters are blocked when the resource quota
 
 :::important
 
-Due to the [Overhead Memory of Virtual Machine](#overhead-memory-of-virtual-machine), each VM needs some additional memory to work. When setting **Memory Limit**, this should be taken into account. For example, when the project **Memory Limit** is `24 Gi`, it is not possible to run 3 VMs each has `8 Gi` memory.
+- Due to the [Overhead Memory of Virtual Machine](#overhead-memory-of-virtual-machine), each VM needs some additional memory to work. When setting **Memory Limit**, this should be taken into account. For example, when the project **Memory Limit** is `24 Gi`, it is not possible to run 3 VMs each has `8 Gi` memory. The [link](../advanced/settings.md#additional-guest-memory-overhead-ratio) includes a table to show how the final memory of a VM is calculated.
+
+- When you plan to change the Harvester setting [additional-guest-memory-overhead-ratio](../advanced/settings.md#additional-guest-memory-overhead-ratio) to a bigger value, remember to review the `ResourceQuota` values and update them accordingly. You need to tune those two parameters to ensure the `ResourceQuota` can accommodate the original number of VMs which will have the new amount of overhead memory.
 
 :::
 
 ## Overhead Memory of Virtual Machine
+
 Upon creating a virtual machine (VM), the VM controller seamlessly incorporates overhead resources into the VM's configuration. These additional resources intend to guarantee the consistent and uninterrupted functioning of the VM. It's important to note that configuring memory limits requires a higher memory reservation due to the inclusion of these overhead resources.
 
 For example, consider the creation of a new VM with the following configuration:
@@ -90,6 +93,7 @@ The `Overhead Memory` varies between different Harvester releases (with differen
 :::
 
 ## Automatic adjustment of ResourceQuota during migration
+
 When the allocated resource quota controlled by the `ResourceQuota` object reaches its limit, migrating a VM becomes unfeasible. The migration process automatically creates a new pod mirroring the resource requirements of the source VM. If these pod creation prerequisites surpass the defined quota, the migration operation cannot proceed.
 
 _Available as of v1.2.0_
