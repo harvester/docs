@@ -178,11 +178,11 @@ Please include the following information in a bug report when reporting a failed
 
 ### Issue Description
 
-After the Harvester was successfully installed and operated, you might suddently observe that the Harvester UI shows "Setting up Harvester" but most of the operations from Harvester UI or CLI are not affected at all. And if you [start an upgrade](../upgrade/automatic.md#start-an-upgrade) then it is blocked.
+After a successful installation, the Harvester console persistently shows `Setting up Harvester`. While most UI and CLI operations remain unaffected, attempts to [start an upgrade](../upgrade/automatic.md#start-an-upgrade) are blocked.
 
 ![](/img/v1.6/troubleshooting/setting-up-harvester-after-day-0.png)
 
-After running the command `kubectl get managedchart -n fleet-local harvester -oyaml`, it shows below information.
+The following information is displayed after you run the command `kubectl get managedchart -n fleet-local harvester -oyaml`:
 
 ```yaml
 ...
@@ -203,18 +203,16 @@ status:
 
 ### Root Cause
 
-Harvester console runs following command to decide if the Harvester `ManagedChart` is `Ready`.
+The Harvester console runs the following command to determine if the status of the `harvester` ManagedChart (in the `fleet-local` namespace) is `Ready`.
 
 ```
 cmd := exec.Command("/bin/sh", "-c", kubectl -n fleet-local get ManagedChart harvester -o jsonpath='{.status.conditions}' | 
 jq 'map(select(.type == "Ready" and .status == "True")) | length')
 ```
 
-The `ManagedChart` has a strong management on all it's sub-resources, if any of them is changed directly, `ManagedChart` records and complains about the change.
+The `ManagedChart` CRD is used by [Fleet](https://fleet.rancher.io/) to manage resources via GitOps. If any of those resources are directly modified, `ManagedChart` records and flags the deviations. In the above example, the error occurred because a custom image tag was directly applied to the `harvester-system/harvester-network-controller` DaemonSet.
 
-The above message is caused by the local change upon `daemonset harvester-system/harvester-network-controller` with a customized image tag.
-
-Run command `kubectl get bundle -n fleet-local mcc-harvester -oyaml` to get the full list of all the sub-resources under `ManagedChart`.
+To retrieve the full list of `ManagedChart` resources, run the command `kubectl get bundle -n fleet-local mcc-harvester -oyaml`.
 
 ```yaml
 apiVersion: fleet.cattle.io/v1alpha1
@@ -232,10 +230,12 @@ spec:
 
 ### Workaround
 
-- Revert the change on sub-resources.
+You can perform either of the following actions:
 
-- Run `kubectl edit managedchart -n fleet-local harvester` to change.
+- Revert the direct changes made to the affected resources.
+
+- Update the `ManagedChart` CRD with the desired custom configuration using `kubectl edit managedchart -n fleet-local harvester`.
 
 ### Related Issue
 
-https://github.com/harvester/harvester/issues/8655
+[#8655](https://github.com/harvester/harvester/issues/8655)
