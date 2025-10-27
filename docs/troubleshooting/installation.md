@@ -487,7 +487,7 @@ icy":"File"}]}}}}
 
 ### Issue Description
 
-After the Harvester was successfully installed and operated, you might suddently observe that the Harvester UI shows "Setting up Harvester" but most of the operations from Harvester UI or CLI are not affected at all. And if you [start an upgrade](../upgrade/automatic.md#start-an-upgrade) then it is blocked.
+After the Harvester cluster was successfully installed and operated, you might suddently observe that the Harvester console shows `Setting up Harvester` but most of the operations from the Harvester UI or CLI are not affected at all. But if you [start an upgrade](../upgrade/automatic.md#start-an-upgrade) it becomes blocked.
 
 ![](/img/v1.6/troubleshooting/setting-up-harvester-after-day-0.png)
 
@@ -512,18 +512,18 @@ status:
 
 ### Root Cause
 
-Harvester console runs following command to decide if the Harvester `ManagedChart` is `Ready`.
+Harvester console runs the following command to determine if the Harvester `ManagedChart` is `Ready`.
 
 ```
 cmd := exec.Command("/bin/sh", "-c", kubectl -n fleet-local get ManagedChart harvester -o jsonpath='{.status.conditions}' | 
 jq 'map(select(.type == "Ready" and .status == "True")) | length')
 ```
 
-The `ManagedChart` has a strong management on all it's sub-resources, if any of them is changed directly, `ManagedChart` records and complains about the change.
+The `ManagedChart` is a [Fleet](https://fleet.rancher.io/) API that offers a strong management on all it's resources via GitOps. If any of them are changed directly, `ManagedChart` records and complains about the deviations.
 
-The above message is caused by the local change upon `daemonset harvester-system/harvester-network-controller` with a customized image tag.
+In the above example, the error is caused by directly changing the `harvester-system/harvester-network-controller` DaemonSet with a customized image tag.
 
-Run command `kubectl get bundle -n fleet-local mcc-harvester -oyaml` to get the full list of all the sub-resources under `ManagedChart`.
+Run `kubectl get bundle -n fleet-local mcc-harvester -oyaml` to get the full list of all the sub-resources under `ManagedChart`.
 
 ```yaml
 apiVersion: fleet.cattle.io/v1alpha1
@@ -541,9 +541,9 @@ spec:
 
 ### Workaround
 
-- Revert the change on sub-resources.
+- Revert the changes made directly to the resources. In the above example, it's the DaemonSet's image tag.
 
-- Run `kubectl edit managedchart -n fleet-local harvester` to change.
+- Update the managed chart with the desired custom configuration using `kubectl edit managedchart -n fleet-local harvester`.
 
 ### Related Issue
 
