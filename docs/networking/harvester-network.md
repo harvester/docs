@@ -140,23 +140,25 @@ _Available as of v1.7.0_
 
     - Type: Select **L2VlanNetwork**.
     - Mode: Select **Trunk**.
-    - Cluster Network
+    - Minimum VLAN ID: Specify the starting VLAN ID of a range.
+    - Maximum VLAN ID: Specify the ending VLAN ID of a range.
+    - Cluster Network: Select the associated cluster network.
 
-1. Add multi VLAN ID ranges.
+    :::note
 
-    - Minimum VLAN ID: starting VLAN ID of a range
-    - Maximum VLAN ID: ending VLAN ID of a range
-    - Add VLAN Trunk: creates a new range, different range can overlap
+    You can specify multiple, overlapping VLAN ID ranges.
 
-    ![](/img/v1.7/networking/created-l2-trunk-vm-network.png)
+    :::
 
-When a VM is attached to VLAN trunk network, OS and applications inside the VM are freely to send/receive packets with any VIDs in the above input range.
+    ![](/img/v1.7/networking/l2-trunk-vm-network.png)
+
+When a virtual machine is attached to a VLAN trunk network, the guest operating system and applications are allowed to send and receive packets tagged with any of the VLAN IDs within the specified range.
 
 :::note
 
-- You are free to change the VM Network types between: `VLAN`, `VLAN Trunk` and `Untagged` if the attached VMs are stopped.
-- When `VLAN` is changed to `VLAN Trunk` or `Untagged`, the original `Route` configuration is removed.
-- Reconfigure the `Route` when change the `VLAN Trunk` and `Untagged` to `VLAN`.
+You can change the network type only when all attached virtual machines are stopped.
+
+When you change the network type from `VLAN` to `VLAN Trunk` or `Untagged`, the settings you configured on the `Route` tab are removed. You must reconfigure these settings if you decide to change the network type back to `VLAN`.
 
 :::
 
