@@ -110,7 +110,7 @@ stringData:
 The OpenStack source reconciliation process attempts to list VMs in the project and marks the source as ready.
 
 ```shell
-$ kubectl get opestacksource.migration
+$ kubectl get openstacksource.migration
 NAME       STATUS
 devstack   clusterReady
 ```
