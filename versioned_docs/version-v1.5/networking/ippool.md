@@ -34,11 +34,11 @@ To create a new IP pool:
 1. Go to the **Selector** tab to specify the **Scope** and **Priority** of the IP pool.
    ![](/img/v1.2/networking/ippool-scope.png)
 
-When you operate from Harvester UI directly, the `Scope` only includes `Namespace`, click `Add Scope` to add new items.
+When you operate from the Harvester UI, the `Scope` only includes `Namespace`. Click `Add Scope` to add new items.
 
 ### Create IP Pool from Rancher Manager UI
 
-When the Harvester cluster is imported to `Rancher Manager`, and you operate from `Rancher Manager UI > Virtualization Management` and locate to this page, it shows differently.
+If the Harvester cluster is imported to `Rancher Manager` from `Rancher Manager UI > Virtualization Management`, the `Network` tab in the IP Pools section looks different.
 
 ![](/img/v1.6/networking/create-ippool-from-rancher-manager.png)
 
@@ -139,13 +139,13 @@ Each IP pool will have a specific range, and you can specify the corresponding r
 
 ### IPPool for VM type Loadbalancer
 
-1. Prefer to [Create IP Pool from Harvester UI directly](#how-to-create), which leaves the seletor scope `Project` and `Guest Kubernetes Cluster` blank.
+1. It is better to [Create IP Pool from Harvester UI directly](#how-to-create), which leaves the seletor scope `Project` and `Guest Kubernetes Cluster` blank.
 
 1. If you can only [Create IP Pool from Rancher Managery UI](#create-ip-pool-from-rancher-manager-ui), set the scope `Project` and `Guest Kubernetes Cluster` to be `All` or `None`.
 
-### IPPool for guest cluster type Loadbalancer
+### IPPool for Guest Cluster type Loadbalancer
 
-1. Prefer to [Create IP Pool from Rancher Managery UI](#create-ip-pool-from-rancher-manager-ui), which allows you to tune `Project` and `Guest Kubernetes Cluster` for better resources management and isolation.
+1. It is better to [Create IP Pool from Rancher Managery UI](#create-ip-pool-from-rancher-manager-ui), because it allows you to tune `Project` and `Guest Kubernetes Cluster` for better resource management and isolation.
 
-1. Be careful to create global IP pool to avoid one guest cluster allocates too much IPs and starves others. The pool can't be deleted if any of IPs is still in use.
+1. Be careful when creating global IP pool as one guest cluster might allocate too many IPs and starve other clusters. The pool can't be deleted if any of the IPs is still in use.
 
