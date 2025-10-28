@@ -261,6 +261,12 @@ For instance, you can combine `Required` with `Affinity` to instruct the schedul
 
 See the [Kubernetes Pod Affinity and Anti-Affinity Documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity) for more details.
 
+:::info important
+
+Virtual machines that can't be live migrated during the upgrade pre-drain phase due to unsatisfiable strict anti-affinity rules are automatically shut down to unblock the upgrade and avoid unsafe restart of the upgrade.
+
+:::
+
 ### Automatically Applied Affinity Rules
 
 Harvester might automatically apply certain affinity rules based on the definition of virtual machine. These rules dictate which nodes are eligible as scheduling/migration targets. If no nodes meet the criteria, the virtual machine fails to be scheduled/migrated.

@@ -49,6 +49,7 @@ A virtual machine is considered non-migratable if it has one or more of the foll
 
     - CPU pinning is enabled on the virtual machine, and CPU Manager is only enabled on one node.
 
+    - The virtual machine has strict anti-affinity rules that prevent it from being co-located with certain other virtual machines.
 
 :::note
 
