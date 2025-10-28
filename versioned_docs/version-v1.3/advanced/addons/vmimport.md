@@ -107,7 +107,7 @@ stringData:
   "ca_cert": "pem-encoded-ca-cert"
 ```
 
-The OpenStack source reconciliation process attempts to list VMs in the project and marks the source as ready.
+As part of the reconciliation process, the controller attempts to list VMs in the project and marks the source as ready.
 
 ```shell
 $ kubectl get openstacksource.migration

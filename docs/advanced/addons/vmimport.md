@@ -10,7 +10,7 @@ title: "VM Import"
 
 _Available as of v1.1.0_
 
-With the vm-import-controller addon, users can import their virtual machines from VMware, OpenStack and Open Virtual Appliance (OVA) package into Harvester.
+With the vm-import-controller add-on, you can import virtual machines from VMware, OpenStack, and Open Virtual Appliance (OVA) packages.
 
 To use the VM import feature, users need to enable the vm-import-controller addon.
 
@@ -108,7 +108,7 @@ stringData:
   "ca_cert": "pem-encoded-ca-cert"
 ```
 
-The OpenStack source reconciliation process attempts to list VMs in the project and marks the source as ready.
+As part of the reconciliation process, the controller attempts to list VMs in the project and marks the source as ready.
 
 ```shell
 $ kubectl get openstacksource.migration
@@ -132,9 +132,9 @@ spec:
     namespace: default
 ```
 
-Specifying the optional `httpTimeoutSeconds` field allows users to customize the timeout for HTTP requests. The timeout includes connection time, any redirects, and reading the response body. A timeout of zero means no timeout. The default value is 10 minutes.
+The optional `httpTimeoutSeconds` field allows you to specify the maximum time (in seconds) Harvester waits for an HTTP request to be completed. This period covers the entire transaction, including establishing the connection, handling redirects, and reading the response body. When the value is `0`, the timeout feature is disabled. The default value is `600` (10 minutes).
 
-The secret may optionally include credentials for basic authentication of the URL, as well as a CA certificate if HTTPS is used:
+When configuring the secret, you can include basic authentication credentials for the URL and a CA certificate if the endpoint uses HTTPS.
 
 ```yaml
 apiVersion: v1
@@ -148,7 +148,7 @@ stringData:
   "ca.crt": "pem-encoded-ca-cert"
 ```
 
-As part of reconciliation, OvaSource issues a HEAD request to the specified URL to confirm its validity before marking the source as ready.
+As part of the reconciliation process, the controller issues a HEAD request to the specified URL to confirm its validity before marking the source as ready.
 
 ```shell
 $ kubectl get ovasource.migration
@@ -274,7 +274,7 @@ OpenStack allows users to have multiple instances with the same name. In such a 
 When creating a virtual machine object, the vm-import-controller add-on uses the name of the source virtual machine, which may not meet the Kubernetes object [naming criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names). You may need to rename the source virtual machine to allow successful completion of the import.
 ##### VMware-Based Virtual Machine Without VMware Tools Is Not Migrated
 
-When you attempt to import a VMware-based virtual machine in Harvester v1.6.0, the following occurs if [VMware Tools](https://knowledge.broadcom.com/external/article/315382/overview-of-vmware-tools.html) is not installed on the virtual machine:
+When you attempt to import a VMware-based virtual machine in Harvester v1.6.0, the following issues occur if [VMware Tools](https://knowledge.broadcom.com/external/article/315382/overview-of-vmware-tools.html) is not installed on the virtual machine:
 
 - The vm-import-controller does not gracefully shut down the guest operating system.
 - When the graceful shutdown period (`gracefulShutdownTimeoutSeconds`) lapses, the vm-import-controller does not force a hard poweroff.
