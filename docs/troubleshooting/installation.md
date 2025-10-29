@@ -70,7 +70,7 @@ stages:
   ...
   initramfs:
   - commands:
-    - rm -f /etc/sysconfig/network/ifroute-mgmt-br
+    - ...
     files:
     - path: /etc/rancher/rancherd/config.yaml
       permissions: 384
