@@ -164,7 +164,7 @@ The storage network is automatically enabled in the following situations:
   apiVersion: harvesterhci.io/v1beta1
   kind: Setting
   metadata:
-  name: storage-network
+    name: storage-network
   value: '{"vlan":100,"clusterNetwork":"storage","range":"192.168.0.0/24", "exclude":["192.168.0.100/32"]}'
   ```
 

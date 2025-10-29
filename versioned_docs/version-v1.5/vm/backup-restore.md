@@ -78,73 +78,6 @@ The restored virtual machine retains the machine ID of the original virtual mach
 
 :::
 
-#### Filesystem Freeze Error in a RHEL 9 Virtual Machine
-
-When a data disk is mounted on a running Red Hat Enterprise Linux 9 virtual machine, attempts to create a backup or snapshot of the virtual machine may fail because of a `Failed to freeze filesystem` error.
-
-![fs-freeze-fail.png](/img/fs-freeze-fail.png)
-
-##### Cause: QEMU Guest Agent Access Denied
-
-This issue is typically caused by SELinux denying read access to the QEMU Guest Agent (`qemu-ga`). You can verify this using the following steps:
-
-1. Access the virtual machine's virt-launcher `compute` container.
-
-  ```bash
-  POD=$(kubectl get pods -n default \
-    -l vm.kubevirt.io/name=vm1 \
-    -o jsonpath='{.items[0].metadata.name}')
-  kubectl exec -it $POD -n default -c compute -- bash
-  ```
-
-1. Attempt to freeze the filesystem using the [virt-freezer](https://github.com/kubevirt/kubevirt/blob/main/docs/freeze.md#virt-freezer) application, which is available in the `compute` container.
-
-  ```bash
-  virt-freezer --freeze --namespace <VM namespace> --name <VM name>
-  ```
-
-1. Check for SELinux `Permission denied` errors.
-
-  If you see a message similar to the following, SELinux is blocking the required access.
-
-  ```
-  {"component":"freezer","level":"error","msg":"Freezing VMI failed","reason":"server error. command Freeze failed: \"LibvirtError(Code=1, Domain=10, Message='internal error: unable to execute QEMU agent command 'guest-fsfreeze-freeze': failed to open /data: Permission denied')\""}
-  ```
-
-##### Solution: Generate a SELinux Policy to Allow QEMU Guest Agent Access
-
-Harvester does not manage guest virtual machine configuration. To resolve the issue, you must create and install a custom SELinux policy module.
-
-:::caution
-
-Using `audit2allow` may grant broad permissions, as it allows all actions found in the logs. Review the policy carefully, or consider mounting the volume with an appropriate SELinux label for tighter security.
-
-:::
-
-1. Generate a custom SELinux policy module from audit logs.
-
-  ```bash
-  grep qemu-ga /var/log/audit/audit.log | audit2allow -M my_qemu_ga
-  ```
-
-1. Install the generated policy module.
-
-  ```bash
-  semodule -i my_qemu_ga.pp
-  ```
-
-1. Repeat steps 1 and 2 until virt-freezer can successfully freeze the filesystems.
-
-:::info important
-
-You must unfreeze the virtual machine filesystems before performing other operations.
-
-```bash
-virt-freezer --unfreeze --namespace <VM namespace> --name <VM name>
-```
-
-:::
-
 ### Restore a new VM using a backup
 
 To restore a new VM from a backup, follow these steps:
@@ -349,6 +282,104 @@ Volumes consume extra disk space in the cluster whenever you create a new virtua
 
     ![edit-quota-vm-read.png](/img/v1.4/vm/edit-quota-vm-read.png)
 
+## Filesystem Freeze for Virtual Machine Backups and Snapshots
+
+When a guest virtual machine is connected with the **QEMU Guest Agent**, the Harvester controller performs filesystem freeze operations through Kubevirt's [virt-freezer](https://github.com/kubevirt/kubevirt/blob/main/docs/freeze.md#virt-freezer) application to ensure filesystem consistency during virtual machine backups and snapshots.
+
+This feature is particularly valuable for virtual machines with high I/O activity or critical data that requires point-in-time consistency guarantees.
+
+### Prerequisites
+
+Filesystem freeze and thaw functionality depends on virtual machine configuration, which is _not controlled by Harvester_. You must ensure that virtual machines are configured correctly and support the required libvirt commands.
+
+- **Red Hat Enterprise Linux (RHEL)** and **SUSE Linux Enterprise (SLE) Micro**: These systems may lack sufficient permissions for filesystem freeze operations by default. You may be required to create custom SELinux policies.
+- **Windows**: Filesystem freeze operations are available on these systems only when the Volume Shadow Copy Service (VSS) service is enabled.
+
+:::note
+
+When the virt-freezer application is triggered, KubeVirt communicates with the QEMU Guest Agent to translate operating system-specific calls. Linux systems use fsfreeze syscalls, while Windows systems use VSS APIs.
+
+:::
+
+### Verifying Filesystem Freeze Compatibility
+
+To verify that your virtual machine supports filesystem freeze operations, perform the following steps:
+
+1. Access the virtual machine's virt-launcher `compute` container:
+
+  ```bash
+  POD=$(kubectl get pods -n default \
+    -l vm.kubevirt.io/name=vm1 \
+    -o jsonpath='{.items[0].metadata.name}')
+  kubectl exec -it $POD -n default -c compute -- bash
+  ```
+
+1. Attempt to freeze the filesystem using the virt-freezer application, which is available in the `compute` container:
+
+  ```bash
+  virt-freezer --freeze --namespace <VM namespace> --name <VM name>
+  ```
+
+1. Verify the result of the freeze operation.
+
+  :::info important
+
+  Do not skip this step. In addition, you must thaw virtual machine filesystems before performing any other operations.
+
+  :::
+
+### Troubleshooting Filesystem Freeze Issues
+
+#### Filesystem Freeze Error Due to Insufficient Permissions
+
+A `Failed to freeze filesystem` error may cause backup or snapshot failures on some Linux distributions.
+
+![fs-freeze-fail.png](/img/fs-freeze-fail.png)
+
+This issue typically occurs when SELinux denies read access to the QEMU Guest Agent (`qemu-ga`). You can verify the cause using the following steps:
+
+1. [Verify that your virtual machine supports filesystem freeze operations](#verifying-filesystem-freeze-compatibility).
+
+1. Check for SELinux `Permission denied` errors in the system logs.
+
+  If you see a message similar to the following, SELinux is blocking the required access:
+
+  ```
+  {"component":"freezer","level":"error","msg":"Freezing VMI failed","reason":"server error. command Freeze failed: \"LibvirtError(Code=1, Domain=10, Message='internal error: unable to execute QEMU agent command 'guest-fsfreeze-freeze': failed to open /data: Permission denied')\""}
+  ```
+
+To resolve the issue, you must create and install a custom SELinux policy module. This solution has been verified to work with **RHEL** and **SLE Micro**.
+
+:::caution
+
+Using `audit2allow` may grant broad permissions, as it allows all actions found in the logs. Carefully review the generated policy, or consider mounting volumes with appropriate SELinux labels for enhanced security.
+
+:::
+
+1. Generate a custom SELinux policy module from audit logs:
+
+  ```bash
+  grep qemu-ga /var/log/audit/audit.log | audit2allow -M my_qemu_ga
+  ```
+
+2. Install the generated policy module:
+
+  ```bash
+  semodule -i my_qemu_ga.pp
+  ```
+
+3. Repeat steps 1 and 2 until **virt-freezer** can successfully freeze the filesystems.
+
+:::info important
+
+You must thaw virtual machine filesystems before performing other operations.
+
+```bash
+virt-freezer --unfreeze --namespace <VM namespace> --name <VM name>
+```
+
+:::
+
 ## Scheduling Virtual Machine Backups and Snapshots
 
 _Available as of v1.4.0_
@@ -454,3 +485,11 @@ Before you upgrade Harvester, ensure that no virtual machine backups or snapshot
   ![upgrade-svmbackup.png](/img/v1.4/vm/upgrade-svmbackup.png)
 
 To avoid such issues, the Harvester team plans to implement automatic suspension of all virtual machine schedules before the upgrade process is started. The suspended schedules will also be automatically resumed after the upgrade is completed. For more information, see [Issue #6759](https://github.com/harvester/harvester/issues/6759).
+
+:::caution
+
+Longhorn has a similar feature called [recurring snapshots and backups](https://longhorn.io/docs/1.10.0/snapshots-and-backups/scheduling-backups-and-snapshots/), which uses recurring jobs to create periodic snapshots or backups of Longhorn volumes. This feature is not integrated into Harvester because it conflicts with certain Harvester operations (for example, virtual machine attachment and cluster upgrades). Recurring Longhorn snapshot and backup jobs can also generate heavy I/O without Harvester's awareness, and in some cases, even destabilize the cluster.
+
+For best results, use the [scheduled virtual machine backups and snapshots](#scheduling-virtual-machine-backups-and-snapshots) feature in Harvester, which has safeguard mechanisms that mitigate heavy I/O when possible. Again, Harvester does not support recurring Longhorn snapshots and backups.
+
+:::

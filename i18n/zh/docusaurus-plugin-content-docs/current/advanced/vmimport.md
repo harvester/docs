@@ -108,7 +108,7 @@ stringData:
 OpenStack 源的调协过程会尝试列出项目中的虚拟机并将源标记为 Ready：
 
 ```shell
-$ kubectl get opestacksource.migration
+$ kubectl get openstacksource.migration
 NAME       STATUS
 devstack   clusterReady
 ```

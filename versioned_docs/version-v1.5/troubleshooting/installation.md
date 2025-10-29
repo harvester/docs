@@ -104,7 +104,51 @@ you can run the following command to only display the token's value:
 $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
 ```
 
-:::
+## Check the status of Harvester components
+
+Before checking the status of Harvester components, obtain a copy of the Harvester cluster's kubeconfig file following the [guide](../faq.md#how-can-i-access-the-kubeconfig-file-of-the-harvester-cluster).
+
+After you obtain a copy of the kubeconfig file, run the following script against the cluster to check the readiness of each component.
+
+- Harvester components script
+  ```shell
+  #!/bin/bash
+
+  cluster_ready() {
+    namespaces=("cattle-system" "kube-system" "harvester-system" "longhorn-system")
+    for ns in "${namespaces[@]}"; do
+      pod_statuses=($(kubectl -n "${ns}" get pods \
+        --field-selector=status.phase!=Succeeded \
+        -ojsonpath='{range .items[*]}{.metadata.namespace}/{.metadata.name},{.status.conditions[?(@.type=="Ready")].status}{"\n"}{end}'))
+      for status in "${pod_statuses[@]}"; do
+        name=$(echo "${status}" | cut -d ',' -f1)
+        ready=$(echo "${status}" | cut -d ',' -f2)
+        if [ "${ready}" != "True" ]; then
+          echo "pod ${name} is not ready"
+          false
+          return
+        fi
+      done
+    done
+  }
+
+  if cluster_ready; then
+    echo "cluster is ready"
+  else
+    echo "cluster is not ready"
+  fi
+  ```
+
+- API
+  ```shell
+  $ curl -fk https://<VIP>/version
+  ```
+
+  :::note
+  
+  You must replace <VIP\> with the [real VIP](../install/management-address.md#how-to-get-the-vip-mac-address), which is the value of `kube-vip.io/requestedIP` in the link.
+
+  :::
 
 ## Collecting troubleshooting information
 
