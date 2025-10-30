@@ -1,11 +1,11 @@
 ---
 sidebar_position: 2
-sidebar_label: Upgrade from v1.6.0 to v1.6.1
-title: "Upgrade from v1.6.0 to v1.6.1"
+sidebar_label: Upgrade from v1.6.x to v1.6.y
+title: "Upgrade from v1.6.x to v1.6.y"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/upgrade/v1-6-0-to-v1-6-1"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/upgrade/v1-6-x-to-v1-6-y"/>
 </head>
 
 ## General Information
@@ -14,9 +14,9 @@ An **Upgrade** button appears on the **Dashboard** screen whenever a new Harvest
 
 For information about upgrading Harvester in air-gapped environments, see [Prepare an air-gapped upgrade](./automatic.md#prepare-an-air-gapped-upgrade).
 
-### Update Harvester UI Extension on Rancher v2.12.0
+### Update Harvester UI Extension on Rancher v2.12
 
-You must use **v1.6.1** of the Harvester UI Extension to import Harvester v1.6.1 clusters on Rancher v2.12.0.
+You must use a compatible version (v1.6.x) of the Harvester UI Extension to import Harvester v1.6.x clusters on Rancher v2.12.
 
 1. On the Rancher UI, go to **local > Apps > Repositories**.
 
@@ -26,7 +26,7 @@ You must use **v1.6.1** of the Harvester UI Extension to import Harvester v1.6.1
 
 1. Locate the extension named **Harvester**, and then click **Update**.
 
-1. Select version **1.6.1**, and then click **Update**.
+1. Select a compatible version, and then click **Update**.
 
 1. Allow some time for the extension to be updated, and then refresh the screen.
 
