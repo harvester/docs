@@ -590,9 +590,9 @@ You can configure the URL of the console for remote server management. This cons
 
   ![](/img/remote_console_button.png)
 
-## Rotate Expiring Certificates
+## Rotate Expired Certificates
 
-If the RKE2 certificates are expired, you cannot use `auto-rotate-rke2-certificates` setting to rotate them. The setting only works for a ready `cluster.provisioning`.
+If the RKE2 certificates have expired, you cannot use the `auto-rotate-rke2-certificates` setting to rotate them. The setting only works when the cluster (`cluster.provisioning`) is marked `Ready`.
 
 ```
 > kubectl get cluster.provisioning -n fleet-local local -o yaml | yq -e '.status.conditions[] | select(.type=="Ready")'
