@@ -77,7 +77,7 @@ kubectl patch -n longhorn-system volume <volume> \
 
 Related issues: [#8949](https://github.com/harvester/harvester/issues/8949) and [#11479](https://github.com/longhorn/longhorn/issues/11479)
 
-### 4. Upgrade to v1.6.1-rc2 Stuck at "Pre-drained" State
+### 4. Upgrade to v1.6.1-rc2 Stuck in the "Pre-drained" State
 
 The upgrade process may become indefinitely stuck in the "Pre-drained" state if the following specific upgrade path is followed:
 

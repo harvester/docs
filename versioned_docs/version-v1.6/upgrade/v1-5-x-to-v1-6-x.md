@@ -22,9 +22,9 @@ Only customers affected by issues listed in the Bug Fixes section of the [releas
 
 For information about upgrading Harvester in air-gapped environments, see [Prepare an air-gapped upgrade](./automatic.md#prepare-an-air-gapped-upgrade).
 
-### Update Harvester UI Extension on Rancher v2.12.0
+### Update Harvester UI Extension on Rancher v2.12
 
-You must use **v1.6.0** of the Harvester UI Extension to import Harvester v1.6.x clusters on Rancher v2.12.0.
+You must use a compatible version (v1.6.x) of the Harvester UI Extension to import Harvester v1.6.x clusters on Rancher v2.12.
 
 1. On the Rancher UI, go to **local > Apps > Repositories**.
 
@@ -34,7 +34,7 @@ You must use **v1.6.0** of the Harvester UI Extension to import Harvester v1.6.x
 
 1. Locate the extension named **Harvester**, and then click **Update**.
 
-1. Select version **1.6.0**, and then click **Update**.
+1. Select a compatible version, and then click **Update**.
 
 1. Allow some time for the extension to be updated, and then refresh the screen.
 
@@ -42,7 +42,7 @@ You must use **v1.6.0** of the Harvester UI Extension to import Harvester v1.6.x
 
 ## Known Issues
 
-### 1. Upgrade is Stuck in the "Pre-drained" State
+### 1. Upgrade Is Stuck in the "Pre-drained" State
 
 In certain situations, the Longhorn Instance Manager might fail to clean up an engine instance, even after the state of the engine CR has changed to "Stopped". The upgrade process becomes stuck in the "Pre-drained" state because the instance-manager pod cannot be deleted while the corresponding PodDisruptionBudget (PDB) still exists.
 
@@ -50,7 +50,7 @@ The workaround is to delete the instance-manager PDB after ensuring that all vol
 
 Related issues: [#8977](https://github.com/harvester/harvester/issues/8977) and [#11605](https://github.com/longhorn/longhorn/issues/11605)
 
-### 2. Guest Cluster is Stuck in the "Updating" State
+### 2. Guest Cluster Is Stuck in the "Updating" State
 
 An RKE2 guest cluster may become stuck in the "Updating" state after Harvester is upgraded. The following error message is displayed on the Harvester UI:
 
@@ -70,11 +70,11 @@ The virtual machine is removed, and the guest cluster attempts to create a new n
 
 Related issue: [#8950](https://github.com/harvester/harvester/issues/8950)
 
-### 3. Stopped Virtual Machine is Stuck in the "Starting" State
+### 3. Stopped Virtual Machine Is Stuck in the "Starting" State
 
 A Longhorn volume can flap between the "Detaching" and "Detached" states after a live migration. Because the volume is not ready, the associated virtual machine is unable to fully start.
 
-The workaround is to clear the Longhorn volume's `status.currentMigrationNodeID` using following command:
+The workaround is to clear the Longhorn volume's `status.currentMigrationNodeID` using the following command:
 
 ```
 kubectl patch -n longhorn-system volume <volume> \
