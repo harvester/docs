@@ -64,7 +64,7 @@ The following example adds disks that match the glob pattern `/dev/sd*` or `/dev
 
 **Definition**: Setting that allows you to automatically rotate certificates for RKE2 services. This setting is disabled by default.
 
-Use the field `expiringInHours` to specify the validity period of each certificate (`1` to `8759` hours). If the certificate is expired in `expiringInHours` hours, Harvester automatically replaces the certificate.
+Use the field `expiringInHours` to specify the validity period of each certificate (`1` to `8759` hours). If the certificate expires within the specified period, Harvester automatically replaces the certificate.
 
 For more information, see the **Certificate Rotation** section of the [Rancher](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/manage-clusters/rotate-certificates) and [RKE2](https://docs.rke2.io/advanced#certificate-rotation) documentation.
 
