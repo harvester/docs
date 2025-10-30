@@ -601,30 +601,39 @@ status: "True"
 type: Ready
 ```
 
-If the `Ready` status is `False`, you must manually rotate the certificates by following these steps on each node:
+If the `status` field's value is `False`, you must manually rotate the certificates by following these steps on each node:
 
 1. Log in to the node using the root account.
-1. Stop RKE2 service:
-  ```
-  # on management node
-  systemctl stop rke2-server
 
-  # on worker node
-  systemctl stop rke2-agent
-  ```
-1. Rotate RKE2 certificates:
-  ```
-  /opt/rke2/bin/rke2 certificate rotate
-  ```
-1. Start RKE2 service:
-  ```
-  # on management node
-  systemctl start rke2-server
+1. Stop the RKE2 service.
 
-  # on worker node
-  systemctl start rke2-agent
-  ```
-1. Restart rancher-system-agent service:
-  ```
-  systemctl restart rancher-system-agent
-  ```
+    - Management nodes
+      ```
+      systemctl stop rke2-server
+      ```
+    - Worker nodes
+      ```
+      systemctl stop rke2-agent
+      ```
+
+1. Rotate the RKE2 certificates.
+
+    ```
+    /opt/rke2/bin/rke2 certificate rotate
+    ```
+
+1. Start the RKE2 service.
+
+    - Management nodes
+      ```
+      systemctl start rke2-server
+      ```
+    - Worker nodes
+      ```
+      systemctl start rke2-agent
+      ```
+
+1. Restart the `rancher-system-agent` service.
+    ```
+    systemctl restart rancher-system-agent
+    ```
