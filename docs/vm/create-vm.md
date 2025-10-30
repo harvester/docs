@@ -263,7 +263,7 @@ See the [Kubernetes Pod Affinity and Anti-Affinity Documentation](https://kubern
 
 :::info important
 
-Virtual machines that can't be live migrated during the upgrade pre-drain phase due to unsatisfiable strict anti-affinity rules are automatically shut down to unblock the upgrade and avoid unsafe restart of the upgrade.
+During the upgrade pre-drain phase, Harvester may be unable to live-migrate virtual machines because of unsatisfiable strict anti-affinity rules. When this happens, Harvester automatically shuts down these virtual machines to unblock the upgrade and prevent the process from restarting unsafely.
 
 :::
 

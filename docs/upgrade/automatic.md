@@ -467,9 +467,9 @@ Related issues: [#7366](https://github.com/harvester/harvester/issues/7366), [#6
 
 ## Failed Live Migration in the "Pre-drained" State
 
-Once the upgrading node is cordoned during the pre-drain state, it is possible for virtual machines with strict [anti-affinity rules](https://docs.harvesterhci.io/v1.6/vm/index#vm-scheduling) to fail to be live migrated, if there are no compatible target nodes to host these virtual machines.
+Live migration of virtual machines can fail when the upgrading node is cordoned during the pre-drain state. A common cause is the lack of compatible target nodes due to strict [anti-affinity rules](https://docs.harvesterhci.io/v1.6/vm/index#vm-scheduling).
 
-When this happens, Harvester automatically shuts down these virtual machines to unblock the upgrade and avoid unsafe restart of the upgrade.
+When this happens, Harvester automatically shuts down these virtual machines to unblock the upgrade and prevent the process from restarting unsafely.
 
 ## Recurring Longhorn Snapshots and Backups are Unsupported
 
