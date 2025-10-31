@@ -528,3 +528,69 @@ ol":"TCP"}],"resources":{"requests":{"cpu":"250m","memory":"256Mi"}},"securityCo
 onfined"},"capabilities":{"add":["SYS_ADMIN"]}},"terminationMessagePath":"/dev/termination-log","terminationMessagePol
 icy":"File"}]}}}}
 ```
+
+## Harvester Console shows "Setting up Harvester" after day 0 Installation
+
+### Issue Description
+
+After the Harvester cluster was successfully installed and operated, you might suddently observe that the Harvester console shows `Setting up Harvester` but most of the operations from the Harvester UI or CLI are not affected at all. But if you [start an upgrade](../upgrade/automatic.md#start-an-upgrade) it becomes blocked.
+
+![](/img/v1.6/troubleshooting/setting-up-harvester-after-day-0.png)
+
+After running the command `kubectl get managedchart -n fleet-local harvester -oyaml`, it shows below information.
+
+```yaml
+...
+status:
+  conditions:
+  - lastUpdateTime: "2025-10-22T08:01:18Z"
+    message: 'NotReady(1) [Cluster fleet-local/local]; daemonset.apps harvester-system/harvester-network-controller
+      modified {"spec":{"template":{"spec":{"containers":[{"args":["agent"],"command":["harvester-network-controller"],
+      "env":[{"name":"NODENAME","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"spec.nodeName"}}},
+      {"name":"NAMESPACE","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.namespace"}}}],
+      "image":"rancher/harvester-network-controller:master-head","imagePullPolicy":"IfNotPresent","name":"harvester-network",
+      "resources":{"limits":{"cpu":"100m","memory":"128Mi"},"requests":{"cpu":"10m","memory":"64Mi"}},
+      "securityContext":{"privileged":true},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File",
+      "volumeMounts":[{"mountPath":"/dev","name":"dev"},{"mountPath":"/lib/modules","name":"modules"}]}]}}}};'
+    status: "False"
+    type: Ready
+```
+
+### Root Cause
+
+Harvester console runs the following command to determine if the Harvester `ManagedChart` is `Ready`.
+
+```
+cmd := exec.Command("/bin/sh", "-c", kubectl -n fleet-local get ManagedChart harvester -o jsonpath='{.status.conditions}' | 
+jq 'map(select(.type == "Ready" and .status == "True")) | length')
+```
+
+The `ManagedChart` is a [Fleet](https://fleet.rancher.io/) API that offers a strong management on all it's resources via GitOps. If any of them are changed directly, `ManagedChart` records and complains about the deviations.
+
+In the above example, the error is caused by directly changing the `harvester-system/harvester-network-controller` DaemonSet with a customized image tag.
+
+Run `kubectl get bundle -n fleet-local mcc-harvester -oyaml` to get the full list of all the sub-resources under `ManagedChart`.
+
+```yaml
+apiVersion: fleet.cattle.io/v1alpha1
+kind: Bundle
+metadata:
+  name: mcc-harvester
+  namespace: fleet-local
+spec:
+  resources:
+  - content: H4s...===
+    encoding: base64+gz
+    charts/harvester-network-controller/templates/daemonset.yaml
+  - content: ...
+```
+
+### Workaround
+
+- Revert the changes made directly to the resources. In the above example, it's the DaemonSet's image tag.
+
+- Update the managed chart with the desired custom configuration using `kubectl edit managedchart -n fleet-local harvester`.
+
+### Related Issue
+
+https://github.com/harvester/harvester/issues/8655
