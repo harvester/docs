@@ -466,8 +466,15 @@ A possible cause is processes related to orphan engines of the Longhorn Instance
 
 Related issues: [#7366](https://github.com/harvester/harvester/issues/7366), [#6764](https://github.com/longhorn/longhorn/issues/6764), [#8977](https://github.com/harvester/harvester/issues/8977) and [#11605](https://github.com/longhorn/longhorn/issues/11605)
 
+## Failed Live Migration in the "Pre-drained" State
+
+Live migration of virtual machines can fail when the upgrading node is cordoned during the pre-drain state. A common cause is the lack of compatible target nodes due to strict [anti-affinity rules](https://docs.harvesterhci.io/v1.6/vm/index#vm-scheduling).
+
+When this happens, Harvester automatically shuts down these virtual machines to unblock the upgrade and prevent the process from restarting unsafely.
+
 ## Recurring Longhorn Snapshots and Backups are Unsupported
 
 [Recurring Longhorn snapshots and backups](https://longhorn.io/docs/1.10.0/snapshots-and-backups/scheduling-backups-and-snapshots) are not integrated into Harvester. If you decide to use this feature, you must disable all **recurring snapshot and backup jobs in Longhorn** before starting the upgrade.
 
 For more information about the incompatibility, see [Scheduling Virtual Machine Backups and Snapshots](../vm/backup-restore.md#scheduling-virtual-machine-backups-and-snapshots).
+
