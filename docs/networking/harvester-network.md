@@ -54,23 +54,24 @@ The [Harvester network-controller](https://github.com/harvester/harvester-networ
 
 ### Create a VM Network
 
-1. Go to **Networks** > **VM Networks**. 
+1. Go to **Networks** > **VM Networks**.
 
-1. Select **Create**. 
+1. Select **Create**.
 
-1. Configure the following settings: 
+1. Configure the following settings:
 
-    - Namespace 
-    - Name 
-    - Description (optional) 
+    - Namespace
+    - Name
+    - Description (optional)
 
-1. On the **Basics** tab, configure the following settings: 
+1. On the **Basics** tab, configure the following settings:
 
     - Type: Select **L2VlanNetwork**.
-    - Vlan ID 
-    - Cluster Network 
+    - Mode: Select **Access**.
+    - Vlan ID
+    - Cluster Network
 
-    ![](/img/v1.2/networking/create-vlan-network.png)
+    ![](/img/v1.7/networking/l2-vlan-100-vm-network.png)
 
   :::note
 
@@ -120,7 +121,50 @@ Starting from Harvester v1.1.2, Harvester supports updating and deleting VM netw
 
 :::
 
+## VLAN Trunk Network
+
+_Available as of v1.7.0_
+
+
+1. Go to **Networks** > **VM Networks**.
+
+1. Select **Create**.
+
+1. Configure the following settings:
+
+    - Namespace
+    - Name
+    - Description (optional)
+
+1. On the **Basics** tab, configure the following settings:
+
+    - Type: Select **L2VlanNetwork**.
+    - Mode: Select **Trunk**.
+    - Minimum VLAN ID: Specify the starting VLAN ID of a range.
+    - Maximum VLAN ID: Specify the ending VLAN ID of a range.
+    - Cluster Network: Select the associated cluster network.
+
+    :::note
+
+    You can specify multiple, overlapping VLAN ID ranges.
+
+    :::
+
+    ![](/img/v1.7/networking/l2-trunk-vm-network.png)
+
+When a virtual machine is attached to a VLAN trunk network, the guest operating system and applications are allowed to send and receive packets tagged with any of the VLAN IDs within the specified range.
+
+:::note
+
+You can change the network type only when all attached virtual machines are stopped.
+
+When you change the network type from `VLAN` to `VLAN Trunk` or `Untagged`, the settings you configured on the `Route` tab are removed. You must reconfigure these settings if you decide to change the network type back to `VLAN`.
+
+:::
+
 ##  Overlay Network (Experimental)
+
+_Available as of v1.6.0_
 
 The [Harvester network-controller](https://github.com/harvester/harvester-network-controller) leverages [Kube-OVN](https://github.com/kubeovn/kube-ovn) to create an OVN-based virtualized network that supports advanced SDN capabilities such as [virtual private clouds (VPCs) and subnets](./kubeovn-vpc.md) for virtual machine workloads.
 
