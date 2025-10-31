@@ -64,9 +64,11 @@ The following example adds disks that match the glob pattern `/dev/sd*` or `/dev
 
 **Definition**: Setting that allows you to automatically rotate certificates for RKE2 services. This setting is disabled by default.
 
-Use the field `expiringInHours` to specify the validity period of each certificate (`1` to `8759` hours). Harvester automatically replaces the certificate before the specified period ends.
+Use the field `expiringInHours` to specify the validity period of each certificate (`1` to `8759` hours). If the certificate is expired in `expiringInHours` hours, Harvester automatically replaces the certificate.
 
 For more information, see the **Certificate Rotation** section of the [Rancher](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/manage-clusters/rotate-certificates) and [RKE2](https://docs.rke2.io/advanced#certificate-rotation) documentation.
+
+If your certificates are expired, please refer to [Rotate RKE2 certificates manually](../host/host.md#rotate-expiring-certificates) to rotate them manually.
 
 **Default value**: `{"enable":false,"expiringInHours":240}`
 
@@ -823,7 +825,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
 - `restoreVM`: Option that enables Harvester to automatically restore previously running [non-migratable virtual machines](../vm/live-migration.md#non-migratable-virtual-machines) after the upgrade is *successfully* completed. You can specify either of the following values:
 
   - `true`: Harvester forcibly shuts down *running* and *paused* non-migratable virtual machines on each node. After the upgrade is completed, the previously running virtual machines are automatically restarted, while the paused virtual machines remain shut down.
-  
+
   - `false`: This is the default value. In multi-node environments, you must stop all non-migratable virtual machines to allow the upgrade to proceed. Harvester does not restart these virtual machines after the upgrade is completed.
 
   :::note
