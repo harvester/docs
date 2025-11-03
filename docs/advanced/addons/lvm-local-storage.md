@@ -8,15 +8,19 @@ title: "Local Storage Support"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/addons/lvm-local-storage"/>
 </head>
 
-_Available as of v1.4.0_
+:::note
+
+**harvester-csi-driver-lvm** is an *experimental* add-on. It is not included in the Harvester ISO, but you can download it from the [experimental-addons repository](https://github.com/harvester/experimental-addons). For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+
+:::
 
 Harvester allows you to use local storage on the host to create persistent volumes for your workloads with better performance and latency. This functionality is made possible by LVM, which provides logical volume management facilities on Linux.
 
-## Installing and Enabling harvester-csi-driver-lvm
+The **harvester-csi-driver-lvm** add-on is a CSI driver that supports local path provisioning through LVM.
 
-The `harvester-csi-driver-lvm` add-on is a CSI driver that supports local path provisioning through LVM. It is not packaged into the Harvester ISO, but is available in the [experimental-addons](https://github.com/harvester/experimental-addons) repository.
+## Installing and Enabling the Add-On
 
-If you are using the Harvester kubeconfig file, you can perform the following steps:
+If you are using the Harvester kubeconfig file, you can install the add-on by performing the following steps:
 
 1. Install the add-on by running the following command:
 
@@ -40,7 +44,7 @@ Harvester currently does not allow you to modify the volume group composition (a
 
 :::
 
-1. Verify that the `harvester-csi-driver-lvm` add-on is installed.
+1. Verify that the **harvester-csi-driver-lvm** add-on is installed.
 
 1. On the Harvester UI, go to the **Hosts** screen.
 
