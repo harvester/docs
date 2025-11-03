@@ -54,21 +54,21 @@ The [Harvester network-controller](https://github.com/harvester/harvester-networ
 
 ### Create a VM Network
 
-1. Go to **Networks** > **VM Networks**. 
+1. Go to **Networks** > **VM Networks**.
 
-1. Select **Create**. 
+1. Select **Create**.
 
-1. Configure the following settings: 
+1. Configure the following settings:
 
-    - Namespace 
-    - Name 
-    - Description (optional) 
+    - Namespace
+    - Name
+    - Description (optional)
 
-1. On the **Basics** tab, configure the following settings: 
+1. On the **Basics** tab, configure the following settings:
 
     - Type: Select **L2VlanNetwork**.
-    - Vlan ID 
-    - Cluster Network 
+    - Vlan ID
+    - Cluster Network
 
     ![](/img/v1.2/networking/create-vlan-network.png)
 
@@ -121,6 +121,8 @@ Starting from Harvester v1.1.2, Harvester supports updating and deleting VM netw
 :::
 
 ##  Overlay Network (Experimental)
+
+_Available as of v1.6.0_
 
 The [Harvester network-controller](https://github.com/harvester/harvester-network-controller) leverages [Kube-OVN](https://github.com/kubeovn/kube-ovn) to create an OVN-based virtualized network that supports advanced SDN capabilities such as [virtual private clouds (VPCs) and subnets](./kubeovn-vpc.md) for virtual machine workloads.
 
