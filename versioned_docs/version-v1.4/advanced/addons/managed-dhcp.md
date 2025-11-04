@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
 sidebar_label: Managed DHCP
-title: "Managed DHCP"
+title: "Managed DHCP (Experimental)"
 ---
 
 <head>

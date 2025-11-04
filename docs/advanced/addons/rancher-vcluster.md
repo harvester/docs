@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 sidebar_label: Rancher Manager
-title: "Rancher Manager"
+title: "Rancher Manager (Experimental)"
 ---
 
 <head>

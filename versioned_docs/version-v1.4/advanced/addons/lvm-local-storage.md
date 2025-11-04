@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
 sidebar_label: Local Storage Support
-title: "Local Storage Support"
+title: "Local Storage Support (Experimental)"
 ---
 
 <head>

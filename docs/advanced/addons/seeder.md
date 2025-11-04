@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 sidebar_label: Harvester Seeder
-title: "Harvester Seeder"
+title: "Harvester Seeder (Experimental)"
 keywords:
 - add-on
 - addon
