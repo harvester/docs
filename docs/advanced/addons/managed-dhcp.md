@@ -35,7 +35,7 @@ Harvester uses the planned infrastructure network so you must ensure that networ
 - The DHCP RELEASE operation is currently not supported.
 - IPPool configuration updates take effect only after you manually restart the relevant agent pods.
 
-## Installing and Enabling the Add-On
+## Installing and Enabling the Add-on
 
 You can install the add-on by running the following command:
 
@@ -76,7 +76,7 @@ After installation, enable the add-on on the **Dashboard** screen of the Harvest
 
 ![](/img/v1.3/vm-dhcp-controller/enable-addon.png)
 
-## Using the Add-On
+## Using the Add-on
 
 1. On the **Dashboard** screen of the Harvester UI, [create a VM Network](../../networking/harvester-network.md#create-a-vm-network).
 
