@@ -1,53 +1,37 @@
 ---
 sidebar_position: 5
-sidebar_label: Addons
-title: "Addons"
+sidebar_label: Add-ons
+title: "Add-ons"
 ---
 
 <head>
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/addons"/>
 </head>
 
-Harvester makes optional functionality available as Addons.
+Harvester provides optional features as add-ons to maintain a minimal installation footprint. This design allows you to easily enable or disable functionality based strictly on your use case and requirements. You can customize the settings of each add-on, though the level of customization depends on the underlying software.
 
-One of the key reasons for the same is to ensure that Harvester installation footprint can be kept low while allowing users to enable/disable functionality based on their use case or requirements.
+The following add-ons are available in this version:
 
-Some level of customization is allowed for each addon, which depends on the underlying addon.
-
-_Available as of v1.1.0_
-
-Harvester v1.3.0 ships with six Addons:
-* [pcidevices-controller](./addons/pcidevices.md)
-* [vm-import-controller](./addons/vmimport.md)
-* [rancher-monitoring](../monitoring/harvester-monitoring.md)
-* [rancher-logging](../logging/harvester-logging.md)
-* [harvester-seeder](./addons/seeder.md)
+* [harvester-csi-driver-lvm](./addons/lvm-local-storage.md) (Experimental)
+* [harvester-seeder](./addons/seeder.md) (Experimental)
+* [harvester-vm-dhcp-controller](./addons/managed-dhcp.md) (Experimental)
+* [kubeovn-operator](./addons/kubeovn-operator.md)
 * [nvidia-driver-toolkit](./addons/nvidiadrivertoolkit)
+* [pcidevices-controller](./addons/pcidevices.md) 
+* [rancher-logging](../logging/harvester-logging.md)
+* [rancher-monitoring](../monitoring/harvester-monitoring.md)
+* [rancher-vcluster](./addons/rancher-vcluster.md) (Experimental)
+* [vm-import-controller](./addons/vmimport.md)
 
-![](/img/v1.2/addons/AddonsV120.png)
+You can enable and disable add-ons using the Harvester UI.
 
-:::note
-
-**harvester-seeder** is released as an experimental feature in Harvester v1.2.0 and has an **Experimental** label added to the **Name**.
-
-:::
-
-You can enable a **Disabled** by choosing an addon and selecting **⋮** > **Enable** from the **Basic** tab.
-
-![](/img/v1.2/addons/enable-rancher-logging-addon.png)
-
-When the addon is enabled successfully, the **State** will be **DeploySuccessful**.
-
-![](/img/v1.2/addons/deploy-successful-addon.png)
-
-You can disable an **Enabled** by choosing an addon and selecting **⋮** > **Disable** or from the **Basic** tab.
-
-![](/img/v1.2/addons/disable-rancher-monitoring-addon.png)
-
-When the addon is disabled successfully, the **State** will be **Disabled**.
+| Operation | Action | New State |
+| --- | --- | --- |
+| Enabling an add-on | Select the add-on, and then select **⋮** > **Enable**. | **DeploySuccessful** |
+| Disabling an add-on | Select the add-on, and then select **⋮** > **Disable**. | **Disabled** |
 
 :::note
 
-When an addon is disabled, the configuration data is stored to reuse when the addon is enabled again.
+Harvester stores the configuration data of disabled add-ons, allowing for immediate reuse upon re-enabling.
 
 :::
