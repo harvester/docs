@@ -20,7 +20,7 @@ The add-on runs a nested K3s cluster in the **rancher-vcluster** namespace and d
 
 During the installation, the ingress for Rancher is synced to the Harvester cluster, allowing end users to access Rancher.
 
-## Installing the Add-On
+## Installing the Add-on
 
 If you are using the Harvester kubeconfig file, you can install the add-on by running the following command:
 
@@ -28,13 +28,13 @@ If you are using the Harvester kubeconfig file, you can install the add-on by ru
 kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/main/rancher-vcluster/rancher-vcluster.yaml
 ```
 
-## Configuring the Add-On
+## Configuring the Add-on
 
-After installing the add-on, you need to configure it from the Harvester UI as follows:
+After installation, configure the add-on using the Harvester UI.
 
-1. Select **Advanced** > **Add-ons**.
+1. Go to **Advanced** > **Add-ons**.
 
-1. Find the **rancher-vcluster** add-on and select **⋮** > **Edit Config**.
+1. Locate the **rancher-vcluster** add-on, and then select **⋮** > **Edit Config**.
 
     ![](/img/v1.2/rancher-vcluster/VclusterConfig.png)
 
@@ -50,11 +50,9 @@ See [Rancher Integration](../../rancher/virtualization-management.md) for more i
 
 :::note
 
-**rancher-vcluster** is deployed on a `vcluster` Statefulset that uses a Longhorn PVC.
+**rancher-vcluster** is deployed on a `vcluster` Statefulset that uses a Longhorn PVC named `data-rancher-vcluster-0`.
 
-When the add-on is disabled, the PVC `data-rancher-vcluster-0` will remain in the `rancher-vcluster` namespace.
-
-If you enable the add-on again, the PVC is re-used, and Rancher will have the old state available again.
+When you disable the add-on, the PVC remains in the `rancher-vcluster` namespace. If you enable the add-on again, the PVC is reused and Rancher's previous state is restored.
 
 If you want to wipe the data, ensure that the PVC is deleted.
 
