@@ -1,7 +1,7 @@
 ---
 sidebar_position: 9
 sidebar_label: Kube-OVN Operator
-title: "Kubeovn Operator"
+title: "Kube-OVN Operator"
 ---
 
 <head>
