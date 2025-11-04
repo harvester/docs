@@ -15,6 +15,12 @@ Description: Perform out-of-band operations on Harvester hosts via IPMI and disc
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/addons/seeder"/>
 </head>
 
+:::note
+
+**harvester-seeder** is an *experimental* add-on. For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+
+:::
+
 The **harvester-seeder** add-on allows you to perform out-of-band operations on Harvester hosts using the Intelligent Platform Management Interface (IPMI).
 
 This add-on can also discover hardware and related events for hosts that support [Redfish](https://www.dmtf.org/standards/redfish)-based access, and then associate that hardware with the corresponding hosts.
