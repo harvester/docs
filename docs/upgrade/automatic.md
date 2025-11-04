@@ -56,10 +56,10 @@ The following table outlines the components used in these versions:
 
 | Components | Harvester v1.5.x | Harvester v1.6.x |
 | --- | --- | --- |
-| KubeVirt | v1.4 | v1.5.2 |
-| Longhorn | v1.8 | v1.9.1 |
-| Rancher | v2.11 | v2.12.0 |
-| RKE2 | v1.32 | v1.33.3 |
+| KubeVirt | v1.4 | v1.5 |
+| Longhorn | v1.8 | v1.9 |
+| Rancher | v2.11 | v2.12 |
+| RKE2 | v1.32 | v1.33 |
 
 :::note
 
