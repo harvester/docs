@@ -18,7 +18,7 @@ Harvester allows you to use local storage on the host to create persistent volum
 
 The **harvester-csi-driver-lvm** add-on is a CSI driver that supports local path provisioning through LVM.
 
-## Installing and Enabling the Add-On
+## Installing and Enabling the Add-on
 
 If you are using the Harvester kubeconfig file, you can install the add-on by performing the following steps:
 
