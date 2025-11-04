@@ -22,7 +22,7 @@ The following add-ons are available in this version:
 * [rancher-vcluster](./addons/rancher-vcluster.md) (Experimental)
 * [vm-import-controller](./addons/vmimport.md)
 
-You can enable and disable add-ons using the Harvester UI.
+You can enable and disable add-ons on the **Add-ons** screen of the Harvester UI.
 
 | Operation | Action | New State |
 | --- | --- | --- |
