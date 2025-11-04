@@ -34,7 +34,7 @@ The following table outlines the supported upgrade paths.
 
 | Installed Version | Supported Upgrade Versions |
 | --- | --- |
-| v1.6.x | [v1.6.y](./v1-6-x-to-v1-6-y.md) |
+| v1.6.x | [v1.6.y](./v1-6-x-to-v1-6-y.md) (*y* is greater than *x*) |
 | v1.5.x | [v1.6.x](./v1-5-x-to-v1-6-x.md) |
 | v1.5.0 | [v1.5.1](./v1-5-0-to-v1-5-1.md) |
 | v1.4.2/v1.4.3 | [v1.5.0](./v1-4-2-to-v1-5-0.md) and [v1.5.1](./v1-4-2-to-v1-5-1.md) |
