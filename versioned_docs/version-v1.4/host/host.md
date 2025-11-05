@@ -626,9 +626,9 @@ You can configure the URL of the console for remote server management. This cons
 
   ![](/img/remote_console_button.png)
 
-## Rotate Expiring Certificates
+## Rotate Expired Certificates
 
-If the RKE2 certificates are expired, you cannot use `auto-rotate-rke2-certificates` setting to rotate them. The setting only works for a ready `cluster.provisioning`.
+If the RKE2 certificates have expired, you cannot use the `auto-rotate-rke2-certificates` setting to rotate them. The setting only works when the cluster (`cluster.provisioning`) is marked `Ready`.
 
 ```
 > kubectl get cluster.provisioning -n fleet-local local -o yaml | yq -e '.status.conditions[] | select(.type=="Ready")'
@@ -636,31 +636,31 @@ lastUpdateTime: "2025-10-22T06:41:33Z"
 status: "True"
 type: Ready
 ```
-
-If the `Ready` status is `False`, you must manually rotate the certificates by following these steps on each node:
-
+If the `status` field's value is `False`, you must manually rotate the certificates by following these steps on each node:
 1. Log in to the node using the root account.
-1. Stop RKE2 service:
-  ```
-  # on management node
-  systemctl stop rke2-server
-
-  # on worker node
-  systemctl stop rke2-agent
-  ```
-1. Rotate RKE2 certificates:
-  ```
-  /opt/rke2/bin/rke2 certificate rotate
-  ```
-1. Start RKE2 service:
-  ```
-  # on management node
-  systemctl start rke2-server
-
-  # on worker node
-  systemctl start rke2-agent
-  ```
-1. Restart rancher-system-agent service:
-  ```
-  systemctl restart rancher-system-agent
-  ```
+1. Stop the RKE2 service.
+    - Management nodes
+      ```
+      systemctl stop rke2-server
+      ```
+    - Worker nodes
+      ```
+      systemctl stop rke2-agent
+      ```
+1. Rotate the RKE2 certificates.
+    ```
+    /opt/rke2/bin/rke2 certificate rotate
+    ```
+1. Start the RKE2 service.
+    - Management nodes
+      ```
+      systemctl start rke2-server
+      ```
+    - Worker nodes
+      ```
+      systemctl start rke2-agent
+      ```
+1. Restart the `rancher-system-agent` service.
+    ```
+    systemctl restart rancher-system-agent
+    ```
