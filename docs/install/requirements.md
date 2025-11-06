@@ -33,6 +33,8 @@ Harvester nodes have the following hardware requirements and recommendations for
 | Network switch | Port trunking for VLAN support | Port trunking for VLAN support |
 
 :::info important
+
+- With Harvester v1.7.0 legacy BIOS boot support is deprecated and will be removed in a later release. New installations should use UEFI.
 - Mixed-architecture clusters are not supported. Deploy separate clusters to avoid unexpected system behavior.
 - For best results, use [YES-certified hardware](https://www.suse.com/yesCertified/home) for SUSE Linux Micro 6.1. Harvester is built on SUSE Linux Enterprise technology and YES-certified hardware has additional validation of driver and system board compatibility. Laptops and nested virtualization are not supported.
 - Nested virtualization is not supported on virtual machines running on Harvester.
