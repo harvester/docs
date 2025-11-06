@@ -235,7 +235,7 @@ stages:
 ```
 The typical expectation is that an additional VLAN sub-interface is created on the `mgmt` interface (`mgmt-br.2113`) and assigned an IPv4 address. In addition, this sub-interface and the primary interface (`mgmt-br.2021`) are both expected to be used for L3 connectivity after the cluster is upgraded to v1.6.x.
 
-In actuality after upgrade to v1.6.0, however, the VLAN sub-interface is created but the secondary VLAN (VLAN ID: `2113`) is removed from the `mgmt-br` bridge and the `mgmt-bo` interface. After a reboot, only the primary VLAN ID is assigned to the `mgmt-br` bridge and the `mgmt-bo` interface (using the `/oem/90_custom.yaml` file).
+In actuality after the upgrade to v1.6.0, however, the VLAN sub-interface is created but the secondary VLAN (VLAN ID: `2113`) is removed from the `mgmt-br` bridge and the `mgmt-bo` interface. After a reboot, only the primary VLAN ID is assigned to the `mgmt-br` bridge and the `mgmt-bo` interface (using the `/oem/90_custom.yaml` file).
 To mitigate the effects of this change, you must perform the workaround described in the previous section. This involves identifying secondary VLAN interfaces and then adding the necessary ones to the `mgmt-br` bridge and the `mgmt-bo` interface.
 
 ### 6. Running VMs show "Restart action is required for the virtual machine configuration change to take effect"
@@ -248,7 +248,7 @@ To fix this, you can restart the VM.
 
 ![vm-restart](/img/v1.6/upgrade/vm-restart.png)
 
-#### Why there is the message with running VMs?
+#### Why is there a message about running VMs?
 
 Before Harvester v1.6.0, the controller patched the MAC address from the VMI into the VM spec during VM creation. This ensured that the MAC address remained consistent after a VM restart. However, this approach modified the VM spec without requiring a restart, which caused the KubeVirt controller to add a "RestartRequired" condition to the VM status. Previously, this condition was not displayed in the UI, though it was visible in the VM’s YAML.
 
