@@ -34,6 +34,7 @@ The following table outlines the supported upgrade paths.
 
 | Installed Version | Supported Upgrade Versions |
 | --- | --- |
+| v1.6.x | [v1.7.x](./v1-6-x-to-v1-7-x.md) |
 | v1.6.x | [v1.6.y](./v1-6-x-to-v1-6-y.md) (*y* is greater than *x*) |
 | v1.5.x | [v1.6.x](./v1-5-x-to-v1-6-x.md) |
 | v1.5.0 | [v1.5.1](./v1-5-0-to-v1-5-1.md) |
@@ -54,12 +55,12 @@ The latest Harvester versions allow the following:
 
 The following table outlines the components used in these versions:
 
-| Components | Harvester v1.5.x | Harvester v1.6.x |
-| --- | --- | --- |
-| KubeVirt | v1.4 | v1.5 |
-| Longhorn | v1.8 | v1.9 |
-| Rancher | v2.11 | v2.12 |
-| RKE2 | v1.32 | v1.33 |
+| Components | Harvester v1.5.x | Harvester v1.6.x | Harvester v1.7.x |
+| --- | --- | --- | --- |
+| KubeVirt | v1.4 | v1.5 | v1.6 |
+| Longhorn | v1.8 | v1.9 | v1.10 |
+| Rancher | v2.11 | v2.12 | v2.13 |
+| RKE2 | v1.32 | v1.33 | v1.34 |
 
 :::note
 
