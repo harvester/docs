@@ -61,7 +61,7 @@ The following table outlines the components used in these versions:
 | Longhorn | v1.8 | v1.9 | v1.10 |
 | Rancher | v2.11 | v2.12 | v2.13 |
 | RKE2 | v1.32 | v1.33 | v1.34 |
-| SL Micro | 5.5 | 5.5 | 6.1 |
+| SUSE Linux Micro | 5.5 | 5.5 | 6.1 |
 
 :::note
 
