@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 sidebar_label: Harvester Seeder
-title: "Harvester Seeder"
+title: "Harvester Seeder (Experimental)"
 keywords:
 - add-on
 - addon
@@ -14,6 +14,12 @@ Description: Perform out-of-band operations on Harvester hosts via IPMI and disc
 <head>
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/addons/seeder"/>
 </head>
+
+:::note
+
+**harvester-seeder** is an *experimental* add-on. For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+
+:::
 
 The **harvester-seeder** add-on allows you to perform out-of-band operations on Harvester hosts using the Intelligent Platform Management Interface (IPMI).
 

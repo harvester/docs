@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-sidebar_label: Nvidia Driver Toolkit
+sidebar_label: NVIDIA Driver Toolkit
 title: "NVIDIA Driver Toolkit"
 ---
 
