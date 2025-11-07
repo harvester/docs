@@ -62,7 +62,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 1. Choose the installation disk you want to install the Harvester cluster on and the data disk you want to store VM data on. By default, Harvester uses [GUID Partition Table (GPT)](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [Master boot record (MBR)](https://en.wikipedia.org/wiki/Master_boot_record).
 
 	:::info important
-	With Harvester v1.7.0 legacy BIOS boot support is deprecated and will be removed in a later release. New installations should use UEFI.
+	Support for legacy BIOS booting is deprecated in v1.7.0 and will be removed in a later release. Existing Harvester clusters that use this boot mode will continue to function, but upgrading to later versions may require re-installation in UEFI mode. To avoid issues and disruptions, use UEFI in new installations.
 	:::
 
 	![choose-installation-target-data-disk.png](/img/v1.2/install/choose-installation-target-data-disk.png)
