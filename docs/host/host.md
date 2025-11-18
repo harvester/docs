@@ -272,6 +272,12 @@ The replica data would be rebuilt to another disk automatically to keep the high
 
 :::
 
+:::note
+
+If disc contains last healthy replica of volume or backing image, disk removal will be rejected. In case a single replica of those objects was configured, move the replica to another disk or remove the objects  altogether to acknowledge that you don't need them. In case there was fault in the replication, fix the faulty replicas on the other disks before proceeding with the deletion of the current one.
+
+:::
+
 #### Identify the disk to remove (Harvester dashboard)
 1. Go to the **Hosts** page.
 2. On the node containing the disk, select the node name and go to the **Storage** tab.
