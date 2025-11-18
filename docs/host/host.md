@@ -274,7 +274,7 @@ The replica data would be rebuilt to another disk automatically to keep the high
 
 :::note
 
-If the disc contains last healthy replica of volume or backing image, disk removal is rejected. In case a single replica of those objects is configured, move the replica to another disk or remove the objects altogether to acknowledge that you don't need them. In case there is a replication fault, fix the faulty replicas on the other disks before proceeding with the deletion of the current one.
+If the disk contains the last healthy replica of a volume or backing image, the disk removal is rejected. If only a single replica of those objects is configured, move the replica to another disk or remove the objects altogether to confirm that you don't need them. If there is a replication fault, fix the faulty replicas on the other disks before attempting to delete the current one.
 
 :::
 
