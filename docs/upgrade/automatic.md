@@ -148,6 +148,10 @@ Check out the available [`upgrade-config` setting](../advanced/settings.md#upgra
 
 :::
 
+:::note
+Starting from v1.7.0, Harvester uses a Deployment-based upgrade repository instead of a VM-based approach for improved performance and reliability. See [harvester#7101](https://github.com/harvester/harvester/issues/7101) for details.
+:::
+
 1. Make sure to read the above `caution`.
 
 1. On the Harvester UI **Dashboard** screen, click **Upgrade**.
