@@ -274,8 +274,7 @@ The replica data would be rebuilt to another disk automatically to keep the high
 
 :::note
 
-If disk contains last healthy replica of volume or backing image, disk removal will be rejected. In case a single replica of those objects was configured, move the replica to another disk or remove the objects  altogether to acknowledge that you don't need them. In case there was fault in the replication, fix the faulty replicas on the other disks before proceeding with the deletion of the current one. There is a known
-issue with [Longhorn V2](https://github.com/longhorn/longhorn/issues/12189) where removal of the disk containing volume with single replica will be rejected as the controller is trying to rebuild the replica on the disk.
+If disc contains last healthy replica of volume or backing image, disk removal will be rejected. In case a single replica of those objects was configured, move the replica to another disk or remove the objects  altogether to acknowledge that you don't need them. In case there was fault in the replication, fix the faulty replicas on the other disks before proceeding with the deletion of the current one. There is a known issue with multiple [Longhorn V2](https://github.com/longhorn/longhorn/issues/12189) disks where removal of the disk containing single replica blank volume will be rejected if it was once attached to another disk.
 
 :::
 
