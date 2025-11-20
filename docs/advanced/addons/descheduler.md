@@ -18,7 +18,7 @@ Enable `descheduler` add-on to deploy the Descheduler to a Harvester cluster for
 
   ![](/img/v1.7/descheduler/descheduler-enable.png)
 
-The add-on can only be enabled when there are more than one node in the cluster. It will deploy a `kube-system/descheduler` deployment and a related configuration in `kube-system/descheduler` ConfigMap.
+The add-on can only be enabled when there is more than one node in the cluster. It will deploy the `kube-system/descheduler` deployment and a related configuration in the `kube-system/descheduler` ConfigMap.
 
 ## Customizing Descheduler Policies
 
