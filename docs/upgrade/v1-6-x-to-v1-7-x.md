@@ -17,7 +17,7 @@ Clusters running v1.6.x can upgrade to v1.7.x directly because Harvester allows 
 For information about upgrading Harvester in air-gapped environments, see [Prepare an air-gapped upgrade](./automatic.md#prepare-an-air-gapped-upgrade).
 
 :::info important
-If you are using DHCP to configure your host IP addresses, it's possible the IP addresses may change during upgrade, which will prevent the cluster from starting correctly. This requires manual intervention to remedy. For full details see [Host IP address may change during upgrade when using DHCP](#1-host-ip-address-may-change-during-upgrade-when-using-dhcp).
+If you are using DHCP to configure your host IP addresses, the IP addresses may change during upgrade, which will prevent the cluster from starting correctly. This requires manual intervention to remedy. For full details, see [Host IP address may change during upgrade when using DHCP](#1-host-ip-address-may-change-during-upgrade-when-using-dhcp).
 
 :::
 
@@ -35,7 +35,7 @@ You must use a compatible version (v1.7.x) of the Harvester UI Extension to impo
 
 1. Select a compatible version, and then click **Update**.
 
-1. Allow some time for the extension to be updated, and then refresh the screen.
+1. Allow some time for the extension to be updated and then refresh the screen.
 
 ---
 
@@ -43,14 +43,14 @@ You must use a compatible version (v1.7.x) of the Harvester UI Extension to impo
 
 ### 1. Host IP address may change during upgrade when using DHCP
 
-Harvester v1.7.x uses NetworkManager instead of Wicked as was used in earlier versions of Harvester. These two network stacks have different defaults for generating DHCP client IDs. This means that if you are using DHCP to configure your host IP addresses, after the operating system on each host is upgraded and the host rebooted, your DHCP server may return a different IP address for that host than it did before. If this happens, the host in question will be unable to join the cluster on startup because its IP address has changed.
+Harvester v1.7.x uses NetworkManager instead of wicked, which was used in earlier versions of Harvester. These two network stacks have different defaults for generating DHCP client IDs. This means that if you are using DHCP to configure your host IP addresses, after the operating system on each host is upgraded and the host rebooted, your DHCP server may return a different IP address for that host than it did before. If this happens, the host in question will be unable to join the cluster on startup because its IP address has changed.
 
-This problem will not occur if your DHCP server is configured to allocate fixed IP addresses based on MAC address, as is done in [Harvester iPXE Examples](https://github.com/harvester/ipxe-examples). It will occur however if the DHCP server is allocating IP addresses based solely on DHCP client ID.
+This problem will not occur if your DHCP server is configured to allocate fixed IP addresses based on MAC address, as is done in [Harvester iPXE Examples](https://github.com/harvester/ipxe-examples). However, it will occur if the DHCP server is allocating IP addresses based solely on DHCP client ID.
 
-For single node Harvester deployments that have this issue, Harvester simply will not start after rebooting after the upgrade, because the IP address is changed. For multi node deployments you may find management nodes are stuck "Waiting Reboot". In both cases, to address this issue, perform the following steps _after_ each node is upgraded and its IP address has changed:
+For single-node Harvester deployments that have this issue, Harvester simply will not start after rebooting after the upgrade, because the IP address is changed. For multi-node deployments, you may find management nodes are stuck "Waiting Reboot". In both cases, to address this issue, perform the following steps _after_ each node is upgraded and its IP address has changed:
 
 1. Log in to the affected node, either via `ssh` to its new IP address, or by using the console.
-1. Check for lease XML file in the `/var/lib/wicked` directory. It should be named similar to `/var/lib/wicked/lease-mgmt-br-dhcp-ipv4.xml`. If you are using a VLAN, the file name will include the VLAN ID, for example `/var/lib/wicked/lease-mgmt-br.2017-dhcp-ipv4.xml`
+1. Check for lease XML file in the `/var/lib/wicked` directory. It should be named similar to `/var/lib/wicked/lease-mgmt-br-dhcp-ipv4.xml`. If you are using a VLAN, the file name will include the VLAN ID, for example, `/var/lib/wicked/lease-mgmt-br.2017-dhcp-ipv4.xml`.
 1. View this file to find the DHCP client ID:
    ```
    $ cat /var/lib/wicked/lease-mgmt-br-dhcp-ipv4.xml
