@@ -8,9 +8,9 @@ _Available as of v1.7.0_
 
 The [Kubernetes Descheduler](https://github.com/kubernetes-sigs/descheduler) optimizes workload scheduling by evicting pods that are not optimally placed according to administrator-defined policies. This crucial function enhances resource utilization, balances workloads across nodes, and improves overall cluster performance.
 
-## Enabling `descheduler` Add-on
+## Enabling the Add-on
 
-Enable `descheduler` add-on to deploy the Descheduler to a Harvester cluster for improved workload scheduling and resource utilization.
+When enabled, the add-on deploys the Descheduler in the `kube-system` namespace and a related configuration in the `kube-system/descheduler` ConfigMap. You can enable the add-on only when the cluster has more than one node.
 
 1. On the Harvester UI, go to **Advanced** > **Add-ons**.
 
