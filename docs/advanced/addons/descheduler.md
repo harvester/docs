@@ -6,7 +6,7 @@ title: "Descheduler (Experimental)"
 
 _Available as of v1.7.0_
 
-[`descheduler`](https://github.com/kubernetes-sigs/descheduler) is used to improve the scheduling of workloads by evicting pods that are not optimally placed according to defined policies. This helps to enhance resource utilization, balance workloads across nodes, and improve overall cluster performance.
+The [Kubernetes Descheduler](https://github.com/kubernetes-sigs/descheduler) optimizes workload scheduling by evicting pods that are not optimally placed according to administrator-defined policies. This crucial function enhances resource utilization, balances workloads across nodes, and improves overall cluster performance.
 
 ## Enabling `descheduler` Add-on
 
