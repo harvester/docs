@@ -1,7 +1,7 @@
 ---
 sidebar_position: 10
 sidebar_label: Descheduler
-title: "Descheduler"
+title: "Descheduler (Experimental)"
 ---
 
 _Available as of v1.7.0_
