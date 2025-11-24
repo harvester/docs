@@ -28,10 +28,11 @@ Select **⋮** > **Edit YAML** to customize the Descheduler policies according t
 
   ![](/img/v1.7/descheduler/descheduler-policy.png)
 
-* `deschedulingInterval`: Specifies how often the descheduler runs. The default is set to 5 minutes.
-* `maxNoOfPodsToEvictPerNode`: Limits the number of pods that can be evicted during a single descheduling cycle. The default is set to 5.
-* `evictableNamespaces.exclude`: Namespaces that should be excluded from eviction. By default, the system namespaces are excluded to protect critical system components.
-* `thresholds` and `targetThresholds`: Define resource usage thresholds to determine when pods should be evicted to balance resource utilization across nodes. The default values only contain CPU and memory. You can add additional resources as needed. It evicts pods from overutilized nodes (those with usage above `targetThresholds`) to underutilized nodes (those with usage below `thresholds`).
+- `deschedulingInterval`: How often the Descheduler runs. The default value is `5m` (5 minutes).
+- `maxNoOfPodsToEvictPerNode`: Maximum number of pods that can be evicted during a single descheduling cycle. The default is value is `5`.
+- `evictableNamespaces.exclude`: Namespaces to be excluded from eviction. By default, the system namespaces are excluded to protect critical system components.
+- `targetThresholds`: Upper utilization limit for monitored resources. Nodes whose usage exceeds this threshold are marked as overutilized, triggering pod eviction to reduce their load. Default values are automatically applied for CPU (`50`) and memory (`50`), but you can define values for other monitored resources.
+- `thresholds`: Lower utilization limit for monitored resources. Pods evicted from overutilized nodes are rescheduled only to nodes whose usage is currently below this threshold. Default values are automatically applied for CPU (`30`) and memory (`30`), but you can define values for other monitored resources.
 
 ## Disabling `descheduler` Add-on
 
