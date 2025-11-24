@@ -34,7 +34,7 @@ Select **⋮** > **Edit YAML** to customize the Descheduler policies according t
 - `targetThresholds`: Upper utilization limit for monitored resources. Nodes whose usage exceeds this threshold are marked as overutilized, triggering pod eviction to reduce their load. Default values are automatically applied for CPU (`50`) and memory (`50`), but you can define values for other monitored resources.
 - `thresholds`: Lower utilization limit for monitored resources. Pods evicted from overutilized nodes are rescheduled only to nodes whose usage is currently below this threshold. Default values are automatically applied for CPU (`30`) and memory (`30`), but you can define values for other monitored resources.
 
-## Disabling `descheduler` Add-on
+## Disabling the Add-on
 
 1. On the Harvester UI, go to **Advanced** > **Add-ons**.
 
