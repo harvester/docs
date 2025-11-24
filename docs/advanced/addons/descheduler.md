@@ -18,8 +18,6 @@ When enabled, the add-on deploys the Descheduler in the `kube-system` namespace 
 
   ![](/img/v1.7/descheduler/descheduler-enable.png)
 
-The add-on can only be enabled when there is more than one node in the cluster. It will deploy the `kube-system/descheduler` deployment and a related configuration in the `kube-system/descheduler` ConfigMap.
-
 ## Customizing Descheduler Policies
 
 Select **⋮** > **Edit YAML** to customize the Descheduler policies according to your requirements. The configuration is defined in YAML format.
