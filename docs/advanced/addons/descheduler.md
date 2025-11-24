@@ -22,7 +22,7 @@ The add-on can only be enabled when there is more than one node in the cluster. 
 
 ## Customizing Descheduler Policies
 
-Click the **Edit YAML** button to customize the descheduler policies according to your requirements. The configuration is defined in YAML format.
+Select **⋮** > **Edit YAML** to customize the Descheduler policies according to your requirements. The configuration is defined in YAML format.
 
   ![](/img/v1.7/descheduler/descheduler-edit-yaml.png)
 
