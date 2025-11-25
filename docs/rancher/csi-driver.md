@@ -31,11 +31,12 @@ The Harvester Container Storage Interface (CSI) Driver provides a standard CSI i
 
 The Harvester CSI driver supports the following features:
 
-| Harvester CSI Driver Version | Harvester Version | Storage Tiering | RWX Volumes | Online Resizing | Third-Party Storage | Snapshots and Backups |
+| Harvester CSI Driver Version | Harvester Version | Storage Tiering | RWX Volumes | Online Resizing | Third-Party Storage | Volume Snapshots |
 | --- | --- | --- | --- | --- | --- | --- |
 | 0.1.15 | All versions | &#10004; | &#10006; | &#10006; | &#10006; | &#10006; |
 | 0.1.20 | v1.4 and later | &#10004; | &#10004; | &#10006; | &#10006; | &#10006; |
 | 0.1.24 | v1.6 and later | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; |
+| 0.1.25 | v1.7 and later | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; |
 
 ## Deploying
 
@@ -470,7 +471,26 @@ If the underlying storage provider supports [online volume expansion](../volume/
 - Harvester v1.6 or later
 - Harvester CSI Driver v0.1.24 or later
 
+## Volume Snapshots
+
+Starting with **v0.1.25**, the Harvester CSI Driver supports [volume snapshots](https://kubernetes.io/docs/concepts/storage/volume-snapshots/), providing point-in-time backup and restore capabilities for workloads running on guest Kubernetes clusters.
+
+### Prerequisites
+
+- Harvester v1.7 or later
+- Harvester CSI Driver v0.1.25 or later
+- The CSI snapshot controller and the required manifests are properly deployed on the guest cluster. (These components are deployed by default on RKE2.)
+
 ## Upgrade the CSI Driver
+
+:::note
+
+The Harvester CSI Driver supports volume snapshots starting with version **v0.1.25**. Using this feature may require additional steps depending on your Kubernetes distribution.
+
+- RKE2 (recommended): The CSI snapshot controller is deployed by default.
+- Other Kubernetes distributions: You must install the CSI snapshot controller on the guest cluster before upgrading the Harvester CSI Driver to **v0.1.25**. For installation instructions, refer to your distribution's documentation (example: [Longhorn](https://longhorn.io/docs/1.10.1/snapshots-and-backups/csi-snapshot-support/enable-csi-snapshot-support/)).
+
+:::
 
 ### Upgrade RKE2
 

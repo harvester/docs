@@ -1,19 +1,25 @@
 ---
 sidebar_position: 6
 sidebar_label: Managed DHCP
-title: "Managed DHCP"
+title: "Managed DHCP (Experimental)"
 ---
 
 <head>
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/addons/managed-dhcp"/>
 </head>
 
-_Available as of v1.3.0_
+:::note
 
-Beginning with v1.3.0, you can configure IP pool information and serve IP addresses to VMs running on Harvester clusters using the embedded Managed DHCP feature. This feature, which is an alternative to the standalone DHCP server, leverages the vm-dhcp-controller add-on to simplify guest cluster deployment.
+**harvester-vm-dhcp-controller** is an *experimental* add-on. It is not included in the Harvester ISO, but you can download it from the [experimental-addons repository](https://github.com/harvester/experimental-addons). For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+
+:::
+
+You can configure IP pool information and serve IP addresses to VMs running on Harvester clusters using the embedded Managed DHCP feature. This feature, which is an alternative to the standalone DHCP server, leverages the [harvester-vm-dhcp-controller](https://github.com/harvester/vm-dhcp-controller) add-on to simplify guest cluster deployment.
 
 :::note
+
 Harvester uses the planned infrastructure network so you must ensure that network connectivity is available and plan the IP pools in advance.
+
 :::
 
 ## Unique Features
@@ -29,9 +35,9 @@ Harvester uses the planned infrastructure network so you must ensure that networ
 - The DHCP RELEASE operation is currently not supported.
 - IPPool configuration updates take effect only after you manually restart the relevant agent pods.
 
-## Install and Enable the vm-dhcp-controller Add-On
+## Installing and Enabling the Add-on
 
-The vm-dhcp-controller add-on is not packed into the Harvester ISO, but you can download it from the [expreimental-addons repository](https://github.com/harvester/experimental-addons). You can install the add-on by running the following command:
+You can install the add-on by running the following command:
 
 ```shell
 kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/main/harvester-vm-dhcp-controller/harvester-vm-dhcp-controller.yaml
@@ -39,7 +45,7 @@ kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons
 
 :::note
 
-The vm-dhcp-controller add-on cannot dynamically detect cluster-specific service CIDRs and uses `10.53.0.0/16` by default.
+The add-on cannot dynamically detect cluster-specific service CIDRs and uses `10.53.0.0/16` by default.
 
 When your cluster uses a different service CIDR, you must configure it explicitly in the `valuesContent` section of the `Addon` CR to prevent issues. Specifically, attempts to create IP pool resources (IPPools) can fail when CIDRs overlap with the default `10.53.0.0/16` service CIDR.
 
@@ -70,7 +76,7 @@ After installation, enable the add-on on the **Dashboard** screen of the Harvest
 
 ![](/img/v1.3/vm-dhcp-controller/enable-addon.png)
 
-## Usage
+## Using the Add-on
 
 1. On the **Dashboard** screen of the Harvester UI, [create a VM Network](../../networking/harvester-network.md#create-a-vm-network).
 
@@ -209,15 +215,15 @@ After installation, enable the add-on on the **Dashboard** screen of the Harvest
 
     ![](/img/v1.3/vm-dhcp-controller/vm-console.png)
 
-## vm-dhcp-controller Pods and CRDs
+## Pods and CRDs
 
-When the vm-dhcp-controller add-on is enabled, the following types of pods run:
+When **harvester-vm-dhcp-controller** is enabled, the following types of pods run:
 
 - Controller: Reconciles CRD objects to determine allocation and mapping between IP and MAC addresses. The results are persisted in the IPPool objects.
 - Webhook: Validates and mutates CRD objects when receiving requests (creation, updating, and deletion)
 - Agent: Serves DHCP requests and ensures that the internal DHCP lease store is up to date. This is accomplished by syncing the specific IPPool object that the agent is associated with. Agents are spawned on-demand whenever you create new IPPool objects.
 
-The [vm-dhcp-controller](https://github.com/harvester/vm-dhcp-controller) introduces the following new CRDs.
+The add-on introduces the following new CRDs:
 
 - IPPool (ippl)
 - VirtualMachineNetworkConfig (vmnetcfg)
@@ -290,5 +296,7 @@ spec:
 After the VirtualMachineNetworkConfig object is created, the controller attempts to retrieve a list of unused IP addresses from the IP allocation module for each recorded MAC address. The IP-MAC mapping is then updated in the VirtualMachineNetworkConfig object and the corresponding IPPool objects.
 
 :::note
-Manual creation of VirtualMachineNetworkConfig objects for VMs is unnecessary in most cases because vm-dhcp-controller handles that task during the VirtualMachine reconciliation process. Automatically-created VirtualMachineNetworkConfig objects are deleted when VirtualMachine objects are removed.
+
+Manual creation of VirtualMachineNetworkConfig objects for VMs is unnecessary in most cases because **harvester-vm-dhcp-controller** handles that task during the VirtualMachine reconciliation process. Automatically-created VirtualMachineNetworkConfig objects are deleted when VirtualMachine objects are removed.
+
 :::

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 sidebar_label: Upgrade from v1.5.x to v1.6.x
 title: "Upgrade from v1.5.x to v1.6.x"
 ---
@@ -182,15 +182,15 @@ After upgrading to v1.6.x, perform the following steps:
    The above outputs only the primary vlan part of `mgmt-br` and `mgmt-bo`
 
 1. Manually add the required secondary VLANs to the `mgmt-br` bridge and the `mgmt-bo` interface by adding the following commands to the `/oem/90_custom.yaml` file:
-  
+
     - `/etc/wicked/scripts/setup_bond.sh` section
-  
+
     ```
     bridge vlan add vid <vlan-id> dev $INTERFACE
     ```
 
     - `/etc/wicked/scripts/setup_bridge.sh` section
-  
+
     ```
     bridge vlan add vid <vlan-id> dev $INTERFACE self
     bridge vlan add vid <vlan-id> dev mgmt-bo
@@ -235,5 +235,21 @@ stages:
 ```
 The typical expectation is that an additional VLAN sub-interface is created on the `mgmt` interface (`mgmt-br.2113`) and assigned an IPv4 address. In addition, this sub-interface and the primary interface (`mgmt-br.2021`) are both expected to be used for L3 connectivity after the cluster is upgraded to v1.6.x.
 
-In actuality after upgrade to v1.6.0, however, the VLAN sub-interface is created but the secondary VLAN (VLAN ID: `2113`) is removed from the `mgmt-br` bridge and the `mgmt-bo` interface. After a reboot, only the primary VLAN ID is assigned to the `mgmt-br` bridge and the `mgmt-bo` interface (using the `/oem/90_custom.yaml` file).
+In actuality after the upgrade to v1.6.0, however, the VLAN sub-interface is created but the secondary VLAN (VLAN ID: `2113`) is removed from the `mgmt-br` bridge and the `mgmt-bo` interface. After a reboot, only the primary VLAN ID is assigned to the `mgmt-br` bridge and the `mgmt-bo` interface (using the `/oem/90_custom.yaml` file).
 To mitigate the effects of this change, you must perform the workaround described in the previous section. This involves identifying secondary VLAN interfaces and then adding the necessary ones to the `mgmt-br` bridge and the `mgmt-bo` interface.
+
+### 6. Running VMs show "Restart action is required for the virtual machine configuration change to take effect"
+
+When upgrading Harvester from v1.5.x to v1.6.x, updating the harvester-ui-extension to v1.6.x, or using Rancher v2.12.x to import an existing Harvester cluster, you may encounter a warning message on some running virtual machines (VMs). This message indicates that the VM configuration has changed and that a restart is required to apply the changes.
+
+![vm-restart-action-required](/img/v1.6/upgrade/vm-restart-required-message.png)
+
+To fix this, you can restart the VM.
+
+![vm-restart](/img/v1.6/upgrade/vm-restart.png)
+
+#### Why is there a message about running VMs?
+
+Before Harvester v1.6.0, the controller patched the MAC address from the VMI into the VM spec during VM creation. This ensured that the MAC address remained consistent after a VM restart. However, this approach modified the VM spec without requiring a restart, which caused the KubeVirt controller to add a "RestartRequired" condition to the VM status. Previously, this condition was not displayed in the UI, though it was visible in the VM’s YAML.
+
+Starting from v1.6.0, to support the CPU and Memory hot-plug feature and to inform users that certain CPU and memory changes might not take effect immediately, we decided to expose the “RestartRequired” condition in the UI. That’s why this message appears after upgrading Harvester or updating the harvester-ui-extension to v1.6.x.
