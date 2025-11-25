@@ -18,17 +18,15 @@ description: Hotplug and hotunplug network interfaces to a running VM.
 
 _Available as of v1.7.0_
 
+Harvester supports hotplugging and hotunplugging of network interface controllers (NICs) for [live-migratable](./live-migration.md#live-migratable-virtual-machines) virtual machines. This feature allows you to add and remove network interfaces from a running virtual machine without requiring a reboot.
+
 :::note
 
-The virtual machine must be [live-migratable](./live-migration.md#live-migratable-virtual-machines).
+You cannot perform NIC hotplugging on virtual machines created in clusters running Harvester versions earlier than v1.7.0 _if the network interface's MAC address was not explicitly configured_. To enable this feature, you must restart those virtual machines. Restarting allows the system to automatically save the observed MAC addresses to the virtual machine's configuration.
 
-For virtual machine created prior to v1.7.0, they are not allowed to perform NIC hotplug or hotunplug if there is a network interface configured without settings MAC address explicitly. Restart is required for them to enable NIC hotplug since the observed MAC addresses would be backfilled to the virtual machine configuration during the corresponding reconciliation steps.
-
-Besides, virtual machines created by [Harvester node driver](../rancher/node/node-driver.md) are not allowed for hotplugging and hotunplugging.
+In addition, virtual machines created by the [Harvester Node Driver](../rancher/node/node-driver.md) do not support NIC hotplugging and hotunplugging.
 
 :::
-
-Harvester supports hotplugging and hotunplugging NICs to a live-migratable virtual machine. This feature allows you to add and remove NICs to a running virtual machine without requiring a reboot.
 
 ## Hotplug NICs to a Running VM
 
