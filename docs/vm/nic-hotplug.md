@@ -52,7 +52,7 @@ For information about limitations to the number of hotplugged interfaces, see [V
 
 You can perform this action only when the following conditions are met:
 
-- The virtual machine has at least one network interface. You cannot hotunplug the single remaining interface.
+- The virtual machine has at least two network interfaces. You cannot hotunplug the single remaining interface.
 - The target interface is connected through bridge binding.
 
 :::
