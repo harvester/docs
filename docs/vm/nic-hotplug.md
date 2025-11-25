@@ -30,25 +30,21 @@ In addition, virtual machines created by the [Harvester Node Driver](../rancher/
 
 ## Hotplug NICs to a Running VM
 
-:::note
+1. On the Harvester UI, go to the **Virtual Machines** screen.
 
-Only [VLAN network](../../networking/harvester-network.md#vlan-network), [untagged network](../../networking/harvester-network.md#untagged-network), [VLAN trunk network](../../networking/harvester-network.md#vlan-trunk-network) are supported for hotplugging.
+1. Locate the target virtual machine, and then select **⋮** > **Hotplug Network Interface**.
 
-:::
+    ![Hotplug Network Interface](/img/v1.7/nic-hotplug/hotplug-network-interface.png)
 
-You can hotplug an interface to a network using the **Hotplug Network Interface** button.
+1. Specify a name for the network interface and select a virtual machine network. 
 
-![Hotplug Network Interface](/img/v1.7/nic-hotplug/hotplug-network-interface.png)
+    You can select a [VLAN network](../../networking/harvester-network.md#vlan-network), an [untagged network](../../networking/harvester-network.md#untagged-network), or a [VLAN trunk network](../../networking/harvester-network.md#vlan-trunk-network).
 
+1. Click **Apply**.
 
-Once you click **Apply**, Harvester [migrates the virtual machine](./live-migration.md#prerequisites) and the new `virtio` model interface would be connected through bridge binding.
+Harvester [migrates the virtual machine](./live-migration.md#prerequisites) and the specified interface is connected through bridge binding.
 
-
-:::note
-
-Be aware that there are limitations to the number of hotplugged interfaces. Please refer to [this KubeVirt documentation](https://kubevirt.io/user-guide/network/hotplug_interfaces/#virtio-limitations).
-
-:::
+For information about limitations to the number of hotplugged interfaces, see [Virtio Limitations](https://kubevirt.io/user-guide/network/hotplug_interfaces/#virtio-limitations) in the KubeVirt documentation.
 
 ## Hotunplug NICs from a Running VM
 
