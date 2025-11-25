@@ -48,16 +48,21 @@ For information about limitations to the number of hotplugged interfaces, see [V
 
 ## Hotunplug NICs from a Running VM
 
-:::note
+:::info important
 
-Hot-unplug is only supported for interfaces connected through bridge binding.
-If there is only single network interface left, it's not allowed to be hotunplugged.
+You can perform this action only when the following conditions are met:
+
+- The virtual machine has at least one network interface. You cannot hotunplug the single remaining interface.
+- The target interface is connected through bridge binding.
 
 :::
 
-Navigate to the **Networks** tab of the detail page of a virtual machine. **Detach Network Interface** button can be used to hotunplug the interface.
+1. On the Harvester UI, go to the **Virtual Machines** screen.
 
+1. Click the name of the target virtual machine, and then go to the **Networks** tab.
 
-![Hotunplug Network Interface](/img/v1.7/nic-hotplug/hotunplug-network-interface.png)
+    ![Hotunplug Network Interface](/img/v1.7/nic-hotplug/hotunplug-network-interface.png)
 
-Once you click it, Harvester [migrates the virtual machine](./live-migration.md#prerequisites) and the interface would be detached.
+1. Locate the target interface, and then click **Detach Network Interface**.
+
+Harvester [migrates the virtual machine](./live-migration.md#prerequisites) and detaches the interface.
