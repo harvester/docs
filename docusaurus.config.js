@@ -76,9 +76,9 @@ const config = {
               banner: `none`
             },
             "v1.4": {
-              label: 'v1.4',
+              label: 'v1.4 (EOL)',
               path: 'v1.4',
-              banner: `none`
+              banner: `unmaintained`
             },
             "v1.3": {
               label: 'v1.3 (EOL)',
