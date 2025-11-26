@@ -274,7 +274,7 @@ The replica data would be rebuilt to another disk automatically to keep the high
 
 :::note
 
-If disc contains last healthy replica of volume or backing image, disk removal will be rejected. In case a single replica of those objects was configured, move the replica to another disk or remove the objects altogether to acknowledge that you don't need them. In case there was fault in the replication, fix the faulty replicas on the other disks before proceeding with the deletion of the current one. For a Longhorn v2 volume that has never been attached, if its last replica is deleted, Longhorn incorrectly triggers a rebuild on another disk. This rebuilt replica is then marked as healthy, causing the disk to become undeletable even though it contains no valid data tracked in [Issue #12189](https://github.com/longhorn/longhorn/issues/12189). In order to delete the disk, remove the volume first.
+If the disk contains the last healthy replica of a volume or backing image, disk removal will be rejected. If a single replica of those objects was configured, move the replica to another disk or remove the objects altogether to acknowledge that you don't need them. If there was a fault in the replication, fix the faulty replicas on the other disks before proceeding with the deletion of the current one. For a Longhorn v2 volume that has never been attached, if its last replica is deleted, Longhorn incorrectly triggers a rebuild on another disk. This rebuilt replica is then marked as healthy, causing the disk to become undeletable even though it contains no valid data tracked in [Issue #12189](https://github.com/longhorn/longhorn/issues/12189). To delete the disk, remove the volume first.
 
 :::
 
