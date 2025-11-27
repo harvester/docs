@@ -26,6 +26,8 @@ You cannot perform NIC hotplugging on virtual machines created in clusters runni
 
 In addition, virtual machines created by the [Harvester Node Driver](../rancher/node/node-driver.md) do not support NIC hotplugging and hotunplugging.
 
+NIC Hotplug is not supported by [Harvester Terraform provider](terraform/terraform-provider.md).
+
 :::
 
 ## Hotplug NICs to a Running VM
@@ -36,7 +38,7 @@ In addition, virtual machines created by the [Harvester Node Driver](../rancher/
 
     ![Hotplug Network Interface](/img/v1.7/nic-hotplug/hotplug-network-interface.png)
 
-1. Specify a name for the network interface and select a virtual machine network. 
+1. Specify a name for the network interface and select a virtual machine network.
 
     You can select a [VLAN network](../../networking/harvester-network.md#vlan-network), an [untagged network](../../networking/harvester-network.md#untagged-network), or a [VLAN trunk network](../../networking/harvester-network.md#vlan-trunk-network).
 
