@@ -33,7 +33,7 @@ current value is "hvst-upgrade-md54b-upgradelog-operator"
 
 ### Root Cause
 
-When an upgrade is started, the `Enable Logging` option can be selected. If the option is ticked, the background processing depends on if the addon [rancher-logging] is enabled. 
+When an upgrade is started, the `Enable Logging` option can be selected. If the option is ticked, the background processing depends on if the addon [rancher-logging](../advanced/addons.md) is enabled. is enabled.
 
 ![](/img/v1.6/troubleshooting/upgrade-with-enable-logging.png)
 
