@@ -26,6 +26,8 @@ You cannot perform NIC hotplugging on virtual machines created in clusters runni
 
 In addition, virtual machines created by the [Harvester Node Driver](../rancher/node/node-driver.md) do not support NIC hotplugging and hotunplugging.
 
+NIC Hotplug is no supported by [Harvester Terraform provider](terraform/terraform-provider.md).
+
 :::
 
 ## Hotplug NICs to a Running VM
