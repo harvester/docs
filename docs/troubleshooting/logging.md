@@ -16,7 +16,7 @@ The following sections contain tips to troubleshoot Harvester Logging.
 
 When the `rancher-logging` add-on is enabled, it shows failure.
 
-![](/img/v1.6/troubleshooting/logging-installation-failure-due-to-conflict.png)
+![](/img/v1.6/troubleshooting/failed-to-enable-logging.png)
 
 Example:
 
@@ -29,7 +29,7 @@ annotation validation error: key "meta.helm.sh/release-name" must equal "rancher
 current value is "hvst-upgrade-md54b-upgradelog-operator"
 ```
 
-![](/img/v1.6/troubleshooting/failed-to-enable-logging.png)
+![](/img/v1.6/troubleshooting/logging-installation-failure-due-to-conflict.png)
 
 ### Root Cause
 
@@ -87,10 +87,11 @@ There is another case:
 
 1. Wait until the upgrade is done
 
-1. Due to a known bug [managedchart is not cleared](https://github.com/harvester/harvester/issues/7654), the `managedchart` and `logging` objects are not effectively removed
+1. Due to a known bug [managedchart is not cleared](https://github.com/harvester/harvester/issues/7654), the `managedchart` and `logging` objects are not effectively removed, they are leftover
 
 1. Enable `rancher-logging` addon, it reports error
 
+The root cause is: when `rancher-logging addon` is enabled, it tries to spin up a `logging-operator`, but if `upgardelog` has spined up the `managedchart fleet-local/hvst-upgrade-hpfnw-upgradelog-operator` as the `logging-operator` before, the conflict happens, and the `rancher-logging addon` fails to be enabled.
 
 ### Workaround
 
@@ -100,7 +101,7 @@ There is another case:
 
 1. Check the above mentioned `managedchart` and `logging` object, if their names start with `hvst-upgrade-`, manually delete them
 
-1. Enable `rancher-logging` add-on
+1. Enable `rancher-logging` add-on, it will be successful
 
 :::note
 
