@@ -102,26 +102,56 @@ During installation of the first cluster node, you can configure the MTU value f
 
 ### Add Secondary VLAN Interfaces
 
-Add the following commands to the `/oem/90_custom.yaml` file and reboot the node.
+:::note
 
-- `/etc/wicked/scripts/setup_bond.sh` section
-
-    ```
-    bridge vlan add vid <vlan-id> dev $INTERFACE
-    ```
-
-- `/etc/wicked/scripts/setup_bridge.sh` section
-
-    ```
-    bridge vlan add vid <vlan-id> dev $INTERFACE self
-    bridge vlan add vid <vlan-id> dev mgmt-bo
-    ```
-
-:::info important
-
-You must include a separate command for each distinct VLAN ID. Ensure that the `vlan-id` placeholder is replaced with the actual ID.
+If you upgrade from a version before `v1.7.0`, the changes below need to be made in the `/oem/91_networkmanager.yaml` file instead of in `/oem/90_custom.yaml`.
 
 :::
+
+1. Create a backup of the `/oem/90_custom.yaml` file on each node.
+
+  You can use this backup to restore the file when the node is unable to reboot.
+
+1. Add the secondary VLAN ID to the list of VLANs for the bond-mgmt and bridge-mgmt connection profiles in the `/oem/90_custom.yaml` file on each node.
+
+    Locate the following paths, and then add the secondary VLAN ID in the `[bridge-port]` and `[bridge]` sections of those files.
+
+    - `path: /etc/NetworkManager/system-connections/bond-mgmt.nmconnection`
+    - `path: /etc/NetworkManager/system-connections/bridge-mgmt.nmconnection`
+
+    Example:
+
+    ```
+    - path: /etc/NetworkManager/system-connections/bond-mgmt.nmconnection
+      permissions: 384
+      owner: 0
+      group: 0
+      content: |-
+        ...
+        [bridge-port]
+        # in this example, 2017 is the primary VLAN ID, and 2018 is the secondary VLAN ID
+        vlans=1 pvid untagged,2017,2018
+      encoding: ""
+      ownerstring: ""
+    - ...
+    - path: /etc/NetworkManager/system-connections/bridge-mgmt.nmconnection
+      permissions: 384
+      owner: 0
+      group: 0
+      content: |-
+        ...
+        [bridge]
+        ...
+        # in this example, 2017 is the primary VLAN ID, and 2018 is the secondary VLAN ID
+        vlans=2017,2018
+        ...
+      encoding: ""
+      ownerstring: ""
+    ```
+
+1. Verify that the file's formatting is still valid using the `yq -e /oem/90_custom.yaml` command. This command prints the file's contents unless an error occurs.
+
+1. Reboot each node to apply the change.
 
 #### Annotate a Non-Default MTU Value to `mgmt` After Installation
 
@@ -149,6 +179,12 @@ You must ensure the following:
 
 #### Change the MTU Value of `mgmt` After Installation
 
+:::note
+
+If you upgrade from a version before `v1.7.0`, the changes below need to be made in the `/oem/91_networkmanager.yaml` file instead of in `/oem/90_custom.yaml`.
+
+:::
+
 The MTU of the mgmt network is saved on an internal file `/oem/90_custom.yaml` on each node. The file stores a lot of basic configuration of the system.
 
 :::caution
@@ -167,32 +203,52 @@ Exercise extreme caution when editing `/oem/90_custom.yaml`. Do not change other
 
 1. Change the MTU value in the `/oem/90_custom.yaml` file on each node.
 
-    Locate the following paths, and then change the value in `MTU=1500`.
+    Locate the following paths, and then set the necessary MTU value in the `[ethernet]` section of those files.
 
-    - `path: /etc/sysconfig/network/ifcfg-mgmt-bo`
-    - `path: /etc/sysconfig/network/ifcfg-mgmt-br`
+    - `path: /etc/NetworkManager/system-connections/bond-mgmt.nmconnection`
+    - `path: /etc/NetworkManager/system-connections/bridge-mgmt.nmconnection`
+    - `path: /etc/NetworkManager/system-connections/vlan-mgmt.nmconnection` (will only be present if a VLAN is configured)
 
     Example:
 
     ```
-    - path: /etc/sysconfig/network/ifcfg-mgmt-bo
-    permissions: 384
-    owner: 0
-    group: 0
-    content: |+
-      ...
-      MTU=1500     // MTU is the last under the content, and might be a blank line, add or change it
-    encoding: ""
-    ownerstring: ""
-    - path: /etc/sysconfig/network/ifcfg-mgmt-br
-    permissions: 384
-    owner: 0
-    group: 0
-    content: |+
-      ...
-      MTU=1500     // MTU is the last under the content, and might be a blank line, add or change it
-    encoding: ""
-    ownerstring: ""
+    - path: /etc/NetworkManager/system-connections/bond-mgmt.nmconnection
+      permissions: 384
+      owner: 0
+      group: 0
+      content: |-
+        ...
+        [ethernet]
+        # add or change the next line as necessary
+        mtu=1500
+        ...
+      encoding: ""
+      ownerstring: ""
+    - ...
+    - path: /etc/NetworkManager/system-connections/bridge-mgmt.nmconnection
+      permissions: 384
+      owner: 0
+      group: 0
+      content: |-
+        ...
+        [ethernet]
+        # add or change the next line as necessary
+        mtu=1500
+        ...
+      encoding: ""
+      ownerstring: ""
+    - path: /etc/NetworkManager/system-connections/vlan-mgmt.nmconnection
+      permissions: 384
+      owner: 0
+      group: 0
+      content: |-
+        ...
+        [ethernet]
+        # add or change the next line as necessary
+        mtu=1500
+        ...
+      encoding: ""
+      ownerstring: ""
 
     ```
 
