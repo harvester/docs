@@ -14,15 +14,20 @@ The following sections contain tips to troubleshoot Harvester Logging.
 
 ### Issue Description
 
-When the `rancher-logging` add-on is enabled, it shows failure.
+An error message appears on the Harvester UI when you attempt to enable the [`rancher-logging`](../advanced/addons.md) add-on.
 
-![](/img/v1.6/troubleshooting/failed-to-enable-logging.png)
+![](/img/v1.6/troubleshooting/failed-to-enable-rancher-logging-addon.png)
+
+Log messages from the `cattle-logging-system/helm-install-rancher-logging` pod confirm that an error has occurred.
 
 Example:
 
-Log from `cattle-logging-system/helm-install-rancher-logging` pod:
-
 ```sh
+...
+ echo 'Installing helm chart'
+...
++ helm install --version ... rancher-logging rancher-logging/rancher-logging ...
+...
 Error: INSTALLATION FAILED: Unable to continue with install: ClusterRole "logging-admin" in namespace "" exists
 and cannot be imported into the current release: invalid ownership metadata;
 annotation validation error: key "meta.helm.sh/release-name" must equal "rancher-logging":
@@ -33,11 +38,15 @@ current value is "hvst-upgrade-md54b-upgradelog-operator"
 
 ### Root Cause
 
-When an upgrade is started, the `Enable Logging` option can be selected. If the option is ticked, the background processing depends on if the addon [rancher-logging](../advanced/addons.md) is enabled. is enabled.
+**Summary**: When you enable the `rancher-logging` add-on, Harvester attempts to install the [Logging Operator](https://kube-logging.dev/docs/#overview). The installation fails when the operator already exists on the cluster, which may be a stale resource from previous upgrade attempts or created by the current ongoing upgrade.
+
+The **Upgrade Software** screen includes an **Enable Logging** option that you must select to enable Harvester to log upgrade events.
 
 ![](/img/v1.6/troubleshooting/upgrade-with-enable-logging.png)
 
-If `rancher-logging` addon is disabled, the `upgrade contrller` creates following `logging` and `managedchart` object to log things happened in the upgrade.
+However, the background processing depends on whether the `rancher-logging` add-on is enabled.
+
+When the add-on is disabled, the upgrade controller creates the following `logging` and `managedchart` objects.
 
 ```sh
 $ kubectl get upgrade.harvesterhci -A
@@ -47,14 +56,14 @@ harvester-system   hvst-upgrade-hpfnw   36s
 $ kubectl get logging -A
 NAME                                          LOGGINGREF             CONTROLNAMESPACE       
 hvst-upgrade-hpfnw-upgradelog-infra           harvester-upgradelog   harvester-system        // newly created by upgrade controller
-hvst-upgrade-hpfnw-upgradelog-operator-root                          cattle-logging-system   // newly created by upgrade controller
+hvst-upgrade-hpfnw-upgradelog-operator-root                          cattle-logging-system   // newly created by upgrade controller, acts as logging-operator
 
 $ kubectl get managedchart -A
 NAMESPACE     NAME                                     AGE
 fleet-local   hvst-upgrade-hpfnw-upgradelog-operator   18s  // newly created by upgrade controller
 ```
 
-If `rancher-logging` addon is enabled, the `upgrade contrller` creates following `logging` object to log things happened in the upgrade.
+When the add-on is enabled, the upgrade controller creates the following `logging` object.
 
 ```sh
 $ kubectl get upgrade.harvesterhci -A
@@ -68,36 +77,20 @@ $ kubectl get logging -A
 NAME                                  LOGGINGREF                     CONTROLNAMESPACE        
 hvst-upgrade-9sn4x-upgradelog-infra   harvester-upgradelog           harvester-system        // newly created by upgrade controller
 rancher-logging-kube-audit            harvester-kube-audit-log-ref   cattle-logging-system   // originally created by rancher-logging addon
-rancher-logging-root                                                 cattle-logging-system   // originally created by rancher-logging addon
+rancher-logging-root                                                 cattle-logging-system   // originally created by rancher-logging addon, acts as logging-operator
 ```
 
-The issue happens when the operations are done on below steps.
+You may encounter the issue in the following situations:
 
-1. Disable `rancher-logging` addon
+- The `rancher-logging` add-on is initially disabled. You start the upgrade with the **Enable Logging** option selected. Without waiting for the upgrade to be completed, you enable the `rancher-logging` add-on. The Harvester UI displays an error message.
 
-1. Kick off the `ugprade` with `Enable Logging` option ticked
-
-1. Enable `rancher-logging` addon, it reports error
-
-There is another case:
-
-1. Disable `rancher-logging` addon
-
-1. Kick off the `ugprade` with `Enable Logging` option ticked
-
-1. Wait until the upgrade is done
-
-1. Due to a known bug [managedchart is not cleared](https://github.com/harvester/harvester/issues/7654), the `managedchart` and `logging` objects are not effectively removed, they are leftover
-
-1. Enable `rancher-logging` addon, it reports error
-
-The root cause is: when `rancher-logging addon` is enabled, it tries to spin up a `logging-operator`, but if `upgardelog` has spined up the `managedchart fleet-local/hvst-upgrade-hpfnw-upgradelog-operator` as the `logging-operator` before, the conflict happens, and the `rancher-logging addon` fails to be enabled.
+- The `rancher-logging` add-on is initially disabled. You start the upgrade with the **Enable Logging** option selected and wait until the upgrade is completed. The `managedchart` and `logging` objects are not removed because of a [known issue](https://github.com/harvester/harvester/issues/7654). Next, you enable the `rancher-logging` add-on. The Harvester UI displays an error message.
 
 ### Workaround
 
-1. Disable `rancher-logging` add-on
+1. If there is an ongoing upgrade, wait until the upgrade is successfully done or removed
 
-1. Wait until the upgrade is successful or removed
+1. If the `rancher-logging` add-on is `enabled` but in `failure` status, disable it
 
 1. Check the above mentioned `managedchart` and `logging` object, if their names start with `hvst-upgrade-`, manually delete them
 
@@ -105,9 +98,9 @@ The root cause is: when `rancher-logging addon` is enabled, it tries to spin up 
 
 :::note
 
-1. When the upgrade is ongoging, do not enable or disable the `rancher-logging` addon, to avoid conflict with upgrde log. This is mandatory checked from Harvester v1.7.0.
+1. When the upgrade is ongoing, do not enable or disable the `rancher-logging` addon, to avoid conflict with upgrade log. This action is blocked by webhook from Harvester v1.7.0 and following versions.
 
-1. Check all the addons before the upgrade, ensure they are in healthy status. This is mandatory checked from Harvester v1.7.0.
+1. All add-ons must be in the healthy state before commencing an upgrade. This condition is actively checked by webhook from Harvester v1.7.0 and following versions.
 
 :::
 
