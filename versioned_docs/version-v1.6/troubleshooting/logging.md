@@ -88,24 +88,26 @@ You may encounter the issue in the following situations:
 
 ### Workaround
 
-1. If there is an ongoing upgrade, wait until the upgrade is successfully done or removed
+1. If an upgrade is in progress, wait until it is successfully completed or removed.
 
-1. If the `rancher-logging` add-on is `enabled` but in `failure` status, disable it
+    :::info important
 
-1. Check the above mentioned `managedchart` and `logging` object, if their names start with `hvst-upgrade-`, manually delete them
+    To avoid logging conflicts, do not enable or disable the `rancher-logging` add-on while an upgrade is in progress. This action is blocked in Harvester v1.7.0 and later versions.
 
-1. Enable `rancher-logging` add-on, it will be successful
+    :::
+
+1. If the `rancher-logging` add-on is enabled but in a failed state, disable it.
+
+1. Check the `logging` and `managedchart` objects. If the names of these objects start with `hvst-upgrade-`, manually delete them.
+
+1. Enable the `rancher-logging` add-on.
 
 :::note
 
-1. When the upgrade is ongoing, do not enable or disable the `rancher-logging` addon, to avoid conflict with upgrade log. This action is blocked by webhook from Harvester v1.7.0 and following versions.
-
-1. All add-ons must be in the healthy state before commencing an upgrade. This condition is actively checked by webhook from Harvester v1.7.0 and following versions.
+All add-ons must be in a healthy state prior to starting an upgrade. This prerequisite is automatically verified in Harvester v1.7.0 and later versions.
 
 :::
 
 ### Related Issue
 
-https://github.com/harvester/harvester/issues/9289
-
-https://github.com/harvester/harvester/issues/9644
+[#9289](https://github.com/harvester/harvester/issues/9289) and [#9644](https://github.com/harvester/harvester/issues/9644)
