@@ -76,9 +76,9 @@ const config = {
               banner: `none`
             },
             "v1.4": {
-              label: 'v1.4',
+              label: 'v1.4 (EOL)',
               path: 'v1.4',
-              banner: `none`
+              banner: `unmaintained`
             },
             "v1.3": {
               label: 'v1.3 (EOL)',
@@ -351,7 +351,7 @@ const config = {
       src: 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
       type:'text/javascript',
       charset: 'UTF-8',
-      'data-domain-script': '0f98beb0-fc4c-417d-a42e-564e2cae42d2',
+      'data-domain-script': '019aa0c6-dbb5-77a5-9e27-54cc31a91bba',
       async: true
     },
     {

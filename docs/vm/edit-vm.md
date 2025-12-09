@@ -41,6 +41,8 @@ You can add additional VLAN networks to your VM instances after booting, the `ma
 
 Additional NICs are not enabled by default unless you configure them manually in the guest OS, e.g. using [wicked for your OpenSUSE Server](https://doc.opensuse.org/documentation/leap/reference/html/book-reference/cha-network.html#sec-network-manconf) or [netplan for your Ubuntu Server](https://ubuntu.com/server/docs/network-configuration).
 
+If the virtual machine has one interface connected to the `mgmt` network and another connected to a different network (such as a VLAN), the node may be unable to reach the virtual machine's `mgmt` IP address. This connection issue occurs when the other network's gateway overrides the virtual machine's default route, resulting in routing that prefers the VLAN network for all inbound and outbound traffic, even traffic destined for the `mgmt` network.
+
 ![edit-vm](/img/v1.2/vm/edit-vm-networks.png)
 
 For more details about the network implementation, please refer to the [Networking](../networking/harvester-network.md) page.
@@ -61,4 +63,4 @@ If you are using external storage, ensure that the storage provider supports vol
 
 Access Credentials allow you to inject basic auth or ssh keys dynamically at run time when your guest OS has QEMU guest agent installed.
 
-For more details please check the page here: [Dynamic SSH Key Injection via Qemu guest agent](./access-to-the-vm.md#dynamic-ssh-key-injection-via-qemu-guest-agent).
+For more information, see [Dynamic SSH Key Injection via Qemu guest agent](./access-to-the-vm.md#dynamic-ssh-key-injection-via-qemu-guest-agent).
