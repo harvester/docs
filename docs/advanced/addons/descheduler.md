@@ -61,4 +61,4 @@ Example:
 I1209 02:06:21.068059       1 defaultevictor.go:228] "pod does not fit on any other node because of nodeSelector(s), Taint(s), or nodes marked as unschedulable" pod="default/virt-launcher-vm-3-w866s"
 ```
 
-For example, a VM after manual migration doesn't have `nodeSelector` on the VM spec, but on the Pod spec. Therefore, descheduler cannot evict such pods based on node affinity rules defined at the Pod level.
+In this example, the virtual machine was manually migrated, so the related pod's specification contains a restrictive node selector. The Descheduler is unable to evict this pod because the node selector would prevent the pod from being successfully run on any other available node in the cluster.
