@@ -24,9 +24,7 @@ Harvester supports hotplugging and hotunplugging of network interface controller
 
 You cannot perform NIC hotplugging on virtual machines created in clusters running Harvester versions earlier than v1.7.0 _if the network interface's MAC address was not explicitly configured_. To enable this feature, you must restart those virtual machines. Restarting allows the system to automatically save the observed MAC addresses to the virtual machine's configuration.
 
-In addition, virtual machines created by the [Harvester Node Driver](../rancher/node/node-driver.md) do not support NIC hotplugging and hotunplugging.
-
-NIC Hotplug is not supported by [Harvester Terraform provider](terraform/terraform-provider.md).
+In addition, virtual machines created using the [Harvester Node Driver](../rancher/node/node-driver.md) and the [Harvester Terraform Provider](terraform/terraform-provider.md) _do not support_ NIC hotplugging and hotunplugging.
 
 :::
 
