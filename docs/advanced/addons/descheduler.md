@@ -51,7 +51,10 @@ I1209 02:06:21.067355       1 lownodeutilization.go:210] "Node has been classifi
 
 ## Limitations
 
-Descheduler works on pods, not VMs. If you expect a VM should be evicted, but it's not evicted, you can check **descheduler** logs for more information.
+The Descheduler works on pods instead of virtual machines. If a virtual machine that you expect to be evicted is not, check the Descheduler logs.
+
+Example:
+
 
 ```
 > kubectl logs -n kube-system -l app.kubernetes.io/name=descheduler -f
