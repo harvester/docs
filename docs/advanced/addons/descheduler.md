@@ -37,3 +37,25 @@ Select **⋮** > **Edit YAML** to customize the Descheduler policies according t
 1. On the Harvester UI, go to **Advanced** > **Add-ons**.
 
 1. Select **descheduler (Experimental)**, and then select **⋮** > **Disable**.
+
+## Node usage
+
+Check **descheduler** logs to monitor node usage.
+
+```
+> kubectl logs -n kube-system -l app.kubernetes.io/name=descheduler -f
+I1209 02:06:21.067225       1 lownodeutilization.go:210] "Node has been classified" category="underutilized" node="hp-131-tink-system" usage={"cpu":"4583m","memory":"3075Mi","pods":"25"} usagePercentage={"cpu":20,"memory":2,"pods":13}
+I1209 02:06:21.067328       1 lownodeutilization.go:210] "Node has been classified" category="underutilized" node="hp-121-tink-system" usage={"cpu":"5198m","memory":"4023Mi","pods":"30"} usagePercentage={"cpu":23,"memory":3,"pods":15}
+I1209 02:06:21.067355       1 lownodeutilization.go:210] "Node has been classified" category="overutilized" node="hp-119-tink-system" usage={"cpu":"10490m","memory":"109333705514","pods":"81"} usagePercentage={"cpu":46,"memory":81,"pods":41}
+```
+
+## Limitations
+
+Descheduler works on pods, not VMs. If you expect a VM should be evicted, but it's not evicted, you can check **descheduler** logs for more information.
+
+```
+> kubectl logs -n kube-system -l app.kubernetes.io/name=descheduler -f
+I1209 02:06:21.068059       1 defaultevictor.go:228] "pod does not fit on any other node because of nodeSelector(s), Taint(s), or nodes marked as unschedulable" pod="default/virt-launcher-vm-3-w866s"
+```
+
+For example, a VM after manual migration doesn't have `nodeSelector` on the VM spec, but on the Pod spec. Therefore, descheduler cannot evict such pods based on node affinity rules defined at the Pod level.
