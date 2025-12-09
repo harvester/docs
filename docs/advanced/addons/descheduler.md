@@ -38,9 +38,9 @@ Select **⋮** > **Edit YAML** to customize the Descheduler policies according t
 
 1. Select **descheduler (Experimental)**, and then select **⋮** > **Disable**.
 
-## Node usage
+## Node Usage
 
-Check **descheduler** logs to monitor node usage.
+Check the Descheduler logs for information about node usage.
 
 ```
 > kubectl logs -n kube-system -l app.kubernetes.io/name=descheduler -f
