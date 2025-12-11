@@ -1,7 +1,7 @@
 ---
 sidebar_position: 9
 sidebar_label: Kube-OVN Operator
-title: "Kube-OVN Operator"
+title: "Kube-OVN Operator (Experimental)"
 ---
 
 <head>
@@ -12,7 +12,7 @@ _Available as of v1.6.0_
 
 :::note
 
-Kube-OVN is in Tech Preview. 
+**kubeovn-operator** is an *experimental* add-on. For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
 
 :::
 

@@ -17,7 +17,7 @@ keywords:
 
 :::note
 
-Kube-OVN is in Tech Preview. 
+All features that use Kube-OVN are considered experimental. For more information about experimental features, see [Feature Labels](../getting-started/document-conventions.md#feature-labels).
 
 :::
 
