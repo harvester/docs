@@ -473,7 +473,7 @@ install:
 
 **Definition**: Setting that forces the installer to skip the interactive steps in the installation process. 
 
-When enabled, the configuration is either retrieved from the value of `harvester.install.config_url` or defined individually using kernel parameters.
+When enabled, the configuration is either retrieved from the value of `harvester.install.config_url`.
 
 ### `install.data_disk` 
 
