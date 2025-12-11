@@ -6,7 +6,7 @@ title: "Virtual Machine Auto Balance  (Experimental)"
 
 _Available as of v1.7.0_
 
-The [Kubernetes Descheduler](https://github.com/kubernetes-sigs/descheduler) optimizes workload scheduling by evicting pods that are not optimally placed according to administrator-defined policies. This crucial function enhances resource utilization, balances workloads across nodes, and improves overall cluster performance.
+The Virtual Machine Auto Balance add-on allows Harvester to leverage the [Kubernetes Descheduler](https://github.com/kubernetes-sigs/descheduler) for rebalancing of virtual machine workloads. The Kubernetes Descheduler optimizes workload scheduling by evicting pods that are not optimally placed according to administrator-defined policies. This crucial function enhances resource utilization, balances workloads across nodes, and improves overall cluster performance.
 
 ## Enabling the Add-on
 
