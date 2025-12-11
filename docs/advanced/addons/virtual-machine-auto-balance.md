@@ -1,7 +1,7 @@
 ---
 sidebar_position: 10
-sidebar_label: Descheduler
-title: "Descheduler (Experimental)"
+sidebar_label: Virtual Machine Auto Balance
+title: "Virtual Machine Auto Balance  (Experimental)"
 ---
 
 _Available as of v1.7.0_
@@ -14,7 +14,7 @@ When enabled, the add-on deploys the Descheduler in the `kube-system` namespace 
 
 1. On the Harvester UI, go to **Advanced** > **Add-ons**.
 
-1. Select **descheduler (Experimental)**, and then select **⋮** > **Enable**.
+1. Select **virtual-machine-auto-balance  (Experimental)**, and then select **⋮** > **Enable**.
 
   ![](/img/v1.7/descheduler/descheduler-enable.png)
 
@@ -36,7 +36,7 @@ Select **⋮** > **Edit YAML** to customize the Descheduler policies according t
 
 1. On the Harvester UI, go to **Advanced** > **Add-ons**.
 
-1. Select **descheduler (Experimental)**, and then select **⋮** > **Disable**.
+1. Select **virtual-machine-auto-balance (Experimental)**, and then select **⋮** > **Disable**.
 
 ## Node Usage
 
