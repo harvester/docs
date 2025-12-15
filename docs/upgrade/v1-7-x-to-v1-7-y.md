@@ -24,4 +24,4 @@ During the node draining process, the `upgrade-repo` deployment may get stuck wh
 
 The workaround is to delete the Longhorn replica of the `upgrade-repo` volume on the drained node. This allows the volume to attach and the upgrade flow to continue. Note that any node being drained during the upgrade may encounter this issue, so this workaround may need to be applied whenever it occurs.
 
-Related issues: [#9597](https://github.com/harvester/harvester/issues/9597) and [longhorn#12226](https://github.com/longhorn/longhorn/issues/12226)
+Related issues: [#9597](https://github.com/harvester/harvester/issues/9597) and [#12226](https://github.com/longhorn/longhorn/issues/12226)
