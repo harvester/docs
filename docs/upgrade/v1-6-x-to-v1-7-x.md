@@ -82,33 +82,23 @@ You must perform the steps for each affected node _after_ the upgrade is complet
     </lease>
     ```
 
-1. Edit the `/oem/91_networkmanager.yaml` file and add the DHCP client ID to the appropriate NetworkManager connection profile within that file.
+1. Use the `nmcli` command to set the DHCP client ID for the appropriate NetworkManager connection profile.
     
-    The section you need to modify depends on whether your node uses a VLAN. 
+    The connection profile you need to modify depends on whether your node uses a VLAN.
 
-    - No VLAN: Add the DHCP client ID to the `bridge-mgmt.nmconnection` section.
-    - VLAN used: Add the DHCP client ID to the  `vlan-mgmt.nmconnection` section.
+    - No VLAN: Add the DHCP client ID to the `bridge-mgmt` connection profile.
+    - VLAN used: Add the DHCP client ID to the `vlan-mgmt` connection profile.
 
-    In either case, you must add `dhcp-client-id=CLIENT_ID_FROM_WICKED_LEASE_FILE` below the `[ipv4]` line. Replace `CLIENT_ID_FROM_WICKED_LEASE_FILE` with the actual client ID.
-
-    Example:
+    For example, in the no VLAN case:
 
     ```
-    $ cat /oem/91_networkmanager.yaml
-    name: Harvester Network Configuration
-    stages:
-        initramfs:
-            - files:
-                ...
-                - path: /etc/NetworkManager/system-connections/bridge-mgmt.nmconnection
-                  ...
-                  content: |
-                    ...
-                    [ipv4]
-                    dhcp-client-id=ff:00:dd:c7:05:00:01:00:01:30:ae:a0:d3:52:54:00:dd:c7:05
-                  method=auto
-                    ...
+    $ nmcli con modify bridge-mgmt \
+            ipv4.dhcp-client-id \
+            ff:00:dd:c7:05:00:01:00:01:30:ae:a0:d3:52:54:00:dd:c7:05
     ```
+
+    Be sure to replace the client ID in the example with the actual client ID from your wicked lease file.
+
 1. Reboot the node.
 
 The DHCP server should return the original IP address and the affected node should be able to join the cluster.
