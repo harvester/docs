@@ -17,7 +17,8 @@ Clusters running v1.6.x can upgrade to v1.7.x directly because Harvester allows 
 For information about upgrading Harvester in air-gapped environments, see [Prepare an air-gapped upgrade](./automatic.md#prepare-an-air-gapped-upgrade).
 
 :::info important
-If you are using DHCP to configure your host IP addresses, the IP addresses may change during upgrade, which will prevent the cluster from starting correctly. This requires manual intervention to remedy. For full details, see [Host IP address may change during upgrade when using DHCP](#1-host-ip-address-may-change-during-upgrade-when-using-dhcp).
+
+Host IP addresses configured via DHCP may change during upgrades. This prevents the cluster from starting correctly and requires manual recovery steps. For details, see [Host IP address may change during upgrade when using DHCP](#1-host-ip-address-may-change-during-upgrade-when-using-dhcp).
 
 :::
 
@@ -43,44 +44,73 @@ You must use a compatible version (v1.7.x) of the Harvester UI Extension to impo
 
 ### 1. Host IP address may change during upgrade when using DHCP
 
-Harvester v1.7.x uses NetworkManager instead of wicked, which was used in earlier versions of Harvester. These two network stacks have different defaults for generating DHCP client IDs. This means that if you are using DHCP to configure your host IP addresses, after the operating system on each host is upgraded and the host rebooted, your DHCP server may return a different IP address for that host than it did before. If this happens, the host in question will be unable to join the cluster on startup because its IP address has changed.
+Harvester v1.7.x uses NetworkManager instead of wicked, which was used in earlier versions of Harvester. These two network stacks have different defaults for generating DHCP client IDs. 
 
-This problem will not occur if your DHCP server is configured to allocate fixed IP addresses based on MAC address, as is done in [Harvester iPXE Examples](https://github.com/harvester/ipxe-examples). However, it will occur if the DHCP server is allocating IP addresses based solely on DHCP client ID.
+If the host IP addresses are configured using DHCP, a Harvester upgrade and subsequent reboot may cause the DHCP server to assign IP addresses that are different from what hosts previously used. Consequently, the affected hosts are unable to join the cluster on startup because of the IP address change.
 
-For single-node Harvester deployments that have this issue, Harvester simply will not start after rebooting after the upgrade, because the IP address is changed. For multi-node deployments, you may find management nodes are stuck "Waiting Reboot". In both cases, to address this issue, perform the following steps _after_ each node is upgraded and its IP address has changed:
+This issue typically occurs when the DHCP server allocates IP addresses based solely on the DHCP client ID. You are unlikely to encounter this issue when the DHCP server is configured to allocate fixed IP addresses based on the MAC address (as demonstrated in the [Harvester iPXE Examples](https://github.com/harvester/ipxe-examples)).
 
-1. Log in to the affected node, either via `ssh` to its new IP address, or by using the console.
-1. Check for lease XML file in the `/var/lib/wicked` directory. It should be named similar to `/var/lib/wicked/lease-mgmt-br-dhcp-ipv4.xml`. If you are using a VLAN, the file name will include the VLAN ID, for example, `/var/lib/wicked/lease-mgmt-br.2017-dhcp-ipv4.xml`.
-1. View this file to find the DHCP client ID:
-   ```
-   $ cat /var/lib/wicked/lease-mgmt-br-dhcp-ipv4.xml
-   <lease>
-     ...
-     <ipv4:dhcp>
-       <client-id>ff:00:dd:c7:05:00:01:00:01:30:ae:a0:d3:52:54:00:dd:c7:05</client-id>
-       ...
-     </ipv4:dhcp>
-   </lease>
-   ```
-1. Edit the `/oem/91_networkmanager.yaml` file and add the DHCP client ID to the content of the appropriate NetworkManager connection profile inside that file. If you are not using a VLAN, use the `bridge-mgmt.nmconnection` section. If you are using a VLAN, use `vlan-mgmt.nmconnection`. In either case, add `dhcp-client-id=CLIENT_ID_FROM_WICKED_LEASE_FILE` below the `[ipv4]` line, for example:
-   ```
-   $ cat /oem/91_networkmanager.yaml
-   name: Harvester Network Configuration
-   stages:
-       initramfs:
-           - files:
-               ...
-               - path: /etc/NetworkManager/system-connections/bridge-mgmt.nmconnection
-                 ...
-                 content: |
-                   ...
-                   [ipv4]
-                   dhcp-client-id=ff:00:dd:c7:05:00:01:00:01:30:ae:a0:d3:52:54:00:dd:c7:05
-                method=auto
-                   ...
+The impact of this issue varies by cluster size:
 
-   ```
-1. Reboot the node. The DHCP server should now return the original IP address and the affected node should be able to join the cluster.
-1. Repeat as necessary for each remaining node.
+- Single-node clusters: Harvester fails to start after rebooting because the IP address has changed.
+- Multi-node clusters: Management nodes become stuck in the "Waiting Reboot" state.
+
+To address the issue, perform the following steps:
+
+:::info important
+
+You must perform the steps for each affected node _after_ the upgrade is completed and the IP address has changed.
+
+:::
+
+1. Log in to the affected node. You can either access the node via SSH at its new IP address or use the console.
+
+1. In the `/var/lib/wicked` directory, check for the lease XML file (named similar to `/var/lib/wicked/lease-mgmt-br-dhcp-ipv4.xml`).
+
+    If you are using a VLAN, the file name includes the VLAN ID (for example, `/var/lib/wicked/lease-mgmt-br.2017-dhcp-ipv4.xml`).
+    
+1. View the file and identify the DHCP client ID.
+
+    ```
+    $ cat /var/lib/wicked/lease-mgmt-br-dhcp-ipv4.xml
+    <lease>
+      ...
+      <ipv4:dhcp>
+        <client-id>ff:00:dd:c7:05:00:01:00:01:30:ae:a0:d3:52:54:00:dd:c7:05</client-id>
+        ...
+      </ipv4:dhcp>
+    </lease>
+    ```
+
+1. Edit the `/oem/91_networkmanager.yaml` file and add the DHCP client ID to the appropriate NetworkManager connection profile within that file.
+    
+    The section you need to modify depends on whether your node uses a VLAN. 
+
+    - No VLAN: Add the DHCP client ID to the `bridge-mgmt.nmconnection` section.
+    - VLAN used: Add the DHCP client ID to the  `vlan-mgmt.nmconnection` section.
+
+    In either case, you must add `dhcp-client-id=CLIENT_ID_FROM_WICKED_LEASE_FILE` below the `[ipv4]` line. Replace `CLIENT_ID_FROM_WICKED_LEASE_FILE` with the actual client ID.
+
+    Example:
+
+    ```
+    $ cat /oem/91_networkmanager.yaml
+    name: Harvester Network Configuration
+    stages:
+        initramfs:
+            - files:
+                ...
+                - path: /etc/NetworkManager/system-connections/bridge-mgmt.nmconnection
+                  ...
+                  content: |
+                    ...
+                    [ipv4]
+                    dhcp-client-id=ff:00:dd:c7:05:00:01:00:01:30:ae:a0:d3:52:54:00:dd:c7:05
+                  method=auto
+                    ...
+    ```
+1. Reboot the node.
+
+The DHCP server should return the original IP address and the affected node should be able to join the cluster.
 
 Related issues: [#9260](https://github.com/harvester/harvester/issues/9260) and [#3418](https://github.com/harvester/harvester/issues/3418)
