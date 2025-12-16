@@ -33,12 +33,10 @@ Longhorn automatically rebuilds the remaining replicas after the cloned volume i
 
 - On the Longhorn UI, manually attach the volume and wait for the replica rebuilding process to be completed.
 
-### Option 2: Enable Offline Replica Rebuilding
+- Enable the Longhorn setting [`offline-replica-rebuilding`](https://longhorn.io/docs/1.10.1/advanced-resources/rebuilding/offline-replica-rebuilding/) to allow automatic rebuilding of replicas for detached volumes.
 
-Enable the Longhorn setting `offline-replica-rebuilding` to allow Longhorn to automatically rebuild replicas for detached volumes. For more information, see the [Longhorn documentation on offline replica rebuilding](https://longhorn.io/docs/1.10.1/advanced-resources/rebuilding/offline-replica-rebuilding/).
+    :::note
 
-:::note
+    This behavior applies exclusively to detached volumes. Longhorn automatically performs replica rebuilding for volumes that are attached to a running virtual machine.
 
-This behavior applies to cloned volumes that are in a detached state. Volumes that are attached to a running VM will automatically rebuild replicas as expected.
-
-:::
+    :::
