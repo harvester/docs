@@ -31,13 +31,7 @@ When you clone a detached Longhorn volume in a multi-node cluster, Longhorn crea
 
 Longhorn automatically rebuilds the remaining replicas after the cloned volume is attached to a virtual machine. However, you can start the replica rebuilding process immediately for the detached volume by performing either of the following actions:
 
-### Option 1: Manually Attach the Volume
-
-1. Navigate to the Longhorn UI
-1. Find and attach the cloned volume
-1. Wait for the Longhorn replica rebuild process to complete
-1. The volume will now have the expected number of replicas (e.g., 3 replicas)
-1. Detach the volume if needed
+- On the Longhorn UI, manually attach the volume and wait for the replica rebuilding process to be completed.
 
 ### Option 2: Enable Offline Replica Rebuilding
 
