@@ -85,13 +85,14 @@ We leverage [multus CNI](https://github.com/k8snetworkplumbingwg/multus-cni) and
 
     The example above shows that the bond `oob-bo` allows packages with tag 1, 100 or 200.
 
-4. When a VM attached to VM Vlan Network or storage network is created in Harvester, corresponding veth interfaces connected to the pods are created on the Harvester host.
-   In earlier versions, these veth interfaces were associated with both VLAN ID 1 and the VLAN ID assigned to the VM Network.This allowed the Harvester bridge to handle both untagged (VLAN 1) and tagged traffic from external switches and forward it correctly to the veth interface.
+4. When you create a virtual machine in Harvester and connect it to a VM network (VLAN) or storage network, Harvester automatically creates virtual Ethernet (veth) interfaces on the host that connect directly to the pods.
 
-   ```
-   vethaf720855      1 Egress Untagged
-                     66 PVID Egress Untagged
-   ```
+    In earlier Harvester versions, these veth interfaces were associated with both VLAN ID 1 and the VLAN ID assigned to the VM network. This allowed the Harvester bridge to correctly forward untagged (VLAN 1) and tagged traffic from external switches to the veth interface.
+
+    ```
+    vethaf720855      1 Egress Untagged
+                      66 PVID Egress Untagged
+    ```
 
    Starting with Harvester v1.6.1 (CNI bridge plugin v1.8.0), this behavior changed. The default VLAN ID 1 is no longer added to veth interfaces. Only the VLAN ID associated with the VM network is configured.
 
