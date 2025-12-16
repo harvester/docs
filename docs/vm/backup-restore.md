@@ -101,6 +101,16 @@ The restored virtual machine retains the machine ID of the original virtual mach
 
 :::
 
+:::caution
+
+Starting with v1.7.0, Harvester supports backups and snapshots for Longhorn V2 volumes.
+
+However, deleting the latest backup of a virtual machine or enabling the Longhorn setting [Auto Cleanup Snapshot When Delete Backup](https://longhorn.io/docs/1.10.1/references/settings/#auto-cleanup-snapshot-when-delete-backup) blocks all subsequent operations on related volumes. This is a [known Longhorn issue](https://github.com/longhorn/longhorn/issues/9064) that affects operations such as volume snapshots, backups, and live migration.
+
+No viable workaround is currently available. Resolving the blocked state requires deleting the affected volume to restore Longhorn Manager functionality.
+
+:::
+
 ### Restore a new VM using a backup
 
 To restore a new VM from a backup, follow these steps:
@@ -238,6 +248,15 @@ The restored virtual machine retains the machine ID of the original virtual mach
 :::note
 
 VM snapshots may encounter a `filesystem freeze failed` error when performed on a running RHEL9 guest VM. For troubleshooting steps and solutions, see [Failed to Freeze Filesystem for a Running RHEL9 Guest VM](#filesystem-freeze-error-in-a-rhel-9-virtual-machine)
+
+:::
+
+:::caution
+
+Starting with v1.7.0, Harvester supports backups and snapshots for Longhorn V2 volumes.
+
+However, deleting the latest snapshot of a virtual machine blocks all subsequent operations on related volumes. This is a [known Longhorn issue](https://github.com/longhorn/longhorn/issues/9064) that affects operations such as volume snapshots, backups, and live migration.
+No viable workaround is currently available. Resolving the blocked state requires deleting the affected volume to restore Longhorn Manager functionality.
 
 :::
 
