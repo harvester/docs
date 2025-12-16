@@ -94,11 +94,11 @@ We leverage [multus CNI](https://github.com/k8snetworkplumbingwg/multus-cni) and
                       66 PVID Egress Untagged
     ```
 
-   Starting with Harvester v1.6.1 (CNI bridge plugin v1.8.0), this behavior changed. The default VLAN ID 1 is no longer added to veth interfaces. Only the VLAN ID associated with the VM network is configured.
-
-   ```
-   vethaf720855      66 PVID Egress Untagged
-   ```
+    This behavior changed in Harvester v1.6.1, which uses v1.8.0 of the CNI bridge plugin. The default VLAN ID 1 is no longer added to veth interfaces. Only the VLAN ID assigned to the VM network is configured.
+    
+    ```
+    vethaf720855      66 PVID Egress Untagged
+    ```
 
    Because untagged VLAN handling is no longer applied, external switches connected to Harvester hosts must now be configured strictly as trunk ports. These trunk ports must:
    - Accept tagged traffic.
