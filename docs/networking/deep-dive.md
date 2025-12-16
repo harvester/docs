@@ -100,11 +100,9 @@ We leverage [multus CNI](https://github.com/k8snetworkplumbingwg/multus-cni) and
     vethaf720855      66 PVID Egress Untagged
     ```
 
-   Because untagged VLAN handling is no longer applied, external switches connected to Harvester hosts must now be configured strictly as trunk ports. These trunk ports must:
-   - Accept tagged traffic.
-   - Send traffic tagged with the VLAN ID used by the VM network.
-
-   Any untagged traffic arriving at Harvester network bridges for a VLAN-tagged veth interface will be dropped, as the bridge cannot forward to the veth interface which has only vid from the VM Network.
+    Because untagged VLAN handling is no longer applied, physical switches connected to Harvester hosts must now be configured strictly as trunk ports. These ports must accept tagged traffic and send traffic tagged with the VLAN ID used by the VM network.
+    
+    Any untagged traffic arriving at Harvester network bridges for a VLAN-tagged veth interface is dropped. This occurs because the bridge cannot forward the traffic to the veth interface, which is configured to accept only the VLAN ID from the VM network.
 
 ### Management Network
 
