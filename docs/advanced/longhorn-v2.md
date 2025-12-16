@@ -33,13 +33,9 @@ Every node with an active Longhorn V2 Data Engine requires the following dedicat
 The Longhorn V2 Data Engine currently does not support the following operations:
 
 - Backing image creation and usage
-- Volume cloning
 - Volume encryption
-- Volume expansion
 
 :::
-
-- Snapshots of V2 volumes cannot be created because snapshot and restoration functionality in Harvester relies on volume cloning.
 
 - SSDs and other non-NVMe disks are managed using the SPDK AIO bdev driver, which does not support the unmap operation. If you are using non-NVMe disks, avoid trimming the filesystem because this results in I/O errors and paused virtual machines. For example, when creating an ext4 filesystem on a Linux virtual machine, use `mkfs.ext4 -E nodiscard /dev/vdb` (assuming `/dev/vdb` is your device path). On Windows virtual machines, you can disable trimming for NTFS by running the command `fsutil behavior set disabledeletenotify NTFS 1`.
 

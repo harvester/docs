@@ -26,7 +26,7 @@ VM backups are created from the **Virtual Machines** page. The VM backup volumes
 
 A backup target must be set up. For more information, see [Configure Backup Target](#configure-backup-target). If the backup target has not been set, you’ll be prompted with a message to do so.
 
-Backup support is currently limited to Longhorn V1 Data Engine volumes. Harvester is unable to create backups of volumes in external storage.
+Backup support is currently limited to Longhorn volumes. Harvester is unable to create backups of volumes in external storage.
 
 :::
 
