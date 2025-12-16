@@ -254,14 +254,12 @@ Before Harvester v1.6.0, the controller patched the MAC address from the VMI int
 
 Starting from v1.6.0, to support the CPU and Memory hot-plug feature and to inform users that certain CPU and memory changes might not take effect immediately, we decided to expose the “RestartRequired” condition in the UI. That’s why this message appears after upgrading Harvester or updating the harvester-ui-extension to v1.6.x.
 
-### 7.Change in default VLAN Behavior for Secondary Pod Interfaces (Harvester v1.5.x → v1.6.1)
+### 7.Change in default VLAN Behavior for Secondary Pod Interfaces
 
-Until Harvester v1.6.0, pods with secondary network interfaces (such as VM networks or storage networks) were automatically assigned to VLAN ID 1 in addition to the VLAN ID configured in the VLAN network. This dual-VID behavior allowed the Linux bridge to forward untagged traffic to the veth interfaces of these pods.
+In v1.6.0 and earlier versions, pods with secondary network interfaces (such as VM networks and storage networks) were automatically assigned to VLAN ID 1 and the VLAN ID configured in the VLAN network. This dual-VLAN ID configuration allowed the Harvester network bridge to forward untagged traffic to the veth interfaces of these pods.
 
-Starting with Harvester v1.6.1 (which includes CNI plugin v1.8.0), this behavior changed. Secondary pod interfaces are now associated only with the VLAN ID specified by the VLAN network. They are no longer added to VLAN ID 1, which means the bridge will not forward untagged traffic to these interfaces.
+This behavior changed in Harvester v1.6.1, which uses v1.8.0 of the CNI bridge plugin. Secondary pod interfaces are now associated only with the VLAN ID assigned to the VM network. Because VLAN ID 1 is no longer added, the bridge is unable to forward untagged traffic to these interfaces.
 
-Related Issue: https://github.com/harvester/harvester/issues/8816
+The change affects clusters upgraded from v1.5.x to v1.6.1 if the external switch port is configured as an access port sending untagged frames. Updating the external switch configuration to use a trunk port resolves the issue. Pods with secondary interfaces that are attached to untagged networks or associated with VLAN ID 1 are not affected.
 
-This change will impact environments upgraded from v1.5.x to v1.6.1 if the external switch port is configured as an access port sending untagged frames, causing the bridge to drop the traffic because the pod interfaces no longer accepted VLAN 1. Updating the external switch configuration to use a trunk port will resolve the issue.
-
-Pods with secondary interfaces attached to untagged or with vlan-id `1` is not affected by this.
+Related issue: [#8816](https://github.com/harvester/harvester/issues/8816)

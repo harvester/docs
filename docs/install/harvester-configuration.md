@@ -707,6 +707,11 @@ install:
     mtu: 1492
     vlan_id: 101
 ```
+:::note
+
+Physical switches connected to `bonded NIC` must be configured strictly as trunk ports. These ports must accept tagged traffic and send traffic tagged with the VLAN ID used by the VM network.
+
+:::
 
 ### `install.mode`
 
