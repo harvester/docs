@@ -25,11 +25,11 @@ After creating a volume, you can clone the volume by following the steps below:
 
     ![clone-volume-2](/img/v1.2/volume/clone-volume-2.png)
 
-### Replica Rebuilding for Cloned Detached Longhorn Volumes
+### Replica Rebuilding for Detached Cloned Longhorn Volumes
 
-When you clone a detached Longhorn volume in a multi-node cluster, the cloned volume initially has only **one replica** instead of the expected number of replicas (e.g., 3 replicas in a 3-node cluster). The volume clone status will show as `copy-completed-awaiting-healthy` rather than `complete`.
+When you clone a detached Longhorn volume in a multi-node cluster, Longhorn creates only *one replica* instead of the expected number (for example, three replicas in a three-node cluster). The displayed volume clone status is `copy-completed-awaiting-healthy` instead of `complete`.
 
-Longhorn will rebuild the remaining replicas automatically when the cloned volume is first attached to a VM. However, if you need to trigger the replica rebuilding immediately for a detached volume, you have two options:
+Longhorn automatically rebuilds the remaining replicas after the cloned volume is attached to a virtual machine. However, you can start the replica rebuilding process immediately for the detached volume by performing either of the following actions:
 
 ### Option 1: Manually Attach the Volume
 
