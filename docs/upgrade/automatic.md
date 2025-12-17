@@ -321,7 +321,7 @@ Example:
 # Find out the latest Upgrade custom resource
 $ kubectl -n harvester-system get upgrades -l harvesterhci.io/latestUpgrade=true
 NAME                 AGE
-hvst-upgrade-6mcwv   4h16
+hvst-upgrade-6mcwv   4h16m
 
 # Update the annotation to unpause the node
 $ kubectl -n harvester-system annotate --overwrite upgrades hvst-upgrade-6mcwv harvesterhci.io/node-upgrade-pause-map='{"charlie-1-tink-system":"unpause","charlie-2-tink-system":"pause","charlie-3-tink-system":"pause"}'

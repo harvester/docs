@@ -859,7 +859,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
     :::info important
 
-    Upgrading of nodes listed in this field is _paused definitely_ until you take specific actions to [resume the process](upgrade/automatic.md#how-to-resume-a-node-to-continue-with-node-upgrade). Given that Harvester upgrades nodes sequentially, this implies that the entire upgrade progress is paused as well. 
+    Upgrading of nodes listed in this field is _paused definitely_ until you take specific actions to [resume the process](upgrade/automatic.md#resuming-a-paused-node-upgrade). Given that Harvester upgrades nodes sequentially, this implies that the entire upgrade progress is paused as well. 
 
     :::
     
