@@ -275,6 +275,12 @@ Harvester applies the `nodeUpgradeOption` configuration during the upgrade initi
 
 :::
 
+:::tip
+
+You can modify the `Upgrade` custom resource to add or remove any nodes in the annotation, as long as the node has not yet been upgraded. The pause node upgrade function deems the annotation as the source of truth.
+
+:::
+
 The Harvester UI provides visual confirmation of paused node upgrades. In the following example, upgrading of the node `charlie-1-tink-system` is currently paused.
 
 ![Node Paused during Node Upgrade](/img/v1.7/upgrade/node-upgrade-paused.png)
@@ -319,7 +325,6 @@ hvst-upgrade-6mcwv   4h16
 
 # Update the annotation to unpause the node
 $ kubectl -n harvester-system annotate --overwrite upgrades hvst-upgrade-6mcwv harvesterhci.io/node-upgrade-pause-map='{"charlie-1-tink-system":"unpause","charlie-2-tink-system":"pause","charlie-3-tink-system":"pause"}'
-upgrade.harvesterhci.io/hvst-upgrade-6mcwv annotate
 ```
 
 Once the target node is annotated in the `Upgrade` custom resource, Harvester resumes the upgrade immediately, with the UI displaying visual progress updates.
