@@ -253,23 +253,28 @@ In production environments, upgrading clusters via the Harvester UI is recommend
 
 _Available as of v1.7.0_
 
-Harvester Upgrade consists of several phases. The node upgrade phase is when Harvester upgrades each node's RKE2 and operating system sequentially and autonomously. You can explicitly specify which nodes should not perform such automatic node upgrades and can only continue doing so upon your consent. During the pause period, you can perform necessary maintenance tasks on the node. After everything is settled, you can instruct Harvester to proceed with the node upgrade for the paused node.
+Harvester upgrades involve several defined phases. A key phase is node upgrades, during which the operating system and the underlying Kubernetes distribution (RKE2) are upgraded on each node sequentially and autonomously.
 
-### How to Pause a Node from Node Upgrade
+You have the option to pause automatic upgrades on specific nodes, which is useful when manual maintenance or verification tasks must be performed. Following the completion of these tasks, you must explicitly instruct Harvester to resume the upgrade on the target nodes.
 
-Check out the `nodeUpgradeOption` option under the `upgrade-config` setting. You can toggle the `mode` field from `auto` to `manual`, enabling pause for every node in the cluster during the node upgrade phase. You can further specify which nodes should be paused, and the remaining ones will still undergo the node upgrade autonomously. For more details about the relevant options, see the [`upgrade-config`](advanced/settings.md#upgrade-config) setting page.
+### Pausing Node Upgrades
 
-:::info
+You can use the `nodeUpgradeOption` option in the [`upgrade-config`](advanced/settings.md#upgrade-config) setting to pause node upgrades.
 
-Harvester applies the pause-relevant configuration during upgrade initialization. After that, any further changes to the fields under the `nodeUpgradeOption` option will not affect the current upgrade and can only take effect upon the next upgrade.
+- Pause for all nodes in the cluster: Change the value of the `mode` field to `manual`.
+- Pause for specific nodes: List the node names in the `pauseNodes` field. Nodes not included in the list are automatically upgraded.
+
+:::info important
+
+Harvester applies the `nodeUpgradeOption` configuration during the upgrade initialization phase. Changes made to these fields after initialization are ignored for the current upgrade and only take effect in the next upgrade cycle.
 
 :::
 
-The upgrade dialog on the dashboard shows whether any node's upgrade is paused. For example, the following upgrade dialog presents that `charlie-1-tink-system` is under the node upgrade pause:
+The Harvester UI provides visual confirmation of paused node upgrades. In the following example, upgrading of the node `charlie-1-tink-system` is currently paused.
 
 ![Node Paused during Node Upgrade](/img/v1.7/upgrade/node-upgrade-paused.png)
 
-You can also check if the node upgrade is paused for any node using `kubectl`:
+You can also use the following `kubectl` command to check for paused node upgrades:
 
 ```shell
 $ kubectl -n harvester-system get upgrades -l harvesterhci.io/latestUpgrade=true -o yaml
@@ -291,13 +296,15 @@ $ kubectl -n harvester-system get upgrades -l harvesterhci.io/latestUpgrade=true
 
 :::caution
 
-The pre-drain jobs for nodes that are paused during node upgrades have not yet been created. However, the paused nodes are still cordoned. You will not be able to run new workloads on the paused nodes. Only maintenance tasks, such as manually shutting down virtual machines or performing node-level operations, should be conducted on paused nodes.
+The pre-drain jobs for nodes with paused upgrades have not been created. However, those nodes are still cordoned and you will not be able to run new workloads on them. Only maintenance tasks, such as manually shutting down virtual machines, should be performed on nodes with paused upgrades.
 
 :::
 
-### How to Resume a Node to Continue with Node Upgrade
+### Resuming a Paused Node Upgrade
 
-You can resume the upgrade for a paused node by updating the `harvesterhci.io/node-upgrade-pause-map` annotation on the Upgrade custom resource. For example:
+You can resume a paused node upgrade by updating the `harvesterhci.io/node-upgrade-pause-map` annotation on the `Upgrade` custom resource.
+
+Example:
 
 ```shell
 # Find out the latest Upgrade custom resource
@@ -310,11 +317,11 @@ $ kubectl -n harvester-system annotate --overwrite upgrades hvst-upgrade-6mcwv h
 upgrade.harvesterhci.io/hvst-upgrade-6mcwv annotate
 ```
 
-Once the paused node is annotated with `unpause` in the Upgrade custom resource, it will embark on the node upgrade procedure. You can check the progress on the upgrade dialog:
+Once the target node is annotated in the `Upgrade` custom resource, Harvester resumes the upgrade immediately, with the UI displaying visual progress updates.
 
 ![Node Unpaused during Node Upgrade](/img/v1.7/upgrade/node-upgrade-unpaused.png)
 
-Or using `kubectl`:
+You can also use the following `kubectl` command to check the state of the target node:
 
 ```shell
 $ kubectl -n harvester-system get upgrades -l harvesterhci.io/latestUpgrade=true -o yaml
@@ -332,7 +339,7 @@ $ kubectl -n harvester-system get upgrades -l harvesterhci.io/latestUpgrade=true
     ...
 ```
 
-Depending on the number of pause nodes configured, you might need to run the unpause operation multiple times during the Harvester Upgrade.
+Depending on the number of target nodes, you might need to run the unpause operation multiple times during the overall cluster upgrade process.
 
 ## Free system partition space requirement
 
