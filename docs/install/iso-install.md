@@ -80,6 +80,9 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
    ![config-network.png](/img/v1.2/install/config-network.png)
 
 	:::note
+
+	Physical switches connected to `bonded NIC` must be configured strictly as trunk ports. These ports must accept tagged traffic and send traffic tagged with the VLAN ID used by the VM network.
+
 	It is not possible to change the node IP throughout the lifecycle of a Harvester cluster. If using DHCP, you must ensure the DHCP server always offers the same IP for the same node. If the node IP is changed, the related node cannot join the cluster and might even break the cluster.
 
 	In addition, you are required to add the *routers* option (`option routers`) when configuring the DHCP server. This option is used to add the default route on the Harvester host. Without the default route, the node will fail to start.

@@ -275,6 +275,12 @@ To simplify cluster maintenance, create one network configuration for each node 
 
    ![](/img/v1.2/networking/config-uplink.png)
 
+   :::note
+
+   Physical switches connected to `Uplink` must be configured strictly as trunk ports. These ports must accept tagged traffic and send traffic tagged with the VLAN ID used by the VM network.
+
+   :::
+
 1. Click **Save**.
 
 ### Change a Network Configuration
