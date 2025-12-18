@@ -331,6 +331,38 @@ _Available as of v1.1.0_
 The label is automatically synchronized with the corresponding Longhorn node.
 
 
+## Hugepages
+
+_Available as of v1.7.0_
+
+Hugepages are a memory management feature of the Linux kernel, which allows it to allocate memory in chunks significantly larger than the default of 4 kilobytes. By using a larger page size, the kernel potentially spends less CPU time doing memory allocation than it would otherwise. This in turn can increase overall system performance.
+
+There are two types of hugepage: persistent or static hugepages, which are pre-allocated, and anonymous or transparent hugepages which are allocated and deallocated automatically by the kernel.
+
+To view information about currently hugepages allocation on a given node:
+
+1. Go to the **Hosts** screen.
+1. Click the node you're interested in then select the **Hugepages** tab.
+
+This will give a summary including the total amount of memory in use for anonymous (or transparent) hugepages, the default hugepage size, and details of the number of persistent (or static) hugepages.
+
+Ordinarily you will see a large number for "Anonymous Hugepages (bytes)", which indicates that the kernel has automatically utilised that amount of RAM for transparent hugepages. The "Total Hugepages" value, which refers to statically allocated hugepages, will usually be zero, except if you have enabled the Longhorn V2 data engine, in which case this will show 1024.
+
+The **Hugepages** tab will also show the current Transparent Hugepages settings, which default to:
+
+- Enabled: always
+- Shared Memory Enabled: never
+- Defragmentation: madvise
+
+In some cases it may be desirable to change the Transparent Hugepages settings, which can be done by selecting **⋮ > Edit Config** for the node you wish to modify, then going to the **Hugepages** tab and making the required changes. The available Transparent Hugepages options are:
+
+- Enabled: Always, Madvise, Never
+- Shared Memory Enabled: Always, Within Size, Advise, Never, Deny, Force
+- Defragmentation: Always, Defer, Defer+Madvise, Madvise, Never
+
+More detail on how these options work can be found in the [Linux kernel administrator's guide](https://docs.kernel.org/admin-guide/mm/transhuge.html).
+
+
 ## Ksmtuned Mode
 
 _Available as of v1.1.0_
