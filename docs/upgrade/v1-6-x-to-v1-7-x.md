@@ -18,7 +18,7 @@ For information about upgrading Harvester in air-gapped environments, see [Prepa
 
 :::caution
 
-Harvester v1.7.x uses NetworkManager instead of wicked, which was used in earlier versions of Harvester. If you have made changes to Harvester's network configuration since it was first installed there are additional manual steps required to ensure a smooth upgrade. For details, see [Migration from wicked to NetworkManager](#migration-from-wicked-to-networkmanager)
+Harvester v1.7.x uses NetworkManager instead of wicked, which was used in earlier versions of Harvester. If you have made changes to the configuration of the management interface since Harvester was first installed there are additional manual steps required to ensure a smooth upgrade. For details, see [Migration from wicked to NetworkManager](#migration-from-wicked-to-networkmanager)
 
 :::
 
@@ -48,9 +48,11 @@ You must use a compatible version (v1.7.x) of the Harvester UI Extension to impo
 
 Harvester v1.7.x uses NetworkManager instead of wicked, which was used in earlier versions of Harvester. There is no straightforward 1:1 mapping between the old `ifcfg` style configuration files and NetworkManager's connection profiles. This means that the existing network configuration cannot be automatically migrated in-place. Instead, during upgrade, new NetworkManager connection profiles will generated based on the configuration in `/oem/harvester.config`, i.e. the network configuration as specified when Harvester was originally installed.
 
-If you started with Harvester v1.1 or newer, and have _not_ made any manual changes to network configuration since inital installation, no special action is required.
+The old `ifcfg` files present in `/oem/90_custom.yaml` will remain after upgrade, but are completely ignored by NetworkManager, which stores its configuration under `/etc/NetworkManager`.
 
-If you have made manual changes to network configuration after installation, for example adding bonding slaves to the management interface, or adjusing DNS servers, these changes will not be picked up automatically during upgrade. You will need to either:
+If you started with Harvester v1.1 or newer, and have _not_ made any manual changes to the configuration of the management interface or DNS since inital installation, no special action is required.
+
+If you have made manual changes to the management interface configuration after installation, whether by editing `/oem/90_custom.yaml` or by adding CloudInit resources to manipulate `ifcfg` files, these changes will have no effect after the upgrade. You will need to either:
 
 1. Preferably, before upgrade, edit `/oem/harvester.config` on each node to specify the desired network configuration, or,
 2. After upgrade, make the required changes to the generated NetworkManager connection profiles using the `nmcli` tool.
