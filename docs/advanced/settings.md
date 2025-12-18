@@ -841,27 +841,33 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
 - `nodeUpgradeOption`: Definition of how Harvester must perform node upgrades.
 
-    The node upgrade is an atomic operation, which includes upgrading of the node's RKE2 components and operating system. The upgrade is either fully completed or failed, with no half-finished state.
+  The node upgrade is an atomic operation, which includes upgrading of the node's RKE2 components and operating system. The upgrade is either fully completed or failed, with no half-finished state.
 
-    To prepare a target node for upgrade, Harvester first attempts to live-migrate all running virtual machines to other nodes. Virtual machines that cannot be live-migrated are automatically shut down to avoid potential disruption and issues during the subsequent upgrade steps.
+  To prepare a target node for upgrade, Harvester first attempts to live-migrate all running virtual machines to other nodes. Virtual machines that cannot be live-migrated are automatically shut down to avoid potential disruption and issues during the subsequent upgrade steps.
 
-- `strategy`: Node upgrade strategy.
+  - `strategy`: Node upgrade strategy.
 
-- `mode`: Mode of node upgrade strategy.
+    - `mode`: Mode of node upgrade strategy.
 
-    - `auto`: Node upgrades start automatically. This is the default value.
+      - `auto`: Node upgrades start automatically. This is the default value.
 
-    - `manual`: Node upgrades are paused until you take specific actions to resume the process.
+      - `manual`: Node upgrades are paused until you take specific actions to resume the process.
 
-- `pauseNodes`: List of nodes that must be excluded from automatic upgrades.
+    - `pauseNodes`: List of nodes that must be excluded from automatic upgrades.
 
-    If the `mode` field is set to `manual` and you do not specify any node names in this field, upgrades are paused for all nodes. If the `mode` field is set to `auto`, node names specified in this field are ignored and node upgrades start automatically.
+      If the `mode` field is set to `manual` and you do not specify any node names in this field, upgrades are paused for all nodes. If the `mode` field is set to `auto`, node names specified in this field are ignored and node upgrades start automatically.
 
-    :::info important
+      :::info important
 
-    Upgrading of nodes listed in this field is _paused definitely_ until you take specific actions to [resume the process](upgrade/automatic.md#resuming-a-paused-node-upgrade). Given that Harvester upgrades nodes sequentially, this implies that the entire upgrade progress is paused as well. 
+      Upgrading of nodes listed in this field is _paused definitely_ until you take specific actions to [resume the process](upgrade/automatic.md#resuming-a-paused-node-upgrade). Given that Harvester upgrades nodes sequentially, this implies that the entire upgrade progress is paused as well. 
 
-    :::
+      :::
+      
+      **Example**:
+      
+      ```json
+      "pauseNodes": ["node-0", "node-2"]
+      ```
     
 - `restoreVM`: Option that enables Harvester to automatically restore previously running [non-migratable virtual machines](../vm/live-migration.md#non-migratable-virtual-machines) after the upgrade is *successfully* completed. You can specify either of the following values:
 
@@ -890,6 +896,14 @@ https://your.upgrade.checker-url/v99/checkupgrade
       "concurrency": 2
     }
   },
+  "nodeUpgradeOption": {
+    "strategy": {
+      "mode": "manual",
+      "pauseNodes": [
+        "node-3"
+      ]
+    }
+  }
   "restoreVM": true,
   "logReadyTimeout": "5"
 }
