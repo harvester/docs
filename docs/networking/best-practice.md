@@ -40,7 +40,7 @@ You can follow the steps below and run them in each node step by step.
 
 Before any action is taken, it is important to collect the current network information and status.
 
-- Harvester network configuration: By default, Harvester creates a bond interface named `mgmt-bo` for the management network. On top of that is a bridge interface named `mgmt-br`, which may optionally use a VLAN. There is also one new bond interface for each cluster network. The current connection details can be views using the `nmcli` tool.
+- Harvester network configuration: By default, Harvester creates a bond interface named `mgmt-bo` for the management network. On top of that is a bridge interface named `mgmt-br`, which may optionally use a VLAN. Each cluster network also has one new bond interface. You can view the current connection details using the `nmcli` tool.
 
     Example:
 

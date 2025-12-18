@@ -14,9 +14,9 @@ description: How to update Harvester configuration after installation
 
 Harvester's OS has an immutable design, which means most files in the OS revert to their pre-configured state after a reboot. The Harvester OS loads the pre-configured values of system components from configuration files during the boot time.
 
-This page describes how to edit some of the most-requested Harvester configurations. To update a configuration, you must first update the runtime value in the system and then update configuration files to make the changes persistent between reboots.
+To update a configuration, you must first update the runtime value in the system and then update configuration files to ensure that changes persist between reboots.
 
-One notable exception to this starting in Harvester v1.7.0 is network configuration, as the `/etc/NetworkManager` directory was added to the list of persistent paths. This means that changes to network configuration made using the `nmcli` tool will persist immediately.
+However, starting with v1.7.0, network configuration changes made using the `nmcli` tool persist automatically because the `/etc/NetworkManager` directory is now included in the list of persistent paths.
 
 :::note
 
@@ -28,8 +28,9 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
 
 ### Runtime change
 
-1. Log in to a Harvester node as user `rancher`. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-in-to-a-harvester-node) for more details.
-1. To reset the password for the user `rancher`, run the command `passwd`.
+1. [Log in to a Harvester node](../troubleshooting/os.md#how-to-log-in-to-a-harvester-node) using the `rancher` user account.
+
+1. Reset the password for the `rancher` user account by running the command `passwd`.
 
 ### Configuration persistence
 
@@ -39,7 +40,9 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
     cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
     ```
 
-1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.initramfs[0].users.rancher.passwd`. Refer to the configuration [`os.password`](./harvester-configuration.md#ospassword) for details on how to specify the password in an encrypted form.
+1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.initramfs[0].users.rancher.passwd`.
+
+    For information about specifying the `rancher` user account password in an encrypted form, see [`os.password`](./harvester-configuration.md#ospassword).
 
 ## NTP servers
 
@@ -49,29 +52,38 @@ For more information about NTP settings in Harvester v1.2.0 and later versions, 
 
 ## DNS servers
 
-1. Log in to a Harvester node and become root. See [how to log into a Harvester node](../troubleshooting/os.md#how-to-log-in-to-a-harvester-node) for more details.
-1. If the management interface _is not_ configured to use a VLAN, run the following command:
+1. [Log in to a Harvester node](../troubleshooting/os.md#how-to-log-in-to-a-harvester-node) using the root account.
+1. Check the management interface configuration, and then run either of the following commands:
 
-    ```
-    nmcli con modify bridge-mgmt ipv4.dns 8.8.8.8,1.1.1.1 && nmcli device reapply mgmt-br
-    ```
+    - Not configured to use a VLAN:
+      
+      ```
+      nmcli con modify bridge-mgmt ipv4.dns 8.8.8.8,1.1.1.1 && nmcli device reapply mgmt-br
+      ```
 
-1. If the management interface _is_ configured to use a VLAN, run the following commands. Replace `VLAN_ID` with the actal ID of the VLAN. If in doubt, run `nmcli con` to see the configured connections and devices.
+    - Configured to use a VLAN:
+
+      You must replace `VLAN_ID` with the actual ID. To view a list of configured connections and devices, run the command `nmcli con`.
 
     ```
     nmcli con modify vlan-mgmt ipv4.dns 8.8.8.8,1.1.1.1 && nmcli device reapply mgmt-br.VLAN_ID
     ```
 
-1. Confirm the file `/etc/resolv.conf` contains the correct DNS servers with the `cat` command:
+1. Verify that the file `/etc/resolv.conf` contains the correct DNS servers by running the `cat` command.
+
 
     ```
     cat /etc/resolv.conf
     ```
-1. Restart rke2-coredns:
+
+1. Restart the `rke2-coredns` deployment.
+
     ```
     kubectl rollout restart deployment/rke2-coredns-rke2-coredns -n kube-system
     ```
-1. Confirm rke2-coredns was rolled out successfully:
+
+1. Verify that the `rke2-coredns` deployment was rolled out successfully.
+
     ```
     kubectl rollout status deployment/rke2-coredns-rke2-coredns -n kube-system
     ```
@@ -94,7 +106,9 @@ You can update the slave interfaces of Harvester's management bonding interface 
     ...
     ```
 
-1. Use `nmcli` to create a connection for the interface and attach it to the management bond, for example:
+1. Use the `nmcli` tool to create a connection for the interface and attach it to the management bond.
+
+    Example:
 
     ```
     $ nmcli con add type bond-slave ifname ens7 master mgmt-bo

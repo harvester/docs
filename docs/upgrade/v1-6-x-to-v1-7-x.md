@@ -18,7 +18,7 @@ For information about upgrading Harvester in air-gapped environments, see [Prepa
 
 :::caution
 
-Harvester v1.7.x uses NetworkManager instead of wicked, which was used in earlier versions of Harvester. If you have made changes to the configuration of the management interface since Harvester was first installed there are additional manual steps required to ensure a smooth upgrade. For details, see [Migration from wicked to NetworkManager](#migration-from-wicked-to-networkmanager)
+v1.7.x uses NetworkManager instead of wicked, which was used in earlier versions of Harvester. If you modified the management interface configuration after the initial installation, you must perform additional manual steps to avoid issues during the upgrade. For more information, see [Migration from wicked to NetworkManager](#migration-from-wicked-to-networkmanager).
 
 :::
 
