@@ -38,7 +38,7 @@ In addition, virtual machines created using the [Harvester Node Driver](../ranch
 
 1. Specify a name for the network interface and select a virtual machine network.
 
-    You can select a [VLAN network](../../networking/harvester-network.md#vlan-network), an [untagged network](../../networking/harvester-network.md#untagged-network), or a [VLAN trunk network](../../networking/harvester-network.md#vlan-trunk-network).
+    You can select a [VLAN network](../networking/harvester-network.md#vlan-network), an [untagged network](../networking/harvester-network.md#untagged-network), or a [VLAN trunk network](../networking/harvester-network.md#vlan-trunk-network).
 
 1. Click **Apply**.
 
