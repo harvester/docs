@@ -59,9 +59,12 @@ If you have made manual changes to the management interface configuration after 
 
 The important things to check in `/oem/harvester.config` before upgrade are `os.dns_nameservers` and `install.management_interface`. Pay particular attention to the latter if you started with Harvester v1.0, as the format of this file changed between Harvester v1.0 and v1.1. For a full reference, see [Harvester configuration](../install/harvester-configuration.md).
 
-If a node gets stuck in "Waiting Reboot" state part way through upgrade, log in via the console and verify the network configuration with `nmcli`.  If necessary you can make manual changes to the configuration at this point, then reboot the node and the upgrade will continue.
+If you encounter any issues during the upgrade, you can perform the following workarounds:
 
-If you run into trouble with manual configuration changes and wish to revert back to the automatically generated NetworkManager connection profiles, you can run the `harvester-installer generate-network-config` command. This will re-create the NetworkManager connection profiles in `/etc/NetworkManager/system-connections/` based on the configuration specified in `/oem/harvester.config`.
+| Scenario | Workaround | Result |
+| --- | --- | --- |
+| A node becomes stuck in "Waiting Reboot" state. | Log in via the console and verify the network configuration using the `nmcli` tool. If necessary, manually correct the configuration, then reboot the node. | The upgrade automatically resumes. |
+| Errors occur when you manually change the configuration. | If you want to revert to the automatically generated NetworkManager connection profiles, run the command `harvester-installer generate-network-config`. | The NetworkManager connection profiles in `/etc/NetworkManager/system-connections/` are recreated based on the configuration specified in `/oem/harvester.config`. |
 
 For further details see the [Migrate from Wicked to NetworkManager HEP](https://github.com/harvester/harvester/pull/9039).
 
