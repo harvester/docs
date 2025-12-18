@@ -85,6 +85,25 @@ We leverage [multus CNI](https://github.com/k8snetworkplumbingwg/multus-cni) and
 
     The example above shows that the bond `oob-bo` allows packages with tag 1, 100 or 200.
 
+4.  When you create a virtual machine in Harvester and connect it to a VM network (VLAN) or storage network, Harvester automatically creates virtual Ethernet (veth) interfaces on the host that connect directly to the pods.
+
+    In earlier Harvester versions, these veth interfaces were associated with both VLAN ID 1 and the VLAN ID assigned to the VM network. This allowed the Harvester bridge to correctly forward untagged (VLAN 1) and tagged traffic from external switches to the veth interface.
+
+    ```
+    vethaf720855      1 Egress Untagged
+                      66 PVID Egress Untagged
+    ```
+
+    This behavior changed in Harvester v1.6.1, which uses v1.8.0 of the CNI bridge plugin. The default VLAN ID 1 is no longer added to veth interfaces. Only the VLAN ID assigned to the VM network is configured.
+
+    ```
+    vethaf720855      66 PVID Egress Untagged
+    ```
+
+    Because untagged VLAN handling is no longer applied, physical switches connected to Harvester hosts must now be configured strictly as trunk ports. These ports must accept tagged traffic and send traffic tagged with the VLAN ID used by the VM network.
+
+    Any untagged traffic arriving at Harvester network bridges for a VLAN-tagged veth interface is dropped. This occurs because the bridge cannot forward the traffic to the veth interface, which is configured to accept only the VLAN ID from the VM network.
+
 ### Management Network
 
 The management network is based on [Canal](https://projectcalico.docs.tigera.io/getting-started/kubernetes/flannel/flannel).

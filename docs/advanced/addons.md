@@ -15,13 +15,14 @@ The following add-ons are available in this version:
 * [harvester-csi-driver-lvm](./addons/lvm-local-storage.md) (Experimental)
 * [harvester-seeder](./addons/seeder.md) (Experimental)
 * [harvester-vm-dhcp-controller](./addons/managed-dhcp.md) (Experimental)
-* [kubeovn-operator](./addons/kubeovn-operator.md)
+* [kubeovn-operator](./addons/kubeovn-operator.md) (Experimental)
 * [nvidia-driver-toolkit](./addons/nvidiadrivertoolkit)
-* [pcidevices-controller](./addons/pcidevices.md) 
+* [pcidevices-controller](./addons/pcidevices.md)
 * [rancher-logging](../logging/harvester-logging.md)
 * [rancher-monitoring](../monitoring/harvester-monitoring.md)
 * [rancher-vcluster](./addons/rancher-vcluster.md) (Experimental)
 * [vm-import-controller](./addons/vmimport.md)
+* [descheduler](./addons/descheduler.md) (Experimental)
 
 You can enable and disable add-ons on the **Add-ons** screen of the Harvester UI.
 

@@ -253,3 +253,13 @@ To fix this, you can restart the VM.
 Before Harvester v1.6.0, the controller patched the MAC address from the VMI into the VM spec during VM creation. This ensured that the MAC address remained consistent after a VM restart. However, this approach modified the VM spec without requiring a restart, which caused the KubeVirt controller to add a "RestartRequired" condition to the VM status. Previously, this condition was not displayed in the UI, though it was visible in the VM’s YAML.
 
 Starting from v1.6.0, to support the CPU and Memory hot-plug feature and to inform users that certain CPU and memory changes might not take effect immediately, we decided to expose the “RestartRequired” condition in the UI. That’s why this message appears after upgrading Harvester or updating the harvester-ui-extension to v1.6.x.
+
+### 7.Change in default VLAN Behavior for Secondary Pod Interfaces
+
+In v1.6.0 and earlier versions, pods with secondary network interfaces (such as VM networks and storage networks) were automatically assigned to VLAN ID 1 and the VLAN ID configured in the VLAN network. This dual-VLAN ID configuration allowed the Harvester network bridge to forward untagged traffic to the veth interfaces of these pods.
+
+This behavior changed in Harvester v1.6.1, which uses v1.8.0 of the CNI bridge plugin. Secondary pod interfaces are now associated only with the VLAN ID assigned to the VM network. Because VLAN ID 1 is no longer added, the bridge is unable to forward untagged traffic to these interfaces.
+
+The change affects clusters upgraded from v1.5.x to v1.6.1 if the external switch port is configured as an access port sending untagged frames. Updating the external switch configuration to use a trunk port resolves the issue. Pods with secondary interfaces that are attached to untagged networks or associated with VLAN ID 1 are not affected.
+
+Related issue: [#8816](https://github.com/harvester/harvester/issues/8816)

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 9
 sidebar_label: Kube-OVN Operator
-title: "Kube-OVN Operator"
+title: "Kube-OVN Operator (Experimental)"
 ---
 
 <head>
@@ -9,6 +9,12 @@ title: "Kube-OVN Operator"
 </head>
 
 _Available as of v1.6.0_
+
+:::note
+
+**kubeovn-operator** is an *experimental* add-on. For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+
+:::
 
 [`kubeovn-operator`](https://github.com/harvester/kubeovn-operator) is used to manage the lifecycle of [Kube-OVN](https://github.com/kubeovn/kube-ovn) as a secondary CNI on underlying Harvester clusters.
 

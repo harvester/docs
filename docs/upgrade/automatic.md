@@ -34,6 +34,7 @@ The following table outlines the supported upgrade paths.
 
 | Installed Version | Supported Upgrade Versions |
 | --- | --- |
+| v1.7.x | [v1.7.y](./v1-7-x-to-v1-7-y.md) (*y* is greater than *x*) |
 | v1.6.x | [v1.7.x](./v1-6-x-to-v1-7-x.md) |
 | v1.6.x | [v1.6.y](./v1-6-x-to-v1-6-y.md) (*y* is greater than *x*) |
 | v1.5.x | [v1.6.x](./v1-5-x-to-v1-6-x.md) |
@@ -146,6 +147,10 @@ Check out the available [`upgrade-config` setting](../advanced/settings.md#upgra
 
 - NICs that connect to a PCI bridge might be renamed after an upgrade. Please check the [knowledge base article](https://harvesterhci.io/kb/nic-naming-scheme) for further information.
 
+:::
+
+:::note
+Starting from v1.7.0, Harvester uses a Deployment-based upgrade repository instead of a VM-based approach for improved performance and reliability. See [harvester#7101](https://github.com/harvester/harvester/issues/7101) for details.
 :::
 
 1. Make sure to read the above `caution`.
