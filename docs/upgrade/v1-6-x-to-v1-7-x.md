@@ -66,8 +66,6 @@ If you encounter any issues during the upgrade, you can perform the following wo
 | A node becomes stuck in "Waiting Reboot" state. | Log in via the console and verify the network configuration using the `nmcli` tool. If necessary, manually correct the configuration, then reboot the node. | The upgrade automatically resumes. |
 | Errors occur when you manually change the configuration. | If you want to revert to the automatically generated NetworkManager connection profiles, run the command `harvester-installer generate-network-config`. | The NetworkManager connection profiles in `/etc/NetworkManager/system-connections/` are recreated based on the configuration specified in `/oem/harvester.config`. |
 
-For further details see the [Migrate from Wicked to NetworkManager HEP](https://github.com/harvester/harvester/pull/9039).
-
 ---
 
 ## Known Issues
