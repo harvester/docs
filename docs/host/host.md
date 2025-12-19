@@ -337,7 +337,10 @@ _Available as of v1.7.0_
 
 Hugepages are a memory management feature of the Linux kernel, which allows it to allocate memory in chunks significantly larger than the default of 4 kilobytes. By using a larger page size, the kernel potentially spends less CPU time doing memory allocation than it would otherwise. This in turn can increase overall system performance.
 
-There are two types of hugepage: persistent or static hugepages, which are pre-allocated, and anonymous or transparent hugepages which are allocated and deallocated automatically by the kernel.
+There are two types of hugepages:
+
+- Persistent or static: Pre-allocated based on relevant kernel boot parameters or Harvester settings
+- Anonymous or transparent: Allocated and deallocated automatically by the kernel
 
 You can view information about the current hugepages allocation for each node.
 
