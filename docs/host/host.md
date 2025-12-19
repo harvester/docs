@@ -339,28 +339,30 @@ Hugepages are a memory management feature of the Linux kernel, which allows it t
 
 There are two types of hugepage: persistent or static hugepages, which are pre-allocated, and anonymous or transparent hugepages which are allocated and deallocated automatically by the kernel.
 
-To view information about currently hugepages allocation on a given node:
+You can view information about the current hugepages allocation for each node.
 
-1. Go to the **Hosts** screen.
-1. Click the node you're interested in then select the **Hugepages** tab.
+1. On the Harvester UI, go to the **Hosts** screen.
+1. Click the target node, then select the **Hugepages** tab.
 
-This will give a summary including the total amount of memory in use for anonymous (or transparent) hugepages, the default hugepage size, and details of the number of persistent (or static) hugepages.
+The information on the **Hugepages** tab is divided into two sections:
 
-Ordinarily you will see a large number for "Anonymous Hugepages (bytes)", which indicates that the kernel has automatically utilised that amount of RAM for transparent hugepages. The "Total Hugepages" value, which refers to statically allocated hugepages, will usually be zero, except if you have enabled the Longhorn V2 data engine, in which case this will show 1024.
+- **Meminfo**: Shows the total amount of memory in use for anonymous (transparent) hugepages, the default hugepage size, and details about persistent (static) hugepages.
 
-The **Hugepages** tab will also show the current Transparent Hugepages settings, which default to:
+    The **Anonymous Hugepages (bytes)** field typically shows a large value, reflecting RAM automatically utilized by the kernel for transparent hugepages.
 
-- Enabled: always
-- Shared Memory Enabled: never
-- Defragmentation: madvise
+    Conversely, the **Total Hugepages** field, which represents statically allocated hugepages, typically remains at `0`. However, if the Longhorn V2 Data Engine is enabled, this value changes to `1024`.
 
-In some cases it may be desirable to change the Transparent Hugepages settings, which can be done by selecting **⋮ > Edit Config** for the node you wish to modify, then going to the **Hugepages** tab and making the required changes. The available Transparent Hugepages options are:
+- **Transparent Hugepages**: Shows the current transparent hugepage settings.
 
-- Enabled: Always, Madvise, Never
-- Shared Memory Enabled: Always, Within Size, Advise, Never, Deny, Force
-- Defragmentation: Always, Defer, Defer+Madvise, Madvise, Never
+    The following list outlines the options and default values for each setting:
 
-More detail on how these options work can be found in the [Linux kernel administrator's guide](https://docs.kernel.org/admin-guide/mm/transhuge.html).
+    - Enabled: `Always`, `Madvise`, `Never` (Default value: `Always`)
+    - Shared Memory Enabled: `Always`, `Within Size`, `Advise`, `Never`, `Deny`, `Force` (Default value: `Never`)
+    - Defragmentation: `Always`, `Defer`, `Defer+Madvise`, `Madvise`, `Never` (Default value: `Madvise`)
+    
+    You can modify these settings for each node by selecting **⋮ > Edit Config** and then clicking the **Hugepages** tab.
+    
+    For more information about the options, see [Transparent Hugepage Support](https://docs.kernel.org/admin-guide/mm/transhuge.html) in the Linux kernel documentation.
 
 
 ## Ksmtuned Mode
