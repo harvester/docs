@@ -53,43 +53,42 @@ You must enable the [**nvidia-driver-toolkit** add-on](./addons/nvidiadrivertool
   Once a vGPU has been assigned to a VM, it may not be possible to disable the VM until the vGPU is removed.
   :::
 
-## MIG backed vGPU devices
+## MIG-backed vGPU Devices
 
 _Available as of v1.7.0_
 
 :::note
-Only applicable for NVIDIA GPUs supporting MIG based partitioning, such as A100,H100,H200.
+
+The following information applies only to NVIDIA GPUs that support Multi-Instance GPU (MIG)-based partitioning, such as A100, H100, and H200.
+
 :::
 
-Harvester can share [MIG](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/) backed vGPU across Virtual Machines.
+Harvester allows [MIG](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/)-backed vGPUs to be shared across virtual machines. MIG-backed vGPUs reside on a GPU instance in a MIG-capable physical GPU. Each resident MIG-backed vGPU has exclusive access to the GPU instance’s engines, including the compute and video decode engines.
 
-Harvester will attempt to detect GPUs supporting MIG based partitioning.
+Harvester creates the `MIGConfiguration` object only if the detected GPU supports MIG-based partitioning.
 
-The `MIGConfiguration` object will only be created if the underlying GPU supports this capability.
+### Enabling MIG-backed vGPU Devices
 
+1. On the Harvester UI, go to **Advanced** > **vGPU MIG Configurations** and verify the following:
 
-1. On the Harvester UI, go to **Advanced** > **vGPU MIG Configurations** and verify the following
-  - MIG Configuration has been created for supporting GPU devices
-  - An associated `migconfiguration.devices.harvesterhci.io` object has been created.
+    - A MIG configuration has been created for supporting GPU devices.
+    - An associated `migconfiguration.devices.harvesterhci.io` object has been created.
 
-  ![](/img/v1.7/advanced/migconfigurations.png)
+    ![](/img/v1.7/advanced/migconfigurations.png)
 
-2. Define the MIG profiles for your GPU and enable the MIG Configuration. Please refer to GPU specific documentation to identify MIG configuration and combinations available
+1. Define the MIG profiles for your GPU and enable the MIG configuration. Refer to the GPU's documentation for information about MIG configuration and available combinations.
 
-  ![](/img/v1.7/advanced/samplemigconfiguration.png)
+    ![](/img/v1.7/advanced/samplemigconfiguration.png)
 
-3. Enable MIG Configuration and wait for MIG Configuration to be `synced`
+1. Go to **Advanced** > **vGPU Devices** and enable the vGPU device associated with the MIG configuration.
 
-  ![](/img/v1.7/advanced/syncedconfiguration.png)
+    The newly created MIG profiles are available as valid vGPU types.
 
-4. Navigate to **Advanced** > **vGPU Devices** and enable vGPU device associated with the MIG Configuration.
-   The newly created MIG profiles should be available as valid vGPU types
+    ![](/img/v1.7/advanced/configurevgpu.png)
 
-   ![](/img/v1.7/advanced/configurevgpu.png)
+Once enabled, the vGPU device can be used with a virtual machine.
 
-5. The enabled vGPU can be used as any other vGPU device with a VM
-
-   ![](/img/v1.7/advanced/vmwithvgpu.png)
+![](/img/v1.7/advanced/vmwithvgpu.png)
 
 ## vGPU Devices in Rancher-Managed Clusters
 
