@@ -18,7 +18,11 @@ When enabled, the add-on deploys the Descheduler in the `kube-system` namespace 
 
   ![](/img/v1.7/descheduler/descheduler-enable.png)
 
-## Customizing Descheduler Policies
+## Descheduler Policies
+
+The configuration contains two plugins - `DefaultEvictor` and `LowNodeUtilization`. The `DefaultEvictor` plugin provides common eviction configuration at the top level, while the `LowNodeUtilization` plugin monitors node resource usage and evicts pods from overutilized nodes to underutilized ones based on defined thresholds. With default configuration, the Descheduler only evicts virtual machines pods.
+
+### Customizing Descheduler Policies
 
 Select **⋮** > **Edit YAML** to customize the Descheduler policies according to your requirements. The configuration is defined in YAML format.
 
@@ -49,7 +53,7 @@ I1209 02:06:21.067328       1 lownodeutilization.go:210] "Node has been classifi
 I1209 02:06:21.067355       1 lownodeutilization.go:210] "Node has been classified" category="overutilized" node="hp-119-tink-system" usage={"cpu":"10490m","memory":"109333705514","pods":"81"} usagePercentage={"cpu":46,"memory":81,"pods":41}
 ```
 
-## Limitations
+## Troubleshooting
 
 The Descheduler works on pods instead of virtual machines. If a virtual machine that you expect to be evicted is not, check the Descheduler logs.
 
