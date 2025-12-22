@@ -40,35 +40,38 @@ You can follow the steps below and run them in each node step by step.
 
 Before any action is taken, it is important to collect the current network information and status.
 
-- Harvester network configuration: By default, Harvester creates a bond interface named `mgmt-bo` for the management network and one new bond interface for each cluster network. Harvester saves network configuration details in the file `/oem/90_custom.yaml`.
+- Harvester network configuration: By default, Harvester creates a bond interface named `mgmt-bo` for the management network. On top of that is a bridge interface named `mgmt-br`, which may optionally use a VLAN. Each cluster network also has one new bond interface. You can view the current connection details using the `nmcli` tool.
 
-    Example: A NIC named `ens3` was added to the `mgmt-bo` bond interface.
+    Example:
 
     ```
-    - path: /etc/sysconfig/network/ifcfg-mgmt-bo
-      permissions: 384
-      owner: 0
-      group: 0
-      content: |+
-        STARTMODE='onboot'
-        BONDING_MASTER='yes'
-        BOOTPROTO='none'
-        POST_UP_SCRIPT="wicked:setup_bond.sh"
-        BONDING_SLAVE_0='ens3'
-        BONDING_MODULE_OPTS='miimon=100 mode=active-backup '
-        DHCLIENT_SET_DEFAULT_ROUTE='no'
-      encoding: ""
-      ownerstring: ""
+    $ nmcli
 
-    - path: /etc/sysconfig/network/ifcfg-ens3
-      permissions: 384
-      owner: 0
-      group: 0
-      content: |
-        STARTMODE='hotplug'
-        BOOTPROTO='none'
-      encoding: ""
-      ownerstring: ""
+    mgmt-br.2017: connected to vlan-mgmt
+            "mgmt-br.2017"
+            vlan, 5C:B9:01:89:C2:F5, sw, mtu 1500
+            ip4 default
+            inet4 10.115.55.20/21
+            route4 10.115.48.0/21 metric 400
+            route4 default via 10.115.55.254 metric 400
+
+    ...
+
+    mgmt-bo: connected to bond-mgmt
+            "mgmt-bo"
+            bond, 5C:B9:01:89:C2:F5, sw, mtu 1500
+            master mgmt-br
+
+    mgmt-br: connected to bridge-mgmt
+            "mgmt-br"
+            bridge, 5C:B9:01:89:C2:F5, sw, mtu 1500
+
+    eno50: connected to bond-slave-eno50
+            "Intel 82599ES SFI/SFP+"
+            ethernet (ixgbe), 5C:B9:01:89:C2:F5, hw, sriov, mtu 1500
+            master mgmt-bo
+
+    ...
     ```
 
 - Physical NICs: You can use the command `ip link` to retrieve related information, including the state of each NIC and the corresponding master (if applicable).

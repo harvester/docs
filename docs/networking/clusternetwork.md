@@ -102,26 +102,27 @@ During installation of the first cluster node, you can configure the MTU value f
 
 ### Add Secondary VLAN Interfaces
 
-Add the following commands to the `/oem/90_custom.yaml` file and reboot the node.
+1. Check the current VLAN settings for the `bond-mgmt` and `bridge-mgmt` connection profiles.
 
-- `/etc/wicked/scripts/setup_bond.sh` section
+   Example, where the primary VLAN ID is 2017:
+   ```
+   $ nmcli -f bridge-port.vlans con show bond-mgmt
+   bridge-port.vlans:                      1 pvid untagged, 2017
 
-    ```
-    bridge vlan add vid <vlan-id> dev $INTERFACE
-    ```
+   $ nmcli -f bridge.vlans con show bridge-mgmt
+   bridge.vlans:                           2017
+   ```
 
-- `/etc/wicked/scripts/setup_bridge.sh` section
+1. Update the `bond-mgmt` and `bridge-mgmt` connection profiles to add the secondary VLAN ID.
 
-    ```
-    bridge vlan add vid <vlan-id> dev $INTERFACE self
-    bridge vlan add vid <vlan-id> dev mgmt-bo
-    ```
+   Example, where the primary VLAN ID is 2017 and the secondary VLAN ID is 2018:
+   ```
+   $ nmcli con modify bond-mgmt bridge-port.vlans '1 pvid untagged, 2017, 2018'
 
-:::info important
+   $ nmcli con modify bridge-mgmt bridge.vlans 2017,2018
+   ```
 
-You must include a separate command for each distinct VLAN ID. Ensure that the `vlan-id` placeholder is replaced with the actual ID.
-
-:::
+1. Reboot each node to apply the change.
 
 #### Annotate a Non-Default MTU Value to `mgmt` After Installation
 
@@ -149,56 +150,22 @@ You must ensure the following:
 
 #### Change the MTU Value of `mgmt` After Installation
 
-The MTU of the mgmt network is saved on an internal file `/oem/90_custom.yaml` on each node. The file stores a lot of basic configuration of the system.
-
-:::caution
-
-Exercise extreme caution when editing `/oem/90_custom.yaml`. Do not change other settings and the file's formatting to avoid breaking the system.
-
-:::
-
-1. Create a backup of the `/oem/90_custom.yaml` file on each node.
-
-  You can use this backup to restore the file when the node is unable to reboot.
-
 1. Stop all virtual machines that are attached to the `mgmt` network.
 
 1. (Optional) Disable the [storage network](../advanced/storagenetwork.md#disable-the-storage-network) if it uses `mgmt` and is enabled.
 
-1. Change the MTU value in the `/oem/90_custom.yaml` file on each node.
-
-    Locate the following paths, and then change the value in `MTU=1500`.
-
-    - `path: /etc/sysconfig/network/ifcfg-mgmt-bo`
-    - `path: /etc/sysconfig/network/ifcfg-mgmt-br`
+1. Change the MTU value for the bond-mgmt, bridge-mgmt and (if you are using a VLAN) the vlan-mgmt connection profiles.
 
     Example:
 
     ```
-    - path: /etc/sysconfig/network/ifcfg-mgmt-bo
-    permissions: 384
-    owner: 0
-    group: 0
-    content: |+
-      ...
-      MTU=1500     // MTU is the last under the content, and might be a blank line, add or change it
-    encoding: ""
-    ownerstring: ""
-    - path: /etc/sysconfig/network/ifcfg-mgmt-br
-    permissions: 384
-    owner: 0
-    group: 0
-    content: |+
-      ...
-      MTU=1500     // MTU is the last under the content, and might be a blank line, add or change it
-    encoding: ""
-    ownerstring: ""
+    $ nmcli con modify bond-mgmt 802-3-ethernet.mtu 9000
+    $ nmcli con modify bridge-mgmt 802-3-ethernet.mtu 9000
+    $ nmcli con modify vlan-mgmt 802-3-ethernet.mtu 9000
 
+    $ nmcli device reapply mgmt-bo
+    $ nmcli device reapply mgmt-br
     ```
-
-1. Verify that the file's formatting is still valid using the `yq -e /oem/90_custom.yaml` command. This command prints the file's contents unless an error occurs.
-
-1. Reboot each node to apply the change.
 
 1. Check the MTU values using the `ip link` command.
 
