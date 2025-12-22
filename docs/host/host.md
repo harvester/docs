@@ -331,6 +331,43 @@ _Available as of v1.1.0_
 The label is automatically synchronized with the corresponding Longhorn node.
 
 
+## Hugepages
+
+_Available as of v1.7.0_
+
+Hugepages are a memory management feature of the Linux kernel, which allows it to allocate memory in chunks significantly larger than the default of 4 kilobytes. By using a larger page size, the kernel potentially spends less CPU time doing memory allocation than it would otherwise. This in turn can increase overall system performance.
+
+There are two types of hugepages:
+
+- Persistent or static: Pre-allocated based on relevant kernel boot parameters or Harvester settings
+- Anonymous or transparent: Allocated and deallocated automatically by the kernel
+
+You can view information about the current hugepages allocation for each node.
+
+1. On the Harvester UI, go to the **Hosts** screen.
+1. Click the target node, then select the **Hugepages** tab.
+
+The information on the **Hugepages** tab is divided into two sections:
+
+- **Meminfo**: Shows the total amount of memory in use for anonymous (transparent) hugepages, the default hugepage size, and details about persistent (static) hugepages.
+
+    The **Anonymous Hugepages (bytes)** field typically shows a large value, reflecting RAM automatically utilized by the kernel for transparent hugepages.
+
+    Conversely, the **Total Hugepages** field, which represents statically allocated hugepages, typically remains at `0`. However, if the Longhorn V2 Data Engine is enabled, this value changes to `1024`.
+
+- **Transparent Hugepages**: Shows the current transparent hugepage settings.
+
+    The following list outlines the options and default values for each setting:
+
+    - Enabled: `Always`, `Madvise`, `Never` (Default value: `Always`)
+    - Shared Memory Enabled: `Always`, `Within Size`, `Advise`, `Never`, `Deny`, `Force` (Default value: `Never`)
+    - Defragmentation: `Always`, `Defer`, `Defer+Madvise`, `Madvise`, `Never` (Default value: `Madvise`)
+    
+    You can modify these settings for each node by selecting **⋮ > Edit Config** and then clicking the **Hugepages** tab.
+    
+    For more information about the options, see [Transparent Hugepage Support](https://docs.kernel.org/admin-guide/mm/transhuge.html) in the Linux kernel documentation.
+
+
 ## Ksmtuned Mode
 
 _Available as of v1.1.0_
