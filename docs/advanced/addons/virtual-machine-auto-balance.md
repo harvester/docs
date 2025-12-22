@@ -20,7 +20,12 @@ When enabled, the add-on deploys the Descheduler in the `kube-system` namespace 
 
 ## Descheduler Policies
 
-The configuration contains two plugins - `DefaultEvictor` and `LowNodeUtilization`. The `DefaultEvictor` plugin provides common eviction configuration at the top level, while the `LowNodeUtilization` plugin monitors node resource usage and evicts pods from overutilized nodes to underutilized ones based on defined thresholds. With default configuration, the Descheduler only evicts virtual machines pods.
+The configuration contains the following plugins:
+
+- `DefaultEvictor`: Provides common eviction configuration at the top level.
+- `LowNodeUtilization`: Monitors node resource usage and evicts pods from overutilized nodes to underutilized ones based on defined thresholds.
+
+With the default configuration, the Descheduler only evicts virtual machine pods.
 
 ### Customizing Descheduler Policies
 
