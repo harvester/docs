@@ -280,10 +280,10 @@ DNS resolution is unavailable in the `after-install-chroot stage`, and the `name
 ```yaml
 os:
   after_install_chroot_commands:
-    - "rm -f /etc/resolv.conf && echo 'nameserver 8.8.8.8' | sudo tee /etc/resolv.conf"
+    - "echo 'nameserver 8.8.8.8' | sudo tee /etc/resolv.conf"
     - "mkdir /usr/local/bin"
     - "curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && chmod 700 get_helm.sh && ./get_helm.sh"
-    - "rm -f /etc/resolv.conf && ln -s /var/run/netconfig/resolv.conf /etc/resolv.conf"
+    - "rm -f /etc/resolv.conf"
 ```
 
 
@@ -707,6 +707,11 @@ install:
     mtu: 1492
     vlan_id: 101
 ```
+:::note
+
+Physical switches connected to `bonded NIC` must be configured strictly as trunk ports. These ports must accept tagged traffic and send traffic tagged with the VLAN ID used by the VM network.
+
+:::
 
 ### `install.mode`
 

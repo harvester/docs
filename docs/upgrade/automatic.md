@@ -34,6 +34,7 @@ The following table outlines the supported upgrade paths.
 
 | Installed Version | Supported Upgrade Versions |
 | --- | --- |
+| v1.7.x | [v1.7.y](./v1-7-x-to-v1-7-y.md) (*y* is greater than *x*) |
 | v1.6.x | [v1.7.x](./v1-6-x-to-v1-7-x.md) |
 | v1.6.x | [v1.6.y](./v1-6-x-to-v1-6-y.md) (*y* is greater than *x*) |
 | v1.5.x | [v1.6.x](./v1-5-x-to-v1-6-x.md) |
@@ -252,6 +253,103 @@ The **Upgrade** button does not appear on the UI immediately after a new Harvest
 In production environments, upgrading clusters via the Harvester UI is recommended.
 
 :::
+
+## Customize Node Upgrade
+
+_Available as of v1.7.0_
+
+Harvester upgrades involve several defined phases. A key phase is node upgrades, during which the operating system and the underlying Kubernetes distribution (RKE2) are upgraded on each node sequentially and autonomously.
+
+You have the option to pause automatic upgrades on specific nodes, which is useful when manual maintenance or verification tasks must be performed. Following the completion of these tasks, you must explicitly instruct Harvester to resume the upgrade on the target nodes.
+
+### Pausing Node Upgrades
+
+You can use the `nodeUpgradeOption` option in the [`upgrade-config`](advanced/settings.md#upgrade-config) setting to pause node upgrades.
+
+- Pause for all nodes in the cluster: Change the value of the `mode` field to `manual`.
+- Pause for specific nodes: List the node names in the `pauseNodes` field. Nodes not included in the list are automatically upgraded.
+
+:::info important
+
+Harvester applies the `nodeUpgradeOption` configuration during the upgrade initialization phase. Changes made to these fields after initialization are ignored for the current upgrade and only take effect in the next upgrade cycle.
+
+:::
+
+:::tip
+
+You can modify the `Upgrade` custom resource to add or remove any nodes in the annotation, as long as the node has not yet been upgraded. The pause node upgrade function deems the annotation as the source of truth.
+
+:::
+
+The Harvester UI provides visual confirmation of paused node upgrades. In the following example, upgrading of the node `charlie-1-tink-system` is currently paused.
+
+![Node Paused during Node Upgrade](/img/v1.7/upgrade/node-upgrade-paused.png)
+
+You can also use the following `kubectl` command to check for paused node upgrades:
+
+```shell
+$ kubectl -n harvester-system get upgrades -l harvesterhci.io/latestUpgrade=true -o yaml
+    ...
+    annotations:
+      harvesterhci.io/node-upgrade-pause-map: '{"charlie-1-tink-system":"pause","charlie-2-tink-system":"pause","charlie-3-tink-system":"pause"}'
+    ...
+    nodeStatuses:
+      charlie-1-tink-system:
+        message: Node upgrade paused as requested by the user
+        reason: AdministrativelyPaused
+        state: Node-upgrade paused
+      charlie-2-tink-system:
+        state: Images preloaded
+      charlie-3-tink-system:
+        state: Images preloaded
+    ...
+```
+
+:::caution
+
+The pre-drain jobs for nodes with paused upgrades have not been created. However, those nodes are still cordoned and you will not be able to run new workloads on them. Only maintenance tasks, such as manually shutting down virtual machines, should be performed on nodes with paused upgrades.
+
+:::
+
+### Resuming a Paused Node Upgrade
+
+You can resume a paused node upgrade by updating the `harvesterhci.io/node-upgrade-pause-map` annotation on the `Upgrade` custom resource.
+
+Example:
+
+```shell
+# Find out the latest Upgrade custom resource
+$ kubectl -n harvester-system get upgrades -l harvesterhci.io/latestUpgrade=true
+NAME                 AGE
+hvst-upgrade-6mcwv   4h16m
+
+# Update the annotation to unpause the node
+$ kubectl -n harvester-system annotate --overwrite upgrades hvst-upgrade-6mcwv harvesterhci.io/node-upgrade-pause-map='{"charlie-1-tink-system":"unpause","charlie-2-tink-system":"pause","charlie-3-tink-system":"pause"}'
+```
+
+Once the target node is annotated in the `Upgrade` custom resource, Harvester resumes the upgrade immediately, with the UI displaying visual progress updates.
+
+![Node Unpaused during Node Upgrade](/img/v1.7/upgrade/node-upgrade-unpaused.png)
+
+You can also use the following `kubectl` command to check the state of the target node:
+
+```shell
+$ kubectl -n harvester-system get upgrades -l harvesterhci.io/latestUpgrade=true -o yaml
+    ...
+    annotations:
+      harvesterhci.io/node-upgrade-pause-map: '{"charlie-1-tink-system":"unpause","charlie-2-tink-system":"pause","charlie-3-tink-system":"pause"}'
+    ...
+    nodeStatuses:
+      charlie-1-tink-system:
+        state: Pre-draining
+      charlie-2-tink-system:
+        state: Images preloaded
+      charlie-3-tink-system:
+        state: Images preloaded
+    ...
+```
+
+Depending on the number of target nodes, you might need to run the unpause operation multiple times during the overall cluster upgrade process.
 
 ## Free system partition space requirement
 
@@ -483,4 +581,3 @@ When this happens, Harvester automatically shuts down these virtual machines to 
 [Recurring Longhorn snapshots and backups](https://longhorn.io/docs/1.10.0/snapshots-and-backups/scheduling-backups-and-snapshots) are not integrated into Harvester. If you decide to use this feature, you must disable all **recurring snapshot and backup jobs in Longhorn** before starting the upgrade.
 
 For more information about the incompatibility, see [Scheduling Virtual Machine Backups and Snapshots](../vm/backup-restore.md#scheduling-virtual-machine-backups-and-snapshots).
-

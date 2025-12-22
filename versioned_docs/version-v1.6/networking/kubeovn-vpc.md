@@ -16,6 +16,12 @@ keywords:
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/networking/kubeovn-vpc"/>
 </head> 
 
+:::note
+
+All features that use Kube-OVN are considered experimental. For more information about experimental features, see [Feature Labels](../getting-started/document-conventions.md#feature-labels).
+
+:::
+
 A virtual private cloud (VPC) is a logically isolated network that provides full control over IP addresses, subnets, route tables, firewalls, and gateways within a cloud infrastructure. VPCs allow the secure and scalable deployment of virtualized resources such as compute, storage, and container services.
 
 The following table outlines the key components of a VPC:

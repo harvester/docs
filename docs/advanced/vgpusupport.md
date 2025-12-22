@@ -53,6 +53,43 @@ You must enable the [**nvidia-driver-toolkit** add-on](./addons/nvidiadrivertool
   Once a vGPU has been assigned to a VM, it may not be possible to disable the VM until the vGPU is removed.
   :::
 
+## MIG-backed vGPU Devices
+
+_Available as of v1.7.0_
+
+:::note
+
+The following information applies only to NVIDIA GPUs that support Multi-Instance GPU (MIG)-based partitioning, such as A100, H100, and H200.
+
+:::
+
+Harvester allows [MIG](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/)-backed vGPUs to be shared across virtual machines. MIG-backed vGPUs reside on a GPU instance in a MIG-capable physical GPU. Each resident MIG-backed vGPU has exclusive access to the GPU instance’s engines, including the compute and video decode engines.
+
+Harvester creates the `MIGConfiguration` object only if the detected GPU supports MIG-based partitioning.
+
+### Enabling MIG-backed vGPU Devices
+
+1. On the Harvester UI, go to **Advanced** > **vGPU MIG Configurations** and verify the following:
+
+    - A MIG configuration has been created for supporting GPU devices.
+    - An associated `migconfiguration.devices.harvesterhci.io` object has been created.
+
+    ![](/img/v1.7/advanced/migconfigurations.png)
+
+1. Define the MIG profiles for your GPU and enable the MIG configuration. Refer to the GPU's documentation for information about MIG configuration and available combinations.
+
+    ![](/img/v1.7/advanced/samplemigconfiguration.png)
+
+1. Go to **Advanced** > **vGPU Devices** and enable the vGPU device associated with the MIG configuration.
+
+    The newly created MIG profiles are available as valid vGPU types.
+
+    ![](/img/v1.7/advanced/configurevgpu.png)
+
+Once enabled, the vGPU device can be used with a virtual machine.
+
+![](/img/v1.7/advanced/vmwithvgpu.png)
+
 ## vGPU Devices in Rancher-Managed Clusters
 
 Ever since vGPU support was introduced in Harvester v1.3.0, Rancher has allowed attaching of vGPUs to virtual machines running on Rancher-managed Harvester clusters. However, Rancher was initially unable to track vGPU device allocation across virtual machines. You could create virtual machines with vGPU device requests that could not be accommodated, and assign vGPU profiles with unallocatable devices to guest clusters. As a result, the affected virtual machines became unschedulable and Rancher repeatedly attempted to recreate those virtual machines without success.

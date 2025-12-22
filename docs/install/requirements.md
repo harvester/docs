@@ -90,7 +90,7 @@ Harvester nodes require the following port connections or inbound rules. Typical
 | TCP       | 9796                     | Harvester management and compute nodes  | Node-exporter                         |
 | TCP       | 30000-32767             |  Harvester management and compute nodes  | NodePort port range                   |
 | TCP       | 22                       | Harvester management and compute nodes  | sshd                                  |
-| UDP       | 68                       | Harvester management and compute nodes  | Wicked                                |
+| UDP       | 68                       | Harvester management and compute nodes  | NetworkManager                        |
 | TCP       | 3260                     | Harvester management and compute nodes |   iscsid                                |
 
 ### Port Requirements for Integrating Harvester with Rancher

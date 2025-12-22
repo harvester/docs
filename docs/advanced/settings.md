@@ -783,7 +783,24 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
 **Definition**: Upgrade-related configuration.
 
-**Default value**: `{"imagePreloadOption":{"strategy":{"type":"sequential"}}, "restoreVM": false}`
+**Default value**:
+
+```json
+{
+  "imagePreloadOption": {
+    "strategy": {
+      "type": "sequential"
+    }
+  },
+  "nodeUpgradeOption": {
+    "strategy": {
+      "mode": "auto"
+    }
+  },
+  "restoreVM": false,
+  "logReadyTimeout": "5"
+}
+```
 
 **Supported options and fields**:
 
@@ -791,37 +808,67 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
   The full ISO contains the core operating system components and all required container images. Harvester can preload these container images to each node during installation and upgrades. When workloads are scheduled to management and worker nodes, the container images are ready to use.
 
-- `strategy`: Image preload strategy.
+  - `strategy`: Image preload strategy.
 
-- `type`: Type of image preload strategy.
+    - `type`: Type of image preload strategy.
 
-    - `sequential`: Harvester preloads the container images from the target ISO to each node. This is the default option.
+      - `sequential`: Harvester preloads the container images from the target ISO to each node. This is the default option.
 
-    - `skip`: Harvester does not preload the container images from the target ISO to each node. **Do not use this option in production environments.**
+      - `skip`: Harvester does not preload the container images from the target ISO to each node. **Do not use this option in production environments.**
 
-      :::info important
+        :::info important
 
-      If you decide to use `skip`, ensure that the following requirements are met:
+        If you decide to use `skip`, ensure that the following requirements are met:
 
-      - You have a private container registry that contains all required images.
-      - Your cluster has high-speed internet access and is able to pull all images from Docker Hub when necessary.
+        - You have a private container registry that contains all required images.
+        - Your cluster has high-speed internet access and is able to pull all images from Docker Hub when necessary.
 
-      Note any potential internet service interruptions and how close you are to reaching your [Docker Hub rate limit](https://www.docker.com/increase-rate-limits/). Failure to download any of the required images may cause the upgrade to fail and may leave the cluster in a middle state.
+        Note any potential internet service interruptions and how close you are to reaching your [Docker Hub rate limit](https://www.docker.com/increase-rate-limits/). Failure to download any of the required images may cause the upgrade to fail and may leave the cluster in a middle state.
+
+        :::
+
+      - `parallel` (**experimental**): Nodes preload images in batches. You can adjust this using the `concurrency` option.
+
+    - `concurrency`: Number of nodes that can simultaneously preload images. This option takes effect only when `type` is set to `parallel`.
+
+      The default value is `0`, which is equivalent to following the cluster's node counts. Using `0` allows the system to dynamically follow the scale of the cluster. Values higher than the cluster's node counts are treated as `0`, while lower values are considered invalid and are rejected by Harvester.
+
+      :::note
+
+      Harvester deploys an upgrade-repo service on the cluster that serves as an HTTP server for nodes that need to preload the container images. When a `concurrency` value is set, each batch of nodes downloads the container images from this upgrade-repo in parallel. Because of this, you must consider the speed of the Harvester management network and the read speed of the default disk for Longhorn.
 
       :::
 
-    - `parallel` (**experimental**): Nodes preload images in batches. You can adjust this using the `concurrency` option.
+- `nodeUpgradeOption`: Definition of how Harvester must perform node upgrades.
 
-- `concurrency`: Number of nodes that can simultaneously preload images. This option takes effect only when `type` is set to `parallel`.
+  The node upgrade is an atomic operation, which includes upgrading of the node's RKE2 components and operating system. The upgrade is either fully completed or failed, with no half-finished state.
 
-  The default value is `0`, which is equivalent to following the cluster's node counts. Using `0` allows the system to dynamically follow the scale of the cluster. Values higher than the cluster's node counts are treated as `0`, while lower values are considered invalid and are rejected by Harvester.
+  To prepare a target node for upgrade, Harvester first attempts to live-migrate all running virtual machines to other nodes. Virtual machines that cannot be live-migrated are automatically shut down to avoid potential disruption and issues during the subsequent upgrade steps.
 
-  :::note
+  - `strategy`: Node upgrade strategy.
 
-  Harvester deploys an upgrade-repo service on the cluster that serves as an HTTP server for nodes that need to preload the container images. When a `concurrency` value is set, each batch of nodes downloads the container images from this upgrade-repo in parallel. Because of this, you must consider the speed of the Harvester management network and the read speed of the default disk for Longhorn.
+    - `mode`: Mode of node upgrade strategy.
 
-  :::
+      - `auto`: Node upgrades start automatically. This is the default value.
 
+      - `manual`: Node upgrades are paused until you take specific actions to resume the process.
+
+    - `pauseNodes`: List of nodes that must be excluded from automatic upgrades.
+
+      If the `mode` field is set to `manual` and you do not specify any node names in this field, upgrades are paused for all nodes. If the `mode` field is set to `auto`, node names specified in this field are ignored and node upgrades start automatically.
+
+      :::info important
+
+      Upgrading of nodes listed in this field is _paused definitely_ until you take specific actions to [resume the process](upgrade/automatic.md#resuming-a-paused-node-upgrade). Given that Harvester upgrades nodes sequentially, this implies that the entire upgrade progress is paused as well. 
+
+      :::
+      
+      **Example**:
+      
+      ```json
+      "pauseNodes": ["node-0", "node-2"]
+      ```
+    
 - `restoreVM`: Option that enables Harvester to automatically restore previously running [non-migratable virtual machines](../vm/live-migration.md#non-migratable-virtual-machines) after the upgrade is *successfully* completed. You can specify either of the following values:
 
   - `true`: Harvester forcibly shuts down *running* and *paused* non-migratable virtual machines on each node. After the upgrade is completed, the previously running virtual machines are automatically restarted, while the paused virtual machines remain shut down.
@@ -849,6 +896,14 @@ https://your.upgrade.checker-url/v99/checkupgrade
       "concurrency": 2
     }
   },
+  "nodeUpgradeOption": {
+    "strategy": {
+      "mode": "manual",
+      "pauseNodes": [
+        "node-3"
+      ]
+    }
+  }
   "restoreVM": true,
   "logReadyTimeout": "5"
 }
