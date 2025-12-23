@@ -308,6 +308,12 @@ const config = {
             label: "dev", // Current version label
             baseUrl: "/dev/api", // Leading slash is important
             versions: {
+              "v1.7": {
+                specPath: "api/v1.7-swagger.json",
+                outputDir: "versioned_docs/version-v1.7/api", // No trailing slash
+                label: "v1.7",
+                baseUrl: "/v1.7/api", // Leading slash is important
+              },
               "v1.6": {
                 specPath: "api/v1.6-swagger.json",
                 outputDir: "versioned_docs/version-v1.6/api", // No trailing slash
