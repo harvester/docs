@@ -73,6 +73,7 @@ const config = {
             "v1.6": {
               label: 'v1.6',
               path: 'v1.6',
+              banner: `none`
             },
             "v1.5": {
               label: 'v1.5',
