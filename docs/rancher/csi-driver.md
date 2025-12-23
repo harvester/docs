@@ -473,7 +473,7 @@ If the underlying storage provider supports [online volume expansion](../volume/
 
 ## Volume Snapshots
 
-Starting with **v0.1.25**, the Harvester CSI Driver supports [volume snapshots](https://kubernetes.io/docs/concepts/storage/volume-snapshots/), providing point-in-time backup and restore capabilities for workloads running on guest Kubernetes clusters.
+Starting with **v0.1.25**, the Harvester CSI Driver supports [volume snapshots](https://kubernetes.io/docs/concepts/storage/volume-snapshots/), providing point-in-time snapshot and restoration capabilities for workloads running on guest Kubernetes clusters.
 
 ### Prerequisites
 
