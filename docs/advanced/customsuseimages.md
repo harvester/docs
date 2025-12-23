@@ -22,7 +22,7 @@ The *Minimal VM Cloud* images were named *Minimal VM OpenStack Cloud* in release
 
 ## Using the openSUSE Build Service (OBS)
 
-You can create custom images based on what SUSE provides using OBS [image templates](https://build.opensuse.org/image_templates), which are pre-configured Kiwi image configurations. For example, if you want use other packages with SLE 15 SP5, you can create an image using the *SLE 15 SP5 Minimal* template. OBS provides an interface for adding packages and automatically builds the image, which you can download and then upload to Harvester. For more information, see the [OBS User Guide](https://openbuildservice.org/help/manuals/obs-user-guide/).
+You can create custom images based on what SUSE provides using OBS [image templates](https://build.opensuse.org/image_templates), which are pre-configured Kiwi image configurations. For example, if you want use other packages with SLE 15 SP7, you can create an image using the *SLE 15 SP7 Minimal* template. OBS provides an interface for adding packages and automatically builds the image, which you can download and then upload to Harvester. For more information, see the [OBS User Guide](https://openbuildservice.org/help/manuals/obs-user-guide/).
 
 ### 1. Create a custom image based on an existing template.
 
@@ -104,6 +104,9 @@ To create custom images, you must first download the file `Minimal.kiwi`, and th
 
 | OS                 | openSUSE Build Service Project                                                                       |
 | -------------------|-----------------------------------------------------------------------------------|
+| SLE 15 SP7         | https://build.opensuse.org/package/show/SUSE:SLE-15-SP7:GA/kiwi-templates-Minimal |
+| SLE 15 SP6         | https://build.opensuse.org/package/show/SUSE:SLE-15-SP6:GA/kiwi-templates-Minimal |
+| openSUSE Leap 15.6 | https://build.opensuse.org/package/show/openSUSE:Leap:15.6/kiwi-templates-Minimal |
 | SLE 15 SP5         | https://build.opensuse.org/package/show/SUSE:SLE-15-SP5:GA/kiwi-templates-Minimal |
 | openSUSE Leap 15.5 | https://build.opensuse.org/package/show/openSUSE:Leap:15.5/kiwi-templates-Minimal |
 | SLE 15 SP4         | https://build.opensuse.org/package/show/SUSE:SLE-15-SP4:GA/kiwi-templates-Minimal |
