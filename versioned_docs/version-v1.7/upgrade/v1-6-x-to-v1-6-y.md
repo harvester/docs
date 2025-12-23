@@ -1,0 +1,99 @@
+---
+sidebar_position: 4
+sidebar_label: Upgrade from v1.6.x to v1.6.y
+title: "Upgrade from v1.6.x to v1.6.y"
+---
+
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/upgrade/v1-6-x-to-v1-6-y"/>
+</head>
+
+## General Information
+
+An **Upgrade** button appears on the **Dashboard** screen whenever a new Harvester version that you can upgrade to becomes available. For more information, see [Start an upgrade](./automatic.md#start-an-upgrade).
+
+For information about upgrading Harvester in air-gapped environments, see [Prepare an air-gapped upgrade](./automatic.md#prepare-an-air-gapped-upgrade).
+
+### Update Harvester UI Extension on Rancher v2.12
+
+You must use a compatible version (v1.6.x) of the Harvester UI Extension to import Harvester v1.6.x clusters on Rancher v2.12.
+
+1. On the Rancher UI, go to **local > Apps > Repositories**.
+
+1. Locate the repository named **harvester**, and then select **⋮ > Refresh**.
+
+1. Go to the **Extensions** screen.
+
+1. Locate the extension named **Harvester**, and then click **Update**.
+
+1. Select a compatible version, and then click **Update**.
+
+1. Allow some time for the extension to be updated, and then refresh the screen.
+
+---
+
+## Known Issues
+
+### 1. Upgrade Is Stuck in the "Pre-drained" State
+
+In certain situations, the Longhorn Instance Manager might fail to clean up an engine instance, even after the state of the engine CR has changed to "Stopped". The upgrade process becomes stuck in the "Pre-drained" state because the instance-manager pod cannot be deleted while the corresponding PodDisruptionBudget (PDB) still exists.
+
+The workaround is to delete the instance-manager PDB after ensuring that all volumes are healthy.
+
+Related issues: [#8977](https://github.com/harvester/harvester/issues/8977) and [#11605](https://github.com/longhorn/longhorn/issues/11605)
+
+### 2. Guest Cluster Is Stuck in the "Updating" State
+
+An RKE2 guest cluster may become stuck in the "Updating" state after Harvester is upgraded. The following error message is displayed on the Harvester UI:
+
+```
+Configuring etcd node(s) rke2-pool1-xdvfc-qf4vb: Node condition MemoryPressure is Unknown. Node condition DiskPressure is Unknown. Node condition PIDPressure is Unknown. Node condition Ready is Unknown, waiting for probes: calico, etcd, kube-apiserver, kube-controller-manager
+```
+
+The issue occurs when the guest node's IP address changes after the upgrade, causing etcd to malfunction. It is likely that the underlying virtual machine was rebooted several times and received a new IP address from the DHCP server.
+
+To address the issue, perform the following steps:
+
+1. On the Rancher UI, delete the error-causing node from the guest cluster.
+1. On the Harvester UI, check the status of the underlying virtual machine.
+1. If necessary, restart the virtual machine.
+
+The virtual machine is removed, and the guest cluster attempts to create a new node. Once the node is created, the status of the guest cluster changes to "Active".
+
+Related issue: [#8950](https://github.com/harvester/harvester/issues/8950)
+
+### 3. Stopped Virtual Machine Is Stuck in the "Starting" State
+
+A Longhorn volume can flap between the "Detaching" and "Detached" states after a live migration. Because the volume is not ready, the associated virtual machine is unable to fully start.
+
+The workaround is to clear the Longhorn volume's `status.currentMigrationNodeID` using the following command:
+
+```
+kubectl patch -n longhorn-system volume <volume> \
+  --type=merge \
+  --subresource status \
+  -p '{"status":{"currentMigrationNodeID":""}}'
+```
+
+Related issues: [#8949](https://github.com/harvester/harvester/issues/8949) and [#11479](https://github.com/longhorn/longhorn/issues/11479)
+
+### 4. Upgrade to v1.6.1-rc2 Stuck in the "Pre-drained" State
+
+The upgrade process may become indefinitely stuck in the "Pre-drained" state if the following specific upgrade path is followed:
+
+- The cluster was first upgraded from v1.5.1 to v1.6.0.
+- A subsequent upgrade from v1.6.0 to v1.6.1-rc2 is attempted.
+
+You may see the following error message when you check the Harvester controller:
+
+```
+harvester-899b4df79-mzgkx apiserver time="2025-10-11T07:21:17Z" level=error msg="error syncing 'fleet-local/custom-a8796656aa4c-machine-plan': handler harvester-upgrade-secret-controller: jobs.batch \"hvst-upgrade-7zqp7-post-drain-hp-113-tink-system\" already exists, requeuing"
+harvester-899b4df79-mzgkx apiserver time="2025-10-11T07:23:17Z" level=error msg="error syncing 'fleet-local/custom-a8796656aa4c-machine-plan': handler harvester-upgrade-secret-controller: jobs.batch \"hvst-upgrade-7zqp7-post-drain-hp-113-tink-system\" already exists, requeuing"
+harvester-899b4df79-mzgkx apiserver time="2025-10-11T07:25:17Z" level=error msg="error syncing 'fleet-local/custom-a8796656aa4c-machine-plan': handler harvester-upgrade-secret-controller: jobs.batch \"hvst-upgrade-7zqp7-post-drain-hp-113-tink-system\" already exists, requeuing"
+```
+
+This is a rare synchronization failure: the job was already created but the upgrade object was not updated.
+
+The workaround is to delete the existing post-drain job and then wait for the upgrade controller to recreate it.
+
+Related issue: [#9293](https://github.com/harvester/harvester/issues/9293)
