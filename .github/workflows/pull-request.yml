@@ -30,6 +30,12 @@ jobs:
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
         run: |
+          node -v
+          echo "NODE_OPTIONS=$NODE_OPTIONS"
+
+          node -e "console.log('execArgv:', process.execArgv)"
+          node -e "const v8=require('v8'); console.log('heap_size_limit(MB):', Math.round(v8.getHeapStatistics().heap_size_limit/1024/1024))"
+
           yarn gen-api-docs
           yarn build
 
