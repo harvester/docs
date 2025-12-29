@@ -141,10 +141,11 @@ The DHCP server should return the original IP address and the affected node shou
 
 Related issues: [#9260](https://github.com/harvester/harvester/issues/9260) and [#3418](https://github.com/harvester/harvester/issues/3418)
 
-### 2. Upgrade Is Stuck in the "Upgradeing System Service" Stage.
+### 2. Upgrade Is Stuck in "Upgrading System Service"
 
-During the upgrade process, it might be stuck in the `Upgradeing System Service` stage. It might be related to the stuck with `apply-manifest` job. We encounter two known issue realted the fleet upgrade.
-You can find the similar logs as below:
+The upgrade process may become stuck in the "Upgrading System Service" phase. This issue is likely related to the `apply-manifest` job and to two known issues related to the Fleet upgrade.
+
+You may encounter log messages similar to the following:
 
 ```
 ...
@@ -154,41 +155,38 @@ wait helm release cattle-fleet-system fleet fleet-108.0.0+up0.14.0 0.14.0 deploy
 wait helm release cattle-fleet-system fleet-crd fleet-crd-108.0.0+up0.14.0 0.14.0 deployed
 ```
 
-Then, you need to check the helm history to identify which case you are facing:
+Check the Helm history to determine the cause and related workaround.
 
-1. The `pending-upgrade` status:
-```
-$ helm history fleet -n cattle-fleet-system
-REVISION        UPDATED                         STATUS          CHART                   APP VERSION     DESCRIPTION
-6               Tue Nov  4 06:22:34 2025        superseded      fleet-105.0.2+up0.11.2  0.11.2          Upgrade complete
-7               Tue Nov  4 06:22:49 2025        superseded      fleet-105.0.2+up0.11.2  0.11.2          Upgrade complete
-8               Mon Dec  8 07:10:43 2025        superseded      fleet-106.1.1+up0.12.3  0.12.3          Upgrade complete
-9               Mon Dec  8 07:26:49 2025        deployed        fleet-106.1.1+up0.12.3  0.12.3          Upgrade complete
-10              Mon Dec  8 07:27:10 2025        pending-upgrade fleet-106.1.1+up0.12.3  0.12.3          Preparing upgrade
-```
+- Scenario 1: The Fleet upgrade status is `pending-upgrade` even after the upgrade has been completed.
 
-If you saw the `pending-upgrade` status, it means the fleet upgrade is waiting for the upgrade even though the fleet has been already upgraded. You can try the following workaround:
+    ```
+    $ helm history fleet -n cattle-fleet-system
+    REVISION        UPDATED                         STATUS          CHART                   APP VERSION     DESCRIPTION
+    6               Tue Nov  4 06:22:34 2025        superseded      fleet-105.0.2+up0.11.2  0.11.2          Upgrade complete
+    7               Tue Nov  4 06:22:49 2025        superseded      fleet-105.0.2+up0.11.2  0.11.2          Upgrade complete
+    8               Mon Dec  8 07:10:43 2025        superseded      fleet-106.1.1+up0.12.3  0.12.3          Upgrade complete
+    9               Mon Dec  8 07:26:49 2025        deployed        fleet-106.1.1+up0.12.3  0.12.3          Upgrade complete
+    10              Mon Dec  8 07:27:10 2025        pending-upgrade fleet-106.1.1+up0.12.3  0.12.3          Preparing upgrade
+    ```
 
-```
-$ helm rollback fleet -n cattle-fleet-system
-```
+    To address the issue, perform the following workaround:
 
-After that, wait for the embedded Rancher reconciling the ClusterRepo again to trigger the chart upgrade. To accelerate the process, you may restart the embedded Rancher pods.
+    1. Run the command `$ helm rollback fleet -n cattle-fleet-system`.
 
-Related issue: [#9738](https://github.com/harvester/harvester/issues/9738)
+    1. Wait for the embedded Rancher to reconcile the `ClusterRepo` CRD and trigger the Helm chart upgrade. To accelerate the process, you can restart the embedded Rancher pods.
 
-2. Stuck in rc version:
+- Scenario 2: The upgrade is stuck on a release candidate (RC) version. 
 
-```
-# helm history fleet -n cattle-fleet-system
-REVISION        UPDATED                         STATUS          CHART                           APP VERSION     DESCRIPTION
-2               Mon Dec  8 10:43:42 2025        superseded      fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
-3               Mon Dec  8 10:49:51 2025        superseded      fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
-4               Mon Dec  8 10:50:04 2025        superseded      fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
-5               Mon Dec  8 10:56:30 2025        superseded      fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
-6               Mon Dec  8 10:56:42 2025        deployed        fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
-```
+    This should not occur unless you are upgrading from an RC version to a stable version, which is not supported. For assistance, create a [GitHub issue](https://github.com/harvester/harvester/issues).
 
-This should not happened unless you are upgradeing from the rc version. And we did not support the upgrade from rc version to the stable version. If you are in this case, please report an issue on the Github repo for further assistance.
+    ```
+    # helm history fleet -n cattle-fleet-system
+    REVISION        UPDATED                         STATUS          CHART                           APP VERSION     DESCRIPTION
+    2               Mon Dec  8 10:43:42 2025        superseded      fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
+    3               Mon Dec  8 10:49:51 2025        superseded      fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
+    4               Mon Dec  8 10:50:04 2025        superseded      fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
+    5               Mon Dec  8 10:56:30 2025        superseded      fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
+    6               Mon Dec  8 10:56:42 2025        deployed        fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
+    ```
 
-Related issue: [#9680](https://github.com/harvester/harvester/issues/9680)
+Related issues: [#9738](https://github.com/harvester/harvester/issues/9738) and [#9680](https://github.com/harvester/harvester/issues/9680)
