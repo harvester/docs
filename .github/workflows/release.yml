@@ -26,8 +26,6 @@ jobs:
           PUPPETEER_DOWNLOAD_BASE_URL=https://storage.googleapis.com/chrome-for-testing-public yarn install --frozen-lockfile
 
       - name: Build
-        env:
-          NODE_OPTIONS: "--max_old_space_size=7168"
         run: |
           yarn gen-api-docs
           yarn build
