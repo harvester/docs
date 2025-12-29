@@ -30,6 +30,8 @@ The following operating systems have been validated to run in Harvester virtual 
 - SUSE Linux Enterprise Server 15 SP6 and 15 SP7
 - Red Hat Enterprise Linux 9 and 10
 - Ubuntu 22.04 and 24.04
+- Windows	11
+- Windows Server 2025
 
 :::note
 
