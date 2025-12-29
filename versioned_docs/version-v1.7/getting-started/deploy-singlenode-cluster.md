@@ -12,7 +12,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/getting-started/deploy-singlenode-cluster"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/getting-started/deploy-singlenode-cluster"/>
 </head>
 
 A [Harvester cluster](../getting-started/glossary.md#harvester-cluster) with three or more nodes is required to fully realize multi-node features such as high availability. Certain versions of Harvester allow you to create clusters with two management nodes and one [witness node](../advanced/witness.md) (and optionally, one or more worker nodes). You can also create [single-node clusters](../advanced/singlenodeclusters.md) that support most Harvester features (excluding high availability, multi-replica support, and live migration). 

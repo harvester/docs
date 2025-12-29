@@ -5,7 +5,7 @@ title: "VM Migration Network"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/vm-migration-network"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/vm-migration-network"/>
 </head>
 
 A VM migration network is useful for isolating migration traffic from cluster traffic on `mgmt` and other cluster-wide workloads. Using a VM migration network results in better network bandwidth and performance.
