@@ -10,7 +10,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/getting-started/glossary"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/getting-started/glossary"/>
 </head>
 
 ## **guest cluster** / **guest Kubernetes cluster**
