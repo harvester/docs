@@ -13,7 +13,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/networking/kubeovn-vpc"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/networking/kubeovn-vpc"/>
 </head> 
 
 :::note
