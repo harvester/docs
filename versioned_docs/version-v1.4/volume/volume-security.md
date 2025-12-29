@@ -8,7 +8,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/volume/volume-security"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/volume/volume-security"/>
 </head>
 
 _Available as of v1.4.0_

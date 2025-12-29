@@ -5,7 +5,7 @@ title: "Creating an RKE1 Kubernetes Cluster"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/rancher/node/rke1-cluster"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/rancher/node/rke1-cluster"/>
 </head>
 
 :::caution

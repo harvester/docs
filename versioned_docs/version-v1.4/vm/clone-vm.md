@@ -12,7 +12,7 @@ description: VM can be cloned with/without data. This function doesn't need to t
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/vm/clone-vm"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/vm/clone-vm"/>
 </head>
 
 _Available as of v1.1.0_

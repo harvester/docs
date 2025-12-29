@@ -10,7 +10,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/getting-started/document-conventions"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/getting-started/document-conventions"/>
 </head>
 
 ## Release Labels
