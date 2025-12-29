@@ -140,3 +140,53 @@ You must perform the steps for each affected node _after_ the upgrade is complet
 The DHCP server should return the original IP address and the affected node should be able to join the cluster.
 
 Related issues: [#9260](https://github.com/harvester/harvester/issues/9260) and [#3418](https://github.com/harvester/harvester/issues/3418)
+
+### 2. Upgrade Is Stuck in "Upgrading System Service"
+
+The upgrade process may become stuck in the "Upgrading System Service" phase. This issue is likely related to the `apply-manifest` job and to two known issues related to the Fleet upgrade.
+
+You may encounter log messages similar to the following:
+
+```
+...
+Happy Containering!
+Wait for Rancher dependencies helm releases...
+wait helm release cattle-fleet-system fleet fleet-108.0.0+up0.14.0 0.14.0 deployed
+wait helm release cattle-fleet-system fleet-crd fleet-crd-108.0.0+up0.14.0 0.14.0 deployed
+```
+
+Check the Helm history to determine the cause and related workaround.
+
+- Scenario 1: The Fleet upgrade status is `pending-upgrade` even after the upgrade has been completed.
+
+    ```
+    $ helm history fleet -n cattle-fleet-system
+    REVISION        UPDATED                         STATUS          CHART                   APP VERSION     DESCRIPTION
+    6               Tue Nov  4 06:22:34 2025        superseded      fleet-105.0.2+up0.11.2  0.11.2          Upgrade complete
+    7               Tue Nov  4 06:22:49 2025        superseded      fleet-105.0.2+up0.11.2  0.11.2          Upgrade complete
+    8               Mon Dec  8 07:10:43 2025        superseded      fleet-106.1.1+up0.12.3  0.12.3          Upgrade complete
+    9               Mon Dec  8 07:26:49 2025        deployed        fleet-106.1.1+up0.12.3  0.12.3          Upgrade complete
+    10              Mon Dec  8 07:27:10 2025        pending-upgrade fleet-106.1.1+up0.12.3  0.12.3          Preparing upgrade
+    ```
+
+    To address the issue, perform the following workaround:
+
+    1. Run the command `$ helm rollback fleet -n cattle-fleet-system`.
+
+    1. Wait for the embedded Rancher to reconcile the `ClusterRepo` CRD and trigger the Helm chart upgrade. To accelerate the process, you can restart the embedded Rancher pods.
+
+- Scenario 2: The upgrade is stuck on a release candidate (RC) version. 
+
+    This should not occur unless you are upgrading from an RC version to a stable version, which is not supported. For assistance, create a [GitHub issue](https://github.com/harvester/harvester/issues).
+
+    ```
+    # helm history fleet -n cattle-fleet-system
+    REVISION        UPDATED                         STATUS          CHART                           APP VERSION     DESCRIPTION
+    2               Mon Dec  8 10:43:42 2025        superseded      fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
+    3               Mon Dec  8 10:49:51 2025        superseded      fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
+    4               Mon Dec  8 10:50:04 2025        superseded      fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
+    5               Mon Dec  8 10:56:30 2025        superseded      fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
+    6               Mon Dec  8 10:56:42 2025        deployed        fleet-108.0.0+up0.14.0-rc.1     0.14.0-rc.1     Upgrade complete
+    ```
+
+Related issues: [#9738](https://github.com/harvester/harvester/issues/9738) and [#9680](https://github.com/harvester/harvester/issues/9680)
