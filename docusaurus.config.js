@@ -84,31 +84,6 @@ const config = {
               label: 'v1.4 (EOL)',
               path: 'v1.4',
               banner: `unmaintained`
-            },
-            "v1.3": {
-              label: 'v1.3 (EOL)',
-              path: 'v1.3',
-              banner: `unmaintained`
-            },
-            "v1.2": {
-              label: 'v1.2 (EOL)',
-              path: 'v1.2',
-              banner: `unmaintained`
-            },
-            "v1.1": {
-              label: 'v1.1 (EOL)',
-              path: 'v1.1',
-              banner: `unmaintained`
-            },
-            "v1.0": {
-              label: 'v1.0 (EOL)',
-              path: 'v1.0',
-              banner: `unmaintained`
-            },
-            "v0.3": {
-              label: 'v0.3 (EOL)',
-              path: 'v0.3',
-              banner: `unmaintained`
             }
           }
         },
@@ -332,25 +307,7 @@ const config = {
                 outputDir: "versioned_docs/version-v1.4/api", // No trailing slash
                 label: "v1.4",
                 baseUrl: "/v1.4/api", // Leading slash is important
-              },              
-              "v1.3": {
-                specPath: "api/v1.3-swagger.json",
-                outputDir: "versioned_docs/version-v1.3/api", // No trailing slash
-                label: "v1.3",
-                baseUrl: "/v1.3/api", // Leading slash is important
-              },
-              "v1.2": {
-                specPath: "api/v1.2-swagger.json",
-                outputDir: "versioned_docs/version-v1.2/api", // No trailing slash
-                label: "v1.2",
-                baseUrl: "/v1.2/api", // Leading slash is important
-              },
-              "v1.1": {
-                specPath: "api/v1.1-swagger.json",
-                outputDir: "versioned_docs/version-v1.1/api", // No trailing slash
-                label: "v1.1",
-                baseUrl: "/v1.1/api", // Leading slash is important
-              },
+              }
             },
           },
         },
