@@ -12,7 +12,7 @@ Description: Perform out-of-band operations on Harvester hosts via IPMI and disc
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/addons/seeder"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/seeder"/>
 </head>
 
 :::note

@@ -5,7 +5,7 @@ title: "Managed DHCP (Experimental)"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/addons/managed-dhcp"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/managed-dhcp"/>
 </head>
 
 :::note

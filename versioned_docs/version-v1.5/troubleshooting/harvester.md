@@ -5,7 +5,7 @@ title: "Harvester"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/troubleshooting/harvester"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/troubleshooting/harvester"/>
 </head>
 
 ## Fail to Deploy a Multi-node Cluster Due to Incorrect HTTP Proxy Setting
