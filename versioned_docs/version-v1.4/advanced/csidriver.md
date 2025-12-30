@@ -5,7 +5,7 @@ title: "Third-Party Storage Support"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/csidriver"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/csidriver"/>
 </head>
 
 _Available as of v1.2.0_

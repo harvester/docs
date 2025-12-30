@@ -10,7 +10,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/rancher/rancher-integration"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/rancher/rancher-integration"/>
 </head>
 
 

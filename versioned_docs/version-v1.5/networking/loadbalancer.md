@@ -7,7 +7,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/networking/loadbalancer"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/networking/loadbalancer"/>
 </head>
 
 _Available as of v1.2.0_

@@ -5,7 +5,7 @@ title: "Logging"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/troubleshooting/logging"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/troubleshooting/logging"/>
 </head>
 
 The following sections contain tips to troubleshoot Harvester Logging.

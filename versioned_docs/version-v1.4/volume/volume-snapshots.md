@@ -8,7 +8,7 @@ keywords:
 description: Take a snapshot for a volume from the Volume page.
 ---
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/volume/volume-snapshots"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/volume/volume-snapshots"/>
 </head>
 
 A volume snapshot represents a snapshot of a volume on a storage system. After creating a volume, you can create a volume snapshot and restore a volume to the snapshot's state. With volume snapshots, you can easily copy or restore a volume's configuration.

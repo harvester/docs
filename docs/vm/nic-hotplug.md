@@ -13,7 +13,7 @@ description: Hotplug and hotunplug network interfaces to a running VM.
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/vm/nic-hotplug"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/vm/nic-hotplug"/>
 </head>
 
 _Available as of v1.7.0_

@@ -19,7 +19,7 @@ description: Create VM with CPU / Memory Hotplug
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/vm/cpu-memory-hotplug"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/vm/cpu-memory-hotplug"/>
 </head>
 
 _Available as of v1.6.0_

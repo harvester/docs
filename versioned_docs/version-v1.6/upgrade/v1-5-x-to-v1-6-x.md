@@ -5,7 +5,7 @@ title: "Upgrade from v1.5.x to v1.6.x"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/upgrade/v1-5-x-to-v1-6-x"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/upgrade/v1-5-x-to-v1-6-x"/>
 </head>
 
 ## General Information

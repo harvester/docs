@@ -5,7 +5,7 @@ title: "Kube-OVN Operator (Experimental)"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/addons/kubeovn-operator"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/kubeovn-operator"/>
 </head>
 
 _Available as of v1.6.0_

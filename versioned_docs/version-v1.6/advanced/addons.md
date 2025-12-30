@@ -5,7 +5,7 @@ title: "Add-ons"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/addons"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons"/>
 </head>
 
 Harvester provides optional features as add-ons to maintain a minimal installation footprint. This design allows you to easily enable or disable functionality based strictly on your use case and requirements. You can customize the settings of each add-on, though the level of customization depends on the underlying software.

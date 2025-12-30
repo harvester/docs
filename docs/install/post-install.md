@@ -10,7 +10,7 @@ description: Post-installation steps.
 
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/install/post-install"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/install/post-install"/>
 </head>
 
 You can enhance the security and performance of your Harvester cluster by performing the following procedures after installation is completed.

@@ -11,7 +11,7 @@ description: Information concerning virtual machines that run on top of the Harv
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/vm/virtual-machines"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/vm/virtual-machines"/>
 </head>
 
 You can create [Linux VMs](../vm/create-vm.md) using one of the following methods: 

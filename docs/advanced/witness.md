@@ -5,7 +5,7 @@ title: "Witness Node"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/witness"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/witness"/>
 </head>
 
 _Available as of v1.3.0_

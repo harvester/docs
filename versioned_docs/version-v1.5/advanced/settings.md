@@ -6,7 +6,7 @@ title: "Settings"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/advanced/index"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/index"/>
 </head>
 
 The following is a list of advanced settings that you can use in Harvester. You can modify the `settings.harvesterhci.io` custom resource using both the Harvester UI and the `kubectl` command.

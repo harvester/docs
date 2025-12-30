@@ -12,7 +12,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.6/networking/kubeovn-vm-isolation"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/networking/kubeovn-vm-isolation"/>
 </head>
 
 :::note
