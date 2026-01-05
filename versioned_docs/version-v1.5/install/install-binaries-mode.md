@@ -15,6 +15,10 @@ description: To get the Harvester ISO, download it from the GitHub releases. Dur
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/install/install-binaries-mode"/>
 </head>
 
+:::danger
+A critical vulnerability has been identified within the SUSE Virtualization (Harvester) interactive installer that allows an attacker to gain unauthorized network access to the host via a remote shell (SSH). Environments that are exposed to untrusted locations must either upgrade to use the Harvester 1.7 interactive installer or utilize the [PXE boot installation mechanism](pxe-boot-install) to create new clusters or expand existing clusters. For more details, see the security advisory at [CVE-2025-62877](https://github.com/harvester/harvester/security/advisories/GHSA-6g8q-hp2j-gvwv).
+:::
+
 _Available as of v1.2.0_
 
 The `Install Harvester binaries only` mode allows you to install and configure binaries only, making it ideal for cloud and edge use cases.

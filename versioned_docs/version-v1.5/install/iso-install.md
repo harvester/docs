@@ -16,6 +16,10 @@ description: To get the Harvester ISO, download it from the Github releases. Dur
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/install/index"/>
 </head>
 
+:::danger
+A critical vulnerability has been identified within the SUSE Virtualization (Harvester) interactive installer that allows an attacker to gain unauthorized network access to the host via a remote shell (SSH). Environments that are exposed to untrusted locations must either upgrade to use the Harvester 1.7 interactive installer or utilize the [PXE boot installation mechanism](pxe-boot-install) to create new clusters or expand existing clusters. For more details, see the security advisory at [CVE-2025-62877](https://github.com/harvester/harvester/security/advisories/GHSA-6g8q-hp2j-gvwv).
+:::
+
 Harvester ships as a bootable appliance image, you can install it directly on a bare metal server with the ISO image. To get the ISO image, download **💿 harvester-v1.x.x-amd64.iso** from the [Harvester releases](https://github.com/harvester/harvester/releases) page.
 
 During the installation, you can either choose to **create a new Harvester cluster** or **join the node to an existing Harvester cluster**.
