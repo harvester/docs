@@ -1,8 +1,9 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const {themes} = require('prism-react-renderer');
+const lightCodeTheme = themes.github;
+const darkCodeTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 const config = {
@@ -11,7 +12,11 @@ const config = {
   url: "https://docs.harvesterhci.io",
   baseUrl: "/",
   onBrokenLinks: "warn",
-  onBrokenMarkdownLinks: "warn",
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: "warn",
+    },
+  },
   favicon: "img/favicon.ico",
   organizationName: "harvester",
   projectName: "docs",
@@ -27,27 +32,16 @@ const config = {
       },
     },
   },
-  webpack: {
-    jsLoader: (isServer) => ({
-      loader: require.resolve("swc-loader"),
-      options: {
-        jsc: {
-          parser: {
-            syntax: "typescript",
-            tsx: true,
-          },
-          target: "es2019",
-          transform: {
-            react: {
-              runtime: "automatic",
-            },
-          },
-        },
-        module: {
-          type: isServer ? "commonjs" : "es6",
-        },
-      },
-    }),
+  future: {
+    v4: true,
+    experimental_faster: {
+      swcJsLoader: true,
+      swcJsMinimizer: true,
+      swcHtmlMinimizer: true,
+      lightningCssMinimizer: true,
+      rspackBundler: true,
+      mdxCrossCompilerCache: true,
+    },
   },
   themes: ["docusaurus-theme-openapi-docs"],
   presets: [
