@@ -59,6 +59,10 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 	- `Witness Role`: Restricts a node to being a witness node (only functions as an etcd node) in a specific cluster.
 	- `Worker Role`: Restricts a node to being a worker node (never promoted to management node) in a specific cluster.
 
+1. Configure and confirm a `Password` to access the node. The default SSH user is `rancher`.
+
+	![config-password.png](/img/v1.2/install/config-password.png)
+
 1. Choose the installation disk you want to install the Harvester cluster on and the data disk you want to store VM data on. By default, Harvester uses [GUID Partition Table (GPT)](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [Master boot record (MBR)](https://en.wikipedia.org/wiki/Master_boot_record).
 
 	:::info important
@@ -131,10 +135,6 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 1. Configure the `Cluster token`. This token is used for adding other nodes to the cluster.
 
 	![config-cluster-token.png](/img/v1.2/install/config-cluster-token.png)
-
-1. Configure and confirm a `Password` to access the node. The default SSH user is `rancher`.
-
-	![config-password.png](/img/v1.2/install/config-password.png)
 
 1. Configure `NTP servers` to make sure all nodes' times are synchronized. This defaults to `0.suse.pool.ntp.org`. Use commas as a delimiter to add more NTP servers.
 

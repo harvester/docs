@@ -14,9 +14,16 @@ description: Harvester Net Install ISO is a minimal ISO that contains only the O
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/install/net-install"/>
 </head>
 
+:::warning
+
+A critical vulnerability in the SUSE Virtualization (Harvester) interactive installer allows attackers to gain remote shell (SSH) access to the host. If your environment is exposed to untrusted locations, you must either upgrade to v1.7 and use the corresponding interactive installer, or use the [PXE boot installation mechanism](pxe-boot-install.md) when creating or expanding clusters. For more information, see the [security advisory for CVE-2025-62877](https://github.com/harvester/harvester/security/advisories/GHSA-6g8q-hp2j-gvwv).
+
+:::
+
 The Harvester net install ISO is a minimal installation image that contains only the core OS components, allowing the installer to boot and then install the Harvester OS on a disk. After installation is completed, the Harvester OS pulls all required container images from the internet (mostly from Docker Hub).
 
 You can use the net install ISO in the following situations:
+
 - The virtual media implementation on a server is buggy or slow. Community users have reported that ISO redirection is too slow to preload all images onto a system. For more information, see [Issue 2651](https://github.com/harvester/harvester/issues/2651).
 - You have a private registry that contains all Harvester images, as well as the knowledge and experience required to configure image mirrors for containerd.
 
