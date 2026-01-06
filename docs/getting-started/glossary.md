@@ -61,15 +61,15 @@ Each node that joins a Harvester cluster must be assigned a [role](../host/host.
 
 ## **live migration**
 
-Process of moving a running virtual machine to another node within the same Harvester cluster without interrupting the guest operating system and causing workload downtime. Live migration can occur only when the [prerequisites](https://docs.harvesterhci.io/v1.7/vm/live-migration/#prerequisites) are met and when the affected virtual machines are [live-migratable](https://docs.harvesterhci.io/v1.7/vm/live-migration/#live-migratable-virtual-machines).
+Process of [moving a running virtual machine to another node](../vm/live-migration.md) within the same Harvester cluster without interrupting the guest operating system and causing workload downtime. Live migration can occur only when the [prerequisites](../vm/live-migration.md#prerequisites) are met and when the affected virtual machines are [live-migratable](../vm/live-migration.md#live-migratable-virtual-machines).
 
 ## **mgmt**
 
-Cluster network that is automatically created during Harvester cluster deployment and is always enabled on all hosts. Harvester uses `mgmt` for intra-cluster communications and cluster management tasks.
+Cluster network that is [automatically created](../networking/clusternetwork.md#built-in-cluster-network) during Harvester cluster deployment and is always enabled on all hosts. Harvester uses `mgmt` for intra-cluster communications and cluster management tasks.
 
 ## **net install ISO**
 
-Installation image that contains only the core Harvester operating system components, allowing the installer to boot and then install the operating system on a disk. After installation is completed, the operating system pulls all required container images from the internet.
+Installation image that contains only the [core Harvester operating system components](../install/net-install.md), allowing the installer to boot and then install the operating system on a disk. After installation is completed, the operating system pulls all required container images from the internet.
 
 ## **network configuration**
 
@@ -77,11 +77,11 @@ Definition of how a set of cluster nodes with uniform network specifications con
 
 ## **storage network**
 
-Network for isolating Longhorn replication traffic from intra-cluster traffic on `mgmt` and other cluster-wide workloads.
+Network for [isolating Longhorn replication traffic](../advanced/storagenetwork.md) from intra-cluster traffic on `mgmt` and other cluster-wide workloads.
 
 ## **VM migration network**
 
-Network for isolating migration traffic from intra-cluster traffic on `mgmt` and other cluster-wide workloads.
+Network for [isolating virtual machine migration traffic](../advanced/vm-migration-network.md) from intra-cluster traffic on `mgmt` and other cluster-wide workloads.
 
 ## **VM network**
 
