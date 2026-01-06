@@ -1,7 +1,7 @@
 name: Pull Request Preview
 
 on:
-  pull_request_target:
+  pull_request:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number }}
@@ -13,14 +13,14 @@ jobs:
     permissions: {} # disable all permission
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Set up Node.js 18
-        uses: actions/setup-node@v4
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v6
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install dependencies
         run: |
@@ -43,10 +43,10 @@ jobs:
       pull-requests: write
     needs: prepare
     steps:
-      - name: Set up Node.js 18
-        uses: actions/setup-node@v4
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v6
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install dependencies
         run: |
