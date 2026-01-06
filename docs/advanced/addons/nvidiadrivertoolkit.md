@@ -52,13 +52,11 @@ If an NVIDIA driver was previously installed, you must restart the pod to trigge
 
 _Available as of v1.8.0_
 
-Starting from v1.8.0, the nvidia-driver-toolkit uses Kubernetes `nodeAffinity` for more flexible node scheduling.
+Starting with v1.8.0, the **nvidia-driver-toolkit** uses node affinity instead of nodeSelector for more flexible node scheduling.
 
 ### Customizing Node Affinity
 
-You can customize the node affinity settings to meet your specific requirements. For example:
-
-**Example: Install on nodes with specific GPU models**
+You can customize the node affinity settings to meet your specific requirements. In the following example, the driver is installed on nodes with specific GPU models.
 
 ```yaml
 affinity:
@@ -79,9 +77,9 @@ affinity:
 
 ### Applying Custom Node Affinity
 
-To apply custom node affinity settings:
+1. Edit the **nvidia-driver-toolkit** add-on configuration using either the Harvester UI or the Helm chart values.
+1. Update the `affinity` section.
+1. Save the changes.
 
-1. Edit the nvidia-driver-toolkit addon configuration through the Harvester UI or by editing the Helm values
-2. Update the `affinity` section with your desired configuration
-3. Save the changes - the DaemonSet will be updated automatically
+The DaemonSet is updated automatically.
 
