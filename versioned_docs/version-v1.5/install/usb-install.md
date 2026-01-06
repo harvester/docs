@@ -8,8 +8,10 @@ title: "USB Installation"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/install/usb-install"/>
 </head>
 
-:::danger
-A critical vulnerability has been identified within the SUSE Virtualization (Harvester) interactive installer that allows an attacker to gain unauthorized network access to the host via a remote shell (SSH). Environments that are exposed to untrusted locations must either upgrade to use the Harvester 1.7 interactive installer or utilize the [PXE boot installation mechanism](pxe-boot-install) to create new clusters or expand existing clusters. For more details, see the security advisory at [CVE-2025-62877](https://github.com/harvester/harvester/security/advisories/GHSA-6g8q-hp2j-gvwv).
+:::warning
+
+A critical vulnerability in the SUSE Virtualization (Harvester) interactive installer allows attackers to gain remote shell (SSH) access to the host. If your environment is exposed to untrusted locations, you must either upgrade to v1.7 and use the corresponding interactive installer, or use the [PXE boot installation mechanism](pxe-boot-install.md) when creating or expanding clusters. For more information, see the [security advisory for CVE-2025-62877](https://github.com/harvester/harvester/security/advisories/GHSA-6g8q-hp2j-gvwv).
+
 :::
 
 ## Create a bootable USB flash drive
