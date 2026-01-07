@@ -22,6 +22,14 @@ The Harvester ISO image contains all the packages to make it work in an air gapp
 
 In some environments, the connection to external services, from the servers or VMs, requires an HTTP(S) proxy.
 
+## Connect an Air-Gapped Harvester Cluster to Rancher
+
+HTTP proxy settings must be configured based on where Rancher is deployed.
+
+- Rancher in the external environment: To allow Rancher to access the Harvester API endpoint, configure the proxy within Rancher using the following:
+  - Operating system environment variables
+  - `http-proxy` setting: Use the `httpProxy`, `httpsProxy`, and `noProxy` options. Ensure that the `noProxy` list includes the Harvester cluster VIP or API server IP, Harvester service domains such as `harvester-system.svc.cluster.local`, and any relevant CIDR ranges. Check more details in [settings](./advanced/settings.md#http-proxy)
+
 ### Configure an HTTP Proxy During Installation
 
 You can configure the HTTP(S) proxy during the [ISO installation](./install/iso-install.md) as shown in picture below:
