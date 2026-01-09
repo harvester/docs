@@ -1,6 +1,6 @@
 # docs.harvesterhci.io
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern
+This website is built using [Docusaurus 3](https://docusaurus.io/blog/releases/3.9), a modern
 static website generator.
 
 ## File Location
@@ -58,21 +58,6 @@ yarn build
 
 This command generates static content into the `build` directory and can be
 served using any static contents hosting service. The build may take a while.
-
-### Generate PDF
-
-First, the docs need to be served on a local dev server. You can do that with:
-
-```console
-yarn start > /dev/null 2>&1 &
-```
-
-When they are successfully generated and served at `localhost:3000` the PDF can
-be generated with
-
-```console
-yarn gen-pdf-docs
-```
 
 ## Deployment
 
