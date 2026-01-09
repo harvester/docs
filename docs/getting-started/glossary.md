@@ -55,9 +55,17 @@ Physical server on which the Harvester hypervisor is installed.
 
 Each node that joins a Harvester cluster must be assigned a [role](../host/host.md#role-management) that determines the functions the node can perform within the cluster. All Harvester nodes process data but not all can store data.
 
+## **Harvester Cloud Provider**
+
+Component that enables a Rancher-managed Harvester cluster to function as a [native cloud backend for guest Kubernetes clusters](../rancher/cloud-provider.md). The Harvester Cloud Provider integrates the Kubernetes cloud controller manager (CCM) and container storage interface (CSI) driver, allowing guest clusters to dynamically request and manage Harvester-native resources (load balancer and storage) without manual intervention.
+
+## **Harvester CSI Driver**
+
+Driver that provides a standard container storage interface (CSI) for guest Kubernetes clusters running on top of Harvester virtual machines. This component [connects guest clusters to the underlying Harvester cluster](../rancher/csi-driver.md) and enables hotplugging of volumes to the virtual machines to provide native storage performance.
+
 ## **Harvester Node Driver**
 
-[Driver](../rancher/node/node-driver.md) that Rancher uses to provision virtual machines in a Harvester cluster, and to launch and manage guest Kubernetes clusters on top of those virtual machines.
+Driver that Rancher uses to [provision virtual machines in a Harvester cluster](../rancher/node/node-driver.md), and to launch and manage guest Kubernetes clusters on top of those virtual machines.
 
 ## **live migration**
 
@@ -75,9 +83,17 @@ Installation image that contains only the [core Harvester operating system compo
 
 Definition of how a set of cluster nodes with uniform network specifications connects to a specific cluster network.
 
+## **overlay network**
+
+Virtual network representing a virtual layer 2 switch that [encapsulates and forwards traffic between virtual machines](../networking/harvester-network.md#overlay-network-experimental). Overlay networks support advanced software-defined networking (SDN) capabilities such as virtual private clouds (VPCs) and subnets for virtual machine workloads.
+
 ## **storage network**
 
 Network for [isolating Longhorn replication traffic](../advanced/storagenetwork.md) from intra-cluster traffic on `mgmt` and other cluster-wide workloads.
+
+## **VLAN trunk network**
+
+Virtual network that provides a virtual machine with a single network interface that can carry traffic for [multiple, overlapping VLAN ID ranges](../networking/harvester-network.md#vlan-trunk-network) simultaneously. When a virtual machine is attached to a VLAN trunk network, the guest operating system and applications are allowed to send and receive packets tagged with any of the VLAN IDs within the specified range.
 
 ## **VM migration network**
 
@@ -86,3 +102,9 @@ Network for [isolating virtual machine migration traffic](../advanced/vm-migrati
 ## **VM network**
 
 Virtual network linked to a specific cluster network that enables communication between virtual machines and the external network.
+
+## **witness node**
+
+[Non-computing node](../advanced/witness.md) used solely to maintain cluster consensus. It ensures the system can reach a majority decision (quorum) on cluster updates even if a management node becomes unavailable or a network failure occurs.
+
+Witness nodes do not run workloads and store data. Each Harvester cluster can have only one witness node.
