@@ -47,3 +47,39 @@ kubectl annotate nodes {node name} sriovgpu.harvesterhci.io/custom-driver=https:
 The nvidia-driver-toolkit installs the specified driver version upon starting.
 
 If an NVIDIA driver was previously installed, you must restart the pod to trigger the installation process again.
+
+## Advanced Node Scheduling with Node Affinity
+
+_Available as of v1.8.0_
+
+Starting with v1.8.0, the **nvidia-driver-toolkit** uses node affinity instead of nodeSelector for more flexible node scheduling.
+
+### Customizing Node Affinity
+
+You can customize the node affinity settings to meet your specific requirements. In the following example, the driver is installed on nodes with specific GPU models.
+
+```yaml
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: sriovgpu.harvesterhci.io/driver-needed
+          operator: In
+          values:
+          - "true"
+        - key: gpu.model
+          operator: In
+          values:
+          - "A100"
+          - "A40"
+```
+
+### Applying Custom Node Affinity
+
+1. Edit the **nvidia-driver-toolkit** add-on configuration using either the Harvester UI or the Helm chart values.
+1. Update the `affinity` section.
+1. Save the changes.
+
+The DaemonSet is updated automatically.
+
