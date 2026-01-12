@@ -133,6 +133,12 @@ The **Migrate** menu option is not available in the following situations:
 
 :::
 
+:::caution
+
+Due to a [limitation](https://kubevirt.io/user-guide/user_workloads/vm_rollout_strategies/#restartrequired-condition) in the VM rollout strategy implementation, virtual machines that are pending restart may get live-migrated to a random node, instead of a user-specified target node. The virtual machines must be restarted for all subsequent node-specific live migrations.
+
+:::
+
 ![](/img/v1.2/vm/migrate.png)
 
 ## Aborting a Migration
