@@ -18,6 +18,10 @@ description: To get the Harvester ISO, download it from the Github releases. Dur
 
 Harvester ships as a bootable appliance image, you can install it directly on a bare metal server with the ISO image. To get the ISO image, download **💿 harvester-v1.x.x-amd64.iso** from the [Harvester releases](https://github.com/harvester/harvester/releases) page.
 
+:::info important
+Support for legacy BIOS booting was deprecated in v1.7.0 and will be removed in a later release. Existing Harvester clusters that use this boot mode will continue to function, but upgrading to later versions may require re-installation in UEFI mode. Starting with Harvester v1.8.0, the installer ISO will not boot on legacy BIOS systems in order to ensure that UEFI is used for all new installations.
+:::
+
 During the installation, you can either choose to **create a new Harvester cluster** or **join the node to an existing Harvester cluster**.
 
 The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an ISO installation.
@@ -63,11 +67,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
 	![config-password.png](/img/v1.2/install/config-password.png)
 
-1. Choose the installation disk you want to install the Harvester cluster on and the data disk you want to store VM data on. By default, Harvester uses [GUID Partition Table (GPT)](https://en.wikipedia.org/wiki/GUID_Partition_Table) partitioning schema for both UEFI and BIOS. If you use the BIOS boot, then you will have the option to select [Master boot record (MBR)](https://en.wikipedia.org/wiki/Master_boot_record).
-
-	:::info important
-	Support for legacy BIOS booting is deprecated in v1.7.0 and will be removed in a later release. Existing Harvester clusters that use this boot mode will continue to function, but upgrading to later versions may require re-installation in UEFI mode. To avoid issues and disruptions, use UEFI in new installations.
-	:::
+1. Choose the installation disk you want to install the Harvester cluster on and the data disk you want to store VM data on.
 
 	![choose-installation-target-data-disk.png](/img/v1.2/install/choose-installation-target-data-disk.png)
 
