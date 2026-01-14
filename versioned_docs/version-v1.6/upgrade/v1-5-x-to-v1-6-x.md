@@ -256,9 +256,9 @@ Starting from v1.6.0, to support the CPU and Memory hot-plug feature and to info
 
 ### 7. Virtual Machine Cannot Be Live Migrated to the Target Node
 
-After upgrading Harvester to v1.6.x, KubeVirt may report that some virtual machines are pending restart. These virtual machines cannot be live migrated to a user-specified target node from the UI, until they are restarted. Once restarted, subsequent node-specific live migrations will work.
+Following an upgrade to v1.6.x, some virtual machines may remain in a _pending restart_ state. These virtual machines cannot be live migrated to the specified target node until they are restarted.
 
-The workaround is to restart the virtual machine.
+The workaround is to restart the virtual machines. Once restarted, subsequent node-specific live migrations will work.
 
 Related issue: [#9739](https://github.com/harvester/harvester/issues/9739)
 
