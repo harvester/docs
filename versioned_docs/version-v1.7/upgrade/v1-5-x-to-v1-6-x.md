@@ -254,7 +254,15 @@ Before Harvester v1.6.0, the controller patched the MAC address from the VMI int
 
 Starting from v1.6.0, to support the CPU and Memory hot-plug feature and to inform users that certain CPU and memory changes might not take effect immediately, we decided to expose the “RestartRequired” condition in the UI. That’s why this message appears after upgrading Harvester or updating the harvester-ui-extension to v1.6.x.
 
-### 7. Change in Default VLAN Behavior for Secondary Pod Interfaces
+### 7. Virtual Machine Cannot Be Live Migrated to the Target Node
+
+Following an upgrade to v1.6.x, some virtual machines may remain in a _pending restart_ state. These virtual machines cannot be live migrated to the specified target node until they are restarted.
+
+The workaround is to restart the virtual machines. Once restarted, subsequent node-specific live migrations will work.
+
+Related issue: [#9739](https://github.com/harvester/harvester/issues/9739)
+
+### 8. Change in Default VLAN Behavior for Secondary Pod Interfaces
 
 In v1.6.0 and earlier versions, pods with secondary network interfaces (such as VM networks and storage networks) were automatically assigned to VLAN ID 1 and the VLAN ID configured in the VLAN network. This dual-VLAN ID configuration allowed the Harvester network bridge to forward untagged traffic to the veth interfaces of these pods.
 
