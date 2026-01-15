@@ -934,14 +934,17 @@ When the state of the node changes to `Not Ready`, the VM is force deleted and r
 
 When the node becomes unavailable or is powered off, the VM only restarts and does not migrate.
 
-**Default value**: `{"enable":true, "period":300}`
+- `period`: Number of seconds Harvester waits before adding the `kubevirt.io/drain` taint to the failed nodes. This option triggers the migration of the virtual machine.
+- `vmMigrationTimeout`: Number of seconds Harvester waits before adding the `node.kubernetes.io/out-of-service` taint to the failed nodes. This option forces cleanup of the orphan resources.
+
+**Default value**: `{"enable":true, "period":15, "vmMigrationTimeout": 180}`
 
 **Example**:
-
 ```json
 {
   "enable": "true",
-  "period": 300
+  "period": 15,
+  "vmMigrationTimeout": 180
 }
 ```
 
