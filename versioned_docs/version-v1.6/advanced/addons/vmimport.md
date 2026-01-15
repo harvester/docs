@@ -243,3 +243,30 @@ To address the issue, perform one of the following workarounds:
 - Shut down the virtual machine before migrating it to Harvester 
 - In the `VirtualMachineImport` CRD spec, set the `forcePowerOff` field to `true`.  
 - Install VMware Tools or [open-vm-tools](https://knowledge.broadcom.com/external/article?legacyId=2073803).
+
+##### Eviction strategy is not set
+
+The `evictionStrategy` field is not configured automatically during the virtual machine import process. This prevents live migration of the virtual machine.
+To address the issue, run the following command:
+
+```shell
+kubectl patch VirtualMachine <vm-name> -n <namespace> --type=merge -p '{
+  "spec": {
+    "template": {
+      "spec": {
+        "evictionStrategy": "LiveMigrateIfPossible"
+      }
+    }
+  }
+}'
+```
+
+To update all virtual machines with a missing `evictionStrategy` configuration, run the following command:
+
+```shell
+for vm in $(kubectl get VirtualMachine -A -o json | jq -r '.items[] | select(.spec.template.spec.evictionStrategy == null) | "\(.metadata.namespace):\(.metadata.name)"'); do \
+  kubectl patch VirtualMachine ${vm#*:} -n ${vm%:*} --type=merge -p '{"spec":{"template":{"spec":{"evictionStrategy":"LiveMigrateIfPossible"}}}}'; \
+done
+```
+
+You need to reboot the virtual machine to apply the changes.
