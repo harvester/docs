@@ -286,7 +286,7 @@ To address the issue, perform one of the following workarounds:
 - In the `VirtualMachineImport` CRD spec, set the `forcePowerOff` field to `true`.  
 - Install VMware Tools or [open-vm-tools](https://knowledge.broadcom.com/external/article?legacyId=2073803).
 
-##### Eviction strategy is not set 
+##### Eviction Strategy Is Not Set 
 
 The `evictionStrategy` field is not configured automatically during the virtual machine import process. This prevents live migration of the virtual machine.
 To address the issue, run the following command:
