@@ -205,7 +205,7 @@ const config = {
           ],
       },
       {
-        type: 'link',
+        type: 'default',
         label: 'Enterprise',
         href: `https://www.suse.com/products/rancher/virtualization/`,
         position: 'right',
