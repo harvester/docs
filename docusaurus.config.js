@@ -136,7 +136,7 @@ const config = {
         {
           type: 'search',
           position: 'left',
-        },
+        },      
         {
           type: 'dropdown',
           label: 'Quick Links',
@@ -203,6 +203,12 @@ const config = {
               className: 'navbar__icon navbar__suse',
             },
           ],
+      },
+      {
+        type: 'link',
+        label: 'Enterprise',
+        href: `https://www.suse.com/products/rancher/virtualization/`,
+        position: 'right',
       },
       ],
     },
