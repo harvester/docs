@@ -673,3 +673,113 @@ This process usually takes a short time to complete, but can be disrupted when t
 ### Related Issue
 
 https://github.com/harvester/harvester/issues/8565
+
+## Cluster Metrics are available but Vitural Machine Metrics are missing
+
+### Issue Description
+
+When the `rancher-monitoring` add-on is enabled, the cluster metrics are available but the virtual machine metrics are missing
+
+The ServiceMonitor object `prometheus-kubevirt-rules/cattle-monitoring-system` is missing, when you create it manually, it is deleted quickly.
+
+```sh
+$ kubectl get servicemonitor -A
+NAMESPACE                  NAME                                 AGE
+cattle-monitoring-system   prometheus-kubevirt-rules            24s  // is missing
+```
+
+### Root Cause
+
+When `kubevirt` is newly installed or upgraded, `kubevirt` generates a new configmap object to store the configurations, the `ServiceMonitor` is enabled or disabled according to the existing of the configured `ServiceAccount` object.
+
+In the upgrade process, `kubevirt` has chance to make a wrong decision. Before next upgrade kubevirt won't regenerate this configmap unless it is triggered explicitly.
+
+### Workaround
+
+1. Confirm the issue
+
+```sh
+$ kubectl get configmap -n harvester-system  -l kubevirt.io/install-strategy
+NAME                              DATA   AGE
+kubevirt-install-strategy-zq86d   1      10m
+```
+
+There might be a couple of such records, some are from legacy versions, and one is for the latest version
+
+Run below command on the latest configmap, when nothing is outputed, the issue is hit.
+
+```sh
+$ kubectl get configmap -n harvester-system  kubevirt-install-strategy-zq86d -ojsonpath="{.data.manifests}" | base64 -d | gunzip  | grep ServiceMoni -i
+```
+
+2. Ensure below fields are existing
+
+```sh
+$ kubectl get kubevirt kubevirt -n harvester-system -oyaml | grep monitoring
+  monitorAccount: rancher-monitoring-operator
+  monitorNamespace: cattle-monitoring-system
+```
+
+3. Ensure the serviceaccount is existing
+
+This object is created when Harvester cluster is installed and should not be removed. If it does not exist, create it manually.
+
+```sh
+$ kubectl get serviceaccount -n cattle-monitoring-system rancher-monitoring-operator
+Error from server (NotFound): serviceaccounts "rancher-monitoring-operator" not found
+```
+
+```sh
+cat > rmo.yaml << 'EOF'
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    meta.helm.sh/release-name: rancher-monitoring
+    meta.helm.sh/release-namespace: cattle-monitoring-system
+  labels:
+    app: rancher-monitoring-operator
+    app.kubernetes.io/component: prometheus-operator
+    app.kubernetes.io/instance: rancher-monitoring
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: rancher-monitoring-prometheus-operator
+    heritage: Helm
+    release: rancher-monitoring
+  name: rancher-monitoring-operator
+  namespace: cattle-monitoring-system
+EOF
+
+kubectl create -f rmo.yaml
+
+
+$ kubectl get serviceaccount -n cattle-monitoring-system rancher-monitoring-operator
+NAME                          SECRETS   AGE
+rancher-monitoring-operator   0         35s
+```
+
+Wait a while
+
+4. Delete all of the `kubevirt-install-strategy-*` configmaps found on step 1
+
+5. Rollout the deployment virt-operator, kubevirt will re-create the configmap
+
+```sh
+$ kubectl rollout restart deployment -n harvester-system virt-operator
+deployment.apps/virt-operator restarted
+
+$ kubectl get pods -n harvester-system
+NAME                                                              READY   STATUS      RESTARTS   AGE
+...
+kubevirt-c2053a4889fe65e8d368b5c232901c84fda8debe-jobgddh65r7ws   0/1     Completed   0          6s  // the pod exists for a short time
+...
+virt-operator-796bf5fd9b-h56z9                                    1/1     Running     0          33s
+
+$ kubectl get servicemonitor -A
+NAMESPACE                  NAME                                 AGE
+cattle-monitoring-system   prometheus-kubevirt-rules            24s  // newly created
+...
+```
+
+### Related Issue
+
+https://github.com/harvester/harvester/issues/9674
