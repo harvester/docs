@@ -262,7 +262,27 @@ The workaround is to restart the virtual machines. Once restarted, subsequent no
 
 Related issue: [#9739](https://github.com/harvester/harvester/issues/9739)
 
-### 8. Change in Default VLAN Behavior for Secondary Pod Interfaces
+### 8. `cpu-feature.node.kubevirt.io/ipred-ctrl=true` CPU Feature Appears During Upgrade
+
+When upgrading from v1.5.x to v1.6.x, Harvester live migrates virtual machines to another node to complete the node upgrade. During this process, if your CPU model is in the following list, the `cpu-feature.node.kubevirt.io/ipred-ctrl=true` feature temporarily appears until the upgrade is complete.
+
+- Intel(R) Xeon(R) Gold 5418Y
+- Intel(R) Xeon(R) Silver 4509Y
+
+Because the `cpu-feature.node.kubevirt.io/ipred-ctrl=true` feature is no longer available after the upgrade, these virtual machines cannot be live migrated because of the mismatched node selector.
+
+To resolve this issue, use one of the following options:
+
+**Before the upgrade:**
+
+- **Option 1:** Configure a CPU model for the virtual machines using [this guideline](https://harvesterhci.io/kb/setup_common_cpu_model_for_vm_live_migration).
+- **Option 2:** Stop the KubeVirt labeller by [adding the `node-labeller.kubevirt.io/skip-node` annotation to the nodes](https://kubevirt.io/user-guide/compute/virtual_hardware/#labeling-nodes-with-cpu-models-cpu-features-and-machine-types), and then remove the annotation after the upgrade completes. This option is more complex if the virtual machines cannot be rebooted. For more information, see the [knowledge base article](https://harvesterhci.io/kb/troubleshooting_vm_scheduling_issues_nodeselector).
+
+**After the upgrade:**
+
+- Reboot the virtual machines.
+
+### 9. Change in Default VLAN Behavior for Secondary Pod Interfaces
 
 In v1.6.0 and earlier versions, pods with secondary network interfaces (such as VM networks and storage networks) were automatically assigned to VLAN ID 1 and the VLAN ID configured in the VLAN network. This dual-VLAN ID configuration allowed the Harvester network bridge to forward untagged traffic to the veth interfaces of these pods.
 
