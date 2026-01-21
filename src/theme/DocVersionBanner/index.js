@@ -7,10 +7,12 @@ import Translate from '@docusaurus/Translate';
 import {
   useActivePlugin,
   useDocVersionSuggestions,
-  useDocsVersion,
-  useDocsPreferredVersion,
 } from '@docusaurus/plugin-content-docs/client';
 import {ThemeClassNames} from '@docusaurus/theme-common';
+import {
+  useDocsPreferredVersion,
+  useDocsVersion,
+} from '@docusaurus/theme-common/internal';
 function UnreleasedVersionLabel({siteTitle, versionMetadata}) {
   return (
     <Translate
