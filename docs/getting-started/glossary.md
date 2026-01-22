@@ -19,15 +19,15 @@ Traffic-isolated forwarding path for transmission of network traffic in the Harv
 
 ## **guest cluster** / **guest Kubernetes cluster**
 
-Group of integrated Kubernetes worker machines that run in virtual machines on top of a Harvester cluster. 
+Group of integrated Kubernetes nodes that run in virtual machines on top of a Harvester cluster. 
 
-You can create RKE2, and K3s guest clusters using the Harvester and Rancher interfaces. Creating guest clusters involves pulling images from either the internet or a private registry.
+You can create RKE2 and K3s guest clusters using the Harvester and Rancher interfaces. Creating guest clusters involves pulling images from either the internet or a private registry.
 
 Guest clusters form the main infrastructure for running container workloads. Certain versions of Harvester and Rancher allow you to deploy container workloads [directly to Harvester clusters](../rancher/rancher-integration.md#harvester-baremetal-container-workload-support-experimental) (with some limitations).
 
 ## **guest node** / **guest cluster node**
 
-Kubernetes worker virtual machine that uses guest cluster resources to run container workloads. 
+Kubernetes worker virtual machine that uses guest cluster resources to run container workloads.
 
 Guest nodes are managed through a control plane that controls pod-related activity and maintains the desired cluster state.
 
@@ -61,7 +61,7 @@ Component that enables a Rancher-managed Harvester cluster to function as a [nat
 
 ## **Harvester CSI Driver**
 
-Driver that provides a standard container storage interface (CSI) for guest Kubernetes clusters running on top of Harvester virtual machines. This component [connects guest clusters to the underlying Harvester cluster](../rancher/csi-driver.md) and enables hotplugging of volumes to the virtual machines to provide native storage performance.
+Driver that [provides a standard container storage interface (CSI) for guest Kubernetes clusters](../rancher/csi-driver.md), allowing container workloads to use the storage solution integrated with the underlying Harvester cluster. This component enables hotplugging of volumes to the virtual machines to provide native storage performance.
 
 ## **Harvester Node Driver**
 
