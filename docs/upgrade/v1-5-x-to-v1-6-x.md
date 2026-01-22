@@ -276,7 +276,7 @@ To resolve this issue, use one of the following options:
 **Before the upgrade:**
 
 - **Option 1:** Configure a CPU model for the virtual machines using [this guideline](https://harvesterhci.io/kb/setup_common_cpu_model_for_vm_live_migration).
-- **Option 2:** Stop the KubeVirt labeller by [adding the `node-labeller.kubevirt.io/skip-node` annotation to the nodes](https://kubevirt.io/user-guide/compute/virtual_hardware/#labeling-nodes-with-cpu-models-cpu-features-and-machine-types), and then remove the annotation after the upgrade completes. This option is more complex if the virtual machines cannot be rebooted. For more information, see the [knowledge base article](https://harvesterhci.io/kb/troubleshooting_vm_scheduling_issues_nodeselector).
+- **Option 2:** Stop the KubeVirt labeller by [adding the `node-labeller.kubevirt.io/skip-node` annotation to the nodes](https://kubevirt.io/user-guide/compute/virtual_hardware/#labeling-nodes-with-cpu-models-cpu-features-and-machine-types), and then remove the annotation after the upgrade completes. This option is more complex but useful if the virtual machines cannot be rebooted. For more information, see the [knowledge base article](https://harvesterhci.io/kb/troubleshooting_vm_scheduling_issues_nodeselector).
 
 **After the upgrade:**
 
