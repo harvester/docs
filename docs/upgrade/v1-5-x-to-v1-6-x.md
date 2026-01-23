@@ -269,7 +269,7 @@ Harvester live migrates virtual machines to ensure zero downtime during node upg
 - Intel(R) Xeon(R) Gold 5418Y
 - Intel(R) Xeon(R) Silver 4509Y
 
-Because the `cpu-feature.node.kubevirt.io/ipred-ctrl=true` feature is no longer available after the upgrade, these virtual machines cannot be live migrated because of the mismatched node selector.
+While this feature flag is automatically removed from nodes after the upgrade, the corresponding node selector is retained in the virtual machine configuration. This mismatch between the virtual machine's requirements and the node's labels causes subsequent live migrations to fail.
 
 To resolve this issue, use one of the following options:
 
