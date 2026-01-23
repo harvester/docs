@@ -264,7 +264,7 @@ Related issue: [#9739](https://github.com/harvester/harvester/issues/9739)
 
 ### 8. `cpu-feature.node.kubevirt.io/ipred-ctrl=true` CPU Feature Appears During Upgrade
 
-When upgrading from v1.5.x to v1.6.x, Harvester live migrates virtual machines to another node to complete the node upgrade. During this process, if your CPU model is in the following list, the `cpu-feature.node.kubevirt.io/ipred-ctrl=true` feature temporarily appears until the upgrade is complete.
+Harvester live migrates virtual machines to ensure zero downtime during node upgrades. If your cluster uses any of the following CPU models, you may notice a temporary feature flag (`cpu-feature.node.kubevirt.io/ipred-ctrl=true`) appear while the upgrade is in progress.
 
 - Intel(R) Xeon(R) Gold 5418Y
 - Intel(R) Xeon(R) Silver 4509Y
