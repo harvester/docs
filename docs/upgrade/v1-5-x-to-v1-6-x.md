@@ -271,12 +271,11 @@ Harvester live migrates virtual machines to ensure zero downtime during node upg
 
 While this feature flag is automatically removed from nodes after the upgrade, the corresponding node selector is retained in the virtual machine configuration. This mismatch between the virtual machine's requirements and the node's labels causes subsequent live migrations to fail.
 
-To resolve this issue, use one of the following options:
+To resolve this issue, perform either of the following actions _before starting the upgrade_:
 
-**Before the upgrade:**
+- **Option 1:** [Configure a common CPU model](https://harvesterhci.io/kb/setup_common_cpu_model_for_vm_live_migration) for the virtual machines.
 
-- **Option 1:** Configure a CPU model for the virtual machines using [this guideline](https://harvesterhci.io/kb/setup_common_cpu_model_for_vm_live_migration).
-- **Option 2:** Stop the KubeVirt labeller by [adding the `node-labeller.kubevirt.io/skip-node` annotation to the nodes](https://kubevirt.io/user-guide/compute/virtual_hardware/#labeling-nodes-with-cpu-models-cpu-features-and-machine-types), and then remove the annotation after the upgrade completes. This option is more complex but useful if the virtual machines cannot be rebooted. For more information, see the [knowledge base article](https://harvesterhci.io/kb/troubleshooting_vm_scheduling_issues_nodeselector).
+- **Option 2:** Stop the KubeVirt labeller by [adding the `node-labeller.kubevirt.io/skip-node` annotation to the nodes](https://kubevirt.io/user-guide/compute/virtual_hardware/#labeling-nodes-with-cpu-models-cpu-features-and-machine-types), and then remove the annotation after the upgrade. While more complex, this option is useful if the virtual machines cannot be rebooted. For more information, see [Troubleshooting VM Live Migration Issues Caused by Node Selectors](https://harvesterhci.io/kb/troubleshooting_vm_scheduling_issues_nodeselector).
 
 ### 9. Change in Default VLAN Behavior for Secondary Pod Interfaces
 
