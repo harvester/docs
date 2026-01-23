@@ -262,7 +262,22 @@ The workaround is to restart the virtual machines. Once restarted, subsequent no
 
 Related issue: [#9739](https://github.com/harvester/harvester/issues/9739)
 
-### 8. Change in Default VLAN Behavior for Secondary Pod Interfaces
+### 8. `cpu-feature.node.kubevirt.io/ipred-ctrl=true` CPU Feature Appears During Upgrade
+
+Harvester live migrates virtual machines to ensure zero downtime during node upgrades. If your cluster uses any of the following CPU models, you may notice a temporary feature flag (`cpu-feature.node.kubevirt.io/ipred-ctrl=true`) appear while the upgrade is in progress.
+
+- Intel(R) Xeon(R) Gold 5418Y
+- Intel(R) Xeon(R) Silver 4509Y
+
+While this feature flag is automatically removed from nodes after the upgrade, the corresponding node selector is retained in the virtual machine configuration. This mismatch between the virtual machine's requirements and the node's labels causes subsequent live migrations to fail.
+
+To resolve this issue, perform either of the following actions _before starting the upgrade_:
+
+- **Option 1:** [Configure a common CPU model](https://harvesterhci.io/kb/setup_common_cpu_model_for_vm_live_migration) for the virtual machines.
+
+- **Option 2:** Stop the KubeVirt labeller by [adding the `node-labeller.kubevirt.io/skip-node` annotation to the nodes](https://kubevirt.io/user-guide/compute/virtual_hardware/#labeling-nodes-with-cpu-models-cpu-features-and-machine-types), and then remove the annotation after the upgrade. While more complex, this option is useful if the virtual machines cannot be rebooted. For more information, see [Troubleshooting VM Live Migration Issues Caused by Node Selectors](https://harvesterhci.io/kb/troubleshooting_vm_scheduling_issues_nodeselector).
+
+### 9. Change in Default VLAN Behavior for Secondary Pod Interfaces
 
 In v1.6.0 and earlier versions, pods with secondary network interfaces (such as VM networks and storage networks) were automatically assigned to VLAN ID 1 and the VLAN ID configured in the VLAN network. This dual-VLAN ID configuration allowed the Harvester network bridge to forward untagged traffic to the veth interfaces of these pods.
 
