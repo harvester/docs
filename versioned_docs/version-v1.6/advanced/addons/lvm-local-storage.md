@@ -32,8 +32,6 @@ If you are using the Harvester kubeconfig file, you can install the add-on by pe
 
 1. Select **harvester-csi-driver-lvm (Experimental)**, and then select **⋮** > **Enable**.
 
-    ![](/img/v1.4/csi-driver-lvm/enable-lvm-addon.png)
-
 ## Creating a Volume Group for LVM
 
 A volume group combines physical volumes to create a single storage structure that can be divided into logical volumes.

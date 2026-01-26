@@ -8,21 +8,15 @@ title: "VM Import"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/vmimport"/>
 </head>
 
-_Available as of v1.1.0_
-
-With the vm-import-controller addon users can import their virtual machines from VMware and OpenStack into Harvester.
+With the vm-import-controller add-on, you can import virtual machines from VMware and OpenStack.
 
 To use the VM import feature, users need to enable the vm-import-controller addon.
-
-![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
 By default, vm-import-controller leverages ephemeral storage, which is mounted from /var/lib/kubelet.  
 
 During the migration, a large VM's node could run out of space on this mount, resulting in subsequent scheduling failures. 
 
 To avoid this, users are advised to enable PVC-backed storage and customize the amount of storage needed. According to the best practice, the PVC size should be twice the size of the largest VM being migrated. This is essential as the PVC is used as scratch space to download the VM, and convert the disks into raw image files.
-
-![](/img/v1.2/vm-import-controller/ConfigureAddon.png)
 
 ## vm-import-controller
 
@@ -71,7 +65,7 @@ Once this check is passed, the source is marked as ready and can be used for VM 
 
 ```shell
 $ kubectl get vmwaresource.migration 
-NAME      STATUS
+NAME    STATUS
 vcsim   clusterReady
 ```
 
@@ -232,7 +226,7 @@ OpenStack allows users to have multiple instances with the same name. In such a 
 When creating a virtual machine object, the vm-import-controller add-on uses the name of the source virtual machine, which may not meet the Kubernetes object [naming criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names). You may need to rename the source virtual machine to allow successful completion of the import.
 ##### VMware-Based Virtual Machine Without VMware Tools Is Not Migrated
 
-When you attempt to import a VMware-based virtual machine in Harvester v1.6.0, the following occur if [VMware Tools](https://knowledge.broadcom.com/external/article/315382/overview-of-vmware-tools.html) is not installed on the virtual machine:
+When you attempt to import a VMware-based virtual machine in Harvester v1.6.0, the following issues occur if [VMware Tools](https://knowledge.broadcom.com/external/article/315382/overview-of-vmware-tools.html) is not installed on the virtual machine:
 
 - The vm-import-controller does not gracefully shut down the guest operating system.
 - When the graceful shutdown period (`gracefulShutdownTimeoutSeconds`) lapses, the vm-import-controller does not force a hard poweroff.
