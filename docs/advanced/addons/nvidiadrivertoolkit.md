@@ -56,7 +56,9 @@ Starting with v1.8.0, the **nvidia-driver-toolkit** uses node affinity instead o
 
 ### Customizing Node Affinity
 
-You can customize the node affinity settings to meet your specific requirements. In the following example, the driver is installed on nodes with specific GPU models.
+You can customize the node affinity settings to meet your specific requirements. 
+
+For example, if you add the labels `gpu.model=A100` and `gpu.model=A40` to nodes that use these GPU models, you can use the following node affinity settings to target the driver installation.
 
 ```yaml
 affinity:
