@@ -8,8 +8,6 @@ title: "NVIDIA Driver Toolkit"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/nvidiadrivertoolkit"/>
 </head>
 
-_Available as of v1.3.0_
-
 nvidia-driver-toolkit is an add-on that allows you to deploy out-of-band NVIDIA GRID KVM drivers to your existing Harvester clusters.
 
 :::note
