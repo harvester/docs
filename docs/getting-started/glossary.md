@@ -19,7 +19,7 @@ Traffic-isolated forwarding path for transmission of network traffic in the Harv
 
 ## **guest cluster** / **guest Kubernetes cluster**
 
-Group of integrated Kubernetes nodes that run in virtual machines on top of a Harvester cluster. 
+Group of integrated virtual machines that run on top of a Harvester cluster.
 
 You can create RKE2 and K3s guest clusters using the Harvester and Rancher interfaces. Creating guest clusters involves pulling images from either the internet or a private registry.
 
@@ -27,7 +27,7 @@ Guest clusters form the main infrastructure for running container workloads. Cer
 
 ## **guest node** / **guest cluster node**
 
-Kubernetes worker virtual machine that uses guest cluster resources to run container workloads.
+Virtual machine that uses Harvester cluster resources to run container workloads.
 
 Guest nodes are managed through a control plane that controls pod-related activity and maintains the desired cluster state.
 
