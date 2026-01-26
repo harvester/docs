@@ -26,6 +26,8 @@ When enabled, the add-on deploys the Descheduler in the `kube-system` namespace 
 
 1. Select **virtual-machine-auto-balance  (Experimental)**, and then select **⋮** > **Enable**.
 
+  ![](/img/v1.7/descheduler/descheduler-enable.png)
+
 ## Descheduler Policies
 
 The configuration contains the following plugins:
