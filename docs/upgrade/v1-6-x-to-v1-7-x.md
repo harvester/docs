@@ -205,13 +205,21 @@ To resolve this issue, apply kernel arguments that restore the original names of
 
 1. Retrieve the list of non-default kernel arguments (`third_party_kernel_args`) on the node.
 
+   ```
+   $ grub2-editenv /oem/grubenv list
+   third_party_kernel_args=multipath=off
+   ```
 
 1. Add `ifname=nicName:macAddress` for each network interface on the node to restore the original names.
 
-  Ensure that `third_party_kernel_args` is included when you add the `ifname=` arguments.
+   Ensure that `third_party_kernel_args` is included when you add the `ifname=` arguments.
 
-  Example:
+   Example:
 
+   ```
+   $ grub2-editenv /oem/grubenv set \
+       third_party_kernel_args="multipath=off ifname=enp6s0f0:d4:c9:ef:ce:30:68 ifname=enp6s0f1:d4:c9:ef:ce:30:69"
+   ```
 
 3. Reboot the node.
 

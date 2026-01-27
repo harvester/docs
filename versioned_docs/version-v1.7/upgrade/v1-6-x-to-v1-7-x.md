@@ -139,7 +139,11 @@ You must perform the steps for each affected node _after_ the upgrade is complet
 
 The DHCP server should return the original IP address and the affected node should be able to join the cluster.
 
-Propagation of the DHCP client ID from wicked to NetworkManager occurs automatially when upgrading from Harvester v1.6.x to v1.7.1. The above manual procedure should only be potentially necessary when upgrading to Harvester v1.7.0.
+:::note
+
+Propagation of the DHCP client ID from wicked to NetworkManager occurs automatically when upgrading from v1.6.x to v1.7.1. This workaround is only required when upgrading to v1.7.0.
+
+:::
 
 Related issues: [#9260](https://github.com/harvester/harvester/issues/9260) and [#3418](https://github.com/harvester/harvester/issues/3418)
 
@@ -195,28 +199,34 @@ Related issues: [#9738](https://github.com/harvester/harvester/issues/9738) and 
 
 ### 3. Persistent names of certain network interfaces may change during upgrade
 
-Harvester v1.7.x includes newer versions of the Linux kernel's `i40e` and `ice` network drivers than were included in Harvester v1.6.x. These newer network drivers result in the addition of a port number to the name of certain Intel network interfaces, notably the X710. For example, what was `enp6s0f0` on Harvester v1.6.x may become `enp6s0f0np0` during upgrade to Harvester v1.7.0. If this happens it will break networking on the host as the network configuration will continue to use the original interface names.
+Harvester v1.7.x uses newer versions of the Linux kernel's `i40e` and `ice` network drivers, causing a port number to be added to the name of certain Intel network interfaces, such as the X710. For example, an interface named `enp6s0f0` on Harvester v1.6.x is renamed to `enp6s0f0np0` during the upgrade to Harvester v1.7.0. This breaks connectivity on the host because existing network configurations still reference the original name.
 
-This issue can be addressed by adding kernel arguments to rename the affected interfaces back to their original names.
+To resolve this issue, apply kernel arguments that restore the original names of the affected interfaces.
 
-1. Get the current `third_party_kernel_args` on the node:
+1. Retrieve the list of non-default kernel arguments (`third_party_kernel_args`) on the node.
 
-    ```
-    $ grub2-editenv /oem/grubenv list
-    third_party_kernel_args=multipath=off
-    ```
+   ```
+   $ grub2-editenv /oem/grubenv list
+   third_party_kernel_args=multipath=off
+   ```
 
-2. Add `ifname=nicName:macAddress` for each network interface on the node to rename them back to their original names. For example:
+1. Add `ifname=nicName:macAddress` for each network interface on the node to restore the original names.
 
-    ```
-    $ grub2-editenv /oem/grubenv set \
-        third_party_kernel_args="multipath=off ifname=enp6s0f0:d4:c9:ef:ce:30:68 ifname=enp6s0f1:d4:c9:ef:ce:30:69"
-    ```
+   Ensure that `third_party_kernel_args` is included when you add the `ifname=` arguments.
 
-    Be sure to include the current `third_party_kernel_args` when adding the additional `ifname=` arguments.
+   Example:
+
+   ```
+   $ grub2-editenv /oem/grubenv set \
+       third_party_kernel_args="multipath=off ifname=enp6s0f0:d4:c9:ef:ce:30:68 ifname=enp6s0f1:d4:c9:ef:ce:30:69"
+   ```
 
 3. Reboot the node.
 
-Manual application of this solution is only necessary when upgrading to Harvester v1.7.0. The relevant `ifname=` arguments are added automatically during upgrade to Harvester v1.7.1 to avoid this problem potentially recurring in future if other kernel network drivers are updated in a similar fashion.
+:::note
+
+This workaround is only necessary when upgrading to v1.7.0. In v1.7.1 and later versions, these `ifname=` arguments are automatically added to prevent network disruptions during driver updates.
+
+:::
 
 Related issues: [#9815](https://github.com/harvester/harvester/issues/9815) and [#9802](https://github.com/harvester/harvester/issues/9802)
