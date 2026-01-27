@@ -53,8 +53,6 @@ Ensure that the following requirements are met before enabling the add-on.
 
     After a few seconds, the value of **State** changes to **DeploySuccessful**.
 
-    ![](/img/v1.2/vm-import-controller/EnableAddon.png)
-
 1. Go to the **Hosts** screen.
 
     You must edit the configuration of each host listed on this screen.

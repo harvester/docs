@@ -8,13 +8,9 @@ title: "VM Import"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/vmimport"/>
 </head>
 
-_Available as of v1.1.0_
-
 With the vm-import-controller add-on, you can import virtual machines from VMware, OpenStack, and Open Virtual Appliance (OVA) packages.
 
 To use the VM import feature, users need to enable the vm-import-controller addon.
-
-![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
 By default, vm-import-controller leverages ephemeral storage, which is mounted from /var/lib/kubelet.  
 
