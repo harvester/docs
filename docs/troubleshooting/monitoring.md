@@ -674,112 +674,119 @@ This process usually takes a short time to complete, but can be disrupted when t
 
 https://github.com/harvester/harvester/issues/8565
 
-## Cluster Metrics are available but Vitural Machine Metrics are missing
+## Harvester UI stops reporting virtual machine metrics after upgrade
 
 ### Issue Description
 
-When the `rancher-monitoring` add-on is enabled, the cluster metrics are available but the virtual machine metrics are missing
+After an upgrade, the Harvester UI stops reporting virtual machine metrics while the cluster metrics remain available. Disabling and re-enabling the `rancher-monitoring` add-on does not resolve the issue.
 
-The ServiceMonitor object `prometheus-kubevirt-rules/cattle-monitoring-system` is missing, when you create it manually, it is deleted quickly.
+The `prometheus-kubevirt-rules` ServiceMonitor object is missing in the `cattle-monitoring-system` namespace. You cannot add this object manually because the KubeVirt operator automatically deletes it.
 
 ```sh
 $ kubectl get servicemonitor -A
 NAMESPACE                  NAME                                 AGE
+...
 cattle-monitoring-system   prometheus-kubevirt-rules            24s  // is missing
+...
 ```
 
 ### Root Cause
 
-When `kubevirt` is newly installed or upgraded, `kubevirt` generates a new configmap object to store the configurations, the `ServiceMonitor` is enabled or disabled according to the existing of the configured `ServiceAccount` object.
+When KubeVirt is newly installed or upgraded, it generates a new ConfigMap object to store the configuration. A race condition occurs within the KubeVirt operator if the `rancher-monitoring-operator` ServiceAccount object is missing/not synced from the `cattle-monitoring-system` namespace during this process. Consequently, the ServiceMonitor configuration may be excluded from the resulting ConfigMap object. 
 
-In the upgrade process, `kubevirt` has chance to make a wrong decision. Before next upgrade kubevirt won't regenerate this configmap unless it is triggered explicitly.
+During the upgrade process, KubeVirt may incorrectly determine the monitoring state. Once the ConfigMap object is generated, KubeVirt does not reconcile or regenerate it until the next upgrade, unless a manual trigger is performed.
 
 ### Workaround
 
-1. Confirm the issue
+The workaround involves ensuring that the `rancher-monitoring-operator` ServiceAccount object exists, removing orphaned ConfigMap objects, and restarting the KubeVirt operator.
 
-```sh
-$ kubectl get configmap -n harvester-system  -l kubevirt.io/install-strategy
-NAME                              DATA   AGE
-kubevirt-install-strategy-zq86d   1      10m
-```
+1. Retrieve the list of ConfigMap objects.
 
-There might be a couple of such records, some are from legacy versions, and one is for the latest version
+  ```sh
+  $ kubectl get configmap -n harvester-system  -l kubevirt.io/install-strategy
+  NAME                              DATA   AGE
+  kubevirt-install-strategy-zq86d   1      10m
+  ```
 
-Run below command on the latest configmap, when nothing is outputed, the issue is hit.
+  The list includes the ConfigMap from the latest version and any surviving legacy objects.
 
-```sh
-$ kubectl get configmap -n harvester-system  kubevirt-install-strategy-zq86d -ojsonpath="{.data.manifests}" | base64 -d | gunzip  | grep ServiceMoni -i
-```
+1. Check if the latest ConfigMap object contains the ServiceMonitor configuration.
 
-2. Ensure below fields are existing
-
-```sh
-$ kubectl get kubevirt kubevirt -n harvester-system -oyaml | grep monitoring
-  monitorAccount: rancher-monitoring-operator
-  monitorNamespace: cattle-monitoring-system
-```
-
-3. Ensure the serviceaccount is existing
-
-This object is created when Harvester cluster is installed and should not be removed. If it does not exist, create it manually.
-
-```sh
-$ kubectl get serviceaccount -n cattle-monitoring-system rancher-monitoring-operator
-Error from server (NotFound): serviceaccounts "rancher-monitoring-operator" not found
-```
-
-```sh
-cat > rmo.yaml << 'EOF'
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  annotations:
-    meta.helm.sh/release-name: rancher-monitoring
-    meta.helm.sh/release-namespace: cattle-monitoring-system
-  labels:
-    app: rancher-monitoring-operator
-    app.kubernetes.io/component: prometheus-operator
-    app.kubernetes.io/instance: rancher-monitoring
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: rancher-monitoring-prometheus-operator
-    heritage: Helm
-    release: rancher-monitoring
-  name: rancher-monitoring-operator
-  namespace: cattle-monitoring-system
-EOF
-
-kubectl create -f rmo.yaml
+  ```sh
+  $ kubectl get configmap -n harvester-system  kubevirt-install-strategy-zq86d -ojsonpath="{.data.manifests}" | base64 -d | gunzip  | grep ServiceMoni -i
+  ```
+  When the output is empty, the issue exists in your environment.
 
 
-$ kubectl get serviceaccount -n cattle-monitoring-system rancher-monitoring-operator
-NAME                          SECRETS   AGE
-rancher-monitoring-operator   0         35s
-```
+1. Verify that the `monitorAccount` and `monitorNamespace` fields exist.
 
-Wait a while
+  ```sh
+  $ kubectl get kubevirt kubevirt -n harvester-system -oyaml | grep monitoring
+    monitorAccount: rancher-monitoring-operator
+    monitorNamespace: cattle-monitoring-system
+  ```
 
-4. Delete all of the `kubevirt-install-strategy-*` configmaps found on step 1
+1. Verify that the ServiceAccount object exists.
 
-5. Rollout the deployment virt-operator, kubevirt will re-create the configmap
+  This object is created during installation and must not be removed.
 
-```sh
-$ kubectl rollout restart deployment -n harvester-system virt-operator
-deployment.apps/virt-operator restarted
+  ```sh
+  $ kubectl get serviceaccount -n cattle-monitoring-system rancher-monitoring-operator
+  Error from server (NotFound): serviceaccounts "rancher-monitoring-operator" not found
+  ```
 
-$ kubectl get pods -n harvester-system
-NAME                                                              READY   STATUS      RESTARTS   AGE
-...
-kubevirt-c2053a4889fe65e8d368b5c232901c84fda8debe-jobgddh65r7ws   0/1     Completed   0          6s  // the pod exists for a short time
-...
-virt-operator-796bf5fd9b-h56z9                                    1/1     Running     0          33s
+1. If the ServiceAccount object does not exist, create it manually. Otherwise, move to the next step.
 
-$ kubectl get servicemonitor -A
-NAMESPACE                  NAME                                 AGE
-cattle-monitoring-system   prometheus-kubevirt-rules            24s  // newly created
-...
-```
+  ```sh
+  $ cat > rmo.yaml << 'EOF'
+  apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: rancher-monitoring
+      meta.helm.sh/release-namespace: cattle-monitoring-system
+    labels:
+      app: rancher-monitoring-operator
+      app.kubernetes.io/component: prometheus-operator
+      app.kubernetes.io/instance: rancher-monitoring
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: rancher-monitoring-prometheus-operator
+      heritage: Helm
+      release: rancher-monitoring
+    name: rancher-monitoring-operator
+    namespace: cattle-monitoring-system
+  EOF
+
+  $ kubectl create -f rmo.yaml
+
+  $ kubectl get serviceaccount -n cattle-monitoring-system rancher-monitoring-operator
+  NAME                          SECRETS   AGE
+  rancher-monitoring-operator   0         35s
+  ```
+
+1. Delete all ConfigMap objects (`kubevirt-install-strategy-*`).
+
+1. Roll out the `virt-operator` deployment.
+
+  Kubevirt recreates the ConfigMap.
+
+  ```sh
+  $ kubectl rollout restart deployment -n harvester-system virt-operator
+  deployment.apps/virt-operator restarted
+
+  $ kubectl get pods -n harvester-system
+  NAME                                                              READY   STATUS      RESTARTS   AGE
+  ...
+  kubevirt-c2053a4889fe65e8d368b5c232901c84fda8debe-jobgddh65r7ws   0/1     Completed   0          6s  // the pod exists for a short time
+  ...
+  virt-operator-796bf5fd9b-h56z9                                    1/1     Running     0          33s
+
+  $ kubectl get servicemonitor -A
+  NAMESPACE                  NAME                                 AGE
+  cattle-monitoring-system   prometheus-kubevirt-rules            24s  // newly created
+  ...
+  ```
 
 ### Related Issue
 
-https://github.com/harvester/harvester/issues/9674
+[#9674](https://github.com/harvester/harvester/issues/9674)
