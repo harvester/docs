@@ -74,8 +74,6 @@ kubectl -n kube-system get pods -l component=kube-apiserver -o yaml | grep "serv
 
 After installation, enable the add-on on the **Dashboard** screen of the Harvester UI or using the command-line tool kubectl.
 
-![](/img/v1.3/vm-dhcp-controller/enable-addon.png)
-
 ## Using the Add-on
 
 1. On the **Dashboard** screen of the Harvester UI, [create a VM Network](../../networking/harvester-network.md#create-a-vm-network).

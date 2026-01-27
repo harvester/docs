@@ -8,8 +8,6 @@ title: "PCI Devices"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/pcidevices"/>
 </head>
 
-_Available as of v1.1.0_
-
 A `PCIDevice` in Harvester represents a host device with a PCI address. 
 The devices can be passed through the hypervisor to a VM by creating a `PCIDeviceClaim` resource, 
 or by using the UI to enable passthrough. Passing a device through the hypervisor means that 
@@ -20,10 +18,8 @@ This is accomplished by using the `pcidevices-controller` addon.
 
 To use the PCI devices feature, users need to enable the `pcidevices-controller` addon first.
 
-![](/img/v1.2/vm-import-controller/EnableAddon.png)
-
 Once the `pcidevices-controller` addon is deployed successfully, it can take a few minutes for it to scan and the PCIDevice CRDs to become available.
-![](/img/v1.2/pcidevices/PcideviceEnabled.png)
+
 ## Enabling Passthrough on a PCI Device
 
 1. Now go to the `Advanced -> PCI Devices` page:

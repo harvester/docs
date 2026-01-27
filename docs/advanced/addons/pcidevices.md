@@ -8,8 +8,6 @@ title: "PCI Devices"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/pcidevices"/>
 </head>
 
-_Available as of v1.1.0_
-
 A `PCIDevice` in Harvester represents a host device with a PCI address. 
 The devices can be passed through the hypervisor to a VM by creating a `PCIDeviceClaim` resource, 
 or by using the UI to enable passthrough. Passing a device through the hypervisor means that 
@@ -20,10 +18,8 @@ This is accomplished by using the `pcidevices-controller` addon.
 
 To use the PCI devices feature, users need to enable the `pcidevices-controller` addon first.
 
-![](/img/v1.2/vm-import-controller/EnableAddon.png)
-
 Once the `pcidevices-controller` addon is deployed successfully, it can take a few minutes for it to scan and the PCIDevice CRDs to become available.
-![](/img/v1.2/pcidevices/PcideviceEnabled.png)
+
 ## Enabling Passthrough on a PCI Device
 
 1. Now go to the `Advanced -> PCI Devices` page:
@@ -76,7 +72,6 @@ The pcidevices-controller add-on currently uses unique resource descriptors to p
 ![](/img/v1.4/vm/vm-scheduling.png)
 
 ## SRIOV Network Devices
-_Available as of v1.2.0_
 
 ![](/img/v1.2/pcidevices/SriovNetworkDevicesLink.png)
 
@@ -105,8 +100,6 @@ The newly created PCI device can be passed through to virtual machines like any 
 ![](/img/v1.2/pcidevices/SriovNetworkDevicesFilterResult.png)
 
 ## USB Devices
-
-_Available as of v1.4.0_
 
 A `USBDevice` resource in Harvester represents a USB device on the node. USB devices can be "passed through" by the hypervisor to allow direct access from VMs. This is accomplished through the `pcidevices-controller` add-on. To use USB passthrough, you can either create a `USBDeviceClaim` resource or enable the feature on the Harvester UI. 
 

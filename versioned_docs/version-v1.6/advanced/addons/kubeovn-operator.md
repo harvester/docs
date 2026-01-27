@@ -26,8 +26,6 @@ You must enable `kubeovn-operator` to deploy Kube-OVN to a Harvester cluster for
 
 1. Select **kubeovn-operator (Experimental)**, and then select **⋮** > **Enable**.
 
-  ![](/img/kubeovn-operator.png)
-
 The add-on deploys `kubeovn-operator` and creates the default `Configuration` object named `configuration.kubeovn.io`, which uses sane Harvester-specific defaults for configuring the Kube-OVN CNI.
 
 The following is an example of a `Configuration` object:

@@ -45,15 +45,13 @@ Ensure that the following requirements are met before enabling the add-on.
 
     Some hardware vendors may require that you enable alerts.
 
-## Enable the Add-On and Configure Hosts
+## Enabling the Add-On and Configuring Hosts
 
-1. On the Harvester UI, go to **Advanced** > **Addons**.
+1. On the Harvester UI, go to **Advanced** > **Add-ons**.
 
 1. Select **harvester-seeder**, and then select **⋮** > **Enable**.
 
     After a few seconds, the value of **State** changes to **DeploySuccessful**.
-
-    ![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
 1. Go to the **Hosts** screen.
 

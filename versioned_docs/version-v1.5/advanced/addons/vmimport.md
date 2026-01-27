@@ -8,21 +8,15 @@ title: "VM Import"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/vmimport"/>
 </head>
 
-_Available as of v1.1.0_
-
-With the vm-import-controller addon users can import their virtual machines from VMware and OpenStack into Harvester.
+With the vm-import-controller add-on, you can import virtual machines from VMware and OpenStack.
 
 To use the VM import feature, users need to enable the vm-import-controller addon.
-
-![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
 By default, vm-import-controller leverages ephemeral storage, which is mounted from /var/lib/kubelet.  
 
 During the migration, a large VM's node could run out of space on this mount, resulting in subsequent scheduling failures. 
 
 To avoid this, users are advised to enable PVC-backed storage and customize the amount of storage needed. According to the best practice, the PVC size should be twice the size of the largest VM being migrated. This is essential as the PVC is used as scratch space to download the VM, and convert the disks into raw image files.
-
-![](/img/v1.2/vm-import-controller/ConfigureAddon.png)
 
 ## vm-import-controller
 
@@ -71,7 +65,7 @@ Once this check is passed, the source is marked as ready and can be used for VM 
 
 ```shell
 $ kubectl get vmwaresource.migration 
-NAME      STATUS
+NAME    STATUS
 vcsim   clusterReady
 ```
 
@@ -144,7 +138,7 @@ spec:
 
 This will trigger the controller to export the VM named "alpine-export-test" on the VMware source cluster to be exported, processed and recreated into the Harvester cluster.
 
-This can take a while based on the size of the virtual machine, but users should see `VirtualMachineImages` created for each disk in the defined virtual machine.
+The duration of the import process depends on the size of the virtual machine. While the import process may take some time, you should see `VirtualMachineImages` created for each disk in the defined virtual machine.
 
 If the source virtual machine is placed in a folder, you can specify the folder name in the optional `folder` field.
 
@@ -161,7 +155,6 @@ $ kubectl get virtualmachineimport.migration
 NAME                    STATUS
 alpine-export-test      virtualMachineRunning
 openstack-cirros-test   virtualMachineRunning
-
 ```
 
 Similarly, users can define a VirtualMachineImport for an OpenStack source as well:
@@ -190,5 +183,8 @@ spec:
 OpenStack allows users to have multiple instances with the same name. In such a scenario, users are advised to use the Instance ID. The reconciliation logic tries to perform a name-to-ID lookup when a name is used.
 :::
 
-#### Known issues
-* **Source virtual machine name is not RFC1123 compliant**: When creating a virtual machine object, the vm-import-controller add-on uses the name of the source virtual machine, which may not meet the Kubernetes object [naming criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names). You may need to rename the source virtual machine to allow successful completion of the import.
+#### Known Issues
+
+##### Source Virtual Machine Name Is Not RFC1123-Compliant
+
+When creating a virtual machine object, the vm-import-controller add-on uses the name of the source virtual machine, which may not meet the Kubernetes object [naming criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names). You may need to rename the source virtual machine to allow successful completion of the import.

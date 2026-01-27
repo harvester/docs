@@ -8,21 +8,15 @@ title: "VM Import"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/vmimport"/>
 </head>
 
-_Available as of v1.1.0_
-
 With the vm-import-controller add-on, you can import virtual machines from VMware, OpenStack, and Open Virtual Appliance (OVA) packages.
 
 To use the VM import feature, users need to enable the vm-import-controller addon.
-
-![](/img/v1.2/vm-import-controller/EnableAddon.png)
 
 By default, vm-import-controller leverages ephemeral storage, which is mounted from /var/lib/kubelet.  
 
 During the migration, a large VM's node could run out of space on this mount, resulting in subsequent scheduling failures. 
 
 To avoid this, users are advised to enable PVC-backed storage and customize the amount of storage needed. According to the best practice, the PVC size should be twice the size of the largest VM being migrated. This is essential as the PVC is used as scratch space to download the VM, and convert the disks into raw image files.
-
-![](/img/v1.2/vm-import-controller/ConfigureAddon.png)
 
 ## vm-import-controller
 
