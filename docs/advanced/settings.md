@@ -207,9 +207,12 @@ Harvester sends a graceful shutdown signal to any VM that is stopped using the H
 
 **Definition**: HTTP proxy used to access external services, including downloading of images and backup to S3 services.
 
+You must configure HTTP proxy settings when deploying a Harvester cluster in an [air-gapped]((../airgap.md)) environment. If you want to import an air-gapped Harvester cluster into a Rancher deployed in the external environment, you must configure additional HTTP proxy settings in Rancher before starting the import.
+
 :::caution
 
-Changing this setting might cause single-node clusters to temporarily become unavailable or inaccessible.
+- Changing this setting might cause single-node clusters to temporarily become unavailable or inaccessible.
+- Proxies can rewrite or remove critical headers such as `Host` or `Cache-Control`, which in turn can break API requests and the caching mechanism. Long-running operations such as backup restoration and downloading of large virtual images can also fail due to proxy-imposed timeouts on idle connections. Ensure that necessary authentication headers are preserved, exempt internal addresses using the `noProxy` option, and adjust proxy timeout settings for lengthy control-plane tasks.
 
 :::
 
@@ -602,6 +605,10 @@ The value is a JSON object literal that contains the following key-value pairs:
 - `repository`: Name of the repository that stores the support bundle image.
 - `tag`:  Tag assigned to the support bundle image.
 - `imagePullPolicy`: Pull policy of the support bundle image. The supported values are `IfNotPresent`, `Always`, and `Never`. For more information, see [Image pull policy](https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy) in the Kubernetes documentation.
+- The configured `httpProxy`, `httpsProxy`, and `noProxy` values are automatically injected into node-level processes, including Kubernetes components, the container runtime that pulls the operating system and virtual machine image containers, and other operating system utilities.
+- The HTTP proxy settings are recognized by all control plane components, including the image downloader that fetches external virtual machine images, the backup-restore controller that communicates with S3 targets, the upgrade checker that polls Rancher’s release server, and the embedded Rancher agent. This behavior results in the following:
+  - Outbound requests to public endpoints are routed through the configured proxy.
+  - Traffic to internal VIPs, service domains, and CIDR ranges bypasses the configured proxy.
 
 **Notes**:
 
