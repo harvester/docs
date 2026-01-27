@@ -24,6 +24,7 @@ Currently, the following source providers are supported:
 * VMware
 * OpenStack
 * Open Virtual Appliance (OVA)
+* KVM
 
 ## API
 The vm-import-controller introduces two CRDs.
@@ -31,7 +32,7 @@ The vm-import-controller introduces two CRDs.
 ### Sources
 Sources allow users to define valid source clusters.
 
-For example:
+#### VMware
 
 ```yaml
 apiVersion: migration.harvesterhci.io/v1beta1
@@ -69,6 +70,8 @@ $ kubectl get vmwaresource.migration
 NAME    STATUS
 vcsim   clusterReady
 ```
+
+#### OpenStack
 
 For OpenStack-based source clusters, an example definition is as follows:
 
@@ -110,6 +113,8 @@ NAME       STATUS
 devstack   clusterReady
 ```
 
+#### Open Virtual Appliance
+
 For OVA-based sources, an example definition is as follows:
 
 ```yaml
@@ -149,6 +154,45 @@ $ kubectl get ovasource.migration
 NAME      STATUS
 example   clusterReady
 ```
+
+#### KVM
+
+For KVM-based sources, an example definition is as follows:
+
+```yaml
+apiVersion: migration.harvesterhci.io/v1beta1
+kind: KVMSource
+metadata:
+  name: kvm
+  namespace: default
+spec:
+  endpoint: "ssh://192.168.0.10:22"
+  sshTimeoutSeconds: 10
+  virshConnectionURI: "qemu:///system"
+  credentials:
+    name: example-kvm-credentials
+    namespace: default
+```
+
+The field `endpoint` specifies the SSH endpoint of the host where the KVM is running.
+The optional `sshTimeoutSeconds` field allows you to specify the maximum amount of time in seconds for the SSH connection to establish. A value is `0` means no timeout. The default value is `30`.
+Check out the libvirt documentation on how to configure the optional [virshConnectionURI](https://libvirt.org/uri.html#local-hypervisor-uris) field. This setting is used by the `virsh` command executed remotely.
+
+When configuring the secret, you can include the authentication credentials that are used to log into the source system via SSH.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata: 
+  name: example-kvm-credentials
+  namespace: default
+stringData:
+  "username": "user"
+  "password": "password"
+  "privateKey": "pem-encoded-private-key"
+```
+
+As part of the reconciliation process, the controller issues a `virsh` command via SSH connection on the host that is extracted from the specified URI to confirm its validity before marking the source as ready.
 
 ### VirtualMachineImport
 The VirtualMachineImport CRD provides a way for users to define a source VM and map to the actual source cluster to perform VM export/import.
