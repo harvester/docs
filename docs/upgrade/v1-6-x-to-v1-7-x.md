@@ -26,6 +26,8 @@ v1.7.x uses NetworkManager instead of wicked, which was used in earlier versions
 
 Host IP addresses configured via DHCP may change during upgrades. This prevents the cluster from starting correctly and requires manual recovery steps. For details, see [Host IP address may change during upgrade when using DHCP](#1-host-ip-address-may-change-during-upgrade-when-using-dhcp).
 
+Additionally, [persistent names of certain Intel network interfaces may change](#3-persistent-names-of-certain-network-interfaces-may-change-during-upgrade) during upgrades. This breaks connectivity on the host and requires manual remediation steps.
+
 :::
 
 ### Update Harvester UI Extension on Rancher v2.13
