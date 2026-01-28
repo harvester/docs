@@ -31,7 +31,7 @@ For the network requirements, please refer to the doc [here](../install/requirem
 
 ## Deploying Rancher server
 
-To use Rancher with Harvester, please install Rancher on a separate server. If you want to try out the integration features, you can create a VM in Harvester and install the Rancher server by following the [Helm CLI quick start](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli).
+To use Rancher with Harvester, you can create a VM in Harvester and install the Rancher server by following the [Helm CLI quick start](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli).
 
 For production setup, please follow [Deploying Rancher Server document](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager) to  deploy and provision Rancher and a Kubernetes cluster with the provider of your choice.
 
