@@ -100,7 +100,7 @@ Related issues:
 
 ### Root Cause
 
-In below example, the guest cluster node(Harvester VM)'s IP is `10.115.1.46`, and later a new Loadbalancer IP `10.115.6.200` is added to a new interface like `vip-fd8c28ce (@enp1s0)`. However, the Loadbalancer IP is taken over by the `calio` controller. It caused the Loadbalancer IP is not reachable.
+In below example, the guest cluster node(Harvester VM)'s IP is `10.115.1.46`, and later a new Loadbalancer IP `10.115.6.200` is added to a new interface like `vip-fd8c28ce (@enp1s0)`. However, the Loadbalancer IP is taken over by the `calio` controller. It caused the Loadbalancer IP is not reachable. Through a shell session using the original IP run the following.
 
 ```sh
 $ ip -d link show dev vxlan.calico
@@ -132,7 +132,7 @@ The IP 10.115.1.46 is from the node main nic enp1s0 interface.
 The Loadbalancer IP is reachable again.
 
 
-When creating new clusters on `Rancher Manager`, click **Add-on: Calico**, add following two lines to `.installation.calicoNetwork`. The `calico` controller won't take over the Loadbalancer IP accidentally.
+When creating new clusters on `Rancher Manager`, click **Add-on: Calico**, YAML configuration window will appear. Add following two lines to `.installation.calicoNetwork`. The `calico` controller won't take over the Loadbalancer IP accidentally.
 
 ```yaml
 installation:
