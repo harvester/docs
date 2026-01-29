@@ -393,7 +393,9 @@ Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and 
 
 :::note
 
-Modifying the `IPAM` mode isn't allowed. You must create a new service if you intend to change the `IPAM` mode.
+- Modifying the `IPAM` mode isn't allowed. You must create a new service if you intend to change the `IPAM` mode.
+
+- Refer to [Guest Cluster Loadbalancer IP is not reachable](../troubleshooting/rancher.md#guest-cluster-loadbalancer-ip-is-not-reachable).
 
 :::
 

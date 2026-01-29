@@ -83,3 +83,98 @@ Related issues:
 
 - Harvester: [#7105](https://github.com/harvester/harvester/issues/7105) and [#7284](https://github.com/harvester/harvester/issues/7284)
 - Rancher: [#45628](https://github.com/rancher/rancher/issues/45628)
+
+## Guest Cluster Loadbalancer IP is not reachable
+
+### Issue Description
+
+1. Create a new [guest cluster](../rancher/node/rke2-cluster.md#create-rke2-kubernetes-cluster) with the default `Container Network: Calico` and the default `Cloud Provider: Harvester`.
+
+1. Deploy `nginx` on this new guest cluster via command `kubectl apply -f https://k8s.io/examples/application/deployment.yaml`.
+
+1. Create a [Load Balancer](../rancher/cloud-provider.md#load-balancer-support), which selects backend nginx.
+
+1. The service is ready with allocated IP from DHCP server or IPPool, but when clicking the link the page might fail to show.
+
+![](/img/v1.5/troubleshooting/gc-lb-is-not-reachable.png)
+
+### Root Cause
+
+In below example, the guest cluster node(Harvester VM)'s IP is `10.115.1.46`, and later a new Loadbalancer IP `10.115.6.200` is added to a new interface like `vip-fd8c28ce (@enp1s0)`. However, the Loadbalancer IP is taken over by the `calio` controller. It caused the Loadbalancer IP is not reachable. Through a shell session using the original IP run the following.
+
+```sh
+$ ip -d link show dev vxlan.calico
+44: vxlan.calico: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether 66:a7:41:00:1d:ba brd ff:ff:ff:ff:ff:ff promiscuity 0  allmulti 0 minmtu 68 maxmtu 65535
+info: Using default fan map value (33)
+    vxlan id 4096 local 10.115.6.200 dev vip-8a928fa0 srcport 0 0 dstport 4789 nolearning ttl auto ageing 300 udpcsum noudp6zerocsumtx noudp6zerocsumrx addrgenmode eui64 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536
+
+The IP 10.115.6.200 is from the vip-* interface.
+
+```
+
+### Affected versions
+
+From Calico `v3.22` or even ealier version, the [IP autodetection](https://github.com/projectcalico/calico/blob/aaee80d6e09254dc8c045136c9b31114b5aea9a9/node/pkg/lifecycle/startup/autodetection/autodetection_methods.go#L30) was available, and the `first-found` was the default value.
+
+SUSE RKE2 version [`v1.29`](https://www.suse.com/suse-rke2/support-matrix/all-supported-versions/rke2-v1-29/) has Calico `v3.29.2`. version [`v1.35`](https://www.suse.com/suse-rke2/support-matrix/all-supported-versions/rke2-v1-35/) has Calico `v3.31.2`.
+
+It means: for most recent RKE2 clusters when they use `Calico` as the default CNI, and use `Harvester-cloud-provider` to offer `loadbalancer` type services, they might suffer this issue.
+
+### Workaround
+
+#### For newly created cluster
+
+When creating new clusters on `Rancher Manager`, click **Add-on: Calico**, YAML configuration window will appear. Add following two lines to `.installation.calicoNetwork`.
+
+![](/img/v1.5/troubleshooting/change-calico-install-params.png)
+
+```yaml
+installation:
+  backend: VXLAN
+  calicoNetwork:
+    bgp: Disabled
+    nodeAddressAutodetectionV4:  // add this line
+      skipInterface: vip.*       // add this line
+```
+
+The `calico` controller won't take over the Loadbalancer IP accidentally.
+
+#### For existing clusters
+
+Run `kubectl` command `$ kubectl edit installation`, go to section `.spec.calicoNetwork.nodeAddressAutodetectionV4`, remove any existing line like `firstFound: true`, add new line `skipInterface: vip.*` and save.
+
+Wait 2 minutes, the daemonset `calico-system/calico-node` is rolling updated and then the related PODs take the node IP for VXLAN to use.
+
+Run following command to check the `vxlan.calico` interface, if it takes the node IP like `10.115.1.46`, not the VIP.
+
+```sh
+$  ip -d link show dev vxlan.calico
+
+45: vxlan.calico: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether 66:a7:41:00:1d:ba brd ff:ff:ff:ff:ff:ff promiscuity 0  allmulti 0 minmtu 68 maxmtu 65535
+info: Using default fan map value (33)
+    vxlan id 4096 local 10.115.1.46 dev enp1s0 srcport 0 0 dstport 4789 nolearning ttl auto ageing 300 udpcsum noudp6zerocsumtx noudp6zerocsumrx addrgenmode eui64 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536
+
+```
+
+If it still uses the VIP, then check the `tigera-operator` pod log to see if there is key word `failed calling webhook`.
+
+```sh
+$ kubectl -n tigera-operator logs tigera-operator-8566d6db5c-wfjkt
+...
+{"level":"error","ts":"2025-12-18T09:06:37Z","msg":"Reconciler error","controller":"tigera-installation-controller","object":{"name":"periodic-5m0s-reconcile-event"},"namespace":"","name":"periodic-5m0s-reconcile-event","reconcileID":"bae9d2da-a4bf-4d8b-89b8-c8a23a96f351","error":"Internal error occurred: failed calling webhook \"rancher.cattle.io.namespaces\": failed to call webhook: Post \"https://rancher-webhook.cattle-system.svc:443/v1/webhook/validation/namespaces?timeout=10s\": context deadline exceeded"...}
+```
+
+In case it happenes, then update the `calico-system/calico-node` daemonset to add following container parameters directly.
+
+```
+            - name: IP_AUTODETECTION_METHOD
+              value: skip-interface=vip.*
+```
+
+Wait 2 minutes and check the aforementioned `vxlan.calico` interface again, when VIP is not taken over by it, VIP will continue to be reachable.
+
+### Related Issue
+
+[#8072](https://github.com/harvester/harvester/issues/8072) and [#9767](https://github.com/harvester/harvester/issues/9767)
