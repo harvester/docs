@@ -293,7 +293,7 @@ This can also be executed by dropping an elemental cloud-init file such as `/oem
 
 ```
 stages:
-   default:
+   initramfs:
    - name: "start multipathd"
      systemctl:
        enable:
@@ -308,14 +308,14 @@ Users wishing to automate this further can leverage the `CloudInit CRD` to apply
 apiVersion: node.harvesterhci.io/v1beta1
 kind: CloudInit
 metadata:
-  name: start-mutlitpathd
+  name: start-multipathd
 spec:
   matchSelector:
     harvesterhci.io/managed: "true"
-  filename: 99-start-mutlitpathd
+  filename: 99-start-multipathd
   contents: |
     stages:
-      default:
+      initramfs:
         - name: "start multipathd"
           systemctl:
             enable:
