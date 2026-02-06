@@ -32,6 +32,16 @@ On pod startup, the ENTRYPOINT script will download the NVIDIA driver from the s
 
 The `PCIDevices` addon can now leverage this addon to manage the lifecycle of the vGPU devices on nodes containing supported GPU [devices](../vgpusupport.md).
 
+:::warning
+
+**Always restart the VM immediately after attaching or detaching vGPU devices.**
+
+Although rebooting the VM after editing its spec is not mandatory, we strongly recommend doing so to ensure proper synchronization. Without an immediate reboot, the addon disable check might not accurately detect devices in use.
+
+If you need to disable and re-enable the `nvidia-driver-toolkit` addon while VMs are stopped with host devices attached, you can annotate the addon with `harvesterhci.io/skipNvidiaDriverToolkitAddonWebhookCheck` to skip the addon disable check.
+
+:::
+
 ## Install Different NVIDIA Driver Versions
 
 _Available as of v1.7.0_
