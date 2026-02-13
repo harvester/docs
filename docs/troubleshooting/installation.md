@@ -106,51 +106,28 @@ $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
 
 :::
 
-## Check the status of Harvester components
+## Check the status of Harvester cluster
 
-Before checking the status of Harvester components, obtain a copy of the Harvester cluster's kubeconfig file following the [guide](../faq.md#how-can-i-access-the-kubeconfig-file-of-the-harvester-cluster).
+Before checking the status of Harvester components, obtain a copy of Harvester cluster's `Cluster token` configured during installation in step 10 of [Installation Steps](../install/iso-install.md#installation-steps) and replace `<TOKEN>` with it's value.
 
-After you obtain a copy of the kubeconfig file, run the following script against the cluster to check the readiness of each component.
+```shell
+$ curl -k -H "Authorization: Bearer <TOKEN>" https://<VIP>/v1/harvester/readyz
+```
 
-- Harvester components script
-  ```shell
-  #!/bin/bash
+:::note
 
-  cluster_ready() {
-    namespaces=("cattle-system" "kube-system" "harvester-system" "longhorn-system")
-    for ns in "${namespaces[@]}"; do
-      pod_statuses=($(kubectl -n "${ns}" get pods \
-        --field-selector=status.phase!=Succeeded \
-        -ojsonpath='{range .items[*]}{.metadata.namespace}/{.metadata.name},{.status.conditions[?(@.type=="Ready")].status}{"\n"}{end}'))
-      for status in "${pod_statuses[@]}"; do
-        name=$(echo "${status}" | cut -d ',' -f1)
-        ready=$(echo "${status}" | cut -d ',' -f2)
-        if [ "${ready}" != "True" ]; then
-          echo "pod ${name} is not ready"
-          false
-          return
-        fi
-      done
-    done
-  }
+You must replace `<VIP>` with the [real VIP](../install/management-address.md#how-to-get-the-vip-mac-address), which is the value of `kube-vip.io/requestedIP` in the link.
 
-  if cluster_ready; then
-    echo "cluster is ready"
-  else
-    echo "cluster is not ready"
-  fi
-  ```
+:::
 
-- API
-  ```shell
-  $ curl -fk https://<VIP>/version
-  ```
+:::note
 
-  :::note
-  
-  You must replace `<VIP>` with the [real VIP](../install/management-address.md#how-to-get-the-vip-mac-address), which is the value of `kube-vip.io/requestedIP` in the link.
+The endpoint should eventually return response:
+```
+{"ready":true,"timestamp":"2026-02-12T11:17:40Z"}
+```
 
-  :::
+:::
 
 ## Collecting troubleshooting information
 
