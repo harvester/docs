@@ -108,22 +108,22 @@ $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
 
 ## Check the status of Harvester cluster
 
-Before checking the status of Harvester components, obtain a copy of Harvester cluster's `Cluster token` configured during installation in step 10 of [Installation Steps](../install/iso-install.md#installation-steps) and replace `<TOKEN>` with it's value.
+Before checking the status of Harvester components, obtain a copy of Harvester cluster's `Cluster token` configured during installation in step 10 of [Installation Steps](../install/iso-install.md#installation-steps) and replace `$TOKEN` with its value.
 
 ```shell
-$ curl -k -H "Authorization: Bearer <TOKEN>" https://<VIP>/v1/harvester/readyz
+$ curl -H "Authorization: Bearer $TOKEN" https://$VIP/v1/harvester/readyz
 ```
 
 :::note
 
-You must replace `<VIP>` with the [real VIP](../install/management-address.md#how-to-get-the-vip-mac-address), which is the value of `kube-vip.io/requestedIP` in the link.
+You must replace `$VIP` with the [real VIP](../install/management-address.md#how-to-get-the-vip-mac-address), which is the value of `kube-vip.io/requestedIP` in the link.
 
 :::
 
 :::note
 
 The endpoint should eventually return response:
-```
+```json
 {"ready":true,"timestamp":"2026-02-12T11:17:40Z"}
 ```
 
