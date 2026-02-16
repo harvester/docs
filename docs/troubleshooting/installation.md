@@ -118,6 +118,8 @@ $ curl -H "Authorization: Bearer $TOKEN" https://$VIP/v1/harvester/readyz
 
 You must replace `$VIP` with the [real VIP](../install/management-address.md#how-to-get-the-vip-mac-address), which is the value of `kube-vip.io/requestedIP` in the link.
 
+For cluster using self-signed TLS certificate, run `curl` with the `-k` flag.
+
 :::
 
 :::note
