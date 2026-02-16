@@ -108,7 +108,17 @@ $ sudo yq eval .token /etc/rancher/rancherd/config.yaml
 
 ## Check the status of Harvester cluster
 
-Before checking the status of Harvester components, obtain a copy of Harvester cluster's `Cluster token` configured during installation in step 10 of [Installation Steps](../install/iso-install.md#installation-steps) and replace `$TOKEN` with its value.
+Harvester exposes a `readyz` endpoint that can be used to assess the health and readiness status of the control plane.
+
+To probe the endpoint, you will need the:
+
+* cluster token configured in step 10 of the [installation steps](../install/iso-install.md#installation-steps)
+* cluster real VIP following the steps described [here](../install/management-address.md#how-to-get-the-vip-mac-address) (use the value of `kube-vip.io/requestedIP` in the link)
+
+Then you can use a client network tool like `curl` to query the endpoint, replacing the `$TOKEN` and `$VIP` variables accordingly:
+
+```shell
+$ curl -H "Authorization: Bearer $TOKEN" https://$VIP/v1/harvester/readyz
 
 ```shell
 $ curl -H "Authorization: Bearer $TOKEN" https://$VIP/v1/harvester/readyz
