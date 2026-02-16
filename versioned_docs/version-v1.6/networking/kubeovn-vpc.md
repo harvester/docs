@@ -190,6 +190,33 @@ Perform the following steps to create and configure a VPC.
     
         This ensures that virtual machines connected to the subnet can obtain the correct default route options.
 
+        :::note
+        You can use the dhcpV4Options to specify additional DHCP settings such as `dns_server` being passed to the VM workloads
+        ```yaml
+        spec:
+            cidrBlock: 172.20.0.0/16
+            default: false
+            dhcpV4Options: dns_server=8.8.8.8
+            enableDHCP: true
+            enableLb: true
+            excludeIps:
+                - 172.20.0.1
+            #    - string
+            gateway: 172.20.0.1
+            gatewayNode: ''
+            gatewayType: distributed
+            natOutgoing: true
+            private: false
+            protocol: IPv4
+            provider: ovn-subnet-1.default.ovn
+            vpc: ovn-cluster
+        ```
+
+        The same change can also be done via form view
+        ![](/img/subnet_dhcp_options.png)
+        
+        :::
+
     1. Click **Create**.
 
 1. Create virtual machines.
