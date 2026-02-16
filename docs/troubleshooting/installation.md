@@ -125,6 +125,7 @@ For cluster using self-signed TLS certificate, run `curl` with the `-k` flag.
 :::note
 
 The endpoint should eventually return response:
+
 ```json
 {"ready":true,"timestamp":"2026-02-12T11:17:40Z"}
 ```
