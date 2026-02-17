@@ -176,43 +176,43 @@ After upgrading to v1.6.x, perform the following steps:
 
 1. Verify VLANs attached to the `mgmt-br` and `mgmt-bo` by running the following command on management hosts:
 
-    ```
-    bridge vlan show
-    ```
+   ```
+   bridge vlan show
+   ```
+
    The above outputs only the primary vlan part of `mgmt-br` and `mgmt-bo`
 
 1. Manually add the required secondary VLANs to the `mgmt-br` bridge and the `mgmt-bo` interface by adding the following commands to the `/oem/90_custom.yaml` file:
+   - `/etc/wicked/scripts/setup_bond.sh` section
 
-    - `/etc/wicked/scripts/setup_bond.sh` section
+   ```
+   bridge vlan add vid <vlan-id> dev $INTERFACE
+   ```
 
-    ```
-    bridge vlan add vid <vlan-id> dev $INTERFACE
-    ```
+   - `/etc/wicked/scripts/setup_bridge.sh` section
 
-    - `/etc/wicked/scripts/setup_bridge.sh` section
+   ```
+   bridge vlan add vid <vlan-id> dev $INTERFACE self
+   bridge vlan add vid <vlan-id> dev mgmt-bo
+   ```
 
-    ```
-    bridge vlan add vid <vlan-id> dev $INTERFACE self
-    bridge vlan add vid <vlan-id> dev mgmt-bo
-    ```
+   :::info important
 
-    :::info important
+   You must include a separate command for each distinct VLAN ID. Ensure that the `vlan-id` placeholder is replaced with the actual ID.
 
-    You must include a separate command for each distinct VLAN ID. Ensure that the `vlan-id` placeholder is replaced with the actual ID.
-
-    :::
+   :::
 
 1. Once the `/oem/90_custom.yaml` file is updated, reboot the management hosts.
 
 1. Verify that all the required VLANs were added by running the following command on the hosts:
 
-    ```
-    bridge vlan show
-    ```
+   ```
+   bridge vlan show
+   ```
 
 #### Upgrade Scenario Example
 
-In the following example, a v1.5.x cluster was initially installed with a [primary VLAN interface](../install/harvester-configuration.md#installmanagement_interface) (VLAN ID: `2021`). To add a secondary VLAN interface (VLAN ID: `2113`), the `/oem/99_vlan-ifcfg.yaml` file  was created on the management hosts with the following contents:
+In the following example, a v1.5.x cluster was initially installed with a [primary VLAN interface](../install/harvester-configuration.md#installmanagement_interface) (VLAN ID: `2021`). To add a secondary VLAN interface (VLAN ID: `2113`), the `/oem/99_vlan-ifcfg.yaml` file was created on the management hosts with the following contents:
 
 ```
 stages:
@@ -233,6 +233,7 @@ stages:
             DEFROUTE='no'
 
 ```
+
 The typical expectation is that an additional VLAN sub-interface is created on the `mgmt` interface (`mgmt-br.2113`) and assigned an IPv4 address. In addition, this sub-interface and the primary interface (`mgmt-br.2021`) are both expected to be used for L3 connectivity after the cluster is upgraded to v1.6.x.
 
 In actuality after the upgrade to v1.6.0, however, the VLAN sub-interface is created but the secondary VLAN (VLAN ID: `2113`) is removed from the `mgmt-br` bridge and the `mgmt-bo` interface. After a reboot, only the primary VLAN ID is assigned to the `mgmt-br` bridge and the `mgmt-bo` interface (using the `/oem/90_custom.yaml` file).
@@ -287,3 +288,40 @@ The change affects clusters upgraded from v1.5.x to v1.6.1 if the external switc
 
 Related issue: [#8816](https://github.com/harvester/harvester/issues/8816)
 
+### 10. Upgrade Stuck at "UpgradingSystemServices" Phase Waiting for Fleet
+
+In certain situations, the Harvester upgrade may become stuck at the "UpgradingSystemServices" phase. The `apply-manifests` pod logs show that the upgrade is waiting for the Fleet helm chart to be deployed, but the Fleet release remains in a `pending-upgrade` state indefinitely.
+
+This issue occurs when the embedded Rancher fails to properly roll out the new Fleet version during the upgrade process. The Fleet helm chart gets stuck in `pending-upgrade` status, preventing the upgrade from completing.
+
+You can verify this issue by checking the Fleet helm release history:
+
+```
+helm history fleet -n cattle-fleet-system
+```
+
+If the latest revision shows a `pending-upgrade` status, the upgrade is affected by this issue.
+
+The workaround is to manually rollback the Fleet chart and restart Rancher to trigger proper reconciliation:
+
+1. Rollback the Fleet helm chart to the previous revision:
+
+   ```
+   helm rollback fleet -n cattle-fleet-system
+   ```
+
+2. Restart the Rancher deployment to trigger reconciliation:
+
+   ```
+   kubectl rollout restart deployment/rancher -n cattle-system
+   ```
+
+3. Wait for Rancher to complete the rollout:
+
+   ```
+   kubectl rollout status deployment/rancher -n cattle-system --timeout=5m
+   ```
+
+After the rollback and Rancher restart, the embedded Rancher will automatically upgrade Fleet to the target version, and the upgrade will proceed normally.
+
+Related issue: [#9738](https://github.com/harvester/harvester/issues/9738)
