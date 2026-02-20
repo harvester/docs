@@ -119,9 +119,6 @@ Then you can use a client network tool like `curl` to query the endpoint, replac
 
 ```shell
 $ curl -H "Authorization: Bearer $TOKEN" https://$VIP/v1/harvester/readyz
-
-```shell
-$ curl -H "Authorization: Bearer $TOKEN" https://$VIP/v1/harvester/readyz
 ```
 
 :::note
@@ -132,15 +129,11 @@ For cluster using self-signed TLS certificate, run `curl` with the `-k` flag.
 
 :::
 
-:::note
-
 The endpoint should eventually return response:
 
 ```json
 {"ready":true,"timestamp":"2026-02-12T11:17:40Z"}
 ```
-
-:::
 
 ## Collecting troubleshooting information
 
