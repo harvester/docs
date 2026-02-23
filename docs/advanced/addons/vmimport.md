@@ -279,3 +279,17 @@ To address the issue, perform one of the following workarounds:
 - Shut down the virtual machine before migrating it to Harvester 
 - In the `VirtualMachineImport` CRD spec, set the `forcePowerOff` field to `true`.  
 - Install VMware Tools or [open-vm-tools](https://knowledge.broadcom.com/external/article?legacyId=2073803).
+
+## UI
+
+The VM Import Controller is integrated into the Harvester UI. This allows users to configure `Sources` and create `Virtual Machine Import` jobs via forms.
+
+The interface is dynamically registered and will only appear in the side navigation bar when the add-on is active. For instructions on how to enable the `vm-import-controller` add-on, see [Add-ons](../addons.md).
+
+Once the `vm-import-controller` is deployed, a new **Virtual Machine Imports** entry appears in the left navigation sidebar. From here, you can manage the different `Source` and `Virtual Machine Import` configurations and view their status.
+
+![](/img/v1.8/advanced/addons/vmimport/kvm-source.png)
+
+By selecting the **Virtual Machine Import** tab, you can create new import tasks and track the progress of ongoing or completed migrations.
+
+![](/img/v1.8/advanced/addons/vmimport/virtualmachineimport.png)
