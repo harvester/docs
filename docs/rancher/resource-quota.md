@@ -118,3 +118,31 @@ When a `ResourceQuota` object has the annotation `harvesterhci.io/skipResourceQu
 You must set the annotation before the migration starts. If the annotation is set while the values are already being adjusted, Harvester is unable to automatically restore the previous configuration.
 
 :::
+
+## ResourceQuota Compensation During Migration
+
+_Available as of v1.8.0_
+
+If you adjust the [VM Overhead Memory](#overhead-memory-of-virtual-machine) cluster settings while a Virtual Machine (VM) is already running, the VM's memory footprint may increase. This can cause issues during Live Migration, as the target node must instantiate a new VM instance that requires more memory than the original.
+
+When the destination Namespace has a strict ResourceQuota, the migration may be blocked because the cumulative memory usage of both the source and target VMs temporarily exceeds the quota even when the quota has already been scaled up automatically.
+
+### Automatic Resolution
+
+Harvester automatically manages this bottleneck through the following workflow:
+
+**Detection**: Harvester identifies when a migration is specifically blocked by ResourceQuota limitations.
+
+**Delta Compensation**: The system automatically injects a temporary "quota compensation" (the delta between the current limit and current usage plus the migration requirements) to allow the migration to proceed.
+
+**Cleanup**: Once the migration is complete (whether it succeeded or failed), Harvester removes the temporary compensation, returning the ResourceQuota to its original state.
+
+:::info important
+
+- This feature acts as an automatic workaround, ensuring that global policy changes (like memory overhead adjustments) do not accidentally "lock" your VMs to their current nodes.
+
+- The compensation applies only to already running VMs. If a running VM is stopped and then restarted, its resource allocation is strictly governed by the original quota. As a result, a VM that was previously running may fail to "cold boot" if the overhead is increased while the ResourceQuota remains unchanged.
+
+- To avoid reliance on this automatic compensation, the best practice is to adjust overhead settings and ResourceQuotas simultaneously. Ultimately, there is no difference between a live migration and a "cold reboot" regarding final quota control; both must eventually fit within the defined namespace limits.
+
+:::
