@@ -399,6 +399,18 @@ Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and 
 
 :::
 
-## Health checks
+### Health checks
 
 Beginning with Harvester cloud provider v0.2.0, additional health checks of the `LoadBalancer` service within the guest Kubernetes cluster are no longer necessary. Instead, you can configure [liveness](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-tcp-liveness-probe) and [readiness](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-readiness-probes) probes for your workloads. Consequently, any unavailable pods will be automatically removed from the load balancer endpoints to achieve the same desired outcome.
+
+### Automatic Cleanup
+
+_Available as of Harvester v1.8.0_
+
+When a guest cluster with the `harvester-cloud-provider` enabled is deleted, Harvester automatically performs a cleanup of all associated `LoadBalancer` resources on the host cluster.
+
+Key benefits:
+
+- Resource Management: Prevents "orphaned" LoadBalancers from consuming IP addresses after a guest cluster is gone.
+
+- Zero Manual Intervention: The lifecycle of the LoadBalancer is tied directly to the lifecycle of the guest Kubernetes cluster.

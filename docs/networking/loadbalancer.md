@@ -67,8 +67,15 @@ The Harvester load balancer supports TCP health checks. You can specify the para
 | Health Check Timeout           | int     | false | 3       | Specifies the timeout of every health check in seconds. Disabled by default.
 
 ## Guest Kubernetes cluster load balancer
+
 In conjunction with Harvester Cloud Provider, the Harvester load balancer provides load balancing for LB services in the guest cluster.
    ![](/img/v1.2/networking/guest-kubernetes-cluster-lb.png)
 When you create, update, or delete an LB service on a guest cluster with Harvester Cloud Provider, the Harvester Cloud Provider will create a Harvester LB automatically.
 
 For more details, refer to [Harvester Cloud Provider](/rancher/cloud-provider.md).
+
+### Automatic Cleanup
+
+_Available as of Harvester v1.8.0_
+
+When a guest cluster with the `harvester-cloud-provider` enabled is deleted, Harvester automatically performs a cleanup of all associated `LoadBalancer` resources.
