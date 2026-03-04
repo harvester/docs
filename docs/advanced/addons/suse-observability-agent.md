@@ -29,7 +29,7 @@ The **SUSE Observability Agent** add-on installs the suse-observability-agent on
 
 1. Login to the running **SUSE Observability** UI.
 2. Add a new instance with a name like `harvester1`.
-3. Follow the guide to **CREATE NEW SERVICE TOKEN**, save this token.
+3. Click the **CREATE NEW SERVICE TOKEN** button as shown below and follow the guide which will open to generate token and save it.
 4. The guide page shows a long text, find the key word `Generic Kubernetes`.
 
 ![](/img/v1.8/advanced/addons/so-add-instance.png)
