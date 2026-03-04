@@ -23,6 +23,7 @@ The following add-ons are available in this version:
 * [rancher-vcluster](./addons/rancher-vcluster.md) (Experimental)
 * [vm-import-controller](./addons/vmimport.md)
 * [virtual-machine-auto-balance](./addons/virtual-machine-auto-balance.md) (Experimental)
+* [suse-observability-agent](./addons/suse-observability-agent.md) (Experimental)
 
 You can enable and disable add-ons on the **Add-ons** screen of the Harvester UI.
 
