@@ -4,7 +4,9 @@ sidebar_label: Filter out and auto provision disks
 title: "Filter out and auto provision disks"
 ---
 
-**Versions**: v1.8.0 and later
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/disk-filter-and-auto-provision"/>
+</head>
 
 Starting from v1.8.0, Harvester provides a more flexible way to manage disk filtering and auto-provisioning through the `harvester-node-disk-manager` ConfigMap. This approach offers more granular control compared to the legacy `auto-disk-provision-paths` setting.
 
@@ -35,7 +37,7 @@ data:
         - "/dev/sdd"
   filters.yaml: |
     - hostname: "*"
-      excludeLabels: ["COS_*, HARV_*"]
+      excludeLabels: ["COS_*", "HARV_*"]
       excludeVendors: ["longhorn", "thisisaexample"]
       excludeDevices: ["/dev/sdd"]
       excludePaths: ["/", "/home"]
@@ -85,7 +87,7 @@ The `filters.yaml` section allows you to exclude disks based on various criteria
 ```yaml
 filters.yaml: |
   - hostname: "*"
-    excludeLabels: ["COS_*, HARV_*"]
+    excludeLabels: ["COS_*", "HARV_*"]
     excludeVendors: ["longhorn", "thisisaexample"]
     excludeDevices: ["/dev/sdd", "/dev/sd*"]
     excludePaths: ["/home"]
