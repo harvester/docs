@@ -753,6 +753,30 @@ If the collection process is not completed within the allotted time, Harvester s
 
 **Default value**: `30`
 
+### `support-bundle-file-name`
+
+**Versions**: v1.8.0 and later
+
+**Definition**: Custom name to use in the support bundle file name.
+
+When generating a support bundle, Harvester creates a ZIP file with the naming format `supportbundle_{name}_{timestamp}.zip`. This setting allows you to customize the `{name}` portion of the file name.
+
+**Default value**: None
+
+**Supported options and values**:
+
+- If a custom name is configured, the support bundle file name follows this format: `supportbundle_{support_bundle_name}_{timestamp}.zip`
+  
+  Example: `supportbundle_my-cluster_2025-09-17T03-39-17Z.zip`
+
+- If no custom name is configured (empty value), the support bundle file name uses a UUID format: `supportbundle_{uuid}_{timestamp}.zip`
+  
+  Example: `supportbundle_c2eb6186-525f-411e-91ee-e88ed090d66d_2025-09-17T03-39-17Z.zip`
+
+**Notes**:
+
+The value can be set through environment variables and is used to help identify support bundles from specific clusters or environments.
+
 ### `upgrade-checker-enabled`
 
 **Definition**: Setting that automatically checks for available Harvester upgrades.
