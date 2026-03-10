@@ -38,9 +38,17 @@ SOME-CA-CERTIFICATES
 
 ### `auto-disk-provision-paths` [Experimental]
 
+**Versions**: v1.8.0 and later recommend using ConfigMap
+
 **Definition**: Setting that allows Harvester to automatically add disks that match the specified glob pattern as VM storage.
 
 This setting only adds formatted disks that are mounted to the system. When specifying multiple patterns, separate values using commas.
+
+:::note
+
+Starting from v1.8.0, it is recommended to use the ConfigMap `harvester-node-disk-manager` in the `harvester-system` namespace to configure automatic disk provisioning instead of this setting. For detailed instructions, see [Filter out and auto provision disks](./disk-filter-and-auto-provision.md).
+
+:::
 
 :::caution
 
