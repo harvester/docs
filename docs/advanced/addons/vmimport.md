@@ -18,7 +18,7 @@ During the migration, a large VM's node could run out of space on this mount, re
 
 To avoid this, users are advised to enable PVC-backed storage and customize the amount of storage needed. According to the best practice, the PVC size should be twice the size of the largest VM being migrated. This is essential as the PVC is used as scratch space to download the VM, and convert the disks into raw image files.
 
-## vm-import-controller
+## Overview
 
 Currently, the following source providers are supported:
 * VMware
@@ -261,12 +261,12 @@ spec:
 OpenStack allows users to have multiple instances with the same name. In such a scenario, users are advised to use the Instance ID. The reconciliation logic tries to perform a name-to-ID lookup when a name is used.
 :::
 
-#### Known Issues
+## Known Issues
 
-##### Source Virtual Machine Name Is Not RFC1123-Compliant
+### Source Virtual Machine Name Is Not RFC1123-Compliant
 
 When creating a virtual machine object, the vm-import-controller add-on uses the name of the source virtual machine, which may not meet the Kubernetes object [naming criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names). You may need to rename the source virtual machine to allow successful completion of the import.
-##### VMware-Based Virtual Machine Without VMware Tools Is Not Migrated
+### VMware-Based Virtual Machine Without VMware Tools Is Not Migrated
 
 When you attempt to import a VMware-based virtual machine in Harvester v1.6.0, the following issues occur if [VMware Tools](https://knowledge.broadcom.com/external/article/315382/overview-of-vmware-tools.html) is not installed on the virtual machine:
 

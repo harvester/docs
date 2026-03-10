@@ -24,7 +24,7 @@ To avoid this, users are advised to enable PVC-backed storage and customize the 
 
 ![](/img/v1.2/vm-import-controller/ConfigureAddon.png)
 
-## vm-import-controller
+## Overview
 
 Currently, the following source providers are supported:
 * VMware

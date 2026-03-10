@@ -20,7 +20,7 @@ To avoid this, users are advised to enable PVC-backed storage and customize the 
 
 ![](/img/v1.2/vm-import-controller/ConfigureAddon.png)
 
-## vm-import-controller
+## Overview
 
 Currently, the following source providers are supported:
 * VMware
@@ -263,12 +263,12 @@ spec:
 OpenStack allows users to have multiple instances with the same name. In such a scenario, users are advised to use the Instance ID. The reconciliation logic tries to perform a name-to-ID lookup when a name is used.
 :::
 
-#### Known Issues
+## Known Issues
 
-##### Source Virtual Machine Name Is Not RFC1123-Compliant
+### Source Virtual Machine Name Is Not RFC1123-Compliant
 
 When creating a virtual machine object, the vm-import-controller add-on uses the name of the source virtual machine, which may not meet the Kubernetes object [naming criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names). You may need to rename the source virtual machine to allow successful completion of the import.
-##### VMware-Based Virtual Machine Without VMware Tools Is Not Migrated
+### VMware-Based Virtual Machine Without VMware Tools Is Not Migrated
 
 When you attempt to import a VMware-based virtual machine in Harvester v1.6.0, the following issues occur if [VMware Tools](https://knowledge.broadcom.com/external/article/315382/overview-of-vmware-tools.html) is not installed on the virtual machine:
 
@@ -282,7 +282,7 @@ To address the issue, perform one of the following workarounds:
 - In the `VirtualMachineImport` CRD spec, set the `forcePowerOff` field to `true`.  
 - Install VMware Tools or [open-vm-tools](https://knowledge.broadcom.com/external/article?legacyId=2073803).
 
-##### Eviction Strategy Is Not Set 
+### Eviction Strategy Is Not Set
 
 The `evictionStrategy` field is not configured automatically during the virtual machine import process. This prevents live migration of the virtual machine.
 To address the issue, run the following command:
