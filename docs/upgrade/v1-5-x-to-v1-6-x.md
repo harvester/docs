@@ -322,6 +322,6 @@ The workaround is to manually rollback the Fleet chart and restart Rancher to tr
    kubectl rollout status deployment/rancher -n cattle-system --timeout=5m
    ```
 
-After the rollback and Rancher restart, the embedded Rancher will automatically upgrade Fleet to the target version, and the upgrade will proceed normally.
+After the rollback and Rancher restart, the embedded Rancher automatically upgrades Fleet to the target version, and the upgrade proceeds normally.
 
 Related issue: [#9738](https://github.com/harvester/harvester/issues/9738)
