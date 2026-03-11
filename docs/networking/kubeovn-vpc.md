@@ -279,11 +279,11 @@ Perform the following steps to create and configure a VPC.
     - **Advanced Options** tab
       ```
       users:
-      `  `- name: ubuntu
-      `    `groups: [ sudo ]
-      `    `shell: /bin/bash
-      `    `sudo: ALL=(ALL) NOPASSWD:ALL
-      `    `lock\_passwd: false
+          - name: ubuntu
+            groups: [ sudo ]
+            shell: /bin/bash
+            sudo: ALL=(ALL) NOPASSWD:ALL
+            lock\_passwd: false
       ```
 
     :::note
@@ -383,11 +383,11 @@ The `natOutgoing` setting enables network address translation (NAT) for traffic 
     - **Advanced Options** tab
       ```
       users:
-      `  `- name: ubuntu
-      `    `groups: [ sudo ]
-      `    `shell: /bin/bash
-      `    `sudo: ALL=(ALL) NOPASSWD:ALL
-      `    `lock\_passwd: false
+          - name: ubuntu
+            groups: [ sudo ]
+            shell: /bin/bash
+            sudo: ALL=(ALL) NOPASSWD:ALL
+            lock\_passwd: false
       ```
 
 1. Open the serial console of `vm-external` (`172.20.30.2`), and then ping `8.8.8.8`.
