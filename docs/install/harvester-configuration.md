@@ -505,7 +505,7 @@ os:
 
 #### Definition
 
-Settings used to configure the OpenSSH Daemon (sshd). You can enable file transfer using the SFTP subsystem (`sftp`) and control whether SSH password authentication is allowed (`disable_password_auth`).
+Settings used to configure the OpenSSH Daemon (sshd). You can enable SFTP file transfer using the `sftp` setting. Post-installation SSH password authentication can be disabled using the `disable_password_auth` setting.
 
 #### Example
 
