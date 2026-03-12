@@ -501,11 +501,11 @@ os:
   additionalKernelArguments: "multipath=on"
 ```
 
-### `os.sshd.sftp`
+### `os.sshd`
 
 #### Definition
 
-Subsystem used to configure the OpenSSH Daemon (sshd). Harvester currently only supports `sftp`.
+Settings used to configure the OpenSSH Daemon (sshd). You can enable SFTP file transfer using the `sftp` setting. Post-installation SSH password authentication can be disabled using the `disable_password_auth` setting.
 
 #### Example
 
@@ -513,6 +513,7 @@ Subsystem used to configure the OpenSSH Daemon (sshd). Harvester currently only 
 os:
   sshd:
     sftp: true  #  The SFTP subsystem is enabled.
+    disable_password_auth: true  #  SSH password authentication is disabled.
 ```
 
 ---
