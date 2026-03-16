@@ -148,9 +148,10 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
 	![config-proxy.png](/img/v1.2/install/config-proxy.png)
 
-1. (Optional) You can choose to import SSH keys by providing `HTTP URL`. For example, your GitHub public keys `https://github.com/<username>.keys` can be used.
+1. (Optional) You can choose to import SSH keys by providing `HTTP URL`. For example, your GitHub public keys `https://github.com/<username>.keys` can be used. Once the key is configured, you have an option to configure whether password auth SSH access is enabled or not.
 
-	![import-ssh-keys.png](/img/v1.2/install/import-ssh-keys.png)
+	![import-ssh-keys.png](/img/v1.8/install/import-ssh-keys.png)
+	![enable-pass-access.png](/img/v1.8/install/enable-pass-access.png)
 
 1. (Optional) If you need to customize the host with a [Harvester configuration](./harvester-configuration.md) file, enter the `HTTP URL` here.
 
