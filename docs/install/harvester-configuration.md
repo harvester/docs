@@ -516,6 +516,12 @@ os:
     disable_password_auth: true  #  SSH password authentication is disabled.
 ```
 
+:::note
+
+If `disable_password_auth` is set to `true` and no [`os.ssh_authorized_keys`](#osssh_authorized_keys) are configured, all SSH access to the node will be disabled. In this case, console access is the only way to reach the node.
+
+:::
+
 ---
 <p>&nbsp;</p>
 
