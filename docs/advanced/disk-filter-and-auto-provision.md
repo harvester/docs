@@ -100,6 +100,12 @@ filters.yaml: |
 
 The `autoprovision.yaml` section allows you to automatically add disks as VM storage.
 
+:::note
+
+Currently, auto-provisioning only supports **Longhorn v1**. Longhorn v2 and LVM are not yet supported.
+
+:::
+
 ### Supported Options
 
 - **`devices`**: List of device paths to automatically provision
