@@ -289,27 +289,16 @@ Now you can create a new StorageClass that you intend to use in your guest Kuber
 
 ## RWX Volumes Support
 
-:::caution
-
-RWX volumes currently only work with a dedicated storage network. [GitHub issue #7218](https://github.com/harvester/harvester/issues/7218) tracks the enhancement that will allow RWX volumes to use various VLANs on guest clusters.
-
-:::
-
 ### Prerequisites
 
 - Harvester v1.4 or later is installed on the host cluster.
 
-- A [storage network](../advanced/storagenetwork.md) is configured on the Harvester cluster.
+- The [`rwx-network`](../advanced/rwxnetwork.md) setting is configured on the Harvester cluster.
 
-  Use **exclude** to reserve a range of IP addresses for the guest cluster virtual machines. 
+  To prevent IP conflicts with guest cluster virtual machines, use the **exclude** field to reserve their IP addresses:
 
-  ![](/img/v1.5/rancher/configure-storage-network-01.png)
-
-- The **Storage Network for RWX Volume** setting on the embedded Longhorn UI is enabled. 
-
-  Go to **General**, and then select **Storage Network for RWX Volume Enabled**.
-  
-  ![](/img/v1.5/rancher/enable-rwx-storage-network-01.png)
+  - If `share-storage-network` is `true`: configure the **exclude** field in the [storage network](../advanced/storagenetwork.md) setting.
+  - If using a dedicated RWX network, `share-storage-network: false` with a `network` specified: configure the **exclude** field in the `rwx-network` setting.
 
 - You have created an RWX StorageClass on the host Harvester cluster.
 
@@ -390,9 +379,9 @@ RWX volumes currently only work with a dedicated storage network. [GitHub issue 
   harvester-networkfs-manager-xvkgp                       1/1     Running     4 (37m ago)    3h41m
   ```
 
-- The VM must have two interfaces. The first one is the default network interface for cluster/external networking. The second one must be in a network which can connect to the storage network.
+- The VM must have two interfaces. The first one is the default network interface for cluster/external networking. The second one must be in a network which can connect to the storage/rwx network.
 
-  The NAD **default/vlan101** is used for the storage network.
+  The NAD **default/vlan101** is used for the storage/rwx network.
 
   ![](/img/v1.5/rancher/create-guest-cluster-with-two-nics.png)
 
@@ -410,13 +399,13 @@ RWX volumes currently only work with a dedicated storage network. [GitHub issue 
 
   - SUSE and OpenSUSE: `zypper install -y nfs-client`
 
-- An IP is manually assigned to the storage network interface.
+- An IP is manually assigned to the storage/rwx network interface.
 
   You can assign any of the reserved IPs using the following commands:
   
   ```
-  $ ip link set <storage network nic> up
-  $ ip a add <reserved IP> dev <storage network nic>
+  $ ip link set <storage/rwx network nic> up
+  $ ip a add <reserved IP> dev <storage/rwx network nic>
   ```
 
   :::info important
