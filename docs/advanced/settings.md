@@ -765,7 +765,7 @@ If the collection process is not completed within the allotted time, Harvester s
 
 **Versions**: v1.8.0 and later
 
-**Definition**: Custom name to use in the support bundle file name.
+**Definition**: Custom name to use in the support bundle file name. test by jack
 
 When generating a support bundle, Harvester creates a ZIP file with the naming format `supportbundle_{string}_{timestamp}.zip`. This setting allows you to customize the `{string}` portion of the file name.
 
