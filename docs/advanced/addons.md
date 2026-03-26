@@ -10,6 +10,8 @@ title: "Add-ons"
 
 Harvester provides optional features as add-ons to maintain a minimal installation footprint. This design allows you to easily enable or disable functionality based strictly on your use case and requirements. You can customize the settings of each add-on, though the level of customization depends on the underlying software.
 
+test by jack
+
 The following add-ons are available in this version:
 
 * [harvester-csi-driver-lvm](./addons/lvm-local-storage.md) (Experimental)
