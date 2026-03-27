@@ -53,6 +53,15 @@ Select **PCI Devices** and use the **Available PCI Devices** drop-down. Select t
 
 ![](/img/v1.2/pcidevices/vm-pcidevices-attach.png)
 
+:::warning
+
+**Always restart the VM immediately after adding or removing PCI devices.**
+
+Although rebooting the VM after editing its spec is not mandatory, we strongly recommend doing so to ensure proper synchronization. Without an immediate reboot, the addon disable check might not accurately detect devices in use.
+
+If you need to disable and re-enable the `pcidevices-controller` addon while VMs are stopped with host devices attached, you can annotate the addon with `harvesterhci.io/skipPCIDevicesControllerAddonWebhookCheck` to skip the addon disable check.
+
+:::
 
 ## Using a passed-through PCI Device inside the VM
 

@@ -24,7 +24,7 @@ To avoid this, users are advised to enable PVC-backed storage and customize the 
 
 ![](/img/v1.2/vm-import-controller/ConfigureAddon.png)
 
-## vm-import-controller
+## Overview
 
 Currently, the following source providers are supported:
 * VMware
@@ -190,7 +190,7 @@ spec:
 OpenStack allows users to have multiple instances with the same name. In such a scenario, users are advised to use the Instance ID. The reconciliation logic tries to perform a name-to-ID lookup when a name is used.
 :::
 
-#### Known issues
+## Known Issues
 * **Source virtual machine name is not RFC1123 compliant**: When creating a virtual machine object, the vm-import-controller add-on uses the name of the source virtual machine, which may not meet the Kubernetes object [naming criteria](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names). You may need to rename the source virtual machine to allow successful completion of the import.
 
 * **Virtual machine image name is too long**: The vm-import-controller add-on labels each imported disk using the format `vm-import-$VMname-$DiskName`. If a label exceeds 63 characters, you will see the following error message in the vm-import-controller logs:

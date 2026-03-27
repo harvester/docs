@@ -1,0 +1,98 @@
+name: Pull Request Deploy
+
+on:
+  workflow_run:
+    workflows: ["Pull Request Build"]
+    types: [completed]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    permissions:
+      pull-requests: write
+      actions: read
+    steps:
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          npm install netlify-cli@21.2.0 -g yarn
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./build
+
+      - name: Download PR data artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pr-data
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Load PR data
+        run: |
+          cat pr-data.env >> $GITHUB_ENV
+
+      - name: Deploy to Netlify
+        run: >
+          netlify deploy
+          --no-build
+          --site ${{ secrets.NETLIFY_SITE_ID }}
+          --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          --message "Deploy from GitHub Action (pull-request: ${{ env.PR_NUMBER }}, ${{ env.HEAD_SHA }})"
+          --dir ./build
+          --json > deploy_output.json
+
+      - name: Get Netlify Deploy URL
+        id: netlify
+        run: |
+          DEPLOY_URL=$(jq -r '.deploy_url' deploy_output.json)
+          echo "deploy_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+
+      - name: Add or Update PR comment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const sha = process.env.HEAD_SHA;
+            const pr_number = process.env.PR_NUMBER;
+            const deployUrl = `${{ steps.netlify.outputs.deploy_url }}`;
+            const commentIdentifier = "<!-- deploy-comment -->";
+            const body = `${commentIdentifier}\n
+            |  Name | Link |
+            |:-:|------------------------|
+            |<span aria-hidden="true">🔨</span> Latest commit | ${sha} |
+            |<span aria-hidden="true">😎</span> Deploy Preview | ${deployUrl} |
+            `
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr_number,
+            });
+
+            const existingComment = comments.find(comment => comment.body.includes(commentIdentifier));
+
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body: body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr_number,
+                body: body,
+              });
+            }

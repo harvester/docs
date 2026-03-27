@@ -267,6 +267,7 @@ Related issue: [#9739](https://github.com/harvester/harvester/issues/9739)
 Harvester live migrates virtual machines to ensure zero downtime during node upgrades. If your cluster uses any of the following CPU models, you may notice a temporary feature flag (`cpu-feature.node.kubevirt.io/ipred-ctrl=true`) appear while the upgrade is in progress.
 
 - Intel(R) Xeon(R) Gold 5418Y
+- Intel(R) Xeon(R) Gold 6542Y
 - Intel(R) Xeon(R) Silver 4509Y
 
 While this feature flag is automatically removed from nodes after the upgrade, the corresponding node selector is retained in the virtual machine configuration. This mismatch between the virtual machine's requirements and the node's labels causes subsequent live migrations to fail.
