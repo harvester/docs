@@ -44,6 +44,7 @@ The Harvester CSI driver supports the following features:
 
 - The Kubernetes cluster is built on top of Harvester virtual machines.
 - The Harvester virtual machines that run as guest Kubernetes nodes are in the same namespace.
+- Starting with v0.1.25, if you install the CSI driver without enabling the Harvester cloud provider, ensure that [Volume Snapshots](./csi-driver.md#volume-snapshots) are properly installed; otherwise, the chart installation will fail.
 
 :::note
 
