@@ -14,7 +14,7 @@ jobs:
       actions: read
     steps:
       - name: Set up Node.js 20
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: 20
 
@@ -23,7 +23,7 @@ jobs:
           npm install netlify-cli@21.2.0 -g yarn
 
       - name: Download build artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: build
           run-id: ${{ github.event.workflow_run.id }}
@@ -31,7 +31,7 @@ jobs:
           path: ./build
 
       - name: Download PR data artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: pr-data
           run-id: ${{ github.event.workflow_run.id }}
@@ -58,7 +58,7 @@ jobs:
           echo "deploy_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
 
       - name: Add or Update PR comment
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
