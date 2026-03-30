@@ -21,7 +21,7 @@ Harvester configuration file can be provided during manual or automatic installa
 
 ```yaml
 scheme_version: 1
-server_url: https://cluster-VIP:443 # empty or absent in create mode
+server_url: "" # empty or absent in create mode; set to https://cluster-VIP:443 in join mode
 token: TOKEN_VALUE
 os:
   ssh_authorized_keys:
