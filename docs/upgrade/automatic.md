@@ -203,6 +203,34 @@ Make sure to check [Upgrade paths](#upgrade-paths) section first about upgradabl
 
 :::
 
+<Tabs>
+<TabItem value="ui" label="UI" default>
+
+_Available as of v1.8.0_
+
+Harvester provides a dedicated UI page for importing an upgrade image in air-gapped environments. To access the page, navigate to **Harvester UI** > **Advanced** > **Settings**, find the **server-version** row, click the **⋮** button, and select **Upgrade**.
+
+To start an upgrade, select either **Upload New Image** or **Select Existing Image**:
+
+- **Upload New Image**: Enter a name for the image, then choose a source type:
+  - **Upload**: Click **Upload File** to select a local `.iso` file.
+  - **Download**: Enter the URL of the ISO file (for example, `http://10.10.0.1/harvester.iso`) for Harvester to download directly.
+
+  Click **Upgrade** once the upload or download is complete.
+
+:::note
+
+You can enable upgrade logging by selecting the **Enable Logging** checkbox before clicking **Upgrade**.
+
+:::
+
+- **Select Existing Image**: Select a previously imported Harvester upgrade image from the dropdown list, then click **Upgrade**.
+
+To remove a previously imported Harvester upgrade image, select **Delete Existing Image**, choose the image from the dropdown list, and confirm the deletion.
+
+</TabItem>
+<TabItem value="cli" label="CLI">
+
 ### Prepare the ISO File
 
 1. Download a Harvester ISO file from the [Releases](https://github.com/harvester/harvester/releases) page.
@@ -243,6 +271,9 @@ Make sure to check [Upgrade paths](#upgrade-paths) section first about upgradabl
 ### Start the Upgrade
 
 The **Upgrade** button appears on the **Dashboard** screen whenever a new Harvester version that you can upgrade to becomes available. Refresh the screen if the button does not appear.
+
+</TabItem>
+</Tabs>
 
 ## Manually Start an Upgrade before the Harvester Official Upgrade is Available
 
