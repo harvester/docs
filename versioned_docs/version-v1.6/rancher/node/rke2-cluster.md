@@ -120,7 +120,7 @@ Workload affinity rules can be added to the machine pools during the cluster cre
 1. Select **Show Advanced** and choose **Add Workload Selector**.
    ![affinity-add-workload-selector](/img/v1.2/rancher/affinity-rke2-add-workload-selector.png)
 2. Select **Type**, **Affinity** or **Anti-Affinity**.
-3. Select **Priority**. **Prefered** means it's an optional rule, and **Required** means a mandatory rule.
+3. Select **Priority**. **Preferred** means it's an optional rule, and **Required** means a mandatory rule.
 4. Select the namespaces for the target workloads.
 5. Select **Add Rule** to specify the workload affinity rules.
 6. Set **Topology Key** to specify the label key that divides Harvester hosts into different topologies.

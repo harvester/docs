@@ -128,7 +128,7 @@ External network devices typically refer to switches and DHCP servers. With a cl
     | --- | ----------- |
     | mode 0(balance-rr) | manual |
     | mode 1(active-backup) | none |
-    | mdoe 2(balance-oxr) | manual |
+    | mode 2(balance-oxr) | manual |
     | mode 3(broadcast) | manual |
     | mode 4(802.3ad) | LACP |
     | mode 5(balance-tlb) | none |
