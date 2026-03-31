@@ -42,7 +42,7 @@ A three-node cluster is required to realize the multi-node features of Harvester
 
 Harvester nodes have the following network requirements for installation.
 
-### Port Requriements for Harvester Nodes
+### Port Requirements for Harvester Nodes
 
 Harvester nodes require the following port connections or inbound rules. Typically, all outbound traffic is allowed.
 
