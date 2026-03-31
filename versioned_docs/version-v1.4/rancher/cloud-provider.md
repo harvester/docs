@@ -406,7 +406,7 @@ Once you've deployed the Harvester cloud provider, you can leverage the Kubernet
 ### IPAM
 Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and you can configure it by adding the annotation `cloudprovider.harvesterhci.io/ipam: $mode` to its corresponding service. Starting from Harvester cloud provider >= v0.2.0, it also introduces a unique **Share IP** mode. A service shares its load balancer IP with other services in this mode.
 
-- **DCHP:** A DHCP server is required. The Harvester load balancer will request an IP address from the DHCP server.
+- **DHCP:** A DHCP server is required. The Harvester load balancer will request an IP address from the DHCP server.
 
 - **Pool:** An [IP pool](../networking/ippool.md) must be configured first. The Harvester load balancer controller will allocate an IP for the load balancer service following [the IP pool selection policy](../networking/ippool.md#selection-policy).
 
