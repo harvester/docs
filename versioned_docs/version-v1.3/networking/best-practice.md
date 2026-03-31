@@ -18,7 +18,7 @@ You may want to replace the Ethernet NICs of a bare-metal node in a Harvester cl
 
 - Malfunction or damage
 
-- Insufficent hardware capacity
+- Insufficient hardware capacity
 
 - Missing features
 
