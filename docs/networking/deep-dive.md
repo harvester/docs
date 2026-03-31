@@ -101,7 +101,7 @@ We leverage [multus CNI](https://github.com/k8snetworkplumbingwg/multus-cni) and
     ```
 
     Because untagged VLAN handling is no longer applied, physical switches connected to Harvester hosts must now be configured strictly as trunk ports. These ports must accept tagged traffic and send traffic tagged with the VLAN ID used by the VM network.
-    
+
     Any untagged traffic arriving at Harvester network bridges for a VLAN-tagged veth interface is dropped. This occurs because the bridge cannot forward the traffic to the veth interface, which is configured to accept only the VLAN ID from the VM network.
 
 ### Management Network
@@ -128,7 +128,7 @@ External network devices typically refer to switches and DHCP servers. With a cl
     | --- | ----------- |
     | mode 0(balance-rr) | manual |
     | mode 1(active-backup) | none |
-    | mdoe 2(balance-oxr) | manual |
+    | mode 2(balance-oxr) | manual |
     | mode 3(broadcast) | manual |
     | mode 4(802.3ad) | LACP |
     | mode 5(balance-tlb) | none |
