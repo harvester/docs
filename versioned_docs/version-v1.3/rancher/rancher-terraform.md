@@ -40,7 +40,7 @@ description: Rancher Terraform allows administrators to create and manage RKE2 g
     required_providers {
         rancher2 = {
             source  = "rancher/rancher2"
-            version = "4.2.0"
+            version = "5.2.0"
             }
         }
     }
@@ -144,7 +144,7 @@ description: Rancher Terraform allows administrators to create and manage RKE2 g
 
     resource "rancher2_cluster_v2" "rke2-demo" {
         name = "rke2-demo"
-        kubernetes_version = "v1.28.10+rke2r1"
+        kubernetes_version = "v1.30.14+rke2r4"
         rke_config {
             machine_pools {
                 name = "pool1"
@@ -184,8 +184,8 @@ description: Rancher Terraform allows administrators to create and manage RKE2 g
 
             chart_values = <<EOF
             harvester-cloud-provider:
-            clusterName: rke2-demo
-            cloudConfigPath: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
+              clusterName: rke2-demo
+              cloudConfigPath: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
             EOF
         }
     }

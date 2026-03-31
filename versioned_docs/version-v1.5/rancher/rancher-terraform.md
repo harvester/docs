@@ -76,7 +76,7 @@ The [Rancher Terraform Provider](https://registry.terraform.io/providers/rancher
     required_providers {
         rancher2 = {
             source  = "rancher/rancher2"
-            version = "4.2.0"
+            version = "7.6.1"
             }
         }
     }
@@ -148,7 +148,7 @@ The [Rancher Terraform Provider](https://registry.terraform.io/providers/rancher
 
     resource "rancher2_cluster_v2" "rke2-demo" {
         name = "rke2-demo"
-        kubernetes_version = "v1.28.10+rke2r1"
+        kubernetes_version = "v1.32.5+rke2r1"
         rke_config {
             machine_pools {
                 name = "pool1"
@@ -188,8 +188,8 @@ The [Rancher Terraform Provider](https://registry.terraform.io/providers/rancher
 
             chart_values = <<EOF
             harvester-cloud-provider:
-            clusterName: rke2-demo
-            cloudConfigPath: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
+              clusterName: rke2-demo
+              cloudConfigPath: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
             EOF
         }
     }
