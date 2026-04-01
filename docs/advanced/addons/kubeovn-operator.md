@@ -208,6 +208,8 @@ You can disable `kubeovn-operator` using the following commands:
 ```
 kubectl delete configuration kubeovn -n kube-system --wait=false
 
+kubectl delete configmap kubeovn-configuration-bootstrap -n kube-system --wait=false --ignore-not-found
+
 kubectl delete validatingwebhookconfiguration  kube-ovn-webhook --ignore-not-found
 
 kubectl delete ips --all 
