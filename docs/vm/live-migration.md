@@ -17,6 +17,12 @@ description: Live migration means moving a virtual machine to a different host w
 
 Live migration means moving a virtual machine to a different host without downtime. A couple of comprehensive processes and tasks are done under the hood to fulfill the live migration.
 
+:::tip
+
+If you want to migrate a VM's volumes to a different StorageClass (rather than migrating the VM to a different host), see [Storage Migration](../volume/storage-migration.md).
+
+:::
+
 ## Prerequisites
 
 Live migration can occur when the following requirements are met:
