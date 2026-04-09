@@ -244,7 +244,7 @@ After the pod is successfully deleted, the `Start` button becomes visible again 
 
 https://github.com/harvester/harvester/issues/4659
 
-## VM Stuck in Starting State with Error Messsage `not a device node`
+## VM Stuck in Starting State with Error Message `not a device node`
 
 *Impacted versions: v1.3.0*
 
@@ -364,7 +364,7 @@ Cluster level operation:
 
    The VM may stuck in `Stopping`, continue the next step.
 
-1. Delete the backing pods forcely.
+1. Delete the backing pods forcibly.
 
     ```
     $ kubectl delete pod virt-launcher-vm1-nxfm4 --force
@@ -380,7 +380,7 @@ Node level operation, node by node:
 
 1. [Cordon](../host/host.md#cordoning-a-node) a node.
 
-1. Unmout all the affected Longhorn volumes in this node.
+1. Unmount all the affected Longhorn volumes in this node.
 
     You need to ssh to this node and execute the `sudo -i umount path` command.
     

@@ -33,7 +33,7 @@ The second node is installed successfully.
 
 The third node is installed successfully.
 
-Then the second node changes to Unavialable state and cannot recover automatically.
+Then the second node changes to Unavailable state and cannot recover automatically.
 ```
 
 #### Solution

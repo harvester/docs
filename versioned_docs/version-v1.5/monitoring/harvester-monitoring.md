@@ -231,7 +231,7 @@ Harvester does not manage upgrades of the rancher-alerting-drivers app, which is
 
 You can also add `AlertmanagerConfig` from the CLI.
 
-Exampe: a Webhook receiver in the `default` namespace.
+Example: a Webhook receiver in the `default` namespace.
 
 ```
 cat << EOF > a-single-receiver.yaml
@@ -295,7 +295,7 @@ Different receivers may present the alerts in different formats. For details, pl
 
 #### Known Limitation
 
-The `AlertmanagerConfig` is enforced by the `namespace`. Gloabl-level `AlertmanagerConfig` without a namespace is not supported.
+The `AlertmanagerConfig` is enforced by the `namespace`. Global-level `AlertmanagerConfig` without a namespace is not supported.
 
 We have already created a [GithHb issue](https://github.com/harvester/harvester/issues/2760) to track upstream changes. Once the feature is available, `Harvester` will adopt it.
 

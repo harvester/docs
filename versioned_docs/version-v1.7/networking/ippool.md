@@ -139,7 +139,7 @@ Each IP pool will have a specific range, and you can specify the corresponding r
 
 ### IPPool for VM type Loadbalancer
 
-1. It is better to [Create IP Pool from Harvester UI directly](#how-to-create), which leaves the seletor scope `Project` and `Guest Kubernetes Cluster` blank.
+1. It is better to [Create IP Pool from Harvester UI directly](#how-to-create), which leaves the selector scope `Project` and `Guest Kubernetes Cluster` blank.
 
 1. If you can only [Create IP Pool from Rancher Managery UI](#create-ip-pool-from-rancher-manager-ui), set the scope `Project` and `Guest Kubernetes Cluster` to be `All` or `None`.
 

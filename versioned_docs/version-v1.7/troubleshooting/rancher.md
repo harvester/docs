@@ -115,7 +115,7 @@ The IP 10.115.6.200 is from the vip-* interface.
 
 ### Affected versions
 
-From Calico `v3.22` or even ealier version, the [IP autodetection](https://github.com/projectcalico/calico/blob/aaee80d6e09254dc8c045136c9b31114b5aea9a9/node/pkg/lifecycle/startup/autodetection/autodetection_methods.go#L30) was available, and the `first-found` was the default value.
+From Calico `v3.22` or even earlier version, the [IP autodetection](https://github.com/projectcalico/calico/blob/aaee80d6e09254dc8c045136c9b31114b5aea9a9/node/pkg/lifecycle/startup/autodetection/autodetection_methods.go#L30) was available, and the `first-found` was the default value.
 
 SUSE RKE2 version [`v1.29`](https://www.suse.com/suse-rke2/support-matrix/all-supported-versions/rke2-v1-29/) has Calico `v3.29.2`. version [`v1.35`](https://www.suse.com/suse-rke2/support-matrix/all-supported-versions/rke2-v1-35/) has Calico `v3.31.2`.
 
@@ -166,7 +166,7 @@ $ kubectl -n tigera-operator logs tigera-operator-8566d6db5c-wfjkt
 {"level":"error","ts":"2025-12-18T09:06:37Z","msg":"Reconciler error","controller":"tigera-installation-controller","object":{"name":"periodic-5m0s-reconcile-event"},"namespace":"","name":"periodic-5m0s-reconcile-event","reconcileID":"bae9d2da-a4bf-4d8b-89b8-c8a23a96f351","error":"Internal error occurred: failed calling webhook \"rancher.cattle.io.namespaces\": failed to call webhook: Post \"https://rancher-webhook.cattle-system.svc:443/v1/webhook/validation/namespaces?timeout=10s\": context deadline exceeded"...}
 ```
 
-In case it happenes, then update the `calico-system/calico-node` daemonset to add following container parameters directly.
+In case it happens, then update the `calico-system/calico-node` daemonset to add following container parameters directly.
 
 ```
             - name: IP_AUTODETECTION_METHOD
