@@ -495,3 +495,7 @@ You can upgrade K3s using the Rancher UI.
 1. Select **Version**.
 
 1. Select **Next** > **Update**.
+
+## Appendix - RBAC Changes for Harvester CSI Driver
+
+As the Harvester CSI driver gained more capabilities, additional RBAC permissions may be required. If you lack the necessary permissions, some features or enhancements may not work as expected. Check our RBAC configuration on the Github Page [here](https://github.com/harvester/harvester/blob/v1.6/deploy/charts/harvester/templates/rbac.yaml).

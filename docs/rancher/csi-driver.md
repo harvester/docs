@@ -31,12 +31,13 @@ The Harvester Container Storage Interface (CSI) Driver provides a standard CSI i
 
 The Harvester CSI driver supports the following features:
 
-| Harvester CSI Driver Version | Harvester Version | Storage Tiering | RWX Volumes | Online Resizing | Third-Party Storage | Volume Snapshots |
-| --- | --- | --- | --- | --- | --- | --- |
-| 0.1.15 | All versions | &#10004; | &#10006; | &#10006; | &#10006; | &#10006; |
-| 0.1.20 | v1.4 and later | &#10004; | &#10004; | &#10006; | &#10006; | &#10006; |
-| 0.1.24 | v1.6 and later | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; |
-| 0.1.25 | v1.7 and later | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; |
+| Harvester CSI Driver Version | Harvester Version | Storage Tiering | RWX Volumes | Online Resizing | Third-Party Storage (RWO) | Volume Snapshots | Volume Backups |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 0.1.15 | All versions | &#10004; | &#10006; | &#10006; | &#10006; | &#10006; | &#10006; |
+| 0.1.20 | v1.4 and later | &#10004; | &#10004; | &#10006; | &#10006; | &#10006; | &#10006; |
+| 0.1.24 | v1.6 and later | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; | &#10006;
+| 0.1.25 | v1.7 and later | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; |
+| 0.1.28 | v1.8 and later | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; |
 
 ## Deploying
 
@@ -515,3 +516,7 @@ You can upgrade K3s using the Rancher UI.
 1. Select **Version**.
 
 1. Select **Next** > **Update**.
+
+## Appendix - RBAC Changes for Harvester CSI Driver
+
+As the Harvester CSI driver gained more capabilities, additional RBAC permissions may be required. If you lack the necessary permissions, some features or enhancements may not work as expected. Check our RBAC configuration on the Github Page [here](https://github.com/harvester/harvester/blob/v1.8/deploy/charts/harvester/templates/rbac.yaml).
