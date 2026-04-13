@@ -142,6 +142,8 @@ For more information, see [cluster-pod-security-standard](./cluster-pod-security
 
 **Definition**: URL used to import the Harvester cluster into Rancher for multi-cluster management.
 
+By default, the registration connection is secured via TLS. Harvester validates the server certificate using its trusted system CA certificates. If your environment uses custom CA certificates, they can be added to the list of Harvester's trusted CA using the [`additional-ca` setting](#additional-ca). In environments where the server certificate is self-signed or signed by an untrusted CA, you can set `insecureSkipTLSVerify` to `true` to skip the TLS verification. However, this is not recommended for production environments.
+
 When you configure this setting, a new pod called `cattle-cluster-agent-*` is created in the namespace `cattle-system` for registration purposes. This pod uses the container image `rancher/rancher-agent:related-version`, which is not packed into the Harvester ISO and is instead determined by Rancher. The `related-version` is usually the same as the Rancher version. For example, when you register Harvester to Rancher v2.7.9, the image is `rancher/rancher-agent:v2.7.9`. For more information, see [Find the required assets for your Rancher version](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/other-installation-methods/air-gapped-helm-cli-install/publish-images#1-find-the-required-assets-for-your-rancher-version) in the Rancher documentation.
 
 Depending on your Harvester settings, the image is downloaded from either of the following locations:
@@ -151,12 +153,12 @@ Depending on your Harvester settings, the image is downloaded from either of the
 
 Alternatively, you can obtain a copy of the image and manually upload it to all Harvester nodes.
 
-**Default value**: None
+**Default value**: `{ "url": "", "insecureSkipTLSVerify": false}`
 
 **Example**:
 
-```
-https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhrc7c_c-m-zxbbbck9.yaml
+```json
+{ "url": "https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhrc7c_c-m-zxbbbck9.yaml", "insecureSkipTLSVerify": false}
 ```
 
 ### `containerd-registry`

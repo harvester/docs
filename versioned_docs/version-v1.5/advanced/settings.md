@@ -105,6 +105,12 @@ For more information, see the [Longhorn documentation](https://longhorn.io/docs/
 
 **Definition**: URL used to import the Harvester cluster into Rancher for multi-cluster management.
 
+:::warning
+
+A vulnerability has been identified in the Harvester/Rancher integration mechanism where the registration client did not validate the certificate presented by the remote server while performing the TLS handshake. This security gap could allow an attacker with network-level access between the Harvester and Rancher Manager to execute a man-in-the-middle (MitM) attack against Harvester. You must either upgrade to v1.8 or ensure that only authorized cluster administrators can access and modify the `cluster-registration-url` setting. For more information, see the security advisory at [CVE-2025-71261](https://github.com/harvester/harvester/security/advisories/GHSA-pgh9-mpwc-8jjf).
+
+:::
+
 When you configure this setting, a new pod called `cattle-cluster-agent-*` is created in the namespace `cattle-system` for registration purposes. This pod uses the container image `rancher/rancher-agent:related-version`, which is not packed into the Harvester ISO and is instead determined by Rancher. The `related-version` is usually the same as the Rancher version. For example, when you register Harvester to Rancher v2.7.9, the image is `rancher/rancher-agent:v2.7.9`. For more information, see [Find the required assets for your Rancher version](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/other-installation-methods/air-gapped-helm-cli-install/publish-images#1-find-the-required-assets-for-your-rancher-version) in the Rancher documentation.
 
 Depending on your Harvester settings, the image is downloaded from either of the following locations:
