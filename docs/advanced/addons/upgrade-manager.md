@@ -1,11 +1,11 @@
 ---
-sidebar_position: 11
+sidebar_position: 12
 sidebar_label: Upgrade Manager
 title: "Upgrade Manager (Experimental)"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/addons/virtual-machine-auto-balance"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/addons/upgrade-manager"/>
 </head>
 
 _Available as of v1.8.0_
@@ -14,7 +14,7 @@ The Upgrade Manager provides a declarative, Kubernetes-native way to orchestrate
 
 :::note
 
-**harvester-upgrade-manager** is an *experimental* add-on. Its add-on manifest, Helm chart, and container image are not included in the published Harvester ISO image, but you can download them from the [experimental-addons repository](https://github.com/harvester/experimental-addons) and Docker Hub. For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+**harvester-upgrade-manager** is an _experimental_ add-on. Its add-on manifest, Helm chart, and container image are not included in the published Harvester ISO image, but you can download them from the [experimental-addons repository](https://github.com/harvester/experimental-addons) and Docker Hub. For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
 
 :::
 
@@ -24,7 +24,7 @@ To install the Upgrade Manager, first apply the add-on manifest from the experim
 
 ```bash
 kubectl apply -f \
-    https://raw.githubusercontent.com/harvester/experimental-addons/refs/heads/main/harvester-upgrade-manager/harvester-upgrade-manager.yaml
+    https://raw.githubusercontent.com/harvester/experimental-addons/main/harvester-upgrade-manager/harvester-upgrade-manager.yaml
 ```
 
 Then enable the add-on by patching its resource:
@@ -51,12 +51,12 @@ The Upgrade Manager supports two ways to specify the target release. Both approa
 With the version-based approach, you first create a `Version` resource that points to the ISO download URL, optionally with its checksum, then create an `UpgradePlan` that references the version by name. The manager automatically resolves the ISO URL from the `Version` resource.
 
 ```yaml
-apiVersion: harvesterhci.io/v1beta1           
-kind: Version            
+apiVersion: harvesterhci.io/v1beta1
+kind: Version
 metadata:
   name: v1.8.0
-  namespace: harvester-system                        
-spec:                                                                                     
+  namespace: harvester-system
+spec:
   isoURL: https://releases.rancher.com/harvester/v1.8.0/harvester-v1.8.0-amd64.iso
 ```
 
