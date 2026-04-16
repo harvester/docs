@@ -14,6 +14,7 @@ The following add-ons are available in this version:
 
 * [harvester-csi-driver-lvm](./addons/lvm-local-storage.md) (Experimental)
 * [harvester-seeder](./addons/seeder.md) (Experimental)
+* [harvester-upgrade-manager](./addons/upgrade-manager.md) (Experimental)
 * [harvester-vm-dhcp-controller](./addons/managed-dhcp.md) (Experimental)
 * [kubeovn-operator](./addons/kubeovn-operator.md) (Experimental)
 * [nvidia-driver-toolkit](./addons/nvidiadrivertoolkit)
