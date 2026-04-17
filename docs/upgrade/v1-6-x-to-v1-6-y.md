@@ -107,7 +107,7 @@ To prevent this issue, you can temporarily disable the `LiveMigrate` workload up
 
 :::note
 
-Starting from v1.8.1, this process is handled automatically. The workaround described below is only necessary when upgrading to a version before v1.8.1.
+Starting from v1.8.0, this process is handled automatically. The workaround described below is only necessary when upgrading to a version before v1.8.0.
 
 :::
 
