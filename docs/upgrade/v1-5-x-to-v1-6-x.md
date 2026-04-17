@@ -291,13 +291,13 @@ Related issue: [#8816](https://github.com/harvester/harvester/issues/8816)
 
 ### 10. Unnecessary live-migrations during the upgrade
 
-Harvester v1.6.x enables [CPU and memory hot-plugging](https://docs.harvesterhci.io/v1.6/vm/cpu-memory-hotplug/) for virtual machines through KubeVirt's `LiveMigrate` workload update strategy. However, when the KubeVirt operator is upgraded, this feature triggers simultaneous live-migration of all running VMs to update their virt-launcher pods immediately. This mass migration can overwhelm cluster resources and cause performance degradation.
+Harvester v1.6.x enables [CPU and memory hot-plugging](../vm/cpu-memory-hotplug/) for virtual machines through KubeVirt's `LiveMigrate` workload update strategy. However, when the KubeVirt operator is upgraded, this feature triggers simultaneous live-migration of all running VMs to update their virt-launcher pods immediately. This mass migration can overwhelm cluster resources and cause performance degradation.
 
 To prevent this issue, you can temporarily disable the `LiveMigrate` workload update method before the upgrade and re-enable it after the upgrade completes. VMs will migrate naturally during node upgrades, allowing the virt-launcher image to be updated gradually.
 
 :::note
 
-Starting from v1.7.1, this process is handled automatically. The workaround described below is only necessary when upgrading to v1.7.0.
+Starting from v1.8.1, this process is handled automatically. The workaround described below is only necessary when upgrading to a version before v1.8.1.
 
 :::
 
