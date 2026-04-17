@@ -97,3 +97,12 @@ This is a rare synchronization failure: the job was already created but the upgr
 The workaround is to delete the existing post-drain job and then wait for the upgrade controller to recreate it.
 
 Related issue: [#9293](https://github.com/harvester/harvester/issues/9293)
+
+
+### 5. Unnecessary live-migrations during the upgrade
+
+Harvester v1.6.x enables [CPU and memory hot-plugging](https://docs.harvesterhci.io/v1.6/vm/cpu-memory-hotplug/) for virtual machines through KubeVirt's `LiveMigrate` workload update strategy. However, when the KubeVirt operator is upgraded, this feature triggers simultaneous live-migration of all running VMs to update their virt-launcher pods immediately. This mass migration can overwhelm cluster resources and cause performance degradation.
+
+To prevent this issue, you can temporarily disable the `LiveMigrate` workload update method before the upgrade and re-enable it after the upgrade completes. VMs will migrate naturally during node upgrades, allowing the virt-launcher image to be updated gradually.
+
+Please see the instruction on this [page](./v1-5-x-to-v1-6-x.md#10-unecessary-live-migrations-during-the-upgrade).
