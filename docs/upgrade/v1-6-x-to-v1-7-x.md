@@ -307,4 +307,4 @@ Starting from v1.8.1, this process is handled automatically. The workaround desc
 
 :::
 
-Please see the instruction on this [page](./v1-5-x-to-v1-6-x.md#10-unecessary-live-migrations-during-the-upgrade).
+Please see the instructions on this [page](./v1-5-x-to-v1-6-x.md#10-unnecessary-live-migrations-during-the-upgrade).

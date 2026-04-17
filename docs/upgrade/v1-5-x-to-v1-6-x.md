@@ -303,18 +303,14 @@ Starting from v1.8.1, this process is handled automatically. The workaround desc
 
 #### Before the upgrade
 
-1. Edit the `kubevirt` resource:
+1. Disable the `LiveMigrate` workload update method:
 
    ```bash
-   kubectl edit kubevirt kubevirt -n harvester-system
-   ```
-
-1. Modify the `workloadUpdateStrategy` section under the `spec` field to remove the `LiveMigrate` method:
-
-   ```yaml
+   kubectl patch kubevirt kubevirt -n harvester-system --type=merge --patch-file=/dev/stdin <<EOF
    spec:
      workloadUpdateStrategy:
        workloadUpdateMethods: []
+   EOF
    ```
 
 1. Edit the `harvester` ManagedChart resource to prevent drift warnings:
@@ -355,19 +351,15 @@ The CPU/memory hot-plugging feature will be temporarily unavailable during the u
 
 After the upgrade completes successfully, restore the `LiveMigrate` workload update method to re-enable CPU and memory hot-plugging.
 
-1. Edit the `kubevirt` resource:
+1. Re-enable the `LiveMigrate` workload update method:
 
    ```bash
-   kubectl edit kubevirt kubevirt -n harvester-system
-   ```
-
-1. Restore the `LiveMigrate` method to the `workloadUpdateStrategy` section:
-
-   ```yaml
+   kubectl patch kubevirt kubevirt -n harvester-system --type=merge --patch-file=/dev/stdin <<EOF
    spec:
      workloadUpdateStrategy:
        workloadUpdateMethods:
        - LiveMigrate
+   EOF
    ```
 
 1. Edit the `harvester` ManagedChart resource:
