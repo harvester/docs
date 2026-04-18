@@ -37,12 +37,6 @@ Live migration can occur when the following requirements are met:
 
 A virtual machine is considered non-migratable if it has one or more of the following:
 
-- Volume with the following properties:
-
-    - Type: `CD-ROM` or `Container Disk`
-    - Access mode: `ReadWriteOnce`
-    - StorageClass replica count: `1` (This is not detected in all cases.)
-
 - Host devices passthrough such as `PCI` and `vGPU`
 
 - [Node selector](./create-vm.md#node-scheduling) that binds the virtual machine to a specific node
