@@ -95,7 +95,7 @@ demo
 
 The format of the `VirtualMachineInstanceMigration` object's name varies depending on whether the migration is manually or automatically triggered.
 
-When a migration is triggered from the **Migrate** [menu item](#starting-a-migration), the `VirtualMachineInstanceMigration` object's name is prefixed with the virtual 
+When a migration is triggered from the **Migrate** [menu item](#starting-a-migration), the `VirtualMachineInstanceMigration` object's name is prefixed with the virtual
 machine's name and a random string (for example, `vm1-a3d1f`).
 
 When a migration is triggered [automatically](#automatically-triggered-batch-migration), the `VirtualMachineInstanceMigration` object's name is prefixed with `kubevirt-evacuation-` and a random string (for example, `kubevirt-evacuation-9c485`).
@@ -116,7 +116,7 @@ Each node has multiple CPU models that are labeled with different keys.
 
 During live migration, the controller checks the value of `spec.domain.cpu.model` in the VirtualMachineInstance (VMI) CR, which is derived from `spec.template.spec.domain.cpu.model` in the VirtualMachine (VM) CR. If the value of `spec.template.spec.domain.cpu.model` is not set, the controller uses the default value `host-model`.
 
-When `host-model` is used, the process fetches the value of the primary CPU model and fills `spec.NodeSelectors` of the newly created pod with the label `cpu-model-migration.node.kubevirt.io/{cpu-model}`. 
+When `host-model` is used, the process fetches the value of the primary CPU model and fills `spec.NodeSelectors` of the newly created pod with the label `cpu-model-migration.node.kubevirt.io/{cpu-model}`.
 
 Alternatively, you can customize the CPU model in `spec.domain.cpu.model`. For example, if the CPU model is `XYZ`, the process fills `spec.NodeSelectors` of the newly created pod with the label `cpu-model.node.kubevirt.io/XYZ`.
 
@@ -173,7 +173,7 @@ Do not use this UI feature if the migration process was created using [batch mig
 
 ### Completion Timeout
 
-The live migration process will copy virtual machine memory pages and disk blocks to the destination. In some cases, the virtual machine can write to different memory pages or disk blocks at a higher rate than these can be copied. As a result, the migration process is prevented from being completed in a reasonable amount of time. 
+The live migration process will copy virtual machine memory pages and disk blocks to the destination. In some cases, the virtual machine can write to different memory pages or disk blocks at a higher rate than these can be copied. As a result, the migration process is prevented from being completed in a reasonable amount of time.
 
 Live migration will be aborted if it exceeds the completion timeout of 800s per GiB of data. For example, a virtual machine with 8 GiB of memory will time out after 6400 seconds.
 
@@ -223,3 +223,9 @@ An outage on the VM migration network can affect the migration process in the fo
 The migration process runs in peer-to-peer mode, which means that the libvirt daemon (libvirtd) on the source node controls the migration by calling the destination daemon directly. In addition, a built-in keepalive mechanism ensures that the client connection remains active during the migration process. If the connection remains inactive for a specific period, it is closed, and the migration process is aborted.
 
 By default, the keepalive interval is set to 5 seconds, and the retry count is set to 5. Given these default values, the migration process is aborted if the connection is inactive for 30 seconds. However, the migration may fail earlier or later, depending on the actual cluster conditions.
+
+## Known Issues
+
+* [Issue #10221](https://github.com/harvester/harvester/issues/10221): Failed to migrate VM after ejecting any image from CDROM devices before `Container` volumes.
+
+If you follow the similar steps [here](../vm/create-windows-vm#volumes-tab) to create a Windows VM having `Container` volumes after `Image Volume` volumes with the `cd-rom` type, the migration would be failed after ejecting any of the images from the CD-ROM devices before `Container` volumes. Before the issue fixed by the upstream, you can either do the migration directly without ejecting images from CD-ROM devices or moving all the `Container` volumes before the first `Image Volume` volume with the `cd-rom` type during the VM creation.
