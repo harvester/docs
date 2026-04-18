@@ -9,7 +9,7 @@ keywords:
   - virtual machine
   - Hotplug
   - CD-ROM
-description: Hotplug and hotunplug CD-ROM Volumes.
+description: Hotplug and hotunplug CD-ROM volumes.
 ---
 
 <head>
@@ -18,11 +18,11 @@ description: Hotplug and hotunplug CD-ROM Volumes.
 
 _Available as of v1.8.0_
 
-Harvester supports hotplugging and hotunplugging CD-ROM volumes for running virtual machines. This feature allows you to inserting and ejecting images from CD-ROM devices.
+Harvester supports hotplugging and hotunplugging CD-ROM volumes for running virtual machines. This feature allows you to insert and eject images from CD-ROM devices.
 
 :::note
 
-You cannot perform CD-ROM volume hotplugging on existing CD-ROM devices of virtual machines created in clusters running Harvester versions earlier than v1.8.0
+You cannot perform CD-ROM volume hotplugging on existing CD-ROM devices of virtual machines created in clusters running Harvester versions earlier than v1.8.0.
 
 In addition, it is important to distinguish this feature from attaching or detaching the CD-ROM *device* itself, which still typically requires a VM restart.
 
@@ -50,4 +50,4 @@ In addition, it is important to distinguish this feature from attaching or detac
 
 1. Select the **Image** and click **Apply**.
 
-    ![Dialog To Insert An Image](/img/v1.8/cdrom-hotplug/insert-image.png)
+    ![Dialog To Insert An Image](/img/v1.8/cdrom-hotplug/insert-image-dialog.png)

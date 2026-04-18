@@ -220,6 +220,11 @@ By default, the keepalive interval is set to 5 seconds, and the retry count is s
 
 ## Known Issues
 
-* [Issue #10221](https://github.com/harvester/harvester/issues/10221): Failed to migrate VM after ejecting any image from CDROM devices before `Container` volumes.
+* [Issue #10221](https://github.com/harvester/harvester/issues/10221): Failed to migrate a VM after ejecting an image from a CD-ROM device that appears before `Container` volumes.
 
-If you follow the similar steps [here](../vm/create-windows-vm#volumes-tab) to create a Windows VM having `Container` volumes after `Image Volume` volumes with the `cd-rom` type, the migration would be failed after ejecting any of the images from the CD-ROM devices before `Container` volumes. Before the issue fixed by the upstream, you can either do the migration directly without ejecting images from CD-ROM devices or moving all the `Container` volumes before the first `Image Volume` volume with the `cd-rom` type during the VM creation.
+If you follow the steps [here](./create-windows-vm.md#volumes-tab) to create a Windows VM, and the VM has `Container` volumes after `Image Volume` volumes of type `cd-rom`, migration fails after you eject an image from any of thos CD-ROM devices.
+
+Until the upstream issue is fixed, use one of these workarounds:
+
+- Migrate the VM without ejecting any images from the CD-ROM devices.
+- During VM creation, move all `Container` volumes before the first `Image Volume` of type `CD-ROM`.
