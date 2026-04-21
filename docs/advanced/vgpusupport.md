@@ -25,17 +25,17 @@ You must enable the [**nvidia-driver-toolkit** add-on](./addons/nvidiadrivertool
 
   ![](/img/v1.3/advanced/sriovgpudevices-disabled.png)
 
-1. Locate the device that you want to enable, and then select **:** > **Enable**. 
+2. Locate the device that you want to enable, and then select **:** > **Enable**. 
 
   ![](/img/v1.3/advanced/sriovgpudevices-enabled.png)
 
-1. Go to the **vGPU Devices** screen and check the associated `vgpudevices.devices.harvesterhci.io` objects.
+3. Go to the **vGPU Devices** screen and check the associated `vgpudevices.devices.harvesterhci.io` objects.
 
   Allow some time for the pcidevices-controller to scan the vGPU devices and for the Harvester UI to display the device information.
 
   ![](/img/v1.3/advanced/vgpudevicelist.png)
 
-1. Select a vGPU and configure a profile.
+4. Select a vGPU and configure a profile.
 
   ![](/img/v1.3/advanced/vgpuprofiles.png)
 
@@ -45,11 +45,17 @@ You must enable the [**nvidia-driver-toolkit** add-on](./addons/nvidiadrivertool
   After you select the first profile, the NVIDIA driver automatically configures the profiles available for the remaining vGPUs.
   :::
 
-1. Attach the vGPU to a new or existing VM.
+5. Attach the vGPU to a new or existing VM.
 
-  ![](/img/v1.3/advanced/vgpuattachment.png)
+  ![](/img/v1.8/advanced/vgpu-pcidevice.png)
 
   :::info important
+  As of Harvester v1.8.0, vGPU's can only be passed through as normal PCIDevices. 
+  
+  When a VGPUDevice is configured, the associated PCIDevice passthrough is also enabled. Users will now need to passthrough the PCIDevice with same name as vGPUDevice.
+
+  For existing VM's with vGPUs, post upgrade, when VM's are started, the VM spec will be updated to reflect the new behaviour.
+
   Once a vGPU has been assigned to a VM, it may not be possible to disable the VM until the vGPU is removed.
   :::
 
