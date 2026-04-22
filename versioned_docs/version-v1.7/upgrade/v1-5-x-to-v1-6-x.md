@@ -287,3 +287,103 @@ This behavior changed in Harvester v1.6.1, which uses v1.8.0 of the CNI bridge p
 The change affects clusters upgraded from v1.5.x to v1.6.1 if the external switch port is configured as an access port sending untagged frames. Updating the external switch configuration to use a trunk port resolves the issue. Pods with secondary interfaces that are attached to untagged networks or associated with VLAN ID 1 are not affected.
 
 Related issue: [#8816](https://github.com/harvester/harvester/issues/8816)
+
+
+### 10. Unnecessary live-migrations during the upgrade
+
+Harvester v1.6.x enables [CPU and memory hot-plugging](../vm/cpu-memory-hotplug/) for virtual machines through KubeVirt's `LiveMigrate` workload update strategy. However, when the KubeVirt operator is upgraded, this feature triggers simultaneous live-migration of all running VMs to update their virt-launcher pods immediately. This mass migration can overwhelm cluster resources and cause performance degradation.
+
+To prevent this issue, you can temporarily disable the `LiveMigrate` workload update method before the upgrade and re-enable it after the upgrade completes. VMs will migrate naturally during node upgrades, allowing the virt-launcher image to be updated gradually.
+
+:::note
+
+Starting from v1.8.0, this process is handled automatically. The workaround described below is only necessary when upgrading to a version before v1.8.0.
+
+:::
+
+#### Before the upgrade
+
+1. Disable the `LiveMigrate` workload update method:
+
+   ```bash
+   kubectl patch kubevirt kubevirt -n harvester-system --type=merge --patch-file=/dev/stdin <<EOF
+   spec:
+     workloadUpdateStrategy:
+       workloadUpdateMethods: []
+   EOF
+   ```
+
+1. Edit the `harvester` ManagedChart resource to prevent drift warnings:
+
+   ```bash
+   kubectl edit managedchart.management.cattle.io harvester -n fleet-local
+   ```
+
+1. Add the following entry to the `spec.diff.comparePatches` field (preserve existing entries):
+
+   ```yaml
+   spec:
+     diff:
+       comparePatches:
+       # Keep existing entries
+       - apiVersion: kubevirt.io/v1
+         jsonPointers:
+         - /spec/workloadUpdateStrategy/workloadUpdateMethods
+         kind: KubeVirt
+         name: kubevirt
+   ```
+
+1. Ensure the managed chart is ready:
+
+   ```bash
+   kubectl get managedchart.management.cattle.io harvester -n fleet-local 
+   ```
+
+With these changes in place, VMs will not be scheduled for live-migration due to virt-launcher pod image mismatches during the upgrade.
+
+:::info important
+
+The CPU/memory hot-plugging feature will be temporarily unavailable during the upgrade period. For more information about decoupling this feature from workload update flags, see [KubeVirt issue #17329](https://github.com/kubevirt/kubevirt/issues/17329).
+
+:::
+
+#### After the upgrade
+
+After the upgrade completes successfully, restore the `LiveMigrate` workload update method to re-enable CPU and memory hot-plugging.
+
+1. Re-enable the `LiveMigrate` workload update method:
+
+   ```bash
+   kubectl patch kubevirt kubevirt -n harvester-system --type=merge --patch-file=/dev/stdin <<EOF
+   spec:
+     workloadUpdateStrategy:
+       workloadUpdateMethods:
+       - LiveMigrate
+   EOF
+   ```
+
+1. Edit the `harvester` ManagedChart resource:
+
+   ```bash
+   kubectl edit managedchart.management.cattle.io harvester -n fleet-local
+   ```
+
+1. Remove the `kubevirt` entry from the `spec.diff.comparePatches` field that you added before the upgrade.
+
+1. Verify that the `LiveMigrate` method has been restored:
+
+   ```bash
+   kubectl get kubevirt kubevirt -n harvester-system -o yaml | grep -A 3 workloadUpdateStrategy
+   ```
+
+   Expected output:
+
+   ```yaml
+   workloadUpdateStrategy:
+     workloadUpdateMethods:
+     - LiveMigrate
+   ```
+
+The CPU and memory hot-plugging feature is now available again.
+
+Related issue: [#10349](https://github.com/harvester/harvester/issues/10349)
