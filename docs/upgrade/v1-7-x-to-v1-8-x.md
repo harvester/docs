@@ -85,7 +85,7 @@ This issue has been observed in three-node clusters with one witness node, but m
 
    ```bash
    kubectl get pods -n harvester-system -l kubevirt.io=virt-handler -o json | \
-     jq -r '.items[] | "\(.metadata.name):\n" + (.metadata.annotations | to_entries | map(select(.key | startswith("kubevirt.io/install-strategy-"))) | map("  \(.key): \(.value)") | join("\n")) + "\n"'
+     jq -r '.items[] | "\(.metadata.name):\n" + ((.metadata.annotations // {}) | to_entries | map(select(.key | startswith("kubevirt.io/install-strategy-"))) | map("  \(.key): \(.value)") | join("\n")) + "\n"'
    ```
 
    The output will show each pod with its KubeVirt install-strategy annotations. The problematic pod will have no annotations listed:
