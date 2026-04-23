@@ -24,6 +24,10 @@ We recommend using [iPXE](https://ipxe.org/) to perform the network boot. It has
 
 To see sample iPXE scripts, please visit [Harvester iPXE Examples](https://github.com/harvester/ipxe-examples).
 
+:::info important
+Support for legacy BIOS booting was deprecated in v1.7.0 and will be removed in a later release. Existing Harvester clusters that use this boot mode will continue to function, but upgrading to later versions may require re-installation in UEFI mode. Starting with Harvester v1.8.0, PXE boot installation will fail on legacy BIOS systems in order to ensure that UEFI is used for all new deployments.
+:::
+
 ## Prerequisite
 
 Nodes need to have at least **8 GiB** of RAM because the installer loads the full ISO file into tmpfs.
