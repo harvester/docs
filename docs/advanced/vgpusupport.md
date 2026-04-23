@@ -50,11 +50,11 @@ You must enable the [**nvidia-driver-toolkit** add-on](./addons/nvidiadrivertool
   ![](/img/v1.8/advanced/vgpu-pcidevice.png)
 
   :::info important
-  As of Harvester v1.8.0, vGPU's can only be passed through as normal PCIDevices. 
+  As of Harvester v1.8.0, vGPUs can only be passed through as normal `PCIDevice`s.
   
-  When a VGPUDevice is configured, the associated PCIDevice passthrough is also enabled. Users will now need to passthrough the PCIDevice with same name as vGPUDevice.
+  When a `VGPUDevice` is configured, the associated `PCIDevice` passthrough is also enabled. Users must now pass through the `PCIDevice` with the same name as the `VGPUDevice`.
 
-  For existing VM's with vGPUs, post upgrade, when VM's are started, the VM spec will be updated to reflect the new behaviour.
+  For existing VMs with vGPUs, when the VMs are started post-upgrade, the VM spec is updated to reflect the new behavior.
 
   Once a vGPU has been assigned to a VM, it may not be possible to disable the VM until the vGPU is removed.
   :::
