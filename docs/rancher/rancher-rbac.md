@@ -145,7 +145,9 @@ The Rancher administrator can add a user as a project member to specific project
 * Select the desired project role from the **Cluster Permissions** section.
 * Click **Add**.
 
-### View Virtualization Resources
+### Roles Definition
+
+#### View Virtualization Resources
 
 The "View Virtualization Resources" role provides a read-only "single pane of glass" experience to specific projects in Harvester. It inherits the built-in "Read-Only" role.
 
@@ -163,7 +165,7 @@ This role does not grant permissions to:
 * Modify host devices like PCI devices, SR-IOV devices, vGPU devices
 * View monitoring metrics (cluster-scoped permissions required)
 
-### Manage Virtualization Resources
+#### Manage Virtualization Resources
 
 The "Manage Virtualization Resources" role inherits the permissions of the built-in "Project User" role, allowing project users to:
 
@@ -208,9 +210,26 @@ The Harvester Rancher RBAC Helm chart also provides the following custom value s
 * `projectRole.virtProjectManage` - A list of additional permissions to be added to the "Manage Virtualization Resources" project role
 * `projectRole.virtProjectView` - A list of additional permissions to be added to the "View Virtualization Resources" project role
 
+For example, to allow _all_ users with the "Manage Virtualization Resources" cluster role to manage logging resources, you can add the following permissions to the `clusterRole.virtClusterManage` chart value:
+
+```yaml
+clusterRole:
+  virtClusterManage:
+    additionalRules:
+    - apiGroups: ["logging.banzaicloud.io"]
+      resources: ["*"]
+      verbs: ["*"]
+```
+
 :::important
 
 Permissions added through the Helm chart values will be applied to _all_ users of the role. Ensure that the additional permissions are appropriate for the scope of the role to avoid over-privileging.
+
+:::
+
+:::important
+
+Resources in the `default` and `harvester-public` namespaces are accessible to all cluster and project members.
 
 :::
 
