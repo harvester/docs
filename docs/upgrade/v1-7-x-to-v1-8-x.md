@@ -16,6 +16,12 @@ Clusters running v1.7.x can upgrade to v1.8.x directly because Harvester allows 
 
 For information about upgrading Harvester in air-gapped environments, see [Prepare an air-gapped upgrade](./automatic.md#prepare-an-air-gapped-upgrade).
 
+:::caution
+
+Support for legacy BIOS booting is removed in v1.8.0. Existing Harvester clusters that use this boot mode will continue to function, but upgrading to later versions may require re-installation in UEFI mode. To avoid issues and disruptions, use UEFI in new installations.
+
+:::
+
 ### Update Harvester UI Extension on Rancher v2.14
 
 You must use a compatible version (v1.8.x) of the Harvester UI Extension to import Harvester v1.8.x clusters on Rancher v2.14.
