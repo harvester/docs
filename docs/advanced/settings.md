@@ -109,6 +109,35 @@ For more information, see the [Longhorn documentation](https://longhorn.io/docs/
 }
 ```
 
+### `cluster-pod-security-standard`
+
+**Versions**: v1.8.0 and later
+
+**Definition**: Setting that allows cluster admins to control pod security standards at the cluster level while allowing fine-grained control for different pod security standards at the namespace level.
+
+For more information, see [cluster-pod-security-standard](./cluster-pod-security-standard.md).
+
+**Default value**: 
+```json
+{
+  "enabled":false,
+  "whitelistedNamespacesList":"", 
+  "privilegedNamespacesList":"",
+  "restrictedNamespacesList":""
+}
+```
+
+**Example**:
+
+```json
+{
+  "enabled":true,
+  "whitelistedNamespacesList":"namespace1,namespace2,namespace3", 
+  "privilegedNamespacesList":"privileged-ns1,privileged-ns2",
+  "restrictedNamespacesList":"restricted-ns1,restricted-ns2"
+}
+```
+
 ### `cluster-registration-url`
 
 **Definition**: URL used to import the Harvester cluster into Rancher for multi-cluster management.
