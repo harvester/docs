@@ -56,13 +56,13 @@ The latest Harvester versions allow the following:
 
 The following table outlines the components used in these versions:
 
-| Components | Harvester v1.5.x | Harvester v1.6.x | Harvester v1.7.x |
-| --- | --- | --- | --- |
-| KubeVirt | v1.4 | v1.5 | v1.6 |
-| Longhorn | v1.8 | v1.9 | v1.10 |
-| Rancher | v2.11 | v2.12 | v2.13 |
-| RKE2 | v1.32 | v1.33 | v1.34 |
-| SUSE Linux Micro | 5.5 | 5.5 | 6.1 |
+| Components | Harvester v1.5.x | Harvester v1.6.x | Harvester v1.7.x | Harvester v1.8.x |
+| --- | --- | --- | --- | --- |
+| KubeVirt | v1.4 | v1.5 | v1.6 | v1.7 |
+| Longhorn | v1.8 | v1.9 | v1.10 | v1.11 |
+| Rancher | v2.11 | v2.12 | v2.13 | v2.14 |
+| RKE2 | v1.32 | v1.33 | v1.34 | v1.35 |
+| SUSE Linux Micro | 5.5 | 5.5 | 6.1 | 6.2 |
 
 :::note
 
