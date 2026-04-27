@@ -248,6 +248,50 @@ Harvester appends necessary addresses to user-specified `noProxy` values (for ex
 }
 ```
 
+### `instance-manager-resources`
+
+**Versions**: v1.8.0 and later
+
+**Definition**: CPU reservation for Longhorn Instance Manager pods.
+
+Harvester synchronizes this setting to the Longhorn **Guaranteed Instance Manager CPU** setting. You can configure separate values for Longhorn V1 and V2 Data Engine instance managers.
+
+:::caution
+
+Changing this setting restarts Longhorn Instance Manager pods. Stop all VMs and detach all Longhorn volumes before changing the value.
+
+:::
+
+**Default value**: `{"cpu":{}}`
+
+The default value does not change the existing Longhorn setting during installation or upgrade. After you configure an explicit value, resetting this setting to the default value resets Longhorn **Guaranteed Instance Manager CPU** to `{"v1":"12","v2":"12"}`.
+
+**Supported options and values**:
+
+- `cpu.v1`: CPU reservation for Longhorn V1 Data Engine instance managers.
+- `cpu.v2`: CPU reservation for Longhorn V2 Data Engine instance managers.
+
+The value must be an integer string from `"0"` to `"40"`. A value of `"10"` reserves 10% of the total allocatable CPU on each node for each instance manager pod. A value of `"0"` disables CPU requests for instance manager pods.
+
+**Example**:
+
+```json
+{
+  "cpu": {
+    "v1": "20",
+    "v2": "20"
+  }
+}
+```
+
+If any Longhorn volume is still attached, Harvester rejects the change. Wait until all volumes are detached, and then retry the command.
+
+To check the Longhorn volume state, run the following command:
+
+```
+kubectl get volumes.longhorn.io -n longhorn-system
+```
+
 ### `log-level`
 
 **Definition**: Log level for the Harvester host.
