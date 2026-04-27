@@ -175,7 +175,7 @@ Hardware issues may force you to replace the management node. In earlier Harvest
 Harvester currently allows only one witness node in the cluster.
 :::
 
-For more information about assigning roles to nodes, see [ISO Installation](/v1.3/install/index).
+For more information about assigning roles to nodes, see [ISO Installation](../install/iso-install.md).
 
 ## Multi-disk Management
 
