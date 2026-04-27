@@ -153,3 +153,16 @@ apt:
   http_proxy: http://192.168.0.1:3128
   https_proxy: http://192.168.0.1:3128
 ```
+
+### Known Issue: Cannot provision RKE2 after re-registering cluster
+
+Cluster provisioning may fail with an error similar to: 
+
+  ```bash
+    clusters.management.cattle.io "<old-cluster-id>" not found
+  ```
+
+This can occur if a Harvester cluster was removed and re-registered in Rancher, leaving behind stale CloudCredentials.
+
+For details and workaround, see:
+[Harvester Cloud Provider documentation](../cloud-provider#known-issue-stale-harvester-cloudcredentials-after-re-registering-cluster)

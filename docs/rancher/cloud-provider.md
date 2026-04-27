@@ -414,3 +414,26 @@ Key benefits:
 - Resource Management: Prevents "orphaned" LoadBalancers from consuming IP addresses after a guest cluster is gone.
 
 - Zero Manual Intervention: The lifecycle of the LoadBalancer is tied directly to the lifecycle of the guest Kubernetes cluster.
+
+## Known Issue: Stale Harvester CloudCredentials after re-registering cluster
+
+If a Harvester cluster is removed from Rancher and later re-registered, Rancher may retain stale Harvester CloudCredentials that reference the previous management cluster ID.
+
+This can cause downstream cluster provisioning (for example, RKE2 or K3s clusters) to fail with errors such as:
+
+  ```bash
+    clusters.management.cattle.io "<old-cluster-id>" not found
+  ```
+
+![](/img/v1.5/rancher/provisioning-cluster-after-removing-harvester-failure.png)
+
+The existing CloudCredential still references the old Harvester cluster ID, which no longer exists after re-registration. 
+
+### Workaround
+
+1. Go to **Rancher > Cluster Management > Cloud Credentials**.
+2. Delete the old Harvester CloudCredential associated with the removed cluster.
+3. Create a new Harvester CloudCredential.
+4. Retry provisioning the downstream cluster.
+
+Related issue: [#53642](https://github.com/rancher/rancher/issues/53642)
