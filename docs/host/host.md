@@ -192,12 +192,6 @@ Users can view and add multiple disks as additional data volumes from the edit h
 
 ![Add Disks](/img/v1.4/host/multidisk-mgmt-02.png)
 
-:::caution
-
-As of Harvester v1.0.2, we no longer support adding partitions as additional disks. If you want to add it as an additional disk, be sure to delete all partitions first (e.g., using `fdisk`).
-
-:::
-
 4. Select a provisioner for the disk.
 
   - **LonghornV1 (CSI)**: This is the default provisioner.
@@ -226,16 +220,10 @@ You can also add [storage tags](#storage-tags) if you want Longhorn volume data 
 
 ![disk tag 02](/img/v1.4/host/multidisk-mgmt-07.png)
 
-:::note
-
-In order for Harvester to identify the disks, each disk needs to have a unique [WWN](https://en.wikipedia.org/wiki/World_Wide_Name). Otherwise, Harvester will refuse to add the disk.
-If your disk does not have a WWN, you can format it with the `EXT4` filesystem to help Harvester recognize the disk.
-
-:::
 
 :::note
 
-If you are testing Harvester in a QEMU environment, you'll need to use QEMU v6.0 or later. Previous versions of QEMU will always generate the same WWN for NVMe disks emulation. This will cause Harvester to not add the additional disks, as explained above. However, you can still add a virtual disk with the SCSI controller. The WWN information could be added manually along with the disk attach operation. For more details, please refer to the [script](https://github.com/harvester/vagrant-rancherd/blob/2782981b6017754d016f5b72d630dff4895f7ad6/scripts/attach-disk.sh#L75).
+If you are testing Harvester in a QEMU environment, you'll need to use QEMU v6.0 or later. Previous versions of QEMU will always generate the same WWN for NVMe disks emulation. This will cause Harvester to not add the additional disks. However, you can still add a virtual disk with the SCSI controller. The WWN information could be added manually along with the disk attach operation. For more details, please refer to the [script](https://github.com/harvester/vagrant-rancherd/blob/2782981b6017754d016f5b72d630dff4895f7ad6/scripts/attach-disk.sh#L75).
 
 :::
 

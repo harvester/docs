@@ -50,10 +50,6 @@ New password for default administrator (user-xxxxx):
 <new_password>
 ```
 
-### I added an additional disk with partitions. Why is it not getting detected?
-
-As of Harvester v1.0.2, we no longer support adding additional partitioned disks, so be sure to delete all partitions first (e.g., using `fdisk`).
-
 ### Why are there some Harvester pods that become ErrImagePull/ImagePullBackOff?
 
 This is likely because your Harvester cluster is an air-gapped setup, and some pre-loaded container images are missing. Kubernetes has a mechanism that does garbage collection against bloated image stores. When the partition which stores container images is over 85% full, `kubelet` tries to prune the images based on the last time they were used, starting with the oldest, until the occupancy is lower than 80%. These numbers (85% and 80%) are default High/Low thresholds that come with Kubernetes.
