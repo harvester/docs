@@ -67,14 +67,14 @@ For more information, see [Dynamic SSH Key Injection via Qemu guest agent](./acc
 
 ## Applying Changes
 
-After modifying the configuration, you must save your changes. Since most configuration updates require a reboot, Harvester provides two options for applying them:
+After modifying the configuration, you must save your changes. Harvester provides two options for applying them:
 
-- Save and Restart: Applies the changes and restarts the virtual machine immediately.
-- Save: Saves the new configuration without restarting. The changes will remain "Pending" and will not take effect until the VM is manually restarted.
+- `Save and Restart`: Applies the changes and restarts the virtual machine immediately.
+- `Save`: Saves the new configuration without restarting. The changes will remain pending and will not take effect until the VM is manually restarted.
 
 ![edit-vm-save-popup](/img/v1.8/vm/edit-vm-save-popup.png)
 
-### Pending changes Notification
+### Pending Changes Notification
 
 If you choose to delay the restart, a warning notification will appear on the Virtual Machines listing page to remind you which VMs have pending configuration changes.
 
