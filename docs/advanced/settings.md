@@ -140,7 +140,7 @@ For more information, see [cluster-pod-security-standard](./cluster-pod-security
 
 ### `cluster-registration-url`
 
-**Definition**: URL used to import the Harvester cluster into Rancher for multi-cluster management.
+**Definition**: JSON object used to import the Harvester cluster into Rancher for multi-cluster management. The `url` field specifies the Rancher registration URL, and the `insecureSkipTLSVerify` field specifies whether TLS certificate verification is skipped when connecting to that URL.
 
 By default, the registration connection is secured via TLS. Harvester validates the server certificate using its trusted system CA certificates. If your environment uses custom CA certificates, they can be added to the list of Harvester's trusted CA using the [`additional-ca` setting](#additional-ca). In environments where the server certificate is self-signed or signed by an untrusted CA, you can set `insecureSkipTLSVerify` to `true` to skip the TLS verification. However, this is not recommended for production environments.
 
