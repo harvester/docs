@@ -10,13 +10,33 @@ title: "Upgrade Manager (Experimental)"
 
 _Available as of v1.8.0_
 
-The Upgrade Manager provides a declarative, Kubernetes-native way to orchestrate Harvester cluster upgrades. In contrast to the previous upgrade mechanics, you create an `UpgradePlan` custom resource and the manager handles the entire lifecycle: downloading the ISO, preloading container images, upgrading the cluster components, upgrading each node in sequence, and cleaning up afterward.
+The [Upgrade Manager](https://github.com/harvester/upgrade-toolkit) provides a declarative, Kubernetes-native way to orchestrate Harvester cluster upgrades. In contrast to the previous upgrade mechanics, you create an `UpgradePlan` custom resource and the manager handles the entire lifecycle: downloading the ISO, preloading container images, upgrading the cluster components, upgrading each node in sequence, and cleaning up afterward.
 
 :::note
 
 **harvester-upgrade-manager** is an _experimental_ add-on. Its add-on manifest, Helm chart, and container image are not included in the published Harvester ISO image, but you can download them from the [experimental-addons repository](https://github.com/harvester/experimental-addons) and Docker Hub. For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
 
 :::
+
+## Limitations
+
+### Mutual Exclusion with the Built-in Upgrade Path
+
+:::warning
+
+The Upgrade Manager must not be used simultaneously with the built-in Harvester upgrade path. Running both upgrade mechanisms at the same time can result in conflicting state changes and leave the cluster in an inconsistent state. Before creating an `UpgradePlan`, confirm that no built-in upgrade is in progress. Likewise, do not start a built-in upgrade while an `UpgradePlan` is still progressing.
+
+:::
+
+### Air-Gapped Environments
+
+:::note important
+
+The Upgrade Manager does not currently support air-gapped environments. Full air-gapped support is tracked in [harvester/harvester#10471](https://github.com/harvester/harvester/issues/10471).
+
+:::
+
+As a workaround, make the Upgrade Manager's container image available from a private registry or pre-loaded on each node, and host its Helm chart on an internal HTTP server.
 
 ## Installing and Enabling the Add-on
 
@@ -100,6 +120,23 @@ metadata:
 spec:
   image: harvester-v1-8-0-amd64
 ```
+
+## Upgrade Plan Phases
+
+The Upgrade Manager drives each `UpgradePlan` through a fixed pipeline of stages. The pipeline ends at one of two terminal phases, `Succeeded` or `Failed`.
+
+![Upgrade Plan phase pipeline](/img/v1.8/advanced/addons/upgradeplan-phases.png)
+
+- `Init`: Validate the request and prepare internal state.
+- `ISODownload`: Provision the ISO image as a `VirtualMachineImage`. Skipped when `spec.image` already references a ready image.
+- `RepoCreate`: Bring up an in-cluster upgrade repository backed by the ISO image.
+- `MetadataPopulate`: Read release metadata (Harvester, Rancher, Kubernetes, monitoring chart versions) from the upgrade repository.
+- `ImagePreload`: Preload all container images required by the new release onto every node.
+- `ClusterUpgrade`: Upgrade the cluster-scoped components: Rancher, the Harvester chart, etc.
+- `NodeUpgrade`: Evacuate VMs, Kubernetes and OS upgrade, and reboot each node in sequence.
+- `ImageCleanup`: Remove the previous-preloaded container images that are no longer required from every node.
+
+Each stage records two phase values in `status.currentPhase`: a present-progressive value (for example, `Initializing`) when work begins, and a past-tense value (`Initialized`) when work completes. Both are appended to `status.phaseTransitionTimestamps` for full history.
 
 ## Monitoring the Upgrade Progress
 
@@ -312,3 +349,41 @@ Events:
   Normal   PhaseCompleted             26m (x2 over 26m)  upgradeplan-controller    Completed phase ImageCleanup
   Normal   UpgradeSucceeded           26m (x2 over 26m)  upgradeplan-controller    Upgrade completed successfully
 ```
+
+## Aborting an Upgrade
+
+A validating webhook guards in-flight `UpgradePlan` resources against accidental deletion. To abort an upgrade that is still progressing, first acknowledge the cancellation with the `management.harvesterhci.io/allow-deletion` annotation, then delete the resource:
+
+```bash
+kubectl annotate upgradeplans <upgradeplan-name> management.harvesterhci.io/allow-deletion=true
+kubectl delete upgradeplans <upgradeplan-name>
+```
+
+:::warning
+
+Deletion is unconditionally blocked during the `ClusterUpgrade` and `NodeUpgrade` phases, regardless of the annotation. Interrupting these phases can leave the cluster components or a partially-upgraded node in an inconsistent state. Wait for the current phase to complete before aborting.
+
+:::
+
+`UpgradePlan` resources that have reached a terminal phase (such as `Succeeded` or `Failed`) can be deleted directly without the annotation.
+
+### Recovering from an Accidentally Deleted UpgradePlan
+
+If an `UpgradePlan` is deleted during a phase that is not hard-blocked (any phase other than `ClusterUpgrading` or `NodeUpgrading`), the Upgrade Manager's finalizer performs cleanup of associated resources: the upgrade repository deployment and service, `VirtualMachineImage`s, image preload plans, cluster upgrade jobs, and node annotations. Any upgrade jobs that were already running continue as orphaned processes with no further coordination.
+
+There is no mechanism to resume a partially completed upgrade after the `UpgradePlan` is deleted. The cluster may be left with components at mixed versions. Manual investigation is required to assess the cluster state before taking any further action.
+
+## Disabling the Add-on
+
+You can safely uninstall the Upgrade Manager by disabling the add-on with the following command:
+
+```bash
+kubectl -n harvester-system patch addons.harvesterhci harvester-upgrade-manager \
+    --type=json -p '[{"op":"replace","path":"/spec/enabled","value":false}]'
+```
+
+:::warning
+
+Do not disable the **harvester-upgrade-manager** add-on while an upgrade is in progress. Disabling the add-on uninstall the Upgrade Manager, which halts all reconciliation. The `UpgradePlan` will remain stuck in its current phase with no automatic recovery. To resume, re-enable the add-on so the Upgrade Manager can restart and continue reconciling.
+
+:::
