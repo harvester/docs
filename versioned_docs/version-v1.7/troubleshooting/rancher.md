@@ -178,3 +178,158 @@ Wait 2 minutes and check the aforementioned `vxlan.calico` interface again, when
 ### Related Issue
 
 [#8072](https://github.com/harvester/harvester/issues/8072) and [#9767](https://github.com/harvester/harvester/issues/9767)
+
+
+## Guest Cluster Provisioning is Stuck at `waiting for cluster agent to connect`
+
+### Issue Description
+
+1. Import Harvester into Rancher Manager.
+
+1. Create a new [guest cluster](../rancher/node/rke2-cluster.md#create-rke2-kubernetes-cluster) via node driver `Harvester` with the default `Cloud Provider: Harvester`.
+
+1. Rancher UI shows the new cluster is `Updating` with information `...waiting for cluster agent to connect`
+
+    ![](/img/v1.8/troubleshooting/guest-cluster-waiting-for-cluster-agent.png)
+
+1. Check the running pods:
+
+    ```sh
+    $ kubectl get pods -A
+
+    NAMESPACE         NAME                                                     READY   STATUS             RESTARTS         AGE
+    calico-system     calico-kube-controllers-76456b5c58-xgzmn                 0/1     Pending            0                29m
+    calico-system     calico-node-n6ptz                                        0/1     Running            0                29m
+    calico-system     calico-typha-5b6744bd87-vfzpm                            0/1     Pending            0                29m
+    cattle-system     cattle-cluster-agent-66f658c49f-mm4xr                    0/1     Pending            0                29m
+    kube-system       etcd-rke2-v1352-7-pool1-wf5n2-8ng58                      1/1     Running            0                30m
+    kube-system       helm-install-harvester-csi-driver-h8tqb                  0/1     CrashLoopBackOff   10 (3m24s ago)   29m
+    kube-system       helm-install-rke2-calico-5t6hj                           0/1     Completed          2                29m
+    kube-system       helm-install-rke2-calico-crd-spg62                       0/1     Completed          0                29m
+    kube-system       helm-install-rke2-coredns-nx5rl                          0/1     Completed          0                29m
+    kube-system       helm-install-rke2-metrics-server-tw8xj                   0/1     Pending            0                29m
+    kube-system       helm-install-rke2-runtimeclasses-csqgq                   0/1     Pending            0                29m
+    kube-system       helm-install-rke2-snapshot-controller-crd-dwkbt          0/1     Pending            0                29m
+    kube-system       helm-install-rke2-snapshot-controller-d2crg              0/1     Pending            0                29m
+    kube-system       helm-install-rke2-traefik-crd-bqb6g                      0/1     Pending            0                29m
+    kube-system       helm-install-rke2-traefik-fnjwg                          0/1     Pending            0                29m
+    kube-system       kube-apiserver-rke2-v1352-7-pool1-wf5n2-8ng58            1/1     Running            0                30m
+    kube-system       kube-controller-manager-rke2-v1352-7-pool1-wf5n2-8ng58   1/1     Running            0                30m
+    kube-system       kube-proxy-rke2-v1352-7-pool1-wf5n2-8ng58                1/1     Running            0                30m
+    kube-system       kube-scheduler-rke2-v1352-7-pool1-wf5n2-8ng58            1/1     Running            0                30m
+    kube-system       rke2-coredns-rke2-coredns-5d4dd4bdd9-5tcdm               0/1     Pending            0                29m
+    kube-system       rke2-coredns-rke2-coredns-autoscaler-67b9856946-m44cd    0/1     Pending            0                29m
+    tigera-operator   tigera-operator-6db5b6cfd8-gxhfv                         1/1     Running            0                29m
+    ```
+
+    ```sh
+    $ kubectl describe pod -n calico-system calico-typha-5b6744bd87-vfzpm
+
+    Events:
+      Type     Reason            Age                  From               Message
+      ----     ------            ----                 ----               -------
+      Warning  FailedScheduling  34m                  default-scheduler  0/1 nodes are available: 1 node(s) had untolerated taint(s). no new claims to deallocate, preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling.
+      Warning  FailedScheduling  9m12s (x5 over 29m)  default-scheduler  0/1 nodes are available: 1 node(s) had untolerated taint(s). no new claims to deallocate, preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling.
+
+    ```
+
+    :::note
+
+    These pods are symptoms; the root cause is that the `node` object has not yet been correctly updated by `cloud-provider`.
+
+    :::
+
+1. Check the `node` object:
+
+    ```sh
+    $ kubectl get node <node-name> -o yaml
+    ```
+
+    ```yaml
+      ...
+      spec:
+        ...
+        taints:
+        - effect: NoSchedule
+          key: node.cloudprovider.kubernetes.io/uninitialized
+          value: "true"
+    ```
+
+    :::note
+
+    When a cloud provider hasn't initialized a node, the node has a `node.cloudprovider.kubernetes.io/uninitialized:NoSchedule` taint.
+
+    :::
+
+
+1. Describe the job `helm-install-harvester-cloud-provider` in namespace `kube-system`:
+
+    ```sh
+    $ kubectl describe job -n kube-system helm-install-harvester-cloud-provider
+    ...
+    Name:             helm-install-harvester-cloud-provider
+    Namespace:        kube-system
+    ...
+    Completion Mode:  NonIndexed
+    Suspend:          false
+    Backoff Limit:    1000
+    Start Time:       Tue, 31 Mar 2026 12:49:15 +0000
+    Pods Statuses:    0 Active (0 Ready) / 0 Succeeded / 0 Failed
+    ...
+    ```
+
+    The `harvester-cloud-provider` job appears stalled; all pod metrics (`active, succeeded, and failed`) remain at zero despite the job being started.
+
+### Root Cause
+
+Due to a race condition during the RKE2 bootstrap stage, the `helm-install-harvester-cloud-provider` pod encountered a rapid `create, delete, create` loop. This caused the `job-controller` to become desynchronized, stalling the job and preventing the node object from being updated.
+
+```sh
+kube-system-kube-controller-manager log:
+...
+[job_controller.go:659] "Unhandled Error" err="syncing job: tracking status: adding uncounted pods to status:
+Operation cannot be fulfilled on jobs.batch \"helm-install-harvester-cloud-provider\":
+StorageError: invalid object, Code: 4, Key: /registry/jobs/kube-system/helm-install-harvester-cloud-provider,
+ResourceVersion: 0, AdditionalErrorMsg: Precondition failed: UID in precondition: 6ae0b0b2-34c6-42e2-afc9-d7616ec93f2e,
+  UID in object meta: 8515b052-3a07-43e8-bf01-d898e2b9c27c" logger="UnhandledError"
+```
+
+:::note
+
+- The UID mismatch in the StorageError indicates that the job object was recreated so quickly that the controller's internal state became inconsistent with the actual object in etcd.
+
+- An upstream fix for this race condition is currently being implemented & tested in `RKE2 & helm-controller` and will be available in upcoming releases.
+
+:::
+
+### Affected versions
+
+**Rancher Manager**: `v2.13.*, v2.14.*`
+
+**RKE2**: `v1.34.*, v1.35.*`
+
+**Harvester**: `v1.7.*, v1.8.*`
+
+### Workaround
+
+- Manually delete the stuck job to allow the controller to recreate it.
+
+    ```sh
+    $ kubectl delete job -n kube-system helm-install-harvester-cloud-provider
+    job.batch "helm-install-harvester-cloud-provider" deleted from kube-system namespace
+    ```
+
+    Within a few minutes, a new job should be created. You can verify the nodes are being initialized by checking if the `uninitialized` taint is removed:
+
+    ```sh
+    $ kubectl get nodes -o jsonpath='{.items[*].spec.taints}'
+    ```
+    Once the job recreates and completes, the command should return an empty response (no taints), allowing the pending pods to schedule.
+
+    The guest cluster will recover automatically.
+
+- Reprovision the failed cluster.
+
+### Related Issue
+
+[#10188](https://github.com/harvester/harvester/issues/10188)
