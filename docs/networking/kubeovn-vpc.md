@@ -627,7 +627,7 @@ To access the topology view, go to **Networks > Virtual Private Cloud** and clic
 
 ### Topology Layout
 
-The topology uses a hierarchical layout following the structure VPC → Subnet → Overlay Network → VM.
+The topology uses a hierarchical layout (VPC → Subnet → Overlay Network → VM) that allows you to audit network paths and manage visibility dynamically.
 
 ![](/img/vpc-network-topology.png)
 
@@ -636,17 +636,5 @@ The topology uses a hierarchical layout following the structure VPC → Subnet �
 | **VPC** | Current VPC being viewed |
 | **Peered VPC** | VPCs connected via peering (labeled with "Peering" badge) |
 | **Subnet** | Subnet with CIDR, gateway, and provider |
-| **Overlay Network** | Overlay network mapped to subnet (shown when a non-OVN provider is used) |
+| **Overlay Network** | Overlay network mapped to subnet (shown when non-ovn provider is used) |
 | **Virtual Machine** | VM with network interfaces, IP addresses, and MAC addresses |
-
-### Interactive Features
-
-**Visibility Controls**: Use checkboxes to show or hide VPCs, subnets, overlay networks, and VMs. Each checkbox displays a count badge.
-
-**VM Status**: Each VM displays a status indicator. Running VMs show a pulsing indicator, while stopped or paused VMs show a static indicator with dashed borders.
-
-**Node Selection**: Click any node to highlight it and its connections. Click the background to clear the selection.
-
-**Peered VPCs**: Click a peered VPC node to navigate to that VPC's topology view.
-
-**Controls**: Scroll to zoom, drag to pan. Use the minimap for navigation and the fit view control to auto-adjust the viewport.
