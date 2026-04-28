@@ -15,6 +15,12 @@ description: Rancher is an open source multi-cluster management platform. Harves
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/rancher/rancher-integration"/>
 </head>
 
+:::warning
+
+A vulnerability has been identified in the Harvester/Rancher integration mechanism where the registration client did not validate the certificate presented by the remote server while performing the TLS handshake. This security gap could allow an attacker with network-level access between the Harvester and Rancher Manager to execute a man-in-the-middle (MitM) attack against Harvester. You must either upgrade to v1.8 or ensure that only authorized cluster administrators can access and modify the `cluster-registration-url` setting. For more information, see the security advisory at [CVE-2025-71261](https://github.com/harvester/harvester/security/advisories/GHSA-pgh9-mpwc-8jjf).
+
+:::
+
 [Rancher](https://github.com/rancher/rancher) is an open-source multi-cluster management platform. Starting with Rancher v2.6.1, Rancher has integrated Harvester by default to centrally manage VMs and containers.
 
 Users can import and manage multiple Harvester clusters using the Rancher [Virtualization Management](virtualization-management.md) feature. Leveraging the Rancher's [authentication](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/authentication-config) feature and [RBAC control](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/manage-role-based-access-control-rbac) for [multi-tenancy](virtualization-management.md#multi-tenancy) support.
