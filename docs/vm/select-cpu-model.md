@@ -18,7 +18,7 @@ description: Select CPU Model
 
 _Available as of v1.8.0_
 
-Harvester lets you set a CPU model for each virtual machine. This is important for clusters with mixed CPU generations, because live migration requires nodes to share a compatible CPU feature set.
+Harvester lets you set a CPU model for each virtual machine. This is important for live migration to work in clusters with mixed CPU configuration.
 
 ## Select a CPU Model
 
@@ -32,8 +32,8 @@ The following options are available:
 |--------|-------------|
 | **Default** | Uses the cluster-wide CPU model set in the KubeVirt resource. If no cluster-wide model is set, this falls back to `host-model`. |
 | **host-model** | Uses a CPU model based on the host node's capabilities. Works well when all nodes share the same CPU features, but might have live migration issues in mixed-CPU clusters. |
-| **host-passthrough** | Passes the exact host CPU through to the VM. Gives the best performance but might have live migration issues in mixed-CPU clusters. |
-| **Named CPU model** (e.g., `IvyBridge`, `Cascadelake-Server`) | Uses a specific CPU model defined by QEMU. This is the **recommended** option for clusters with mixed-CPU clusters. The dropdown lists available CPU models with the number of nodes that share that model — for example, `IvyBridge (2 nodes)` means two nodes in the cluster have the `IvyBridge` CPU model. |
+| **host-passthrough** | Passes the exact host CPU through to the VM. Gives the best performance but live migration to a target node with different CPU configuration is not possible. |
+| **Named CPU model** (e.g., `IvyBridge`, `Cascadelake-Server`) | Uses a specific CPU model defined by QEMU. This is the **recommended** option for clusters with mixed-CPU clusters. The dropdown list shows the available CPU models with the number of nodes that share that model — for example, `IvyBridge (2 nodes)` means two nodes in the cluster have the `IvyBridge` CPU model. |
 
 ## Recommendations
 
