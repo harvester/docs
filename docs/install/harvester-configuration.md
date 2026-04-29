@@ -90,7 +90,6 @@ install:
   cluster_pod_cidr: 10.52.0.0/16
   cluster_service_cidr: 10.53.0.0/16
   cluster_dns: 10.53.0.10
-  force_mbr: false
   addons:
     harvester_vm_import_controller:
       enabled: false
@@ -587,21 +586,6 @@ When installing via PXE, use `/dev/disk/by-id/$id` or `/dev/disk/by-path/$path` 
 **Definition**: Setting that forces EFI installation even when EFI is not detected.
 
 **Default value**: `false`
-
-### `install.force_mbr`
-
-**Definition**: Setting that forces usage of MBR partitioning on BIOS systems.
-
-Harvester uses GPT partitioning on UEFI and BIOS systems by default. Compatibility issues may require you to use MBR partitioning instead.
-
-If you specify the same storage device for both `install.device` and `install.data_disk`, Harvester creates an additional partition for storing VM data. This additional partition is not created when you force usage of MBR partitioning. Instead, VM data is stored in a partition that stores OS data.
-
-**Example**:
-
-```yaml
-install:
-  force_mbr: true
-```
 
 ### `install.harvester.longhorn.default_settings.guaranteedInstanceManagerCPU`
 

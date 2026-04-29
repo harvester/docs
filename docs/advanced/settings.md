@@ -109,9 +109,40 @@ For more information, see the [Longhorn documentation](https://longhorn.io/docs/
 }
 ```
 
+### `cluster-pod-security-standard`
+
+**Versions**: v1.8.0 and later
+
+**Definition**: Setting that allows cluster admins to control pod security standards at the cluster level while allowing fine-grained control for different pod security standards at the namespace level.
+
+For more information, see [cluster-pod-security-standard](./cluster-pod-security-standard.md).
+
+**Default value**: 
+```json
+{
+  "enabled":false,
+  "whitelistedNamespacesList":"", 
+  "privilegedNamespacesList":"",
+  "restrictedNamespacesList":""
+}
+```
+
+**Example**:
+
+```json
+{
+  "enabled":true,
+  "whitelistedNamespacesList":"namespace1,namespace2,namespace3", 
+  "privilegedNamespacesList":"privileged-ns1,privileged-ns2",
+  "restrictedNamespacesList":"restricted-ns1,restricted-ns2"
+}
+```
+
 ### `cluster-registration-url`
 
-**Definition**: URL used to import the Harvester cluster into Rancher for multi-cluster management.
+**Definition**: JSON object used to import the Harvester cluster into Rancher for multi-cluster management. The `url` field specifies the Rancher registration URL, and the `insecureSkipTLSVerify` field specifies whether TLS certificate verification is skipped when connecting to that URL.
+
+By default, the registration connection is secured via TLS. Harvester validates the server certificate using its trusted system CA certificates. If your environment uses custom CA certificates, they can be added to the list of Harvester's trusted CA using the [`additional-ca` setting](#additional-ca). In environments where the server certificate is self-signed or signed by an untrusted CA, you can set `insecureSkipTLSVerify` to `true` to skip the TLS verification. However, this is not recommended for production environments.
 
 When you configure this setting, a new pod called `cattle-cluster-agent-*` is created in the namespace `cattle-system` for registration purposes. This pod uses the container image `rancher/rancher-agent:related-version`, which is not packed into the Harvester ISO and is instead determined by Rancher. The `related-version` is usually the same as the Rancher version. For example, when you register Harvester to Rancher v2.7.9, the image is `rancher/rancher-agent:v2.7.9`. For more information, see [Find the required assets for your Rancher version](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/other-installation-methods/air-gapped-helm-cli-install/publish-images#1-find-the-required-assets-for-your-rancher-version) in the Rancher documentation.
 
@@ -122,12 +153,12 @@ Depending on your Harvester settings, the image is downloaded from either of the
 
 Alternatively, you can obtain a copy of the image and manually upload it to all Harvester nodes.
 
-**Default value**: None
+**Default value**: `{ "url": "", "insecureSkipTLSVerify": false}`
 
 **Example**:
 
-```
-https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhrc7c_c-m-zxbbbck9.yaml
+```json
+{ "url": "https://172.16.0.1/v3/import/w6tp7dgwjj549l88pr7xmxb4x6m54v5kcplvhbp9vv2wzqrrjhrc7c_c-m-zxbbbck9.yaml", "insecureSkipTLSVerify": false}
 ```
 
 ### `containerd-registry`
@@ -246,6 +277,50 @@ Harvester appends necessary addresses to user-specified `noProxy` values (for ex
   "httpsProxy": "https://my.proxy",
   "noProxy": "some.internal.svc,172.16.0.0/16"
 }
+```
+
+### `instance-manager-resources`
+
+**Versions**: v1.8.0 and later
+
+**Definition**: CPU reservation for Longhorn Instance Manager pods.
+
+Harvester synchronizes this setting to the Longhorn **Guaranteed Instance Manager CPU** setting. You can configure separate values for Longhorn V1 and V2 Data Engine instance managers.
+
+:::caution
+
+Changing this setting restarts Longhorn Instance Manager pods. Stop all VMs and detach all Longhorn volumes before changing the value.
+
+:::
+
+**Default value**: `{"cpu":{}}`
+
+The default value does not change the existing Longhorn setting during installation or upgrade. After you configure an explicit value, resetting this setting to the default value resets Longhorn **Guaranteed Instance Manager CPU** to `{"v1":"12","v2":"12"}`.
+
+**Supported options and values**:
+
+- `cpu.v1`: CPU reservation for Longhorn V1 Data Engine instance managers.
+- `cpu.v2`: CPU reservation for Longhorn V2 Data Engine instance managers.
+
+The value must be an integer string from `"0"` to `"40"`. A value of `"10"` reserves 10% of the total allocatable CPU on each node for each instance manager pod. A value of `"0"` disables CPU requests for instance manager pods.
+
+**Example**:
+
+```json
+{
+  "cpu": {
+    "v1": "20",
+    "v2": "20"
+  }
+}
+```
+
+If any Longhorn volume is still attached, Harvester rejects the change. Wait until all volumes are detached, and then retry the command.
+
+To check the Longhorn volume state, run the following command:
+
+```
+kubectl get volumes.longhorn.io -n longhorn-system
 ```
 
 ### `log-level`
@@ -494,6 +569,53 @@ spec:
   isoChecksum: ${ISO_CHECKSUM}
   isoURL: ${ISO_URL}
 ```
+
+### `rwx-network`
+
+**Versions**: v1.8.0 and later
+
+**Definition**: Network configuration for isolating Longhorn RWX volume traffic.
+
+By default (`share-storage-network: false` with no `network` specified), RWX traffic uses the Kubernetes default cluster network. You can configure a dedicated network or share the existing storage network to improve bandwidth, performance, and security. For more information, see [RWX Network](./rwxnetwork.md).
+
+:::info important
+
+Changing this setting restarts all `longhorn-csi-plugin` pods, which temporarily disrupts operations that depend on the CSI plugin, including VM disk provisioning, volume attachment and detachment, and RWX volume access. Plan for appropriate maintenance windows.
+
+:::
+
+**Default value**: `{"share-storage-network":false}`
+
+**Example (dedicated network)**:
+
+```json
+{
+  "share-storage-network": false,
+  "network": {
+    "vlan": 200,
+    "clusterNetwork": "rwx",
+    "range": "192.168.1.0/24",
+    "exclude": ["192.168.1.1/32", "192.168.1.254/32"]
+  }
+}
+```
+
+**Example (share storage network)**:
+
+```json
+{
+  "share-storage-network": true
+}
+```
+
+**Supported options and values**:
+
+- `share-storage-network`: If `true`, RWX traffic reuses the existing [storage network](./storagenetwork.md) configuration. If `false`, RWX traffic uses either a dedicated network (when `network` is specified) or the Kubernetes default cluster network.
+- `network`: Required only when `share-storage-network` is `false` and a dedicated network is desired.
+  - `vlan`: (Optional) VLAN ID for RWX network traffic.
+  - `clusterNetwork`: Cluster network to use (must be pre-configured).
+  - `range`: IPv4 CIDR range for RWX network IPs.
+  - `exclude`: (Optional) List of IP addresses or ranges to exclude from allocation.
 
 ### `server-version`
 

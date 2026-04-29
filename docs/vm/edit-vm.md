@@ -64,3 +64,18 @@ If you are using external storage, ensure that the storage provider supports vol
 Access Credentials allow you to inject basic auth or ssh keys dynamically at run time when your guest OS has QEMU guest agent installed.
 
 For more information, see [Dynamic SSH Key Injection via Qemu guest agent](./access-to-the-vm.md#dynamic-ssh-key-injection-via-qemu-guest-agent).
+
+## Applying Changes
+
+After modifying the configuration, you must save your changes. Harvester provides two options for applying them:
+
+- `Save and Restart`: Applies the changes and restarts the virtual machine immediately.
+- `Save`: Saves the new configuration without restarting. The changes will remain pending and will not take effect until the VM is manually restarted.
+
+![edit-vm-save-popup](/img/v1.8/vm/edit-vm-save-popup.png)
+
+### Pending Changes Notification
+
+If you choose to delay the restart, a warning notification will appear on the Virtual Machines listing page to remind you which VMs have pending configuration changes.
+
+![edit-vm-list-restart-warning](/img/v1.8/vm/edit-vm-list-restart-warning.png)
