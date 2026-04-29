@@ -35,10 +35,30 @@ Before you begin configuring the storage network, ensure that the following requ
     The following addresses are reserved: `10.42.0.0/16`, `10.43.0.0/16`, `10.52.0.0/16`, and `10.53.0.0/16`.
 
   - Covers the requirements of the cluster
-    
-    The required number of IP addresses is calculated using the following formula: `Required number of IPs = (Number of nodes * 2) + (Number of disks * 2) + Number of images to be downloaded or uploaded`
-    
-    Example: If a cluster has five nodes with two disks each, and ten images are to be uploaded simultaneously, the IP range should be greater than or equal to `/26` (calculation: (5 x 2) + (5 x 2) + 10 = 30).
+
+    The required number of IP addresses depends on whether the [rwx-network](./settings.md#rwx-network) shares the storage network.
+
+    - **Without RWX network sharing** (`share-storage-network: false`):
+
+      `Required IPs = (Number of nodes × 2) + (Number of disks × 2) + Number of concurrent image uploads/downloads`
+
+      Example: A cluster with 5 nodes, 2 disks per node, and 10 concurrent image uploads requires at least 30 IPs — use `/26` or larger (calculation: (5 × 2) + (5 × 2) + 10 = 30).
+
+    - **With RWX network sharing** (`share-storage-network: true`):
+
+      The `longhorn-csi-plugin` DaemonSet (one pod per node) also uses the storage network, requiring one additional IP per node.
+
+      `Required IPs = (Number of nodes × 3) + (Number of disks × 2) + Number of concurrent image uploads/downloads + 32`
+
+      The additional 32 is an arbitrary buffer to accommodate future RWX volume growth.
+
+      Example: A cluster with 5 nodes, 2 disks per node, and 10 concurrent image uploads requires at least 67 IPs — use `/25` or larger (calculation: (5 × 3) + (5 × 2) + 10 + 32 = 67).
+
+    :::caution
+
+    During a cluster upgrade, Harvester requires additional IPs beyond normal operation — mounted RWX volumes hold their allocated IPs throughout the upgrade, the upgrade repository deployment also uses a Longhorn RWX volume (occupying one additional IP), and Longhorn pods may run in both old and new versions simultaneously. IP exhaustion during an upgrade can cause it to stall. See [Best Practices](#best-practices) for details on per-pod IP usage during upgrades.
+
+    :::
 
   - Excludes IP addresses that Longhorn pods and the storage network must not use, such as addresses reserved for [RWX volumes](../rancher/csi-driver.md#rwx-volumes-support), the gateway, and other components.
 
@@ -412,5 +432,12 @@ Once the configuration is verified, you can manually start virtual machines when
     - `backing-image-ds` pods: These pods process on-the-fly uploads and downloads of backing image data sources, and are removed once the image uploads and downloads are completed.
     
     - `backing-image-manager` pods: Each disk requires one IP address. During an upgrade, both old and new versions of these pods exist, and the old version is deleted once the upgrade is completed.
+
+    If the [RWX network](./settings.md#rwx-network) setting has `share-storage-network` set to `true`, the following pods also use the storage network:
+
+    - `longhorn-csi-plugin` pods: One pod per node (DaemonSet), each requiring one IP address.
+    - `share-manager` pods: One pod per active RWX volume, each requiring one IP address.
+
+    Note that during a cluster upgrade, the Harvester upgrade repository deployment is backed by an RWX volume, which creates an additional `share-manager` pod and consumes one extra IP for the duration of the upgrade.
 
 - Configure the storage network on a non-`mgmt` cluster network to ensure complete separation of the Longhorn replication traffic from the Kubernetes control plane traffic. Using `mgmt` is possible but not recommended because of the negative impact (resource and bandwidth contention) on the control plane network performance. Use `mgmt` only if your cluster has NIC-related constraints and if you can completely segregate the traffic.

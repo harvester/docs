@@ -570,6 +570,53 @@ spec:
   isoURL: ${ISO_URL}
 ```
 
+### `rwx-network`
+
+**Versions**: v1.8.0 and later
+
+**Definition**: Network configuration for isolating Longhorn RWX volume traffic.
+
+By default (`share-storage-network: false` with no `network` specified), RWX traffic uses the Kubernetes default cluster network. You can configure a dedicated network or share the existing storage network to improve bandwidth, performance, and security. For more information, see [RWX Network](./rwxnetwork.md).
+
+:::info important
+
+Changing this setting restarts all `longhorn-csi-plugin` pods, which temporarily disrupts operations that depend on the CSI plugin, including VM disk provisioning, volume attachment and detachment, and RWX volume access. Plan for appropriate maintenance windows.
+
+:::
+
+**Default value**: `{"share-storage-network":false}`
+
+**Example (dedicated network)**:
+
+```json
+{
+  "share-storage-network": false,
+  "network": {
+    "vlan": 200,
+    "clusterNetwork": "rwx",
+    "range": "192.168.1.0/24",
+    "exclude": ["192.168.1.1/32", "192.168.1.254/32"]
+  }
+}
+```
+
+**Example (share storage network)**:
+
+```json
+{
+  "share-storage-network": true
+}
+```
+
+**Supported options and values**:
+
+- `share-storage-network`: If `true`, RWX traffic reuses the existing [storage network](./storagenetwork.md) configuration. If `false`, RWX traffic uses either a dedicated network (when `network` is specified) or the Kubernetes default cluster network.
+- `network`: Required only when `share-storage-network` is `false` and a dedicated network is desired.
+  - `vlan`: (Optional) VLAN ID for RWX network traffic.
+  - `clusterNetwork`: Cluster network to use (must be pre-configured).
+  - `range`: IPv4 CIDR range for RWX network IPs.
+  - `exclude`: (Optional) List of IP addresses or ranges to exclude from allocation.
+
 ### `server-version`
 
 **Definition**: Version of Harvester that is installed on Harvester nodes.
