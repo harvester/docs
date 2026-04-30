@@ -60,38 +60,116 @@ Harvester nodes have the following network requirements for installation.
 
 Harvester nodes require the following port connections or inbound rules. Typically, all outbound traffic is allowed.
 
-| Protocol  |   Port                 |  Source                                |   Description                           |
-|:----------|:---------------------------|:-----------------------------------------|:----------------------------------------|
-| TCP    |   2379                 |  Harvester management nodes            |   Etcd client port                      |
-| TCP       | 2381                     | Harvester management nodes              | Etcd metrics collection                |
-| TCP       | 2380                     | Harvester management nodes              | Etcd peer port                        |
-| TCP       | 2382                     | Harvester management nodes              | Etcd client port (HTTP only)          |
-| TCP       | 10010                    | Harvester management and compute nodes  | Containerd                            |
-| TCP       | 6443                     | Harvester management nodes              | Kubernetes API                        |
-| TCP       | 9345                     | Harvester management nodes              | Kubernetes API                        |
-| TCP       | 10252                    | Harvester management nodes              | Kube-controller-manager health checks |
-| TCP       | 10257                    | Harvester management nodes              | Kube-controller-manager secure port   |
-| TCP       | 10251                    | Harvester management nodes              | Kube-scheduler health checks          |
-| TCP       | 10259                    | Harvester management nodes              | Kube-scheduler secure port            |
-| TCP       | 10250                    | Harvester management and compute nodes  | Kubelet                               |
-| TCP       | 10256                    | Harvester management and compute nodes  | Kube-proxy health checks              |
-| TCP       | 10258                    | Harvester management nodes              | cloud-controller-manager              |
-| TCP       | 10260                    | Harvester management nodes              | cloud-controller-manager              |
-| TCP       | 9091                     | Harvester management and compute nodes  | Canal calico-node felix               |
-| TCP       | 9099                     | Harvester management and compute nodes  | Canal CNI health checks               |
-| UDP       | 8472                     | Harvester management and compute nodes  | Canal CNI with VxLAN                  |
-| TCP       | 2112                     | Harvester management nodes              | Kube-vip                              |
-| TCP       | 6444                     | Harvester management and compute nodes  | RKE2 agent                            |
-| TCP       | 10246/10247/10248/10249 |  Harvester management and compute nodes |   Nginx worker process                  |
-| TCP       | 8181                     | Harvester management and compute nodes  | Nginx-ingress-controller              |
-| TCP       | 8444                     | Harvester management and compute nodes  | Nginx-ingress-controller              |
-| TCP       | 10245                    | Harvester management and compute nodes  | Nginx-ingress-controller              |
-| TCP       | 80                       | Harvester management and compute nodes  | Nginx                                 |
-| TCP       | 9796                     | Harvester management and compute nodes  | Node-exporter                         |
-| TCP       | 30000-32767             |  Harvester management and compute nodes  | NodePort port range                   |
-| TCP       | 22                       | Harvester management and compute nodes  | sshd                                  |
-| UDP       | 68                       | Harvester management and compute nodes  | NetworkManager                        |
-| TCP       | 3260                     | Harvester management and compute nodes |   iscsid                                |
+Ports that bind only to `127.0.0.1` are accessible from localhost only and do not require inbound firewall rules; they are included here for completeness.
+
+#### Control-plane Node
+
+| Protocol | Port | Bind Address | Source | Description |
+|:---------|:-----|:-------------|:-------|:------------|
+| TCP | 22 | `0.0.0.0` | All | SSH |
+| TCP | 80 | `0.0.0.0` | All | Harvester UI HTTP (nginx proxy) |
+| TCP | 443 | `0.0.0.0` | All | Harvester UI HTTPS (nginx proxy) |
+| TCP | 2112 | `0.0.0.0` | All | kube-vip Prometheus metrics |
+| TCP | 2379 | `127.0.0.1`, node IP | Harvester management nodes | etcd client port |
+| TCP | 2380 | `127.0.0.1`, node IP | Harvester management nodes | etcd peer port |
+| TCP | 2381 | `127.0.0.1` only | localhost | etcd metrics/health |
+| TCP | 2382 | `127.0.0.1` only | localhost | etcd learner client (HTTP) |
+| TCP | 6443 | `0.0.0.0` | All | Kubernetes API server |
+| TCP | 9091 | `0.0.0.0` | All | calico-node metrics (Prometheus) |
+| TCP | 9099 | `127.0.0.1` only | localhost | Canal/CNI health check |
+| TCP | 9345 | `0.0.0.0` | Harvester nodes | RKE2 supervisor API |
+| TCP | 9796 | `0.0.0.0` | All | Prometheus node-exporter |
+| TCP | 10010 | `127.0.0.1` only | localhost | containerd gRPC |
+| TCP | 10248 | `127.0.0.1` only | localhost | kubelet healthz |
+| TCP | 10249 | `127.0.0.1` only | localhost | kube-proxy metrics |
+| TCP | 10250 | `0.0.0.0` | Kubernetes components | kubelet API |
+| TCP | 10256 | `127.0.0.1` only | localhost | kube-proxy health |
+| TCP | 10257 | `127.0.0.1` only | localhost | kube-controller-manager |
+| TCP | 10258 | `127.0.0.1` only | localhost | cloud-controller-manager |
+| TCP | 10259 | `127.0.0.1` only | localhost | kube-scheduler |
+| TCP | 30000-32767 | `0.0.0.0` | All | NodePort services (TCP) |
+| UDP | 8472 | `0.0.0.0` | Harvester nodes | VXLAN (Flannel/Canal) |
+| UDP | 30000-32767 | `0.0.0.0` | All | NodePort services (UDP) |
+
+#### Worker Node
+
+| Protocol | Port | Bind Address | Source | Description |
+|:---------|:-----|:-------------|:-------|:------------|
+| TCP | 22 | `0.0.0.0` | All | SSH |
+| TCP | 80 | `0.0.0.0` | All | Harvester UI HTTP (nginx proxy) |
+| TCP | 443 | `0.0.0.0` | All | Harvester UI HTTPS (nginx proxy) |
+| TCP | 6443 | `127.0.0.1`, `[::1]` | localhost | Kubernetes API server (RKE2 agent proxy) |
+| TCP | 6444 | `127.0.0.1`, `[::1]` | localhost | RKE2 agent API proxy |
+| TCP | 9091 | `0.0.0.0` | All | calico-node metrics (Prometheus) |
+| TCP | 9099 | `127.0.0.1` only | localhost | Canal/CNI health check |
+| TCP | 9796 | `0.0.0.0` | All | Prometheus node-exporter |
+| TCP | 10010 | `127.0.0.1` only | localhost | containerd gRPC |
+| TCP | 10248 | `127.0.0.1` only | localhost | kubelet healthz |
+| TCP | 10249 | `127.0.0.1` only | localhost | kube-proxy metrics |
+| TCP | 10250 | `0.0.0.0` | Kubernetes components | kubelet API |
+| TCP | 10256 | `127.0.0.1` only | localhost | kube-proxy health |
+| TCP | 30000-32767 | `0.0.0.0` | All | NodePort services (TCP) |
+| UDP | 8472 | `0.0.0.0` | Harvester nodes | VXLAN (Flannel/Canal) |
+| UDP | 30000-32767 | `0.0.0.0` | All | NodePort services (UDP) |
+
+#### Witness Node
+
+| Protocol | Port | Bind Address | Source | Description |
+|:---------|:-----|:-------------|:-------|:------------|
+| TCP | 22 | `0.0.0.0` | All | SSH |
+| TCP | 2379 | `127.0.0.1`, node IP | Harvester management nodes | etcd client port |
+| TCP | 2380 | `127.0.0.1`, node IP | Harvester management nodes | etcd peer port |
+| TCP | 2381 | `127.0.0.1` only | localhost | etcd metrics/health |
+| TCP | 2382 | `127.0.0.1` only | localhost | etcd learner client (HTTP) |
+| TCP | 6443 | `127.0.0.1` only | localhost | Kubernetes API server (RKE2 agent proxy) |
+| TCP | 6444 | `127.0.0.1` only | localhost | RKE2 agent API proxy |
+| TCP | 9091 | `0.0.0.0` | All | calico-node metrics (Prometheus) |
+| TCP | 9099 | `127.0.0.1` only | localhost | Canal/CNI health check |
+| TCP | 9345 | `0.0.0.0` | Harvester nodes | RKE2 supervisor API |
+| TCP | 9796 | `0.0.0.0` | All | Prometheus node-exporter |
+| TCP | 10010 | `127.0.0.1` only | localhost | containerd gRPC |
+| TCP | 10248 | `127.0.0.1` only | localhost | kubelet healthz |
+| TCP | 10249 | `127.0.0.1` only | localhost | kube-proxy metrics |
+| TCP | 10250 | `0.0.0.0` | Kubernetes components | kubelet API |
+| TCP | 10256 | `127.0.0.1` only | localhost | kube-proxy health |
+| TCP | 10258 | `127.0.0.1` only | localhost | cloud-controller-manager |
+| UDP | 8472 | `0.0.0.0` | Harvester nodes | VXLAN (Flannel/Canal) |
+
+### Port Requirements for Addons
+
+The following tables list the additional ports opened by optional Harvester addons on each node role, compared to the baseline with no addons enabled.
+
+#### kubeovn-operator (Experimental)
+
+**Control-plane Node**
+
+| Protocol | Port | Bind Address | Source | Description |
+|:---------|:-----|:-------------|:-------|:------------|
+| TCP | 6641 | node IP | Harvester nodes | OVN Northbound DB |
+| TCP | 6642 | node IP | Harvester nodes | OVN Southbound DB |
+| TCP | 6643 | node IP | Harvester nodes | OVN JSON-RPC |
+| TCP | 6644 | node IP | Harvester nodes | OVN JSON-RPC |
+| TCP | 10660 | node IP | Harvester nodes | kube-ovn-controller metrics |
+| TCP | 10665 | node IP | Harvester nodes | kube-ovn-daemon metrics/API |
+| UDP | 4789 | `0.0.0.0` | Harvester nodes | VXLAN tunnel (Kube-OVN overlay) |
+
+**Worker Node**
+
+| Protocol | Port | Bind Address | Source | Description |
+|:---------|:-----|:-------------|:-------|:------------|
+| TCP | 8080 | node IP | Harvester nodes | kube-ovn-webhook HTTP |
+| TCP | 8443 | `0.0.0.0` | All | kube-ovn-webhook HTTPS |
+| TCP | 10660 | node IP | Harvester nodes | kube-ovn-controller metrics |
+| TCP | 10665 | node IP | Harvester nodes | kube-ovn-daemon metrics/API |
+| UDP | 4789 | `0.0.0.0` | Harvester nodes | VXLAN tunnel (Kube-OVN overlay) |
+
+**Witness Node**
+
+| Protocol | Port | Bind Address | Source | Description |
+|:---------|:-----|:-------------|:-------|:------------|
+| TCP | 10665 | node IP | Harvester nodes | kube-ovn-daemon metrics/API |
+| UDP | 4789 | `0.0.0.0` | Harvester nodes | VXLAN tunnel (Kube-OVN overlay) |
+
 
 ### Port Requirements for Integrating Harvester with Rancher
 
