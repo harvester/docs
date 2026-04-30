@@ -149,7 +149,7 @@ The following tables list the additional ports opened by optional Harvester addo
 | TCP | 6642 | node IP | Harvester nodes | OVN Southbound DB |
 | TCP | 6643 | node IP | Harvester nodes | OVN JSON-RPC |
 | TCP | 6644 | node IP | Harvester nodes | OVN JSON-RPC |
-| TCP | 10660 | node IP | Harvester nodes | kube-ovn-controller metrics |
+| TCP | 10661 | node IP | Harvester nodes | kube-ovn-monitor |
 | TCP | 10665 | node IP | Harvester nodes | kube-ovn-daemon metrics/API |
 | UDP | 4789 | `0.0.0.0` | Harvester nodes | VXLAN tunnel (Kube-OVN overlay) |
 
