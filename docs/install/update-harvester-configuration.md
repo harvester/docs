@@ -34,15 +34,43 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
 
 ### Configuration persistence
 
-1. Backup the elemental `cloud-init` file `/oem/90_custom.yaml` as follows:
+Create a `CloudInit` resource to modify the password.
 
-    ```
-    cp /oem/90_custom.yaml /oem/install/90_custom.yaml.$(date --iso-8601=minutes)
-    ```
+```yaml
+apiVersion: node.harvesterhci.io/v1beta1
+kind: CloudInit
+metadata:
+  name: passwd
+spec:
+  matchSelector: {}
+  filename: 99_passwd.yaml
+  contents: |
+    stages:
+      initramfs.after:
+        - users:
+            rancher:
+              passwd: <PLAIN_OR_SHA512HASHED_PASSWORD>
+```
+For more information about how to configure users, check the [Elemental-toolkit](https://rancher.github.io/elemental-toolkit/docs/reference/cloud_init/#stagesstage_idstep_nameusers) specification.
+Alternatively you can use the [cloud-config](https://rancher.github.io/elemental-toolkit/docs/reference/cloud_init/#compatibility-with-cloud-init-format) format.
+```yaml
+apiVersion: node.harvesterhci.io/v1beta1
+kind: CloudInit
+metadata:
+  name: passwd
+spec:
+  matchSelector: {}
+  filename: 99_passwd.yaml
+  contents: |
+    #cloud-config
+    users:
+      - name: rancher
+        passwd: <PLAIN_OR_SHA512HASHED_PASSWORD>
+```
 
-1. Edit `/oem/90_custom.yaml` and update the yaml path `stages.initramfs[0].users.rancher.passwd`.
+Using a `CloudInit` resource is preferable to manually editing the `/oem/90_custom.yaml` file.
 
-    For information about specifying the `rancher` user account password in an encrypted form, see [`os.password`](./harvester-configuration.md#ospassword).
+For information about specifying the `rancher` user account password in an encrypted form, see [CloudInit](../host/host.md#creating-a-cloudinit-resource).
 
 ## NTP servers
 
