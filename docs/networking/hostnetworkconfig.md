@@ -12,7 +12,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/networking/hostnetworkconfig.md"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/networking/hostnetworkconfig.md"/>
 </head>
 
 ## Host Network Configuration

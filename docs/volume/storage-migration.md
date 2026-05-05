@@ -11,7 +11,7 @@ description: Migrate VM volumes between different StorageClasses without data lo
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/volume/storage-migration"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/volume/storage-migration"/>
 </head>
 
 Storage migration allows you to move VM volumes data from one StorageClass to another. This is useful when you need to change the storage backend for a VM — for example, migrating from Longhorn replicated storage to LVM local storage for better performance, or from local storage to replicated storage for higher availability.
