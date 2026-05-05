@@ -5,7 +5,7 @@ title: "USB Installation"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/install/usb-install"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/install/usb-install"/>
 </head>
 
 :::warning
