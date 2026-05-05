@@ -227,11 +227,17 @@ To resolve this issue, apply kernel arguments that restore the original names of
 
 :::note
 
-This workaround is only necessary when upgrading to v1.7.0. In v1.7.1 and later versions, these `ifname=` arguments are automatically added to prevent network disruptions during driver updates.
+This workaround is only necessary when upgrading to v1.7.0 or if using bonded interfaces. In v1.7.1 and later versions, these `ifname=` arguments are automatically added to prevent network disruptions during driver updates.
+
+| Version | Interface | Workaround |
+| --- | --- | --- |
+| v1.7.0 | Any | Required |
+| v1.7.1+ | Standalone | Automated (No action) |
+| v1.7.1+ | Bonded | Required |
 
 :::
 
-Related issues: [#9815](https://github.com/harvester/harvester/issues/9815) and [#9802](https://github.com/harvester/harvester/issues/9802)
+Related issues: [#9815](https://github.com/harvester/harvester/issues/9815), [#9802](https://github.com/harvester/harvester/issues/9802), and [#10397](https://github.com/harvester/harvester/issues/10397)
 
 ### 4. After upgrade the running VMs show message "Restart action is required ..."
 
