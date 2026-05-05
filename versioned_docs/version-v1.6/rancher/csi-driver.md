@@ -9,7 +9,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/rancher/csi-driver"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/rancher/csi-driver"/>
 </head>
 
 :::caution
