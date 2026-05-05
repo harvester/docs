@@ -1,0 +1,95 @@
+---
+sidebar_position: 6
+sidebar_label: NVIDIA Driver Toolkit
+title: "NVIDIA Driver Toolkit"
+---
+
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/nvidiadrivertoolkit"/>
+</head>
+
+nvidia-driver-toolkit is an add-on that allows you to deploy out-of-band NVIDIA GRID KVM drivers to your existing Harvester clusters.
+
+:::note
+The toolkit only includes the correct Harvester OS image, build utilities, and kernel headers that allow NVIDIA drivers to be compiled and loaded from the container. You must download the NVIDIA KVM drivers using a valid NVIDIA subscription. For guidance on identifying the correct driver for your NVIDIA GPU, see the [NVIDIA documentation](https://www.nvidia.com/en-au/drivers/vgpu-software-driver/).
+:::
+
+The Harvester ISO does not include the nvidia-driver-toolkit container image. Because of its size, the image is pulled from Docker Hub by default. If you have an air-gapped environment, you can download and push the image to your private registry. The **Image Repository** and **Image Tag** fields on the **nvidia-driver-toolkit** screen provide information about the image that you must download.
+
+![](/img/v1.3/advanced/nvidia-driver-toolkit.png)
+
+:::note
+Each new Harvester version will be released with the correct nvidia-driver-toolkit image to ensure that all dependencies required to install the NVIDIA vGPU KVM drivers are available in the image.
+:::
+
+To enable the addon, users need to perform the following:
+* Provide the `Driver Location`: which is an http location where nvidia vgpu kvm driver file is located (as shown in the example)
+* update the `Image Repository` and `Image Tag` if needed
+
+Once the addon is enabled, a nvidia-driver-toolkit daemonset is deployed to the cluster.
+
+On pod startup, the ENTRYPOINT script will download the NVIDIA driver from the specified `Driver Location`. Install the driver and load the kernel drivers.
+
+The `PCIDevices` addon can now leverage this addon to manage the lifecycle of the vGPU devices on nodes containing supported GPU [devices](../vgpusupport.md).
+
+:::warning
+
+**Always restart the VM immediately after attaching or detaching vGPU devices.**
+
+Although rebooting the VM after editing its spec is not mandatory, we strongly recommend doing so to ensure proper synchronization. Without an immediate reboot, the addon disable check might not accurately detect devices in use.
+
+If you need to disable and re-enable the `nvidia-driver-toolkit` addon while VMs are stopped with host devices attached, you can annotate the addon with `harvesterhci.io/skipNvidiaDriverToolkitAddonWebhookCheck` to skip the addon disable check.
+
+:::
+
+## Install Different NVIDIA Driver Versions
+
+_Available as of v1.7.0_
+
+NVIDIA driver versions can vary across cluster nodes. If you want to install a specific driver version on a node, you must annotate the node before starting the nvidia-driver-toolkit add-on.
+
+```
+kubectl annotate nodes {node name} sriovgpu.harvesterhci.io/custom-driver=https://[driver location]
+```
+
+The nvidia-driver-toolkit installs the specified driver version upon starting.
+
+If an NVIDIA driver was previously installed, you must restart the pod to trigger the installation process again.
+
+## Advanced Node Scheduling with Node Affinity
+
+_Available as of v1.8.0_
+
+Starting with v1.8.0, the **nvidia-driver-toolkit** uses node affinity instead of nodeSelector for more flexible node scheduling.
+
+### Customizing Node Affinity
+
+You can customize the node affinity settings to meet your specific requirements. 
+
+For example, if you add the labels `gpu.model=A100` and `gpu.model=A40` to nodes that use these GPU models, you can use the following node affinity settings to target the driver installation.
+
+```yaml
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: sriovgpu.harvesterhci.io/driver-needed
+          operator: In
+          values:
+          - "true"
+        - key: gpu.model
+          operator: In
+          values:
+          - "A100"
+          - "A40"
+```
+
+### Applying Custom Node Affinity
+
+1. Edit the **nvidia-driver-toolkit** add-on configuration using either the Harvester UI or the Helm chart values.
+1. Update the `affinity` section.
+1. Save the changes.
+
+The DaemonSet is updated automatically.
+

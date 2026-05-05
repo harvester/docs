@@ -47,15 +47,20 @@ const config = {
           showLastUpdateTime: true,
           editUrl: "https://github.com/harvester/docs/edit/main/",
           docItemComponent: "@theme/ApiItem",
-          lastVersion: 'v1.7',
+          lastVersion: 'v1.8',
           versions: {
             current: {
-              label: 'v1.8 (Dev)',
+              label: 'v1.9 (Dev)',
+              path: 'v1.9',
+            },
+            "v1.8": {
+              label: 'v1.8 (Latest)',
               path: 'v1.8',
             },
             "v1.7": {
-              label: 'v1.7 (Latest)',
+              label: 'v1.7',
               path: 'v1.7',
+              banner: `none`
             },
             "v1.6": {
               label: 'v1.6',
@@ -276,6 +281,12 @@ const config = {
             label: "dev", // Current version label
             baseUrl: "/dev/api", // Leading slash is important
             versions: {
+              "v1.8": {
+                specPath: "api/v1.8-swagger.json",
+                outputDir: "versioned_docs/version-v1.8/api", // No trailing slash
+                label: "v1.8",
+                baseUrl: "/v1.8/api", // Leading slash is important
+              },
               "v1.7": {
                 specPath: "api/v1.7-swagger.json",
                 outputDir: "versioned_docs/version-v1.7/api", // No trailing slash
