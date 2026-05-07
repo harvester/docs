@@ -314,9 +314,9 @@ ResourceVersion: 0, AdditionalErrorMsg: Precondition failed: UID in precondition
 
 **High-Risk Configurations & Verification**
 
-The issue is most frequently observed on **Rancher Manager `v2.14.0`**, **Harvester `v1.8.0`**, and **RKE2 `v1.35.2/v1.35.3`**.
+The issue is most frequently observed on **Rancher Manager `v2.14.0`**, **RKE2 `v1.35.2/v1.35.3`** and **Harvester `v1.8.0`**.
 
-While these are the primary focus, the bug may potentially impact other versions as well. Please check the aforementioned `issue description` phenomenon to confirm if it occurs on your environment.
+While these are the primary focus, the bug may potentially impact other versions as well. Verify whether the symptoms described above occur in your environment, and review the related issue linked below for additional details.
 
 :::
 
@@ -326,7 +326,9 @@ This issue is resolved in RKE2 `v1.35.4` and all subsequent releases.
 
 :::note
 
-RKE2 `v1.35.4` is available by default starting with **Rancher Manager `v2.14.1`**. It is recommended to upgrade both components to ensure full compatibility.
+* **RKE2** `v1.35.4` is available by default starting with **Rancher Manager `v2.14.1`**. Refer to the Rancher Manager documentation to upgrade the manager and its guest clusters.
+
+* **Harvester** requires no changes or upgrades to resolve this issue.
 
 :::
 
