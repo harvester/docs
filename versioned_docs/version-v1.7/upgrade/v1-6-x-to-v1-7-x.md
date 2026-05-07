@@ -55,6 +55,7 @@ During upgrades, Harvester generates new NetworkManager connection profiles usin
 | Scenario | Action Required |
 | --- | --- |
 | You installed v1.1 or later, and never manually modified the management interface or DNS configuration. | None |
+| You originally installed v1.1 or earlier. | **Required** (Rename the configuration file and update the `/oem/harvester.config` schema.) |
 | You manually modified the management interface configuration by editing the `/oem/90_custom.yaml` file or by adding CloudInit resources to the `ifcfg` files. | **Required** (Custom configuration will be ignored after the upgrade to v1.7.0.) |
 
 If action is required, choose one of the following methods:
@@ -63,7 +64,26 @@ If action is required, choose one of the following methods:
 
   :::note
 
-  If you initially installed v1.0, ensure that `install.management_interface` follows the updated schema required by later Harvester versions.
+  If you originally installed v1.1 or earlier, perform the following actions before starting the upgrade:
+
+  - Verify that the `install.management_interface` setting in `/oem/harvester.config` follows the [schema](../install/harvester-configuration.md#installmanagement_interface) required by later Harvester versions.
+  - Rename the `/oem/99_custom.yaml` file to `/oem/90_custom.yaml`.
+
+  As a best practice, run the [pre-check script](https://github.com/harvester/upgrade-helpers/tree/main/pre-check) on a Harvester control plane node before starting the upgrade. The script determines if either of the listed steps is necessary.
+
+  Example:
+
+  ```
+  Starting network config check...
+  Waiting for validator to finish on all nodes...
+  Network Config Check FAILED:
+  [pod/upgrade-helper-network-check-pxcqt/validator] RESULT: h161-w: Validation completed.
+  [pod/upgrade-helper-network-check-s6j8r/validator] ERROR: h161-1: /oem/99_custom.yaml must be renamed to /oem/90_custom.yaml
+  [pod/upgrade-helper-network-check-s6j8r/validator] RESULT: h161-1: Validation completed.
+  [pod/upgrade-helper-network-check-t757l/validator] ERROR: h161-0: /oem/harvester.config uses old v1.0 schema for management interface config
+  [pod/upgrade-helper-network-check-t757l/validator] RESULT: h161-0: Validation completed.
+  Network-Config Test: Failed
+  ```
 
   :::
 
