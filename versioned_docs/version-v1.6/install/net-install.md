@@ -11,7 +11,7 @@ description: Harvester Net Install ISO is a minimal ISO that contains only the O
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/install/net-install"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/install/net-install"/>
 </head>
 
 :::warning

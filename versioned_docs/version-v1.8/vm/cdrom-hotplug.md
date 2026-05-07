@@ -13,7 +13,7 @@ description: Hotplug and hotunplug CD-ROM volumes.
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/vm/cdrom-hotplug"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/vm/cdrom-hotplug"/>
 </head>
 
 _Available as of v1.8.0_

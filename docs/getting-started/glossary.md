@@ -10,7 +10,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/getting-started/glossary"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/getting-started/glossary"/>
 </head>
 
 ## **cluster network**

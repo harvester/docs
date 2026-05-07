@@ -5,7 +5,7 @@ title: "VM Import"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/vmimport"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/addons/vmimport"/>
 </head>
 
 With the vm-import-controller add-on, you can import virtual machines from VMware and OpenStack.

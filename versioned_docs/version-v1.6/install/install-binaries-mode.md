@@ -12,7 +12,7 @@ description: To get the Harvester ISO, download it from the GitHub releases. Dur
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/install/install-binaries-mode"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/install/install-binaries-mode"/>
 </head>
 
 :::warning
