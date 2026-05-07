@@ -140,3 +140,73 @@ Delete the problematic `virt-handler` pod. Kubernetes will automatically recreat
 1. Verify that virtual machine operations are now working correctly.
 
 Related issue: [#10447](https://github.com/harvester/harvester/issues/10447)
+
+---
+
+### 2. Upgrade Stuck in Post-draining When Storage Network is Configured with RWX Volumes
+
+When upgrading to v1.8.x with the storage network enabled for RWX volumes (the Longhorn setting [Storage Network For RWX Volume Enabled](https://longhorn.io/docs/1.10.2/references/settings/#storage-network-for-rwx-volume-enabled) is set to `true`), the upgrade may become stuck with one node remaining in the **Post-draining** state.
+
+:::note
+
+This issue does not affect clusters that have storage network configured but have **not** enabled the Longhorn "Storage Network for RWX Volume Enabled" feature.
+
+:::
+
+#### Indicators
+
+- The post-drain job repeatedly shows the following message:
+  ```
+  Upgrade repo deployment is not ready yet, waiting...
+  ```
+
+- The pod in the `upgrade-repo` deployment fails to mount its RWX PVC, showing an error message similar to the following:
+  ```
+  Warning  FailedMount  76s (x55 over 97m)  kubelet  MountVolume.MountDevice failed for volume "pvc-ea2fbba7-7e5b-4446-a008-b2277892e8c8" : rpc error: code = Internal desc = mount failed: exit status 32
+  Mounting command: /usr/local/sbin/nsmounter
+  Mounting arguments: mount -t nfs -o vers=4.1,noresvport,timeo=600,retrans=5,softerr None:/pvc-ea2fbba7-7e5b-4446-a008-b2277892e8c8 /var/lib/kubelet/plugins/kubernetes.io/csi/driver.longhorn.io/cf026ab85828c03bfd7fca2bf32f1d9d37752c2d19fd441ec617799827a1612e/globalmount
+  Output: mount.nfs: Failed to resolve server None: Name or service not known
+  ```
+
+#### Root Cause
+
+During the upgrade, a race condition occurs between Harvester's storage network initialization and Longhorn's one-time migration process. Harvester incorrectly clears the Longhorn setting [`endpoint-network-for-rwx-volume`](https://longhorn.io/docs/1.11.1/references/settings/#endpoint-network-for-rwx-volume) before Longhorn completes its migration. This causes existing RWX share-manager services to use an invalid NFS endpoint (`nfs://None/pvc-xxx`), which cannot be resolved.
+
+#### Workaround
+
+If your upgrade is stuck due to this issue, follow these steps to recover:
+
+1. Restore the storage network setting in Longhorn by patching the `endpoint-network-for-rwx-volume` setting with your storage network NAD name:
+
+   ```bash
+   kubectl -n longhorn-system patch setting endpoint-network-for-rwx-volume \
+     --type=merge -p '{"value":"<storage-network-nad-name>"}'
+   ```
+
+   Replace `<storage-network-nad-name>` with your actual storage network NAD name (for example, `storagenetwork-2g426`).
+
+1. Find the upgrade-repo volume name:
+
+   ```bash
+   kubectl get pvc $(kubectl get deployment -l harvesterhci.io/upgradeComponent=repo -n harvester-system -o jsonpath='{.items[0].spec.template.spec.volumes[0].persistentVolumeClaim.claimName}') -n harvester-system -o jsonpath='{.spec.volumeName}'
+   ```
+
+   This will output the volume name in the format `pvc-<id>` (for example, `pvc-ea2fbba7-7e5b-4446-a008-b2277892e8c8`).
+
+1. Restart the upgrade-repo share-manager pod using the volume name from the previous step:
+
+   ```bash
+   kubectl -n longhorn-system delete pod share-manager-pvc-ea2fbba7-7e5b-4446-a008-b2277892e8c8
+   ```
+
+   Replace `pvc-ea2fbba7-7e5b-4446-a008-b2277892e8c8` with your actual volume name.
+
+1. Remove the initialized annotation from the `rwx-network` setting:
+   ```bash
+   kubectl annotate settings.harvesterhci.io rwx-network rwx-network.settings.harvesterhci.io/initialized-
+   ```
+   Removing the annotation ensures that Harvester syncs the correct Longhorn value and prevents it from being overwritten by an empty value during future reconciliations.
+
+1. Monitor the upgrade process and verify that it is completed successfully.
+
+Related issue: [#10532](https://github.com/harvester/harvester/issues/10532)
