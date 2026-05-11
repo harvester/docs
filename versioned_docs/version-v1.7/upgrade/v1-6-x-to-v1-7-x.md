@@ -163,7 +163,7 @@ The DHCP server should return the original IP address and the affected node shou
 
 :::note
 
-Propagation of the DHCP client ID from wicked to NetworkManager occurs automatically when upgrading from v1.6.x to v1.7.1. This workaround is only required when upgrading to v1.7.0.
+Propagation of the DHCP client ID from wicked to NetworkManager occurs automatically when upgrading from v1.6.x to v1.7.1 or v1.7.2. This workaround is only required when upgrading to v1.7.0.
 
 :::
 
@@ -247,13 +247,14 @@ To resolve this issue, apply kernel arguments that restore the original names of
 
 :::note
 
-This workaround is only necessary when upgrading to v1.7.0 or if using bonded interfaces. In v1.7.1 and later versions, these `ifname=` arguments are automatically added to prevent network disruptions during driver updates.
+This workaround is only necessary when upgrading to v1.7.0, or if using bonded interfaces with v1.7.1. In v1.7.2 and later versions, these `ifname=` arguments are automatically added to prevent network disruptions during driver updates.
 
 | Version | Interface | Workaround |
 | --- | --- | --- |
 | v1.7.0 | Any | Required |
-| v1.7.1+ | Standalone | Automated (No action) |
-| v1.7.1+ | Bonded | Required |
+| v1.7.1 | Standalone | Automated (No action) |
+| v1.7.1 | Bonded | Required |
+| v1.7.2+ | Any | Automated (No action) |
 
 :::
 
