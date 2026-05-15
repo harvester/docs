@@ -21,7 +21,7 @@ Harvester configuration file can be provided during manual or automatic installa
 
 ```yaml
 scheme_version: 1
-server_url: https://cluster-VIP:443
+server_url: "" # empty or absent in create mode; set to https://cluster-VIP:443 in join mode
 token: TOKEN_VALUE
 os:
   ssh_authorized_keys:
@@ -146,6 +146,7 @@ Make sure that your custom configuration always has the correct scheme version.
 `server_url` is the URL of the Harvester cluster, which is used for the new `node` to join the cluster.
 
 This configuration is mandatory when the installation is in `JOIN` mode. The default format of `server_url` is `https://cluster-VIP:443`.
+In `CREATE` mode the parameter must be absent or with empty value (`""`). Otherwise the installation fails.
 
 :::note
 
@@ -154,6 +155,16 @@ To ensure a high availability (HA) Harvester cluster, please use either the Harv
 :::
 
 #### Example
+
+for cluster creation
+
+```yaml
+server_url: '' # or remove this line
+install:
+  mode: create
+```
+
+or to join a cluster
 
 ```yaml
 server_url: https://cluster-VIP:443
