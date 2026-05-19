@@ -254,7 +254,7 @@ os:
 
 #### Definition
 
-The `os.writeFilespersistentStatePaths` option allows you to configure custom paths where modifications made to files will persist across reboots. Any changes to files in these paths will not be lost after a reboot.
+The `os.persistentStatePaths` option allows you to configure custom paths where modifications made to files will persist across reboots. Any changes to files in these paths will not be lost after a reboot.
 
 #### Example
 
