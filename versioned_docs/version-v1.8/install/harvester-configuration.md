@@ -27,7 +27,7 @@ os:
   sshAuthorizedKeys:
     - ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB...
     - github:username
-  write_files:
+  writeFiles:
   - encoding: ""
     content: test content
     owner: root
@@ -214,7 +214,7 @@ os:
     - "github:ibuildthecloud"
 ```
 
-### `os.write_files`
+### `os.writeFiles`
 
 A list of files to write to disk on boot. The `encoding` field specifies the content's encoding. Valid `encoding` values are:
 
@@ -227,7 +227,7 @@ Example
 
 ```yaml
 os:
-  write_files:
+  writeFiles:
   - encoding: b64
     content: CiMgVGhpcyBmaWxlIGNvbnRyb2xzIHRoZSBzdGF0ZSBvZiBTRUxpbnV4...
     owner: root:root
@@ -250,11 +250,11 @@ os:
     path: /etc/crontab
 ```
 
-### `os.persistent_state_paths`
+### `os.writeFilespersistentStatePaths`
 
 #### Definition
 
-The `os.persistent_state_paths` option allows you to configure custom paths where modifications made to files will persist across reboots. Any changes to files in these paths will not be lost after a reboot.
+The `os.writeFilespersistentStatePaths` option allows you to configure custom paths where modifications made to files will persist across reboots. Any changes to files in these paths will not be lost after a reboot.
 
 #### Example
 
@@ -262,7 +262,7 @@ Refer to the following example config for installing `rook-ceph` in Harvester:
 
 ```yaml
 os:
-  persistent_state_paths:
+  writeFilespersistentStatePaths:
     - /var/lib/rook
     - /var/lib/ceph
   modules:
@@ -270,11 +270,11 @@ os:
     - nbd
 ```
 
-### `os.after_install_chroot_commands`
+### `os.afterInstallChrootCommands`
 
 #### Definition
 
-You can add additional software packages with `after_install_chroot_commands`. The `after-install-chroot` stage, provided by [elemental-toolkit](https://rancher.github.io/elemental-toolkit/docs/), allows you to execute commands not restricted by file system write issues, ensuring the persistence of user-defined commands even after a system reboot.
+You can add additional software packages with `afterInstallChrootCommands`. The `after-install-chroot` stage, provided by [elemental-toolkit](https://rancher.github.io/elemental-toolkit/docs/), allows you to execute commands not restricted by file system write issues, ensuring the persistence of user-defined commands even after a system reboot.
 
 #### Example
 
@@ -282,7 +282,7 @@ Refer to the following example config for installing an RPM package in Harvester
 
 ```yaml
 os:
-  after_install_chroot_commands:
+  afterInstallChrootCommands:
     - rpm -ivh <the url of rpm package>
 
 ```
@@ -291,7 +291,7 @@ DNS resolution is unavailable in the `after-install-chroot stage`, and the `name
 
 ```yaml
 os:
-  after_install_chroot_commands:
+  afterInstallChrootCommands:
     - "echo 'nameserver 8.8.8.8' | sudo tee /etc/resolv.conf"
     - "mkdir /usr/local/bin"
     - "curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && chmod 700 get_helm.sh && ./get_helm.sh"
