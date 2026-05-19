@@ -24,7 +24,7 @@ scheme_version: 1
 server_url: "" # omitted or empty in CREATE mode; set to https://cluster-VIP:443 in JOIN mode
 token: TOKEN_VALUE
 os:
-  ssh_authorized_keys:
+  sshAuthorizedKeys:
     - ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB...
     - github:username
   write_files:
@@ -198,7 +198,7 @@ token: "K1074ec55daebdf54ef48294b0ddf0ce1c3cb64ee7e3d0b9ec79fbc7baf1f7ddac6::nod
 ---
 <p>&nbsp;</p>
 
-### `os.ssh_authorized_keys`
+### `os.sshAuthorizedKeys`
 
 #### Definition
 
@@ -209,7 +209,7 @@ A list of SSH authorized keys that should be added to the default user, `rancher
 
 ```yaml
 os:
-  ssh_authorized_keys:
+  sshAuthorizedKeys:
     - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2TBZGjE+J8ag11dzkFT58J3XPONrDVmalCNrKxsfADfyy0eqdZrG8hcAxAR/5zuj90Gin2uBR4Sw6Cn4VHsPZcFpXyQCjK1QDADj+WcuhpXOIOY3AB0LZBly9NI0ll+8lo3QtEaoyRLtrMBhQ6Mooy2M3MTG4JNwU9o3yInuqZWf9PvtW6KxMl+ygg1xZkljhemGZ9k0wSrjqif+8usNbzVlCOVQmZwZA+BZxbdcLNwkg7zWJSXzDIXyqM6iWPGXQDEbWLq3+HR1qKucTCSxjbqoe0FD5xcW7NHIME5XKX84yH92n6yn+rxSsyUfhJWYqJd+i0fKf5UbN6qLrtd/D"
     - "github:ibuildthecloud"
 ```
@@ -530,7 +530,7 @@ os:
 
 :::note
 
-If `disable_password_auth` is set to `true` and no [`os.ssh_authorized_keys`](#osssh_authorized_keys) are configured, all SSH access to the node will be disabled. In this case, console access is the only way to reach the node.
+If `disable_password_auth` is set to `true` and no [`os.sshAuthorizedKeys`](#ossshAuthorizedKeys) are configured, all SSH access to the node will be disabled. In this case, console access is the only way to reach the node.
 
 :::
 
