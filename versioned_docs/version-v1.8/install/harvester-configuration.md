@@ -250,7 +250,7 @@ os:
     path: /etc/crontab
 ```
 
-### `os.writeFilespersistentStatePaths`
+### `os.persistentStatePaths`
 
 #### Definition
 
