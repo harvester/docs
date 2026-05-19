@@ -262,7 +262,7 @@ Refer to the following example config for installing `rook-ceph` in Harvester:
 
 ```yaml
 os:
-  writeFilespersistentStatePaths:
+  persistentStatePaths:
     - /var/lib/rook
     - /var/lib/ceph
   modules:
