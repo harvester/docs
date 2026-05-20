@@ -108,6 +108,6 @@ The secret is an unencrypted Base64-encoded string. To keep the secret safe, you
 
 You cannot perform the following actions:
 
-- Export a new volume from an encrypted volume
+- Export a new image from an encrypted volume
 - Restore an encrypted volume to an unencrypted volume
 - Restore an unencrypted volume to an encrypted volume
