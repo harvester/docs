@@ -13,7 +13,7 @@ Users can view and manage Harvester nodes from the host page. The first node alw
 
 :::note
 
-Because Harvester is built on top of Kubernetes and uses etcd as its database, the maximum node fault toleration is one when there are three management nodes.
+Because Harvester is built on top of Kubernetes and uses etcd as its database, the maximum node fault tolerance is one when there are three management nodes.
 
 :::
 
@@ -114,11 +114,11 @@ Eviction cannot be completed if the remaining nodes cannot accept replicas from 
 
 ### 4. Manage non-migratable Virtual Machines.
 
-Check if there are any [non-migratable virtual machine](../vm/live-migration.md#non-migratable-virtual-machines).
+Check if there are any [non-migratable virtual machines](../vm/live-migration.md#non-migratable-virtual-machines).
 
 :::tip
 - Create a backup or snapshot for each non-migratable virtual machine.
-- Change the virtual machines to let them run on other nodes as more as possible.
+- Move as many virtual machines as possible to run on other nodes.
 - Stop the remaining non-migratable virtual machines manually.
 :::
 
@@ -262,7 +262,7 @@ The replica data would be rebuilt to another disk automatically to keep the high
 
 :::note
 
-If the disk contains the last healthy replica of a volume or backing image, disk removal will be rejected. If a single replica of those objects was configured, move the replica to another disk or remove the objects altogether to acknowledge that you don't need them. If there was a fault in the replication, fix the faulty replicas on the other disks before proceeding with the deletion of the current one. For a Longhorn v2 volume that has never been attached, if its last replica is deleted, Longhorn incorrectly triggers a rebuild on another disk. This rebuilt replica is then marked as healthy, causing the disk to become undeletable even though it contains no valid data tracked in [Issue #12189](https://github.com/longhorn/longhorn/issues/12189). To delete the disk, remove the volume first.
+If the disk contains the last healthy replica of a volume or backing image, disk removal will be rejected. If a single replica of those objects was configured, move the replica to another disk or remove the objects altogether to acknowledge that you don't need them. If there was a fault in the replication, fix the faulty replicas on the other disks before proceeding with the deletion of the current one. For a Longhorn v2 volume that has never been attached, if its last replica is deleted, Longhorn incorrectly triggers a rebuild on another disk. This rebuilt replica is then marked as healthy, causing the disk to become undeletable even though it contains no valid data. This issue is tracked in [Issue #12189](https://github.com/longhorn/longhorn/issues/12189). To delete the disk, remove the volume first.
 
 :::
 
@@ -274,7 +274,7 @@ If the disk contains the last healthy replica of a volume or backing image, disk
 ![Find disk to remove](/img/v1.2/host/remove-disks-harvester-find-disk.png)
 
 #### Evict replicas (Longhorn dashboard)
-1. Please follow [this session](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards) to enable the embedded Longhorn dashboard.
+1. Please follow [this section](../troubleshooting/harvester.md#access-embedded-rancher-and-longhorn-dashboards) to enable the embedded Longhorn dashboard.
 2. Visit the Longhorn dashboard and go to the **Node** page.
 3. Expand the node containing the disk. Confirm the mount point `/var/lib/harvester/extra-disks/1b805b97eb5aa724e6be30cbdb373d04` is in the disks list.
 
@@ -360,7 +360,7 @@ The information on the **Hugepages** tab is divided into two sections:
 
 _Available as of v1.1.0_
 
-Ksmtuned is a KSM automation tool deployed as a DaemonSet to run Ksmtuned on each node. It will start or stop the KSM by watching the available memory percentage ratio (**i.e. Threshold Coefficient**). By default, you need to manually enable Ksmtuned on each node UI. You will be able to see the KSM statistics from the node UI after 1-2 minutes.(check [KSM](https://www.kernel.org/doc/html/latest/admin-guide/mm/ksm.html#ksm-daemon-sysfs-interface) for more details).
+Ksmtuned is a KSM automation tool deployed as a DaemonSet to run Ksmtuned on each node. It will start or stop the KSM by watching the available memory percentage ratio (**i.e. Threshold Coefficient**). By default, you need to manually enable Ksmtuned on each node UI. You will be able to see the KSM statistics from the node UI after 1-2 minutes.(Check [KSM])(https://www.kernel.org/doc/html/latest/admin-guide/mm/ksm.html#ksm-daemon-sysfs-interface) for more details).
 
 ### Quick Run
 
@@ -445,7 +445,7 @@ Time synchronization is an important aspect of distributed cluster architecture.
 
 In previous Harvester versions, NTP settings were mainly configurable [during the installation process](https://docs.harvesterhci.io/v1.2/install/harvester-configuration#osntp_servers). To modify the settings, you needed to manually update the configuration file on each node.
 
-Beginning with version v1.2.0, Harvester is supporting NTP configuration on the Harvester UI Settings screen (**Advanced** > **Settings**). You can configure NTP settings for the entire Harvester cluster at any time, and the settings are applied to all nodes in the cluster.
+Beginning with version v1.2.0, Harvester supports NTP configuration on the Harvester UI Settings screen (**Advanced** > **Settings**). You can configure NTP settings for the entire Harvester cluster at any time, and the settings are applied to all nodes in the cluster.
 
 ![](/img/v1.3/host/harvester-ntp-settings.png)
 
