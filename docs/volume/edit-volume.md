@@ -25,7 +25,13 @@ _Available as of v1.6.0_
 
 To minimize downtime, Harvester allows you to expand volumes that are attached to a running virtual machine or have a PVC that is attached to a running pod in the guest cluster. Depending on the underlying storage provider, you may need to take extra steps to use this feature.
 
-- **Longhorn**: Harvester considers Longhorn to have support for online volume expansion, even if differences exist between versions of the Longhorn Data Engine. Currently, the V1 Data Engine fully supports online volume expansion, while the V2 Data Engine does not support volume expansion at all (regardless of the volume's attachment state).
+- **Longhorn**: Longhorn volumes support online volume expansion.
+
+:::info
+
+Before expanding a volume, check the volume status on the Volumes UI and resolve any warnings such as `Precheck new replica failed: disks are unavailable`. Volume expansion might not work as expected while these warnings are present.
+
+:::
 
 - **Third-party storage**: Harvester rejects online volume expansion requests for third-party storage by default. If you have confirmed that your storage provider supports online volume expansion, you can use the [`csi-online-expand-validation`](../advanced/settings.md#csi-online-expand-validation) setting to mark that storage provider as validated.
 
