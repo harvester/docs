@@ -162,7 +162,7 @@ When you change the network type from `VLAN` to `VLAN Trunk` or `Untagged`, the 
 
 :::
 
-##  Overlay Network (Experimental)
+## Overlay Network (Experimental)
 
 _Available as of v1.6.0_
 
@@ -212,7 +212,7 @@ The overlay network implementation in Harvester v1.6 has the following limitatio
 
 - The static IP in cloud-init appears to be ignored for overlay NICs. In practice, the static IP works *only if it matches the exact address Kube-OVN has reserved* for the virtual machine. Any other value breaks connectivity.
 
-- When multiple NICs are attached and the overlay NIC is not the primary interface, you must manually initialize the overlay NIC within the guest operating system (IP link setup) and run the DHCP client (dhclient) command to obtain the NIC's IP address.
+- When multiple NICs are attached and the overlay NIC is not the primary interface, you must manually initialize the overlay NIC within the guest operating system (`ip link`) and run the DHCP client (`dhclient`) command to obtain the NIC's IP address.
 
 - Peering only works between custom VPCs. Attempts to establish a peering connection between the default VPC and a custom VPC will fail.
 
