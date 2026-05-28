@@ -323,6 +323,7 @@ RWX volumes currently only work with a dedicated storage network. [GitHub issue 
   allowVolumeExpansion: true
   reclaimPolicy: Delete
   volumeBindingMode: Immediate
+  migratable: false # Must be empty or set to `false` when using standard RWX filesystem volumes
   parameters:
     numberOfReplicas: "3"
     staleReplicaTimeout: "2880"

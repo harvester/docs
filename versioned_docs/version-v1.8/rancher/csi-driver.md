@@ -312,6 +312,7 @@ Now you can create a new StorageClass that you intend to use in your guest Kuber
   allowVolumeExpansion: true
   reclaimPolicy: Delete
   volumeBindingMode: Immediate
+  migratable: false # Must be empty or set to `false` when using standard RWX filesystem volumes
   parameters:
     numberOfReplicas: "3"
     staleReplicaTimeout: "2880"
