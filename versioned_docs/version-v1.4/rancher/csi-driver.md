@@ -346,10 +346,6 @@ RWX volumes currently only work with a dedicated storage network. [GitHub issue 
 
   :::info important
 
-  The `migratable=true` parameter instructs Longhorn to create a migratable RWX block volume intended for VM live migration workflows, rather than a standard RWX filesystem volume.
-
-  When `migratable=true` is set, the standard RWX filesystem sharing layer managed by Longhorn `share-manager` and NFS services is not used.
-
   To use standard RWX filesystem volumes, `migratable` must remain unset or be explicitly set to `false`.
 
   :::
