@@ -1,6 +1,9 @@
 name: Algolia Search Index
 
 on:
+  schedule:
+    # Trigger every day at 20:00 UTC+0
+    - cron: '0 20 * * *'
   workflow_dispatch:
 
 jobs:
