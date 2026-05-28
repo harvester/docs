@@ -5,7 +5,7 @@ title: "StorageClass"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/storageclass"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/storageclass"/>
 </head>
 
 Harvester uses StorageClasses to describe how Longhorn must provision volumes. Longhorn StorageClasses can map to replica policies, node schedule policies, or disk schedule policies created by the cluster administrators. This concept is referred to as *profiles* in other storage systems.
@@ -121,7 +121,7 @@ resource "harvester_storageclass" "single-replica" {
 
 You can use the `dataLocality` parameter when at least one replica of a Longhorn volume must be scheduled on the same node as the pod that uses the volume (whenever possible).
 
-Harvester officially supports data locality as of **v1.3.0**. This applies even to volumes created from [images](../image/upload-image.md). To configure data locality, create a new StorageClass on the Harvester UI (**Storage Classess** > **Create** > **Parameters**) and then add the following parameter:
+Harvester officially supports data locality as of **v1.3.0**. This applies even to volumes created from [images](../image/upload-image.md). To configure data locality, create a new StorageClass on the Harvester UI (**Storage Classes** > **Create** > **Parameters**) and then add the following parameter:
 
 - **Key**: `dataLocality`
 - **Value**: `disabled` or `best-effort`

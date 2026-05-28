@@ -6,7 +6,7 @@ title: "Host Management"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/host"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/host"/>
 </head>
 
 Users can view and manage Harvester nodes from the host page. The first node always defaults to be a management node of the cluster. When there are three or more nodes, the two other nodes that first joined are automatically promoted to management nodes to form a HA cluster.
@@ -179,7 +179,7 @@ Hardware issues may force you to replace the management node. In earlier Harvest
 Harvester currently allows only one witness node in the cluster.
 :::
 
-For more information about assigning roles to nodes, see [ISO Installation](/v1.3/install/index).
+For more information about assigning roles to nodes, see [ISO Installation](../install/iso-install.md).
 
 ## Multi-disk Management
 

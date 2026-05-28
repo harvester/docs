@@ -5,7 +5,7 @@ title: "Monitoring"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/troubleshooting/monitoring"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/troubleshooting/monitoring"/>
 </head>
 
 The following sections contain tips to troubleshoot Harvester Monitoring.
@@ -250,7 +250,7 @@ You may encounter this when you install the Harvester v1.3.0 or higher version c
 
 ### Workaround
 
-1. Disable the `rancher-monitoring` addon if you have alreay enabled it.
+1. Disable the `rancher-monitoring` addon if you have already enabled it.
 
     All pods in `cattle-monitoring-system` are deleted but the PVCs are retained. For more information, see [Addons].
 

@@ -5,7 +5,7 @@ title: "Creating an K3s Kubernetes Cluster"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/rancher/node/k3s-cluster"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/rancher/node/k3s-cluster"/>
 </head>
 
 You can now provision K3s Kubernetes clusters on top of the Harvester cluster in Rancher using the built-in Harvester node driver.
@@ -95,3 +95,16 @@ apt:
   http_proxy: http://192.168.0.1:3128
   https_proxy: http://192.168.0.1:3128
 ```
+
+### Known Issue: Cannot provision K3s after re-registering cluster
+
+Cluster provisioning may fail with an error similar to: 
+
+  ```bash
+    clusters.management.cattle.io "<old-cluster-id>" not found
+  ```
+
+This can occur if a Harvester cluster was removed and re-registered in Rancher, leaving behind stale CloudCredentials.
+
+For details and workaround, see:
+[Harvester Cloud Provider documentation](../cloud-provider#known-issue-stale-harvester-cloudcredentials-after-re-registering-cluster)

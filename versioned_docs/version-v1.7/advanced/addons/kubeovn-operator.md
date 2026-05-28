@@ -5,7 +5,7 @@ title: "Kube-OVN Operator (Experimental)"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/kubeovn-operator"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/addons/kubeovn-operator"/>
 </head>
 
 _Available as of v1.6.0_
@@ -207,6 +207,8 @@ You can disable `kubeovn-operator` using the following commands:
 
 ```
 kubectl delete configuration kubeovn -n kube-system --wait=false
+
+kubectl delete configmap kubeovn-configuration-bootstrap -n kube-system --ignore-not-found --wait=false
 
 kubectl delete validatingwebhookconfiguration  kube-ovn-webhook --ignore-not-found
 

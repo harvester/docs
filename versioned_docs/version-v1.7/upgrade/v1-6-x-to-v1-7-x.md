@@ -5,7 +5,7 @@ title: "Upgrade from v1.6.x to v1.7.x"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/upgrade/v1-6-x-to-v1-7-x"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/upgrade/v1-6-x-to-v1-7-x"/>
 </head>
 
 ## General Information
@@ -55,6 +55,7 @@ During upgrades, Harvester generates new NetworkManager connection profiles usin
 | Scenario | Action Required |
 | --- | --- |
 | You installed v1.1 or later, and never manually modified the management interface or DNS configuration. | None |
+| You originally installed v1.1 or earlier. | **Required** (Rename the configuration file and update the `/oem/harvester.config` schema.) |
 | You manually modified the management interface configuration by editing the `/oem/90_custom.yaml` file or by adding CloudInit resources to the `ifcfg` files. | **Required** (Custom configuration will be ignored after the upgrade to v1.7.0.) |
 
 If action is required, choose one of the following methods:
@@ -63,7 +64,26 @@ If action is required, choose one of the following methods:
 
   :::note
 
-  If you initially installed v1.0, ensure that `install.management_interface` follows the updated schema required by later Harvester versions.
+  If you originally installed v1.1 or earlier, perform the following actions before starting the upgrade:
+
+  - Verify that the `install.management_interface` setting in `/oem/harvester.config` follows the [schema](../install/harvester-configuration.md#installmanagement_interface) required by later Harvester versions.
+  - Rename the `/oem/99_custom.yaml` file to `/oem/90_custom.yaml`.
+
+  As a best practice, run the [pre-check script](https://github.com/harvester/upgrade-helpers/tree/main/pre-check) on a Harvester control plane node before starting the upgrade. The script determines if either of the listed steps is necessary.
+
+  Example:
+
+  ```
+  Starting network config check...
+  Waiting for validator to finish on all nodes...
+  Network Config Check FAILED:
+  [pod/upgrade-helper-network-check-pxcqt/validator] RESULT: h161-w: Validation completed.
+  [pod/upgrade-helper-network-check-s6j8r/validator] ERROR: h161-1: /oem/99_custom.yaml must be renamed to /oem/90_custom.yaml
+  [pod/upgrade-helper-network-check-s6j8r/validator] RESULT: h161-1: Validation completed.
+  [pod/upgrade-helper-network-check-t757l/validator] ERROR: h161-0: /oem/harvester.config uses old v1.0 schema for management interface config
+  [pod/upgrade-helper-network-check-t757l/validator] RESULT: h161-0: Validation completed.
+  Network-Config Test: Failed
+  ```
 
   :::
 
@@ -143,7 +163,7 @@ The DHCP server should return the original IP address and the affected node shou
 
 :::note
 
-Propagation of the DHCP client ID from wicked to NetworkManager occurs automatically when upgrading from v1.6.x to v1.7.1. This workaround is only required when upgrading to v1.7.0.
+Propagation of the DHCP client ID from wicked to NetworkManager occurs automatically when upgrading from v1.6.x to v1.7.1 or v1.7.2. This workaround is only required when upgrading to v1.7.0.
 
 :::
 
@@ -227,11 +247,18 @@ To resolve this issue, apply kernel arguments that restore the original names of
 
 :::note
 
-This workaround is only necessary when upgrading to v1.7.0. In v1.7.1 and later versions, these `ifname=` arguments are automatically added to prevent network disruptions during driver updates.
+This workaround is only necessary when upgrading to v1.7.0, or if using bonded interfaces with v1.7.1. In v1.7.2 and later versions, these `ifname=` arguments are automatically added to prevent network disruptions during driver updates.
+
+| Version | Interface | Workaround |
+| --- | --- | --- |
+| v1.7.0 | Any | Required |
+| v1.7.1 | Standalone | Automated (No action) |
+| v1.7.1 | Bonded | Required |
+| v1.7.2+ | Any | Automated (No action) |
 
 :::
 
-Related issues: [#9815](https://github.com/harvester/harvester/issues/9815) and [#9802](https://github.com/harvester/harvester/issues/9802)
+Related issues: [#9815](https://github.com/harvester/harvester/issues/9815), [#9802](https://github.com/harvester/harvester/issues/9802), and [#10397](https://github.com/harvester/harvester/issues/10397)
 
 ### 4. After upgrade the running VMs show message "Restart action is required ..."
 
@@ -293,3 +320,18 @@ Example:
 To clear the message, restart the affected virtual machines at your next scheduled maintenance window.
 
 Related issue: [#9751](https://github.com/harvester/harvester/issues/9751)
+
+
+### 5. Unnecessary live-migrations during the upgrade
+
+Harvester v1.6.x enables [CPU and memory hot-plugging](../vm/cpu-memory-hotplug/) for virtual machines through KubeVirt's `LiveMigrate` workload update strategy. However, when the KubeVirt operator is upgraded, this feature triggers simultaneous live-migration of all running VMs to update their virt-launcher pods immediately. This mass migration can overwhelm cluster resources and cause performance degradation.
+
+To prevent this issue, you can temporarily disable the `LiveMigrate` workload update method before the upgrade and re-enable it after the upgrade completes. VMs will migrate naturally during node upgrades, allowing the virt-launcher image to be updated gradually.
+
+:::note
+
+Starting from v1.8.0, this process is handled automatically. The workaround described below is only necessary when upgrading to a version before v1.8.0.
+
+:::
+
+Please see the instructions on this [page](./v1-5-x-to-v1-6-x.md#10-unnecessary-live-migrations-during-the-upgrade).
