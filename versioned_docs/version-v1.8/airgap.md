@@ -85,13 +85,13 @@ The Harvester UI Extension is required to access the Harvester UI in Rancher v2.
 
 1. Pull the image [rancher/ui-plugin-catalog](https://hub.docker.com/r/rancher/ui-plugin-catalog/tags) with the following support version.
 
-| Harvester UI Extension Version | rancher/ui-plugin-catalog version |
-| --- | --- |
-| 1.0.x | 3.4.5 |
-| 1.5.x | 4.0.5 |
-| 1.6.x | 4.1.0 |
-| 1.7.x | 4.13.0 |
-| 1.8.x | 4.23.0 |
+  | Harvester UI Extension Version | rancher/ui-plugin-catalog version |
+  | --- | --- |
+  | 1.0.x | 3.4.5 |
+  | 1.5.x | 4.0.5 |
+  | 1.6.x | 4.1.0 |
+  | 1.7.x | 4.13.0 |
+  | 1.8.x | 4.23.0 |
 
 1. On the Rancher UI, go to **Extensions**, and then select **⋮ > Manage Extension Catalogs**.
 
