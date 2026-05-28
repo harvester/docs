@@ -322,7 +322,7 @@ Now you can create a new StorageClass that you intend to use in your guest Kuber
 
   :::info important
 
-  To use standard RWX filesystem volumes, `migratable` must remain unset or be explicitly set to `false`.
+  To use standard RWX filesystem volumes, the `migratable` parameter must be empty or explicitly set to `false`.
 
   :::
 
