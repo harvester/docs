@@ -90,4 +90,4 @@ $ rm harvester.tar
 
 - Find the missing images on that node from the other nodes, then export the images from the node where the images still exist and import them on the missing node.
 
-To prevent this from happening, we recommend cleaning up unused container images from the previous version after each successful Harvester upgrade if the image store disk space is stressed. You can refer to [manual image cleanup](../upgrade/troubleshooting.md#manual-image-cleanup) to remove unused images.
+To prevent this from happening, we recommend cleaning up unused container images from the previous version after each successful Harvester upgrade if the image store disk space is stressed. You can refer to [manual image cleanup](./upgrade/troubleshooting.md#manual-image-cleanup) to remove unused images.
