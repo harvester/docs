@@ -119,30 +119,24 @@ You must set the annotation before the migration starts. If the annotation is se
 
 :::
 
-## ResourceQuota Compensation During Migration
+### Automatic adjustment of ResourceQuota during migration when `additional-guest-memory-overhead-ratio` changes
 
-_Available as of v1.8.0_
+_Available as of v1.9.0_
 
-If you adjust the [VM Overhead Memory](#overhead-memory-of-virtual-machine) cluster settings while a Virtual Machine (VM) is already running, the VM's memory footprint may increase. This can cause issues during Live Migration, as the target node must instantiate a new VM instance that requires more memory than the original.
+When the system setting [additional-guest-memory-overhead-ratio](../advanced/settings.md#additional-guest-memory-overhead-ratio) is increased, it affects all subsequent VM cold starts and live migrations. For a running VM, subsequent migrations will consume more memory. This creates a cumulative challenge: after multiple live migrations, the actual memory usage of all VMs within a namespace can exceed its configured `ResourceQuota` limit, placing the namespace in an **over-provisioned** state.
 
-When the destination Namespace has a strict ResourceQuota, the migration may be blocked because the cumulative memory usage of both the source and target VMs temporarily exceeds the quota even when the quota has already been scaled up automatically.
-
-### Automatic Resolution
+It is important to understand the fundamental Kubernetes mechanism regarding `ResourceQuota`: while scaling a quota down can result in current usage exceeding the new limit, Kubernetes does not terminate running instances; it allows them to continue as-is while blocking the creation of any *new* instances. Consequently, when a new migration is triggered in an already **over-provisioned** environment, the system may block the operation because the total namespace quota is insufficient to accommodate both the existing source VM and the new target VM instance, even when the quota is automatically scaled for the new instance's specific requirements.
 
 Harvester automatically manages this bottleneck through the following workflow:
 
-**Detection**: Harvester identifies when a migration is specifically blocked by ResourceQuota limitations.
+- **Detection:** Harvester identifies when a live migration is specifically blocked by `ResourceQuota` limitations, even after the quota has already been scaled up for that specific VM.
 
-**Delta Compensation**: The system automatically injects a temporary "quota compensation" (the delta between the current limit and current usage plus the migration requirements) to allow the migration to proceed.
+- **Delta Adjustment:** The system calculates a temporary "quota delta"—the additional capacity required to accommodate the cumulative memory footprint—and applies it to allow the migration to proceed.
 
-**Cleanup**: Once the migration is complete (whether it succeeded or failed), Harvester removes the temporary compensation, returning the ResourceQuota to its original state.
+- **Cleanup:** Once the migration concludes, Harvester removes the temporary adjustment, reverting the `ResourceQuota` to its configured state.
 
-:::info important
+:::info
 
-- This feature acts as an automatic workaround, ensuring that global policy changes (like memory overhead adjustments) do not accidentally "lock" your VMs to their current nodes.
-
-- The compensation applies only to already running VMs. If a running VM is stopped and then restarted, its resource allocation is strictly governed by the original quota. As a result, a VM that was previously running may fail to "cold boot" if the overhead is increased while the ResourceQuota remains unchanged.
-
-- To avoid reliance on this automatic compensation, the best practice is to adjust overhead settings and ResourceQuotas simultaneously. Ultimately, there is no difference between a live migration and a "cold reboot" regarding final quota control; both must eventually fit within the defined namespace limits.
+To minimize reliance on automatic adjustments, manually update `ResourceQuota` settings whenever overhead configurations are changed. Ultimately, the VM's final memory footprint must always comply with defined namespace limits, regardless of whether it is migrated or cold-rebooted.
 
 :::
