@@ -10,7 +10,7 @@ title: "RWX Network"
 
 _Available as of v1.8.0_
 
-Harvester uses Longhorn to provide ReadWriteMany (RWX) volumes for workloads that require shared filesystem access. By default, RWX traffic uses the Kubernetes cluster network. You can configure the [`rwx-network`](./settings.md#rwx-network) setting to either share it with the existing [storage network](./storagenetwork.md), or isolate RWX traffic on a dedicated network for better network bandwidth, performance, and security.
+Harvester uses Longhorn to provide ReadWriteMany (RWX) volumes for workloads that require shared filesystem access. By default, RWX traffic uses the default Kubernetes pod network. You can configure the [`rwx-network`](./settings.md#rwx-network) setting to either share it with the existing [storage network](./storagenetwork.md), or isolate RWX traffic on a dedicated network for better network bandwidth, performance, and security.
 
 :::note
 
@@ -81,9 +81,9 @@ You can [enable](#enable-the-rwx-network) and [disable](#disable-the-rwx-network
 }
 ```
 
-To configure a _shared_ RWX network, set `share-store-network` to `true`. Setting this field to `false` with a non-empty `network` field enables a _dedicated_ RWX network.
+To configure a _shared_ RWX network, set `share-storage-network` to `true`. Setting this field to `false` with a non-empty `network` field enables a _dedicated_ RWX network.
 
-The `network` field is only required when `share-storage-network` is `false`. If `share-storage-network` is `false` and no `network` is specified, RWX traffic uses the Kubernetes default cluster network. This is the default behavior when the `rwx-network` setting is not configured.
+The `network` field is only required when `share-storage-network` is `false`. If `share-storage-network` is `false` and no `network` is specified, RWX traffic uses the Kubernetes default pod network. This is the default behavior when the `rwx-network` setting is not configured.
 
 The following occur once the `rwx-network` setting is applied:
 
