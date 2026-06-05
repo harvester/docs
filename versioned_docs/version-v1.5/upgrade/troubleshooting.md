@@ -93,7 +93,7 @@ If the upgrade fails at this point, you must generate a [support bundle](../trou
 The Harvester controller creates the following jobs on each node:
 
 - Multi-node clusters:
-  - `pre-drain` job: Live-migrates or shuts down virtual machines on the node. Once completed, the embedded Rancher service upgrades the RKE2 runtime on the node.
+  - `pre-drain` job: [Live-migrates or shuts down virtual machines](./automatic.md#virtual-machine-management-through-the-upgrade) on the node. Once completed, the embedded Rancher service upgrades the RKE2 runtime on the node.
   - `post-drain` job: Upgrades and reboots the operating system.
 - Single-node clusters:
   - `single-node-upgrade` job: Upgrades the operating system and RKE2 runtime. The job name uses the format `hvst-upgrade-xxx-single-node-upgrade-<hostname>`.
@@ -335,10 +335,10 @@ chmod +x ./harv-purge-images-v2.sh
 
 ```bash
 # 1. Dry-run (Always run this first)
-./harv-purge-images-v2.sh --version v1.8.0 --dry-run
+./harv-purge-images-v2.sh --version <current_cluster_version> --dry-run
 
 # 2. Actual Cleanup
-./harv-purge-images-v2.sh --version v1.8.0
+./harv-purge-images-v2.sh --version <current_cluster_version>
 ```
 
 The sample output:
@@ -389,9 +389,11 @@ RECLAIMED SPACE: 548 MB
 
 ##### Air-Gapped Environment Workflow
 
+The following commands assume the cluster is running Harvester `v1.8.0`.
+
 Suppose there is a `proxy` workstation which can connect to the internet.
 
-1.  **Prepare the Proxy:** Download the script and download the official image lists.
+1.  **Prepare the Proxy:** Download the script and then use the script to download the official image lists.
 
     ```bash
     curl https://raw.githubusercontent.com/harvester/upgrade-helpers/refs/heads/main/bin/harv-purge-images-v2.sh -o harv-purge-images-v2.sh
@@ -438,7 +440,7 @@ Parameters accepted:
 [DRY-RUN] Found 3 unique images to purge.
 
 >>> IMAGE CLEANUP FINISHED
-./harv-purge-images-v2.sh --version v1.8.0  --images-list ./v1.8.0-amd64-images-list.txt
+./harv-purge-images-v2.sh --version v1.8.0 --images-list ./v1.8.0-amd64-images-list.txt
 Parameters accepted:
   Cluster Version: v1.8.0
   Dry Run:         false
