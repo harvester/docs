@@ -304,8 +304,9 @@ For scenarios where you need to perform maintenance manually, use the **v2 clean
 
 ##### V2 Script Usage & Options
 
-The **v2 cleanup script** supports the following options. Use the `--version` flag to specify the current Harvester version of your cluster; the script automatically handles legacy image identification and cleans up all dangling ("ghost") or untagged images, so no previous version information is required. It also reports the total number of images removed and provides a comparison of disk usage before and after the operation.
+The **v2 cleanup script** supports the following options. Use the `--version` flag to specify the current Harvester version of your cluster; the script automatically handles legacy image identification and cleans up all dangling ("ghost") or untagged images. It also reports the total number of images removed and provides a comparison of disk usage before and after the operation.
 
+The script is designed to be conservative; it respects underlying CRI limitations and tolerates individual removal failures—for instance, if an image is in use, pinned, or already removed from the node—rather than force-deleting it. Furthermore, it deletes images based on the specific tags provided in the input file rather than by their hash ID (except for dangling images, which are identified and removed by ID). This ensures that if an image has multiple tags, the script only removes the specified tag, preventing accidental impact on other shared references. This design ensures safety even if an incorrect version is specified (e.g., running it on a `v1.7.0` Harvester cluster with the `--version v1.8.0` flag), as the script will protect images that are still in use.
 
 ```bash
 ./harv-purge-images-v2.sh
