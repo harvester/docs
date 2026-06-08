@@ -291,3 +291,178 @@ New images are loaded to each Harvester node during upgrades. When disk usage ex
 If you encounter the error message `Node xxx will reach xx.xx% storage space after loading new images. It's higher than kubelet image garbage collection threshold 85%.`, run `crictl rmi --prune` to clean up unused images before starting a new upgrade.
 
 ![Disk space not enough error message](/img/v1.4/upgrade/disk-space-not-enough-error-message.png)
+
+
+Harvester includes both automated and manual methods to reclaim disk space by removing unused container images.
+
+#### Automatic Image Cleanup on Upgrade
+
+During the final stage of an upgrade, Harvester triggers an automatic cleanup to remove image differences between the previous and current versions.
+
+#### Manual Image Cleanup
+
+For scenarios where you need to perform maintenance manually, use the **v2 cleanup script**. This script is registry-agnostic and supports air-gapped environments. The [legacy script](https://github.com/harvester/upgrade-helpers/blob/main/bin/harv-purge-images.sh) is also available.
+
+##### V2 Script Usage & Options
+
+The **v2 cleanup script** supports the following options. Use the `--version` flag to specify the current Harvester version of your cluster; the script automatically handles legacy image identification and cleans up all dangling ("ghost") or untagged images. It also reports the total number of images removed and provides a comparison of disk usage before and after the operation.
+
+The script is designed to be conservative; it respects underlying CRI limitations and tolerates individual removal failures—for instance, if an image is in use, pinned, or already removed from the node—rather than force-deleting it. Furthermore, it deletes images based on the specific tags provided in the input file rather than by their hash ID (except for dangling images, which are identified and removed by ID). This ensures that if an image has multiple tags, the script only removes the specified tag, preventing accidental impact on other shared references. This design ensures safety even if an incorrect version is specified (e.g., running it on a `v1.7.0` Harvester cluster with the `--version v1.8.0` flag), as the script will protect images that are still in use.
+
+```bash
+./harv-purge-images-v2.sh
+Error: Missing current cluster version (--version)
+Usage: ./harv-purge-images-v2.sh --version <v1.x.x> [options]
+Options:
+  --version <v1.x.x>     REQUIRED: The current Harvester version of your cluster
+  --download-only        Download official lists for BOTH amd64 and arm64 and exit
+  --dry-run              Simulate removal and show targets (STRONGLY RECOMMENDED)
+  --debug                Show detailed JSON snapshots and logic logs
+  --images-list <path>   Path to a local file or URL. Use this to provide your
+                         edited list containing third-party image tags.
+  -h, --help             Show this help menu
+```
+
+##### Common Workflow
+
+1. Download the script to your node:
+
+```bash
+curl https://raw.githubusercontent.com/harvester/upgrade-helpers/refs/heads/main/bin/harv-purge-images-v2.sh -o harv-purge-images-v2.sh
+chmod +x ./harv-purge-images-v2.sh
+```
+
+1. Perform a dry-run, then execute the cleanup:
+
+```bash
+# 1. Dry-run (Always run this first)
+./harv-purge-images-v2.sh --version <current_cluster_version> --dry-run
+
+# 2. Actual Cleanup
+./harv-purge-images-v2.sh --version <current_cluster_version>
+```
+
+The sample output:
+
+```bash
+./harv-purge-images-v2.sh --version v1.8.0 --dry-run
+Parameters accepted:
+  Cluster Version: v1.8.0
+  Dry Run:         true
+  Debug:           false
+  Images List:     https://raw.githubusercontent.com/harvester/upgrade-helpers/refs/heads/main/manifests/image-lists/lists/v1.8.0-amd64-images-list.txt
+ [INFO] Fetching remote list: https://raw.githubusercontent.com/harvester/upgrade-helpers/refs/heads/main/manifests/image-lists/lists/v1.8.0-amd64-images-list.txt...
+>>> IMAGE CLEANUP START
+>>> Analyzing system images ...
+  [DRY-RUN] Would remove: docker.io/rancher/harvester:v1.4.0 (sha256:d9fd8e5c1561efc36a615751ae20541a548338578df5396b9ee4c1d649b927b9)
+  [DRY-RUN] Would remove: docker.io/rancher/fleet-agent:v0.12.0 (sha256:ec813929d62b5fe5de54316e15723d1b8d9b5f32fe67447f7ab1173e697898f6)
+
+[DRY-RUN] Found 2 unique images to purge.
+
+>>> IMAGE CLEANUP FINISHED
+
+
+./harv-purge-images-v2.sh --version v1.8.0
+Parameters accepted:
+  Cluster Version: v1.8.0
+  Dry Run:         false
+  Debug:           false
+  Images List:     https://raw.githubusercontent.com/harvester/upgrade-helpers/refs/heads/main/manifests/image-lists/lists/v1.8.0-amd64-images-list.txt
+ [INFO] Fetching remote list: https://raw.githubusercontent.com/harvester/upgrade-helpers/refs/heads/main/manifests/image-lists/lists/v1.8.0-amd64-images-list.txt...
+>>> IMAGE CLEANUP START
+--- Disk Usage: BEFORE ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda5       147G   41G   99G  30% /usr/local
+>>> Analyzing system images ...
+  [TARGET] docker.io/rancher/harvester:v1.4.0 (sha256:d9fd8e5c1561efc36a615751ae20541a548338578df5396b9ee4c1d649b927b9)
+  [TARGET] docker.io/rancher/fleet-agent:v0.12.0 (sha256:ec813929d62b5fe5de54316e15723d1b8d9b5f32fe67447f7ab1173e697898f6)
+
+[ACTION] Removing 2 images...
+
+--- Disk Usage: AFTER ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda5       147G   41G  100G  29% /usr/local
+----------------------------------------------
+RECLAIMED SPACE: 548 MB
+----------------------------------------------
+>>> IMAGE CLEANUP FINISHED
+```
+
+##### Air-Gapped Environment Workflow
+
+The following commands assume the cluster is running Harvester `v1.8.0`.
+
+Suppose there is a `proxy` workstation which can connect to the internet.
+
+1.  **Prepare the Proxy:** Download the script and then use the script to download the official image lists.
+
+    ```bash
+    curl https://raw.githubusercontent.com/harvester/upgrade-helpers/refs/heads/main/bin/harv-purge-images-v2.sh -o harv-purge-images-v2.sh
+    chmod +x ./harv-purge-images-v2.sh
+    ./harv-purge-images-v2.sh --version v1.8.0 --download-only
+
+    [INFO] Downloading official manifests for Version: v1.8.0...
+     [SAVED] ./v1.8.0-amd64-images-list.txt
+     [SAVED] ./v1.8.0-arm64-images-list.txt
+    ```
+
+2.  **Verify Lists:** The process downloads `v1.8.0-amd64-images-list.txt` and `v1.8.0-arm64-images-list.txt`.
+    * *Tip:* If you have third-party images that should also be removed, append them to the appropriate list file.
+    * *Tip:* If you wish to preserve specific images, remove their entries from the list file before proceeding.
+
+3.  **Transfer to Harvester nodes:** Transfer the script and the relevant architecture list file to each target air-gapped Harvester node.
+
+4.  **Execute on Target:** The script runs using the locally prepared image list.
+
+    ```bash
+    # 1. Dry-run (Always run this first)
+    ./harv-purge-images-v2.sh --version v1.8.0 --dry-run --images-list ./v1.8.0-amd64-images-list.txt
+
+    # 2. Actual Cleanup
+    ./harv-purge-images-v2.sh --version v1.8.0 --images-list ./v1.8.0-amd64-images-list.txt
+    ```
+
+
+The sample output:
+
+```bash
+./harv-purge-images-v2.sh --version v1.8.0 --dry-run --images-list ./v1.8.0-amd64-images-list.txt
+Parameters accepted:
+  Cluster Version: v1.8.0
+  Dry Run:         true
+  Debug:           false
+  Images List:     ./v1.8.0-amd64-images-list.txt
+>>> IMAGE CLEANUP START
+>>> Analyzing system images ...
+  [DRY-RUN] Would remove: docker.io/rancher/mirrored-ingress-nginx-kube-webhook-certgen:v1.4.1 (sha256:684c5ea3b61b299cd4e713c10bfd8989341da91f6175e2e6e502869c0781fb66)
+  [DRY-RUN] Would remove: docker.io/rancher/harvester-network-controller:v0.4.0 (sha256:b4aa17f3b8e20edf7ca6b6095e9520eabea5ca16fabfe1255112cd9dfc0804d2)
+  [DRY-RUN] Would remove: docker.io/rancher/harvester-network-controller:v0.3.6 (sha256:e92474d956e2776e51b8cd0c3b1fe4ede69fe9f6b110c7ff4ec34143d8b1e5b0)
+
+[DRY-RUN] Found 3 unique images to purge.
+
+>>> IMAGE CLEANUP FINISHED
+./harv-purge-images-v2.sh --version v1.8.0 --images-list ./v1.8.0-amd64-images-list.txt
+Parameters accepted:
+  Cluster Version: v1.8.0
+  Dry Run:         false
+  Debug:           false
+  Images List:     ./v1.8.0-amd64-images-list.txt
+>>> IMAGE CLEANUP START
+--- Disk Usage: BEFORE ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda5       147G   41G   99G  30% /usr/local
+>>> Analyzing system images ...
+  [TARGET] docker.io/rancher/mirrored-ingress-nginx-kube-webhook-certgen:v1.4.1 (sha256:684c5ea3b61b299cd4e713c10bfd8989341da91f6175e2e6e502869c0781fb66)
+  [TARGET] docker.io/rancher/harvester-network-controller:v0.4.0 (sha256:b4aa17f3b8e20edf7ca6b6095e9520eabea5ca16fabfe1255112cd9dfc0804d2)
+  [TARGET] docker.io/rancher/harvester-network-controller:v0.3.6 (sha256:e92474d956e2776e51b8cd0c3b1fe4ede69fe9f6b110c7ff4ec34143d8b1e5b0)
+
+[ACTION] Removing 3 images...
+
+--- Disk Usage: AFTER ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda5       147G   41G  100G  29% /usr/local
+----------------------------------------------
+RECLAIMED SPACE: 620 MB
+----------------------------------------------
+>>> IMAGE CLEANUP FINISHED
+```
