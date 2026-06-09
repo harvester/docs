@@ -353,7 +353,7 @@ The CPU/memory hot-plugging feature will be temporarily unavailable during the u
 
 After the upgrade completes successfully, restore the `LiveMigrate` workload update method to re-enable CPU and memory hot-plugging.
 
-1. Edit the `harvester` ManagedChart and restore `LiveMigrate` method under `spec.values.kubevirt.spec.workloadUpdateStrategy.workloadUpdateMethods`:
+1. Edit the `harvester` ManagedChart to remove the `workloadUpdateStrategy` field under `spec.values.kubevirt.spec`:
 
    ```bash
    kubectl edit managedchart.management.cattle.io harvester -n fleet-local
@@ -366,9 +366,7 @@ After the upgrade completes successfully, restore the `LiveMigrate` workload upd
          spec:
            monitorAccount: rancher-monitoring-operator
            monitorNamespace: cattle-monitoring-system
-           workloadUpdateStrategy:
-             workloadUpdateMethods:
-               - LiveMigrate
+           # ... keep all other existing fields unchanged
    ```
 
 1. Verify that the `LiveMigrate` method has been restored in the kubevirt CR:
