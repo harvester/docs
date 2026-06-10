@@ -44,7 +44,7 @@ To install the Upgrade Manager, first apply the add-on manifest from the experim
 
 ```bash
 kubectl apply -f \
-    https://raw.githubusercontent.com/harvester/experimental-addons/main/harvester-upgrade-manager/harvester-upgrade-manager.yaml
+    https://raw.githubusercontent.com/harvester/experimental-addons/v1.8/harvester-upgrade-manager/harvester-upgrade-manager.yaml
 ```
 
 Then enable the add-on by patching its resource:
