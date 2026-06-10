@@ -25,7 +25,7 @@ If you are using the Harvester kubeconfig file, you can install the add-on by pe
 1. Install the add-on by running the following command:
 
     ```
-    # kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/main/harvester-csi-driver-lvm/harvester-csi-driver-lvm.yaml
+    # kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/v1.8/harvester-csi-driver-lvm/harvester-csi-driver-lvm.yaml
     ```
 
 1. On the Harvester UI, go to **Advanced** > **Add-ons**.
