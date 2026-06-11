@@ -179,7 +179,7 @@ In the Rancher UI, you can create a `Custom` RKE2 cluster with **Harvester Cloud
 
 The **Harvester Cloud Provider** requires a cloud-config file to connect to the remote Harvester cluster (e.g., to query VM information or allocate load balancers). Follow the steps below to generate this file.
 
-1. Generate cloud config data using the script `generate_addon.sh`, and then place the data on every custom node (directory: `/etc/kubernetes/cloud-config`).
+1. Generate cloud config data using the script `generate_addon.sh`, and then place the data on every custom node (directory: `/etc/kubernetes/cloud-config`; see the note below for the newer RKE2 default path `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`).
 
     ```bash
     curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
@@ -242,7 +242,7 @@ The **Harvester Cloud Provider** requires a cloud-config file to connect to the 
 
     :::note
 
-    In newer RKE2 versions (e.g.v1.33.11), the cloud-config path defaults to `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`. Ensure `cloudConfigPath` matches the file location you write to:
+    In newer RKE2 versions (e.g. v1.33.11), the cloud-config path defaults to `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`. Ensure `cloudConfigPath` matches the file location you write to:
 
     - If you use the RKE2 default path, change the `write_files` entry above to `path: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config`.
 
@@ -270,7 +270,7 @@ The **Harvester Cloud Provider** requires a cloud-config file to connect to the 
 
     :::note
 
-    **Instance Labels** are critical for Harvester to manage resource allocation and deallocation for guest clusters. If these labels are missing, features like the guest cluster LoadBalancer in `Pool` mode may not work, as Harvester node driver can not identify the guest cluster.
+    **Instance Labels** are critical for Harvester to manage resource allocation and deallocation for guest clusters. If these labels are missing, features like the guest cluster LoadBalancer in `Pool` mode may not work, as the Harvester node driver cannot identify the guest cluster.
 
     :::
 
@@ -278,7 +278,7 @@ The **Harvester Cloud Provider** requires a cloud-config file to connect to the 
 
     ![](/img/v1.9/rancher/create-custom-rke2.png)
 
-    Click **Add-on: Harvester Cloud Provider** to verify the `Cloud config file path`. On newer versions, this defaults to `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`. Ensure this value matches the path defined in the previous step under `write_files:` (`path: /etc/kubernetes/cloud-config`).
+    Click **Add-on: Harvester Cloud Provider** to verify the `Cloud config file path`. On newer versions, this defaults to `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`. Ensure this value matches the `path` you set under `write_files:` in the previous step.
 
     ![](/img/v1.9/rancher/create-custom-rke2-cloud-config.png)
 
@@ -286,7 +286,7 @@ The **Harvester Cloud Provider** requires a cloud-config file to connect to the 
 
     ![](/img/v1.9/rancher/custom-cluster-registration.png)
 
-1. (Optional) Verify the customized cluster YAML to ensure the following fields are correctly set::
+1. (Optional) Verify the customized cluster YAML to ensure the following fields are correctly set:
     - `.spec.rkeConfig.chartValues.harvester-cloud-provider.global.cattle.clusterName`
     - `.spec.rkeConfig.chartValues.harvester-cloud-provider.cloudConfigPath`
     If either field is missing or incorrect, update it in the YAML file.

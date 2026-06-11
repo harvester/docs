@@ -32,7 +32,7 @@ The Harvester node driver only supports cloud images. This is because ISO images
 
 Starting from Rancher `v2.6.3`, the Harvester node driver is enabled by default.
 
-On Rancher version like `v2.14.2` You can go to the **Cluster Management** > **Providers** > **Node Drivers** page to check the Harvester node driver status.
+On Rancher version like `v2.14.2` you can go to the **Cluster Management** > **Providers** > **Node Drivers** page to check the Harvester node driver status.
 
 ![edit-node-driver](/img/v1.9/rancher/harvester-node-driver.png)
 
@@ -46,17 +46,17 @@ When the Harvester node driver is enabled, you can `Provision new nodes and crea
 - Changes made to the node driver configuration is not persisted. Any modifications applied will be reset upon restarting the Rancher container.
 - Starting with Harvester node driver v0.6.3, the automatic injection of the `qemu-guest-agent` has been removed from the backend. If the image you are using does not contain the `qemu-guest-agent` package, you can still install it via the `userdata` config. Otherwise, the cluster will not be provisioned successfully.
 
-   ```yaml
-   #cloud-config
-   package_update: true
-   packages:
-   - qemu-guest-agent
-   runcmd:
-   - - systemctl
-     - enable
-     - '--now'
-     - qemu-guest-agent.service
-   ```
+    ```yaml
+    #cloud-config
+    package_update: true
+    packages:
+    - qemu-guest-agent
+    runcmd:
+    - - systemctl
+      - enable
+      - '--now'
+      - qemu-guest-agent.service
+    ```
 
 :::
 

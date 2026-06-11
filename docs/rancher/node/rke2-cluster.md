@@ -59,19 +59,19 @@ Users can create a RKE2 Kubernetes cluster from the **Cluster Management** page 
 8. Enter **Network Name** (required).
 9. Enter **SSH User** (required).
 10. (optional) Configure the **Show Advanced > User Data** to install the required packages of VM.
-```yaml
-#cloud-config
-package_update: true
-packages:
-  - qemu-guest-agent
-runcmd:
-  - - systemctl
-    - enable
-    - '--now'
-    - qemu-guest-agent.service
-```
+    ```yaml
+    #cloud-config
+    package_update: true
+    packages:
+      - qemu-guest-agent
+    runcmd:
+      - - systemctl
+        - enable
+        - '--now'
+        - qemu-guest-agent.service
+    ```
 11. Select cluster type `(RKE2/K3s)` and version.
-12. Configure cluster-specific settings. (Dynamically loads based on your selection.)
+12. Configure cluster-specific settings. (Loads dynamically based on your selection.)
 13. Click **Create**.
 
 :::note
@@ -82,7 +82,7 @@ Calico and Canal networks require the `iptables` or `xtables-nft` package to be 
 
 :::important
 
-Ensure all **Machine Pools** use the same first(primary) Network. RKE2 relies on this network to boot the cluster; using different networks across machine pools may cause the cluster to fail.
+Ensure all **Machine Pools** use the same first(primary) Network. RKE2/K3s rely on this network to boot the cluster; using different networks across machine pools may cause the cluster to fail.
 
 :::
 
@@ -151,7 +151,7 @@ See the [Kubernetes Pod Affinity and Anti-Affinity Documentation](https://kubern
 1. Click **☰ > Cluster Management**.
 1. Select **Clusters** menu.
 1. Find the target cluster.
-1. Click the right side **three dot** and select **Edit Config**.
+1. Click the **three-dot** menu on the right and select **Edit Config**.
 
 The non-grayed fields of the RKE2 machine pool represent the Harvester VM configurations. Any modifications to these fields will trigger node reprovisioning.
 
@@ -159,7 +159,7 @@ The non-grayed fields of the RKE2 machine pool represent the Harvester VM config
 
 :::important
 
-Do not change the first(primary) **Network**. By default, RKE2 relies on it to boot the cluster. If different **Machine Pools** use different networks, the cluster may break.
+Do not change the first(primary) **Network**. By default, RKE2/K3s relies on it to boot the cluster. If different **Machine Pools** use different networks, the cluster may break.
 
 :::
 
