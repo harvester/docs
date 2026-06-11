@@ -8,9 +8,9 @@ title: "Creating an RKE2 Kubernetes Cluster"
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/rancher/node/rke2-cluster"/>
 </head>
 
-You can now provision RKE2 Kubernetes clusters on top of the Harvester cluster in Rancher using the built-in Harvester node driver.
+You can now `Provision new nodes and create a cluster using RKE2/K3s` on top of the Harvester cluster in Rancher using the built-in Harvester node driver.
 
-![rke2-cluster](/img/v1.2/rancher/rke2-k3s-node-driver.png)
+![rke2-cluster](/img/v1.9/rancher/create-cluster-via-harvester-node-driver.png)
 
 :::note
 
@@ -43,28 +43,36 @@ For a detailed support matrix, please refer to the **Harvester CCM & CSI Driver 
 6. Select "Imported Harvester Cluster".
 7. Click **Create**.
 
-![create-harvester-cloud-credentials](/img/v1.2/rancher/create-cloud-credentials.png)
+![create-harvester-cloud-credentials](/img/v1.9/rancher/create-cloud-credentials-v2.14.2.png)
 
 ###  Create RKE2 kubernetes cluster
 
-Users can create a RKE2 Kubernetes cluster from the **Cluster Management** page via the RKE2 node driver.
+Users can create a RKE2 Kubernetes cluster from the **Cluster Management** page via the Harvester node driver.
 
 1. Select **Clusters** menu.
 2. Click **Create** button.
-3. Toggle Switch to **RKE2/K3s**.
-4. Select Harvester node driver.
-5. Select a **Cloud Credential**.
-6. Enter **Cluster Name** (required).
-7. Enter **Namespace** (required).
-8. Enter **Image** (required).
-9. Enter **Network Name** (required).
-10. Enter **SSH User** (required).
-11. (optional) Configure the **Show Advanced > User Data** to install the required packages of VM.
+3. Select Harvester node driver.
+4. Select a **Cloud Credential**.
+5. Enter **Cluster Name** (required).
+6. Enter **Namespace** (required).
+7. Enter **Image** (required).
+8. Enter **Network Name** (required).
+9. Enter **SSH User** (required).
+10. (optional) Configure the **Show Advanced > User Data** to install the required packages of VM.
 ```yaml
 #cloud-config
+package_update: true
 packages:
-  - iptables
+  - qemu-guest-agent
+runcmd:
+  - - systemctl
+    - enable
+    - '--now'
+    - qemu-guest-agent.service
 ```
+11. Select cluster type `(RKE2/K3s)` and version.
+12. Configure cluster-specific settings. (Dynamically loads based on your selection.)
+13. Click **Create**.
 
 :::note
 
@@ -72,12 +80,23 @@ Calico and Canal networks require the `iptables` or `xtables-nft` package to be 
 
 :::
 
+:::important
 
-12. Click **Create**.
+Ensure all **Machine Pools** use the same first(primary) Network. RKE2 relies on this network to boot the cluster; using different networks across machine pools may cause the cluster to fail.
 
-![create-rke2-harvester-cluster-1](/img/v1.2/rancher/create-rke2-harvester-cluster-1.png)
-![create-rke2-harvester-cluster-2](/img/v1.2/rancher/create-rke2-harvester-cluster-2.png)
-![create-rke2-harvester-cluster-3](/img/v1.2/rancher/create-rke2-harvester-cluster-3.png)
+:::
+
+Machine Pools (Basic)
+![create-rke2-harvester-cluster-1](/img/v1.9/rancher/create-rke2-harvester-cluster-1.png)
+
+Machine Pools (Advanced)
+![create-rke2-harvester-cluster-2](/img/v1.9/rancher/create-rke2-harvester-cluster-2.png)
+
+Cluster Type & Version
+![create-rke2-harvester-cluster-rke2-k3s-selection](/img/v1.9/rancher/create-rke2-harvester-cluster-rke2-k3s-selection.png)
+
+RKE2 Settings (Only applies if RKE2 is selected)
+![create-rke2-harvester-cluster-3](/img/v1.9/rancher/create-rke2-harvester-cluster-3-rke2-v135.png)
 
 :::note
 
@@ -129,9 +148,20 @@ See the [Kubernetes Pod Affinity and Anti-Affinity Documentation](https://kubern
 
 ###  Update RKE2 Kubernetes cluster
 
-The fields highlighted below of the RKE2 machine pool represent the Harvester VM configurations. Any modifications to these fields will trigger node reprovisioning.
+1. Click **☰ > Cluster Management**.
+1. Select **Clusters** menu.
+1. Find the target cluster.
+1. Click the right side **three dot** and select **Edit Config**.
 
-![rke2-harvester-fields](/img/v1.2/rancher/rke2-harvester-fields.png)
+The non-grayed fields of the RKE2 machine pool represent the Harvester VM configurations. Any modifications to these fields will trigger node reprovisioning.
+
+![rke2-harvester-fields](/img/v1.9/rancher/rke2-harvester-fields.png)
+
+:::important
+
+Do not change the first(primary) **Network**. By default, RKE2 relies on it to boot the cluster. If different **Machine Pools** use different networks, the cluster may break.
+
+:::
 
 ### Using Harvester RKE2 node driver in air gapped environment
 

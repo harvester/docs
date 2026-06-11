@@ -19,7 +19,7 @@ description: The Harvester cloud provider used by the guest cluster in Harvester
 
 In this page we will learn:
 
-- How to deploy the Harvester cloud provider in an RKE2 cluster
+- How to deploy the Harvester cloud provider in an RKE2 cluster.
 - How to use the [Harvester load balancer](#load-balancer-support).
 
 ### Backward Compatibility Notice
@@ -173,11 +173,11 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
 
 ### Deploying to the RKE2 custom cluster (experimental)
 
-On Rancher UI, you can create a `Custom` RKE cluster with **Harvester Cloud Provider**.
+In the Rancher UI, you can create a `Custom` RKE2 cluster with **Harvester Cloud Provider**.
 
-![](/img/v1.2/rancher/custom.png)
+![](/img/v1.9/rancher/guest-cluster-custom.png)
 
-
+The **Harvester Cloud Provider** requires a cloud-config file to connect to the remote Harvester cluster (e.g., to query VM information or allocate load balancers). Follow the steps below to generate this file.
 
 1. Generate cloud config data using the script `generate_addon.sh`, and then place the data on every custom node (directory: `/etc/kubernetes/cloud-config`).
 
@@ -185,13 +185,13 @@ On Rancher UI, you can create a `Custom` RKE cluster with **Harvester Cloud Prov
     curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
     ```
 
-  :::note
+    :::note
 
     The script depends on `kubectl` and `jq` when operating the Harvester cluster, and functions only when given access to the `Harvester Cluster` kubeconfig file.
 
     You can find the `kubeconfig` file in one of the Harvester management nodes in the `/etc/rancher/rke2/rke2.yaml` path. The server IP must be replaced with the VIP address.
 
-  Example of content:
+    Example of content:
 
     ```yaml
     apiVersion: v1
@@ -205,7 +205,7 @@ On Rancher UI, you can create a `Custom` RKE cluster with **Harvester Cloud Prov
 
     You must specify the namespace in which the guest cluster will be created.
 
-  :::
+    :::
 
     Example of output:
 
@@ -242,11 +242,11 @@ On Rancher UI, you can create a `Custom` RKE cluster with **Harvester Cloud Prov
 
     :::note
 
-    In newer rke2 version (v1.30+), the cloud-config path defaults `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`, you can:
+    In newer RKE2 versions (e.g.v1.33.11), the cloud-config path defaults to `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`. Ensure `cloudConfigPath` matches the file location you write to:
 
-    - Change above `path: /etc/kubernetes/cloud-config` to `path: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config`.
+    - If you use the RKE2 default path, change the `write_files` entry above to `path: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config`.
 
-    - Chnage Cluster object from Rancher UI, set `.spec.rkeConfig.chartValues.harvester-cloud-provider.cloudConfigPath: /etc/kubernetes/cloud-config`
+    - If you keep `path: /etc/kubernetes/cloud-config`, set `.spec.rkeConfig.chartValues.harvester-cloud-provider.cloudConfigPath` to `/etc/kubernetes/cloud-config` in the Rancher UI.
 
     :::
 
@@ -254,38 +254,42 @@ On Rancher UI, you can create a `Custom` RKE cluster with **Harvester Cloud Prov
 
     - **Basics** tab: The minimum requirements are 2 CPUs and 4 GiB of RAM. The required disk space depends on the VM image.
 
-      ![](/img/v1.3/rancher/custom-cluster-vm-cpu-and-ram.png)
+      ![](/img/v1.9/rancher/custom-cluster-vm-cpu-and-ram.png)
 
     - **Networks** tab: Specify a network name with the format `nic-<number>`.
 
-      ![](/img/v1.3/rancher/custom-cluster-vm-network.png)
+      ![](/img/v1.9/rancher/custom-cluster-vm-network.png)
 
-    - **Instance Labels** tab: Add two required labels: `guestcluster.harvesterhci.io/name: cluster-name` and `harvesterhci.io/creator: docker-machine-driver-harvester`.
+    - **Instance Labels** tab: Add two required labels: `guestcluster.harvesterhci.io/name: <cluster-name>` and `harvesterhci.io/creator: docker-machine-driver-harvester`.
 
       ![](/img/v1.9/rancher/guest-cluster-vm-instance-labels.png)
 
     - **Advanced Options** tab: Copy and paste the content of the **Cloud Config User Data** screen.
 
-      ![](/img/v1.3/rancher/custom-cluster-vm-user-data.png)
+      ![](/img/v1.9/rancher/custom-cluster-vm-user-data.png)
 
     :::note
 
-    **Instance Labels** are critical for Harvester to manage resource allocation and deallocation for guest clusters. If these labels are missing, features like the `Pool` mode LoadBalancer on the guest cluster may fail to allocate IP addresses.
+    **Instance Labels** are critical for Harvester to manage resource allocation and deallocation for guest clusters. If these labels are missing, features like the guest cluster LoadBalancer in `Pool` mode may not work, as Harvester node driver can not identify the guest cluster.
 
     :::
 
 1. On the **Basics** tab of the **Cluster Configuration** screen, select **Harvester** as the **Cloud Provider** and then select **Create** to spin up the cluster.
 
-  ![](/img/v1.2/rancher/create-custom-rke2.png)
+    ![](/img/v1.9/rancher/create-custom-rke2.png)
+
+    Click **Add-on: Harvester Cloud Provider** to verify the `Cloud config file path`. On newer versions, this defaults to `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`. Ensure this value matches the path defined in the previous step under `write_files:` (`path: /etc/kubernetes/cloud-config`).
+
+    ![](/img/v1.9/rancher/create-custom-rke2-cloud-config.png)
 
 1. On the **Registration** tab, perform the steps required to run the RKE2 registration command on the VM.
 
-    ![](/img/v1.3/rancher/custom-cluster-registration.png)
+    ![](/img/v1.9/rancher/custom-cluster-registration.png)
 
-1. (Optional)Verify the customized cluster YAML to ensure the following fields are correctly set:
-    * `.spec.rkeConfig.chartValues.harvester-cloud-provider.global.cattle.clusterName`
-    * `.spec.rkeConfig.chartValues.harvester-cloud-provider.cloudConfigPath`
-   If either field is missing or incorrect, update it in the YAML file.
+1. (Optional) Verify the customized cluster YAML to ensure the following fields are correctly set::
+    - `.spec.rkeConfig.chartValues.harvester-cloud-provider.global.cattle.clusterName`
+    - `.spec.rkeConfig.chartValues.harvester-cloud-provider.cloudConfigPath`
+    If either field is missing or incorrect, update it in the YAML file.
 
     ![](/img/v1.9/rancher/guest-cluster-yaml.png)
 

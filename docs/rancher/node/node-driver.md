@@ -30,13 +30,15 @@ The Harvester node driver only supports cloud images. This is because ISO images
 
 ## Harvester node driver
 
-Starting from Rancher `v2.6.3`, the Harvester node driver is enabled by default. You can go to the **Cluster Management** > **Drivers** > **Node Drivers** page to check the Harvester node driver status.
+Starting from Rancher `v2.6.3`, the Harvester node driver is enabled by default.
 
-![edit-node-driver](/img/v1.2/rancher/edit-node-driver.png)
+On Rancher version like `v2.14.2` You can go to the **Cluster Management** > **Providers** > **Node Drivers** page to check the Harvester node driver status.
 
-When the Harvester node driver is enabled, you can create Kubernetes clusters on top of the Harvester cluster and manage them from Rancher.
+![edit-node-driver](/img/v1.9/rancher/harvester-node-driver.png)
 
-![harvester-node-driver](/img/v1.2/rancher/harvester-node-driver.png)
+When the Harvester node driver is enabled, you can `Provision new nodes and create a cluster using RKE2/K3s` on top of the Harvester from Rancher.
+
+![harvester-node-driver](/img/v1.9/rancher/create-cluster-via-harvester-node-driver.png)
 
 :::note
 
