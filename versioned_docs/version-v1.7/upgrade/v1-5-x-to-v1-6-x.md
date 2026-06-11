@@ -303,7 +303,7 @@ Starting from v1.8.0, this process is handled automatically. The workaround desc
 
 #### Before the upgrade
 
-1. Edit the `harvester` ManagedChart and set `workloadUpdateMethods` to an empty list under `spec.values.kubevirt.spec.workloadUpdateStrategy`:
+1. Edit the `harvester` ManagedChart resource. Under `spec.values.kubevirt.spec.workloadUpdateStrategy`, set the `workloadUpdateMethods` field to an empty list `[]`.
 
    ```bash
    kubectl edit managedchart.management.cattle.io harvester -n fleet-local
@@ -320,15 +320,15 @@ Starting from v1.8.0, this process is handled automatically. The workaround desc
              workloadUpdateMethods: []
    ```
 
-   :::note
+  :::caution
 
-   Only change the `workloadUpdateMethods` value. Do not delete any other existing fields in the `harvester` ManagedChart.
+  Only modify the `workloadUpdateMethods` field. Do not modify or delete any other existing fields in the `harvester` ManagedChart resource.
 
-   Note that the YAML snippet above is a partial excerpt, not a full resource manifest.
+  The YAML snippet is an excerpt, not a full resource manifest.
 
-   :::
+  :::
 
-1. Verify that the kubevirt CR reflects the change:
+1. Verify that the KubeVirt CR reflects the change.
 
    ```bash
    kubectl get kubevirt kubevirt -n harvester-system -o yaml | grep -A 3 workloadUpdateStrategy
@@ -353,7 +353,7 @@ The CPU/memory hot-plugging feature will be temporarily unavailable during the u
 
 After the upgrade completes successfully, restore the `LiveMigrate` workload update method to re-enable CPU and memory hot-plugging.
 
-1. Edit the `harvester` ManagedChart to remove the `workloadUpdateStrategy` field under `spec.values.kubevirt.spec`:
+1. Edit the `harvester` ManagedChart resource. Under `spec.values.kubevirt.spec`, remove the `workloadUpdateStrategy` field.
 
    ```bash
    kubectl edit managedchart.management.cattle.io harvester -n fleet-local
@@ -369,7 +369,7 @@ After the upgrade completes successfully, restore the `LiveMigrate` workload upd
            # ... keep all other existing fields unchanged
    ```
 
-1. Verify that the `LiveMigrate` method has been restored in the kubevirt CR:
+1. In the KubeVirt CR, verify that `LiveMigrate` has been restored in the `workloadUpdateMethods` field.
 
    ```bash
    kubectl get kubevirt kubevirt -n harvester-system -o yaml | grep -A 3 workloadUpdateStrategy
