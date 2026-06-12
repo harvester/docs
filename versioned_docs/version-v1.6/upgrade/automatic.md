@@ -13,7 +13,7 @@ description: Harvester provides two ways to upgrade. Users can either upgrade us
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/upgrade/index"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/upgrade/index"/>
 </head>
 
 Harvester is adopting a new lifecycle strategy that simplifies version management and upgrades. This strategy includes the following:
@@ -114,7 +114,7 @@ Check out the available [`upgrade-config` setting](../advanced/settings.md#upgra
 - Do not operate the cluster during an upgrade. For example, creating new VMs, uploading new images, etc.
 - Make sure your hardware meets the **preferred** [hardware requirements](../install/requirements.md#hardware-requirements). This is due to there will be intermediate resources consumed by an upgrade.
 - Make sure each node has at least 30 GiB of free system partition space (`df -h /usr/local/`). If any node in the cluster has less than 30 GiB of free system partition space, the upgrade will be denied. Check [free system partition space requirement](#free-system-partition-space-requirement) for more information.
-- Run the pre-check script on a Harvester control-plane node. Please pick a script according to your cluster's version: https://github.com/harvester/upgrade-helpers/tree/main/pre-check.
+- Run the [pre-check script](https://github.com/harvester/upgrade-helpers/tree/main/pre-check) on a Harvester control-plane node. Take action on any failed checks before initiating the upgrade process.
 - A number of one-off privileged pods will be created in the `harvester-system` and `cattle-system` namespaces to perform host-level upgrade operations. If [pod security admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/) is enabled, adjust these policies to allow these pods to run.
 
 :::
@@ -286,7 +286,7 @@ The following sections describe solutions for issues related to this requirement
 
 ### Free System Partition Space Manually
 
-Harvester attempts to remove unnecessary container images after an upgrade is completed. However, this automatic image cleanup may not be performed for various reasons. You can use [this script](https://github.com/harvester/upgrade-helpers/blob/main/bin/harv-purge-images.sh) to manually remove images. For more information, see issue [#6620](https://github.com/harvester/harvester/issues/6620).
+Harvester attempts to remove unnecessary container images after an upgrade is completed. However, this automatic image cleanup may not be performed for various reasons. You can refer to [manual image cleanup](./troubleshooting.md#manual-image-cleanup) to remove unused images. For more information, see issue [#6620](https://github.com/harvester/harvester/issues/6620) and [#8667](https://github.com/harvester/harvester/issues/8667).
 
 ### Set Up a Private Container Registry and Skip Image Preloading
 

@@ -12,7 +12,7 @@ description: ResourceQuota allows administrators to set resource limits per name
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/rancher/resource-quota"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/rancher/resource-quota"/>
 </head>
 
 [ResourceQuota](https://kubernetes.io/docs/concepts/policy/resource-quotas/) is used to limit the usage of resources within a namespace. It helps administrators control and restrict the allocation of cluster resources to ensure fairness and controlled resource distribution among namespaces.
@@ -116,5 +116,27 @@ When a `ResourceQuota` object has the annotation `harvesterhci.io/skipResourceQu
 :::info important
 
 You must set the annotation before the migration starts. If the annotation is set while the values are already being adjusted, Harvester is unable to automatically restore the previous configuration.
+
+:::
+
+### Automatic adjustment of ResourceQuota during migration when `additional-guest-memory-overhead-ratio` changes
+
+_Available as of v1.9.0_
+
+When the system setting [additional-guest-memory-overhead-ratio](../advanced/settings.md#additional-guest-memory-overhead-ratio) is increased, it affects all subsequent VM cold starts and live migrations. For a running VM, subsequent migrations will consume more memory. This creates a cumulative challenge: after multiple live migrations, the actual memory usage of all VMs within a namespace can exceed its configured `ResourceQuota` limit, placing the namespace in an **over-provisioned** state.
+
+It is important to understand the fundamental Kubernetes mechanism regarding `ResourceQuota`: while scaling a quota down can result in current usage exceeding the new limit, Kubernetes does not terminate running instances; it allows them to continue as-is while blocking the creation of any *new* instances. Consequently, when a new migration is triggered in an already **over-provisioned** environment, the system may block the operation because the total namespace quota is insufficient to accommodate both the existing source VM and the new target VM instance, even when the quota is automatically scaled for the new instance's specific requirements.
+
+Harvester automatically manages this bottleneck through the following workflow:
+
+- **Detection:** Harvester identifies when a live migration is specifically blocked by `ResourceQuota` limitations, even after the quota has already been scaled up for that specific VM.
+
+- **Delta Adjustment:** The system calculates a temporary "quota delta"—the additional capacity required to accommodate the cumulative memory footprint—and applies it to allow the migration to proceed.
+
+- **Cleanup:** Once the migration concludes, Harvester removes the temporary adjustment, reverting the `ResourceQuota` to its configured state.
+
+:::info
+
+To minimize reliance on automatic adjustments, manually update `ResourceQuota` settings whenever overhead configurations are changed. Ultimately, the VM's final memory footprint must always comply with defined namespace limits, regardless of whether it is migrated or cold-rebooted.
 
 :::

@@ -11,7 +11,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/airgap"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/airgap"/>
 </head>
 
 This section describes how to use Harvester in an air gapped environment. Some use cases could be where Harvester will be installed offline, behind a firewall, or behind a proxy.
@@ -79,11 +79,18 @@ docker load -i /tmp/rancher-agent-<version>.tar
 
 ## Harvester UI extension with Rancher Integration
 
-The Harvester UI Extension is required to access the Harvester UI in Rancher v2.10.x and later versions. However, installing the extension over the network is not possible in air-gapped environments, so you must perform the following workaround:
+The Harvester UI Extension is required to access the Harvester UI in Rancher v2.10.x and later versions. This extension's assets are served on the Rancher UI through the [ui-plugin-catalog container image](https://hub.docker.com/r/rancher/ui-plugin-catalog/tags). Installing the extension over the network is not possible in air-gapped environments, so you must perform the following workaround:
 
 
+1. Pull the [`ui-plugin-catalog` container image](https://hub.docker.com/r/rancher/ui-plugin-catalog/tags) that matches the required Harvester UI Extension version.
 
-1. Pull the image [rancher/ui-plugin-catalog](https://hub.docker.com/r/rancher/ui-plugin-catalog/tags) with the newest tag.
+  | Harvester UI Extension Version | ui-plugin-catalog Image Version |
+  | --- | --- |
+  | 1.0.x | 3.4.5 |
+  | 1.5.x | 4.0.5 |
+  | 1.6.x | 4.1.0 |
+  | 1.7.x | 4.13.0 |
+
 
 1. On the Rancher UI, go to **Extensions**, and then select **⋮ > Manage Extension Catalogs**.
 

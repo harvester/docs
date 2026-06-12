@@ -5,7 +5,7 @@ title: "PCI Devices"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/addons/pcidevices"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/addons/pcidevices"/>
 </head>
 
 A `PCIDevice` in Harvester represents a host device with a PCI address. 

@@ -6,7 +6,7 @@ title: "FAQ"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/faq"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/faq"/>
 </head>
 
 This FAQ is a work in progress designed to answer the questions our users most frequently ask about Harvester.
@@ -94,16 +94,4 @@ $ rm harvester.tar
 
 - Find the missing images on that node from the other nodes, then export the images from the node where the images still exist and import them on the missing node.
 
-To prevent this from happening, we recommend cleaning up unused container images from the previous version after each successful Harvester upgrade if the image store disk space is stressed. We provided a [harv-purge-images script](https://github.com/harvester/upgrade-helpers/blob/main/bin/harv-purge-images.sh) that makes cleaning up disk space easy, especially for container image storage. The script has to be executed on each Harvester node. For example, if the cluster was originally in v1.1.2, and now it gets upgraded to v1.2.0, you can do the following to discard the container images that are only used in v1.1.2 but no longer needed in v1.2.0:
-
-```shell
-# on each node
-$ ./harv-purge-images.sh v1.1.2 v1.2.0
-```
-
-:::caution
-
-- The script only downloads the image lists and compares the two to calculate the difference between the two versions. It does not communicate with the cluster and, as a result, does not know what version the cluster was upgraded from.
-- We published image lists for each version released since v1.1.0. For clusters older than v1.1.0, you have to clean up the old images manually.
-
-:::
+To prevent this from happening, we recommend cleaning up unused container images from the previous version after each successful Harvester upgrade if the image store disk space is stressed. You can refer to [manual image cleanup](./upgrade/troubleshooting.md#manual-image-cleanup) to remove unused images.

@@ -9,7 +9,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/rancher/csi-driver"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/rancher/csi-driver"/>
 </head>
 
 :::caution
@@ -44,6 +44,8 @@ The Harvester CSI driver supports the following features:
 
 - The Kubernetes cluster is built on top of Harvester virtual machines.
 - The Harvester virtual machines that run as guest Kubernetes nodes are in the same namespace.
+- Starting with v0.1.25, if you install the CSI driver without enabling the Harvester cloud provider, ensure that [Volume Snapshots](./csi-driver.md#volume-snapshots) are properly installed; otherwise, the chart installation will fail.
+
 
 :::note
 
@@ -515,3 +517,7 @@ You can upgrade K3s using the Rancher UI.
 1. Select **Version**.
 
 1. Select **Next** > **Update**.
+
+## Appendix - RBAC Changes for Harvester CSI Driver
+
+As the Harvester CSI driver gained more capabilities, additional RBAC permissions may be required. If you lack the necessary permissions, some features or enhancements may not work as expected. Check our RBAC configuration on the Github Page [here](https://github.com/harvester/harvester/blob/v1.7/deploy/charts/harvester/templates/rbac.yaml).

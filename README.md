@@ -10,8 +10,9 @@ modifying the correct files:
 
 | Path                                 | Version       | URL         |
 | ------------------------------------ | ------------- | ----------- |
-| docs/hello.md                        | v1.8 (Dev)    | /v1.8/hello |
-| versioned_docs/version-v1.7/hello.md | v1.7 (Latest) | /v1.7/hello |
+| docs/hello.md                        | v1.9 (Dev)    | /v1.9/hello |
+| versioned_docs/version-v1.8/hello.md | v1.8 (Latest) | /v1.8/hello |
+| versioned_docs/version-v1.7/hello.md | v1.7          | /v1.7/hello |
 | versioned_docs/version-v1.6/hello.md | v1.6          | /v1.6/hello |
 | versioned_docs/version-v1.5/hello.md | v1.5          | /v1.5/hello |
 | versioned_docs/version-v1.4/hello.md | v1.4          | /v1.4/hello |

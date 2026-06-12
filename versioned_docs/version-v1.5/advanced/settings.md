@@ -6,7 +6,7 @@ title: "Settings"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/advanced/index"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/index"/>
 </head>
 
 The following is a list of advanced settings that you can use in Harvester. You can modify the `settings.harvesterhci.io` custom resource using both the Harvester UI and the `kubectl` command.
@@ -104,6 +104,12 @@ For more information, see the [Longhorn documentation](https://longhorn.io/docs/
 ### `cluster-registration-url`
 
 **Definition**: URL used to import the Harvester cluster into Rancher for multi-cluster management.
+
+:::warning
+
+A vulnerability has been identified in the Harvester/Rancher integration mechanism where the registration client did not validate the certificate presented by the remote server while performing the TLS handshake. This security gap could allow an attacker with network-level access between the Harvester and Rancher Manager to execute a man-in-the-middle (MitM) attack against Harvester. You must either upgrade to v1.8 or ensure that only authorized cluster administrators can access and modify the `cluster-registration-url` setting. For more information, see the security advisory at [CVE-2025-71261](https://github.com/harvester/harvester/security/advisories/GHSA-pgh9-mpwc-8jjf).
+
+:::
 
 When you configure this setting, a new pod called `cattle-cluster-agent-*` is created in the namespace `cattle-system` for registration purposes. This pod uses the container image `rancher/rancher-agent:related-version`, which is not packed into the Harvester ISO and is instead determined by Rancher. The `related-version` is usually the same as the Rancher version. For example, when you register Harvester to Rancher v2.7.9, the image is `rancher/rancher-agent:v2.7.9`. For more information, see [Find the required assets for your Rancher version](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/other-installation-methods/air-gapped-helm-cli-install/publish-images#1-find-the-required-assets-for-your-rancher-version) in the Rancher documentation.
 
@@ -332,7 +338,7 @@ A VM that is configured to use 2 CPUs (equivalent to 2,000 milliCPU) can consume
 
 ### `additional-guest-memory-overhead-ratio`
 
-**Definition**: The ratio to futher tune the VM `memory overhead`.
+**Definition**: The ratio to further tune the VM `memory overhead`.
 
 Each VM is configured with a memory value, this memory is targeted for the VM guest OS to see and use. In Harvester, the VM run in a virt-launcher pod. CPU/VM resource limits are translated and applied to the launcher pod [Resource requests and limits of Pod and container](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container). Kubevirt ensures certain amount of memory is reserved in the pod for managing the virtualization process. Harvester and KubeVirt summarize such additional memory as the VM `Memory Overhead`. The `Memory Overhead` is computed by a complex formula. However, sometimes the OOM(Out Of Memory) can still happen and the related VM is killed by the Harvester OS, the direct cause is that the whole POD/Container exceeds its memory limits. From practice, the `Memory Overhead` varies on different kinds of VM, different kinds of VM operating system, and also depends on the running workloads on the VM.
 

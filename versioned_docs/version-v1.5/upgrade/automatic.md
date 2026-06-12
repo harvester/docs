@@ -13,7 +13,7 @@ description: Harvester provides two ways to upgrade. Users can either upgrade us
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/upgrade/index"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/upgrade/index"/>
 </head>
 
 Harvester is adopting a new lifecycle strategy that simplifies version management and upgrades. This strategy includes the following:
@@ -291,7 +291,7 @@ The following sections describe solutions for issues related to this requirement
 
 ### Free System Partition Space Manually
 
-Harvester attempts to remove unnecessary container images after an upgrade is completed. However, this automatic image cleanup may not be performed for various reasons. You can use [this script](https://github.com/harvester/upgrade-helpers/blob/main/bin/harv-purge-images.sh) to manually remove images. For more information, see issue [#6620](https://github.com/harvester/harvester/issues/6620).
+Harvester attempts to remove unnecessary container images after an upgrade is completed. However, this automatic image cleanup may not be performed for various reasons. You can refer to [manual image cleanup](./troubleshooting.md#manual-image-cleanup) to remove unused images. For more information, see issue [#6620](https://github.com/harvester/harvester/issues/6620) and [#8667](https://github.com/harvester/harvester/issues/8667).
 
 ### Set Up a Private Container Registry and Skip Image Preloading
 

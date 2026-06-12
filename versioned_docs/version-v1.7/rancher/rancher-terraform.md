@@ -13,7 +13,7 @@ description: Rancher Terraform allows administrators to create and manage RKE2 g
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/rancher/rancher-terraform"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/rancher/rancher-terraform"/>
 </head>
 
 The [Rancher Terraform Provider](https://registry.terraform.io/providers/rancher/rancher2/) allows administrators to create and manage RKE2 guest clusters using Terraform.
@@ -76,7 +76,7 @@ The [Rancher Terraform Provider](https://registry.terraform.io/providers/rancher
     required_providers {
         rancher2 = {
             source  = "rancher/rancher2"
-            version = "4.2.0"
+            version = "13.1.4"
             }
         }
     }
@@ -148,7 +148,7 @@ The [Rancher Terraform Provider](https://registry.terraform.io/providers/rancher
 
     resource "rancher2_cluster_v2" "rke2-demo" {
         name = "rke2-demo"
-        kubernetes_version = "v1.28.10+rke2r1"
+        kubernetes_version = "v1.34.6+rke2r1"
         rke_config {
             machine_pools {
                 name = "pool1"
@@ -188,8 +188,8 @@ The [Rancher Terraform Provider](https://registry.terraform.io/providers/rancher
 
             chart_values = <<EOF
             harvester-cloud-provider:
-            clusterName: rke2-demo
-            cloudConfigPath: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
+              clusterName: rke2-demo
+              cloudConfigPath: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
             EOF
         }
     }

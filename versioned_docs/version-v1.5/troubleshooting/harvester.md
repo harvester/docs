@@ -5,7 +5,7 @@ title: "Harvester"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/troubleshooting/harvester"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/troubleshooting/harvester"/>
 </head>
 
 ## Fail to Deploy a Multi-node Cluster Due to Incorrect HTTP Proxy Setting
@@ -33,7 +33,7 @@ The second node is installed successfully.
 
 The third node is installed successfully.
 
-Then the second node changes to Unavialable state and cannot recover automatically.
+Then the second node changes to Unavailable state and cannot recover automatically.
 ```
 
 #### Solution

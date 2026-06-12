@@ -9,7 +9,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.7/networking/best-practice"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/networking/best-practice"/>
 </head>
 
 ## Replace Ethernet NICs
@@ -18,7 +18,7 @@ You may want to replace the Ethernet NICs of a bare-metal node in a Harvester cl
 
 - Malfunction or damage
 
-- Insufficent hardware capacity
+- Insufficient hardware capacity
 
 - Missing features
 
