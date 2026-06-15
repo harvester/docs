@@ -59,7 +59,7 @@ Users can create a K3s Kubernetes cluster from the **Cluster Management** page v
         - '--now'
         - qemu-guest-agent.service
     ```
-11. Select cluster type `(RKE2/K3s)` and version.
+11. In the **Basics** section, use the **Kubernetes Version** drop-down menu to select your preferred Kubernetes distribution (**RKE2** or **K3s**) and its corresponding version.
 12. Configure cluster-specific settings. (Loads dynamically based on your selection.)
 13. Click **Create**.
 
@@ -75,7 +75,7 @@ Machine Pools (Basic)
 Machine Pools (Advanced)
 ![create-rke2-harvester-cluster-2](/img/v1.9/rancher/create-rke2-harvester-cluster-2.png)
 
-Cluster Type & Version
+Kubernetes Distribution & Version
 ![create-rke2-harvester-cluster-rke2-k3s-selection](/img/v1.9/rancher/create-rke2-harvester-cluster-rke2-k3s-selection.png)
 
 K3s Settings (Only applies if K3s is selected)
@@ -143,3 +143,4 @@ This can occur if a Harvester cluster was removed and re-registered in Rancher, 
 
 For details and workaround, see:
 [Harvester Cloud Provider documentation](../cloud-provider#known-issue-stale-harvester-cloudcredentials-after-re-registering-cluster)
+
