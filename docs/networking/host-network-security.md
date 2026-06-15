@@ -21,6 +21,12 @@ For the full list of required ports per node role, see [Network Requirements](..
 
 The examples below use a custom iptables chain (`HARVESTER_INPUT`) attached to the `INPUT` hook on the management bridge ([mgmt-br](./clusternetwork.md#cluster-network-details)). The rule set follows this structure:
 
+:::info
+
+When using [HostNetwork Configuration](./hostnetworkconfig), need to create another rule for the new NIC. For eaxmple, `iptables -A INPUT -i {new secondary network interface name} -j HARVESTER_INPUT`.
+
+:::
+
 1. **Established connections** — Allow return traffic from connections already tracked by conntrack.
 2. **Protocol rules** — Allow ICMP, DHCP, and other protocol-level traffic.
 3. **Service-specific ACCEPT rules** — Allow traffic to ports required by the node role.
@@ -238,7 +244,7 @@ spec:
             - iptables -A HARVESTER_INPUT -p udp --dport 8472 -m comment --comment "VXLAN (Flannel/Canal)" -j ACCEPT
             - iptables -A HARVESTER_INPUT -p tcp --dport 8080 -m comment --comment "kube-ovn-webhook HTTP (kubeovn-operator)" -j ACCEPT
             - iptables -A HARVESTER_INPUT -p tcp --dport 8443 -m comment --comment "kube-ovn-webhook HTTPS (kubeovn-operator)" -j ACCEPT
-            - iptables -A HARVESTER_INPUT -p tcp --dport 6641:6644 -m comment --comment "OVN NB/SB DB and JSON-RPC (kubeovn-operator)" -j ACCEPT
+            - iptables -A HARVESTER_INPUT -p tcp --dport 6641:6644 -m comment --comment "OVN NB/SB DB, Northd, and Raft (kubeovn-operator)" -j ACCEPT
             - iptables -A HARVESTER_INPUT -p tcp --dport 10661 -m comment --comment "kube-ovn-monitor metrics (kubeovn-operator)" -j ACCEPT
             - iptables -A HARVESTER_INPUT -p tcp --dport 10665 -m comment --comment "kube-ovn-daemon (kubeovn-operator)" -j ACCEPT
             - iptables -A HARVESTER_INPUT -p udp --dport 4789 -m comment --comment "VXLAN (Kube-OVN, kubeovn-operator)" -j ACCEPT
