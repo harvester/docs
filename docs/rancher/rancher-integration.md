@@ -62,7 +62,7 @@ One benefit of installing Kubernetes on node pools hosted by the node driver is 
 
 Starting from Rancher version `v2.6.1`, the Harvester node driver is included by default. You can refer to the [node-driver](./node/node-driver.md) page for more details.
 
-![harvester-node-driver](/img/v1.2/rancher/harvester-node-driver.png)
+![harvester-node-driver](/img/v1.9/rancher/create-cluster-via-harvester-node-driver.png)
 
 ## Harvester baremetal container workload support (experimental)
 

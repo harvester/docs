@@ -30,13 +30,15 @@ The Harvester node driver only supports cloud images. This is because ISO images
 
 ## Harvester node driver
 
-Starting from Rancher `v2.6.3`, the Harvester node driver is enabled by default. You can go to the **Cluster Management** > **Drivers** > **Node Drivers** page to check the Harvester node driver status.
+Starting from Rancher `v2.6.3`, the Harvester node driver is enabled by default.
 
-![edit-node-driver](/img/v1.2/rancher/edit-node-driver.png)
+On Rancher version like `v2.14.2` you can go to the **Cluster Management** > **Providers** > **Node Drivers** page to check the Harvester node driver status.
 
-When the Harvester node driver is enabled, you can create Kubernetes clusters on top of the Harvester cluster and manage them from Rancher.
+![edit-node-driver](/img/v1.9/rancher/harvester-node-driver.png)
 
-![harvester-node-driver](/img/v1.2/rancher/harvester-node-driver.png)
+When the Harvester node driver is enabled, you can `Provision new nodes and create a cluster using RKE2/K3s` on top of the Harvester from Rancher.
+
+![harvester-node-driver](/img/v1.9/rancher/create-cluster-via-harvester-node-driver.png)
 
 :::note
 
@@ -44,17 +46,17 @@ When the Harvester node driver is enabled, you can create Kubernetes clusters on
 - Changes made to the node driver configuration is not persisted. Any modifications applied will be reset upon restarting the Rancher container.
 - Starting with Harvester node driver v0.6.3, the automatic injection of the `qemu-guest-agent` has been removed from the backend. If the image you are using does not contain the `qemu-guest-agent` package, you can still install it via the `userdata` config. Otherwise, the cluster will not be provisioned successfully.
 
-   ```yaml
-   #cloud-config
-   package_update: true
-   packages:
-   - qemu-guest-agent
-   runcmd:
-   - - systemctl
-     - enable
-     - '--now'
-     - qemu-guest-agent.service
-   ```
+    ```yaml
+    #cloud-config
+    package_update: true
+    packages:
+    - qemu-guest-agent
+    runcmd:
+    - - systemctl
+      - enable
+      - '--now'
+      - qemu-guest-agent.service
+    ```
 
 :::
 
