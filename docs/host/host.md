@@ -668,3 +668,52 @@ If the `status` field's value is `False`, you must manually rotate the certifica
     ```
     systemctl restart rancher-system-agent
     ```
+
+## Update /etc/hosts Configuration
+
+By default, Harvester writes `127.0.0.1 localhost {hostname}` in `/etc/hosts`. This configuration can cause the `hostname -f` command to return unexpected results.
+
+To resolve this issue, you can use a CloudInit resource to automatically configure the `/etc/hosts` file with the correct host mapping.
+
+The following template performs these actions:
+
+1. Retrieves the fully qualified domain name (FQDN) and extracts the short hostname
+1. Retrieves the node's IP address
+1. Replaces the default `127.0.0.1 localhost {hostname}` entry with `127.0.0.1 localhost`
+1. Adds a new entry in the format: `{node IP} {FQDN} {short hostname}`
+
+:::note
+
+This template uses the `network.after` stage, which requires a reboot. If you have other custom CloudInit resources using the same stage, ensure they don't conflict. CloudInit files are executed in alphabetical order by filename. 
+
+Alternatively, you can use the `reconcile` stage, which runs 5 minutes after boot and then repeats every 60 minutes.
+
+If you don't want a reboot, you can create a CloudInit CRD first, then run the commands by yourself. This ensures that the runtime configuration is changed and preserved in the next reboot.
+
+:::
+
+You can customize this template to meet your specific requirements.
+
+```yaml
+apiVersion: node.harvesterhci.io/v1beta1
+kind: CloudInit
+metadata:
+  name: fix-hostname-hosts
+spec:
+  matchSelector: {}
+  paused: false
+  filename: 99_fix_hostname.yaml
+  contents: |
+    stages:
+      network.after:
+        - name: fix-hostname-hosts
+          commands:
+            - |
+              FQDN=$(cat /etc/hostname | tr -d '[:space:]')
+              SHORT=$(echo "${FQDN}" | cut -d. -f1)
+              NODE_IP=$(ip addr show mgmt-br 2>/dev/null | awk '/inet /{print $2}' | cut -d/ -f1 | head -1)
+              [ -z "$NODE_IP" ] && exit 0
+              sed -i 's/^127\.0\.0\.1.*/127.0.0.1 localhost/' /etc/hosts
+              awk -v fqdn="$FQDN" -v short="$SHORT" '{for(i=2;i<=NF;i++) if($i==fqdn || $i==short) next}1' /etc/hosts > /tmp/hosts.tmp && mv /tmp/hosts.tmp /etc/hosts
+              echo "${NODE_IP} ${FQDN} ${SHORT}" >> /etc/hosts
+```
