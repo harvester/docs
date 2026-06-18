@@ -228,3 +228,9 @@ Until the upstream issue is fixed, use one of these workarounds:
 
 - Migrate the VM without ejecting any images from the CD-ROM devices.
 - During VM creation, move all `Container` volumes before the first `Image Volume` of type `CD-ROM`.
+
+* [Issue #10653](https://github.com/harvester/harvester/issues/10653): Unexpected network disruption due to multiple MAC address moves between source and target hosts.
+
+During live migration, the virtual machine's MAC address moved between the source and target hosts *multiple times*. This caused external switches to register the same MAC address on different interfaces, resulting in a temporary network disruption.
+
+To resolve this issue, set `disableContainerInterface: true` within the `spec.config` field of the corresponding Multus `NetworkAttachmentDefinition` *before* starting a live migration. This configuration delays enabling of the pod interface until after the switchover occurs, preventing multiple MAC address moves. For more information, see [Example L2-only, disabled interface configuration](https://www.cni.dev/plugins/current/main/bridge/#example-l2-only-disabled-interface-configuration) in the Container Network Interface (CNI) documentation.
