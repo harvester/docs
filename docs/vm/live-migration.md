@@ -222,8 +222,7 @@ By default, the keepalive interval is set to 5 seconds, and the retry count is s
 
 Starting with v1.9.0, virtual machines using Kube-OVN overlay networks can be live migrated with less than 0.5 seconds of network traffic disruption.
 
-Follow the procedure in [Starting a Migration](#starting-a-migration) to migrate overlay VMs.
-For more details, refer to [Kube-OVN Live Migration](https://kube-ovn.readthedocs.io/zh-cn/stable/en/kubevirt/live-migration/).
+For information about migrating overlay virtual machines, see [Starting a Migration](#starting-a-migration). For architectural details, see [Live Migration](https://kube-ovn.readthedocs.io/zh-cn/stable/en/kubevirt/live-migration/) in the Kube-OVN documentation.
 
 ## Known Issues
 
