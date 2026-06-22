@@ -303,40 +303,42 @@ Starting from v1.8.0, this process is handled automatically. The workaround desc
 
 #### Before the upgrade
 
-1. Disable the `LiveMigrate` workload update method:
-
-   ```bash
-   kubectl patch kubevirt kubevirt -n harvester-system --type=merge --patch-file=/dev/stdin <<EOF
-   spec:
-     workloadUpdateStrategy:
-       workloadUpdateMethods: []
-   EOF
-   ```
-
-1. Edit the `harvester` ManagedChart resource to prevent drift warnings:
+1. Edit the `harvester` ManagedChart resource. Under `spec.values.kubevirt.spec.workloadUpdateStrategy`, set the `workloadUpdateMethods` field to an empty list `[]`.
 
    ```bash
    kubectl edit managedchart.management.cattle.io harvester -n fleet-local
    ```
 
-1. Add the following entry to the `spec.diff.comparePatches` field (preserve existing entries):
-
    ```yaml
    spec:
-     diff:
-       comparePatches:
-       # Keep existing entries
-       - apiVersion: kubevirt.io/v1
-         jsonPointers:
-         - /spec/workloadUpdateStrategy/workloadUpdateMethods
-         kind: KubeVirt
-         name: kubevirt
+     values:
+       kubevirt:
+         spec:
+           monitorAccount: rancher-monitoring-operator
+           monitorNamespace: cattle-monitoring-system
+           workloadUpdateStrategy:
+             workloadUpdateMethods: []
    ```
 
-1. Ensure the managed chart is ready:
+  :::caution
+
+  Only modify the `workloadUpdateMethods` field. Do not modify or delete any other existing fields in the `harvester` ManagedChart resource.
+
+  The YAML snippet is an excerpt, not a full resource manifest.
+
+  :::
+
+1. Verify that the KubeVirt CR reflects the change.
 
    ```bash
-   kubectl get managedchart.management.cattle.io harvester -n fleet-local 
+   kubectl get kubevirt kubevirt -n harvester-system -o yaml | grep -A 3 workloadUpdateStrategy
+   ```
+
+   Expected output:
+
+   ```yaml
+   workloadUpdateStrategy:
+     workloadUpdateMethods: []
    ```
 
 With these changes in place, VMs will not be scheduled for live-migration due to virt-launcher pod image mismatches during the upgrade.
@@ -351,26 +353,23 @@ The CPU/memory hot-plugging feature will be temporarily unavailable during the u
 
 After the upgrade completes successfully, restore the `LiveMigrate` workload update method to re-enable CPU and memory hot-plugging.
 
-1. Re-enable the `LiveMigrate` workload update method:
-
-   ```bash
-   kubectl patch kubevirt kubevirt -n harvester-system --type=merge --patch-file=/dev/stdin <<EOF
-   spec:
-     workloadUpdateStrategy:
-       workloadUpdateMethods:
-       - LiveMigrate
-   EOF
-   ```
-
-1. Edit the `harvester` ManagedChart resource:
+1. Edit the `harvester` ManagedChart resource. Under `spec.values.kubevirt.spec`, remove the `workloadUpdateStrategy` field.
 
    ```bash
    kubectl edit managedchart.management.cattle.io harvester -n fleet-local
    ```
 
-1. Remove the `kubevirt` entry from the `spec.diff.comparePatches` field that you added before the upgrade.
+   ```yaml
+   spec:
+     values:
+       kubevirt:
+         spec:
+           monitorAccount: rancher-monitoring-operator
+           monitorNamespace: cattle-monitoring-system
+           # ... keep all other existing fields unchanged
+   ```
 
-1. Verify that the `LiveMigrate` method has been restored:
+1. In the KubeVirt CR, verify that `LiveMigrate` has been restored in the `workloadUpdateMethods` field.
 
    ```bash
    kubectl get kubevirt kubevirt -n harvester-system -o yaml | grep -A 3 workloadUpdateStrategy

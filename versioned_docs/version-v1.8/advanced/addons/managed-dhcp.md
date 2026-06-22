@@ -40,7 +40,7 @@ Harvester uses the planned infrastructure network so you must ensure that networ
 You can install the add-on by running the following command:
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/main/harvester-vm-dhcp-controller/harvester-vm-dhcp-controller.yaml
+kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/v1.8/harvester-vm-dhcp-controller/harvester-vm-dhcp-controller.yaml
 ```
 
 :::note

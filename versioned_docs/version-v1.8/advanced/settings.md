@@ -576,7 +576,7 @@ spec:
 
 **Definition**: Network configuration for isolating Longhorn RWX volume traffic.
 
-By default (`share-storage-network: false` with no `network` specified), RWX traffic uses the Kubernetes default cluster network. You can configure a dedicated network or share the existing storage network to improve bandwidth, performance, and security. For more information, see [RWX Network](./rwxnetwork.md).
+By default (`share-storage-network: false` with no `network` specified), RWX traffic uses the Kubernetes default pod network. You can configure a dedicated network or share the existing storage network to improve bandwidth, performance, and security. For more information, see [RWX Network](./rwxnetwork.md).
 
 :::info important
 
@@ -610,7 +610,7 @@ Changing this setting restarts all `longhorn-csi-plugin` pods, which temporarily
 
 **Supported options and values**:
 
-- `share-storage-network`: If `true`, RWX traffic reuses the existing [storage network](./storagenetwork.md) configuration. If `false`, RWX traffic uses either a dedicated network (when `network` is specified) or the Kubernetes default cluster network.
+- `share-storage-network`: If `true`, RWX traffic reuses the existing [storage network](./storagenetwork.md) configuration. If `false`, RWX traffic uses either a dedicated network (when `network` is specified) or the Kubernetes default pod network.
 - `network`: Required only when `share-storage-network` is `false` and a dedicated network is desired.
   - `vlan`: (Optional) VLAN ID for RWX network traffic.
   - `clusterNetwork`: Cluster network to use (must be pre-configured).

@@ -65,7 +65,7 @@ Save the `TOKEN` and `helm upgrade` commands, they will be used in following ste
 Run following command upon the target Harvester cluster to create the experimental addons `suse-observability-agent`.
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/main/suse-observability-agent/suse-observability-agent.yaml
+kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/v1.8/suse-observability-agent/suse-observability-agent.yaml
 ```
 
 ### Fill in above saved data to following fields

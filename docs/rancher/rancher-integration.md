@@ -31,9 +31,9 @@ For the network requirements, please refer to the doc [here](../install/requirem
 
 ## Deploying Rancher server
 
-To use Rancher with Harvester, please install Rancher on a separate server. If you want to try out the integration features, you can create a VM in Harvester and install the Rancher server by following the [Helm CLI quick start](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli).
+For production setups, you must install the Rancher server on a dedicated, high-availability Kubernetes cluster (with three or more nodes) deployed on infrastructure external to the Harvester cluster. Ensure that the cluster nodes meet the [software, hardware, and networking requirements](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-requirements) outlined in the Rancher documentation. For more information, see [Deploying Rancher Server](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager).
 
-For production setup, please follow [Deploying Rancher Server document](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager) to  deploy and provision Rancher and a Kubernetes cluster with the provider of your choice.
+If you want to test the integration features, you can create a virtual machine in Harvester and then install the Rancher server using Helm. For more information, see the [Helm CLI Quick Start](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli).
 
 If you prefer, the following guide will take you through the same process in individual steps. Use this if you want to run Rancher with a different provider, on prem, or if you want to see how easy it is.
 
@@ -62,7 +62,7 @@ One benefit of installing Kubernetes on node pools hosted by the node driver is 
 
 Starting from Rancher version `v2.6.1`, the Harvester node driver is included by default. You can refer to the [node-driver](./node/node-driver.md) page for more details.
 
-![harvester-node-driver](/img/v1.2/rancher/harvester-node-driver.png)
+![harvester-node-driver](/img/v1.9/rancher/create-cluster-via-harvester-node-driver.png)
 
 ## Harvester baremetal container workload support (experimental)
 

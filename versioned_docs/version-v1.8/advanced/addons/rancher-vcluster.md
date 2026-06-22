@@ -25,7 +25,7 @@ During the installation, the ingress for Rancher is synced to the Harvester clus
 If you are using the Harvester kubeconfig file, you can install the add-on by running the following command:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/main/rancher-vcluster/rancher-vcluster.yaml
+kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/v1.8/rancher-vcluster/rancher-vcluster.yaml
 ```
 
 ## Configuring the Add-on
