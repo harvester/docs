@@ -32,7 +32,7 @@ These validated CSI drivers have the following capabilities:
 
 Support for third-party storage equates to support for provisioning of root volumes and data volumes using external container storage interface (CSI) drivers. This means that storage vendors can validate their storage appliances with Harvester to ensure greater interoperability. 
 
-The Harvester engineering team exclusively validates internally developed storage solutions and select open-source projects. You can find information about enterprise-grade storage solutions that are certified to be compatible with Harvester in the [Partner Certification and Solutions Catalog](https://www.suse.com/pcsc/home).
+The Harvester engineering team exclusively validates internally developed storage solutions and select open-source projects. You can find information about enterprise-grade storage solutions that are certified to be compatible with Harvester in the [Partner Certification and Solutions Catalog](https://www.suse.com/pcsc/home#search?productName=&sortOrder.sortOrder=1&partnerName=&platforms=1031&certifications=4&categories=17).
 
 :::
 
