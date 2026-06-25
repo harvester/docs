@@ -355,14 +355,16 @@ UEFI firmware supports loading a boot image from an HTTP server. This section de
 
 ### Serve the iPXE Program
 
-Download the iPXE UEFI program from http://boot.ipxe.org/ipxe.efi and make sure `ipxe.efi` can be downloaded from the HTTP server. For example:
+1. Download the [iPXE](http://boot.ipxe.org) UEFI program that matches your system's architecture. 
 
-```bash
-cd /usr/share/nginx/html/harvester/
-wget http://boot.ipxe.org/ipxe.efi
-```
+    Example:
 
-The file now can be downloaded from http://10.100.0.10/harvester/ipxe.efi locally.
+    ```bash
+    cd /usr/share/nginx/html/harvester/
+    wget http://boot.ipxe.org/x86_64-efi/ipxe.efi
+    ```
+
+1. Verify that you can download `ipxe.efi` from the HTTP server (`http://10.100.0.10/harvester/ipxe.efi`).
 
 ### DHCP Server Configuration
 
