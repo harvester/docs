@@ -35,10 +35,6 @@ For production setups, you must install the Rancher server on a dedicated, high-
 
 If you want to test the integration features, you can create a virtual machine in Harvester and then install the Rancher server using Helm. For more information, see the [Helm CLI Quick Start](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli).
 
-If you prefer, the following guide will take you through the same process in individual steps. Use this if you want to run Rancher with a different provider, on prem, or if you want to see how easy it is.
-
-- [Manual Install](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli)
-
 :::caution
 
 **Do not install Rancher with Docker in production**. Otherwise, your environment may be damaged, and your cluster may not be able to be recovered. Installing Rancher in Docker should only be used for quick evaluation and testing purposes.
