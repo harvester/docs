@@ -31,7 +31,7 @@ For the network requirements, please refer to the doc [here](../install/requirem
 
 ## Deploying Rancher server
 
-For production setups, you must install the Rancher server on a dedicated, high-availability Kubernetes cluster (with three or more nodes) deployed on infrastructure external to the Harvester cluster. Ensure that the cluster nodes meet the [software, hardware, and networking requirements](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-requirements) outlined in the Rancher documentation. For more information, see [Deploying Rancher Server](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager).
+For production setups, you must install the Rancher server on a dedicated, high-availability Kubernetes cluster (with three or more nodes). Ensure that the cluster nodes meet the [software, hardware, and networking requirements](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-requirements) outlined in the Rancher documentation. For more information, see [Deploying Rancher Server](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager).
 
 If you want to test the integration features, you can create a virtual machine in Harvester and then install the Rancher server using Helm. For more information, see the [Helm CLI Quick Start](https://ranchermanager.docs.rancher.com/getting-started/quick-start-guides/deploy-rancher-manager/helm-cli).
 
