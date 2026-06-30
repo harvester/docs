@@ -222,11 +222,17 @@ With these settings in place a K3s cluster should provision successfully while u
 
 The **Harvester Cloud Provider** requires a cloud-config file to connect to the remote Harvester cluster (e.g., to query VM information or allocate load balancers). Follow the steps below to generate this file.
 
+:::note
+
+We highly recommend using the **Via API Endpoint** method. The **Via Bash Script** method is considered legacy and will be deprecated in a future release.
+
+:::
+
 #### Via API Endpoint
 
 _Available as of v1.9.0_
 
-You can `POST` and `GET` the cloud-config via the Harvester API endpoint `/v1/harvester/kubeconfig` using an admin bearer token.
+You can `POST` and `GET` via the Harvester API endpoint `/v1/harvester/kubeconfig` using an admin bearer token; set `outputFormat=yaml` to retrieve the `cloud-init user data` (omit it to receive the raw kubeconfig).
 
 ##### Request Parameters
 
@@ -234,17 +240,31 @@ You can `POST` and `GET` the cloud-config via the Harvester API endpoint `/v1/ha
 | :--- | :--- | :--- |
 | `namespace` | String | The target Kubernetes namespace (e.g., `gc-test`). |
 | `serviceAccountName` | String | The service account name (e.g., `gc4`). |
+| `clusterRoleName` | String | *(Optional)* ClusterRole to bind to the service account (e.g., `harvesterhci.io:cloudprovider`). |
 | `outputFormat` | String | The desired output format (e.g., `yaml`). |
+
+:::note
+
+* **`clusterRoleName`**: Only supports `harvesterhci.io:cloudprovider` (which is also the default if left empty).
+* **`outputFormat`**: Supports `yaml`. Any other value (including empty) defaults to the legacy raw output.
+
+:::
 
 ##### 1. POST Request
 
 ```bash
-curl -k -X POST \
+ curl -X POST \
   -H "Authorization: Bearer token-abcde:..." \
   -H "Content-Type: application/json" \
   -d '{"namespace": "gc-test", "serviceAccountName": "gc4", "outputFormat": "yaml"}' \
   "https://<vip>/v1/harvester/kubeconfig"
 ```
+
+:::note
+
+Add `-k`/`--insecure` to the `curl` command only if your Harvester endpoint uses a self-signed certificate.
+
+:::
 
 **Response:**
 
@@ -268,7 +288,7 @@ write_files:
 *(Note: Ensure a single `&` is used to separate query parameters)*
 
 ```bash
-curl -k -X GET \
+curl -X GET \
   -H "Authorization: Bearer token-abcde:..." \
   "https://<vip>/v1/harvester/kubeconfig?namespace=gc-test&serviceAccountName=gc4&outputFormat=yaml"
 ```
@@ -292,12 +312,11 @@ write_files:
 
 :::note
 
-The `GET` response contains the cloud-init configuration for both the legacy and new paths. Make sure to remove the section that does not apply to your environment.
+The API response contains the cloud-init configuration for both the legacy and new paths. Make sure to remove the section that does not apply to your environment.
 
 :::
 
-
-#### Via BASH Script
+#### Via Bash Script
 
 1.  Generate the cloud-config data using the `generate_addon.sh` script.
 2.  Place the generated data on every custom node.
