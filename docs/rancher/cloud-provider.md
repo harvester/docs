@@ -423,6 +423,8 @@ Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and 
 
 - **Pool:** An [IP pool](../networking/ippool.md) must be configured first. The Harvester load balancer controller will allocate an IP for the load balancer service following [the IP pool selection policy](../networking/ippool.md#selection-policy). Notice the difference between [Create IP Pool from Harvester UI directly](../networking/ippool.md#how-to-create) and [Create IP Pool from Rancher Managery UI](../networking/ippool.md#create-ip-pool-from-rancher-manager-ui). Refer to the [Best Practice](../networking/ippool.md#best-practice).
 
+    When a guest cluster uses multiple networks, or when multiple guest clusters with distinct networks share a single namespace, configuring the correct network parameters is critical. For details on how the system automatically determines the network, refer to [Guest Cluster Load Balancer Network Resolution](../networking/ippool.md#guest-cluster-load-balancer-network-resolution).
+
 - **Share IP:** When creating a new load balancer service, you can re-utilize an existing load balancer service IP. The new service is referred to as a secondary service, while the currently chosen service is the primary one. To specify the primary service in the secondary service, you can add the annotation `cloudprovider.harvesterhci.io/primary-service: $primary-service-name`.  However, there are two known limitations:
   - Services that share the same IP address can't use the same port.
   - Secondary services cannot share their IP with additional services.
