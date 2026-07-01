@@ -19,48 +19,58 @@ _Available as of v1.1.0_
 
 VM can be cloned with/without data. This function doesn't need to take a VM snapshot or set up a backup target first.
 
-The cloned VM inherits the source VM's basic configuration. Before cloning, you can update settings such as the VM name, volume data cloning, and [run strategy](./create-vm.md#run-strategy).
+The cloned virtual machine inherits the source's basic configuration. You can choose whether to include the source's volume data, as well as customize the clone's name and [run strategy](./create-vm.md#run-strategy).
 
-## Clone VM with volume data
+## Clone a Virtual Machine with Volume Data
 
-1. On the `Virtual Machines` page, click `Clone` of the VM actions.
-2. Select a [run strategy](./create-vm.md#run-strategy). The cloned VM uses the source VM's run strategy by default.
-3. Set a new VM name and click `Create` to create a new VM.
-![clone-vm-with-data.png](/img/v1.8/vm/clone-vm-with-data.png)
+1. On the **Virtual Machines** screen, locate the target virtual machine and select **⋮ > Clone**.
+    ![clone-vm-with-data.png](/img/v1.8/vm/clone-vm-with-data.png)
 
-## Clone VM without volume data
+2. Specify a unique name for the cloned virtual machine.
 
-Cloning a VM without volume data creates a new VM with the same configuration as the source VM.
+3. Select a [run strategy](./create-vm.md#run-strategy).
+    The cloned virtual machine uses the source's run strategy by default.
 
-1. On the `Virtual Machines` page, click `Clone` of the VM actions.
-2. Clear the `clone volume data` checkbox.
-3. Select a [run strategy](./create-vm.md#run-strategy). The cloned VM uses the source VM's run strategy by default.
-4. Set a new VM name and click `Create` to create a new VM.
-![clone-vm-without-data.png](/img/v1.8/vm/clone-vm-without-data.png)
+4. Click **Create**.
+
+## Clone a Virtual Machine Without Volume Data
+
+Cloning a virtual machine without volume data creates a new virtual machine with the same configuration as the source virtual machine.
+
+1. On the **Virtual Machines** screen, locate the target virtual machine and select **⋮ > Clone**.
+    ![clone-vm-without-data.png](/img/v1.8/vm/clone-vm-without-data.png)
+
+2. Clear **Clone volume data**.
+
+3. Specify a unique name for the cloned virtual machine.
+
+4. Select a [run strategy](./create-vm.md#run-strategy).
+    The cloned virtual machine uses the source's run strategy by default.
+
+5. Click **Create**.
 ![clone-vm-without-data-config.png](/img/v1.8/vm/clone-vm-without-data-config.png)
 
 ## EFI and vTPM Persistent State
 
-Harvester supports cloning VMs that use persistent EFI or vTPM state. When you clone this type of VM, Harvester also copies the persistent state that the guest OS depends on. This allows the cloned VM to keep EFI NVRAM settings and vTPM data, such as a BitLocker recovery key stored in vTPM.
+Harvester supports cloning virtual machines that use persistent EFI or vTPM states. During cloning, Harvester copies the underlying persistent data that the guest operating system depends on. This ensures the cloned virtual machine retains vital configuration details, such as EFI NVRAM settings and vTPM-stored data (including BitLocker recovery keys).
 
-Before creating the cloned VM, you can choose whether to enable EFI, vTPM, or both. Harvester preserves only the persistent state required by the cloned VM.
+You can enable EFI and/or vTPM independently before cloning. Harvester preserves only the persistent state required by the cloned virtual machine.
 
-- If both EFI and vTPM are enabled, Harvester preserves both persistent states.
-- If only EFI or only vTPM is enabled, Harvester preserves only the selected persistent state.
-- If neither EFI nor vTPM is enabled, Harvester does not process the persistent state storage.
+| EFI Status | vTPM Status | Harvester Behavior |
+| --- | --- | --- |
+| Enabled | Enabled | Preserves both persistent states |
+| Enabled | Disabled | Preserves only the EFI state |
+| Disabled | Enabled | Preserves only the vTPM state |
+| Disabled | Disabled | Skips processing of persistent state storage |
 
-The cloned VM may stay in the `Pending` state while Harvester copies and prepares the persistent state storage.
+The cloned virtual machine may remain in the `Pending` state while Harvester prepares the persistent state storage.
 
 ![efi-tpm-clone.png](/img/v1.9/vm/efi-tpm-clone.png)
 
-:::note
-
-EFI and vTPM persistent state is stored separately from the volumes listed in `vm.Spec.Template.Spec.Volumes`. Harvester creates this storage only after the source VM has been started at least once. If the source VM has never been started, cloning a VM with EFI or vTPM persistent state can fail because the required source storage does not exist.
-
-:::
-
 :::caution
 
-Because the persistent state is copied from the source VM, guest-visible firmware identifiers such as the firmware UUID will be the same on the cloned VM. The cloned VM still has its own VM object identity in Harvester.
+EFI and vTPM persistent state is stored separately from the volumes listed in `spec.template.spec.volumes`. Harvester creates this storage only after the source virtual machine has been started at least once. If the source virtual machine has never been started, cloning a virtual machine with EFI or vTPM persistent state can fail because the required source storage does not exist.
+
+Because the persistent state is copied from the source virtual machine, guest-visible firmware identifiers such as the firmware UUID will be the same on the cloned virtual machine. The cloned virtual machine still has its own object identity in Harvester.
 
 :::

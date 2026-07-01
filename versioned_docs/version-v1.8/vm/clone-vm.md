@@ -19,22 +19,32 @@ _Available as of v1.1.0_
 
 VM can be cloned with/without data. This function doesn't need to take a VM snapshot or set up a backup target first.
 
-The cloned VM inherits the source VM's basic configuration. Before cloning, you can update settings such as the VM name, volume data cloning, and [run strategy](./create-vm.md#run-strategy).
+The cloned virtual machine inherits the source's basic configuration. You can choose whether to include the source's volume data, as well as customize the clone's name and [run strategy](./create-vm.md#run-strategy).
 
-## Clone VM with volume data
+## Clone a Virtual Machine with Volume Data
 
-1. On the `Virtual Machines` page, click `Clone` of the VM actions.
-2. Select a [run strategy](./create-vm.md#run-strategy). The cloned VM uses the source VM's run strategy by default.
-3. Set a new VM name and click `Create` to create a new VM.
-![clone-vm-with-data.png](/img/v1.8/vm/clone-vm-with-data.png)
+1. On the **Virtual Machines** screen, locate the target virtual machine and select **⋮ > Clone**.
+    ![clone-vm-with-data.png](/img/v1.8/vm/clone-vm-with-data.png)
 
-## Clone VM without volume data
+2. Specify a unique name for the cloned virtual machine.
 
-Cloning a VM without volume data creates a new VM with the same configuration as the source VM.
+3. Select a [run strategy](./create-vm.md#run-strategy).
+    The cloned virtual machine uses the source's run strategy by default.
 
-1. On the `Virtual Machines` page, click `Clone` of the VM actions.
-2. Clear the `clone volume data` checkbox.
-3. Select a [run strategy](./create-vm.md#run-strategy). The cloned VM uses the source VM's run strategy by default.
-4. Set a new VM name and click `Create` to create a new VM.
-![clone-vm-without-data.png](/img/v1.8/vm/clone-vm-without-data.png)
+4. Click **Create**.
+
+## Clone a Virtual Machine Without Volume Data
+
+Cloning a virtual machine without volume data creates a new virtual machine with the same configuration as the source virtual machine.
+
+1. On the **Virtual Machines** screen, locate the target virtual machine and select **⋮ > Clone**.
+    ![clone-vm-without-data.png](/img/v1.8/vm/clone-vm-without-data.png)
+2. Clear **Clone volume data**.
+
+3. Specify a unique name for the cloned virtual machine.
+
+4. Select a [run strategy](./create-vm.md#run-strategy).
+    The cloned virtual machine uses the source's run strategy by default.
+
+5. Click **Create**.
 ![clone-vm-without-data-config.png](/img/v1.8/vm/clone-vm-without-data-config.png)
