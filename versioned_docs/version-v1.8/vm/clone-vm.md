@@ -19,17 +19,32 @@ _Available as of v1.1.0_
 
 VM can be cloned with/without data. This function doesn't need to take a VM snapshot or set up a backup target first.
 
-## Clone VM with volume data
+The cloned virtual machine inherits the source's basic configuration. You can choose whether to include the source's volume data, as well as customize the clone's name and [run strategy](./create-vm.md#run-strategy).
 
-1. On the `Virtual Machines` page, click `Clone` of the VM actions.
-1. Set a new VM name and click `Create` to create a new VM.
-![clone-vm-with-data.png](/img/v1.2/vm/clone-vm-with-data.png)
+## Clone a Virtual Machine with Volume Data
 
-## Clone VM without volume data
+1. On the **Virtual Machines** screen, locate the target virtual machine and select **⋮ > Clone**.
+    ![clone-vm-with-data.png](/img/v1.8/vm/clone-vm-with-data.png)
 
-Cloning a VM without volume data creates a new VM with the same configuration as the source VM.
+2. Specify a unique name for the cloned virtual machine.
 
-1. On the `Virtual Machines` page, click `Clone` of the VM actions.
-1. Unclick the `clone volume data` checkbox.
-1. Set a new VM name and click `Create` to create a new VM.
-![clone-vm-without-data.png](/img/v1.2/vm/clone-vm-without-data.png)
+3. Select a [run strategy](./create-vm.md#run-strategy).
+    The cloned virtual machine uses the source's run strategy by default.
+
+4. Click **Create**.
+
+## Clone a Virtual Machine Without Volume Data
+
+Cloning a virtual machine without volume data creates a new virtual machine with the same configuration as the source virtual machine.
+
+1. On the **Virtual Machines** screen, locate the target virtual machine and select **⋮ > Clone**.
+    ![clone-vm-without-data.png](/img/v1.8/vm/clone-vm-without-data.png)
+2. Clear **Clone volume data**.
+
+3. Specify a unique name for the cloned virtual machine.
+
+4. Select a [run strategy](./create-vm.md#run-strategy).
+    The cloned virtual machine uses the source's run strategy by default.
+
+5. Click **Create**.
+![clone-vm-without-data-config.png](/img/v1.8/vm/clone-vm-without-data-config.png)
