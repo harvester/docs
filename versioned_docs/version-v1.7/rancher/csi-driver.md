@@ -323,6 +323,7 @@ RWX volumes currently only work with a dedicated storage network. [GitHub issue 
   allowVolumeExpansion: true
   reclaimPolicy: Delete
   volumeBindingMode: Immediate
+  migratable: false # Must be empty or set to `false` when using standard RWX filesystem volumes
   parameters:
     numberOfReplicas: "3"
     staleReplicaTimeout: "2880"
@@ -330,6 +331,12 @@ RWX volumes currently only work with a dedicated storage network. [GitHub issue 
     fsType: "ext4"
     nfsOptions: "vers=4.2,noresvport,softerr,timeo=600,retrans=5"
   ```
+
+  :::info important
+
+  To use standard RWX filesystem volumes, the `migratable` parameter must be empty or explicitly set to `false`.
+
+  :::
 
   ![](/img/v1.4/rancher/create-rwx-sc-host-cluster-01.png)
 
