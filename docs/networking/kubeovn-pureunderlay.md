@@ -22,7 +22,7 @@ All features that use Kube-OVN are considered experimental. For more information
 
 A pure underlay network allows virtual machines to connect directly to a physical Layer 2 network without overlay networking and the encapsulation overhead of technologies such as VXLAN or Geneve. Each virtual machine becomes a first-class member of the external network, communicating natively using standard Ethernet frames.
 
-In Harvester using KubeOVN, this is typically achieved by attaching VMs to a Provider Network, which maps a physical NIC (or bonded interface) on each host into the cluster. Traffic leaves the VM through the host's physical interface and reaches the external network without passing through an overlay tunnel.
+In Harvester, this direct connectivity is achieved by attaching virtual machines to a provider network, which maps a physical NIC or bonded interface on each host to the cluster. Traffic leaves the virtual machine through the host's physical interface and reaches the external network immediately, bypassing overlay tunnels completely.
 
 ##  Why Pure underlay ?
 
