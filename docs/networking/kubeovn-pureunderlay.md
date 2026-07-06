@@ -26,7 +26,7 @@ In Harvester, this direct connectivity is achieved by attaching virtual machines
 
 ## Kube-OVN Underlay Mode
 
-While traditional VLAN networking already enables VMs to communicate directly with the physical network, Kube-OVN's Pure Underlay extends this capability by integrating native Layer 2 connectivity into the Kube-OVN networking model. This allows workloads to leverage existing underlay infrastructure while coexisting seamlessly with overlay networks in the same Kubernetes cluster.
+While traditional VLAN networking already enables virtual machines to communicate directly with the physical infrastructure, Kube-OVN's _Underlay_ mode extends this capability by embedding native Layer 2 connectivity directly into the OVN networking control plane. This deep integration allows workloads to leverage your existing physical underlay infrastructure while coexisting seamlessly with standard overlay networks inside the same Kubernetes cluster.
 
 Also by integrating underlay networking of Kube-OVN into SUSE Virtualization, VMs connected to the physical network can still benefit from Kube-OVN's micro-segmentation capabilities, including Subnet ACLs and Network Policies. This enables fine-grained traffic control between workloads.
 
