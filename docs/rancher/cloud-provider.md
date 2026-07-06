@@ -72,7 +72,7 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
 
 ### Manually Deploying to the RKE2 Cluster
 
-1. Follow [Generate the cloud-config for Harvester Cloud Provider](#generate-the-cloud-config-for-harvester-cloud-provider).
+1. [Generate the cloud-config for the Harvester Cloud Provider](#generate-the-cloud-config-for-harvester-cloud-provider).
 
 1. On the RKE2 cluster creation page, go to the **Cluster Configuration** screen and set the value of **Cloud Provider** to **External**.
 
@@ -118,7 +118,7 @@ In the Rancher UI, you can create a `Custom` RKE2 cluster with **Harvester Cloud
 
 ![](/img/v1.9/rancher/guest-cluster-custom.png)
 
-1. Follow [Generate the cloud-config for Harvester Cloud Provider](#generate-the-cloud-config-for-harvester-cloud-provider).
+1. [Generate the cloud-config for the Harvester Cloud Provider](#generate-the-cloud-config-for-harvester-cloud-provider).
 
 1. Create a VM in the Harvester cluster with the following settings:
 
@@ -167,7 +167,7 @@ In the Rancher UI, you can create a `Custom` RKE2 cluster with **Harvester Cloud
 
 When spinning up a K3s cluster using the Harvester node driver, you can perform the following steps to deploy the harvester cloud provider:
 
-1. Follow [Generate the cloud-config for Harvester Cloud Provider](#generate-the-cloud-config-for-harvester-cloud-provider).
+1. [Generate the cloud-config for the Harvester Cloud Provider](#generate-the-cloud-config-for-harvester-cloud-provider).
 
 2. Copy and paste the `cloud-init user data` content to **Machine Pools >Show Advanced > User Data**.
    ![](/img/v1.2/rancher/cloud-config-userdata.png)
@@ -220,37 +220,40 @@ With these settings in place a K3s cluster should provision successfully while u
 
 ### Generate the cloud-config for Harvester Cloud Provider
 
-The **Harvester Cloud Provider** requires a cloud-config file to connect to the remote Harvester cluster (e.g., to query VM information or allocate load balancers). Follow the steps below to generate this file.
+The **Harvester Cloud Provider** requires a cloud-config file to connect to the remote Harvester cluster (for example, to query virtual machine information or allocate load balancers). You can generate this file using either the API endpoint or a bash script.
 
-:::note
+:::info important
 
-We highly recommend using the **Via API Endpoint** method. The **Via Bash Script** method is considered legacy and will be deprecated in a future release.
+Support for the bash script method will be deprecated in a future release. Use the API endpoint to ensure long-term compatibility.
 
 :::
 
-#### Via API Endpoint
+<Tabs>
+<TabItem value="ui" label="API" default>
 
 _Available as of v1.9.0_
 
-You can `POST` and `GET` via the Harvester API endpoint `/v1/harvester/kubeconfig` using an admin bearer token; set `outputFormat=yaml` to retrieve the `cloud-init user data` (omit it to receive the raw kubeconfig).
+You can send `POST` and `GET` requests to the Harvester API endpoint `/v1/harvester/kubeconfig` using an admin bearer token.
 
-##### Request Parameters
+#### Request Parameters
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `namespace` | String | The target Kubernetes namespace (e.g., `gc-test`). |
-| `serviceAccountName` | String | The service account name (e.g., `gc4`). |
-| `clusterRoleName` | String | *(Optional)* ClusterRole to bind to the service account (e.g., `harvesterhci.io:cloudprovider`). |
-| `outputFormat` | String | The desired output format (e.g., `yaml`). |
+| Parameter | Type | Description | Example |
+| :--- | :--- | :--- | :--- |
+| `namespace` | String | Target Kubernetes namespace | `gc-test` |
+| `serviceAccountName` | String | Service account name | `gc4` |
+| `clusterRoleName` | String | ClusterRole to bind to the service account (optional) | `harvesterhci.io:cloudprovider` (only supported value) |
+| `outputFormat` | String | Output format | `yaml` (only supported value) |
 
 :::note
 
-* **`clusterRoleName`**: Only supports `harvesterhci.io:cloudprovider` (which is also the default if left empty).
-* **`outputFormat`**: Supports `yaml`. Any other value (including empty) defaults to the legacy raw output.
+- `clusterRoleName`: Harvester uses `harvesterhci.io:cloudprovider` by default if this field is left empty.
+- `outputFormat`: Setting this to `yaml` retrieves the cloud-init user data. Specifying any other value or leaving the field empty returns the raw kubeconfig file.
 
 :::
 
-##### 1. POST Request
+#### `POST` Request
+
+Add `-k`/`--insecure` to the `curl` command only if your Harvester endpoint uses a self-signed certificate.
 
 ```bash
  curl -X POST \
@@ -260,13 +263,7 @@ You can `POST` and `GET` via the Harvester API endpoint `/v1/harvester/kubeconfi
   "https://<vip>/v1/harvester/kubeconfig"
 ```
 
-:::note
-
-Add `-k`/`--insecure` to the `curl` command only if your Harvester endpoint uses a self-signed certificate.
-
-:::
-
-**Response:**
+#### `POST` Response
 
 ```yaml
 ########## cloud-init user data ############
@@ -283,9 +280,9 @@ write_files:
   permissions: '0644'
 ```
 
-##### 2. GET Request
+#### `GET` Request
 
-*(Note: Ensure a single `&` is used to separate query parameters)*
+Use a single ampersand (`&`) to separate query parameters.
 
 ```bash
 curl -X GET \
@@ -293,7 +290,9 @@ curl -X GET \
   "https://<vip>/v1/harvester/kubeconfig?namespace=gc-test&serviceAccountName=gc4&outputFormat=yaml"
 ```
 
-**Response:**
+#### `GET` Response
+
+The API response automatically includes cloud-init configurations for both legacy and new paths. Before applying this configuration, remove the block that does not apply to your environment.
 
 ```yaml
 ########## cloud-init user data ############
@@ -310,28 +309,25 @@ write_files:
   permissions: '0644'
 ```
 
-:::note
+</TabItem>
+<TabItem value="api" label="Bash Script">
 
-The API response contains the cloud-init configuration for both the legacy and new paths. Make sure to remove the section that does not apply to your environment.
+1. Generate the cloud-config data using the `generate_addon.sh` script.
 
-:::
+    ```bash
+    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
+    ```
 
-#### Via Bash Script
+1. Copy the generated data to every node.
 
-1.  Generate the cloud-config data using the `generate_addon.sh` script.
-2.  Place the generated data on every custom node.
-    * **Legacy Path:** `/etc/kubernetes/cloud-config`
-    * **RKE2 Default Path (v1.9.0+):** `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`
-
-```bash
-curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
-```
+    - Legacy path: `/etc/kubernetes/cloud-config`
+    - RKE2 default path (v1.9.0 and later): `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`
 
 :::note
 
-The script depends on `kubectl` and `jq` when operating the Harvester cluster, and functions only when given access to the `Harvester Cluster` kubeconfig file.
+The script requires `kubectl` and `jq` to interact with the Harvester cluster, and functions only when given access to the Harvester cluster's kubeconfig file.
 
-You can find the `kubeconfig` file in one of the Harvester management nodes in the `/etc/rancher/rke2/rke2.yaml` path. The server IP must be replaced with the VIP address.
+You can find the kubeconfig file on any Harvester management node at the following path: `/etc/rancher/rke2/rke2.yaml`. Before using the kubeconfig file, you must replace the IP address in the `server: field` with your cluster's VIP address.
 
 Example of content:
 
@@ -384,13 +380,18 @@ write_files:
 
 :::note
 
-In newer RKE2 versions (e.g. v1.33.11), the cloud-config path defaults to `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`. Ensure `cloudConfigPath` matches the file location you write to:
+In newer RKE2 versions (such as v1.33.11), the default cloud-config path is `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`. You must ensure that the `cloudConfigPath` value matches the exact file location you write to.
 
-- If you use the RKE2 default path, change the `write_files` entry above to `path: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config`.
+Depending on your setup, choose one of the following approaches:
 
-- If you keep `path: /etc/kubernetes/cloud-config`, set `.spec.rkeConfig.chartValues.harvester-cloud-provider.cloudConfigPath` to `/etc/kubernetes/cloud-config` in the Rancher UI.
+- **Use the RKE2 default path**: In the `write_files` entry in your cloud-init configuration, change the value of `path` to `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`.
+
+- **Keep the legacy path**: In the Rancher UI, set `.spec.rkeConfig.chartValues.harvester-cloud-provider.cloudConfigPath` to `/etc/kubernetes/cloud-config`.
 
 :::
+
+</TabItem>
+</Tabs>
 
 ## Upgrade Cloud Provider
 

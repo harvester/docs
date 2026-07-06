@@ -62,7 +62,7 @@ Rancher allows you to import existing Harvester VMs in which you installed Kuber
         permissions: '0644'
     ```
 
-1. Follow [Generate the cloud-config for Harvester Cloud Provider](./cloud-provider.md#generate-the-cloud-config-for-harvester-cloud-provider).
+1. [Generate the cloud-config for the Harvester Cloud Provider](#generate-the-cloud-config-for-harvester-cloud-provider).
 
 1. Create VM with two cloud-config files.
 
