@@ -668,3 +668,48 @@ If the `status` field's value is `False`, you must manually rotate the certifica
     ```
     systemctl restart rancher-system-agent
     ```
+
+## Update /etc/hosts Configuration
+
+Harvester writes `127.0.0.1 localhost {hostname}` into the `/etc/hosts` file by default. Because the specific hostname is mapped directly to the loopback address, commands such as `hostname -f` may return unexpected results.
+
+To resolve this, you can use a CloudInit resource to automatically configure the `/etc/hosts` file with the correct host mapping. You can customize the following template to meet your specific requirements.
+
+```yaml
+apiVersion: node.harvesterhci.io/v1beta1
+kind: CloudInit
+metadata:
+  name: fix-hostname-hosts
+spec:
+  matchSelector: {}
+  paused: false
+  filename: 99_fix_hostname.yaml
+  contents: |
+    stages:
+      network.after:
+        - name: fix-hostname-hosts
+          commands:
+            - |
+              FQDN=$(cat /etc/hostname | tr -d '[:space:]')
+              SHORT=$(echo "${FQDN}" | cut -d. -f1)
+              NODE_IP=$(ip addr show mgmt-br 2>/dev/null | awk '/inet /{print $2}' | cut -d/ -f1 | head -1)
+              [ -z "$NODE_IP" ] && exit 0
+              sed -i 's/^127\.0\.0\.1.*/127.0.0.1 localhost/' /etc/hosts
+              awk -v fqdn="$FQDN" -v short="$SHORT" '{for(i=2;i<=NF;i++) if($i==fqdn || $i==short) next}1' /etc/hosts > /tmp/hosts.tmp && mv /tmp/hosts.tmp /etc/hosts
+              echo "${NODE_IP} ${FQDN} ${SHORT}" >> /etc/hosts
+```
+
+The following template performs these actions:
+
+1. Retrieves the fully qualified domain name (FQDN) and extracts the short hostname
+1. Retrieves the node's IP address
+1. Replaces the default `127.0.0.1 localhost {hostname}` entry with `127.0.0.1 localhost`
+1. Adds a new entry in the format: `{node IP} {FQDN} {short hostname}`
+
+The template uses the `network.after` stage, which applies changes after the network initializes. A reboot is normally required to ensure these changes are safely applied to all active system processes. However, if immediate node downtime is not possible, or if you can tolerate a brief delay, you can choose an alternative deployment method.
+
+| Deployment option | CloudInit Stage | Operational Impact | Required Action | Behavior |
+| --- | --- | --- | --- | --- |
+| Standard boot | `network.after` | Reboot required. | Ensure the resource's filename will not override other configurations in this stage. | CloudInit files are executed in alphabetical order. |
+| Live deployment | `network.after` | No immediate reboot required. | Apply the resource and then manually run the script commands on the node. | The configuration is immediately applied to the live runtime and persists across future reboots. |
+| Periodic reconciliation | `reconcile` | No reboot or manual action required. | None | The script automatically runs 5 minutes after boot and repeats every 60 minutes. |
