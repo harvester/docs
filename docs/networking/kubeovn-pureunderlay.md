@@ -1,7 +1,7 @@
 ---
 sidebar_position: 12
-sidebar_label: Kube-OVN Pure Underlay
-title: "Pure Underlay Networking Using Kube-OVN Provider Networks"
+sidebar_label: Pure Underlay Networking
+title: "Pure Underlay Networking"
 keywords:
 - Harvester
 - networking
