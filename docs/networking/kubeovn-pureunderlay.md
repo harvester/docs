@@ -24,7 +24,7 @@ A pure underlay network allows virtual machines to connect directly to a physica
 
 In Harvester, this direct connectivity is achieved by attaching virtual machines to a provider network, which maps a physical NIC or bonded interface on each host to the cluster. Traffic leaves the virtual machine through the host's physical interface and reaches the external network immediately, bypassing overlay tunnels completely.
 
-##  Why Pure underlay ?
+## Kube-OVN Underlay Mode
 
 While traditional VLAN networking already enables VMs to communicate directly with the physical network, Kube-OVN's Pure Underlay extends this capability by integrating native Layer 2 connectivity into the Kube-OVN networking model. This allows workloads to leverage existing underlay infrastructure while coexisting seamlessly with overlay networks in the same Kubernetes cluster.
 
