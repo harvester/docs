@@ -218,6 +218,12 @@ The migration process runs in peer-to-peer mode, which means that the libvirt da
 
 By default, the keepalive interval is set to 5 seconds, and the retry count is set to 5. Given these default values, the migration process is aborted if the connection is inactive for 30 seconds. However, the migration may fail earlier or later, depending on the actual cluster conditions.
 
+#### Overlay VM Migration
+
+Starting with v1.9.0, virtual machines using Kube-OVN overlay networks can be live migrated with less than 0.5 seconds of network traffic disruption.
+
+For information about migrating overlay virtual machines, see [Starting a Migration](#starting-a-migration). For architectural details, see [Live Migration](https://kube-ovn.readthedocs.io/zh-cn/stable/en/kubevirt/live-migration/) in the Kube-OVN documentation.
+
 ## Known Issues
 
 * [Issue #10221](https://github.com/harvester/harvester/issues/10221): Failed to migrate a VM after ejecting an image from a CD-ROM device that appears before `Container` volumes.

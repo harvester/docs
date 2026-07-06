@@ -76,6 +76,44 @@ Each IP pool will have a specific range, and you can specify the corresponding r
 
 :::
 
+### Guest Cluster Load Balancer Network Resolution
+
+When a user or application creates a `LoadBalancer` service inside a guest cluster, the `cloud-provider-harvester` sends a creation request to the Harvester API server in the management cluster.
+
+Before the resource is persisted, the Harvester load balancer mutating **webhook** is invoked to automatically resolve the correct network annotation. Once this synchronous resolution phase is complete, the object is saved, and control is handed over to the **backend controller** to asynchronously handle IP pool matching and allocation.
+
+#### Network Resolution Workflow
+
+**Legacy Behavior (Harvester v1.8 and earlier):**
+
+During the automatic resolution phase, the webhook performs a basic network lookup:
+* It fetches all VMIs with the label `harvesterhci.io/creator:docker-machine-driver-harvester` from the load balancer's namespace.
+* It filters for VMIs that use the `cluster-name` as a prefix.
+* It selects the first multus-network name.
+
+
+**Current Behavior (Harvester v1.9.0 and later):**
+
+The webhook automatically resolves the network by evaluating the following conditions in sequential order before handing the resource off to the backend controller:
+
+1.  **Existing Load Balancer Annotation**
+    If the `loadbalancer.harvesterhci.io/network` annotation is already present and non-empty, its value is used directly.
+
+1.  **Management Network Annotation**
+    If the `cloudprovider.harvesterhci.io/managementNetwork` annotation is present and non-empty, its value is used.
+
+1.  **Cluster Name Label Lookup**
+    The webhook fetches all VMIs matching the label `guestcluster.harvesterhci.io/name: <cluster-name>` from the load balancer's namespace. It then selects the first multus-network name.
+
+1.  **Legacy Driver Label Fallback**
+    The webhook fetches all VMIs with the label `harvesterhci.io/creator:docker-machine-driver-harvester` from the load balancer's namespace, filters for VMIs using `cluster-name` as a prefix, and selects the first multus-network name.
+
+    :::note
+
+    This final step serves as a fallback path to maintain backward compatibility with guest clusters deployed using Harvester v1.8 and earlier versions.
+
+    :::
+
 ### Examples
 - **Example 1:** You wish to set up an IP pool within the range `192.168.100.0/24` for the `default` namespace. In this scenario, all load balancers within the `default` namespace will receive an IP address from this designated IP pool:
   
