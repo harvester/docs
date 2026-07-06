@@ -84,6 +84,43 @@ The Longhorn V2 Data Engine is only available for newly created volumes and imag
 
   Volumes and images created using the new StorageClass are backed by the Longhorn V2 Data Engine.
 
+## Known Issues
+
+### I/O Operations May Become Stuck on ARM Platforms
+
+On ARM64 platforms, Longhorn V2 disks that use the SPDK NVMe bdev driver can experience stalled I/O operations. For more information, see issue [#10710](https://github.com/harvester/harvester/issues/10710).
+
+To work around the issue, perform the following steps:
+
+1. [Remove the affected Longhorn V2 disk](../host/host.md#remove-disks).
+
+1. [Add the Longhorn V2 disk again](../host/host.md#add-additional-disks).
+
+1. Verify that the workaround was successful.
+
+    ```
+    kubectl -n longhorn-system get blockdevices.harvesterhci.io -o yaml
+    ```
+
+    The matching `BlockDevice` custom resource should have the following values:
+
+    ```
+    spec:
+      provisioner:
+        longhorn:
+          diskDriver: aio
+          engineVersion: LonghornV2
+    status:
+      provisionPhase: Provisioned
+      state: Active
+    ```
+
+:::note
+
+Starting with Harvester v1.9.0, the default disk driver for Longhorn V2 volumes is changed to `AIO`. Removing and then re-adding the affected disk forces Harvester to use this new default driver and resolves the stalled I/O operations on ARM64 platforms.
+
+:::
+
 ## Upgrading from Harvester v1.4.x
 
 In Harvester v1.4 (which uses Longhorn v1.7), V2 volumes did not support live migration, nor could the V2 data engine be used for virtual machine images, which meant VM boot volumes could not use the V2 Data Engine.
