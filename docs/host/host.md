@@ -671,28 +671,9 @@ If the `status` field's value is `False`, you must manually rotate the certifica
 
 ## Update /etc/hosts Configuration
 
-By default, Harvester writes `127.0.0.1 localhost {hostname}` in `/etc/hosts`. This configuration can cause the `hostname -f` command to return unexpected results.
+Harvester writes `127.0.0.1 localhost {hostname}` into the `/etc/hosts` file by default. Because the specific hostname is mapped directly to the loopback address, commands such as `hostname -f` may return unexpected results.
 
-To resolve this issue, you can use a CloudInit resource to automatically configure the `/etc/hosts` file with the correct host mapping.
-
-The following template performs these actions:
-
-1. Retrieves the fully qualified domain name (FQDN) and extracts the short hostname
-1. Retrieves the node's IP address
-1. Replaces the default `127.0.0.1 localhost {hostname}` entry with `127.0.0.1 localhost`
-1. Adds a new entry in the format: `{node IP} {FQDN} {short hostname}`
-
-:::note
-
-This template uses the `network.after` stage, which requires a reboot. If you have other custom CloudInit resources using the same stage, ensure they don't conflict. CloudInit files are executed in alphabetical order by filename. 
-
-Alternatively, you can use the `reconcile` stage, which runs 5 minutes after boot and then repeats every 60 minutes.
-
-If you don't want a reboot, you can create a CloudInit CRD first, then run the commands by yourself. This ensures that the runtime configuration is changed and preserved in the next reboot.
-
-:::
-
-You can customize this template to meet your specific requirements.
+To resolve this, you can use a CloudInit resource to automatically configure the `/etc/hosts` file with the correct host mapping. You can customize the following template to meet your specific requirements.
 
 ```yaml
 apiVersion: node.harvesterhci.io/v1beta1
@@ -717,3 +698,18 @@ spec:
               awk -v fqdn="$FQDN" -v short="$SHORT" '{for(i=2;i<=NF;i++) if($i==fqdn || $i==short) next}1' /etc/hosts > /tmp/hosts.tmp && mv /tmp/hosts.tmp /etc/hosts
               echo "${NODE_IP} ${FQDN} ${SHORT}" >> /etc/hosts
 ```
+
+The following template performs these actions:
+
+1. Retrieves the fully qualified domain name (FQDN) and extracts the short hostname
+1. Retrieves the node's IP address
+1. Replaces the default `127.0.0.1 localhost {hostname}` entry with `127.0.0.1 localhost`
+1. Adds a new entry in the format: `{node IP} {FQDN} {short hostname}`
+
+The template uses the `network.after` stage, which applies changes after the network initializes. A reboot is normally required to ensure these changes are safely applied to all active system processes. However, if immediate node downtime is not possible, or if you can tolerate a brief delay, you can choose an alternative deployment method.
+
+| Deployment option | CloudInit Stage | Operational Impact | Required Action | Behavior |
+| --- | --- | --- | --- | --- |
+| Standard boot | `network.after` | Reboot required. | Ensure the resource's filename will not override other configurations in this stage. | CloudInit files are executed in alphabetical order. |
+| Live deployment | `network.after` | No immediate reboot required. | Apply the resource and then manually run the script commands on the node. | The configuration is immediately applied to the live runtime and persists across future reboots. |
+| Periodic reconciliation | `reconcile` | No reboot or manual action required. | None | The script automatically runs 5 minutes after boot and repeats every 60 minutes. |
