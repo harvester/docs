@@ -62,47 +62,7 @@ Rancher allows you to import existing Harvester VMs in which you installed Kuber
         permissions: '0644'
     ```
 
-1. Generate the cloud-provider cloud-config using the [generate_addon.sh](https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh) script, which is available in the [harvester/cloud-provider-harvester](https://github.com/harvester/cloud-provider-harvester) repository.
-
-    Example:
-
-    ```shell
-    ./generate_addon.sh <serviceaccount name> <namespace>
-    ```
-
-    The generated output will be similar to the following one:
-    The output will look as follows:
-
-    ```yaml
-    ########## cloud config ############
-    apiVersion: v1
-    clusters:
-    - cluster:
-        certificate-authority-data: <CACERT>
-        server: https://HARVESTER-ENDPOINT/k8s/clusters/local
-      name: local
-    contexts:
-    - context:
-        cluster: local
-        namespace: default
-        user: harvester-cloud-provider-default-local
-      name: harvester-cloud-provider-default-local
-    current-context: harvester-cloud-provider-default-local
-    kind: Config
-    preferences: {}
-    users:
-    - name: harvester-cloud-provider-default-local
-      user:
-        token: <TOKEN>
-
-    ########## cloud-init user data ############
-    write_files:
-    - encoding: b64
-      content: <CONTENT>
-      owner: root:root
-      path: /etc/kubernetes/cloud-config
-      permissions: '0644'
-    ```
+1. [Generate the cloud-config for the Harvester Cloud Provider](./cloud-provider.md#generate-the-cloud-config-for-harvester-cloud-provider).
 
 1. Create VM with two cloud-config files.
 
