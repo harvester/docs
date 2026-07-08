@@ -54,7 +54,7 @@ Furthermore, integrating Kube-OVN’s underlay capabilities into Harvester ensur
 
 1. Click **Create**.
 
-Refer [Provider Network Configuration](https://kubeovn.github.io/docs/v1.16.x/en/start/underlay/#create-providernetwork)
+For more information, see [Create Provider Network](https://kubeovn.github.io/docs/v1.16.x/en/start/underlay/#create-providernetwork) in the Kube-OVN documentation.
 
 #### Create a VLAN Network
 
