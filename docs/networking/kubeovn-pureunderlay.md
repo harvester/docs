@@ -76,9 +76,9 @@ For more information, see [Create Provider Network](https://kubeovn.github.io/do
 
 For more information, see [Create VLAN](https://kubeovn.github.io/docs/v1.16.x/en/start/underlay/#create-vlan) in the Kube-OVN documentation.
 
-#### Create an Overlay Network
+### Create an Overlay Network
 
-Follow [Create an Overlay Network](https://docs.harvesterhci.io/v1.9/networking/harvester-network#create-an-overlay-network) to create an Overlay Network.
+Follow the instructions in [Create an Overlay Network](./harvester-network.md#create-an-overlay-network).
 
 1. Select `kube-system` namespace
 
