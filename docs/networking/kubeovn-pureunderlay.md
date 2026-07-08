@@ -30,7 +30,7 @@ In Harvester, this direct connectivity is achieved by attaching virtual machines
 
 While traditional VLAN networking already enables virtual machines to communicate directly with the physical infrastructure, Kube-OVN's _Underlay_ mode extends this capability by embedding native Layer 2 connectivity directly into the OVN networking control plane. This deep integration allows workloads to leverage your existing physical underlay infrastructure while coexisting seamlessly with standard overlay networks inside the same Kubernetes cluster.
 
-Furthermore, integrating Kube-OVN’s underlay capabilities into Harvester ensures that virtual machines connected to the physical network do not lose their cloud-native security features. Workloads can still benefit from advanced micro-segmentation capabilities, including subnet ACLs and granular network policies, allowing you to maintain strict traffic control across both virtual and physical network boundaries.Use [Network Isolation](https://docs.harvesterhci.io/v1.9/networking/kubeovn-vm-isolation) to achieve microsegmentation of VMs using underlay Network.
+Furthermore, integrating Kube-OVN’s underlay capabilities into Harvester ensures that virtual machines connected to the physical network do not lose their cloud-native security features. Workloads can still benefit from advanced micro-segmentation capabilities, including [subnet ACLs and granular network policies](./kubeovn-vm-isolation.md), allowing you to maintain strict traffic control across both virtual and physical network boundaries.
 
 ## Underlay Installation
 
