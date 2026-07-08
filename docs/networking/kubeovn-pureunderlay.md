@@ -52,7 +52,7 @@ Furthermore, integrating Kube-OVN’s underlay capabilities into Harvester ensur
 
 1. (Optional) On the **Excluded Nodes** tab, select nodes that should not participate in this provider network (for example, nodes that are isolated for dedicated tasks).
 
-    ![](/img/pn.png)
+1. Click **Create**.
 
 Refer [Provider Network Configuration](https://kubeovn.github.io/docs/v1.16.x/en/start/underlay/#create-providernetwork)
 
