@@ -46,12 +46,11 @@ Furthermore, integrating Kube-OVN’s underlay capabilities into Harvester ensur
 
 1. On the **Interfaces** tab, configure the following settings:
 
-    - Select **Default Interface**. This is any physical or bond interface available on all the Harvester host.The provider network using this spans all nodes in the cluster.
-    - Select **Custom Interfaces**. (Optional). If the interface names are not same on all the nodes in the cluster, user provides specific interface name to nodename mapping.
-      - Interface Name
-      - Nodes
-    - Select **Excluded Nodes**. (Optional). These nodes are excluded from provider network configuration.
-      - Nodes
+    - **Default Interface**: Select a physical or bonded interface that is present on every host in your cluster. This interface acts as the main uplink connecting all nodes to the provider network.
+
+    - **Custom Interfaces**: (Optional) Configure a custom interface if your hosts do not have identical network interface names. You can manually map specific interface names to their corresponding nodes to ensure consistent network connectivity.
+
+1. (Optional) On the **Excluded Nodes** tab, select nodes that should not participate in this provider network (for example, nodes that are isolated for dedicated tasks).
 
     ![](/img/pn.png)
 
