@@ -72,7 +72,7 @@ For more information, see [Create Provider Network](https://kubeovn.github.io/do
 
     - **Provider Network**: Select the underlying provider network. You can map multiple VLANs to the same provider network to segregate traffic over the same physical infrastructure.
 
-    ![](/img/vlan2017.png)
+1. Click **Create**.
 
 Refer [VLAN Network Configuration](https://kubeovn.github.io/docs/v1.16.x/en/start/underlay/#create-vlan)
 
