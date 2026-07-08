@@ -56,16 +56,15 @@ Furthermore, integrating Kube-OVN’s underlay capabilities into Harvester ensur
 
 For more information, see [Create Provider Network](https://kubeovn.github.io/docs/v1.16.x/en/start/underlay/#create-providernetwork) in the Kube-OVN documentation.
 
-#### Create a VLAN Network
+### Create a VLAN Network
 
-1. Go to > **VLANs**.
+1. On the Harvester UI, go to **Underlay Networks > VLANs**.
 
-1. Select **Create**.
+    ![](/img/vlan2017.png)
 
-1. Configure the following settings:
+1. Click **Create**.
 
-    - Name
-    - Description (optional)
+1. Specify a unique name for the network.
 
 1. On the **Basics** tab, configure the following settings:
 
