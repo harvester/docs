@@ -74,7 +74,7 @@ For more information, see [Create Provider Network](https://kubeovn.github.io/do
 
 1. Click **Create**.
 
-Refer [VLAN Network Configuration](https://kubeovn.github.io/docs/v1.16.x/en/start/underlay/#create-vlan)
+For more information, see [Create VLAN](https://kubeovn.github.io/docs/v1.16.x/en/start/underlay/#create-vlan) in the Kube-OVN documentation.
 
 #### Create an Overlay Network
 
