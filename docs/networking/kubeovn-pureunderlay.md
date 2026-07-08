@@ -91,15 +91,17 @@ When setting up a pure underlay, the overlay network must use the following conf
 
 :::
 
-#### Create a Subnet in custom or default VPC
+### Create a Subnet in a VPC
 
-Follow [Create a Subnet](https://docs.harvesterhci.io/v1.8/networking/kubeovn-vpc/#subnet-settings)
+For descriptions of settings that you must configure, see [Subnet Settings](./kubeovn-vpc.md#subnet-settings).
 
-1. On the **Basics** tab, configure the following additional settings:
+![](/img/subnetexternal.png)
 
-    - **VLAN**. Name of the vlan resource configured for the Provider Network.
+:::info important
 
-     ![](/img/subnetexternal.png)
+When setting up a pure underlay, you must specify the name of the VLAN network that is mapped to the provider network.
+
+:::
 
 
 #### Create VMs attached to underlay network using `vswitchexternal`
