@@ -66,10 +66,11 @@ For more information, see [Create Provider Network](https://kubeovn.github.io/do
 
 1. Specify a unique name for the network.
 
-1. On the **Basics** tab, configure the following settings:
+1. On the **Basic** tab, configure the following settings:
 
-    - Select **VLAN ID**.VLAN ID/Tag, Kube-OVN will add this Vlan tag to traffic, if set 0, no tag is added. the vlan tag applies to a localnet port.
-    - Select **Provider Network**. The name of ProviderNetwork. Multiple VLAN can use a same ProviderNetwork.
+    - **VLAN ID**: Specify the VLAN tag number for this network. Traffic passing through this network will automatically be tagged with this ID. If you do not want traffic to be tagged, set the value to `0`.
+
+    - **Provider Network**: Select the underlying provider network. You can map multiple VLANs to the same provider network to segregate traffic over the same physical infrastructure.
 
     ![](/img/vlan2017.png)
 
