@@ -34,16 +34,15 @@ Furthermore, integrating Kube-OVN’s underlay capabilities into Harvester ensur
 
 ## Underlay Installation
 
-#### Create a Provider Network
+### Create a Provider Network
 
-1. Go to > **Underlay Networks**.
+1. On the Harvester UI, go to **Underlay Networks > Provider Networks**.
 
-1. Select **Create**.
+1. Click **Create**.
 
-1. Configure the following settings:
+    ![](/img/pn.png)
 
-    - Name
-    - Description (optional)
+1. Specify a unique name for the network.
 
 1. On the **Interfaces** tab, configure the following settings:
 
