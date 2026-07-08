@@ -80,14 +80,16 @@ For more information, see [Create VLAN](https://kubeovn.github.io/docs/v1.16.x/e
 
 Follow the instructions in [Create an Overlay Network](./harvester-network.md#create-an-overlay-network).
 
-1. Select `kube-system` namespace
+![](/img/vswitchexternal.png)
 
-1. On the **Basics** tab, configure the following additional settings:
+:::info important
 
-    - Select **OverlayNetwork**.
-    - Select **Network Interface Card** (`The NIC selected here must match the interface provided in Provider Network`)
+When setting up a pure underlay, the overlay network must use the following configuration:
 
-     ![](/img/vswitchexternal.png)
+- **Namespace**: Select `kube-system`.
+- **Network Interface Card**: Select the identical physical or bonded network interfaces that you assigned when configuring the provider network.
+
+:::
 
 #### Create a Subnet in custom or default VPC
 
