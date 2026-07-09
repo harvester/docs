@@ -103,6 +103,8 @@ When setting up a pure underlay, you must specify the name of the VLAN network t
 
 :::
 
+## Connecting Virtual Machines to the Underlay
 
-#### Create VMs attached to underlay network using `vswitchexternal`
-Refer [Create a VM](https://docs.harvesterhci.io/v1.9/vm/index#how-to-create-a-vm)
+You can create virtual machines and attach them directly to a VLAN Network mapped to the configured provider network. These virtual machines can communicate with other virtual machines on the same subnet and route traffic directly to external networks via the physical infrastructure.
+
+For more information, see [Create a Virtual Machine](../vm/create-vm.md#how-to-create-a-vm).
