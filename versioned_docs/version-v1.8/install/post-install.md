@@ -36,7 +36,6 @@ spec:
       network:
         - name: "disable password login"
           commands:
-            # Drop a native configuration piece straight into the drop-in directory
             - echo "PasswordAuthentication no" > /etc/ssh/sshd_config.d/99-disable-passwords.conf
             - echo "KbdInteractiveAuthentication no" >> /etc/ssh/sshd_config.d/99-disable-passwords.conf
             - systemctl restart sshd
