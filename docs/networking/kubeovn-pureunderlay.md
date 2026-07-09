@@ -32,7 +32,7 @@ While traditional VLAN networking already enables virtual machines to communicat
 
 Furthermore, integrating Kube-OVN’s underlay capabilities into Harvester ensures that virtual machines connected to the physical network do not lose their cloud-native security features. Workloads can still benefit from advanced micro-segmentation capabilities, including [subnet ACLs and granular network policies](./kubeovn-vm-isolation.md), allowing you to maintain strict traffic control across both virtual and physical network boundaries.
 
-## Underlay Installation
+## Underlay Configuration
 
 ### Create a Provider Network
 
