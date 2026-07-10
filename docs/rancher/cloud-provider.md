@@ -15,12 +15,30 @@ description: The Harvester cloud provider used by the guest cluster in Harvester
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/rancher/cloud-provider"/>
 </head>
 
-[RKE2](./node/rke2-cluster.md) clusters can be provisioned in Rancher using the built-in Harvester Node Driver. Harvester provides [load balancer](#load-balancer-support) and Harvester cluster [storage passthrough](./csi-driver.md) support to the guest Kubernetes cluster.
+## Introduction
+
+[RKE2](./node/rke2-cluster.md) clusters can be provisioned in Rancher using the built-in **Harvester Node Driver**. Harvester provides [load balancer](#load-balancer-support) and Harvester cluster [storage passthrough](./csi-driver.md) support to the guest Kubernetes cluster.
 
 In this page we will learn:
 
 - How to deploy the Harvester cloud provider in an RKE2 cluster.
 - How to use the [Harvester load balancer](#load-balancer-support).
+
+### Main Functionalities
+
+The Harvester cloud provider implements a subset of the `cloudprovider` interface defined by `k8s.io/cloud-provider`. 
+
+It supports the following core components:
+
+1.  **[Node/Instance Lifecycle Management](#instance-lifecycle-management):**
+
+    * Acts as the instance manager to dynamically discover and report node metadata, including node names, regions, zones, and internal/external IP addresses.
+
+        * *Note: This serves as a critical bootstrap component for the RKE2 cluster.*
+
+2.  **[Load Balancer Management](#load-balancer-support):**
+
+    * Provisions and configures load balancers automatically for Kubernetes `Service` objects of type `LoadBalancer`, routing external traffic efficiently to target nodes.
 
 ### Backward Compatibility Notice
 
@@ -409,6 +427,10 @@ The upgrade process for a [single-node guest cluster](../advanced/singlenodeclus
 For more information, see [this GitHub issue comment](https://github.com/harvester/harvester/issues/5348#issuecomment-2055453709). To address the issue, manually delete the old `harvester-cloud-provider` pod. You might need to do this multiple times until the new pod can be successfully scheduled.
 
 :::
+
+## Instance Lifecycle Management
+
+
 
 ## Load Balancer Support
 Once you've deployed the Harvester cloud provider, you can leverage the Kubernetes `LoadBalancer` service to expose a microservice within the guest cluster to the external world. Creating a Kubernetes `LoadBalancer` service assigns a dedicated Harvester load balancer to the service, and you can make adjustments through the `Add-on Config` within the Rancher UI.
