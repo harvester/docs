@@ -24,7 +24,7 @@ Creating [Windows VMs](../vm/create-windows-vm.md) on the Harvester UI involves 
 
 :::note
 
-Before creating virtual machines, review [Resource Overcommit](../vm/resource-overcommit.md) to confirm that the cluster's default CPU, memory, and storage allocation ratios match your workload requirements. The defaults suit dense general-purpose workloads but may be too aggressive for latency-sensitive or CPU-bound guests.
+Before creating virtual machines, review [Resource Overcommit](../vm/resource-overcommit.md) and verify that the cluster's default CPU, memory, and storage allocation ratios match your workload requirements. The default values suit dense, general-purpose workloads but may be too aggressive for latency-sensitive or CPU-bound guests.
 
 :::
 
