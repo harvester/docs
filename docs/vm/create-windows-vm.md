@@ -183,31 +183,37 @@ Windows guests benefit substantially from KubeVirt's Hyper-V TLFS (Top-Level Fun
 - Smooths out sustained-write throughput and reduces periodic stalls during large file copies.
 - Lowers per-interrupt scheduling overhead inside the guest.
 
-The enlightenments are not enabled by default in the VM creation form. To apply them, click **Edit as YAML** in the VM edit view and add the following to `.spec.template.spec.domain`:
+The enlightenments are _not_ enabled by default. To enable them, perform the following steps:
 
-```yaml
-features:
-  acpi: { enabled: true }
-  apic: { enabled: true }
-  smm:  { enabled: true }
-  hyperv:
-    relaxed:    { enabled: true }
-    vapic:      { enabled: true }
-    spinlocks:  { enabled: true, spinlocks: 8191 }
-    vpindex:    { enabled: true }
-    synic:      { enabled: true }
-    synictimer: { enabled: true }
-    ipi:        { enabled: true }
-    runtime:    { enabled: true }
-    reset:      { enabled: true }
-clock:
-  utc: {}
-  timer:
-    hpet:   { present: false }
-    hyperv: { present: true }
-    pit:    { tickPolicy: delay }
-    rtc:    { tickPolicy: catchup }
-```
+1. On the Harvester UI, go to **Virtual Machines**.
+
+1. Locate the target virtual machine, and then select **⋮ > Edit as YAML**.
+
+1. Add the following block to `.spec.template.spec.domain`:
+
+  ```yaml
+  features:
+    acpi: { enabled: true }
+    apic: { enabled: true }
+    smm:  { enabled: true }
+    hyperv:
+      relaxed:    { enabled: true }
+      vapic:      { enabled: true }
+      spinlocks:  { enabled: true, spinlocks: 8191 }
+      vpindex:    { enabled: true }
+      synic:      { enabled: true }
+      synictimer: { enabled: true }
+      ipi:        { enabled: true }
+      runtime:    { enabled: true }
+      reset:      { enabled: true }
+  clock:
+    utc: {}
+    timer:
+      hpet:   { present: false }
+      hyperv: { present: true }
+      pit:    { tickPolicy: delay }
+      rtc:    { tickPolicy: catchup }
+  ```
 
 1. Restart the virtual machine to apply the changes.
 
