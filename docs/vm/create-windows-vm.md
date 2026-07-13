@@ -177,11 +177,11 @@ For full instructions on how to install the VMDP guest driver and tools see the 
 
 ### Enable Hyper-V Enlightenments
 
-Windows guests benefit substantially from KubeVirt's Hyper-V TLFS (Top-Level Functional Specification) enlightenment set — paravirtualized interrupt delivery (SynIC), the Hyper-V synthetic timer with direct interrupts, TLB flush hypercalls, VAPIC, and the Hyper-V clock timer. Enabling them typically:
+Windows guests benefit significantly from KubeVirt's Hyper-V Top-Level Functional Specification (TLFS) enlightenment features. These include paravirtualized interrupt delivery (SynIC), the Hyper-V synthetic timer with direct interrupts, TLB flush hypercalls, VAPIC, and the Hyper-V clock timer. Enabling these features typically results in the following:
 
-- Reduces first-touch write allocation time on thin-provisioned storage.
-- Smooths out sustained-write throughput and reduces periodic stalls during large file copies.
-- Lowers per-interrupt scheduling overhead inside the guest.
+- Reduced initial write allocation time on thin-provisioned storage.
+- Stable throughput during sustained write operations and minimal periodic stalls during large file copies.
+- Lower per-interrupt scheduling overhead within the guest operating system.
 
 The enlightenments are not enabled by default in the VM creation form. To apply them, click **Edit as YAML** in the VM edit view and add the following to `.spec.template.spec.domain`:
 
