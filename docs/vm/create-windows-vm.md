@@ -183,31 +183,37 @@ Windows guests benefit significantly from KubeVirt's Hyper-V Top-Level Functiona
 - Stable throughput during sustained write operations and minimal periodic stalls during large file copies.
 - Lower per-interrupt scheduling overhead within the guest operating system.
 
-The enlightenments are not enabled by default in the VM creation form. To apply them, click **Edit as YAML** in the VM edit view and add the following to `.spec.template.spec.domain`:
+The enlightenments are _not_ enabled by default. To enable them, perform the following steps:
 
-```yaml
-features:
-  acpi: { enabled: true }
-  apic: { enabled: true }
-  smm:  { enabled: true }
-  hyperv:
-    relaxed:    { enabled: true }
-    vapic:      { enabled: true }
-    spinlocks:  { enabled: true, spinlocks: 8191 }
-    vpindex:    { enabled: true }
-    synic:      { enabled: true }
-    synictimer: { enabled: true }
-    ipi:        { enabled: true }
-    runtime:    { enabled: true }
-    reset:      { enabled: true }
-clock:
-  utc: {}
-  timer:
-    hpet:   { present: false }
-    hyperv: { present: true }
-    pit:    { tickPolicy: delay }
-    rtc:    { tickPolicy: catchup }
-```
+1. On the Harvester UI, go to **Virtual Machines**.
+
+1. Locate the target virtual machine, and then select **⋮ > Edit as YAML**.
+
+1. Add the following block to `.spec.template.spec.domain`:
+
+  ```yaml
+  features:
+    acpi: { enabled: true }
+    apic: { enabled: true }
+    smm:  { enabled: true }
+    hyperv:
+      relaxed:    { enabled: true }
+      vapic:      { enabled: true }
+      spinlocks:  { enabled: true, spinlocks: 8191 }
+      vpindex:    { enabled: true }
+      synic:      { enabled: true }
+      synictimer: { enabled: true }
+      ipi:        { enabled: true }
+      runtime:    { enabled: true }
+      reset:      { enabled: true }
+  clock:
+    utc: {}
+    timer:
+      hpet:   { present: false }
+      hyperv: { present: true }
+      pit:    { tickPolicy: delay }
+      rtc:    { tickPolicy: catchup }
+  ```
 
 Restart the VM for the changes to take effect. Verify from outside the guest:
 
