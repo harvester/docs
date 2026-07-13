@@ -215,11 +215,13 @@ The enlightenments are _not_ enabled by default. To enable them, perform the fol
       rtc:    { tickPolicy: catchup }
   ```
 
-Restart the VM for the changes to take effect. Verify from outside the guest:
+1. Restart the virtual machine to apply the changes.
 
-```
-kubectl get vmi <vm-name> -o json | jq '.spec.domain.features.hyperv'
-```
+1. Verify that the enlightenments are active from the cluster level.
+
+  ```
+  kubectl get vmi <vm-name> -o json | jq '.spec.domain.features.hyperv'
+  ```
 
 The configuration above matches the recommendation for "best balance between performance and stability" in the SUSE Support Knowledge Base article [Lower disk I/O performance in Windows 11 VMs compared to Linux guests on Harvester](https://support.scc.suse.com/s/kb/Lower-disk-I-O-performance-in-Windows-11-VMs-compared-to-Linux-guests-on-Harvester). 
 
