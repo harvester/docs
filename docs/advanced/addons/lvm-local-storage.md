@@ -116,16 +116,6 @@ You can only use one type of local volume in each volume group. If necessary, cr
 
     ![](/img/v1.4/csi-driver-lvm/create-lvm-sc-05.png)
 
-### Considerations: `striped` vs `dm-thin`
-
-Both volume group types are fully supported. The choice depends on how the workload will use snapshots and how the pool capacity will be shared.
-
-- **`striped`** is a good fit for workloads that mostly need direct volume performance across the physical devices in the volume group. Each logical volume gets its full requested capacity at provision time. Snapshots are provisioned as separate LVs sized to the origin's full capacity — a snapshot of a 100 GiB volume reserves an additional 100 GiB of volume group space at creation, regardless of how much data has actually been written to the origin.
-
-- **`dm-thin`** is a good fit for virtual machine workloads that take snapshots or clones, and for environments that want to over-provision pool capacity. Thin volumes consume physical space only as blocks are written to them, and snapshots are true copy-on-write at the thin-pool chunk level — a fresh snapshot of a 100 GiB volume adds effectively zero pool capacity at creation and only grows as changed blocks accumulate.
-
-If regular snapshots are expected, `dm-thin` is generally the right choice for VM workloads.
-
 For more information, see [StorageClass](../storageclass.md).
 
 ## Creating a Volume with LVM
