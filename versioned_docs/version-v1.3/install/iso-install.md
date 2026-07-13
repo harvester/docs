@@ -91,13 +91,15 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
 	![config-dns-server.png](/img/v1.2/install/config-dns-server.png)
 
-1. Configure the virtual IP (VIP) by selecting a `VIP Mode`. This VIP is used to access the cluster or for other nodes to join the cluster.
+1. (New cluster only) Configure the virtual IP (VIP) by selecting a `VIP Mode`. This VIP is used to access the cluster or for other nodes to join the cluster.
 
 	:::note
 	If using DHCP to configure the IP address, you need to configure a static MAC-to-IP address mapping on your DHCP server to have a persistent virtual IP (VIP), and the VIP must be unique.
 	:::
 
 	![config-virtual-ip.png](/img/v1.2/install/config-virtual-ip.png)
+
+1. (Joining pre-existing cluster only) Configure with URL from pre-existing Harvester Cluster Management URL. Must include http scheme (ex: `https://x.x.x.x` if using IPs). Management URLs can be found on the management node after bootup.
 
 1. Configure the `Cluster token`. This token is used for adding other nodes to the cluster.
 
