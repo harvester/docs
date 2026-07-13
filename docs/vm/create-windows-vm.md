@@ -221,7 +221,14 @@ Restart the VM for the changes to take effect. Verify from outside the guest:
 kubectl get vmi <vm-name> -o json | jq '.spec.domain.features.hyperv'
 ```
 
-The set above matches the "balanced set for performance and stability" recommended in the SUSE Support KB article [_Lower disk I/O performance in Windows 11 VMs compared to Linux guests on Harvester_](https://support.scc.suse.com/s/kb/Lower-disk-I-O-performance-in-Windows-11-VMs-compared-to-Linux-guests-on-Harvester). More aggressive enlightenments (`tlbflush`, `frequencies`, `reenlightenment`, or `synictimer` with `direct: true`) can be enabled per-VM when the cluster hardware supports them, but they may affect live-migration compatibility across nodes with different CPU generations — see the [KubeVirt Hyper-V enlightenments documentation](https://kubevirt.io/user-guide/compute/hyperv/) and the [SUSE Virtualization blog on tuning Windows VM performance](https://www.suse.com/c/tuning-windows-vm-performance-on-suse-virtualization/) for details.
+The configuration above matches the recommendation for "best balance between performance and stability" in the SUSE Support Knowledge Base article [Lower disk I/O performance in Windows 11 VMs compared to Linux guests on Harvester](https://support.scc.suse.com/s/kb/Lower-disk-I-O-performance-in-Windows-11-VMs-compared-to-Linux-guests-on-Harvester). 
+
+You can enable more aggressive enlightenments (such as `tlbflush`, `frequencies`, `reenlightenment`, or `synictimer` with `direct: true`) on individual virtual machines to improve their performance. However, these enlightenments have the following disadvantages:
+
+- Require explicit support from the underlying cluster hardware.
+- Can affect live-migration compatibility across cluster nodes that run on different CPU generations.
+
+For more information, see [HyperV optimizations](https://kubevirt.io/user-guide/user_workloads/guest_operating_system_information/#hyperv-optimizations) in the KubeVirt documentation and [Tuning Windows VM Performance on SUSE Virtualization](https://www.suse.com/c/tuning-windows-vm-performance-on-suse-virtualization/) in the SUSE blog.
 
 ## Known Issues
 
