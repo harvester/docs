@@ -213,9 +213,9 @@ When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass
   sudo lvchange --zero n <vgName>/<vgName>-thinpool
   ```
 
-  The change is fully reversible with `--zero y`.
+  You can fully reverse the change by running the command with `--zero y`.
 
-- **Pool metadata size.** LVM auto-sizes the thin-pool metadata LV at pool creation. For pools that will hold many snapshots or many thin volumes over time, extending the metadata proactively avoids running short later:
+- **Pool metadata size**: When the thin pool is created, LVM automatically sizes its metadata logical volume. Consider extending this volume proactively if you expect the pool to store a large number of snapshots or thin volumes over time. Doing so prevents the pool from running out of space and becoming unresponsive later.
 
   ```
   sudo lvextend --poolmetadatasize +1G <vgName>/<vgName>-thinpool
