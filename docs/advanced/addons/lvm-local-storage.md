@@ -205,7 +205,7 @@ Backup creation is currently not supported. This limitation will be addressed in
 
 ### Tuning the `dm-thin` Pool
 
-When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass, the driver creates an LVM thin-pool named `<vgName>-thinpool` at `-l 90%FREE` of the volume group. Two settings are worth knowing about:
+When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass, the driver creates an LVM thin pool named `<vgName>-thinpool` using `-l 90%FREE` (allocating 90% of the volume group's remaining free space). Consider tuning the following settings based on your workload demands:
 
 - **Chunk zeroing**: By default, the thin pool writes zeros to each newly allocated block chunk before exposing it to a write operation. On single-tenant clusters, you can disable chunk zeroing to significantly reduce write amplification during initial data allocations.
 
