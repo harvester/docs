@@ -98,7 +98,19 @@ You can only use one type of local volume in each volume group. If necessary, cr
 
       ![](/img/v1.4/csi-driver-lvm/create-lvm-sc-04.png)
 
-1. Click **Save**.
+    - **Volume Group Type**: Select a type based on how the workload uses snapshots and how pool capacity is allocated. Harvester supports the following options:
+    
+        - **striped**: Best suited for workloads requiring direct, high-performance volume access distributed across the physical devices in the volume group. Each logical volume is fully allocated its requested capacity at provisioning time. Snapshots are created as independent logical volumes sized to match the source volume's maximum capacity. For example, a snapshot of a 100 GiB volume reserves an additional 100 GiB of volume group space upon creation, regardless of the actual quantity of data written to the source..
+
+        - **dm-thin**: Best suited for virtual machine workloads that frequently use snapshots or clones, and for environments that require over-provisioned pool capacity. Thin-provisioned volumes consume physical space only as blocks are written. Snapshots leverage true copy-on-write functionality at the thin-pool chunk level. For example, a fresh snapshot of a 100 GiB volume consumes practically zero pool capacity at creation, only growing as modified blocks accumulate over time.
+
+        :::tip
+
+        Select **dm-thin** if you expect to create regular snapshots or scheduled backups. This option is generally optimal for standard virtual machine workloads because of its efficient space utilization.
+
+        :::
+
+        ![](/img/v1.4/csi-driver-lvm/create-lvm-sc-04.png)
 
 1. On the **Storage** screen, verify that the StorageClass was created and the correct provisioner was set.
 
