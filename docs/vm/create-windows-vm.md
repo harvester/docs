@@ -68,7 +68,7 @@ The `bootOrder` values need to be set with the installation image first. If you 
     2. `Type`: Select `disk`.
     3. `StorageClass`: You can use the default StorageClass `harvester-longhorn` or specify a custom one.
     4. `Size`: The value `32` is set by default. See the disk space requirements for [Windows Server](https://docs.microsoft.com/en-us/windows-server/get-started/hardware-requirements#storage-controller-and-disk-space-requirements) and [Windows 11](https://docs.microsoft.com/en-us/windows/whats-new/windows-11-requirements#hardware-requirements) before changing this value.
-    5. `Bus`: The value `VirtIO` is set by default. For Windows workloads that generate sustained writes (for example large file copies, database write-ahead logs, or backup targets), `SCSI` (virtio-scsi) generally performs better than `VirtIO` (virtio-blk) — it supports multiple queues and has a more efficient DISCARD path. `SATA` is a compatible fallback for scenarios that cannot load paravirtualized drivers at boot time.
+    5. `Bus`: The default value is `VirtIO`. For Windows workloads that generate sustained writes (such as large file copies, database write-ahead logs, and backup targets), `SCSI` (`virtio-scsi`) generally outperforms `VirtIO` (`virtio-blk`) because it supports multiple queues and uses a more efficient `DISCARD` path. `SATA` is a secondary option for scenarios where paravirtualized drivers cannot be loaded at boot time.
 3. The **third volume** is a `Container` with the following values:
     1. `Name`: The value `virtio-container-disk` is set by default. You can keep it or change it.
     2. `Type`: Select `cd-rom`.
