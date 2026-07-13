@@ -221,9 +221,9 @@ When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass
   sudo lvextend --poolmetadatasize +1G <vgName>/<vgName>-thinpool
   ```
 
-### Choosing a VM Disk Bus
+### Choosing a Virtual Machine Disk Bus
 
-When attaching an LVM CSI PersistentVolumeClaim to a VirtualMachine, `virtio-scsi` (`bus: scsi`) generally performs better than the default `virtio-blk` (`bus: virtio`) for sustained-write workloads on thin-provisioned pools, particularly on RAID-backed storage. `virtio-scsi` supports multiple queues and has a more efficient DISCARD path.
+When attaching an LVM CSI PersistentVolumeClaim to a VirtualMachine, `virtio-scsi` (`bus: scsi`) generally outperforms the default `virtio-blk` (`bus: virtio`) for sustained-write workloads on thin-provisioned pools, particularly on RAID-backed storage. `virtio-scsi` performs better because it supports multiple queues and uses a more efficient DISCARD path.
 
 ### Coexistence with Longhorn v2 Block-Mode Disks
 
