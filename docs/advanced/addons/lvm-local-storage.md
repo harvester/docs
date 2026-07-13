@@ -228,4 +228,4 @@ devices {
 }
 ```
 
-On Harvester's immutable OS, persist the change through an `/oem/*.yaml` cloud-config file so it survives reboots. For background, see [harvester/harvester#11098](https://github.com/harvester/harvester/issues/11098).
+Because Harvester's operating system is immutable, you must persist this change through an `/oem/*.yaml` cloud-config file to ensure it survives system reboots and upgrades.For more information, see issue [#11098](https://github.com/harvester/harvester/issues/11098).
