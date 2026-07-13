@@ -227,7 +227,7 @@ When attaching an LVM CSI PersistentVolumeClaim to a VirtualMachine, `virtio-scs
 
 ### Coexistence with Longhorn v2 Block-Mode Disks
 
-If the same node hosts a Longhorn v2 disk in block mode, the underlying device is held exclusively by the SPDK instance manager. Adding that device to the LVM `global_filter` prevents LVM's device scan from attempting to open it. Example, in `/etc/lvm/lvmlocal.conf`:
+If the same node hosts a Longhorn V2 disk in block mode, the underlying device is held exclusively by the SPDK Instance Manager. You can add this device to the LVM `global_filter` to exclude it from LVM device scans and prevent resource conflicts.
 
 ```
 devices {
