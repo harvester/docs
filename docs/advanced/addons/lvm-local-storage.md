@@ -197,7 +197,34 @@ Backup creation is currently not supported. This limitation will be addressed in
 
 When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass, the driver creates an LVM thin pool named `<vgName>-thinpool` using `-l 90%FREE` (allocating 90% of the volume group's remaining free space). Consider tuning the following settings based on your workload demands:
 
+- **Chunk size**: The chunk size determines the smallest unit of physical space that a thin pool allocates in response to a write. A write to a previously-unallocated region always allocates a full chunk, so small random writes to virgin space against a large chunk size cause severe write amplification (a 4 KiB write against a 16 MiB chunk allocates 16 MiB of pool space). When you install the harvester-csi-driver-lvm add-on version 0.4.0 or later, the default StorageClass sets `chunkSize: "512K"`, which matches [LVM's upstream `performance` policy seed](https://github.com/lvmteam/lvm2/blob/master/lib/config/defaults.h) and the [Linux kernel dm-thin admin guide's general-purpose recommendation](https://docs.kernel.org/admin-guide/device-mapper/thin-provisioning.html), and comfortably supports thin pools up to 128 TB.
+
+  :::warning
+
+  Chunk size cannot be changed after the thin pool is created. The value must be chosen before the first PersistentVolumeClaim is created against the StorageClass. Reducing chunk size on an existing pool requires evacuating all volumes, destroying the pool, recreating it with the new chunk size, and restoring the volumes.
+
+  :::
+
+  Override the default with the `chunkSize` parameter on the StorageClass. Common values:
+
+  | Value | When to use |
+  |---|---|
+  | `128K` | Snapshot-heavy tenants (halves copy-on-write cost per touched region) |
+  | `512K` | **Default** — general-purpose VM workloads on pools up to 128 TB |
+  | `1M` | Pools larger than 128 TB, or bulk sequential-write workloads |
+
+  Never exceed `2M`. Larger chunks trigger disproportionate copy-on-write costs for snapshots, as documented in the [Red Hat Gluster admin guide](https://docs.redhat.com/en/documentation/red_hat_gluster_storage/3.5/html/administration_guide/chap-configuring_red_hat_storage_for_enhancing_performance). If you rely on LVM's built-in auto-selection instead of setting `chunkSize` explicitly, LVM chooses the chunk size based on the pool size to keep metadata bounded, which for multi-TB pools produces 8–16 MiB chunks — appropriate for metadata sizing but often not for random-write performance.
+
+  Verify the effective chunk size of a live pool:
+
+  ```
+  sudo lvs -o vg_name,lv_name,chunk_size,zero <vgName>/<vgName>-thinpool
+  sudo dmsetup table <vgName>-<vgName>--thinpool-tpool
+  ```
+
 - **Chunk zeroing**: By default, the thin pool writes zeros to each newly allocated block chunk before exposing it to a write operation. On single-tenant clusters, you can disable chunk zeroing to significantly reduce write amplification during initial data allocations.
+
+  Set `zeroBlocks: "false"` on the StorageClass at pool creation time, or apply it to an existing pool with:
 
   ```
   sudo lvchange --zero n <vgName>/<vgName>-thinpool
@@ -205,10 +232,29 @@ When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass
 
   You can fully reverse the change by running the command with `--zero y`.
 
-- **Pool metadata size**: When the thin pool is created, LVM automatically sizes its metadata logical volume. Consider extending this volume proactively if you expect the pool to store a large number of snapshots or thin volumes over time. Doing so prevents the pool from running out of space and becoming unresponsive later.
+- **Pool metadata size**: When the thin pool is created, the driver sizes its metadata logical volume based on the `poolMetadataSize` StorageClass parameter (default `16G`, sufficient for pools up to 128 TB at the default 512 KiB chunk size). If you set `chunkSize` smaller than 512 KiB, the pool needs more metadata to address the same amount of data: metadata bytes ≈ 64 × (pool_size ÷ chunk_size). If you did not set the parameter, or if the pool grew significantly after creation, extend the metadata volume proactively to prevent the pool from running out of space and becoming unresponsive later.
 
   ```
   sudo lvextend --poolmetadatasize +1G <vgName>/<vgName>-thinpool
+  ```
+
+- **Example `dm-thin` StorageClass with all tuning parameters set explicitly**:
+
+  ```yaml
+  apiVersion: storage.k8s.io/v1
+  kind: StorageClass
+  metadata:
+    name: harvester-lvm-thin
+  provisioner: lvm.driver.harvesterhci.io
+  parameters:
+    type: dm-thin
+    vgName: vmvg
+    chunkSize: "512K"          # Applied on first-time pool creation only.
+    poolMetadataSize: "16G"    # Applied on first-time pool creation only.
+    zeroBlocks: "false"        # Applied on first-time pool creation only.
+  reclaimPolicy: Delete
+  volumeBindingMode: WaitForFirstConsumer
+  allowVolumeExpansion: true
   ```
 
 ### Choosing a Virtual Machine Disk Bus
