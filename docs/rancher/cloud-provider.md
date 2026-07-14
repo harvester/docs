@@ -428,9 +428,27 @@ Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and 
 
 - **DHCP:** A DHCP server is required. The Harvester load balancer will request an IP address from the DHCP server.
 
-- **Pool:** An [IP pool](../networking/ippool.md) must be configured first. The Harvester load balancer controller will allocate an IP for the load balancer service following [the IP pool selection policy](../networking/ippool.md#selection-policy). Notice the difference between [Create IP Pool from Harvester UI directly](../networking/ippool.md#how-to-create) and [Create IP Pool from Rancher Managery UI](../networking/ippool.md#create-ip-pool-from-rancher-manager-ui). Refer to the [Best Practice](../networking/ippool.md#best-practice).
+  Starting with **Rancher v2.15.1**, you can select a **VM network** from the UI when creating a `LoadBalancer` service. This tells the load balancer which network interface to use, so the VIP is bound to the correct interface instead of always defaulting to the management interface. If no VM network is selected, the behavior is the same as before.
+
+  On older Rancher versions (v2.12.x, v2.13.x, and v2.14.x), the UI does not have this option, but you can still achieve the same result by setting the following annotations on the service:
+
+  - `cloudprovider.harvesterhci.io/ipam: "dhcp"`
+  - `cloudprovider.harvesterhci.io/network: "default/mgmt-vlan1"`
+
+  ![](../../static/img/v1.9/rancher/guest-cluster-load-balancer-dhcp.png)
+
+- **Pool:** An [IP pool](../networking/ippool.md) must be configured first. The Harvester load balancer controller will allocate an IP for the load balancer service following [the IP pool selection policy](../networking/ippool.md#selection-policy). Notice the difference between [Create IP Pool from Harvester UI directly](../networking/ippool.md#how-to-create) and [Create IP Pool from Rancher Manager UI](../networking/ippool.md#create-ip-pool-from-rancher-manager-ui). Refer to the [Best Practice](../networking/ippool.md#best-practice).
+
+    Starting with **Rancher v2.15.1**, you can select a **VM network** from the UI when creating a `LoadBalancer` service to explicitly bind the load balancer to a specific network interface. If no VM network is selected, the load balancer controller automatically determines the network.
+
+    On older Rancher versions (v2.12.x, v2.13.x, and v2.14.x), the UI does not have this option, but you can still achieve the same result by setting the following annotations on the service:
+
+    - `cloudprovider.harvesterhci.io/ipam: "ippool"`
+    - `cloudprovider.harvesterhci.io/network: "default/mgmt-vlan1"`
 
     When a guest cluster uses multiple networks, or when multiple guest clusters with distinct networks share a single namespace, configuring the correct network parameters is critical. For details on how the system automatically determines the network, refer to [Guest Cluster Load Balancer Network Resolution](../networking/ippool.md#guest-cluster-load-balancer-network-resolution).
+
+    ![](../../static/img/v1.9/rancher/guest-cluster-load-balancer-pool.png)
 
 - **Share IP:** When creating a new load balancer service, you can re-utilize an existing load balancer service IP. The new service is referred to as a secondary service, while the currently chosen service is the primary one. To specify the primary service in the secondary service, you can add the annotation `cloudprovider.harvesterhci.io/primary-service: $primary-service-name`.  However, there are two known limitations:
   - Services that share the same IP address can't use the same port.
@@ -443,6 +461,44 @@ Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and 
 - Refer to [Guest Cluster Loadbalancer IP is not reachable](../troubleshooting/rancher.md#guest-cluster-loadbalancer-ip-is-not-reachable).
 
 :::
+
+#### Asymmetric Network Topology
+
+The VM network dropdown only shows networks that are attached to the **same interface position** across all nodes. This means:
+
+- **All nodes share the same networks on the same interfaces** — all networks appear in the dropdown.
+
+  ```
+  Node A: enp1s0 → management, enp2s0 → net-101
+  Node B: enp1s0 → management, enp2s0 → net-101
+  ```
+  Both `management` and `net-101` appear in the dropdown.
+
+- **Same network, but different interface position across nodes** — the network does **not** appear in the dropdown.
+
+  ```
+  Node A: enp1s0 → management, enp2s0 → net-101
+  Node B: enp1s0 → management, enp2s0 → net-102, enp3s0 → net-101
+  ```
+  `net-101` is on `enp2s0` for Node A but `enp3s0` for Node B, so it will not appear.
+
+- **Network missing on some nodes** — the network does **not** appear in the dropdown.
+
+  ```
+  Node A: enp1s0 → management
+  Node B: enp1s0 → management, enp2s0 → net-101
+  ```
+  `net-101` is absent from Node A, so it will not appear.
+
+- **Same networks on all nodes, but attached in a different order** — only the management network appears in the dropdown.
+
+  ```
+  Node A: enp1s0 → management, enp2s0 → net-101, enp3s0 → net-102
+  Node B: enp1s0 → management, enp2s0 → net-102, enp3s0 → net-101
+  ```
+  Both nodes have all three networks, but `net-101` and `net-102` are swapped. Only `management` is on the same interface across all nodes, so only `management` appears in the dropdown.
+
+For the case where the same VM network is attached but in a different NIC order across nodes, the workaround is to shut down the affected VMs, reorder the network interfaces so the attachment order is consistent across all nodes, and restart the VMs.
 
 ### Health checks
 
