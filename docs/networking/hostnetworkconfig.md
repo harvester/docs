@@ -319,7 +319,7 @@ Delete the config using the following command:
 
 :::caution
 
-If a node has multiple host interfaces, do not connect them to the same VLAN or subnet.
+If a node has multiple host interfaces, do not attach them to the same VLAN or subnet. This restriction applies to interfaces configured manually on the host and those configured through `HostNetwork` configurations.
 
 VLAN interfaces under a cluster network are derived from the same bridge and therefore use the same MAC address. This can cause the following issue:
 - **DHCP response misrouting**: When multiple host interfaces from the same cluster network reside on the same VLAN, DHCP responses may be associated with an existing interface instead of a newly created one. For example, if `mgmt-br` is connected to the native VLAN and has an IP address, a DHCP client running on `mgmt-br.1` may fail to acquire a lease. This occurs because the DHCP `OFFER` packets can be delivered to `mgmt-br` instead of `mgmt-br.1`.
