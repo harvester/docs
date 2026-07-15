@@ -321,8 +321,11 @@ Delete the config using the following command:
 
 If a node has multiple host interfaces, do not attach them to the same VLAN or subnet. This restriction applies to interfaces configured manually on the host and those configured through `HostNetwork` configurations.
 
-VLAN interfaces under a cluster network are derived from the same bridge and therefore use the same MAC address. This can cause the following issue:
-- **DHCP response misrouting**: When multiple host interfaces from the same cluster network reside on the same VLAN, DHCP responses may be associated with an existing interface instead of a newly created one. For example, if `mgmt-br` is connected to the native VLAN and has an IP address, a DHCP client running on `mgmt-br.1` may fail to acquire a lease. This occurs because the DHCP `OFFER` packets can be delivered to `mgmt-br` instead of `mgmt-br.1`.
+**DHCP Response Misrouting**
+
+VLAN interfaces used in a cluster network are derived from the same underlying bridge and consequently share the same MAC address. This shared MAC address can cause DHCP response misrouting.
+
+When multiple host interfaces from the same cluster network reside on the same VLAN, DHCP responses may be incorrectly associated with an existing interface instead of a newly created one. For example, if `mgmt-br` is connected to the native VLAN and has an active IP address, a DHCP client running on `mgmt-br.1` may fail to acquire a lease. This failure occurs because the DHCP `OFFER` packets are delivered to `mgmt-br` instead of `mgmt-br.1`.
 
 Configuring multiple interfaces in the same VLAN and subnet can result in ambiguous routing behavior.
 - **Ambiguous kernel routing**: Linux typically installs a single connected route for a subnet. When multiple interfaces are attached to the same VLAN and subnet, the kernel may associate the subnet route with only one of those interfaces, causing traffic to be forwarded through an unintended path.
