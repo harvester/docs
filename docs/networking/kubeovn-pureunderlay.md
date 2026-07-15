@@ -95,11 +95,13 @@ When setting up a pure underlay, the overlay network must use the following conf
 
 For descriptions of settings that you must configure, see [Subnet Settings](./kubeovn-vpc.md#subnet-settings).
 
-![](/img/subnetexternal.png)
+![](/img/subnetdhcp.png)
 
 :::info important
 
 When setting up a pure underlay, you must specify the name of the VLAN network that is mapped to the provider network.
+If using this as external network for the `VPC NAT Gateway`, then make sure to enable DHCP and set `dns_server=8.8.8.8` and `natOutgoing` as `true`.
+This will make sure to install default route and resolve dns on the VMs which are using these subnets.
 
 :::
 
