@@ -62,13 +62,17 @@ After importing:
 
 For detailed import procedures, refer to: [Harvester Virtualization Management](./virtualization-management.md#importing-harvester-cluster)
 
-#### Provisioning a Downstream Kubernetes Cluster
+### Provisioning a Guest Cluster
 
 Rancher uses the Harvester Node Driver to automatically provision the required virtual machines and bootstrap Kubernetes on them.
 
-For detailed downstream cluster create procedures, refer to: [Harvester Node Driver](./node/rke2-cluster.md)
+For detailed instructions, see [Harvester Node Driver](./node/rke2-cluster.md).
 
-- Under the Network Name use KubeOVN's overlay or underlay network
+:::info important
+
+In the **Networks** section of the cluster creation screen, you must specify the correct underlay or overlay network.
+
+:::
 
 ![](/img/v1.9/rancher/gc-overlayvmnetwork.png)
 
