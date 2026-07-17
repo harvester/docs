@@ -28,22 +28,25 @@ Deploying guest clusters on pure underlay networks is functionally similar to us
 
 For information about setting up the overlay infrastructure, see [Create an underlay network](../networking/kubeovn-pureunderlay.md#underlay-configuration).
 
-### Guest Clusters from KubeOVN Overlay Network
+## Guest Cluster Deployment on Overlay Network
 
-TThis requires configuring a VPC NAT Gateway to provide inbound and outbound connectivity for the VM nodes through DNAT and SNAT.
+Deploying guest clusters on overlay networks requires configuring a VPC NAT gateway to provide inbound and outbound connectivity to the virtual machines through DNAT and SNAT.
 
-Setup the overlay infrastructure [Create a VPC NAT Gateway](../networking/kubeovn-vpcnatgateway.md#kubeovn-as-secondary-cni) to create guest clusters VMs.
+The key architectural features are as follows:
 
-#### Architecture
+- Harvester provides the virtual machine infrastructure for the guest cluster's control plane and worker nodes.
+- Rancher provisions and manages the lifecycle of the guest cluster.
+- Kube-OVN provides networking within the guest cluster using overlay tunnels between the guest nodes.
+- Pod communication is encapsulated and transported across the overlay network connecting the guest nodes.
 
-* Harvester provides the virtual machine infrastructure for Kubernetes control plane and worker nodes.
-* Rancher provisions and manages the lifecycle of the guest cluster.
-* Kube-OVN provides networking within the guest cluster using overlay tunnels between Kubernetes nodes.
-* Pod communication is encapsulated and transported across the overlay network connecting the Kubernetes nodes.
+Kube-OVN overlay networking enables guest clusters to manage pod networking independently of the underlying Harvester infrastructure network. This provides the following operational benefits:
 
-#### Benefits of Using Kube-OVN overlay network
+- Simplified cluster deployment
+- Reduced dependence on physical network configuration
+- Dynamic cluster scaling without additional VLAN planning
+- Consistent networking model across environments
 
-Kube-OVN overlay networking enables downstream Kubernetes clusters to manage pod networking independently of the underlying Harvester infrastructure network. This simplifies cluster deployment, reduces dependence on physical network configuration, allows clusters to scale without additional VLAN planning, and provides a consistent networking model across environments.
+For information about setting up the overlay infrastructure, see [Create a VPC NAT Gateway](../networking/kubeovn-vpcnatgateway.md#kubeovn-as-secondary-cni).
 
 ### Provisioning Steps
 
