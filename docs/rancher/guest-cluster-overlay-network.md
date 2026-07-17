@@ -22,11 +22,11 @@ Using the Harvester Node Driver, Rancher automatically creates virtual machines 
 
 While guest clusters can use traditional virtual machine networking, they can also leverage Kube-OVN overlay or underlay networking to provide a flexible and Kubernetes-native networking model for workloads.
 
-### Guest Clusters from KubeOVN Underlay Network
+## Guest Cluster Deployment on Underlay Network
 
-Deploying guest clusters on Kube-OVN Pure Underlay Networks is functionally similar to using traditional VM VLAN networks, but with the added advantages of Kube-OVN features including Network Policies and tenant-isolated VPCs.
+Deploying guest clusters on pure underlay networks is functionally similar to using traditional virtual machine VLAN networks, but with the added advantages of Kube-OVN features such as network policies and tenant-isolated VPCs.
 
-Setup the underlay infrastructure [Create an underlay network](../networking/kubeovn-pureunderlay.md#underlay-configuration) to create guest clusters VMs.
+For information about setting up the overlay infrastructure, see [Create an underlay network](../networking/kubeovn-pureunderlay.md#underlay-configuration).
 
 ### Guest Clusters from KubeOVN Overlay Network
 
