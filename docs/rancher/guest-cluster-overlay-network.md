@@ -16,11 +16,11 @@ keywords:
 
 ### Introduction
 
-Rancher provides centralized management for Kubernetes clusters across multiple environments. When integrated with Harvester, Rancher can provision downstream Kubernetes clusters directly on virtual machine infrastructure managed by Harvester.
+Rancher provides centralized management for Kubernetes clusters across multiple environments. When integrated with Harvester, Rancher can provision guest Kubernetes clusters directly on virtual machine infrastructure managed by Harvester.
 
-Using the Harvester Node Driver, Rancher automatically creates virtual machines that serve as Kubernetes control plane and worker nodes. This simplifies cluster deployment and lifecycle management by providing a single interface for infrastructure and Kubernetes operations.
+Using the Harvester Node Driver, Rancher automatically creates virtual machines that serve as control plane and worker nodes. This simplifies cluster deployment and lifecycle management by providing a single interface for infrastructure and Kubernetes operations.
 
-While downstream clusters can use traditional VM networking, they can also use Kube-OVN overlay or underlay networking to provide a flexible and Kubernetes-native networking model for workloads.
+While guest clusters can use traditional virtual machine networking, they can also leverage Kube-OVN overlay or underlay networking to provide a flexible and Kubernetes-native networking model for workloads.
 
 ### Guest Clusters from KubeOVN Underlay Network
 
