@@ -1,7 +1,7 @@
 ---
 sidebar_position: 11
-sidebar_label: Guest Cluster using Overlay Network
-title: "Guest Cluster using Overlay Network"
+sidebar_label: Guest Cluster using KubeOVN Networks
+title: "Guest Cluster using KubeOVN Networks"
 keywords:
   - Harvester
   - Rancher
@@ -12,9 +12,7 @@ keywords:
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/rancher/guest-cluster-overlay-network"/>
 </head>
 
-## Provisioning Downstream Kubernetes Clusters on Harvester Using Rancher and Kube-OVN Networking
-
-### Introduction
+## Introduction
 
 Rancher provides centralized management for Kubernetes clusters across multiple environments. When integrated with Harvester, Rancher can provision guest Kubernetes clusters directly on virtual machine infrastructure managed by Harvester.
 
@@ -48,19 +46,19 @@ Kube-OVN overlay networking enables guest clusters to manage pod networking inde
 
 For information about setting up the overlay infrastructure, see [Create a VPC NAT Gateway](../networking/kubeovn-vpcnatgateway.md#kubeovn-as-secondary-cni).
 
-### Provisioning Steps
+## Guest Cluster Provisioning
 
-#### Importing Harvester into Rancher
+### Importing Harvester Clusters into Rancher
 
-Harvester clusters are imported through Rancher's Virtualization Management interface.
+Harvester clusters are imported through Rancher's **Virtualization Management** interface.
 
-After importing:
+The following occur after a Harvester cluster is imported:
 
 - Rancher recognizes the cluster as a Harvester provider.
 - Virtual machine resources become available through Rancher.
 - Harvester can be selected as an infrastructure provider when creating downstream clusters.
 
-For detailed import procedures, refer to: [Harvester Virtualization Management](./virtualization-management.md#importing-harvester-cluster)
+For detailed instructions, see [Importing Harvester Cluster](./virtualization-management.md#importing-harvester-cluster).
 
 ### Provisioning a Guest Cluster
 
@@ -77,3 +75,10 @@ In the **Networks** section of the cluster creation screen, you must specify the
 ![](/img/v1.9/rancher/gc-overlayvmnetwork.png)
 
 ![](/img/v1.9/rancher/gc-overlayvm.png)
+
+:::info important
+
+For VMs provisioned as downstream cluster nodes, ensure external connectivity is available by enabling DHCP and configuring dns_server=8.8.8.8 and natOutgoing=true on the subnet. This allows the VMs to obtain a default route and perform DNS resolution.
+
+Since VMs attached to Kube-OVN overlay networks use private IP addresses, a route to the VM subnet must be configured on the rancher VM via the external IP used for SNAT/DNAT. This enables SSH access to the VM nodes from the Rancher UI.
+:::
