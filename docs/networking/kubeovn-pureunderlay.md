@@ -110,3 +110,9 @@ This will make sure to install default route and resolve dns on the VMs which ar
 You can create virtual machines and attach them directly to a VLAN Network mapped to the configured provider network. These virtual machines can communicate with other virtual machines on the same subnet and route traffic directly to external networks via the physical infrastructure.
 
 For more information, see [Create a Virtual Machine](../vm/create-vm.md#how-to-create-a-vm).
+
+:::note
+
+The VLAN specified in this document is arbitrary and can be replaced with any VLAN that matches your network design. When using a VPC NAT Gateway, the External Network and External IP address must belong to the VLAN network chosen for the underlay network to ensure proper connectivity.
+
+:::
