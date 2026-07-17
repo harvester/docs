@@ -58,7 +58,7 @@ This will make sure to install default route and resolve dns on the VMs which ar
 
 ### Create an External Network
 
-Follow the instructions in [Pure Underlay Networking](./harvester-network.md#kubeovn-pureunderlay#underlay-configuration) to create an external network.
+Follow the instructions in [Pure Underlay Networking](./kubeovn-pureunderlay.md#underlay-configuration) to create an external network.
 
 ### VPC NAT Gateway
 
