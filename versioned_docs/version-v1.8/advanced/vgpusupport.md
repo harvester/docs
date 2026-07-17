@@ -74,7 +74,7 @@ Harvester allows [MIG](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/)
 Harvester creates the `MIGConfiguration` object only if the detected GPU supports MIG-based partitioning.
 
 :::note
-When an SR-IOV GPU device is enabled, Harvester attempts to initialize it in MIG mode by default. If MIG mode is not supported or fails to initialize, the device falls back to timesliced mode. The actual mode depends on whether the GPU supports MIG.
+When an SR-IOV GPU device is enabled, Harvester attempts to initialize it in MIG mode by default. If the GPU does not support MIG or initialization fails, the device automatically switches to time-sliced mode.
 :::
 
 ### Enabling MIG-backed vGPU Devices
