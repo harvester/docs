@@ -477,6 +477,8 @@ If the underlying storage provider supports [online volume expansion](../volume/
 - Harvester v1.6 or later
 - Harvester CSI Driver v0.1.24 or later
 
+## Upgrade the CSI Driver
+
 ### Upgrade RKE2
 
 To upgrade the CSI driver, use the Rancher UI to upgrade RKE2. Ensure the new RKE2 version supports/bundled with the updated CSI driver version.
