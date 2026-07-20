@@ -472,6 +472,66 @@ Starting with **v0.1.25**, the Harvester CSI Driver supports [volume snapshots](
 - Harvester CSI Driver v0.1.25 or later
 - The CSI snapshot controller and the required manifests are properly deployed on the guest cluster. (These components are deployed by default on RKE2.)
 
+### Enabling Volume Snapshots on Guest Clusters
+
+The volume snapshot feature depends on the snapshot controller and its associated CRDs. Both the controller and the CRDs operate independently of any specific CSI driver. 
+
+Kubernetes distributions such as RKE2 typically bundle and automatically deploy these components. If your distribution does not, you must manually install them on each guest cluster.
+
+1. Download the required components from the [`kubernetes-csi/external-snapshotter`](https://github.com/kubernetes-csi/external-snapshotter) repository.
+
+    For example, to use v8.5.0, you must download the files from the following directories:
+
+    - Snapshot CRDs: `client/config/crd`
+    - Snapshot controller: `deploy/kubernetes/snapshot-controller`
+
+    :::info important
+
+    You must use matching versions for the CRDs and the controller to guarantee API compatibility.
+
+    :::
+
+1. In the snapshot controller YAML files, update the namespace with a value that matches your environment.
+
+    For example, on a vanilla Kubernetes cluster, change the namespace from `default` to `kube-system`. Ensure that you change both the workload namespace and the target namespace in the `ClusterRoleBinding` configurations.
+
+1. Install the snapshot CRDs.
+
+    ```bash
+    kubectl create -k client/config/crd
+    ```
+
+1. Install the snapshot controller.
+
+    ```bash
+    kubectl create -k deploy/kubernetes/snapshot-controller
+    ```
+
+1. Verify that the snapshot CRDs are available on the cluster.
+
+    ```bash
+    kubectl get crd | grep snapshot.storage.k8s.io
+    ```
+
+1. Create a default VolumeSnapshotClass configuration file.
+
+    Example (`volumesnapshotclass.yaml`):
+
+    ```yaml
+    kind: VolumeSnapshotClass
+    apiVersion: snapshot.storage.k8s.io/v1
+    metadata:
+      name: longhorn
+    driver: driver.longhorn.io
+    deletionPolicy: Delete
+    ```
+
+1. Apply the VolumeSnapshotClass configuration to your cluster.
+
+    ```bash
+    kubectl apply -f volumesnapshotclass.yaml
+    ```
+
 ## Volume Backups
 
 Starting with **v0.1.28**, the Harvester CSI Driver supports remote volume backup and restore for guest Kubernetes clusters. This feature allows you to create a backup of a PVC to the Harvester backup target, and then restore it in the same guest cluster or a different guest cluster that uses the same Harvester cluster.
