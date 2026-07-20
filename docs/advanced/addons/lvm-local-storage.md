@@ -197,7 +197,7 @@ Backup creation is currently not supported. This limitation will be addressed in
 
 When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass, the driver creates an LVM thin pool named `<vgName>-thinpool` using `-l 90%FREE` (allocating 90% of the volume group's remaining free space). Consider tuning the following settings based on your workload demands:
 
-- **Chunk size**: The chunk size determines the smallest unit of physical space that a thin pool allocates in response to a write. A write to a previously-unallocated region always allocates a full chunk, so small random writes to virgin space against a large chunk size cause severe write amplification (a 4 KiB write against a 16 MiB chunk allocates 16 MiB of pool space). When you install the harvester-csi-driver-lvm add-on version 0.4.0 or later, the default StorageClass sets `chunkSize: "512K"`, which matches [LVM's upstream `performance` policy seed](https://github.com/lvmteam/lvm2/blob/master/lib/config/defaults.h) and the [Linux kernel dm-thin admin guide's general-purpose recommendation](https://docs.kernel.org/admin-guide/device-mapper/thin-provisioning.html), and comfortably supports thin pools up to 128 TB.
+- **Chunk size**: The chunk size determines the smallest unit of physical space that a thin pool allocates in response to a write. A write to a previously-unallocated region always allocates a full chunk, so small random writes to virgin space against a large chunk size cause severe write amplification (a 4 KiB write against a 16 MiB chunk allocates 16 MiB of pool space). When you install the harvester-csi-driver-lvm add-on version 0.4.0 or later, the default StorageClass sets `chunkSize: "1M"`. On the hardware-RAID-backed volume groups typical of Harvester nodes, `1M` matches the full-stripe width of common layouts (for example, four data disks at a 256 KiB strip yields a 1 MiB stripe), so each chunk allocation maps to whole stripes rather than partial ones. `1M` also keeps thin-pool metadata bounded and comfortably supports pools up to 256 TB. See the [Linux kernel dm-thin admin guide](https://docs.kernel.org/admin-guide/device-mapper/thin-provisioning.html) for background on chunk sizing.
 
   :::warning
 
@@ -205,13 +205,15 @@ When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass
 
   :::
 
+  Align the chunk size to your RAID full-stripe width — that is, (number of data disks) × (RAID strip size). A chunk smaller than the full stripe (for example, a `512K` chunk on a 1 MiB stripe) forces every first-touch allocation into a partial-stripe **read-modify-write**. On parity RAID (5/6), partial-stripe writes also widen the write-hole window, so an unclean shutdown without a protected controller cache (BBU/FBWC) can leave a stripe with inconsistent parity. Choosing a chunk size equal to — or an exact multiple of — the full stripe avoids both problems; `1M` is the safe default because it aligns with the most common power-of-two RAID geometries.
+
   Override the default with the `chunkSize` parameter on the StorageClass. Common values:
 
   | Value | When to use |
   |---|---|
-  | `128K` | Snapshot-heavy tenants (halves copy-on-write cost per touched region) |
-  | `512K` | **Default** — general-purpose VM workloads on pools up to 128 TB |
-  | `1M` | Pools larger than 128 TB, or bulk sequential-write workloads |
+  | `1M` | **Default** — matches the full-stripe width of common hardware-RAID layouts; general-purpose VM workloads |
+  | `512K` / `128K` | Only when the RAID full stripe is that size, or on non-RAID / single-disk volume groups where stripe alignment does not apply and minimizing snapshot copy-on-write cost is the priority |
+  | `2M` | Very large sequential-write pools whose RAID full stripe is 2 MiB |
 
   Never exceed `2M`. Larger chunks trigger disproportionate copy-on-write costs for snapshots, as documented in the [Red Hat Gluster admin guide](https://docs.redhat.com/en/documentation/red_hat_gluster_storage/3.5/html/administration_guide/chap-configuring_red_hat_storage_for_enhancing_performance). If you rely on LVM's built-in auto-selection instead of setting `chunkSize` explicitly, LVM chooses the chunk size based on the pool size to keep metadata bounded, which for multi-TB pools produces 8–16 MiB chunks — appropriate for metadata sizing but often not for random-write performance.
 
@@ -232,7 +234,7 @@ When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass
 
   You can fully reverse the change by running the command with `--zero y`.
 
-- **Pool metadata size**: When the thin pool is created, the driver sizes its metadata logical volume based on the `poolMetadataSize` StorageClass parameter (default `16G`, sufficient for pools up to 128 TB at the default 512 KiB chunk size). If you set `chunkSize` smaller than 512 KiB, the pool needs more metadata to address the same amount of data: metadata bytes ≈ 64 × (pool_size ÷ chunk_size). If you did not set the parameter, or if the pool grew significantly after creation, extend the metadata volume proactively to prevent the pool from running out of space and becoming unresponsive later.
+- **Pool metadata size**: When the thin pool is created, the driver sizes its metadata logical volume based on the `poolMetadataSize` StorageClass parameter (default `16G`, sufficient for pools up to 256 TB at the default 1 MiB chunk size). A larger chunk size needs less metadata to address the same capacity, and a smaller chunk size needs more: metadata bytes ≈ 64 × (pool_size ÷ chunk_size). If you did not set the parameter, or if the pool grew significantly after creation, extend the metadata volume proactively to prevent the pool from running out of space and becoming unresponsive later.
 
   ```
   sudo lvextend --poolmetadatasize +1G <vgName>/<vgName>-thinpool
@@ -249,7 +251,7 @@ When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass
   parameters:
     type: dm-thin
     vgName: vmvg
-    chunkSize: "512K"          # Applied on first-time pool creation only.
+    chunkSize: "1M"            # Applied on first-time pool creation only.
     poolMetadataSize: "16G"    # Applied on first-time pool creation only.
     zeroBlocks: "false"        # Applied on first-time pool creation only.
   reclaimPolicy: Delete
