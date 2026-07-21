@@ -138,10 +138,10 @@ External network devices typically refer to switches and DHCP servers. With a cl
 
 ## Virtual Machine Network Setup and Scheduling Workflow
 
-The following process outlines the general workflow for setting up a network for a virtual machine:
+The following workflow outlines the steps you must perform to set up a network for a virtual machine:
 
-1. A [cluster network](./clusternetwork.md#cluster-network) and a corresponding [network configuration](./clusternetwork.md#network-configuration) are created. Only nodes specified in the network configuration set up the associated network devices.
-1. A [VM network](./harvester-network.md#create-a-vm-network) is created with a specific VLAN ID.
+1. Create a [cluster network](./clusternetwork.md#cluster-network) and a corresponding [network configuration](./clusternetwork.md#network-configuration). Only nodes specified in the network configuration set up the associated network devices.
+1. Create a [VM network](./harvester-network.md#create-a-vm-network) with a specified VLAN ID.
 
 ### Example Scenario
 
