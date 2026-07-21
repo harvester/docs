@@ -101,7 +101,7 @@ We leverage [multus CNI](https://github.com/k8snetworkplumbingwg/multus-cni) and
     ```
 
     Because untagged VLAN handling is no longer applied, physical switches connected to Harvester hosts must now be configured strictly as trunk ports. These ports must accept tagged traffic and send traffic tagged with the VLAN ID used by the VM network.
-    
+
     Any untagged traffic arriving at Harvester network bridges for a VLAN-tagged veth interface is dropped. This occurs because the bridge cannot forward the traffic to the veth interface, which is configured to accept only the VLAN ID from the VM network.
 
 ### Management Network
@@ -136,11 +136,12 @@ External network devices typically refer to switches and DHCP servers. With a cl
 
 - If you want VMs in a VLAN to be able to obtain IP addresses through the DHCP protocol, configure an IP pool for that VLAN in the DHCP server.
 
-## Virtual Machine Network Setup and Scheduling Workflow
+## Virtual Machine Network Setup and Scheduling
 
 The following workflow outlines the steps you must perform to set up a network for a virtual machine:
 
 1. Create a [cluster network](./clusternetwork.md#cluster-network) and a corresponding [network configuration](./clusternetwork.md#network-configuration). Only nodes specified in the network configuration set up the associated network devices.
+
 1. Create a [VM network](./harvester-network.md#create-a-vm-network) with a specified VLAN ID.
 
 ### Example Scenario
@@ -156,16 +157,9 @@ A user performs the following configuration steps:
 
 In response, Harvester automatically handles the following:
 
-- A cluster network named `cn2` is created.
-- A network configuration named `cn2-vc1` is created, covering `node1` and `node2`.
-- A VM network named `cn2-nad-100` is created with VLAN ID `100`.
-- A virtual machine named `vm1` attaches to a secondary network named `cn2-nad-100`.
+- **Node labeling**: The Harvester controller labels the target Kubernetes `node` objects.
 
-In response, Harvester automatically handles the following:
-
-- **Node Labeling**: The Harvester controller labels the target Kubernetes `node` objects.
-
-  ```
+  ```yaml
   kubectl get node node1 -oyaml
   ...
   metadata:
@@ -178,7 +172,7 @@ In response, Harvester automatically handles the following:
 
 - **Affinity rules**: The Harvester webhook updates the `virtualmachine` object to inject a node affinity rule.
 
-  ```
+  ```yaml
   spec:
     template:
       spec:
