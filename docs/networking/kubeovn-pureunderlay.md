@@ -113,6 +113,6 @@ For more information, see [Create a Virtual Machine](../vm/create-vm.md#how-to-c
 
 :::note
 
-The VLAN specified in this document is arbitrary and can be replaced with any VLAN that matches your network design. When using a VPC NAT Gateway, the External Network and External IP address must belong to the VLAN network chosen for the underlay network to ensure proper connectivity.
+The VLAN ID referenced in this guide is an example and can be replaced with any VLAN that fits your network design. When using a VPC NAT Gateway, the external network and external IP address must belong to the underlay network's designated VLAN to ensure proper connectivity.
 
 :::
