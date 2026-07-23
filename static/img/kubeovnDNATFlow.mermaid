@@ -1,0 +1,74 @@
+---
+title: DNAT flow — external to VM (inbound)
+config:
+  theme: base
+  securityLevel: loose
+  themeVariables:
+    fontFamily: 'SUSE, Verdana, sans-serif'
+    fontSize: '14px'
+    primaryColor: '#0ca678'
+    primaryTextColor: '#092a1d'
+    primaryBorderColor: '#0ca678'
+    lineColor: '#212529'
+    secondaryColor: '#1c7ed6'
+    tertiaryColor: '#e6fcf5'
+    mainBkg: '#ffffff'
+    nodeBorder: '#212529'
+    clusterBkg: '#f8f9fa'
+    clusterBorder: '#adb5bd'
+    titleColor: '#092a1d'
+    edgeLabelBackground: '#ffffff'
+  themeCSS: |
+    * { font-family: 'SUSE', Verdana, sans-serif; }
+    code, code * { font-family: 'SUSE Mono', 'Roboto Mono', monospace; font-weight: 500; font-size: 0.92em; }
+  flowchart:
+    rankSpacing: 70
+    nodeSpacing: 50
+    subGraphTitleMargin:
+      top: 6
+      bottom: 14
+---
+flowchart TD
+    classDef default fill:#ffffff,stroke:#212529,stroke-width:1px,color:#212529;
+    classDef overlay fill:#e6fcf5,stroke:#0ca678,stroke-width:2.5px,color:#092a1d;
+    classDef nat fill:#f3f0ff,stroke:#7048e8,stroke-width:2.5px,color:#3b0764;
+    classDef ext fill:#e7f5ff,stroke:#1c7ed6,stroke-width:2.5px,color:#0b2e5c;
+    classDef inet fill:#f8f9fa,stroke:#868e96,stroke-width:2px,color:#212529;
+    classDef annot fill:#f8f9fa,stroke:#adb5bd,stroke-width:1.5px,stroke-dasharray: 4 3,color:#495057;
+    classDef netVpc fill:#ffffff,stroke:#0ca678,stroke-width:2px,stroke-dasharray: 6 4,color:#092a1d;
+    classDef netExt fill:#ffffff,stroke:#1c7ed6,stroke-width:2px,stroke-dasharray: 6 4,color:#0b2e5c;
+
+    INET["<b>External client</b><br/>curl <code>10.115.55.200:8888</code>"]:::inet
+
+    subgraph EXT ["External subnet / provider network (eno50 — VLAN 2017)"]
+        direction TB
+        UGW["<b>Upstream gateway</b><br/><code>10.115.55.254</code>"]:::ext
+        ESUB["<b>External subnet</b><br/><code>subnetexternal 10.115.48.0/21</code><br/>EIP <code>10.115.55.200</code> on net2"]:::ext
+        UGW -->|"② routed in"| ESUB
+    end
+
+    subgraph VPC ["Custom VPC: commonvpc"]
+        direction TB
+        NATGW["<b>VPC NAT gateway pod<br/>(vpc-nat-gw-gw1-0)</b><br/><code>net2: 10.115.48.1 (external)</code><br/><code>PREROUTING → DNAT_FILTER</code>"]:::nat
+        IPT["iptables DNAT rule (inside nat gw pod):<br/><code>-A DNAT_FILTER -d 10.115.55.200 -p tcp --dport 8888</code><br/><code>-j DNAT --to-destination 172.20.10.2:80</code>"]:::annot
+        LS["<b>OVN logical switch</b><br/><code>subnetinternal 172.20.10.0/24</code>"]:::overlay
+        VM["<b>VM (nginx)</b><br/><code>172.20.10.2:80</code>"]:::overlay
+        NATGW ==>|"④ DNAT: dst 10.115.55.200:8888 → 172.20.10.2:80"| LS
+        LS -->|"⑤ forwarded via net1<br/>172.20.10.254"| VM
+    end
+
+
+    INET -->|"① dst 10.115.55.200:8888"| UGW
+    ESUB -->|"③ arrives on net2 (10.115.48.1)"| NATGW
+    NATGW -.->|"implements"| IPT
+
+    class VPC netVpc;
+    class EXT netExt;
+
+    %% edge colours: 0 UGW-ESUB, 1 NATGW-LS(DNAT), 2 LS-VM, 3 INET-UGW, 4 ESUB-NATGW, 5 NATGW-IPT
+    linkStyle 0 stroke:#1c7ed6,stroke-width:2px;
+    linkStyle 1 stroke:#7048e8,stroke-width:3px;
+    linkStyle 2 stroke:#0ca678,stroke-width:2px;
+    linkStyle 3 stroke:#1c7ed6,stroke-width:2px;
+    linkStyle 4 stroke:#1c7ed6,stroke-width:2px;
+    linkStyle 5 stroke:#7048e8,stroke-width:1.5px;

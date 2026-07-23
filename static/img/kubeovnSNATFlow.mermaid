@@ -1,0 +1,73 @@
+---
+title: SNAT flow — VM to internet (outbound)
+config:
+  theme: base
+  securityLevel: loose
+  themeVariables:
+    fontFamily: 'SUSE, Verdana, sans-serif'
+    fontSize: '14px'
+    primaryColor: '#0ca678'
+    primaryTextColor: '#092a1d'
+    primaryBorderColor: '#0ca678'
+    lineColor: '#212529'
+    secondaryColor: '#1c7ed6'
+    tertiaryColor: '#e6fcf5'
+    mainBkg: '#ffffff'
+    nodeBorder: '#212529'
+    clusterBkg: '#f8f9fa'
+    clusterBorder: '#adb5bd'
+    titleColor: '#092a1d'
+    edgeLabelBackground: '#ffffff'
+  themeCSS: |
+    * { font-family: 'SUSE', Verdana, sans-serif; }
+    code, code * { font-family: 'SUSE Mono', 'Roboto Mono', monospace; font-weight: 500; font-size: 0.92em; }
+  flowchart:
+    rankSpacing: 70
+    nodeSpacing: 50
+    subGraphTitleMargin:
+      top: 6
+      bottom: 14
+---
+flowchart TD
+    classDef default fill:#ffffff,stroke:#212529,stroke-width:1px,color:#212529;
+    classDef overlay fill:#e6fcf5,stroke:#0ca678,stroke-width:2.5px,color:#092a1d;
+    classDef nat fill:#f3f0ff,stroke:#7048e8,stroke-width:2.5px,color:#3b0764;
+    classDef ext fill:#e7f5ff,stroke:#1c7ed6,stroke-width:2.5px,color:#0b2e5c;
+    classDef inet fill:#f8f9fa,stroke:#868e96,stroke-width:2px,color:#212529;
+    classDef annot fill:#f8f9fa,stroke:#adb5bd,stroke-width:1.5px,stroke-dasharray: 4 3,color:#495057;
+    classDef netVpc fill:#ffffff,stroke:#0ca678,stroke-width:2px,stroke-dasharray: 6 4,color:#092a1d;
+    classDef netExt fill:#ffffff,stroke:#1c7ed6,stroke-width:2px,stroke-dasharray: 6 4,color:#0b2e5c;
+ 
+    subgraph VPC ["Custom VPC: commonvpc"]
+        direction TB
+        VM["<b>VM (guest OS)</b><br/><code>172.20.10.x/24</code>"]:::overlay
+        LS["<b>OVN logical switch</b><br/><code>subnetinternal 172.20.10.0/24</code>"]:::overlay
+        NATGW["<b>VPC NAT gateway pod<br/>(vpc-nat-gw-gw1-0)</b><br/><code>net1: 172.20.10.254 (internal)</code><br/><code>net2: 10.115.48.1 / 10.115.55.200 (external)</code>"]:::nat
+        VM ---|"① default GW<br/>172.20.10.254"| LS
+        LS -->|"② → net1 (172.20.10.254)"| NATGW
+    end
+ 
+    subgraph EXT ["External subnet / provider network (eno50 — VLAN 2017)"]
+        direction TB
+        ESUB["<b>External subnet</b><br/><code>subnetexternal 10.115.48.0/21</code>"]:::ext
+        UGW["<b>Upstream gateway</b><br/><code>10.115.55.254</code>"]:::ext
+        ESUB -->|"④ src IP: 10.115.55.200"| UGW
+    end
+ 
+    INET["<b>Internet / external host</b><br/>e.g. <code>8.8.8.8</code>"]:::inet
+    IPT["iptables SNAT rule (inside nat gw pod):<br/><code>-A SHARED_SNAT -s 172.20.10.0/24 -o net2</code><br/><code>-j SNAT --to-source 10.115.55.200</code>"]:::annot
+ 
+    NATGW ==>|"③ SNAT: src 172.20.10.x → 10.115.55.200"| ESUB
+    UGW -->|"⑤ routed out"| INET
+    NATGW -.->|"implements"| IPT
+ 
+    class VPC netVpc;
+    class EXT netExt;
+ 
+    %% edge colours: 0 VM-LS, 1 LS-NATGW, 2 ESUB-UGW, 3 NATGW-ESUB(SNAT), 4 UGW-INET, 5 NATGW-IPT
+    linkStyle 0 stroke:#0ca678,stroke-width:2px;
+    linkStyle 1 stroke:#0ca678,stroke-width:2px;
+    linkStyle 2 stroke:#1c7ed6,stroke-width:2px;
+    linkStyle 3 stroke:#7048e8,stroke-width:3px;
+    linkStyle 4 stroke:#1c7ed6,stroke-width:2px;
+    linkStyle 5 stroke:#adb5bd,stroke-width:1.5px;
