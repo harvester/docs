@@ -510,19 +510,19 @@ The traffic from VM reaches net1 of vpc nat gw pod and with route installed egre
 
 1. Click **Create**.
 
-1. Specify a unique name for the dnat.
+1. Specify a unique name for the DNAT rule.
 
 1. On the **Basic** tab, configure the following settings:
 
-    - **EIP**: Name of the eip(`my-eip`) same used for `snat`
+    - **EIP**: External IP assigned to the VPC NAT gateway (for example, `my-eip`)
 
-    - **External Port** The port on which incoming traffic is received from external clients.
+    - **External Port**: Port on which incoming traffic is received from external clients
 
-    - **Internal IP** The destination IP address to which the incoming traffic is forwarded.(IP address of the overlay VM)
+    - **Internal IP**: Destination IP address to which incoming traffic is forwarded (the IP address of the target overlay virtual machine)
 
-    - **Internal Port** The destination port on the internal host to which the incoming traffic is translated and forwarded.
+    - **Internal Port**: Destination port on the internal host to which incoming traffic is translated and forwarded
 
-    - **Protocol** tcp or udp
+    - **Protocol** `TCP` or `UDP`
 
 1. Click **Create**.
 
