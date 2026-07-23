@@ -428,14 +428,13 @@ nobody@hp-65:/kube-ovn$ ovs-vsctl show
     ![](/img/snat.png)
 
 1. Click **Create**.
-
-1. Specify a unique name for the snat.
+1. Specify a unique name for the SNAT rule.
 
 1. On the **Basic** tab, configure the following settings:
 
-    - **EIP**: Name of the eip(`my-eip`)
+    - **EIP**: External IP (for example, `my-eip`)
 
-    - **Internal CIDR** `cidr` of the internal tenant subnet
+    - **Internal CIDR**: CIDR of the internal tenant subnet
 
 1. Click **Create**.
 
