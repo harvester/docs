@@ -92,21 +92,21 @@ Follow the instructions in [Pure Underlay Networking](./kubeovn-pureunderlay.md#
 
 1. Click **Create**.
 
-1. Specify a unique name for the vpc nat gw.
+1. Specify a unique name for the VPC NAT gateway.
 
 1. On the **Basic** tab, configure the following settings:
 
-    - **Internal Tenant Network**: Name of the internal tenant network(`vswitchinternal`)
+    - **Internal Tenant Network**: Name of the internal tenant network (for example, `vswitchinternal`)
 
-    - **VPC** VPC of the internal tenant network subnet (`commonvpc`)
+    - **VPC** VPC of the internal tenant network subnet (for example, `commonvpc`)
 
-    - **Subnet**: subnet of the internal tenant network (`subnetinternal`)
+    - **Subnet**: Subnet of the internal tenant network (for example, `subnetinternal`)
 
-    - **LAN IP**: Gw Ip of the internal tenant network
+    - **LAN IP**: Gateway IP address of the internal tenant network
 
 1. On the **External Subnets** tab, configure the following settings:
 
-    - **Subnet**: subnet of the underlay external network(`subnetexternal`)
+    - **Subnet**: Subnet of the underlay external network (for example, `subnetexternal`)
 
 1. Click **Create**.
 
