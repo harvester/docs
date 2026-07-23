@@ -547,9 +547,9 @@ Chain DNAT_FILTER (1 references)
 
     ```
 
-### Create a VM
+### Create a Virtual Machine
 
-See [Create a Virtual Machine](../vm/create-vm.md#how-to-create-a-vm) to create a VM attached to overlay network on `subnetinternal` and Install nginx on VM to check inbound access
+[Create a virtual machine](../vm/create-vm.md#how-to-create-a-vm) attached to the overlay network on `subnetinternal`, then install NGINX on the virtual machine to verify inbound connectivity.
 
 ```
 sudo apt update
