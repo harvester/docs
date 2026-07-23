@@ -35,6 +35,28 @@ With the introduction of kubeovn as secondary CNI in Harvester v1.8.0, Outbound 
 
 ### Create a Tenant Network
 
+1. [Create an overlay network](./harvester-network.md#create-an-overlay-network).
+
+1. [Create a custom VPC](./kubeovn-vpc.md#vpc-settings).
+
+1. [Create a subnet](./kubeovn-vpc.md#subnet-settings) inside the VPC created in the previous step.
+
+    ![](/img/subnetinternal.png)
+
+    :::info important
+
+    When creating a subnet for a tenant network, ensure DHCP is enabled, `dns_server` is set to `8.8.8.8`, and `natOutgoing` is set to `true`. This configuration ensures that a default route is installed and DNS is resolved on virtual machines attached to these subnets.
+
+    :::
+
+1. [Create an external network](./kubeovn-pureunderlay.md#underlay-configuration).
+
+The examples in this document use the following settings:
+
+- **Overlay network**: `vswitchinternal`
+- **VPC**: `commonvpc`
+- **Subnet (in `commonvpc`)**: `subnetinternal`
+
 #### Create an Overlay Network
 
 Follow the instructions in [Create an Overlay Network](./harvester-network.md#create-an-overlay-network) to create `vswitchinternal`.
