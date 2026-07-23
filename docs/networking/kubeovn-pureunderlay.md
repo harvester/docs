@@ -101,7 +101,7 @@ For descriptions of settings that you must configure, see [Subnet Settings](./ku
 
 When setting up a pure underlay network, specify the name of the VLAN network mapped to the provider network.
 
-If you are using this network as an external network for a VPC NAT gateway, ensure that DHCP is enabled, `dns_server` is set to `8.8.8.8`, and `natOutgoing` is set to `true`. This configuration ensures that virtual machines using these subnets can resolve DNS and route traffic through the default gateway.
+If you are using this network as an external network for a VPC NAT gateway, ensure that DHCP is enabled, `dns_server` is set to a valid DNS server IP address (for example, `8.8.8.8`) and `natOutgoing` is set to `true`. This configuration ensures that virtual machines using these subnets can resolve DNS and route traffic through the default gateway.
 
 :::
 

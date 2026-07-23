@@ -32,10 +32,10 @@ Deploying guest clusters on overlay networks requires configuring a VPC NAT gate
 
 The key architectural features are as follows:
 
-- Harvester provides the virtual machine infrastructure for the guest cluster's control plane and worker nodes.
-- Rancher provisions and manages the lifecycle of the guest cluster.
-- Kube-OVN provides networking within the guest cluster using overlay tunnels between the guest nodes.
-- Pod communication is encapsulated and transported across the overlay network connecting the guest nodes.
+- Harvester provides the virtual machine infrastructure where the guest cluster control plane and worker nodes run.
+- Rancher is responsible for provisioning and managing the lifecycle of the guest Kubernetes cluster.
+- Kube-OVN provides the network connectivity for the VMs hosting the guest nodes through its overlay network between Harvester hosts.
+- The guest cluster CNI (for example, Calico) manages pod networking, while pod traffic is transported over the underlying Kube-OVN-provided VM network.
 
 Kube-OVN overlay networking enables guest clusters to manage pod networking independently of the underlying Harvester infrastructure network. This provides the following operational benefits:
 
@@ -70,15 +70,17 @@ For detailed instructions, see [Harvester Node Driver](./node/rke2-cluster.md).
 
 In the **Networks** section of the cluster creation screen, you must specify the correct underlay or overlay network.
 
+Also, For VMs provisioned as downstream cluster nodes, ensure external connectivity is available by enabling DHCP and dns_server is set to a valid DNS server IP address (for example, `8.8.8.8`) and natOutgoing=true on the subnet. This allows the VMs to obtain a default route and perform DNS resolution.
+
 :::
 
 ![](/img/v1.9/rancher/gc-overlayvmnetwork.png)
 
 ![](/img/v1.9/rancher/gc-overlayvm.png)
 
-:::info important
 
-For VMs provisioned as downstream cluster nodes, ensure external connectivity is available by enabling DHCP and configuring dns_server=8.8.8.8 and natOutgoing=true on the subnet. This allows the VMs to obtain a default route and perform DNS resolution.
+:::tip
 
-Since VMs attached to Kube-OVN overlay networks use private IP addresses, a route to the VM subnet must be configured on the rancher VM via the external IP used for SNAT/DNAT. This enables SSH access to the VM nodes from the Rancher UI.
+Since the guest cluster VM nodes over Kube-OVN overlay networks use private IP addresses, a route to the guest cluster VM node subnet must be configured on the Rancher VM with the Kube-OVN EIP (configured during the VPC NAT gateway EIP setup) as the next hop. This provides network reachability from the Rancher VM to the guest cluster VM nodes and enables SSH access through the Rancher UI for debugging purposes.
+
 :::
