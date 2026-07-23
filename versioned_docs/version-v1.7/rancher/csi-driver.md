@@ -29,6 +29,14 @@ This issue was fixed in v0.1.21. If your system is affected, you can follow the 
 
 The Harvester Container Storage Interface (CSI) Driver provides a standard CSI interface used by guest Kubernetes clusters in Harvester. It connects to the host cluster and hot-plugs host volumes to the virtual machines (VMs) to provide native storage performance.
 
+:::note
+
+For single-node read-write (RWO) volumes, the Harvester CSI driver hot-plugs volumes to the VM that runs as the guest Kubernetes node. Each guest node VM can have up to 256 attached volumes. This limit includes non-CSI volumes such as the root disk and cloud-init disk.
+
+If many workloads with PVCs are scheduled on the same guest Kubernetes node, the node VM can reach the volume limit and volume attachment may fail. To avoid this issue, distribute PVC-backed workloads across multiple guest nodes or add more guest worker nodes.
+
+:::
+
 The Harvester CSI driver supports the following features:
 
 | Harvester CSI Driver Version | Harvester Version | Storage Tiering | RWX Volumes | Online Resizing | Third-Party Storage | Volume Snapshots |
