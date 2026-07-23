@@ -490,9 +490,9 @@ vpc-nat-gw-gw1-0:/kube-ovn# iptables-legacy-save -t nat
     COMMIT
     ```
 
-### Create a VM
+### Create a Virtual Machine
 
-See [Create a Virtual Machine](../vm/create-vm.md#how-to-create-a-vm) to create a VM and attach it to the `vswitchinternal` overlay network.
+[Create a virtual machine](../vm/create-vm.md#how-to-create-a-vm) and attach it to the `vswitchinternal` overlay network.
 
 Ping from VM (inside guest os) to 8.8.8.8 must be successful
 The traffic from VM reaches net1 of vpc nat gw pod and with route installed egress out of net2 and hits the iptable rule for SNAT and translates 172.20.10.0/24 subnet ip to 10.115.55.200 for external connectivity.
