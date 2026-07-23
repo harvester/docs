@@ -407,15 +407,17 @@ nobody@hp-65:/kube-ovn$ ovs-vsctl show
 
 1. Click **Create**.
 
-1. Specify a unique name for the eip.
+1. Specify a unique name for the external IP.
 
 1. On the **Basic** tab, configure the following settings:
 
-    - **VPC NAT GW**: Name of the vpc nat gw(`gw1`)
+    - **VPC NAT GW**: Name of the VPC NAT gateway (for example, `gw1`)
 
-    - **External Subnet** subnet of the underlay external network (`subnetexternal`)
+    - **External Subnet**: Subnet of the underlay external network (for example, `subnetexternal`)
 
-    - **v4 IP**: choose an IP address from external subnet CIDR Range to be used as public IP for SNAT/DNAT
+    - **v4 IP**: Available IP address from the external subnet CIDR range to be used as a public IP for SNAT/DNAT
+
+1. Click **Create**.
 
 1. Click **Create**.
 
