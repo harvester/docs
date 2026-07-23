@@ -532,13 +532,20 @@ The traffic from VM reaches net1 of vpc nat gw pod and with route installed egre
 vpc-nat-gw-gw1-0:/kube-ovn# iptables-legacy -t nat -L -n -v 2>/dev/null | grep -E "DNAT"
  3051  392K DNAT_FILTER  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
 Chain DNAT_FILTER (1 references)
- 3051  392K EXCLUSIVE_DNAT  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
- 3051  392K SHARED_DNAT  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
-Chain EXCLUSIVE_DNAT (1 references)
-Chain SHARED_DNAT (1 references)
-    1    60 DNAT       tcp  --  *      *       0.0.0.0/0            10.115.55.200        tcp dpt:8888 to:172.20.10.2:80
+1. Verify that the DNAT filter iptables rule exists inside the VPC NAT gateway pod.
 
-```
+    Example: 
+    ```
+    vpc-nat-gw-gw1-0:/kube-ovn# iptables-legacy -t nat -L -n -v 2>/dev/null | grep -E "DNAT"
+    3051  392K DNAT_FILTER  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    Chain DNAT_FILTER (1 references)
+    3051  392K EXCLUSIVE_DNAT  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    3051  392K SHARED_DNAT  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    Chain EXCLUSIVE_DNAT (1 references)
+    Chain SHARED_DNAT (1 references)
+        1    60 DNAT       tcp  --  *      *       0.0.0.0/0            10.115.55.200        tcp dpt:8888 to:172.20.10.2:80
+
+    ```
 
 ### Create a VM
 
