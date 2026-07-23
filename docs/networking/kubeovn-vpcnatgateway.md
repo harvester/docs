@@ -421,7 +421,7 @@ nobody@hp-65:/kube-ovn$ ovs-vsctl show
 
 1. Click **Create**.
 
-#### Create SNAT
+#### Create an SNAT Rule
 
 1. On the Harvester UI, go to **Overlay Networks > NAT & Internet > Source Rules**.
 
