@@ -438,13 +438,14 @@ nobody@hp-65:/kube-ovn$ ovs-vsctl show
 
 1. Click **Create**.
 
-####  Verify EIP status
-```
-kubectl get eip
-NAME     IP              MAC                 NAT         NATGWDP   READY
-my-eip   10.115.55.200   52:1b:4f:1d:14:ce   dnat,snat   gw1       true
+1. Verify the status of the external IP.
 
-```
+    ```
+    kubectl get eip
+    NAME     IP              MAC                 NAT         NATGWDP   READY
+    my-eip   10.115.55.200   52:1b:4f:1d:14:ce   dnat,snat   gw1       true
+
+    ```
 
 #### Verify SNAT filter iptable rule created inside the VPC NAT gateway pod
 
