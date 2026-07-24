@@ -493,7 +493,7 @@ Kubernetes distributions such as RKE2 typically bundle and automatically deploy 
 
 1. In the snapshot controller YAML files, update the namespace with a value that matches your environment.
 
-    For example, on a vanilla Kubernetes cluster, change the namespace from `default` to `kube-system`. Ensure that you change both the workload namespace and the target namespace in the `ClusterRoleBinding` configurations.
+    For example, on a standard Kubernetes cluster, change the namespace from `default` to `kube-system`. Ensure that you change both the workload namespace and the target namespace in the `ClusterRoleBinding` configurations.
 
 1. Install the snapshot CRDs.
 
@@ -511,12 +511,6 @@ Kubernetes distributions such as RKE2 typically bundle and automatically deploy 
 
     ```bash
     kubectl get crd | grep snapshot.storage.k8s.io
-    ```
-
-1. Apply the VolumeSnapshotClass configuration.
-
-    ```bash
-    kubectl apply -f volumesnapshotclass.yaml
     ```
 
 ## Volume Backups
