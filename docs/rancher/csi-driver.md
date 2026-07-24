@@ -513,20 +513,7 @@ Kubernetes distributions such as RKE2 typically bundle and automatically deploy 
     kubectl get crd | grep snapshot.storage.k8s.io
     ```
 
-1. Create a default VolumeSnapshotClass configuration file.
-
-    Example (`volumesnapshotclass.yaml`):
-
-    ```yaml
-    kind: VolumeSnapshotClass
-    apiVersion: snapshot.storage.k8s.io/v1
-    metadata:
-      name: longhorn
-    driver: driver.longhorn.io
-    deletionPolicy: Delete
-    ```
-
-1. Apply the VolumeSnapshotClass configuration to your cluster.
+1. Apply the VolumeSnapshotClass configuration.
 
     ```bash
     kubectl apply -f volumesnapshotclass.yaml
