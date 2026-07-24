@@ -68,7 +68,7 @@ The `bootOrder` values need to be set with the installation image first. If you 
     2. `Type`: Select `disk`.
     3. `StorageClass`: You can use the default StorageClass `harvester-longhorn` or specify a custom one.
     4. `Size`: The value `32` is set by default. See the disk space requirements for [Windows Server](https://docs.microsoft.com/en-us/windows-server/get-started/hardware-requirements#storage-controller-and-disk-space-requirements) and [Windows 11](https://docs.microsoft.com/en-us/windows/whats-new/windows-11-requirements#hardware-requirements) before changing this value.
-    5. `Bus`: The value `VirtIO` is set by default. You can keep it or change it to the other available options, `SATA` or `SCSI`.
+    5. `Bus`: The default value is `VirtIO`. For Windows workloads that generate sustained writes (such as large file copies, database write-ahead logs, and backup targets), `SCSI` (`virtio-scsi`) generally outperforms `VirtIO` (`virtio-blk`) because it supports multiple queues and uses a more efficient `DISCARD` path. `SATA` is a secondary option for scenarios where paravirtualized drivers cannot be loaded at boot time.
 3. The **third volume** is a `Container` with the following values:
     1. `Name`: The value `virtio-container-disk` is set by default. You can keep it or change it.
     2. `Type`: Select `cd-rom`.
@@ -82,7 +82,7 @@ The `bootOrder` values need to be set with the installation image first. If you 
 
 1. The **Management Network** is added by default with the following values: 
     1. `Name`:  The value `default` is set by default. You can keep it or change it.
-    2. `Model`: The value `e1000` is set by default. You can keep it or change it to the other available options from the dropdown.
+    2. `Model`: The default value is `e1000`. This option ensures the guest operating system can obtain network connectivity before paravirtualized drivers are installed. Once VMDP (or VirtIO drivers such as `virtio-win`) is loaded inside the guest, switching to `virtio` provides higher throughput and lower CPU overhead for sustained network transfers.
     3. `Network`: The value `management Network` is set by default. You can't change this option if no other network has been created. See [Harvester Network](../networking/harvester-network.md) for the full description on how to create new networks.
     4. `Type`: The value `masquerade` is set by default. You can keep it or change it to the other available option, `bridge`.
 2. You can add additional networks by clicking  `Add Network`.
@@ -106,7 +106,7 @@ Changing the `Node Scheduling` settings can impact Harvester features, such as d
 1. `OS Type`: The value `Windows` is set by default. It's recommended you don't change it.
 2. `Machine Type`: The value `None` is set by default. It's recommended you don't change it. See the [KubeVirt Machine Type](https://kubevirt.io/user-guide/virtual_machines/virtual_hardware/#machine-type) documentation before you change this value.
 3. (Optional) `Hostname`: Set the VM hostname.
-4. (Optional) `Cloud Config`: Both `User Data` and `Network Data` values are set with default values. Currently, these configurations are not applied to Windows-based VMs.
+4. `Cloud Config` (Optional): The values for both `User Data` and `Network Data` are set by default. If the selected Windows image includes [Cloudbase-Init](https://cloudbase.it/cloudbase-init/) (a common addition to automated Windows cloud images), the guest processes the `User Data` during its initial boot phase. This allows injection of custom configurations (such as SSH keys, local administrator accounts, driver installation commands, custom hostnames, and first-boot PowerShell scripts) for each virtual machine. If the image does not include Cloudbase-Init, the system still mounts the `User Data` on the configuration drive (`NoCloud` ISO format), but the guest operating system ignores it.
 5. (Optional) `Enable TPM`, `Booting in EFI mode`, `Secure Boot`: Both the TPM 2.0 device and UEFI firmware with Secure Boot are hard requirements for Windows 11.
 
 :::note
@@ -172,6 +172,65 @@ If you didn't use the `windows-iso-image-base-template` template, and you still 
 For full instructions on how to install the VMDP guest driver and tools see the documentation at https://documentation.suse.com/sle-vmdp/2.5/html/vmdp/index.html
 
 :::
+
+## Recommended Tuning
+
+### Enable Hyper-V Enlightenments
+
+Windows guests benefit significantly from KubeVirt's Hyper-V Top-Level Functional Specification (TLFS) enlightenment features. These include paravirtualized interrupt delivery (SynIC), the Hyper-V synthetic timer with direct interrupts, TLB flush hypercalls, VAPIC, and the Hyper-V clock timer. Enabling these features typically results in the following:
+
+- Reduced initial write allocation time on thin-provisioned storage.
+- Stable throughput during sustained write operations and minimal periodic stalls during large file copies.
+- Lower per-interrupt scheduling overhead within the guest operating system.
+
+The enlightenments are _not_ enabled by default. To enable them, perform the following steps:
+
+1. On the Harvester UI, go to **Virtual Machines**.
+
+1. Locate the target virtual machine, and then select **⋮ > Edit as YAML**.
+
+1. Add the following block to `.spec.template.spec.domain`:
+
+  ```yaml
+  features:
+    acpi: { enabled: true }
+    apic: { enabled: true }
+    smm:  { enabled: true }
+    hyperv:
+      relaxed:    { enabled: true }
+      vapic:      { enabled: true }
+      spinlocks:  { enabled: true, spinlocks: 8191 }
+      vpindex:    { enabled: true }
+      synic:      { enabled: true }
+      synictimer: { enabled: true }
+      ipi:        { enabled: true }
+      runtime:    { enabled: true }
+      reset:      { enabled: true }
+  clock:
+    utc: {}
+    timer:
+      hpet:   { present: false }
+      hyperv: { present: true }
+      pit:    { tickPolicy: delay }
+      rtc:    { tickPolicy: catchup }
+  ```
+
+1. Restart the virtual machine to apply the changes.
+
+1. Verify that the enlightenments are active from the cluster level.
+
+  ```
+  kubectl get vmi <vm-name> -o json | jq '.spec.domain.features.hyperv'
+  ```
+
+The configuration above matches the recommendation for "best balance between performance and stability" in the SUSE Support Knowledge Base article [Lower disk I/O performance in Windows 11 VMs compared to Linux guests on Harvester](https://support.scc.suse.com/s/kb/Lower-disk-I-O-performance-in-Windows-11-VMs-compared-to-Linux-guests-on-Harvester). 
+
+You can enable more aggressive enlightenments (such as `tlbflush`, `frequencies`, `reenlightenment`, or `synictimer` with `direct: true`) on individual virtual machines to improve their performance. However, these enlightenments have the following disadvantages:
+
+- Require explicit support from the underlying cluster hardware.
+- Can affect live-migration compatibility across cluster nodes that run on different CPU generations.
+
+For more information, see [HyperV optimizations](https://kubevirt.io/user-guide/user_workloads/guest_operating_system_information/#hyperv-optimizations) in the KubeVirt documentation and [Tuning Windows VM Performance on SUSE Virtualization](https://www.suse.com/c/tuning-windows-vm-performance-on-suse-virtualization/) in the SUSE blog.
 
 ## Known Issues
 

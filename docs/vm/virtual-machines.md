@@ -20,7 +20,13 @@ You can create [Linux VMs](../vm/create-vm.md) using one of the following method
 - Kubernetes API: Create a `VirtualMachine` object. 
 - [Harvester Terraform Provider](../terraform/terraform-provider.md): Define a `harvester_virtualmachine` resource block. 
 
-Creating [Windows VMs](../vm/create-windows-vm.md) on the Harvester UI involves slightly different steps. Harvester provides a VM template named `windows-iso-image-base-template` that adds a volume with the Virtio drivers for Windows, which streamlines the VM configuration process. If you require Virtio devices but choose to not use the template, you must add your own Virtio drivers for Windows to enable correct hardware detection. 
+Creating [Windows VMs](../vm/create-windows-vm.md) on the Harvester UI involves slightly different steps. Harvester provides a VM template named `windows-iso-image-base-template` that adds a volume with the Virtio drivers for Windows, which streamlines the VM configuration process. If you require Virtio devices but choose to not use the template, you must add your own Virtio drivers for Windows to enable correct hardware detection.
+
+:::note
+
+Before creating virtual machines, review [Resource Overcommit](../vm/resource-overcommit.md) and verify that the cluster's default CPU, memory, and storage allocation ratios match your workload requirements. The default values suit dense, general-purpose workloads but may be too aggressive for latency-sensitive or CPU-bound guests.
+
+:::
 
 ## Validated Guest Operating Systems
 
