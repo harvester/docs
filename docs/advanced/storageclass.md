@@ -202,7 +202,7 @@ Avoid changing the storage profile or CDI directly. Instead, allow the Harvester
 The following are the default values for the supported StorageClasses:
 
 - Longhorn V2 Data Engine
-    - `cdi.harvesterhci.io/storageProfileCloneStrategy`: `"copy"`
+    - `cdi.harvesterhci.io/storageProfileCloneStrategy`: `"csi-clone"`
     - `cdi.harvesterhci.io/storageProfileVolumeSnapshotClass`: `"longhorn-snapshot"`
 
 - LVM
