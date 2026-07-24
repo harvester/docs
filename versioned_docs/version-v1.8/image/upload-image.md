@@ -135,6 +135,26 @@ If Rancher is deployed on an RKE2 cluster, perform the following steps:
 
 3. Delete the stuck image, and then restart the upload process.
 
+#### Image Upload with a Third-Party StorageClass Fails with `context canceled`
+
+When uploading a large `qcow2` image with a third-party StorageClass, the upload progress may remain at *99%* for a while and then fail with a `context canceled` error.
+
+This issue can occur because CDI needs additional time to convert the `qcow2` image during the final stage of the upload. If the conversion takes longer than the default Harvester ingress proxy timeout, the request may time out.
+
+This error does not necessarily mean that the upload has failed. The image upload may continue in the background, and the VM image may eventually become healthy. You can check the related `cdi-upload-*` pod to confirm whether the upload is still running.
+
+To work around this issue, increase the ingress proxy timeout:
+
+```
+kubectl annotate ingress rancher-expose \
+  -n cattle-system \
+  nginx.ingress.kubernetes.io/proxy-read-timeout="1800" \
+  nginx.ingress.kubernetes.io/proxy-send-timeout="1800" \
+  --overwrite
+```
+
+This increases the proxy timeout to 30 minutes.
+
 #### Uploading Images Previously Downloaded from Harvester
 
 Starting with **v1.5.5**, Longhorn [compresses backing images for downloading](https://github.com/longhorn/backing-image-manager/pull/153). If you attempt to upload a compressed backing image, Harvester rejects the attempt and displays the message **Upload failed: the uploaded file size xxxx should be a multiple of 512 bytes since Longhorn uses directIO by default** because the compressed data violates Longhorn's data alignment.
