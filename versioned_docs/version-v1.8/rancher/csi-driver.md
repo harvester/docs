@@ -31,9 +31,13 @@ The Harvester Container Storage Interface (CSI) Driver provides a standard CSI i
 
 :::note
 
-For single-node read-write (RWO) volumes, the Harvester CSI driver hot-plugs volumes to the VM that runs as the guest Kubernetes node. Each guest node VM can have up to 256 attached volumes. This limit includes non-CSI volumes such as the root disk and cloud-init disk.
+For **ReadWriteOnce (RWO)** volumes, the Harvester CSI Driver hotplugs underlying persistent volumes directly to virtual machines acting as guest nodes.
 
-If many workloads with PVCs are scheduled on the same guest Kubernetes node, the node VM can reach the volume limit and volume attachment may fail. To avoid this issue, distribute PVC-backed workloads across multiple guest nodes or add more guest worker nodes.
+KubeVirt enforces a hard limit of 256 volumes per virtual machine instance, including non-CSI disks such as the root disk and cloud-init disk. Consequently, a single guest node can realistically host a maximum of 245 CSI volumes.
+
+If too many PVC-dependent workloads are scheduled on the same guest node, volume attachment will fail with the error `VM Schema Invalid: Max Disk Limit (256) Exceeded on Guest Cluster`.
+
+To prevent this issue, distribute PVC-dependent workloads across multiple guest nodes or add guest worker nodes.
 
 :::
 
