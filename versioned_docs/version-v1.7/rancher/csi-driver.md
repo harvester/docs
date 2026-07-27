@@ -543,6 +543,18 @@ Kubernetes distributions such as RKE2 typically bundle and automatically deploy 
     kubectl get crd | grep snapshot.storage.k8s.io
     ```
 
+1. Apply a VolumeSnapshotClass manifest.
+
+    Example:
+
+    ```yaml
+    apiVersion: snapshot.storage.k8s.io/v1
+    deletionPolicy: Delete
+    driver: driver.harvesterhci.io
+    kind: VolumeSnapshotClass
+    metadata:
+      name: harvester-snap
+    ```
 ## Upgrade the CSI Driver
 
 :::note

@@ -532,6 +532,19 @@ Kubernetes distributions such as RKE2 typically bundle and automatically deploy 
     kubectl get crd | grep snapshot.storage.k8s.io
     ```
 
+1. Apply a VolumeSnapshotClass manifest.
+
+    Example:
+
+    ```yaml
+    apiVersion: snapshot.storage.k8s.io/v1
+    deletionPolicy: Delete
+    driver: driver.harvesterhci.io
+    kind: VolumeSnapshotClass
+    metadata:
+      name: harvester-snap
+    ```
+
 ## Volume Backups
 
 Starting with **v0.1.28**, the Harvester CSI Driver supports remote volume backup and restore for guest Kubernetes clusters. This feature allows you to create a backup of a PVC to the Harvester backup target, and then restore it in the same guest cluster or a different guest cluster that uses the same Harvester cluster.
