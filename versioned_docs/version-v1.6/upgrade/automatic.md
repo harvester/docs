@@ -103,57 +103,57 @@ For more information, see [Phase 4: Upgrade Nodes](./troubleshooting.md#phase-4-
 
 ### Planned VM Shutdown vs. Live Migration
 
-Live-migratable virtual machines are automatically migrated during an upgrade, as described in [Live-Migratable Virtual Machines](#live-migratable-virtual-machines). For most workloads, this is the best option because it avoids downtime. However, even when a virtual machine *can* be live-migrated, doing so is not always the most reliable choice. For certain workloads, gracefully shutting them down before the upgrade is more predictable.
+[Live-migratable virtual machines](#live-migratable-virtual-machines) are automatically migrated during an upgrade. Live migration is recommended for most workloads because it avoids downtime. However, for sensitive or complex workloads requiring predictability, gracefully shutting down virtual machines before the upgrade is the safest approach.
 
 #### When Live Migration May Not Converge
 
-Live migration copies a virtual machine's memory pages to the target node while the virtual machine keeps running. When a virtual machine writes to memory faster than the pages can be copied (a high *dirty rate*), the migration cannot catch up. Harvester then aborts the migration once it reaches [the completion timeout or the progress timeout](../vm/live-migration.md#migration-timeouts).
+Live migration copies a virtual machine's memory pages to the target node while the virtual machine continues to run. If a virtual machine writes to memory faster than its pages can be transferred across the network (a high *dirty rate*), the migration cannot converge. Harvester then aborts the migration upon reaching the [completion or progress timeout](../vm/live-migration.md#migration-timeouts).
 
-This is a common problem for write-heavy workloads (such as busy databases) when the dirty rate exceeds the available migration bandwidth. If these migrations cannot converge within the maintenance window, the upgrade may stall.
+This issue commonly affects write-heavy workloads (such as active databases) where the memory dirty rate exceeds available bandwidth. If these migrations fail to converge within the maintenance window, the upgrade may stall.
 
 #### Comparison
 
 | Aspect | Live Migration | Planned VM Shutdown |
 | --- | --- | --- |
-| Downtime | None (zero downtime) | Yes, for the duration of the upgrade |
-| Convergence risk for write-heavy VMs | High — may fail to converge and abort | None — no migration involved |
-| Maintenance-window predictability | Lower — completion time depends on dirty rate and bandwidth | Higher — shutdown and restart times are predictable |
-| Operational effort | Low — automatic | Higher — requires planning and coordinating downtime |
-| Resource overhead during upgrade | Higher — target node must host the VM during migration | Lower — no concurrent copy of VM state |
+| Downtime | None | Brief service interruption |
+| Convergence risk for write-heavy VMs | High (risk of failure to converge and abort) | None (no migration involved) |
+| Maintenance window predictability | Low (completion time depends on dirty rate and bandwidth) | High (predictable shutdown and restart times) |
+| Operational effort | Low (automatic) | High (requires planning and downtime coordination) |
+| Resource overhead during upgrade | High (target node required to host the VM during migration) | Low (no concurrent copy of VM state) |
 
-#### Guidance
+:::tip
 
-- **Live migration** is the default and is suitable for most workloads. Keep it for virtual machines that can be migrated within the maintenance window.
+Based on these trade-offs, use live migration by default for any virtual machine that can complete migration within the maintenance window.
 
-- **Planned VM shutdown** is recommended for business-critical, write-heavy virtual machines when:
-  - Live migration is unlikely to converge within the maintenance window.
-  - A predictable, bounded maintenance window must be guaranteed.
+Gracefully shut down business-critical or write-heavy virtual machines before starting the upgrade when:
+- Live migration is unlikely to converge within the maintenance window.
+- A predictable, bounded maintenance window is strictly required.
+
+:::
 
 #### Performing a Planned Shutdown
 
-Gracefully shut down the selected virtual machines *before* starting the upgrade. Once the upgrade is complete, restart the virtual machines manually.
-
-:::note
-
-The `restoreVM` option in the [`upgrade-config`](../advanced/settings.md#upgrade-config) setting only applies to [non-migratable virtual machines](../vm/live-migration.md#non-migratable-virtual-machines) that Harvester powers off automatically during the upgrade. It does not restart live-migratable virtual machines that you shut down manually as part of a planned shutdown.
-
-:::
+Gracefully shut down selected virtual machines _before_ starting the upgrade. Once the upgrade completes, manually power the virtual machines back on.
 
 :::caution
 
-Avoid powering on a large number of virtual machines at the same time. Simultaneous boots can cause CPU and storage I/O spikes (a *boot storm*) that slow down or destabilize the cluster. Restart virtual machines in batches, prioritizing the most critical workloads first.
+The following are key post-upgrade restart considerations:
+
+- Avoid powering on a large number of virtual machines simultaneously, which can cause CPU and storage I/O spikes (_a boot storm_) that slow down or destabilize the cluster. Restart virtual machines in batches, prioritizing the most critical workloads first.
+
+- The `restoreVM` option in [`upgrade-config`](../advanced/settings.md#upgrade-config) only applies to [non-migratable virtual machines](../vm/live-migration.md#non-migratable-virtual-machines) that Harvester automatically powers off. Virtual machines that you manually shut down are not automatically powered on after the upgrade.
 
 :::
 
-#### Mitigations If You Keep Live Migration
+#### Mitigation Measures for Live Migration
 
-If you prefer to keep live migration for write-heavy virtual machines, consider the following:
+If you prefer to use live migration for write-heavy virtual machines, consider the following mitigation measures:
 
 - Configure a dedicated [VM migration network](../advanced/vm-migration-network.md) to increase migration bandwidth and isolate migration traffic.
 
-- Tune the migration strategy and bandwidth (for example, enable auto-converge or post-copy, or adjust `bandwidthPerMigration`), or apply per-VM migration policies. For details, see the knowledge base article [VM Live Migration Policy and Configuration](https://harvesterhci.io/kb/vm_live_migration_policy_and_configuration).
+- Tune the migration strategy and parameters. You can enable auto-converge or post-copy, adjust the `bandwidthPerMigration` value, or apply migration policies specific to indiviual virtual machines. For more information see, see the knowledge base article [VM Live Migration Policy and Configuration](https://harvesterhci.io/kb/vm_live_migration_policy_and_configuration).
 
-- Schedule upgrades during periods of low write activity to reduce the dirty rate.
+- Perform upgrades during periods of low write activity to minimize memory dirtying.
 
 ## Before starting an upgrade
 
