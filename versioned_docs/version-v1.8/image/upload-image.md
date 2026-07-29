@@ -39,7 +39,9 @@ To import virtual machine images in the **Images** page, enter a URL that can be
 
 To import a virtual machine image from a repository using the API, create a `VirtualMachineImage` object. You must specify a URL that can be accessed from the cluster.
 
-Example:
+By default, a `VirtualMachineImage` object uses the Longhorn backing image backend. To store images in third-party storage or Longhorn V2 Data Engine volumes, use the Containerized Data Importer (CDI) backend and specify the target StorageClass.
+
+Example (Longhorn backing image backend):
 
 ```yaml
 apiVersion: harvesterhci.io/v1beta1
@@ -54,6 +56,26 @@ spec:
   url: "https://download.opensuse.org/repositories/Cloud:/Images:/Leap_15.5/images/openSUSE-Leap-15.5.x86_64-NoCloud.qcow2"
   checksum: 80c27afb7cd791ac86ee1b0b0c572a242f6142579db5beac841e71151d370cd6
 ```
+
+Example (CDI backend):
+
+```yaml
+apiVersion: harvesterhci.io/v1beta1
+kind: VirtualMachineImage
+metadata:
+  name: opensuse-leap-nfs
+  namespace: default
+spec:
+  backend: cdi
+  description: A VM image stored in third-party storage
+  displayName: openSUSE-Leap-NFS
+  sourceType: download
+  url: "https://download.opensuse.org/repositories/Cloud:/Images:/Leap_15.5/images/openSUSE-Leap-15.5.x86_64-NoCloud.qcow2"
+  checksum: 80c27afb7cd791ac86ee1b0b0c572a242f6142579db5beac841e71151d370cd6
+  targetStorageClassName: nfs-csi
+```
+
+Replace `nfs-csi` with the name of the StorageClass for your storage solution. The target StorageClass cannot be changed after the image is created.
 
 For more information, see the [API reference](/v1.6/api/create-namespaced-virtual-machine-image).
 
@@ -149,15 +171,23 @@ On the **Volumes** page, click **Export Image**. Enter the image name and select
 
 ### Image StorageClass
 
-When creating an image, you can select a [StorageClass](../advanced/storageclass.md) and use its pre-defined parameters like replicas, node selectors and disk selectors .
+When creating an image, select a [StorageClass](../advanced/storageclass.md) on the **Storage** tab. Harvester selects the image backend according to the type of storage.
 
-:::note
+| Image Backend | StorageClass | Image Storage |
+| --- | --- | --- |
+| Longhorn backing image | Longhorn V1 Data Engine | Harvester creates an image-specific StorageClass that inherits parameters such as the number of replicas, node selectors, and disk selectors from the selected StorageClass. The image does not use the selected StorageClass directly. |
+| CDI | Longhorn V2 Data Engine, LVM, and third-party CSI storage | Harvester creates a golden image PVC directly in the selected StorageClass. |
 
-The image will not use the `StorageClass` selected here directly. It's just a `StorageClass` template.
+To create an image in third-party storage:
 
-Instead, it will create a special StorageClass under the hood with a prefix name of `longhorn-`. This is automatically done by the Harvester backend, but it will inherit the parameters from the StorageClass you have selected.
+1. [Install and configure the third-party CSI driver](../advanced/csidriver.md#install-the-csi-driver), and create a StorageClass for the storage solution.
+1. Configure the StorageClass [CDI settings](../advanced/storageclass.md#containerized-data-importer-cdi-settings). This step is required when CDI cannot automatically determine the volume mode and access modes for the CSI provisioner.
+1. On the **Images** page, select **Create Image**.
+1. Select **URL** or **File**, and configure the image source.
+1. On the **Storage** tab, select the StorageClass for the third-party storage solution.
+1. Select **Create**, and wait for the image to become ready.
 
-:::
+Harvester uses CDI to import the image into a golden image PVC in the selected StorageClass. Volumes created from the image use the clone strategy configured in the StorageClass CDI settings.
 
 ![](/img/v1.2/image-storageclass.png)
 
