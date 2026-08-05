@@ -14,7 +14,7 @@ title: "Managed DHCP (Experimental)"
 
 :::
 
-You can configure IP pool information and serve IP addresses to VMs running on Harvester clusters using the embedded Managed DHCP feature. This feature, which is an alternative to the standalone DHCP server, leverages the [harvester-vm-dhcp-controller](https://github.com/harvester/vm-dhcp-controller) add-on to simplify guest cluster deployment.
+You can configure IP pool information and serve IP addresses to VMs on Harvester VM Networks that do not have a standalone DHCP server. The Managed DHCP feature leverages the [harvester-vm-dhcp-controller](https://github.com/harvester/vm-dhcp-controller) add-on to simplify guest cluster deployment.
 
 :::note
 
@@ -29,6 +29,12 @@ Harvester uses the planned infrastructure network so you must ensure that networ
 - The Managed DHCP agents can still serve DHCP requests for existing entities even if the cluster's control plane stops working, ensuring that your virtual machine workload's network remains available.
 
 ## Limitations
+
+:::caution
+
+The Managed DHCP add-on is not compatible with overlay networks backed by Kube-OVN. For VMs connected to these networks, use the Kube-OVN per-subnet DHCP service and the `managedTap` binding plug-in. For instructions, see [Create a VPC](../../networking/kubeovn-vpc.md#create-a-vpc).
+
+:::
 
 - The Managed DHCP feature only works with the network interfaces specified in the VirtualMachine CRs. Network interfaces created in the virtual machine are not supported.
 - IP addresses are not allocated or deallocated when you add or remove network interfaces after the virtual machine is created. The actual MAC addresses are recorded in the VirtualMachineNetworkConfig CRs.
