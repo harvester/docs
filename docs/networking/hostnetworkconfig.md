@@ -57,138 +57,67 @@ A VlanConfig / NetworkConfig exists for the cluster network and covers the inten
 For static mode: valid CIDR addresses are prepared for each node.
 For underlay selection: the HostNetworkConfig must span all nodes in the cluster.
 
-### Configuring Host Network Config
-Via kubectl
-Create a HostNetworkConfig manifest and apply it with `kubectl apply -f <hostnetworkconfig>.yaml`.
+### Configuring the Host Networks
 
-#### Examples
+#### Host Network Configuration without Node Selectors
 
-##### DHCP Mode — All Nodes
-Creates a VLAN sub-interface on cluster network cn-1 with VLAN ID 2012 and assigns an IP address via DHCP on every node covered by the cluster network's VlanConfig.
+1. On the Harvester UI, go to **Networks > Host Networks**.
 
-```
-apiVersion: network.harvesterhci.io/v1beta1
-kind: HostNetworkConfig
-metadata:
-  name: cn1-vlan2012-dhcp
-spec:
-  clusterNetwork: cn-1
-  vlanID: 2012
-  mode: dhcp
-```
+1. Click **Create**.
 
-After applying, the following is configured on each node:
+    ![](/img/hnc-1.png)
 
-- VLAN 2012 is added to the bridge and uplink ports (cn-1-br, cn-1-bo).
-- Sub-interface cn-1-br.2012 is created and brought up.
-- An IP address is obtained via DHCP and applied to the sub-interface.
+1. Specify a unique name for the host network.
 
-##### Static Mode — Per-Node IPs
+1. On the **Mode** tab, configure the following settings:
 
-Assigns specific IP addresses to each node's sub-interface.
+    - **Mode**:
+      - `DHCP` IP address will be assigned to the host network interface from DHCP server.
+      - `Static` IP address provided by users.
+    - Cluster network
+    - VLAN ID
 
-```
-apiVersion: network.harvesterhci.io/v1beta1
-kind: HostNetworkConfig
-metadata:
-  name: cn1-vlan2012-static
-spec:
-  clusterNetwork: cn-1
-  vlanID: 2012
-  mode: static
-  ips:
-    node1: 192.168.1.10/24
-    node2: 192.168.1.11/24
-    node3: 192.168.1.12/24
-```
+1. Click **Create**.
 
-:::note
+#### Host Network Configuration with Node Selectors
 
-Replace the node names "node1,node2,node3" with the actual node names from your cluster
+1. On the Harvester UI, go to **Networks > Host Networks**.
 
-In static mode, you must provide an IP entry for every node covered by the VlanConfig's node selector. If a node is added to the cluster later, update the HostNetworkConfig to include the new node's IP before the config will apply to it.
+1. Click **Create**.
 
-:::
+    ![](/img/hnc-2.png)
 
-##### Node Selector — Targeted Nodes Only
+1. Specify a unique name for the host network.
 
-Applies the config only to nodes with the label network-role=l3.
+1. On the **Mode** tab, configure the following settings:
 
-```
-apiVersion: network.harvesterhci.io/v1beta1
-kind: HostNetworkConfig
-metadata:
-  name: cn1-vlan2014-selected
-spec:
-  nodeSelector:
-    matchLabels:
-      network-role: l3
-  clusterNetwork: cn-1
-  vlanID: 2014
-  mode: dhcp
-```
-Label the desired nodes before or after creating the resource:
+    - **Mode**:
+      - `DHCP` IP address will be assigned to the host network interface from DHCP server.
+      - `Static` IP address provided by users.
+    - cluster network
+    - VLAN ID
 
-```
-kubectl label node <node-name> network-role=l3
-```
+1. **Node Selector**: Add a `key` and `value` pair matching the labels from nodes in the cluster.
+                      Host Network configuration is applied only to nodes matching the node's `key/value` pairs.
 
-When a label is removed from a node,
-```
-kubectl label node <node-name> network-role=-
-```
-the VLAN interface and bridge VLAN entry are automatically removed from that node.
+1. Click **Create**.
 
-##### Management Cluster Network
-
-The mgmt cluster network is also supported. This creates a VLAN sub-interface on the management bridge.
-
-```
-apiVersion: network.harvesterhci.io/v1beta1
-kind: HostNetworkConfig
-metadata:
-  name: mgmt-vlan2014-dhcp
-spec:
-  clusterNetwork: mgmt
-  vlanID: 2014
-  mode: dhcp
-```
-
-:::note
-
-Linux network interface names are limited to 15 characters. Ensure that the generated bridge name in the format `ClusterNetworkName>-br.<vlanID>` does not exceed this limit.
-
-:::
-
-### Configuring the Underlay of the Harvester Overlay Networking
+#### Configuring the Underlay of the Harvester Overlay Networking
 
 By default, KubeOVN uses the management interface `(mgmt-br.<vlan>)` as the underlay tunnel interface for inter-node VM traffic. You can designate any HostNetworkConfig with a configured VLAN interface as the underlay instead.
 Why Change the Underlay?
+
 
 Separates VM inter-node (VXLAN) traffic from management traffic, reducing contention.
 Allows use of a dedicated physical NIC and VLAN for VM traffic.
 Enforces network best practices in environments where the management plane must be isolated from the data plane.
 
 How to Set the Underlay:
-Set underlay: true on the HostNetworkConfig that should carry overlay traffic:
+Select the checkbox `underlay` under the host network configuration to enable a user configured underlay interface.
 
-```
-apiVersion: network.harvesterhci.io/v1beta1
-kind: HostNetworkConfig
-metadata:
-  name: cn1-vlan2012-underlay
-spec:
-  underlay: true
-  clusterNetwork: cn-1
-  vlanID: 2012
-  mode: static
-  ips:
-    node1: 10.115.8.15/21
-    node2: 10.115.8.16/21
-    node3: 10.115.8.17/21
-```
+![](/img/hnc-3.png)
 
-When underlay: true is set:
+When underlay is enabled,
 
 The hostnetworkconfig agent updates the ovn.kubernetes.io/tunnel_interface annotation on each node to point to the new sub-interface (e.g., cn-1-br.2012).
 KubeOVN automatically updates the remote VXLAN tunnel endpoints in the OVS bridges on each node to use the new interface's IPs.
@@ -226,8 +155,8 @@ ovs-vsctl show
 
 ```
 
-Reverting to the Default Underlay
-Set underlay: false on the resource. The agent restores the ovn.kubernetes.io/tunnel_interface annotation to the default management interface and KubeOVN reconfigures tunnel endpoints accordingly.
+Reverting to the Default Underlay:
+Clear the checkbox `underlay` under the host network configuration to disable the option.The agent restores the ovn.kubernetes.io/tunnel_interface annotation to the default management interface and KubeOVN reconfigures tunnel endpoints accordingly.
 
 ### Behavior Reference
 
@@ -308,14 +237,6 @@ status:
       vlanID: 2012
 
 ```
-
-Update the config using the following command:
-
-`kubectl edit hostnetworkconfig cn1-vlan2012-dhcp` and edit the contents and save the config.
-
-Delete the config using the following command:
-
-`kubectl delete hostnetworkconfig cn1-vlan2012-dhcp`.
 
 :::caution
 
