@@ -30,6 +30,19 @@ Isolation between virtual machines is typically achieved using either VLANs (in 
 
 For more information about the schema and usage guidelines, see [Subnet ACL](https://kubeovn.github.io/docs/v1.13.x/en/guide/subnet/#subnet-acl) and [ACL API Reference](https://kubeovn.github.io/docs/v1.13.x/en/reference/kube-ovn-api/#acl) in the Kube-OVN documentation.
 
+### Configuration
+
+See [Subnet Settings](./kubeovn-vpc.md#subnet-settings) for basic subnet configuration.
+
+On the **Access Control List** tab, click Add Rule and configure the following options:
+
+- Action – Specify the action to apply to traffic that matches the rule.
+- Direction – Define whether the rule applies to Ingress or Egress traffic.
+- Priority – Set the rule priority. Rules with higher priority are evaluated before rules with lower priority.
+- Match – Define the traffic criteria for the rule, such as matching the source or destination IP address.
+
+ ![](/img/subnet-acl.png)
+
 ### Examples
 
 - Example 1: All virtual machines within the `172.20.10.0/24` subnet, except those with the addresses `172.20.10.2` and `172.20.10.3` in the subnet range `172.20.10.0/30`, are allowed to communicate with each other.
@@ -165,6 +178,39 @@ NetworkPolicy rules deny traffic by default. To avoid affecting other pods, ensu
 - Traffic is isolated using pod selectors and namespaces.
 
 :::
+
+### Configuration
+
+
+1. On the Harvester UI, go to **Overlay Networks > Policies**.
+
+1. Click **Create**.
+
+1. Configure the following settings under **Ingress Rules** or **Egress Rules** tab.
+
+   1. Click `Add Allowed traffic source` to add one or more rules.
+
+   1. Click `AddAllowed Port`	to specify the port number and protocol.
+
+   ![](/img/np-ingress.png)
+
+   ![](/img/np-egress.png)
+
+1. Configure **Selectors**
+
+   These selectors define the pods to which the NetworkPolicy is applied.
+
+   ![](/img/np-selectors.png)
+
+1. Configure **Labels and Annotations**
+
+   - Label - Key-value pairs attached to the NetworkPolicy resource for identification, organization, and filtering.
+
+   - Annotations - Key-value pairs used to store additional metadata, such as ownership or tool-specific information.
+
+   ![](/img/np-labels.png)
+
+1. Click **Create**.
 
 The examples in this document focus on achieving isolation between VMs within the same subnet.
 
