@@ -159,14 +159,10 @@ If Rancher is deployed on an RKE2 cluster, perform the following steps:
 
 #### Image Upload with a Third-Party StorageClass Fails with `context canceled`
 
-When uploading a large `qcow2` image with a third-party StorageClass, the upload progress may remain at *99%* for a while and then fail with a `context canceled` error.
-
-This issue can occur because CDI needs additional time to convert the `qcow2` image during the final stage of the upload. If the conversion takes longer than the default Harvester ingress proxy timeout, the request may time out.
-
-This error does not necessarily mean that the upload has failed. The image upload may continue in the background, and the VM image may eventually become healthy. You can check the related `cdi-upload-*` pod to confirm whether the upload is still running.
-
-To work around this issue, increase the ingress proxy timeout:
-
+When uploading a large `qcow2` image with a third-party `StorageClass`, the upload progress may pause at *99%* before failing with a `context canceled` error.
+This issue occurs because CDI requires extra time to convert the `qcow2` image during the final upload stage. If the image conversion exceeds Harvester's default ingress proxy timeout, the request times out.
+A timeout error does not always mean the upload has failed. Image processing often continues in the background, and the virtual machine image may eventually transition to a `Healthy` state. You can verify whether the process is still running by checking the status of the corresponding `cdi-upload-*` pod.
+To prevent request timeouts during large image uploads, increase the ingress proxy timeout values. The following example increases the proxy timeout to 30 minutes (1800 seconds):
 ```
 kubectl annotate ingress rancher-expose \
   -n cattle-system \
