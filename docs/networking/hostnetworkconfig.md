@@ -116,7 +116,7 @@ Allows use of a dedicated physical NIC and VLAN for VM traffic.
 Enforces network best practices in environments where the management plane must be isolated from the data plane.
 
 How to Set the Underlay:
-Select the checkbox `underlay` under the host network configuration to enable a user configured underlay interface.
+Select the **Underlay** option to enable a custom underlay interface on the host network.
 
 ![](/img/hnc-3.png)
 
