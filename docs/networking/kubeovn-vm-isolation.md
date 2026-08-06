@@ -32,14 +32,14 @@ For more information about the schema and usage guidelines, see [Subnet ACL](htt
 
 ### Configuration
 
-See [Subnet Settings](./kubeovn-vpc.md#subnet-settings) for basic subnet configuration.
+See [Subnet Settings](./kubeovn-vpc.md#subnet-settings) for information about basic subnet configuration.
 
-On the **Access Control List** tab, click Add Rule and configure the following options:
+On the **Access Control List** tab, define traffic rules with the following components:
 
-- Action – Specify the action to apply to traffic that matches the rule.
-- Direction – Define whether the rule applies to Ingress or Egress traffic.
-- Priority – Set the rule priority. Rules with higher priority are evaluated before rules with lower priority.
-- Match – Define the traffic criteria for the rule, such as matching the source or destination IP address.
+- **Action**: Action to take when traffic matches the rule.
+- **Direction**: Traffic flow to which the rule applies (ingress or egress).
+- **Priority**: Integer that determines when the rule is evaluated. Rules with larger values are evaluated first (for example, `1000` takes precedence over `100`).
+- **Match**: Packet filtering criteria, such as the source or destination IP address.
 
  ![](/img/subnet-acl.png)
 
