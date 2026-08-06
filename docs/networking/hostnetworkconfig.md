@@ -91,11 +91,11 @@ For underlay selection: the HostNetworkConfig must span all nodes in the cluster
 
 1. On the **Mode** tab, configure the following settings:
 
-    - **Mode**:
-      - `DHCP` IP address will be assigned to the host network interface from DHCP server.
-      - `Static` IP address provided by users.
-    - cluster network
-    - VLAN ID
+    - **Mode**: Specify how IP addresses are assigned to the host network interface.
+      - **DHCP**: Automatically assigns IP addresses from a DHCP server.
+      - **Static**: Requires you to manually specify the IP address, subnet mask, and gateway.
+    - **Cluster network**: Select the cluster network to associate with this host network.
+    - **VLAN ID**: Specify the VLAN ID for tagged traffic.
 
 1. **Node Selector**: Add a `key` and `value` pair matching the labels from nodes in the cluster.
                       Host Network configuration is applied only to nodes matching the node's `key/value` pairs.
