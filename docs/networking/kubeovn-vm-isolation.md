@@ -186,15 +186,19 @@ NetworkPolicy rules deny traffic by default. To avoid affecting other pods, ensu
 
 1. Click **Create**.
 
-1. Configure the following settings under **Ingress Rules** or **Egress Rules** tab.
+1. On the **Ingress Rules** tab, configure the following settings:
 
-   1. Click `Add Allowed traffic source` to add one or more rules.
+    - **Sources**: IP blocks, namespaces, or pods from which inbound traffic is permitted.
+    - **Allowed ports**: Network ports and protocols open to inbound traffic.
 
-   1. Click `AddAllowed Port`	to specify the port number and protocol.
+    ![](/img/np-ingress.png)
 
-   ![](/img/np-ingress.png)
+1. On the **Egress Rules** tab, configure the following settings:
 
-   ![](/img/np-egress.png)
+    **Targets**: IP blocks, namespaces, or pods to which outbound traffic is permitted.
+    **Allowed ports**: Network ports and protocols permitted for outbound traffic.
+
+    ![](/img/np-egress.png)
 
 1. Configure **Selectors**
 
