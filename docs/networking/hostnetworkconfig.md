@@ -159,7 +159,7 @@ ovs-vsctl show
 ```
 
 Reverting to the Default Underlay:
-Clear the checkbox `underlay` under the host network configuration to disable the option.The agent restores the ovn.kubernetes.io/tunnel_interface annotation to the default management interface and KubeOVN reconfigures tunnel endpoints accordingly.
+Clear the **Underlay** option to disable the custom underlay interface. The agent restores the `ovn.kubernetes.io/tunnel_interface` annotation to the default management interface, and Kube-OVN reconfigures the tunnel endpoints accordingly.
 
 ### Behavior Reference
 
