@@ -200,19 +200,16 @@ NetworkPolicy rules deny traffic by default. To avoid affecting other pods, ensu
 
     ![](/img/np-egress.png)
 
-1. Configure **Selectors**
-
-   These selectors define the pods to which the NetworkPolicy is applied.
+1. On the **Selectors** tab, define rules that select the workload pods to which this network policy applies.
 
    ![](/img/np-selectors.png)
 
-1. Configure **Labels and Annotations**
+1. On the **Labels and Annotations** tab, configure the following settings:
 
-   - Label - Key-value pairs attached to the NetworkPolicy resource for identification, organization, and filtering.
+    - **Labels**: Key-value pairs used to categorize and filter the `NetworkPolicy` resource.
+    - **Annotations**: Non-identifying metadata used by external tools or system controllers.
 
-   - Annotations - Key-value pairs used to store additional metadata, such as ownership or tool-specific information.
-
-   ![](/img/np-labels.png)
+    ![](/img/np-labels.png)
 
 1. Click **Create**.
 
