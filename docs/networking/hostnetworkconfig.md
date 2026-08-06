@@ -97,8 +97,11 @@ For underlay selection: the HostNetworkConfig must span all nodes in the cluster
     - **Cluster network**: Select the cluster network to associate with this host network.
     - **VLAN ID**: Specify the VLAN ID for tagged traffic.
 
-1. **Node Selector**: Add a `key` and `value` pair matching the labels from nodes in the cluster.
-                      Host Network configuration is applied only to nodes matching the node's `key/value` pairs.
+1. On the **Node Selector** tab, define rules that match specific labels applied to nodes.
+    
+    Harvester applies the host network configuration only to nodes targeted by the defined node selector rules.
+
+    ![](/img/hnc-2.png)
 
 1. Click **Create**.
 
