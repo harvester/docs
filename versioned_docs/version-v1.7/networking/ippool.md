@@ -46,7 +46,14 @@ The `Scope` includes `Project`, `Namespace` and `Guest Kubernetes Cluster`. For 
 
 When a pool has only one `Scope` and each selects `All`, then this IP Pool is marked as `global` automatically.
 
+:::note
+
+The `global` status of an IP pool is automatically assigned by the mutating webhook via internal annotations `loadbalancer.harvesterhci.io/global-ip-pool: 'true'`. You cannot manually add, edit, or remove this annotation.
+
+:::
+
 ## Selection policy
+
 Each IP pool will have a specific range, and you can specify the corresponding requirements in the LB `annotations`. IP pools that meet the specified requirements will automatically assign IP addresses to LBs.
 
 - LBs utilize the following annotations to express requirements (all annotations are optional):
