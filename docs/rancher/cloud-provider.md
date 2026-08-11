@@ -439,7 +439,7 @@ Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and 
 
 - **Pool:** A pre-configured [IP pool](../networking/ippool.md) is required. The Harvester load balancer controller allocates an IP for the load balancer service according to the [IP pool selection policy](../networking/ippool.md#selection-policy). You can create IP pools using either the [Harvester UI](../networking/ippool.md#how-to-create) or the [Rancher UI](../networking/ippool.md#create-ip-pool-from-rancher-manager-ui). For more information, see [Best Practices](../networking/ippool.md#best-practice).
 
-    Starting with **Rancher v2.15.1**, you can select a VM network when creating a `LoadBalancer` service using the UI. This enables explicit binding of the load balancer to the correct network interface. If you do not select a VM network, the load balancer controller automatically determines the network to be used.
+    Starting with **Rancher v2.15.1**, you can select a VM network when creating a `LoadBalancer` service using the UI. This enables explicit binding of the load balancer to the correct network interface. If you do not select a VM network(specifically, the `cloudprovider.harvesterhci.io/network` is empty), the load balancer controller automatically determines the network to be used.
 
     On earlier Rancher versions (v2.12.x, v2.13.x, and v2.14.x), you can achieve the same result by adding the following annotations to the `Service` manifest:
 
@@ -470,16 +470,26 @@ Example:
 
 | Network-Interface Mapping | UI Behavior | Node A | Node B | Displayed Networks |
 | :--- | :--- | :--- | :--- | :--- |
-| Identical mapping across all nodes | All networks are displayed | `enp1s0` → `mgmt`<br>`enp2s0` → `net-101` | `enp1s0` → `mgmt`<br>`enp2s0` → `net-101` | `mgmt` and `net-101` |
-| Network in different interface positions across nodes | Network is hidden | `enp1s0` → `mgmt`<br>`enp2s0` → `net-101` | `enp1s0` → `mgmt`<br>`enp2s0` → `net-102`<br>`enp3s0` → `net-101` | `mgmt` |
-| Network absent on some nodes | Network is hidden | `enp1s0` → `mgmt` | `enp1s0` → `mgmt`<br>`enp2s0` → `net-101` | `mgmt` |
-| Swapped interface mapping order | Only matching networks are displayed | `enp1s0` → `mgmt`<br>`enp2s0` → `net-101`<br>`enp3s0` → `net-102` | `enp1s0` → `mgmt`<br>`enp2s0` → `net-102`<br>`enp3s0` → `net-101` | `mgmt` |
+| Identical mapping across all nodes | All networks are displayed | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-101` | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-101` | `mgmt` and `net-101` |
+| Network in different interface positions across nodes | Network is hidden | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-101` | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-102`<br/>`enp3s0` → `net-101` | `mgmt` |
+| Network absent on some nodes | Network is hidden | `enp1s0` → `mgmt` | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-101` | `mgmt` |
+| Swapped interface mapping order | Only matching networks are displayed | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-101`<br/>`enp3s0` → `net-102` | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-102`<br/>`enp3s0` → `net-101` | `mgmt` |
 
 :::tip
 
 If a VM network is attached in a different NIC order across nodes, shut down the affected virtual machines, reorder the network interfaces so the attachment order is consistent across all nodes, and restart the virtual machines.
 
 :::
+
+### Limitations
+
+- **Default LB provider:** The UI defaults to `kube-vip` as the selected network for load balancers. If you disable `kube-vip` and use a different load balancer provider, refer to the documentation for your chosen provider to configure it correctly.
+
+- **Pre-condition for LB on secondary network:** Each guest-cluster node (Harvester VM) must have the secondary-network NIC configured with a valid IP address and route. If this is not the case, the load balancer may not function. Verifying this NIC configuration is the first step when troubleshooting secondary-network LB issues.
+
+- **Changing the LB network:** If you need to change the load balancer network, delete and recreate the load balancer service. Directly modifying the network annotation on an existing service may cause unexpected behavior and is not recommended.
+
+- **Setting the network annotation incorrectly:** If you set the annotation `cloudprovider.harvesterhci.io/network` directly and the specified network is incorrect or exhibits an [Asymmetric Network Topology](#asymmetric-network-topology), the load balancer may fail to obtain an IP address or the assigned IP may be unreachable. There is no webhook validation for this annotation. It is recommended to select the target network through the UI instead.
 
 ### Health checks
 
