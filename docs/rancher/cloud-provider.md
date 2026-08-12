@@ -489,7 +489,7 @@ If a VM network is attached in a different NIC order across nodes, reconfigure t
 
 - **Load balancer network changes**: Delete and recreate the load balancer service if you require changes to the load balancer network. Modifying the network annotation on an existing service may cause unexpected behavior and is not supported.
 
-- **Setting the network annotation incorrectly:** If you set the annotation `cloudprovider.harvesterhci.io/network` directly and the specified network is incorrect or exhibits an [Asymmetric Network Topology](#asymmetric-network-topology), the load balancer may fail to obtain an IP address or the assigned IP may be unreachable. There is no webhook validation for this annotation. It is recommended to select the target network through the UI instead.
+- **Incorrect network annotation**: The load balancer may fail to obtain an IP address or become unreachable if you directly configure the `cloudprovider.harvesterhci.io/network` annotation and specify a network that is either invalid or exhibits an [asymmetric topology](#asymmetric-network-topology). Because webhook validation is not performed on this annotation, select the target network on the UI instead.
 
 ### Health checks
 
