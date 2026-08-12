@@ -328,7 +328,7 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
     172.30.0.0/24 via 172.20.10.1 dev net1
     ```
 
-1. Verify provider network bridge (br-pn1) and external subnet attached on the ovs (patch-localnet.subnetexternal-to-br-int)
+1. Verify that the provider network bridge (`br-pn1`) is present and that the patch port (`patch-localnet.subnetexternal-to-br-int`) connects the external subnet to `br-int`.
 
     ```
     $ kubectl exec -it ovs-ovn-q92zk -n kube-system -- /bin/bash
