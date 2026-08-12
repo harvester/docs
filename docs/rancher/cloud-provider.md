@@ -485,7 +485,7 @@ If a VM network is attached in a different NIC order across nodes, reconfigure t
 
 - **Default load balancer provider**: `kube-vip` is selected by default on the UI. If you disable `kube-vip` and use an alternative provider, refer to that provider's documentation for configuration instructions.
 
-- **Pre-condition for LB on secondary network:** Each guest-cluster node (Harvester VM) must have the secondary-network NIC configured with a valid IP address and route. If this is not the case, the load balancer may not function. Verifying this NIC configuration is the first step when troubleshooting secondary-network LB issues.
+- **Pre-condition for secondary network load balancing**: The secondary network interface of each guest cluster node must have a valid IP address and route. Otherwise, the load balancer cannot route traffic. Verifying this interface configuration should be the first step when troubleshooting issues related to secondary network load balancers.
 
 - **Load balancer network changes**: Delete and recreate the load balancer service if you require changes to the load balancer network. Modifying the network annotation on an existing service may cause unexpected behavior and is not supported.
 
