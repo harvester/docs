@@ -333,3 +333,48 @@ ResourceVersion: 0, AdditionalErrorMsg: Precondition failed: UID in precondition
 ### Related Issue
 
 [#10188](https://github.com/harvester/harvester/issues/10188)
+
+
+## Guest Cluster Load Balancer Allocates IP from Global Pool
+
+When a load balancer operating in IP pool mode targets a specific network, it unexpectedly allocates an IP address from the global IP pool if no dedicated pool matches the target network.
+
+### Issue Description
+
+In the following example, if an IP-pool-mode load balancer targets `default/vlan-200`, it selects an IP address from `pool-100` because no dedicated pool exists for `default/vlan-200`.
+
+| Type | Name | Details |
+| :--- | :--- | :--- |
+| VM network | `default/vlan-100` | - |
+| VM network | `default/vlan-200` | - |
+| VM network | `default/vlan-300` | - |
+| IP pool (global) | `pool-100` | Intended for `default/vlan-100`, but its `network` field is empty |
+| IP pool (dedicated) | `pool-300` | Bound to `default/vlan-300` |
+
+### Root Cause
+
+In the current implementation, a global IP pool can have an empty `network` field, causing the controller to skip network matching during IP allocation.
+
+- **Design rationale**: This behavior simplifies cluster setup in single-pool deployments, allowing a primary global IP pool to serve guest clusters without being tied to specific VM networks.
+
+- **Selection behavior**: During automatic IP pool selection, the controller does not verify whether the global IP pool matches the target network requested by the load balancer. As a result, the controller selects the global pool whenever no dedicated pool matches the target network.
+
+- **Backward compatibility constraints**: Strictly enforcing network matching on global IP pool would break backward compatibility for existing cluster deployments. Furthermore, because a global IP pool's `network` field can be left empty, requiring a strict network match would prevent the creation of new load balancers targeting global IP pool.
+
+### Workaround
+
+Select one of the following options to prevent unexpected global IP allocations:
+
+- **Option 1: Avoid creating global IP pool.**
+
+    Do not set all three **Scope** fields (`Project`, `Namespace`, and `Guest Kubernetes Cluster`) to `ALL(*)` when [creating an IP pool](../networking/ippool.md#create-ip-pool-from-rancher-manager-ui). In multi-tenant environments, avoid global IP pool because they prevent proper resource isolation and tenant access control.
+
+- **Option 2: Create dedicated IP pools for guest cluster networks.**
+
+    If you cannot modify or delete existing global IP pool, create a dedicated IP pool (or a placeholder pool) for every VM network used by guest clusters (for example, `pool-200`). Binding a dedicated pool to each network ensures the controller selects the intended pool instead of selecting an unassigned global pool.
+
+**Expected result**: The guest cluster load balancer will either allocate an IP address from the matching dedicated pool or fail explicitly with an error message such as `no matching pool` or `no IP`.
+
+### Related Issue
+
+[#10592](https://github.com/harvester/harvester/issues/10592)

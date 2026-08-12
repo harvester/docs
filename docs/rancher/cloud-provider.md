@@ -428,9 +428,27 @@ Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and 
 
 - **DHCP:** A DHCP server is required. The Harvester load balancer will request an IP address from the DHCP server.
 
-- **Pool:** An [IP pool](../networking/ippool.md) must be configured first. The Harvester load balancer controller will allocate an IP for the load balancer service following [the IP pool selection policy](../networking/ippool.md#selection-policy). Notice the difference between [Create IP Pool from Harvester UI directly](../networking/ippool.md#how-to-create) and [Create IP Pool from Rancher Managery UI](../networking/ippool.md#create-ip-pool-from-rancher-manager-ui). Refer to the [Best Practice](../networking/ippool.md#best-practice).
+    Starting with **Rancher v2.15.1**, you can select a VM network when creating a `LoadBalancer` service using the UI. This enables explicit binding of the virtual IP to the correct network interface. If you do not select a VM network, the load balancer uses the default interface.
+
+    On earlier Rancher versions (v2.12.x, v2.13.x, and v2.14.x), you can achieve the same result by adding the following annotations to the `Service` manifest:
+
+    - `cloudprovider.harvesterhci.io/ipam: "dhcp"`
+    - `cloudprovider.harvesterhci.io/network: "default/mgmt-vlan1"`
+
+    ![](../../static/img/v1.9/rancher/guest-cluster-load-balancer-dhcp.png)
+
+- **Pool:** A pre-configured [IP pool](../networking/ippool.md) is required. The Harvester load balancer controller allocates an IP for the load balancer service according to the [IP pool selection policy](../networking/ippool.md#selection-policy). You can create IP pools using either the [Harvester UI](../networking/ippool.md#how-to-create) or the [Rancher UI](../networking/ippool.md#create-ip-pool-from-rancher-manager-ui). For more information, see [Best Practices](../networking/ippool.md#best-practice).
+
+    Starting with **Rancher v2.15.1**, you can select a VM network when creating a `LoadBalancer` service using the UI. This enables explicit binding of the load balancer to the correct network interface. If you do not select a VM network(specifically, the `cloudprovider.harvesterhci.io/network` is empty), the load balancer controller automatically determines the network to be used.
+
+    On earlier Rancher versions (v2.12.x, v2.13.x, and v2.14.x), you can achieve the same result by adding the following annotations to the `Service` manifest:
+
+    - `cloudprovider.harvesterhci.io/ipam: "ippool"`
+    - `cloudprovider.harvesterhci.io/network: "default/mgmt-vlan1"`
 
     When a guest cluster uses multiple networks, or when multiple guest clusters with distinct networks share a single namespace, configuring the correct network parameters is critical. For details on how the system automatically determines the network, refer to [Guest Cluster Load Balancer Network Resolution](../networking/ippool.md#guest-cluster-load-balancer-network-resolution).
+
+    ![](../../static/img/v1.9/rancher/guest-cluster-load-balancer-pool.png)
 
 - **Share IP:** When creating a new load balancer service, you can re-utilize an existing load balancer service IP. The new service is referred to as a secondary service, while the currently chosen service is the primary one. To specify the primary service in the secondary service, you can add the annotation `cloudprovider.harvesterhci.io/primary-service: $primary-service-name`.  However, there are two known limitations:
   - Services that share the same IP address can't use the same port.
@@ -443,6 +461,35 @@ Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and 
 - Refer to [Guest Cluster Loadbalancer IP is not reachable](../troubleshooting/rancher.md#guest-cluster-loadbalancer-ip-is-not-reachable).
 
 :::
+
+#### Asymmetric Network Topology
+
+The network dropdown list on the UI displays only networks assigned to the _exact same interface position across all cluster nodes_.
+
+Example:
+
+| Network-Interface Mapping | UI Behavior | Node A | Node B | Displayed Networks |
+| :--- | :--- | :--- | :--- | :--- |
+| Identical mapping across all nodes | All networks are displayed | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-101` | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-101` | `mgmt` and `net-101` |
+| Network in different interface positions across nodes | Network is hidden | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-101` | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-102`<br/>`enp3s0` → `net-101` | `mgmt` |
+| Network absent on some nodes | Network is hidden | `enp1s0` → `mgmt` | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-101` | `mgmt` |
+| Swapped interface mapping order | Only matching networks are displayed | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-101`<br/>`enp3s0` → `net-102` | `enp1s0` → `mgmt`<br/>`enp2s0` → `net-102`<br/>`enp3s0` → `net-101` | `mgmt` |
+
+:::tip
+
+If VM network interfaces are attached in different orders across nodes, reconfigure the network interface order in the machine pool settings to allow Rancher and RKE2 to reprovision the guest cluster virtual machines.
+
+:::
+
+### Limitations
+
+- **Default load balancer provider**: `kube-vip` is selected by default on the UI. If you disable `kube-vip` and use an alternative provider, refer to that provider's documentation for configuration instructions.
+
+- **Pre-condition for secondary network load balancing**: The secondary network interface of each guest cluster node must have a valid IP address and route. Otherwise, the load balancer cannot route traffic. Verifying this interface configuration should be the first step when troubleshooting issues related to secondary network load balancers.
+
+- **Load balancer network changes**: Delete and recreate the load balancer service if you require changes to the load balancer network. Modifying the network annotation on an existing service may cause unexpected behavior and is not supported.
+
+- **Incorrect network annotation**: The load balancer may fail to obtain an IP address or become unreachable if you directly configure the `cloudprovider.harvesterhci.io/network` annotation and specify a network that is either invalid or exhibits an [asymmetric topology](#asymmetric-network-topology). Because webhook validation is not performed on this annotation, select the target network on the UI instead.
 
 ### Health checks
 
