@@ -70,7 +70,7 @@ For detailed instructions, see [Harvester Node Driver](./node/rke2-cluster.md).
 
 In the **Networks** section of the cluster creation screen, you must specify the correct underlay or overlay network.
 
-Also, For VMs provisioned as downstream cluster nodes, ensure external connectivity is available by enabling DHCP and dns_server is set to a valid DNS server IP address (for example, `8.8.8.8`) and natOutgoing=true on the subnet. This allows the VMs to obtain a default route and perform DNS resolution.
+For virtual machines provisioned as downstream cluster nodes, ensure external connectivity by enabling DHCP, specifying a valid `dns_server` IP address (for example, `8.8.8.8`), and setting `natOutgoing=true` on the subnet. This configuration ensures that nodes obtain a default route, perform DNS resolution, and access external networks.
 
 :::
 
