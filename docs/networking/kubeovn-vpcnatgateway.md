@@ -288,7 +288,7 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
     Events:                      <none>
     ```
 
-1. Check the vpc nat gw pod for interfaces (net1 attached to internal network, net2 attached to external network)
+1. Verify that the network interfaces of the `vpc-nat-gw` pod are attached correctly (`net1` to the internal network and `net2` to the external network).
 
     ```
     $ kubectl exec -it vpc-nat-gw-gw1-0 -n kube-system -- /bin/bash
