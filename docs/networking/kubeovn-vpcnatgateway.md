@@ -393,7 +393,7 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
 
    1. Click **Create**.
 
-1. Create an SNAT Rule
+1. Create an SNAT rule.
 
    1. On the Harvester UI, go to **Overlay Networks > NAT & Internet > Source Rules**.
 
