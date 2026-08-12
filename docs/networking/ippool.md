@@ -48,7 +48,7 @@ When a pool has only one `Scope` and each selects `All`, then this IP Pool is ma
 
 :::note
 
-The `global` status of an IP pool is automatically assigned by the mutating webhook via internal annotations `loadbalancer.harvesterhci.io/global-ip-pool: 'true'`. You cannot manually add, edit, or remove this annotation.
+A mutating webhook automatically assigns the global status to an IP pool via the internal annotation `loadbalancer.harvesterhci.io/global-ip-pool: 'true'`. You cannot manually add, edit, or remove this annotation.
 
 :::
 
@@ -68,7 +68,7 @@ Each IP pool will have a specific range, and you can specify the corresponding r
 
 :::note
 
-Known limitation: [Guest Cluster Load Balancer Gets IP from Unexpected Global IP Pool](../troubleshooting/rancher.md#guest-cluster-load-balancer-gets-ip-from-unexpected-global-ip-pool).
+For details on troubleshooting a known limitation, see [Guest Cluster Load Balancer Allocates IP from Global Pool](../troubleshooting/rancher.md#guest-cluster-load-balancer-allocates-ip-from-global-pool).
 
 :::
 
