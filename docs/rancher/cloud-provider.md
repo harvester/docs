@@ -477,7 +477,7 @@ Example:
 
 :::tip
 
-If a VM network is attached in a different NIC order across nodes, shut down the affected virtual machines, reorder the network interfaces so the attachment order is consistent across all nodes, and restart the virtual machines.
+If a VM network is attached in a different NIC order across nodes, reconfigure the network interface order in the machine pool settings and let Rancher Manager and RKE2 re-provision the guest cluster VMs.
 
 :::
 
