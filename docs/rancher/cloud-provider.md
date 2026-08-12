@@ -477,7 +477,7 @@ Example:
 
 :::tip
 
-If a VM network is attached in a different NIC order across nodes, reconfigure the network interface order in the machine pool settings and let Rancher Manager and RKE2 re-provision the guest cluster VMs.
+If VM network interfaces are attached in different orders across nodes, reconfigure the network interface order in the machine pool settings to allow Rancher and RKE2 to reprovision the guest cluster virtual machines.
 
 :::
 
