@@ -411,7 +411,7 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
 
    1. Click **Create**.
 
-#### Verification and Example Outputs
+#### Verification and Sample Outputs
 
 1. Verify the status of the external IP.
 
