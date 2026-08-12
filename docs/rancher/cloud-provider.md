@@ -491,6 +491,8 @@ If VM network interfaces are attached in different orders across nodes, reconfig
 
 - **Incorrect network annotation**: The load balancer may fail to obtain an IP address or become unreachable if you directly configure the `cloudprovider.harvesterhci.io/network` annotation and specify a network that is either invalid or exhibits an [asymmetric topology](#asymmetric-network-topology). Because webhook validation is not performed on this annotation, select the target network on the UI instead.
 
+- **Secondary network load balancer does not provide full traffic isolation**: Incoming traffic arrives on the secondary network interface and is NAT-ed to the pod network. Only workloads listening on the pod network can receive traffic through the load balancer. Workloads configured to listen exclusively on the secondary network interface cannot receive such traffic. Full traffic isolation is not yet supported.
+
 ### Health checks
 
 Beginning with Harvester cloud provider v0.2.0, additional health checks of the `LoadBalancer` service within the guest Kubernetes cluster are no longer necessary. Instead, you can configure [liveness](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-tcp-liveness-probe) and [readiness](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-readiness-probes) probes for your workloads. Consequently, any unavailable pods will be automatically removed from the load balancer endpoints to achieve the same desired outcome.
