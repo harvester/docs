@@ -450,10 +450,11 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
 
 ### Create a Virtual Machine
 
-[Create a virtual machine](../vm/create-vm.md#how-to-create-a-vm) and attach it to the `vswitchinternal` overlay network.
+1. [Create a virtual machine](../vm/create-vm.md#how-to-create-a-vm) and attach it to the `vswitchinternal` overlay network.
 
-Ping from VM (inside guest os) to any IP address external to the cluster, such as 8.8.8.8 must be successful
-The traffic from VM reaches net1 of vpc nat gw pod and with route installed egress out of net2 and hits the iptable rule for SNAT and translates 172.20.10.0/24 subnet ip to 10.115.55.200 for external connectivity.
+1. From within the virtual machine's guest operating system, ping an external IP address (for example, 8.8.8.8). The ping must succeed.
+
+Traffic leaving the virtual machine enters the `vpc-nat-gw` pod on interface`net1` and routes out through interface `net2`. An iptables SNAT rule translates the source IP from the internal subnet (`172.20.10.0/24`) to the external IP (`10.115.55.200`) for external connectivity.
 
 ![](/img/kubeovnSNATFlow.png)
 
