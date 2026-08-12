@@ -46,7 +46,14 @@ The `Scope` includes `Project`, `Namespace` and `Guest Kubernetes Cluster`. For 
 
 When a pool has only one `Scope` and each selects `All`, then this IP Pool is marked as `global` automatically.
 
+:::note
+
+A mutating webhook automatically assigns the global status to an IP pool via the internal annotation `loadbalancer.harvesterhci.io/global-ip-pool: 'true'`. You cannot manually add, edit, or remove this annotation.
+
+:::
+
 ## Selection policy
+
 Each IP pool will have a specific range, and you can specify the corresponding requirements in the LB `annotations`. IP pools that meet the specified requirements will automatically assign IP addresses to LBs.
 
 - LBs utilize the following annotations to express requirements (all annotations are optional):
@@ -58,6 +65,12 @@ Each IP pool will have a specific range, and you can specify the corresponding r
   - Every IP pool, except the global IP pool, has a unique scope different from others if its priority is `0`. The project, namespace, or cluster name of LBs should be in the scope of the IP pool if they want to get an IP from this pool.
 - `spec.selector.priority` specifies the priority of the IP Pool. The larger the number, the higher the priority. If the priority is not `0`, the value should differ. The priority helps you to migrate the old IP pool to the new one.
 - If the IP Pool has a scope that matches all projects, namespaces, and guest clusters, it's called a global IP pool, and only one global IP pool is allowed. If there is no IP pool matching the requirements of the LB, the IPAM will allocate an IP address from the global IP pool if it exists.
+
+:::note
+
+For details on troubleshooting a known limitation, see [Guest Cluster Load Balancer Allocates IP from Global Pool](../troubleshooting/rancher.md#guest-cluster-load-balancer-allocates-ip-from-global-pool).
+
+:::
 
 ### Examples
 - **Example 1:** You wish to set up an IP pool within the range `192.168.100.0/24` for the `default` namespace. In this scenario, all load balancers within the `default` namespace will receive an IP address from this designated IP pool:
