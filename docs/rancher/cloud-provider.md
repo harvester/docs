@@ -487,7 +487,7 @@ If a VM network is attached in a different NIC order across nodes, reconfigure t
 
 - **Pre-condition for LB on secondary network:** Each guest-cluster node (Harvester VM) must have the secondary-network NIC configured with a valid IP address and route. If this is not the case, the load balancer may not function. Verifying this NIC configuration is the first step when troubleshooting secondary-network LB issues.
 
-- **Changing the LB network:** If you need to change the load balancer network, delete and recreate the load balancer service. Directly modifying the network annotation on an existing service may cause unexpected behavior and is not recommended.
+- **Load balancer network changes**: Delete and recreate the load balancer service if you require changes to the load balancer network. Modifying the network annotation on an existing service may cause unexpected behavior and is not supported.
 
 - **Setting the network annotation incorrectly:** If you set the annotation `cloudprovider.harvesterhci.io/network` directly and the specified network is incorrect or exhibits an [Asymmetric Network Topology](#asymmetric-network-topology), the load balancer may fail to obtain an IP address or the assigned IP may be unreachable. There is no webhook validation for this annotation. It is recommended to select the target network through the UI instead.
 
