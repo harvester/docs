@@ -85,9 +85,9 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
 
 1. Click **Create**.
 
-#### Verification and Example Outputs
+#### Verification and Sample Outputs
 
-1. Verify if a new vpcnatgw statefulset and a pod created
+1. Verify that a new StatefulSet (`vpc-nat-gw`) and associated pod were created.
 
     ```
     $ kubectl get statefulset -n kube-system vpc-nat-gw-gw1 -o yaml
