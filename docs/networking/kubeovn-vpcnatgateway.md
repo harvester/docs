@@ -57,7 +57,7 @@ The examples in this document use the following settings:
 
 ### Create an External Network
 
-  Follow [underlay network](./kubeovn-pureunderlay.md#underlay-configuration) to create an external network.
+Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#underlay-configuration) to create an external network.
 
 ### VPC NAT Gateway
 
