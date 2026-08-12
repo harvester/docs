@@ -371,9 +371,9 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
         ovs_version: "3.5.3"
     ```
 
-### SNAT for external connectivity from Overlay VMs
+### SNAT for External Connectivity from Overlay VMs
 
-1. Create EIP
+1. Create an external IP.
 
    1. On the Harvester UI, go to **Overlay Networks > NAT & Internet > External IPs**.
 
