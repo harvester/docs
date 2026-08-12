@@ -485,7 +485,7 @@ Traffic leaving the virtual machine enters the `vpc-nat-gw` pod on interface`net
 
    1. Click **Create**.
 
-#### Verification and Example Outputs
+#### Verification and Sample Outputs
 
 1. Verify that the DNAT iptables rule exists inside the VPC NAT gateway pod.
 
