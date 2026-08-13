@@ -491,7 +491,7 @@ If VM network interfaces are attached in different orders across nodes, reconfig
 
 - **Incorrect network annotation**: The load balancer may fail to obtain an IP address or become unreachable if you directly configure the `cloudprovider.harvesterhci.io/network` annotation and specify a network that is either invalid or exhibits an [asymmetric topology](#asymmetric-network-topology). Because webhook validation is not performed on this annotation, select the target network on the UI instead.
 
-- **Secondary network load balancer does not provide full traffic isolation**: Incoming traffic arrives on the secondary network interface and is NAT-ed to the pod network. Only workloads listening on the pod network can receive traffic through the load balancer. Workloads configured to listen exclusively on the secondary network interface cannot receive such traffic. Full traffic isolation is not yet supported.
+**Secondary network load balancer traffic isolation**: Incoming traffic arrives on the secondary network interface and undergoes NAT to the pod network. Consequently, only workloads listening on the pod network can receive load balancer traffic. Workloads configured to listen exclusively on the secondary network interface cannot. Full traffic isolation is currently unsupported.
 
 ### Health checks
 
