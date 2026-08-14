@@ -21,17 +21,17 @@ You can provision [RKE2](./node/rke2-cluster.md) clusters in Rancher using the b
 
 In this page we will learn:
 
+- The main functionality and key configuration parameters of the **Harvester Cloud Provider**.
 - How to deploy the **Harvester Cloud Provider** in an RKE2 cluster.
 - How to use the [Harvester load balancer](#load-balancer-support).
 
 ### Main Functionalities
 
-The **Harvester Cloud Provider** (aka Cloud Controller Manager, or CCM) implements a subset of the cloudprovider interface defined by k8s.io/cloud-provider.
+The **Harvester Cloud Provider** (**HCP**, also known as **Cloud Controller Manager** or **CCM**) implements a subset of the `cloudprovider` interface defined by `k8s.io/cloud-provider`.
 
 - **[Node Instance Metadata Support](#node-instance-metadata-support)**: Dynamically discovers and reports node metadata (such as node names, regions, zones, and IP addresses), acting as a critical bootstrap component for the guest cluster.
 
 - **[Load Balancer Support](#load-balancer-support)**: Automatically provisions and configures load balancers for Kubernetes `Service` objects (type: `LoadBalancer`), routing external traffic to the correct guest nodes.
-
 
 :::important
 
@@ -73,8 +73,7 @@ The following table lists the most common parameters:
 | Parameter | Description | Default | First Available Version |
 | --- | --- | --- | --- |
 | `extraArgs` | Additional CLI flags passed to the cloud provider container | `[]` | 0.2.12 |
-| `cloudConfigPath` | Legacy host path to the cloud-config file | `"/etc/kubernetes/cloud-config"` | 0.2.3 |
-| `cloudConfigPath` | Legacy host path to the cloud-config file | `"/var/lib/rancher/rke2/etc/config-files/cloud-provider-config"` | 0.2.10 |
+| `cloudConfigPath` | Legacy host path to the cloud-config file (default: `"/etc/kubernetes/cloud-config"` in 0.2.3–0.2.9) | `"/var/lib/rancher/rke2/etc/config-files/cloud-provider-config"` | 0.2.10 |
 | `cloudConfig.secretName` | Kubernetes Secret name containing cloud-config data | `""` | 0.2.12 |
 | `cloudConfig.secretKey` | Secret key containing the configuration data | `"cloud-config"` | 0.2.12 |
 | `cloudConfig.hostPath` | Fallback host path for cloud-config | `"/var/lib/rancher/rke2/etc/config-files/cloud-provider-config"` | 0.2.12 |
@@ -101,7 +100,7 @@ The `global.cattle.clusterName` parameter configures a unique cluster identifier
 ```yaml
 global:
   cattle:
-    clusterName: "my-guest-cluster"
+    clusterName: "cgc"
 ```
 
 :::note
@@ -112,6 +111,36 @@ global:
 
 :::
 
+For **Rancher-provisioned RKE2 clusters**, Rancher automatically embeds the `harvester-cloud-provider` chart configuration within the `Cluster` custom resource (`provisioning.cattle.io/v1`).
+
+To customize these parameters, edit the `Cluster` resource directly in the Rancher UI or update it via **Edit as YAML**:
+
+```yaml
+apiVersion: provisioning.cattle.io/v1
+kind: Cluster
+metadata:
+  name: cgc
+spec:
+  rkeConfig:
+    chartValues:
+      harvester-cloud-provider:
+        cloudConfigPath: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
+        global:
+          cattle:
+            clusterName: cgc
+```
+
+![HCP configure nested in Rancher cluster object](/img/v1.9/rancher/hcp-chart-config-path.png)
+
+:::tip
+
+**YAML Structure & Indentation**: All HCP-related configuration parameters must be nested directly under the `harvester-cloud-provider`: key. Pay close attention to YAML indentation—incorrect indentation may cause Helm to ignore or misinterpret your chart parameters.
+
+When using **Edit as YAML** in the Rancher UI, the built-in editor automatically performs syntax checking and highlights indentation errors before you save.
+
+:::
+
+
 :::warning
 
 **Resource Allocation & Leakage Risks**
@@ -119,6 +148,29 @@ global:
 If `global.cattle.clusterName` is missing, the underlying Cloud Controller Manager framework defaults to using `kubernetes` as the cluster name.
 
 Because Harvester manages multi-tenant and multi-cluster environments, using the generic fallback name prevents Harvester from effectively identifying which guest cluster owns specific backing resources (such as Load Balancers). This can cause resource tracking conflicts, resource leaks, or unexpected resource exhaustion across clusters sharing the same Harvester installation.
+
+Starting with `HCP v0.2.12` and `Harvester v1.9.0`, both `harvester-cloud-provider` (running in the guest cluster) and `harvester-load-balancer` (running in the Harvester cluster) will emit warning logs whenever the cluster name is missing or defaults to `kubernetes`. If you observe these warning logs in either location, inspect your Helm chart parameters immediately and update them.
+
+:::
+
+##### Parameter Alignment & Terminology Mapping
+
+Due to legacy design evolution and the need to preserve backward compatibility across different layers, the **cluster identifier** is referenced using different parameter names depending on the context:
+
+| Context / Location | Parameter Term | Notes & Alignment |
+| :--- | :--- | :--- |
+| **Rancher UI** | `Cluster Name` | Set during guest cluster creation in the UI. |
+| **HCP Helm Chart** | `global.cattle.clusterName` | Configured in `values.yaml`. Injected automatically by Rancher UI for RKE2 guest clusters; must be set manually in all other cases. |
+| **HCP Deployment Flag** | `--cluster-name` | Internal container argument injected into the HCP deployment. The Helm chart template automatically converts `global.cattle.clusterName` to `--cluster-name`. When troubleshooting, check the Deployment manifest to verify this parameter is set correctly, but **do not edit it directly**. |
+| **Cloud Config Generation** | `serviceAccountName` | Parameter specified when generating the `cloud-config` payload. |
+
+:::warning
+
+Critical Alignment Requirement:
+
+Although different components use different parameter names (`Cluster Name`, `global.cattle.clusterName`, `--cluster-name`, and `serviceAccountName`), **they all represent the exact same cluster identifier and must strictly match**.
+
+If these values do not match, `harvester-cloud-provider` will fail to authenticate or properly manage resources in Harvester.
 
 :::
 
@@ -140,7 +192,7 @@ This approach relies on mounting the configuration file directly from the host n
 
 - Host Path Fallback (`cloudConfig.hostPath`):
 
-    Maintained as a deprecation placeholder. This is only evaluated if `secretName` is empty and `cloudConfigPath` is removed.
+    Maintained as a deprecation placeholder. This is only evaluated if `cloudConfig.secretName` is empty and `cloudConfigPath` is removed.
 
 ##### New Secret-Based Cloud-Config (Recommended)
 
@@ -253,7 +305,7 @@ Supported flags overview:
 
     - `--disable-vmi-controller`: Set to `true` to disable Harvester's custom VMI controller.
         - **Context**: The standard CCM framework `--controllers` flag only toggles upstream CCM controllers. Harvester introduces a dedicated VMI controller to continuously watch Harvester `VirtualMachineInstance` (VMI) resources and dynamically sync topology changes (such as region and zone updates) back to guest `Node` objects.
-        - **Recommendation**: Leave this enabled (`false`) to ensure dynamic topology sync works seamlessly as detailed in [Node Metadata Reporting](#node-metadata-reporting).
+        - **Recommendation**: Leave this enabled (`false`) to ensure dynamic topology sync works seamlessly as detailed in [Node Instance Metadata Support](#node-instance-metadata-support).
 
     - `--show-full-help-on-error`: Set to true to print full CLI help if a flag parsing error occurs at startup.
         - **Context**: By default, the upstream CCM framework dumps several hundred lines of help text on any CLI parsing error, making startup logs noisy and hard to read. `harvester-cloud-provider` silences this verbose help by default; setting this flag to `true` restores the upstream behavior.
@@ -570,7 +622,7 @@ When spinning up a K3s cluster using the Harvester node driver, you can perform 
       bootstrap: true
       repo: https://charts.harvesterhci.io/
       chart: harvester-cloud-provider
-      version: 0.2.15
+      version: 0.2.12
       helmVersion: v3
     ```
 
@@ -624,8 +676,8 @@ You can send `POST` and `GET` requests to the Harvester API endpoint `/v1/harves
 
 | Parameter | Type | Description | Example |
 | :--- | :--- | :--- | :--- |
-| `namespace` | String | Target Kubernetes namespace | `gc-test` |
-| `serviceAccountName` | String | Service account name, it is the guest cluster name | `gc4` |
+| `namespace` | String | Target namespace in Harvester where the guest cluster is deployed. | `gc-test` |
+| `serviceAccountName` | String | Name of the ServiceAccount created for `cloud-config` generation. **Must strictly match the guest cluster name.** | `gc4` |
 | `clusterRoleName` | String | ClusterRole to bind to the service account (optional) | `harvesterhci.io:cloudprovider` (only supported value) |
 | `outputFormat` | String | Output format | `yaml` (only supported value) |
 
