@@ -155,6 +155,57 @@ cloudConfig:
   hostPath: "/var/lib/rancher/rke2/etc/config-files/cloud-provider-config"
 ```
 
+Configuration steps:
+
+1.  **Generate and copy the cloud-config content**
+
+    Generate the `cloud-config` by following [Generate the Cloud Config for Harvester Cloud Provider](#generate-the-cloud-config-for-harvester-cloud-provider). Copy the full configuration content string under the `content:` key (note that this value is already Base64-encoded).
+
+    :::important
+
+    The `namespace` and `serviceAccountName` used when generating the `cloud-config` must strictly match the guest cluster deployment settings:
+
+    *   **`namespace`**: Must be the exact namespace where the guest cluster is deployed.
+    *   **`serviceAccountName`**: Must match the exact `cluster name` of the guest cluster.
+
+    If these values do not match, Harvester Cloud Provider (HCP) will be unable to connect to Harvester.
+
+    :::
+
+    ![Cloud Config Secret Content](/img/v1.9/rancher/hcp-config-secret-content.png)
+
+2.  **Paste the Secret manifest during cluster provisioning**
+
+    When provisioning the new guest cluster in the Rancher UI, paste the generated Secret definition into the **Additional Manifests** section under **Cluster Configuration**.
+
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: hcp-cloud-config
+      namespace: kube-system
+    type: Opaque
+    data:
+      cloud-config: <BASE64_ENCODED_CLOUD_CONFIG>
+    ```
+
+    :::important
+
+    **namespace**: The `harvester-cloud-provider` is deployed in `kube-system` by default, so this **Secret** must be created in the same namespace.
+
+    **Secret Key (data.cloud-config)**: The default key name expected by the provider is `cloud-config`. If you choose a different key name in data, make sure to update the Cloud Config Secret Key field (`cloudConfig.secretKey`) in the Rancher UI to match your custom key.
+
+    :::
+
+    ![Rancher UI Additional Manifests Field](/img/v1.9/rancher/hcp-config-additional-manifest.png)
+
+3.  **Reference the Secret name in the Harvester Cloud Provider addon**
+
+    Under **Addon: Harvester Cloud Provider**, enter the name of your created Secret into the **Cloud Config Secret Name** field.
+
+    ![Rancher UI Cloud Config Secret Name Field](/img/v1.9/rancher/hcp-config-sc-name.png)
+
+
 :::important
 
 In SELinux-enabled clusters, container runtimes enforce strict security context labeling. The `harvester-cloud-provider` container is blocked from mounting or reading local host files directly under `/var/lib/rancher/rke2/...` because host path access triggers SELinux permission violations (`EACCES: Permission denied`).
@@ -314,11 +365,11 @@ A Known Limitation: Rancher Manager UI IP Synchronization:
 
 :::
 
-#### 4. **Embedded Kube-vip Integration**
+#### 4. Embedded Kube-vip Integration
 
 `harvester-cloud-provider` integrates with `kube-vip` to provision and manage Virtual IPs for Kubernetes `LoadBalancer` services.
 
-1. **Disabling embedded kube-vip**
+##### Disabling embedded kube-vip
 
 If you want `harvester-cloud-provider` to retain its LoadBalancer IP allocation and management logic (such as pool-based IP assignment), but prefer using another LoadBalancer tool or external BGP/ARP speaker to handle VIP traffic routing, you can disable the embedded `kube-vip` sub-chart:
 
@@ -327,7 +378,7 @@ kube-vip:
   enabled: false
 ```
 
-2. **Support service `externalTrafficPolicy: Local`**
+##### Support service `externalTrafficPolicy: Local`
 
 By default, kube-vip runs exclusively on control-plane nodes. To support `externalTrafficPolicy: Local` for LoadBalancer services, traffic must be routed directly to nodes hosting workload pods. This requires two configuration changes:
 
@@ -574,7 +625,7 @@ You can send `POST` and `GET` requests to the Harvester API endpoint `/v1/harves
 | Parameter | Type | Description | Example |
 | :--- | :--- | :--- | :--- |
 | `namespace` | String | Target Kubernetes namespace | `gc-test` |
-| `serviceAccountName` | String | Service account name | `gc4` |
+| `serviceAccountName` | String | Service account name, it is the guest cluster name | `gc4` |
 | `clusterRoleName` | String | ClusterRole to bind to the service account (optional) | `harvesterhci.io:cloudprovider` (only supported value) |
 | `outputFormat` | String | Output format | `yaml` (only supported value) |
 
