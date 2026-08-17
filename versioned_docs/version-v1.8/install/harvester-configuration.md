@@ -24,10 +24,10 @@ scheme_version: 1
 server_url: "" # omitted or empty in CREATE mode; set to https://cluster-VIP:443 in JOIN mode
 token: TOKEN_VALUE
 os:
-  ssh_authorized_keys:
+  sshAuthorizedKeys:
     - ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB...
     - github:username
-  write_files:
+  writeFiles:
   - encoding: ""
     content: test content
     owner: root
@@ -198,7 +198,7 @@ token: "K1074ec55daebdf54ef48294b0ddf0ce1c3cb64ee7e3d0b9ec79fbc7baf1f7ddac6::nod
 ---
 <p>&nbsp;</p>
 
-### `os.ssh_authorized_keys`
+### `os.sshAuthorizedKeys`
 
 #### Definition
 
@@ -209,12 +209,12 @@ A list of SSH authorized keys that should be added to the default user, `rancher
 
 ```yaml
 os:
-  ssh_authorized_keys:
+  sshAuthorizedKeys:
     - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2TBZGjE+J8ag11dzkFT58J3XPONrDVmalCNrKxsfADfyy0eqdZrG8hcAxAR/5zuj90Gin2uBR4Sw6Cn4VHsPZcFpXyQCjK1QDADj+WcuhpXOIOY3AB0LZBly9NI0ll+8lo3QtEaoyRLtrMBhQ6Mooy2M3MTG4JNwU9o3yInuqZWf9PvtW6KxMl+ygg1xZkljhemGZ9k0wSrjqif+8usNbzVlCOVQmZwZA+BZxbdcLNwkg7zWJSXzDIXyqM6iWPGXQDEbWLq3+HR1qKucTCSxjbqoe0FD5xcW7NHIME5XKX84yH92n6yn+rxSsyUfhJWYqJd+i0fKf5UbN6qLrtd/D"
     - "github:ibuildthecloud"
 ```
 
-### `os.write_files`
+### `os.writeFiles`
 
 A list of files to write to disk on boot. The `encoding` field specifies the content's encoding. Valid `encoding` values are:
 
@@ -227,7 +227,7 @@ Example
 
 ```yaml
 os:
-  write_files:
+  writeFiles:
   - encoding: b64
     content: CiMgVGhpcyBmaWxlIGNvbnRyb2xzIHRoZSBzdGF0ZSBvZiBTRUxpbnV4...
     owner: root:root
@@ -250,11 +250,11 @@ os:
     path: /etc/crontab
 ```
 
-### `os.persistent_state_paths`
+### `os.persistentStatePaths`
 
 #### Definition
 
-The `os.persistent_state_paths` option allows you to configure custom paths where modifications made to files will persist across reboots. Any changes to files in these paths will not be lost after a reboot.
+The `os.persistentStatePaths` option allows you to configure custom paths where modifications made to files will persist across reboots. Any changes to files in these paths will not be lost after a reboot.
 
 #### Example
 
@@ -262,7 +262,7 @@ Refer to the following example config for installing `rook-ceph` in Harvester:
 
 ```yaml
 os:
-  persistent_state_paths:
+  persistentStatePaths:
     - /var/lib/rook
     - /var/lib/ceph
   modules:
@@ -270,11 +270,11 @@ os:
     - nbd
 ```
 
-### `os.after_install_chroot_commands`
+### `os.afterInstallChrootCommands`
 
 #### Definition
 
-You can add additional software packages with `after_install_chroot_commands`. The `after-install-chroot` stage, provided by [elemental-toolkit](https://rancher.github.io/elemental-toolkit/docs/), allows you to execute commands not restricted by file system write issues, ensuring the persistence of user-defined commands even after a system reboot.
+You can add additional software packages with `afterInstallChrootCommands`. The `after-install-chroot` stage, provided by [elemental-toolkit](https://rancher.github.io/elemental-toolkit/docs/), allows you to execute commands not restricted by file system write issues, ensuring the persistence of user-defined commands even after a system reboot.
 
 #### Example
 
@@ -282,7 +282,7 @@ Refer to the following example config for installing an RPM package in Harvester
 
 ```yaml
 os:
-  after_install_chroot_commands:
+  afterInstallChrootCommands:
     - rpm -ivh <the url of rpm package>
 
 ```
@@ -291,7 +291,7 @@ DNS resolution is unavailable in the `after-install-chroot stage`, and the `name
 
 ```yaml
 os:
-  after_install_chroot_commands:
+  afterInstallChrootCommands:
     - "echo 'nameserver 8.8.8.8' | sudo tee /etc/resolv.conf"
     - "mkdir /usr/local/bin"
     - "curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && chmod 700 get_helm.sh && ./get_helm.sh"
@@ -530,7 +530,7 @@ os:
 
 :::note
 
-If `disable_password_auth` is set to `true` and no [`os.ssh_authorized_keys`](#osssh_authorized_keys) are configured, all SSH access to the node will be disabled. In this case, console access is the only way to reach the node.
+If `disable_password_auth` is set to `true` and no [`os.sshAuthorizedKeys`](#ossshAuthorizedKeys) are configured, all SSH access to the node will be disabled. In this case, console access is the only way to reach the node.
 
 :::
 
