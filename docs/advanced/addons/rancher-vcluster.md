@@ -10,11 +10,7 @@ title: "Rancher VCluster [Deprecated]"
 
 :::note
 
-**Deprecated as of Harvester v1.9.0**
-
-**rancher-vcluster** is an  *experimental* add-on. It is not included in the Harvester ISO, but you can download it from the [experimental-addons repository](https://github.com/harvester/experimental-addons). For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
-
-Please use the [rancher-k3k addon](./rancher-k3k.md)
+**rancher-vcluster** is deprecated in Harvester v1.9.0. Use the [**rancher-k3k** add-on](./rancher-k3k.md) instead.
 :::
 
 The **rancher-vcluster** add-on allows you to run Rancher as a workload on the underlying Harvester cluster and is implemented using [vCluster](https://www.vcluster.com).
