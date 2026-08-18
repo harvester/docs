@@ -266,17 +266,19 @@ Restart the `system-upgrade-controller` deployment to force SUC to reconcile all
 kubectl rollout restart deployment/system-upgrade-controller -n cattle-system
 ```
 
-### 4. Grafana Dashboard Shows Incorrect Migration Memory Transfer Rate Metric
 After the restart, SUC reschedules the plan job for the affected node. The upgrade should resume automatically within a few minutes.
 
 Related issue: [#9880](https://github.com/harvester/harvester/issues/9880)
 
-After upgrading from v1.7.x to v1.8.x, the **Migration Memory Transfer Rate** panel in the VM migration details Grafana dashboard fails to display data due to an outdated metric expression in the dashboard ConfigMap.
+### 4. Grafana Dashboard Fails to Display Migration Memory Transfer Rate
+
+After upgrading to v1.8.x, the **Migration Memory Transfer Rate** panel on the Grafana dashboard for virtual machine migration does not display any data because of an outdated metric expression in the dashboard's `ConfigMap`.
+
 ![before-patch.png](/img/v1.8/migration-metric/before-patch-memory-transfer-rate-metric.png)
 
 #### Workaround
 
-Run the following commands to patch the dashboard ConfigMap:
+Run the following commands to patch the dashboard's `ConfigMap`:
 
 ```bash
 inner_json=$(
@@ -293,7 +295,8 @@ kubectl patch -n cattle-dashboards configmap harvester-vm-migration-details-dash
   --type merge -p "{\"data\":{\"harvester_vm_migration_details.json\": $(jq -n --arg v "$inner_json" '$v')}}"
 ```
 
-After patching, the **Migration Memory Transfer Rate** panel will display correct data on the next live migration.
+After patching, the **Migration Memory Transfer Rate** panel displays data during the next live migration.
+
 ![after-patch.png](/img/v1.8/migration-metric/after-patch-memory-transfer-rate-metric.png)
 
 Related issue: [#11390](https://github.com/harvester/harvester/issues/11390)
