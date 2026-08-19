@@ -106,6 +106,93 @@ You can only use one type of local volume in each volume group. If necessary, cr
 
 For more information, see [StorageClass](../storageclass.md).
 
+## Encrypting an LVM Volume
+
+`dm-thin` LVM volumes can be encrypted at rest using LUKS2 (dm-crypt). Encryption is configured on the StorageClass, and it uses the same encryption secret convention as [Longhorn volume encryption](../../rancher/csi-driver/longhorn.md), so any volume, VM image, or virtual machine that uses an encrypted StorageClass is encrypted automatically.
+
+:::note
+
+Encryption is an opt-in property of the StorageClass. Existing (unencrypted) StorageClasses are unaffected, and you cannot convert a volume between the encrypted and unencrypted states.
+
+:::
+
+### Creating an Encryption Secret
+
+Create a `Secret` that holds the encryption passphrase in the `CRYPTO_KEY_VALUE` field. The remaining `CRYPTO_KEY_*` fields are optional and default to `aes-xts-plain64` / `sha256` / `256` / `argon2i` when omitted.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: lvm-encryption
+  namespace: default
+type: Opaque
+stringData:
+  CRYPTO_KEY_VALUE: "Your encryption passphrase"
+  CRYPTO_KEY_PROVIDER: "secret"
+  CRYPTO_KEY_CIPHER: "aes-xts-plain64"
+  CRYPTO_KEY_HASH: "sha256"
+  CRYPTO_KEY_SIZE: "256"
+  CRYPTO_PBKDF: "argon2i"
+```
+
+:::caution
+
+Store the passphrase securely and back it up. If the secret is lost, the encrypted data is **unrecoverable**.
+
+:::
+
+### Creating an Encrypted StorageClass
+
+1. On the Harvester UI, go to the **Storage** screen.
+
+1. Create a new StorageClass, select **LVM** in the **Provisioner** list, and configure the **Node**, **Volume Group Name**, and **Volume Group Type** (`dm-thin`) as described in [Creating a StorageClass for LVM](#creating-a-storageclass-for-lvm).
+
+1. On the **Parameters** tab, set **Volume Encryption** to **Yes**, and then select the encryption secret that you created.
+
+1. Click **Save**.
+
+You can also create the encrypted StorageClass directly. The `encrypted: "true"` parameter and the `csi.storage.k8s.io/*-secret-*` parameters that reference the encryption secret are required.
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: lvm-dm-thin-encrypted
+  annotations:
+    # Use host-assisted copy so image clones are written through the encryption
+    # layer. See the note below.
+    cdi.harvesterhci.io/storageProfileCloneStrategy: copy
+parameters:
+  type: dm-thin
+  vgName: <your-volume-group>
+  encrypted: "true"
+  csi.storage.k8s.io/provisioner-secret-name: lvm-encryption
+  csi.storage.k8s.io/provisioner-secret-namespace: default
+  csi.storage.k8s.io/node-publish-secret-name: lvm-encryption
+  csi.storage.k8s.io/node-publish-secret-namespace: default
+  csi.storage.k8s.io/node-stage-secret-name: lvm-encryption
+  csi.storage.k8s.io/node-stage-secret-namespace: default
+provisioner: lvm.driver.harvesterhci.io
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+allowedTopologies:
+  - matchLabelExpressions:
+      - key: topology.lvm.csi/node
+        values:
+          - <target-node-name>
+```
+
+To use a different passphrase per volume, replace the fixed secret name and namespace with the `${pvc.name}` and `${pvc.namespace}` templates.
+
+:::note
+
+When you create a VM image or clone an existing image into an encrypted StorageClass, set the clone strategy to **copy** (as shown in the annotation above, or on the **CDI Settings** tab of the StorageClass form). A host-assisted copy writes the data through the encryption layer; a block-level snapshot clone would bypass it.
+
+:::
+
+Any VM image, volume, or virtual machine that uses this StorageClass is encrypted at rest. VM snapshots, backups, and restores also preserve encryption because they reuse the encrypted StorageClass.
+
 ## Creating a Volume with LVM
 
 1. On the Harvester UI, go to the **Volumes** screen.
