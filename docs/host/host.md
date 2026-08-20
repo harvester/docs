@@ -142,18 +142,21 @@ Again, removing a control plane node in this situation is **not recommended** be
 
 ### 6. Delete RKE2 services and shut down the node.
 
+:::warning
+
+**Critical Warnings Before Running the Uninstall Script `/opt/rke2/bin/rke2-uninstall.sh`**
+
+- You must run the script **only on the target node**. Always verify your current hostname (using `hostname`) before running the command.
+
+- The script runs immediately **without asking for confirmation** (`y/n`). Once invoked, it stops services and permanently destroys node configurations and local data.
+
+:::
+
 1. Log in to the node using the root account.
 
 1. Run the script `/opt/rke2/bin/rke2-uninstall.sh` to delete RKE2 services running on the node.
 
 1. Shut down the node.
-
-:::note
-
-There's a [known issue](https://github.com/harvester/harvester/issues/1497) about node hard delete.
-Once resolved, you can skip this step.
-
-:::
 
 ### 7. Remove the node.
 
@@ -162,6 +165,83 @@ Once resolved, you can skip this step.
 1. Locate the node that you want to remove, and then click **⋮ > Delete**.
 
 ![delete.png](/img/v1.2/host/delete-node.png)
+
+This deletion process typically completes within one minute. If the UI status does not update automatically, refresh your browser to reload the cluster state.
+
+:::important
+
+The process deletes cluster components and configurations without wiping local disks and bootloader partitions.
+
+Transfer the decommissioned host to your IT infrastructure or system administration team for drive sanitization procedures compliant with your organization's data retention and hardware lifecycle policies.
+
+:::
+
+### Known Issue: Node Stuck in "Draining" State During Removal
+
+**Symptom**
+
+During node deletion, the host status displayed on the UI typically is `Kubelet stopped posting node status`.
+
+![uninstalled-node.png](/img/v1.9/host/node-removal-normally-uninstalled.png)
+
+If the UI displays `Node is draining due to kubelet/node not ready`, or toggles between `Kubelet stopped posting node status` and `Node is draining due to kubelet/node not ready` for more than 5 minutes without removing the host, you have encountered this issue. In the backend, `fleet-agent` pods are repeatedly scheduled onto the target node, creating a continuous `Terminating` loop that prevents node deletion.
+
+![re-drain-node.png](/img/v1.9/host/node-removal-node-draining.png)
+
+```sh
+$ kubectl get pods -A -owide | grep fleet
+cattle-fleet-local-system         fleet-agent-6dfc5584bf-4jm7r                            0/1     Terminating   0              46s     <none>            harv42   <none>           <none>
+cattle-fleet-local-system         fleet-agent-747c7b5f98-44lq5                            0/1     Pending       0              46s     <none>            harv42   <none>           <none>
+cattle-fleet-system               fleet-controller-6c5d89f545-q925w                       3/3     Running       3 (126m ago)   3h10m   10.52.0.8         harv31   <none>           <none>
+```
+
+**Cause**
+
+During node deletion, the changing cluster topology prompts `fleet-controller` to roll out new revisions of the `fleet-agent` deployment. Because `fleet-agent` includes broad tolerations (such as `node.kubernetes.io/unreachable:NoSchedule` and `node.kubernetes.io/unschedulable:NoSchedule`), `kube-scheduler` may continue to select the draining node as a valid target and redeploy agent pods onto it.
+
+:::note
+
+This is an intermittent issue caused by a scheduling race condition. It occurs most frequently on clusters with **three or more management nodes** when one of those management nodes is being deleted, as `kube-scheduler` attempts to schedule replacement `fleet-agent` pods onto it.
+
+:::
+
+**Workaround**
+
+The `fleet-agent` deployment template includes a soft node affinity rule, which you can use to break the scheduling loop. By default, Harvester nodes do not carry the `fleet.cattle.io/agent` label.
+
+```yaml
+spec:
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - preference:
+          matchExpressions:
+          - key: fleet.cattle.io/agent
+            operator: In
+            values:
+            - "true"
+        weight: 1
+```
+
+Temporarily assigning `fleet.cattle.io/agent=true` to a healthy node (other than the node being deleted) increases its scheduling weight. This forces `kube-scheduler` to steer replacement `fleet-agent` pods away from the draining node.
+
+1. Temporarily pin fleet-agent to a healthy active node:
+
+    ```sh
+    kubectl label node <healthy-active-node> fleet.cattle.io/agent=true --overwrite
+    ```
+
+1. Monitor the node deletion status on the Harvester UI until the process completes.
+
+1. Remove the temporary label after the node is successfully deleted from the cluster.
+
+    ```sh
+    kubectl label node <healthy-active-node> fleet.cattle.io/agent-
+    ```
+
+**Related Issue**
+
+[#11349](https://github.com/harvester/harvester/issues/11349)
 
 ## Role Management
 
