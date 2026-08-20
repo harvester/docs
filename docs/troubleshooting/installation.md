@@ -49,7 +49,7 @@ If the cluster token setup in the agent node is not matching the server node tok
 
 ```shell
 msg="Bootstrapping Rancher (v2.7.5/v1.25.9+rke2r1)"
-msg="failed to bootstrap system, will retry: generating plan: response 502: 502  Bad Gateway getting cacerts: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
+msg="failed to bootstrap system, will retry: generating plan: response 502: 502  Bad Gateway getting cacerts: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr>\r\n</body>\r\n</html>\r\n"
 ```
 
 Note that the Rancher version and IP address depend on your environment and might differ from the message above.
@@ -168,7 +168,7 @@ Harvester uses the following chart CRDs:
     - `rke2-runtimeclasses`
     - `rke2-multus`
     - `rke2-metrics-server`
-    - `rke2-ingress-nginx`
+    - `rke2-traefik`
     - `rke2-coredns`
     - `rke2-cannal`
 
@@ -185,25 +185,26 @@ You can use the `helm list -A` command to retrieve a list of installed charts.
 Example of output:
 
 ```shell
-NAME                                       	NAMESPACE                      	REVISION	UPDATED                                	STATUS  	CHART                                                                                   	APP VERSION
-fleet                                      	cattle-fleet-system            	4       	2025-09-24 09:07:10.801764068 +0000 UTC	deployed	fleet-107.0.0+up0.13.0                                                                  	0.13.0
-fleet-agent-local                          	cattle-fleet-local-system      	1       	2025-09-24 08:59:28.686781982 +0000 UTC	deployed	fleet-agent-local-v0.0.0+s-d4f65a6f642cca930c78e6e2f0d3f9bbb7d3ba47cf1cce34ac3d6b8770ce5
-fleet-crd                                  	cattle-fleet-system            	1       	2025-09-24 08:58:28.396419747 +0000 UTC	deployed	fleet-crd-107.0.0+up0.13.0                                                              	0.13.0
-harvester                                  	harvester-system               	1       	2025-09-24 08:59:37.718646669 +0000 UTC	deployed	harvester-0.0.0-master-ac070598                                                         	master-ac070598
-harvester-crd                              	harvester-system               	1       	2025-09-24 08:59:35.341316526 +0000 UTC	deployed	harvester-crd-0.0.0-master-ac070598                                                     	master-ac070598
-kubeovn-operator-crd                       	kube-system                    	1       	2025-09-24 08:59:34.783356576 +0000 UTC	deployed	kubeovn-operator-crd-1.13.13                                                            	v1.13.13
-mcc-local-managed-system-upgrade-controller	cattle-system                  	1       	2025-09-24 08:59:10.656784284 +0000 UTC	deployed	system-upgrade-controller-107.0.0                                                       	v0.16.0
-rancher                                    	cattle-system                  	1       	2025-09-24 08:57:20.690330683 +0000 UTC	deployed	rancher-2.12.0                                                                          	8815e66-dirty
-rancher-logging-crd                        	cattle-logging-system          	1       	2025-09-24 08:59:36.262080367 +0000 UTC	deployed	rancher-logging-crd-107.0.1+up4.10.0-rancher.10
-rancher-monitoring-crd                     	cattle-monitoring-system       	1       	2025-09-24 08:59:35.287099045 +0000 UTC	deployed	rancher-monitoring-crd-107.1.0+up69.8.2-rancher.15
-rancher-provisioning-capi                  	cattle-provisioning-capi-system	1       	2025-09-24 08:59:00.561162307 +0000 UTC	deployed	rancher-provisioning-capi-107.0.0+up0.8.0                                               	1.10.2
-rancher-webhook                            	cattle-system                  	2       	2025-09-24 09:02:38.774660489 +0000 UTC	deployed	rancher-webhook-107.0.0+up0.8.0                                                         	0.8.0
-rke2-canal                                 	kube-system                    	1       	2025-09-24 08:57:25.248839867 +0000 UTC	deployed	rke2-canal-v3.30.2-build2025071100                                                      	v3.30.2
-rke2-coredns                               	kube-system                    	1       	2025-09-24 08:57:25.341016864 +0000 UTC	deployed	rke2-coredns-1.42.302                                                                   	1.12.2
-rke2-ingress-nginx                         	kube-system                    	3       	2025-09-24 09:01:31.331647555 +0000 UTC	deployed	rke2-ingress-nginx-4.12.401                                                             	1.12.4
-rke2-metrics-server                        	kube-system                    	1       	2025-09-24 08:57:42.162046899 +0000 UTC	deployed	rke2-metrics-server-3.12.203                                                            	0.7.2
-rke2-multus                                	kube-system                    	1       	2025-09-24 08:57:25.341560394 +0000 UTC	deployed	rke2-multus-v4.2.106                                                                    	4.2.1
-rke2-runtimeclasses                        	kube-system                    	1       	2025-09-24 08:57:40.137168056 +0000 UTC	deployed	rke2-runtimeclasses-0.1.000                                                             	0.1.0
+NAME                                       	NAMESPACE                	REVISION	UPDATED                                	STATUS  	CHART                                                                                   	APP VERSION
+fleet                                      	cattle-fleet-system      	7       	2026-08-19 04:27:43.255592759 +0000 UTC	deployed	fleet-110.0.0+up0.16.0                                                                  	0.16.0
+fleet-agent-local                          	cattle-fleet-local-system	1       	2026-08-19 03:55:07.87234703 +0000 UTC 	deployed	fleet-agent-local-v0.0.0+s-8485a5dc16708bb7c6c863f3d8b5710a8fba51dfddb8712ac22b4c69b6fca
+fleet-crd                                  	cattle-fleet-system      	1       	2026-08-19 03:54:40.436201083 +0000 UTC	deployed	fleet-crd-110.0.0+up0.16.0                                                              	0.16.0
+harvester                                  	harvester-system         	1       	2026-08-19 03:56:15.415558184 +0000 UTC	deployed	harvester-0.0.0-master-5f26ee4b-dirty                                                   	master-5f26ee4b-dirty
+harvester-crd                              	harvester-system         	1       	2026-08-19 03:55:55.981360295 +0000 UTC	deployed	harvester-crd-0.0.0-master-5f26ee4b-dirty                                               	master-5f26ee4b-dirty
+kubeovn-operator-crd                       	kube-system              	1       	2026-08-19 03:55:53.905562097 +0000 UTC	deployed	kubeovn-operator-crd-1.16.2-dev.0                                                       	v1.16.2-dev.0
+mcc-local-managed-system-upgrade-controller	cattle-system            	2       	2026-08-19 03:56:25.679669008 +0000 UTC	deployed	system-upgrade-controller-110.0.0                                                       	v0.20.1
+rancher                                    	cattle-system            	1       	2026-08-19 03:52:32.850730397 +0000 UTC	deployed	rancher-2.15.0                                                                          	9994cd9-dirty
+rancher-logging-crd                        	cattle-logging-system    	1       	2026-08-19 03:56:02.878958079 +0000 UTC	deployed	rancher-logging-crd-109.0.0+up4.10.0-rancher.23
+rancher-monitoring-crd                     	cattle-monitoring-system 	1       	2026-08-19 03:55:54.297017024 +0000 UTC	deployed	rancher-monitoring-crd-109.0.3+up80.9.1-rancher.14
+rancher-turtles                            	cattle-turtles-system    	2       	2026-08-19 03:57:06.91719977 +0000 UTC 	deployed	rancher-turtles-110.0.0+up0.27.0                                                        	0.27.0
+rancher-webhook                            	cattle-system            	2       	2026-08-19 03:56:34.680194227 +0000 UTC	deployed	rancher-webhook-110.0.0+up0.11.0                                                        	0.11.0
+rke2-canal                                 	kube-system              	1       	2026-08-19 03:52:38.934327727 +0000 UTC	deployed	rke2-canal-v3.32.1-build2026072200                                                      	v3.32.1
+rke2-coredns                               	kube-system              	1       	2026-08-19 03:52:39.185411951 +0000 UTC	deployed	rke2-coredns-1.46.201                                                                   	1.13.1
+rke2-metrics-server                        	kube-system              	1       	2026-08-19 03:53:06.805134402 +0000 UTC	deployed	rke2-metrics-server-3.13.105                                                            	0.8.1
+rke2-multus                                	kube-system              	1       	2026-08-19 03:53:04.854508241 +0000 UTC	deployed	rke2-multus-v4.3.008                                                                    	4.3.0
+rke2-runtimeclasses                        	kube-system              	1       	2026-08-19 03:53:07.436814679 +0000 UTC	deployed	rke2-runtimeclasses-0.1.000                                                             	0.1.0
+rke2-traefik                               	kube-system              	2       	2026-08-19 03:55:56.389203275 +0000 UTC	deployed	rke2-traefik-40.1.009                                                                   	v3.7.1
+rke2-traefik-crd                           	kube-system              	1       	2026-08-19 03:53:06.682741753 +0000 UTC	deployed	rke2-traefik-crd-40.1.009                                                               	v3.7.1                                                          	0.1.0
 ```
 
 ### HelmChart CRD
@@ -244,19 +245,6 @@ Status:
 JobName: helm-install-rke2-coredns
 
 Namespace: kube-system
-Name: rke2-ingress-nginx
-Status:
-  - Type: JobCreated
-    Status: True
-    Reason: Job created
-    Message: Applying HelmChart using Job kube-system/helm-install-rke2-ingress-nginx
-  - Type: Failed
-    Status: False
-    Reason:
-    Message:
-JobName: helm-install-rke2-ingress-nginx
-
-Namespace: kube-system
 Name: rke2-metrics-server
 Status:
   - Type: JobCreated
@@ -294,6 +282,32 @@ Status:
     Reason:
     Message:
 JobName: helm-install-rke2-runtimeclasses
+
+Namespace: kube-system
+Name: rke2-traefik
+Status:
+  - Type: JobCreated
+    Status: True
+    Reason: Job created
+    Message: Applying HelmChart using Job kube-system/helm-install-rke2-traefik
+  - Type: Failed
+    Status: False
+    Reason:
+    Message:
+JobName: helm-install-rke2-traefik
+
+Namespace: kube-system
+Name: rke2-traefik-crd
+Status:
+  - Type: JobCreated
+    Status: True
+    Reason: Job created
+    Message: Applying HelmChart using Job kube-system/helm-install-rke2-traefik-crd
+  - Type: Failed
+    Status: False
+    Reason:
+    Message:
+JobName: helm-install-rke2-traefik-crd
 ```
 
 You can use the information in the following ways:
