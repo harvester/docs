@@ -401,3 +401,26 @@ Select one of the following options to prevent unexpected global IP allocations:
 ### Related Issue
 
 [#10592](https://github.com/harvester/harvester/issues/10592)
+
+## Guest Cluster LoadBalancer IP Leaks with Multiple Cloud Providers
+
+### Issue Description
+
+Deleting a `LoadBalancer` type service using `IPPool` mode in a guest cluster does not delete the corresponding backend Harvester LoadBalancer object, causing IP leaks.
+
+### Root Cause
+
+This occurs when `kube-vip-cloud-controller` is deployed alongside `harvester-cloud-provider` with its `service-lb-controller` enabled.
+
+If a `harvester-cloud-provider` pod restarts while a LoadBalancer service is removed or recreated, the deletion event may bypass `harvester-cloud-provider` and be acknowledged directly by `kube-vip-cloud-controller`. As a result, `harvester-cloud-provider` loses track of the backend LoadBalancer object and fails to clean it up.
+
+### Workaround
+
+Ensure only one `cloud-controller-manager` handles LoadBalancer services:
+
+*   Deploy only a single `cloud-controller-manager` in the cluster.
+*   Alternatively, disable the `service-lb-controller` in `harvester-cloud-provider` (supported in version 0.2.12 and later) to avoid conflicts with other third-party cloud controllers.
+
+### Related Issue
+
+[#11345](https://github.com/harvester/harvester/issues/11345)
