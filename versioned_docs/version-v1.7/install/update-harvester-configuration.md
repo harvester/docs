@@ -24,6 +24,12 @@ If you upgrade from a version before `v1.1.2`, the `cloud-init` file in examples
 
 :::
 
+:::info important
+
+After installation, Harvester does not re-read or reconcile changes made to `/oem/harvester.config`.
+
+:::
+
 ## Password of user `rancher`
 
 ### Runtime change
