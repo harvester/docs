@@ -274,7 +274,7 @@ os:
 
 #### Definition
 
-You can add additional software packages with `after_install_chroot_commands`. The `after-install-chroot` stage, provided by [elemental-toolkit](https://rancher.github.io/elemental-toolkit/docs/), allows you to execute commands not restricted by file system write issues, ensuring the persistence of user-defined commands even after a system reboot.
+You can add additional software packages with `after_install_chroot_commands`. The `after-install-chroot` stage allows you to execute commands not restricted by file system write issues, ensuring the persistence of user-defined commands even after a system reboot. For further details see [Installing RPMs or Other Binaries During System Installation and Upgrade](../advanced/installing-additional-software.md#installing-rpms-or-other-binaries-during-system-installation-and-upgrade).
 
 #### Example
 
@@ -301,7 +301,7 @@ os:
 
 :::note
 
-Upgrading Harvester causes the changes to the OS in the `after-install-chroot` stage to be lost. You must also configure the `after-upgrade-chroot` to make your changes persistent across an upgrade. Refer to [Runtime persistent changes](https://rancher.github.io/elemental-toolkit/docs/customizing/runtime_persistent_changes/) before upgrading Harvester.
+Upgrading Harvester causes the changes to the OS in the `after-install-chroot` stage to be lost. You must also configure the `after-upgrade-chroot` stage to make your changes persistent across an upgrade. Refer to [Installing RPMs or Other Binaries During System Installation and Upgrade](../advanced/installing-additional-software.md#installing-rpms-or-other-binaries-during-system-installation-and-upgrade) before upgrading Harvester.
 
 :::
 
