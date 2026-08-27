@@ -369,56 +369,57 @@ The Harvester Cloud Provider correctly applies network flags and updates Kuberne
 
 **Workaround**: Set network flags in `extraArgs` during initial cluster bootstrapping. Applying these flags to an existing cluster requires a cluster redeployment for the Rancher UI to reflect the updated node metadata.
 
-### Embedded Kube-vip Integration
+### Embedded `kube-vip` Integration
 
-`harvester-cloud-provider` integrates with `kube-vip` to provision and manage Virtual IPs for Kubernetes `LoadBalancer` services.
+The Harvester Cloud Provider integrates with `kube-vip` to provision and manage virtual IPs for Kubernetes `LoadBalancer` services.
 
-#### Disabling embedded kube-vip
+#### Disabling the Embedded `kube-vip`
 
-If you want `harvester-cloud-provider` to retain its LoadBalancer IP allocation and management logic (such as pool-based IP assignment), but prefer using another LoadBalancer tool or external BGP/ARP speaker to handle VIP traffic routing, you can disable the embedded `kube-vip` sub-chart:
+If you want the Harvester Cloud Provider to retain its load balancer IP allocation logic (such as pool-based IP assignment), but prefer using an external BGP/ARP speaker or alternative tool to handle VIP traffic routing, disable the embedded `kube-vip` sub-chart:
 
 ```yaml
 kube-vip:
   enabled: false
 ```
 
-#### Support service `externalTrafficPolicy: Local`
+#### Configuring Support for `externalTrafficPolicy: Local`
 
-By default, kube-vip runs exclusively on control-plane nodes. To support `externalTrafficPolicy: Local` for LoadBalancer services, traffic must be routed directly to nodes hosting workload pods. This requires two configuration changes:
+By default, `kube-vip` runs exclusively on management nodes. To support `externalTrafficPolicy: Local` for `LoadBalancer` services, traffic must route directly to nodes hosting active workload pods.
 
-1. Enable service leader election by setting `svc_election: "true"`.
+1. Enable service leader election by setting `svc_election: "true"` in the `kube-vip` environment configuration.
 
-1. Expand `kube-vip.affinity` rules so kube-vip pods run on worker nodes in addition to control-plane nodes.
+1. Expand `kube-vip.affinity` rules so `kube-vip` pods run on both management nodes and worker nodes.
 
-```yaml
-kube-vip:
-  env:
-    svc_election: "true"
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: node-role.kubernetes.io/control-plane
-            operator: Exists
-        - matchExpressions:
-          - key: node-role.kubernetes.io/worker
-            operator: Exists
-```
+    ```yaml
+    kube-vip:
+      env:
+        svc_election: "true"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+            - matchExpressions:
+              - key: node-role.kubernetes.io/worker
+                operator: Exists
+    ```
 
-:::important
+:::info important
 
 Best Practice: Ensure the node coverage for `externalTrafficPolicy: Local`.
 
+**Best Practice: Ensure Node Coverage for `externalTrafficPolicy: Local`**
+
 Deploying `kube-vip` across all nodes in the guest cluster is strongly recommended when using `externalTrafficPolicy: Local`.
+Because `kube-vip` only elects a leader and advertises a VIP on nodes that actively host workload pods, restricting pod scheduling creates the following coverage gaps:
 
-Because `kube-vip` requires a co-located workload pod on the same node to elect a leader and advertise the VIP:
+- **No common nodes**: If `kube-vip` runs only on management nodes while workload pods run exclusively on worker nodes, `kube-vip` cannot elect a leader and will fail to advertise the VIP for that service.
 
-- **No common nodes**: If `kube-vip` runs only on `control-plane` nodes while workload pods run exclusively on `worker` nodes, `kube-vip` cannot elect a leader and will not advertise the VIP for that service.
+- **Partial overlap**: If `kube-vip` runs on a subset of worker nodes (for example, `node1` and `node2`) while workload pods run on `node2` and `node3`, only the overlapping node (`node2`) can advertise the VIP.
 
-- **Partial overlap**: If `kube-vip` runs on a subset of worker nodes (e.g., `node1`, `node2`) while workload pods run on `node2` and `node3`, only the overlapping node (`node2`) can be elected to advertise the VIP.
-
-In both cases, the `high availability (HA)` of the LoadBalancer service is significantly compromised or lost entirely.
+In both scenarios, the high availability aspect of the `LoadBalancer` service is severely compromised or lost entirely.
 
 :::
 
