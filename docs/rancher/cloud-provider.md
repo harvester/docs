@@ -286,75 +286,71 @@ Consider the following usage notes when configuring complex flags:
 
     The target Harvester cluster must run Harvester v1.9.0 or later to support the `--management-network` flag for `LoadBalancer` services, designating it as the target load balancer network. Earlier Harvester versions fall back to `first-fit` resolution to select the target network. For more information, see [Guest Cluster Load Balancer Network Resolution](../networking/ippool.md#guest-cluster-load-balancer-network-resolution).
 
+#### Configuration Examples
 
 The following examples demonstrate how to configure `extraArgs` for various deployment scenarios:
 
-**Example 1: Disable LoadBalancer Controller**
+##### Disabling the Default Load Balancer Controller
 
-Use this configuration if you deploy an alternative load balancer controller and need to disable the default LoadBalancer controller provided by `harvester-cloud-provider`:
+Use this configuration when deploying an alternative to the default load balancer controller of the Harvester Cloud Provider.
 
 ```yaml
 extraArgs:
   - "--controllers=cloud-node-controller,cloud-node-lifecycle-controller,node-route-controller"
 ```
 
-:::info
+:::info important
 
-Disabling embedded `kube-vip`:
+Because `kube-vip` is embedded within the Harvester Cloud Provider to advertise load balancer IP addresses, disabling the upstream service controller typically requires disabling `kube-vip` in your Helm values as well.
 
-Because `kube-vip` is embedded within `harvester-cloud-provider` to advertise LoadBalancer IP addresses, disabling the upstream service controller typically means you should also disable kube-vip in your Helm values:
-
-If you plan to keep `kube-vip` enabled while using an alternative load balancer controller, that third-party controller must be capable of cooperating with `kube-vip`. Integrating third-party load balancer controllers with kube-vip is outside the scope of `harvester-cloud-provider`.
+If you keep `kube-vip` enabled while using an alternative load balancer controller, ensure the controller is compatible with `kube-vip`. Integrating third-party load balancer controllers with `kube-vip` is outside the scope of the Harvester Cloud Provider.
 
 :::
 
-**Example 2: Multi-Network / Multi-IP Configuration with Exclusions (Recommended)**
+##### Multi-Network and Multi-IP Configurations (Recommended)
 
-When guest cluster nodes are booted with multiple networks, dual-stack IP addresses, or multiple IPv4 addresses on a single interface, default `first-hit` selection logic can cause non-deterministic IP reporting.
+When guest cluster nodes use multiple networks, dual-stack IPs, or secondary IPv4 addresses on a single interface, the default `first-hit` selection logic can cause non-deterministic IP reporting.
 
 The following scenarios demonstrate how to use `extraArgs` to handle complex networking setups:
 
-**Example 2.1 : Multi-Network Environments (Network Selection)**
+**Network Selection in Multi-Network Environments**
 
-When cluster nodes are attached to multiple Harvester VM networks (e.g., `default/vlan-100` and `default/vlan-200`), `harvester-cloud-provider` might randomly select an interface. Setting `--management-network` forces the provider to only report node IPs from the specified network (e.g., `default/vlan-100`). Additionally, the provider will allocate LoadBalancer IPs from this designated network.
+- Scenario: Nodes are attached to multiple Harvester VM networks (for example, `default/vlan-100` and `default/vlan-200`).
+- Default behavior: The provider selects an interface non-deterministically based on discovery order.
+- Goal: Force the provider to allocate load balancer IPs and report node IPs exclusively from a designated network (for example, `default/vlan-100`).
 
 ```yaml
 extraArgs:
   - "--management-network=default/vlan-100"
 ```
 
-**Example 2.2: Dual-Stack Interfaces in Single-Stack (IPv4-Only) Clusters**
+**Dual-Stack Interfaces in Single-Stack (IPv4-Only) Clusters**
 
-When cluster nodes receive both IPv4 and IPv6 addresses, harvester-cloud-provider may default to reporting both of the IP addresses as the node's `InternalIP`. Setting `--node-ip-cidr` instructs the provider to select the matching IPv4 address as the primary `InternalIP` (relegating the IPv6 address to `ExternalIP`).
+- Scenario: Nodes are assigned both IPv4 and IPv6 addresses in an IPv4-only cluster.
+- Default behavior: The provider may report both addresses as `InternalIP`.
+- Goal: Ensure the IPv4 address is assigned as the primary `InternalIP`, relegating the IPv6 address to `ExternalIP`.
 
 ```yaml
 extraArgs:
   - "--node-ip-cidr=192.168.1.0/24"
 ```
 
-**Example 2.3: Excluding Secondary IP Ranges on the Same Network (e.g., Split Subnets)**
+**Excluding Secondary IP Ranges on the Same Network**
 
-When cluster nodes have multiple IPv4 addresses configured on the same management network interface (`default/vlan-100`), such as `192.168.100.0/25` for node management and `192.168.100.128/25` reserved strictly for cluster-internal usage (like internal traffic or storage), the provider defaults to assigning the first IPv4 as `InternalIP` and automatically publishing the second IPv4 as `ExternalIP`.
-
-To enforce your network design and prevent internal secondary IPs on the same interface from leaking into Kubernetes node status as `ExternalIP`, combine all three flags:
-
-1. `--management-network`: Selects the target network interface.
-
-1. `--node-ip-cidr`: Locks the primary InternalIP selection to the node management subnet range.
-
-1. `--node-exclude-ip-ranges`: Excludes the secondary IP range from being reported as `ExternalIP`.
-
+- Scenario: Nodes have multiple IPv4 addresses on the same management interface (`default/vlan-100`), such as `192.168.100.0/25` for node management and `192.168.100.128/25` for internal storage.
+- Default behavior: The provider assigns the first IPv4 address as `InternalIP` and automatically publishes the second IPv4 address as `ExternalIP`.
+- Goal: Enforce network boundaries and prevent secondary internal subnets from leaking into Kubernetes node status as `ExternalIP`.
 
 ```yaml
 extraArgs:
-    - "--management-network=default/vlan-100"
-    - "--node-ip-cidr=192.168.100.0/25"
-    - "--node-exclude-ip-ranges=192.168.100.128/25"
+  - "--management-network=default/vlan-100" # Specifies the target network interface
+  - "--node-ip-cidr=192.168.100.0/25" # Locks the primary internal IP selection to the node management subnet range
+  - "--node-exclude-ip-ranges=192.168.100.128/25" # Prevents the secondary IP range from being reported as ExternalIP
 ```
 
-Combined Production Example:
+**Production Multi-Network Stack**
 
-Combining these flags ensures strict, predictable InternalIP selection and prevents secondary networks or split subnets from leaking into ExternalIP status:
+- Goal: Combine strict network selection, subnet binding, range exclusion, and runtime flags for a deterministic production configuration.
 
 ```yaml
 extraArgs:
@@ -365,17 +361,13 @@ extraArgs:
     - "--show-full-help-on-error=true"
 ```
 
-:::note
+##### Limitation: Rancher UI IP Synchronization
 
-A Known Limitation: Rancher Manager UI IP Synchronization:
+The Harvester Cloud Provider correctly applies network flags and updates Kubernetes node status (`InternalIP` or `ExternalIP`). However, the Rancher UI does not dynamically re-sync node IP changes if they are updated after initial node registration (see [issue #10381](https://github.com/harvester/harvester/issues/10381#issuecomment-5264412173)).
 
-`harvester-cloud-provider` correctly applies these network flags and updates the Kubernetes Node object status (`InternalIP / ExternalIP`). However, Rancher Manager UI does not dynamically re-sync node IP changes in its UI if they are updated after initial node registration (for more details, see [Harvester Issue 10381](https://github.com/harvester/harvester/issues/10381#issuecomment-5264412173)).
+**Example**: On an IPv4-only cluster where nodes initially report both IPv4 and IPv6 addresses as `InternalIP`, specifying `--node-ip-cidr` enables the Harvester Cloud Provider to successfully filter the Kubernetes node status to IPv4 addresses only. However, the Rancher UI may continue displaying the unsynced IP information.
 
-- **Example Scenario**: On an IPv4-only cluster where nodes initially report both IPv4 and IPv6 addresses as InternalIP, specifying --node-ip-cidr enables harvester-cloud-provider to successfully filter the Kubernetes Node status down to IPv4 only. However, the Rancher UI may continue displaying the unsynced IP information in its dashboard.
-
-- **Workaround**: Set these network parameters in `extraArgs` during initial cluster bootstrapping. If applying these flags to an existing cluster, a cluster redeployment is required for Rancher UI to reflect the updated node metadata.
-
-:::
+**Workaround**: Set network flags in `extraArgs` during initial cluster bootstrapping. Applying these flags to an existing cluster requires a cluster redeployment for the Rancher UI to reflect the updated node metadata.
 
 ### Embedded Kube-vip Integration
 
