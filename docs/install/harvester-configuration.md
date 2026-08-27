@@ -618,6 +618,31 @@ install:
   cluster_service_cidr: 172.22.0.0/16
 ```
 
+### `install.cordoned`
+
+**Versions**: v1.9.0 and later
+
+**Definition**: When joining the node to an existing cluster, bring it up in a [cordoned](../host/host.md#cordoning-a-node) state.
+
+This can be useful if some post-installation configuration of nodes is required prior to having them run VMs. Once you are ready for the node to host workloads it can be uncordoned via the Harvester GUI, or by running `kubectl uncordon <node name>`.
+
+This option cannot be used in create mode for the first node in a cluster, nor can it be used for witness nodes.
+
+**Default value**: `false`
+
+**Example**:
+
+```yaml
+install:
+  cordoned: true
+```
+
+:::note
+
+Cordoned nodes will never be considered for promotion to management nodes. This means that when first deploying Harvester, if the second two nodes are deployed with `install.cordoned = true`, they will not be automatically promoted to management until they are uncordoned by the user.
+
+:::
+
 ### `install.data_disk`
 
 **Versions**: v1.0.1 and later

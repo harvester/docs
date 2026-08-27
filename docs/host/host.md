@@ -49,6 +49,13 @@ Cordoned nodes are marked as unschedulable. Cordoning is useful when you want to
 
 ![cordon-node.png](/img/v1.2/host/cordon-nodes.png)
 
+:::note
+
+- Cordoned worker nodes will never be considered for promotion to management nodes.
+- When upgrading Harvester to a newer version, all nodes must be uncordoned for the upgrade to proceed.
+
+:::
+
 ## Deleting a Node
 
 :::caution
