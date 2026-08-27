@@ -28,16 +28,10 @@ Every node with an active Longhorn V2 Data Engine requires the following dedicat
 
 ## Limitations
 
-:::note
-
 The Longhorn V2 Data Engine currently does not support the following operations:
 
 - Backing image creation and usage
 - Volume encryption
-
-:::
-
-- SSDs and other non-NVMe disks are managed using the SPDK AIO bdev driver, which does not support the unmap operation. If you are using non-NVMe disks, avoid trimming the filesystem because this results in I/O errors and paused virtual machines. For example, when creating an ext4 filesystem on a Linux virtual machine, use `mkfs.ext4 -E nodiscard /dev/vdb` (assuming `/dev/vdb` is your device path). On Windows virtual machines, you can disable trimming for NTFS by running the command `fsutil behavior set disabledeletenotify NTFS 1`.
 
 ## Using the Longhorn V2 Data Engine
 
@@ -65,14 +59,6 @@ The Longhorn V2 Data Engine is only available for newly created volumes and imag
 1. Go to the **Hosts** screen, and then add extra disks to each node as described in [Multi-disk Management](../host/host.md#multi-disk-management). 
 
   Set the `Provisioner` of each extra disk to `Longhorn V2 (CSI)`.
-
-  :::info important
-
-  Harvester sets the [Longhorn disk driver](https://longhorn.io/docs/1.7.2/v2-data-engine/features/node-disk-support/) to `auto` so that NVMe disks use the SPDK NVMe bdev driver, which provides the best performance and also supports advanced operations such as trim (also known as discard).
-  
-  SSDs and other non-NVMe disks are managed using the SPDK AIO bdev driver, which requires a disk size that is an *even multiple of 4096 bytes*. Non-NVMe disks that do not meet this size requirement cannot be added.  Additionally, the SPDK AIO bdev driver does not support the unmap operation. If you are using non-NVMe disks, avoid trimming the filesystem because this results in I/O errors and paused virtual machines.
-
-  :::
 
 1. Go to **Advanced** > **Storage Classes**, and then add a new StorageClass as described in [Creating a StorageClass](storageclass.md#creating-a-storageclass). 
 
