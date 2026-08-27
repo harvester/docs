@@ -84,3 +84,7 @@ For virtual machines provisioned as downstream cluster nodes, ensure external co
 Because guest cluster nodes on Kube-OVN overlay networks use private IP addresses, you must configure a route to the virtual machine node subnet on the Rancher virtual machine, specifying the Kube-OVN EIP (configured during VPC NAT gateway EIP setup) as the next hop. This ensures network reachability between the Rancher virtual machine and guest cluster nodes, enabling SSH access through the Rancher UI for debugging.
 
 :::
+
+## Limitations
+
+This release supports basic guest cluster VM provisioning for running workloads. However, LoadBalancer services and CSI-based RWX (ReadWriteMany) volumes are not supported for guest clusters using Kube-OVN networks.
