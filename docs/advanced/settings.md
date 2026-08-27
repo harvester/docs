@@ -374,6 +374,38 @@ To disable the Longhorn V2 Data Engine on specific nodes (for example, nodes wit
 true
 ```
 
+### `longhorn-v2-data-engine-hugepage-enabled`
+
+**Versions**: v1.9.0 and later
+
+**Definition**: Enable hugepages when using the Longhorn V2 data engine.
+
+Disabling hugepages reduces memory pressure on low-spec nodes and increases deployment flexibility. However, performance may be lower compared to running with hugepages.
+
+**Default Value**: `true`
+
+**Example**:
+
+```
+false
+```
+
+### `longhorn-v2-data-engine-memory-size`
+
+**Versions**: v1.9.0 and later
+
+**Definition**: The amount of memory in MiB allocated to the SPDK target daemon when using the Longhorn V2 data engine.
+
+All V2 volumes must be detached for changes to this setting to take effect.
+
+**Default Value**: `2048`
+
+**Example**:
+
+```
+4096
+```
+
 ### `ntp-servers`
 
 **Versions**: v1.2.0 and later
