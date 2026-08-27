@@ -567,6 +567,57 @@ install:
 
 When enabled, the configuration is either retrieved from the value of `harvester.install.config_url` or defined individually using kernel parameters.
 
+### `install.cluster_dns`
+
+**Definition**: IP of the Harvester DNS service.
+
+Use this field to override the default DNS service IP of 10.53.0.10.
+
+:::info important
+
+This IP must be within the range defined by the `cluster_service_cidr` field.
+
+:::
+
+**Example**:
+
+```yaml
+install:
+  cluster_dns: 172.16.0.10
+```
+
+### `install.cluster_pod_cidr`
+
+**Definition**: CIDR of the Harvester pods.
+
+Use this field to override the default pod CIDR of 10.52.0.0/16.
+
+**Example**:
+
+```yaml
+install:
+  cluster_pod_cidr: 172.16.0.0/16
+```
+
+### `install.cluster_service_cidr`
+
+**Definition**: CIDR of the Harvester services.
+
+Use this field to override the default service CIDR of 10.53.0.0/16.
+
+:::info important
+
+If you change this CIDR, you must ensure that the cluster DNS IP (`install.cluster_dns`) is within this range.
+
+:::
+
+**Example**:
+
+```yaml
+install:
+  cluster_service_cidr: 172.22.0.0/16
+```
+
 ### `install.data_disk`
 
 **Versions**: v1.0.1 and later
@@ -835,57 +886,6 @@ install:
   vip: 10.10.0.19
   vip_mode: dhcp
   vip_hw_addr: 52:54:00:ec:0e:0b
-```
-
-### `install.cluster_pod_cidr`
-
-**Definition**: CIDR of the Harvester pods.
-
-Use this field to override the default pod CIDR of 10.52.0.0/16.
-
-**Example**:
-
-```yaml
-install:
-  cluster_pod_cidr: 172.16.0.0/16
-```
-
-### `install.cluster_service_cidr`
-
-**Definition**: CIDR of the Harvester services.
-
-Use this field to override the default service CIDR of 10.53.0.0/16.
-
-:::info important
-
-If you change this CIDR, you must ensure that the cluster DNS IP (`install.cluster_dns`) is within this range.
-
-:::
-
-**Example**:
-
-```yaml
-install:
-  cluster_service_cidr: 172.22.0.0/16
-```
-
-### `install.cluster_dns`
-
-**Definition**: IP of the Harvester DNS service.
-
-Use this field to override the default DNS service IP of 10.53.0.10.
-
-:::info important
-
-This IP must be within the range defined by the `cluster_service_cidr` field.
-
-:::
-
-**Example**:
-
-```yaml
-install:
-  cluster_dns: 172.16.0.10
 ```
 
 ### `install.webhooks`
