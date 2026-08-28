@@ -382,6 +382,12 @@ true
 
 Disabling hugepages reduces memory pressure on resource-constrained nodes and increases deployment flexibility. However, performance may be lower compared to running the engine with hugepages enabled.
 
+:::caution
+
+Disabling hugepages is currently supported only for Longhorn V2 disks that use the AIO bdev driver. Do not disable hugepages when using the NVMe or virtio bdev driver.
+
+:::
+
 **Default Value**: `true`
 
 **Example**:

@@ -49,7 +49,7 @@ The Longhorn V2 Data Engine is only available for newly created volumes and imag
 
   If you encounter error messages that include the phrase "not enough hugepages-2Mi capacity", allow some time for the error to be resolved. If the error persists, reboot the affected nodes.
   
-  If you do not plan to use hugepages or want to allocate a custom memory size, adjust the `longhorn-v2-data-engine-hugepage-enabled` and `longhorn-v2-data-engine-memory-size` settings, preferably before enabling the Longhorn V2 Data Engine.
+  If you do not plan to use hugepages or want to allocate a custom memory size, adjust the `longhorn-v2-data-engine-hugepage-enabled` and `longhorn-v2-data-engine-memory-size` settings, preferably before enabling the Longhorn V2 Data Engine. Disabling hugepages is currently supported only for Longhorn V2 disks that use the AIO bdev driver (the default in Harvester v1.9.0). Do not disable hugepages when using the NVMe or virtio bdev driver.
 
   To disable the Longhorn V2 Data Engine on specific nodes (for example, nodes with less processing and memory resources), go to the **Hosts** screen and add the following label to the target nodes:
 
