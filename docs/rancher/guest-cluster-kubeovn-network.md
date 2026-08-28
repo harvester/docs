@@ -87,4 +87,4 @@ Because guest cluster nodes on Kube-OVN overlay networks use private IP addresse
 
 ## Limitations
 
-This release supports basic guest cluster VM provisioning for running workloads. However, LoadBalancer services and CSI-based RWX (ReadWriteMany) volumes are not supported for guest clusters using Kube-OVN networks.
+Harvester v1.9.0 supports basic virtual machine provisioning for guest cluster workloads. However, `LoadBalancer` services and CSI-based ReadWriteMany (RWX) volumes are not supported on guest clusters using Kube-OVN networks.
