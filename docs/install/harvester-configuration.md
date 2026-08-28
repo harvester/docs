@@ -571,11 +571,11 @@ When enabled, the configuration is either retrieved from the value of `harvester
 
 **Definition**: IP of the Harvester DNS service.
 
-Use this field to override the default DNS service IP of 10.53.0.10.
+Use this setting to override the default DNS service IP (`10.53.0.10`).
 
 :::info important
 
-This IP must be within the range defined by the `cluster_service_cidr` field.
+This IP must be within the range defined by the `cluster_service_cidr` setting.
 
 :::
 
@@ -588,9 +588,9 @@ install:
 
 ### `install.cluster_pod_cidr`
 
-**Definition**: CIDR of the Harvester pods.
+**Definition**: CIDR block allocated for Harvester pods.
 
-Use this field to override the default pod CIDR of 10.52.0.0/16.
+Use this setting to override the default pod CIDR (`10.52.0.0/16`).
 
 **Example**:
 
@@ -601,9 +601,9 @@ install:
 
 ### `install.cluster_service_cidr`
 
-**Definition**: CIDR of the Harvester services.
+**Definition**: CIDR block allocated for Harvester services.
 
-Use this field to override the default service CIDR of 10.53.0.0/16.
+Use this setting to override the default service CIDR (`10.53.0.0/16`).
 
 :::info important
 
@@ -622,11 +622,11 @@ install:
 
 **Versions**: v1.9.0 and later
 
-**Definition**: When joining the node to an existing cluster, bring it up in a [cordoned](../host/host.md#cordoning-a-node) state.
+**Definition**: Setting that initializes the node in a [cordoned](../host/host.md#cordoning-a-node) state when joining an existing cluster.
 
-This can be useful if some post-installation configuration of nodes is required prior to having them run VMs. Once you are ready for the node to host workloads it can be uncordoned via the Harvester GUI, or by running `kubectl uncordon <node name>`.
+This setting is useful when post-installation node configuration is required before scheduling workloads. Once the node is ready to host virtual machines, you can uncordon it using the Harvester UI or by running `kubectl uncordon <node-name>`.
 
-This option cannot be used in create mode for the first node in a cluster, nor can it be used for witness nodes.
+You cannot use this setting when initializing the first node in the cluster or when configuring witness nodes.
 
 **Default value**: `false`
 
@@ -639,7 +639,7 @@ install:
 
 :::note
 
-Cordoned nodes will never be considered for promotion to management nodes. This means that when first deploying Harvester, if the second two nodes are deployed with `install.cordoned = true`, they will not be automatically promoted to management until they are uncordoned by the user.
+Cordoned worker nodes are never considered for promotion to management nodes. When initially deploying a Harvester cluster, if the second and third nodes join with `install.cordoned = true`, they are not automatically promoted until you uncordon them.
 
 :::
 

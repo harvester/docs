@@ -51,8 +51,8 @@ Cordoned nodes are marked as unschedulable. Cordoning is useful when you want to
 
 :::note
 
-- Cordoned worker nodes will never be considered for promotion to management nodes.
-- When upgrading Harvester to a newer version, all nodes must be uncordoned for the upgrade to proceed.
+- Cordoned worker nodes are never considered for promotion to management nodes.
+- You must uncordon all nodes before upgrading Harvester to a newer version.
 
 :::
 
