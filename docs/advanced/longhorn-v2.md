@@ -14,7 +14,7 @@ The Longhorn V2 Data Engine harnesses the power of the Storage Performance Devel
 
 :::caution
 
-The Longhorn V2 Data Engine is an **Preview** feature and should not be utilized in a production environment.
+The Longhorn V2 Data Engine is a **Technical Preview** feature. Explore the feature extensively before using in production environments.
 
 :::
 
@@ -49,7 +49,7 @@ The Longhorn V2 Data Engine is only available for newly created volumes and imag
 
   If you encounter error messages that include the phrase "not enough hugepages-2Mi capacity", allow some time for the error to be resolved. If the error persists, reboot the affected nodes.
   
-  If you don't want to use huge pages and/or wish to allocate a different amount of memory, adjust the `longhorn-v2-data-engine-hugepage-enabled` and `longhorn-v2-data-engine-memory-size` options appropriately, ideally prior to enabling the Longhorn V2 data engine.
+  If you do not plan to use hugepages or want to allocate a custom memory size, adjust the `longhorn-v2-data-engine-hugepage-enabled` and `longhorn-v2-data-engine-memory-size` settings, preferably before enabling the Longhorn V2 Data Engine.
 
   To disable the Longhorn V2 Data Engine on specific nodes (for example, nodes with less processing and memory resources), go to the **Hosts** screen and add the following label to the target nodes:
 

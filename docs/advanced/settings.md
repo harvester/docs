@@ -378,9 +378,9 @@ true
 
 **Versions**: v1.9.0 and later
 
-**Definition**: Enable hugepages when using the Longhorn V2 data engine.
+**Definition**: Setting that enables or disables hugepages when using the Longhorn V2 Data Engine.
 
-Disabling hugepages reduces memory pressure on low-spec nodes and increases deployment flexibility. However, performance may be lower compared to running with hugepages.
+Disabling hugepages reduces memory pressure on resource-constrained nodes and increases deployment flexibility. However, performance may be lower compared to running the engine with hugepages enabled.
 
 **Default Value**: `true`
 
@@ -394,9 +394,9 @@ false
 
 **Versions**: v1.9.0 and later
 
-**Definition**: The amount of memory in MiB allocated to the SPDK target daemon when using the Longhorn V2 data engine.
+**Definition**: Amount of memory in MiB allocated to the SPDK target daemon when using the Longhorn V2 Data Engine.
 
-All V2 volumes must be detached for changes to this setting to take effect.
+You must detach all V2 volumes before changes to this setting take effect.
 
 **Default Value**: `2048`
 
