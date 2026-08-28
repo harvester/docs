@@ -62,6 +62,14 @@ The Longhorn V2 Data Engine is only available for newly created volumes and imag
 
   Set the `Provisioner` of each extra disk to `Longhorn V2 (CSI)`.
 
+  :::info important
+
+  Harvester sets the [Longhorn disk driver](https://longhorn.io/docs/1.7.2/v2-data-engine/features/node-disk-support/) to `aio` for newly added Longhorn V2 disks. The AIO driver uses a Linux block device path and avoids the SPDK NVMe VFIO path.
+  
+  SSDs and other non-NVMe disks are managed using the SPDK AIO bdev driver, which requires a disk size that is an *even multiple of 4096 bytes*. Non-NVMe disks that do not meet this size requirement cannot be added.  Additionally, the SPDK AIO bdev driver does not support the unmap operation. If you are using non-NVMe disks, avoid trimming the filesystem because this results in I/O errors and paused virtual machines.
+
+  :::
+
 1. Go to **Advanced** > **Storage Classes**, and then add a new StorageClass as described in [Creating a StorageClass](storageclass.md#creating-a-storageclass). 
 
   Set the `Provisioner` to `Longhorn V2 (CSI)`.
@@ -72,27 +80,31 @@ The Longhorn V2 Data Engine is only available for newly created volumes and imag
 
   Volumes and images created using the new StorageClass are backed by the Longhorn V2 Data Engine.
 
-## Known Issues
+## Migrating Longhorn V2 Disks from NVMe to AIO
 
-### I/O Operations May Become Stuck on ARM Platforms
+Before migrating a disk, verify that all affected volumes are healthy and that other Longhorn V2 disks have enough free space for rebuilt replicas.
 
-On ARM64 platforms, Longhorn V2 disks that use the SPDK NVMe bdev driver can experience stalled I/O operations. For more information, see issue [#10710](https://github.com/harvester/harvester/issues/10710).
+:::note
 
-To work around the issue, perform the following steps:
+Starting with Harvester v1.9.0, new Longhorn V2 disks use the `aio` disk driver by default. Existing Longhorn V2 disks keep their current disk driver until you remove and add them again.
+
+:::
+
+To migrate a disk, perform the following steps:
 
 1. [Remove the affected Longhorn V2 disk](../host/host.md#remove-disks).
 
 1. [Add the Longhorn V2 disk again](../host/host.md#add-additional-disks).
 
-1. Verify that the workaround was successful.
+1. Verify that the migrated disk uses `aio`.
 
-    ```
-    kubectl -n longhorn-system get blockdevices.harvesterhci.io -o yaml
+    ```shell
+    kubectl -n longhorn-system get blockdevices.harvesterhci.io BLOCKDEVICE_NAME -o yaml
     ```
 
     The matching `BlockDevice` custom resource should have the following values:
 
-    ```
+    ```yaml
     spec:
       provisioner:
         longhorn:
@@ -103,11 +115,13 @@ To work around the issue, perform the following steps:
       state: Active
     ```
 
-:::note
+## Known Issues
 
-Starting with Harvester v1.9.0, the default disk driver for Longhorn V2 volumes is changed to `AIO`. Removing and then re-adding the affected disk forces Harvester to use this new default driver and resolves the stalled I/O operations on ARM64 platforms.
+### I/O Operations May Become Stuck on ARM64 Platforms
 
-:::
+On ARM64 platforms, Longhorn V2 disks that use the SPDK NVMe bdev driver can experience stalled I/O operations. For more information, see issue [#10710](https://github.com/harvester/harvester/issues/10710).
+
+To work around this issue, see [Migrating Longhorn V2 Disks from NVMe to AIO](#migrating-longhorn-v2-disks-from-nvme-to-aio).
 
 ## Upgrading from Harvester v1.4.x
 
