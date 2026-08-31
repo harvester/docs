@@ -246,6 +246,85 @@ Harvester appends necessary addresses to user-specified `noProxy` values (for ex
 }
 ```
 
+### `kubevirt-migration`
+
+**Versions**: v1.7.0 and later
+
+**Definition**: Cluster-wide configuration for virtual machine live migration.
+
+Harvester writes the value of this setting to the `spec.configuration.migrations` field of the `kubevirt` object. Configure live migration using this setting instead of editing the `kubevirt` object directly.
+
+**Default value**: `{"parallelOutboundMigrationsPerNode":2,"parallelMigrationsPerCluster":5,"allowAutoConverge":false,"bandwidthPerMigration":0,"completionTimeoutPerGiB":150,"progressTimeout":150,"unsafeMigrationOverride":false,"allowPostCopy":false,"allowWorkloadDisruption":false,"disableTLS":false,"matchSELinuxLevelOnMigration":false}`
+
+When the `value` field is empty, the `default` field is used. The default values are identical to the KubeVirt defaults, so a cluster that never customized this setting behaves exactly as KubeVirt does out of the box.
+
+**Supported fields**:
+
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `parallelOutboundMigrationsPerNode` | integer | `2` | Maximum number of migrations that can leave a single node at the same time. |
+| `parallelMigrationsPerCluster` | integer | `5` | Maximum number of migrations that can run in the cluster at the same time. |
+| `allowAutoConverge` | boolean | `false` | Allows KubeVirt to throttle the guest CPU when the memory of a busy virtual machine changes faster than it can be copied to the target node. Enabling this option increases the chance that the migration completes, but slows the guest down while the migration is running. |
+| `bandwidthPerMigration` | quantity | `0` | Maximum network bandwidth that a single migration can use, for example `40Gi`. The value `0` means that the bandwidth is not limited. |
+| `completionTimeoutPerGiB` | integer | `150` | Number of seconds per GiB of guest memory that a migration is allowed to run before it is canceled. |
+| `progressTimeout` | integer | `150` | Number of seconds without progress that a migration is allowed to run before it is canceled. |
+| `unsafeMigrationOverride` | boolean | `false` | Allows migrations to proceed even when the compatibility check fails. |
+| `allowPostCopy` | boolean | `false` | Allows a migration that cannot converge to switch from pre-copy to post-copy. |
+| `allowWorkloadDisruption` | boolean | `false` | Allows a migration that cannot complete otherwise to disrupt the workload. |
+| `disableTLS` | boolean | `false` | Disables encryption of the migration connection. |
+| `matchSELinuxLevelOnMigration` | boolean | `false` | Applies the SELinux level of the source virt-launcher pod to the target pod. |
+
+**Example**:
+
+```json
+{
+  "parallelOutboundMigrationsPerNode": 2,
+  "parallelMigrationsPerCluster": 5,
+  "allowAutoConverge": true,
+  "bandwidthPerMigration": 0,
+  "completionTimeoutPerGiB": 150,
+  "progressTimeout": 150,
+  "unsafeMigrationOverride": false,
+  "allowPostCopy": false,
+  "allowWorkloadDisruption": false,
+  "disableTLS": false,
+  "matchSELinuxLevelOnMigration": false
+}
+```
+
+You can copy the example, change the fields that you want to customize, and then apply it to the setting. Fields that you omit fall back to the KubeVirt defaults listed in the table.
+
+:::note
+
+The `nodeDrainTaintKey` and `network` fields of the `kubevirt` object cannot be configured using this setting, and are rejected if you include them in the value.
+
+- `nodeDrainTaintKey` must keep the default value `kubevirt.io/drain` because the Harvester upgrade process depends on it.
+- `network` is configured using the [`vm-migration-network`](#vm-migration-network) setting.
+
+:::
+
+:::note
+
+You cannot change this setting while a virtual machine migration is in progress. Wait until all migrations are completed, and then retry.
+
+:::
+
+:::caution
+
+Enabling `unsafeMigrationOverride`, `allowPostCopy`, `allowWorkloadDisruption`, or `disableTLS` can affect the integrity, the availability, or the confidentiality of your workloads. In particular, a network failure during the post-copy phase of a migration can crash the virtual machine. Change these fields only when you understand the consequences.
+
+:::
+
+:::important
+
+Harvester applies the whole value to the `kubevirt` object. When you save the setting, every field that the value contains is written, including the fields that you did not change. Any configuration that was applied to the `spec.configuration.migrations` field of the `kubevirt` object outside of this setting is replaced.
+
+If you configured live migration by editing the `kubevirt` object directly on a cluster running a version earlier than v1.7.0, the upgrade to v1.7.x does not change the configuration, but the setting is created without a value and therefore displays the default values. The two no longer match, and your configuration is lost the first time the setting is saved.
+
+To keep your configuration, create the setting from the `kubevirt` object **before** you upgrade. For instructions, see [Preserving a manually configured KubeVirt live migration configuration](https://harvesterhci.io/kb/preserve_kubevirt_migration_configuration_before_upgrade).
+
+:::
+
 ### `log-level`
 
 **Definition**: Log level for the Harvester host.
