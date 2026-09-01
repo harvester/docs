@@ -393,7 +393,9 @@ Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and 
 
 :::note
 
-Modifying the `IPAM` mode isn't allowed. You must create a new service if you intend to change the `IPAM` mode.
+- Modifying the `IPAM` mode isn't allowed. You must create a new service if you intend to change the `IPAM` mode.
+
+- Refer to [Guest Cluster LoadBalancer IP Leaks with Multiple Cloud Providers](../troubleshooting/rancher.md#guest-cluster-loadbalancer-ip-leaks-with-multiple-cloud-providers) if you encounter leftover `LoadBalancer` objects when deleting services in environments with multiple cloud providers.
 
 :::
 

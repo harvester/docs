@@ -397,6 +397,8 @@ Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and 
 
 - Refer to [Guest Cluster Loadbalancer IP is not reachable](../troubleshooting/rancher.md#guest-cluster-loadbalancer-ip-is-not-reachable).
 
+- Refer to [Guest Cluster LoadBalancer IP Leaks with Multiple Cloud Providers](../troubleshooting/rancher.md#guest-cluster-loadbalancer-ip-leaks-with-multiple-cloud-providers) if you encounter leftover `LoadBalancer` objects when deleting services in environments with multiple cloud providers.
+
 :::
 
 ### Health checks
