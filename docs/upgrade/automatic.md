@@ -1,6 +1,6 @@
 ---
 id: index
-sidebar_position: 1
+sidebar_position: 10
 sidebar_label: Upgrading Harvester
 title: "Upgrading Harvester"
 keywords:
@@ -175,6 +175,15 @@ For write-heavy or business-critical virtual machines that may not converge duri
 - Make sure your hardware meets the **preferred** [hardware requirements](../install/requirements.md#hardware-requirements). This is due to there will be intermediate resources consumed by an upgrade.
 - Make sure each node has at least 30 GiB of free system partition space (`df -h /usr/local/`). If any node in the cluster has less than 30 GiB of free system partition space, the upgrade will be denied. Check [free system partition space requirement](#free-system-partition-space-requirement) for more information.
 - Run the [pre-check script](https://github.com/harvester/upgrade-helpers/tree/main/pre-check) on a Harvester control-plane node. Take action on any failed checks before initiating the upgrade process.
+
+    ```
+    # Download the script
+    $ curl -o /tmp/check.sh https://raw.githubusercontent.com/harvester/upgrade-helpers/refs/heads/main/pre-check/v1.x/check.sh && chmod +x /tmp/check.sh
+
+    # Run the checks
+    $ /tmp/check.sh
+    ```
+
 - A number of one-off privileged pods will be created in the `harvester-system` and `cattle-system` namespaces to perform host-level upgrade operations. If [pod security admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/) is enabled, adjust these policies to allow these pods to run.
 
 :::
