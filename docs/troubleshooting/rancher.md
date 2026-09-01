@@ -406,20 +406,21 @@ Select one of the following options to prevent unexpected global IP allocations:
 
 ### Issue Description
 
-Deleting a `LoadBalancer` type service using `IPPool` mode in a guest cluster does not delete the corresponding backend Harvester LoadBalancer object, causing IP leaks.
+When you delete a `LoadBalancer` service that uses `IPPool` mode in a guest cluster, the corresponding `LoadBalancer` object in the underlying Harvester cluster is not deleted, causing IP address leaks.
 
 ### Root Cause
 
-This occurs when `kube-vip-cloud-controller` is deployed alongside `harvester-cloud-provider` with its `service-lb-controller` enabled.
+This issue occurs when `kube-vip-cloud-controller` is deployed alongside the Harvester Cloud Provider with its `service-lb-controller` enabled.
 
-If a `harvester-cloud-provider` pod restarts while a LoadBalancer service is removed or recreated, the deletion event may bypass `harvester-cloud-provider` and be acknowledged directly by `kube-vip-cloud-controller`. As a result, `harvester-cloud-provider` loses track of the backend LoadBalancer object and fails to clean it up.
+If a `harvester-cloud-provider` pod restarts while a `LoadBalancer` service is removed or recreated, the deletion event may bypass the provider and be acknowledged directly by `kube-vip-cloud-controller`. As a result, the Harvester Cloud Provider loses track of the `LoadBalancer` object and fails to clean it up.
 
 ### Workaround
 
-Ensure only one `cloud-controller-manager` handles LoadBalancer services:
+Ensure only one cloud controller manages `LoadBalancer` services in the guest cluster. To do this, perform either of the following actions:
 
-*   Deploy only a single `cloud-controller-manager` in the cluster.
-*   Alternatively, disable the `service-lb-controller` in `harvester-cloud-provider` (supported in version 0.2.12 and later) to avoid conflicts with other third-party cloud controllers.
+- Deploy only one `cloud-controller-manager` in the cluster.
+
+- Disable the `service-lb-controller` (supported in Harvester Cloud Provider v0.2.12 and later) to avoid conflicts with third-party cloud controllers such as `kube-vip-cloud-controller`.
 
 ### Related Issue
 
