@@ -135,7 +135,7 @@ resource "harvester_volume" "empty-volume" {
 
 :::info important
 
-When creating volumes from a VM image, ensure that the volume size is greater than or equal to the image size. The volume may become corrupted if the configured volume size is less than the size of the underlying image. This is particularly important for qcow2 images because the virtual size is typically greater than the physical size.
+Starting with Harvester v1.10.0, Harvester strictly **validates and enforces** that any volume created or updated from a VM image must have a size greater than or equal to the virtual size of the source image. The validating webhook will reject any PVC creation or update requests that violate this constraint to prevent potential guest data corruption.
 
 By default, Harvester will set the volume size to the virtual size of the image.
 
