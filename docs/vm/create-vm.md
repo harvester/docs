@@ -164,7 +164,7 @@ If you are using external storage, ensure that the correct **StorageClass** and 
 
 :::info important
 
-When creating volumes from a VM image, ensure that the volume size is greater than or equal to the image size. The volume may become corrupted if the configured volume size is less than the size of the underlying image. This is particularly important for qcow2 images because the virtual size is typically greater than the physical size.
+Starting with Harvester v1.10.0, Harvester validates that any volume created or updated from a virtual machine image is at least as large as the virtual size of the source image. The validating webhook rejects virtual machine disk or volume requests that violate this constraint to prevent guest filesystem corruption.
 
 By default, Harvester sets the volume size to either 10 GiB or the virtual size of the VM image, whichever is greater.
 
