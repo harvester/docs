@@ -22,8 +22,8 @@ The Longhorn V2 Data Engine is a **Technical Preview** feature. Explore the feat
 
 Every node with an active Longhorn V2 Data Engine requires the following dedicated resources:
 
-- 1 CPU core for use by the Longhorn instance-manager pod
-- 2 GiB RAM (allocated as 1024 × 2 GiB huge pages)
+- 2 CPU cores for use by the Longhorn instance-manager pod
+- 2 GiB RAM (allocated as 1024 × 2 MiB huge pages)
 - At least one local NVMe disk for data storage
 
 ## Limitations
@@ -32,6 +32,7 @@ The Longhorn V2 Data Engine currently does not support the following operations:
 
 - Backing image creation and usage
 - Volume encryption
+- Harvester does not automatically coordinate Longhorn V2 SPDK CPU assignment with VM CPU pinning. Configure Longhorn V2 SPDK CPU assignment before running CPU-pinned VMs on nodes where the Longhorn V2 Data Engine is enabled. For more information, see [CPU Core Configuration with CPU-Pinned VMs](#cpu-core-configuration-with-cpu-pinned-vms).
 
 ## Using the Longhorn V2 Data Engine
 
@@ -78,6 +79,55 @@ The Longhorn V2 Data Engine is only available for newly created volumes and imag
 
   Volumes and images created using the new StorageClass are backed by the Longhorn V2 Data Engine.
 
+## CPU Core Configuration with CPU-Pinned VMs
+
+_Available as of v1.9.0_
+
+Longhorn supports assigning SPDK CPU cores through Kubernetes CPU Manager. Harvester does not yet expose these Longhorn controls in the Harvester UI. Configure them directly in Longhorn when the same nodes run the Longhorn V2 Data Engine and CPU-pinned VMs.
+
+By default, Longhorn V2 uses [`data-engine-cpu-mask`](https://longhorn.io/docs/1.12.1/references/settings/#data-engine-cpu-mask) (default: `{"v2":"0x3"}`, which maps to CPU IDs `0` and `1`), which binds `spdk_tgt` to fixed CPU IDs. When Harvester CPU Manager is enabled, CPU-pinned VM pods can receive exclusive CPUs from kubelet. If those exclusive CPUs overlap with the Longhorn V2 CPU mask and the V2 instance-manager pod starts with a cpuset that excludes one of the masked CPUs, `spdk_tgt` can fail to start with the following error:
+
+```text
+EAL: PANIC in rte_eal_init():
+Cannot set affinity
+```
+
+To avoid fixed CPU ID conflicts, configure the Longhorn [`data-engine-number-of-cpu-cores`](https://longhorn.io/docs/1.12.1/references/settings/#data-engine-number-of-cpu-cores) setting before enabling Longhorn V2 on nodes that already run CPU-pinned VMs. This setting is global. When the value is greater than `0`, Longhorn validates that every node reports the `static` CPU Manager policy. Longhorn then ignores `data-engine-cpu-mask`, requests at least the configured number of full CPU cores for each V2 instance-manager pod, and uses Kubernetes CPU Manager to assign exclusive CPUs.
+
+:::caution
+
+Longhorn does not support mixed CPU Manager configurations for `data-engine-number-of-cpu-cores`. If CPU Manager is enabled only on some nodes, Longhorn rejects any V2 value greater than `0`. Enable CPU Manager on all nodes before configuring this setting.
+
+:::
+
+1. Enable [CPU Manager](../vm/cpu-pinning.md#enable-and-disable-cpu-manager) on all nodes in the cluster.
+
+1. Select the CPU core count for the V2 instance-manager pod.
+
+    Longhorn recommends at least `2` CPU cores for `data-engine-number-of-cpu-cores`. Make sure each node that can run Longhorn V2 has enough allocatable CPU for the selected count and for any CPU-pinned VMs.
+
+    Harvester's [`instance-manager-resources`](settings.md#instance-manager-resources) setting is not required for CPU Manager-based SPDK CPU assignment. That setting controls Longhorn's CPU reservation for instance-manager pods. If Longhorn's CPU reservation for V2 instance-manager pods is higher than the configured SPDK CPU core count, Longhorn rounds the reservation up to full CPU cores, and the pod can receive more exclusive CPUs than the `data-engine-number-of-cpu-cores` value.
+
+1. If Longhorn V2 volumes are already attached, schedule a maintenance window, stop all VMs that use those volumes, and detach the volumes.
+
+    Longhorn automatically recreates idle V2 instance-manager pods to apply the new CPU settings.
+
+1. Configure `data-engine-number-of-cpu-cores`.
+
+    The following example allocates `2` CPU cores to the SPDK target daemon in each V2 instance-manager pod:
+
+    ```shell
+    kubectl -n longhorn-system patch settings.longhorn.io data-engine-number-of-cpu-cores --type=merge -p '{"value":"{\"v2\":\"2\"}"}'
+    ```
+
+1. Verify the effective CPU set after the V2 instance-manager pods are recreated.
+
+    ```shell
+    kubectl -n longhorn-system exec <v2-instance-manager-pod> -- awk '/^Cpus_allowed_list:/ {print $2}' /proc/self/status
+    ```
+
+    The allowed CPU list should contain at least the configured number of CPUs. If Longhorn's guaranteed instance-manager CPU reservation is higher, the list can contain more CPUs.
+
 ## Migrating Longhorn V2 Disks from NVMe to AIO
 
 Before migrating a disk, verify that all affected volumes are healthy and that the remaining Longhorn V2 disks have sufficient free space to accommodate rebuilt replicas during disk removal.
@@ -92,9 +142,9 @@ To migrate a disk, perform the following steps:
 
 1. [Remove the affected Longhorn V2 disk](../host/host.md#remove-disks).
 
-1. [Add the Longhorn V2 disk again](../host/host.md#add-additional-disks).
+2. [Add the Longhorn V2 disk again](../host/host.md#add-additional-disks).
 
-1. Verify that the migrated disk uses `aio`.
+3. Verify that the migrated disk uses `aio`.
 
     ```shell
     kubectl -n longhorn-system get blockdevices.harvesterhci.io BLOCKDEVICE_NAME -o yaml

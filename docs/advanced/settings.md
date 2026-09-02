@@ -287,6 +287,12 @@ Harvester appends necessary addresses to user-specified `noProxy` values (for ex
 
 Harvester synchronizes this setting to the Longhorn **Guaranteed Instance Manager CPU** setting. You can configure separate values for Longhorn V1 and V2 Data Engine instance managers.
 
+:::note
+
+For Longhorn V2, when `data-engine-number-of-cpu-cores` is nonzero, Longhorn compares that value with the CPU request calculated from `instance-manager-resources.cpu.v2`, rounded up to full cores, and uses the higher value. For more information, see [CPU Core Configuration with CPU-Pinned VMs](longhorn-v2.md#cpu-core-configuration-with-cpu-pinned-vms).
+
+:::
+
 :::caution
 
 Changing this setting restarts Longhorn Instance Manager pods. Stop all VMs and detach all Longhorn volumes before changing the value.
