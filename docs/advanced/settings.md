@@ -345,7 +345,7 @@ kubectl get volumes.longhorn.io -n longhorn-system
 debug
 ```
 
-### `longhorn-v2-data-engine-enabled` [Experimental]
+### `longhorn-v2-data-engine-enabled` [Technical Preview]
 
 **Versions**: v1.4.0 and later
 
@@ -374,7 +374,7 @@ To disable the Longhorn V2 Data Engine on specific nodes (for example, nodes wit
 true
 ```
 
-### `longhorn-v2-data-engine-hugepage-enabled`
+### `longhorn-v2-data-engine-hugepage-enabled` [Technical Preview]
 
 **Versions**: v1.9.0 and later
 
@@ -396,7 +396,7 @@ Disabling hugepages is currently supported only for Longhorn V2 disks that use t
 false
 ```
 
-### `longhorn-v2-data-engine-memory-size`
+### `longhorn-v2-data-engine-memory-size` [Technical Preview]
 
 **Versions**: v1.9.0 and later
 
