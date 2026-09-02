@@ -18,13 +18,19 @@ Harvester supports global configuration of resource overload percentages on CPU,
 
 Harvester allows you to overcommit CPU and RAM on compute nodes. This allows you to increase the number of instances running on your cloud at the cost of reducing the performance of the instances. The Compute service uses the following ratios by default:
 
-- CPU allocation ratio: 1600%
+- CPU allocation ratio: 1000%
 - RAM allocation ratio: 150%
-- Storage allocation ratio: 200%
+- Storage allocation ratio: 100%
 
 :::note
 
 Classic memory overcommitment or memory ballooning is not yet supported by this feature. In other words, memory used by a virtual machine instance cannot be returned once allocated.
+
+:::
+
+:::note
+
+The default CPU allocation ratio of 1000% is aggressive: a host CPU is treated as if it provides 10 vCPUs. Under load, this can produce noticeable CPU steal and latency spikes in guests. For workloads that are latency-sensitive or perform sustained CPU-bound work (for example, databases, real-time services, or interactive Windows desktops), benchmark with a representative workload and reduce the CPU allocation ratio if you observe degradation. A common conservative starting point is 200–400%.
 
 :::
 
