@@ -321,8 +321,61 @@ To clear the message, restart the affected virtual machines at your next schedul
 
 Related issue: [#9751](https://github.com/harvester/harvester/issues/9751)
 
+### 5. Upgrade may get stuck in PreparingRepo when node subnet overlaps with KubeVirt default masquerade CIDR
 
-### 5. Unnecessary live-migrations during the upgrade
+The upgrade process may become stuck in the `PreparingRepo` phase when the node network overlaps with KubeVirt’s default masquerade CIDR (`10.0.2.0/24`). In this situation, the upgrade repository VM (`upgrade-repo-hvst-xxxx`) is running but not reachable from other nodes.
+
+This issue occurs because KubeVirt uses `10.0.2.0/24` as the default internal network for virtual machines when `VMNetworkCIDR` is not explicitly configured. If the Harvester nodes are also using this subnet, a routing conflict occurs between the VM guest network and the host network.
+
+You may encounter the following symptoms:
+
+  ```
+  $ kubectl -n harvester-system get vm
+  NAME                              AGE   STATUS    READY
+  upgrade-repo-hvst-xxxx            XXm   Running   False
+  ```
+
+The readiness probe fails with timeout errors:
+
+  ```
+  Readiness probe failed: Get "http://<pod-ip>:80/harvester-iso/harvester-release.yaml":
+  context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+  ```
+
+To address the issue, perform the following steps:
+
+  1. Edit the upgrade repo VM and change the network interface from masquerade to bridge.
+
+      ```
+      $ kubectl edit vm upgrade-repo-<upgrade-name> -n harvester-system
+      ```
+
+      Locate the interfaces section:
+
+      ```
+      interfaces:
+        - masquerade: {}
+          model: virtio
+          name: default
+      ```
+
+      Change it to:
+
+      ```
+      interfaces:
+        - bridge: {}
+          model: virtio
+          name: default
+      ```
+
+  2. Restart the virtual machine:
+
+      ```
+      $ virtctl stop upgrade-repo-<upgrade-name> -n harvester-system
+      $ virtctl start upgrade-repo-<upgrade-name> -n harvester-system
+      ```
+
+### 6. Unnecessary live-migrations during the upgrade
 
 Harvester v1.6.x enables [CPU and memory hot-plugging](../vm/cpu-memory-hotplug/) for virtual machines through KubeVirt's `LiveMigrate` workload update strategy. However, when the KubeVirt operator is upgraded, this feature triggers simultaneous live-migration of all running VMs to update their virt-launcher pods immediately. This mass migration can overwhelm cluster resources and cause performance degradation.
 
