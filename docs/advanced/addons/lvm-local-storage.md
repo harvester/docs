@@ -118,7 +118,9 @@ Encryption is an opt-in property of the StorageClass. Existing (unencrypted) Sto
 
 ### Creating an Encryption Secret
 
-Create a `Secret` that holds the encryption passphrase in the `CRYPTO_KEY_VALUE` field. The remaining `CRYPTO_KEY_*` fields are optional and default to `aes-xts-plain64` / `sha256` / `256` / `argon2i` when omitted.
+Create a `Secret` that holds the encryption passphrase in the `CRYPTO_KEY_VALUE` field. Include all of the fields shown below: the CSI driver applies the defaults `aes-xts-plain64` / `sha256` / `256` / `argon2i` when the tuning fields are omitted, but Harvester rejects a StorageClass whose encryption secret has a missing or empty field.
+
+The secret must exist before you create the StorageClass that references it.
 
 ```yaml
 apiVersion: v1
@@ -173,6 +175,8 @@ parameters:
   csi.storage.k8s.io/node-publish-secret-namespace: default
   csi.storage.k8s.io/node-stage-secret-name: lvm-encryption
   csi.storage.k8s.io/node-stage-secret-namespace: default
+  csi.storage.k8s.io/node-expand-secret-name: lvm-encryption
+  csi.storage.k8s.io/node-expand-secret-namespace: default
 provisioner: lvm.driver.harvesterhci.io
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
@@ -183,7 +187,22 @@ allowedTopologies:
           - <target-node-name>
 ```
 
-To use a different passphrase per volume, replace the fixed secret name and namespace with the `${pvc.name}` and `${pvc.namespace}` templates.
+All four secret references are required. The driver uses the passphrase when it creates the volume, when it opens the encrypted device on the node, and when it expands the device; Harvester requires the `node-stage` reference as well.
+
+:::note
+
+Harvester resolves the secret reference when the StorageClass is created, so the `${pvc.name}` and `${pvc.namespace}` templates that upstream Kubernetes supports cannot be used here. To give different volumes different passphrases, create one encrypted StorageClass per encryption secret.
+
+:::
+
+### Snapshots, Clones, and Restores of Encrypted Volumes
+
+A volume snapshot or clone is a block-level copy, so the copy carries the same encryption state as its source and you cannot change that state during a restore:
+
+- Restoring an encrypted snapshot into an unencrypted StorageClass, or an unencrypted snapshot into an encrypted StorageClass, fails when the volume is provisioned.
+- A volume restored from an encrypted snapshot can only be opened with the **source volume's** passphrase. If you restore through a StorageClass that references a different encryption secret, the volume is provisioned but fails to attach.
+
+To place unencrypted data (such as an existing VM image) into an encrypted StorageClass, use the **copy** clone strategy described below, which writes the data through the encryption layer instead of copying blocks.
 
 :::note
 
