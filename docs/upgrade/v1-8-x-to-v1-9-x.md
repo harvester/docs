@@ -114,3 +114,46 @@ This issue mostly happens when upgrading from v1.8.0. v1.8.0 does not have the `
     The version you upgraded to already includes the memory-limit fix, so the override is no longer needed.
 
 Related issues: [#11143](https://github.com/harvester/harvester/issues/11143) and [#10056](https://github.com/harvester/harvester/issues/10056)
+
+### 2. Upgrade Is Stuck in "Images preloaded"
+
+In rare cases, an upgrade from v1.8.x to v1.9.0 may remain in the **Images preloaded** state after a node reboots into the new operating system. This occurs when the upgrade controller changes the node's upgrade state to `Succeeded` before removing the `harvesterhci.io/pendingOSImage` annotation.
+
+#### Identifying the Issue
+
+1. Check the latest `Upgrade` CR:
+
+  ```bash
+  kubectl -n harvester-system get upgrades.harvesterhci.io \
+    -l harvesterhci.io/latestUpgrade=true \
+    -o yaml
+  ```
+
+  When the upgrade stops progressing, check if the output shows an upgraded node with `state: Succeeded` while the remaining nodes are stuck in the `Images preloaded` state.
+
+1. Check the upgraded node's current and pending operating system images:
+
+  ```bash
+  kubectl get node <node-name> \
+    -o custom-columns='NAME:.metadata.name,CURRENT-OS-IMAGE:.status.nodeInfo.osImage,PENDING-OS-IMAGE:.metadata.annotations.harvesterhci\.io/pendingOSImage'
+  ```
+
+  Check if the value of `PENDING-OS-IMAGE` matches `CURRENT-OS-IMAGE`.
+
+#### Workaround
+
+Apply this workaround only if all conditions described in the previous section are met.
+
+1. Change the affected node's state in the Upgrade CR back to `Waiting Reboot`:
+
+  Replace `<upgrade-name>` with the name of the `Upgrade` CR, and `<node-name>` with the name of the affected node.
+
+  ```bash
+  kubectl -n harvester-system patch upgrades.harvesterhci.io <upgrade-name> \
+    --type=json \
+    -p '[{"op":"replace","path":"/status/nodeStatuses/<node-name>/state","value":"Waiting Reboot"}]'
+  ```
+
+1. Verify that the upgrade resumes once the upgrade controller reconciles the node state.
+
+Related issue: [#11543](https://github.com/harvester/harvester/issues/11543)
