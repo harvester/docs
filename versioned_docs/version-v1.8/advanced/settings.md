@@ -369,36 +369,12 @@ When the `value` field is empty, the `default` field is used. The default values
 }
 ```
 
-You can copy the example, change the fields that you want to customize, and then apply it to the setting. Fields that you omit fall back to the KubeVirt defaults listed in the table.
-
 :::note
 
 The `nodeDrainTaintKey` and `network` fields of the `kubevirt` object cannot be configured using this setting, and are rejected if you include them in the value.
 
 - `nodeDrainTaintKey` must keep the default value `kubevirt.io/drain` because the Harvester upgrade process depends on it.
 - `network` is configured using the [`vm-migration-network`](#vm-migration-network) setting.
-
-:::
-
-:::note
-
-You cannot change this setting while a virtual machine migration is in progress. Wait until all migrations are completed, and then retry.
-
-:::
-
-:::caution
-
-Enabling `unsafeMigrationOverride`, `allowPostCopy`, `allowWorkloadDisruption`, or `disableTLS` can affect the integrity, the availability, or the confidentiality of your workloads. In particular, a network failure during the post-copy phase of a migration can crash the virtual machine. Change these fields only when you understand the consequences.
-
-:::
-
-:::important
-
-Harvester applies the whole value to the `kubevirt` object. When you save the setting, every field that the value contains is written, including the fields that you did not change. Any configuration that was applied to the `spec.configuration.migrations` field of the `kubevirt` object outside of this setting is replaced.
-
-If you configured live migration by editing the `kubevirt` object directly on a cluster running a version earlier than v1.7.0, the upgrade to v1.7.x does not change the configuration, but the setting is created without a value and therefore displays the default values. The two no longer match, and your configuration is lost the first time the setting is saved.
-
-To keep your configuration, create the setting from the `kubevirt` object **before** you upgrade. For instructions, see [Preserving a manually configured KubeVirt live migration configuration](https://harvesterhci.io/kb/preserve_kubevirt_migration_configuration_before_upgrade).
 
 :::
 
