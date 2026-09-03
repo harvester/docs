@@ -144,9 +144,9 @@ To migrate a disk, perform the following steps:
 
 1. [Remove the affected Longhorn V2 disk](../host/host.md#remove-disks).
 
-2. [Add the Longhorn V2 disk again](../host/host.md#add-additional-disks).
+1. [Add the Longhorn V2 disk again](../host/host.md#add-additional-disks).
 
-3. Verify that the migrated disk uses `aio`.
+1. Verify that the migrated disk uses `aio`.
 
     ```shell
     kubectl -n longhorn-system get blockdevices.harvesterhci.io BLOCKDEVICE_NAME -o yaml
