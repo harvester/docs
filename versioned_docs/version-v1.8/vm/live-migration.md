@@ -165,15 +165,23 @@ Do not use this UI feature if the migration process was created using [batch mig
 
 ## Migration Timeouts
 
+The timeouts described in this section are cluster-wide. You can change them, and the other live migration parameters, using the [`kubevirt-migration`](../advanced/settings.md#kubevirt-migration) setting.
+
 ### Completion Timeout
 
 The live migration process will copy virtual machine memory pages and disk blocks to the destination. In some cases, the virtual machine can write to different memory pages or disk blocks at a higher rate than these can be copied. As a result, the migration process is prevented from being completed in a reasonable amount of time.
 
-Live migration will be aborted if it exceeds the completion timeout of 800s per GiB of data. For example, a virtual machine with 8 GiB of memory will time out after 6400 seconds.
+Live migration will be aborted if it exceeds the completion timeout, which is 150s per GiB of data by default. For example, a virtual machine with 8 GiB of memory will time out after 1200 seconds. To change the timeout, use the `completionTimeoutPerGiB` field of the [`kubevirt-migration`](../advanced/settings.md#kubevirt-migration) setting.
+
+:::tip
+
+Instead of increasing the timeout, consider enabling the `allowAutoConverge` field of the [`kubevirt-migration`](../advanced/settings.md#kubevirt-migration) setting. This allows KubeVirt to throttle the guest CPU when the memory of a busy virtual machine changes faster than it can be copied, which increases the chance that the migration completes.
+
+:::
 
 ### Progress Timeout
 
-Live migration will also be aborted when copying memory doesn't make any progress in 150s.
+Live migration will also be aborted when copying memory doesn't make any progress in 150s. To change the timeout, use the `progressTimeout` field of the [`kubevirt-migration`](../advanced/settings.md#kubevirt-migration) setting.
 
 ## Monitoring
 

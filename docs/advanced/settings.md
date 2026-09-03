@@ -327,7 +327,7 @@ kubectl get volumes.longhorn.io -n longhorn-system
 
 **Versions**: v1.7.0 and later
 
-**Definition**: Cluster-wide configuration for virtual machine live migration.
+**Definition**: Cluster-wide configuration for virtual machine live migration. For more information, see [Live Migration](../vm/live-migration.md).
 
 Harvester manages live migration configuration using this setting. Always configure live migration through this setting rather than editing the `kubevirt` object directly.
 

@@ -345,5 +345,10 @@ If you modified the `spec.configuration.migrations` field of the `kubevirt` obje
 
 To check if your cluster is affected, run the following command before upgrading:
 
+```bash
+kubectl get kubevirt kubevirt -n harvester-system -o jsonpath='{.spec.configuration.migrations}' | jq
+```
+
+If the command returns `null` or an empty string, your cluster uses the standard KubeVirt defaults and no action is required. If custom fields are returned, create the setting from the existing `kubevirt` object before upgrading using the script in the knowledge base article [Preserving a manually configured KubeVirt live migration configuration](https://harvesterhci.io/kb/preserve_kubevirt_migration_configuration_before_upgrade).
 
 Related issue: [#11517](https://github.com/harvester/harvester/issues/11517)
