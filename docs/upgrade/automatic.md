@@ -1,6 +1,6 @@
 ---
 id: index
-sidebar_position: 1
+sidebar_position: 10
 sidebar_label: Upgrading Harvester
 title: "Upgrading Harvester"
 keywords:

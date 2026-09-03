@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 110
 sidebar_label: Upgrade from v1.7.x to v1.8.x
 title: "Upgrade from v1.7.x to v1.8.x"
 ---
