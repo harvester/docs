@@ -28,7 +28,7 @@ Harvester supports VM CPU pinning. To use this feature, you must first enable th
 
 :::caution
 
-If you use CPU-pinned VMs on nodes where the Longhorn V2 Data Engine is enabled, configure Longhorn V2 SPDK CPU assignment before starting those workloads. Otherwise, the fixed SPDK CPU mask can overlap with CPUs assigned by Kubernetes CPU Manager. For more information, see [CPU Core Configuration with CPU-Pinned VMs](../advanced/longhorn-v2.md#cpu-core-configuration-with-cpu-pinned-vms).
+If you run CPU-pinned virtual machines on nodes where the Longhorn V2 Data Engine is enabled, configure Longhorn V2 SPDK CPU assignment before starting those workloads. Otherwise, the fixed SPDK CPU mask can overlap with exclusive CPUs assigned by the Kubernetes CPU Manager. For more information, see [CPU Core Configuration with CPU-Pinned VMs](../advanced/longhorn-v2.md#cpu-core-configuration-with-cpu-pinned-vms).
 
 :::
 

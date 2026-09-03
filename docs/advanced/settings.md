@@ -289,7 +289,7 @@ Harvester synchronizes this setting to the Longhorn **Guaranteed Instance Manage
 
 :::note
 
-For Longhorn V2, when `data-engine-number-of-cpu-cores` is nonzero, Longhorn compares that value with the CPU request calculated from `instance-manager-resources.cpu.v2`, rounded up to full cores, and uses the higher value. For more information, see [CPU Core Configuration with CPU-Pinned VMs](longhorn-v2.md#cpu-core-configuration-with-cpu-pinned-vms).
+For V2 `instance-manager` pods, when the `data-engine-number-of-cpu-cores` setting is set to a value greater than `0`, Longhorn compares that value with the CPU request calculated from `instance-manager-resources.cpu.v2` (rounded up to full cores) and uses the larger value. For more information, see [CPU Core Configuration with CPU-Pinned VMs](longhorn-v2.md#cpu-core-configuration-with-cpu-pinned-vms).
 
 :::
 
