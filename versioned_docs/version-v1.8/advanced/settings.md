@@ -323,6 +323,81 @@ To check the Longhorn volume state, run the following command:
 kubectl get volumes.longhorn.io -n longhorn-system
 ```
 
+### `kubevirt-migration`
+
+**Versions**: v1.7.0 and later
+
+**Definition**: Cluster-wide configuration for virtual machine live migration.[live migration](../vm/live-migration.md).
+
+Harvester manages live migration configuration using this setting. Always configure live migration through this setting rather than editing the `kubevirt` object directly.
+
+The entire value (in JSON format) is applied to the `spec.configuration.migrations` field of the underlying `kubevirt` object. When you save this setting, every field included in the JSON value is written, including fields you did not modify. Any changes previously applied directly to the object are overwritten.
+
+If you configured live migration by editing the `kubevirt` object directly on a cluster running a version earlier than v1.7.0, the upgrade process creates the `kubevirt-migration` setting without a populated value. While the `kubevirt` object retains your existing configuration during the upgrade, the setting displays default values, creating a mismatch. Because Harvester applies the entire JSON payload to the object, saving the setting for the first time overwrites all migration fields on the object with the setting's default values.
+
+To preserve your existing configuration, create the setting from the `kubevirt` object **before** upgrading. For detailed steps, see [Preserving a manually configured KubeVirt live migration configuration](https://harvesterhci.io/kb/preserve_kubevirt_migration_configuration_before_upgrade).
+
+:::caution
+
+Do not modify this setting while virtual machine migrations are in progress. Wait for all active migrations to complete before saving changes.
+
+:::
+
+**Default value**: `{"parallelOutboundMigrationsPerNode":2,"parallelMigrationsPerCluster":5,"allowAutoConverge":false,"bandwidthPerMigration":0,"completionTimeoutPerGiB":150,"progressTimeout":150,"unsafeMigrationOverride":false,"allowPostCopy":false,"allowWorkloadDisruption":false,"disableTLS":false,"matchSELinuxLevelOnMigration":false}`
+
+Harvester applies the default values if you leave the JSON payload empty. These match KubeVirt's default settings, resulting in standard KubeVirt behavior across the cluster.
+
+**Supported fields**:
+
+| Field | Type | Default Value | Description |
+| --- | --- | --- | --- |
+| `parallelOutboundMigrationsPerNode` | integer | `2` | Maximum number of concurrent outbound migrations allowed per node. |
+| `parallelMigrationsPerCluster` | integer | `5` | Maximum number of concurrent migrations allowed cluster-wide. |
+| `allowAutoConverge` | boolean | `false` | Allows KubeVirt to throttle the guest CPU if memory changes faster than it can be transferred to the target node. Enabling this option increases migration success rates at the cost of temporary guest performance degradation. |
+| `bandwidthPerMigration` | quantity | `0` | Maximum network bandwidth allocated to a single migration (for example, `40Gi`). Set this field to `0` for unlimited bandwidth. |
+| `completionTimeoutPerGiB` | integer | `150` | Number of seconds per GiB of guest memory that a migration is allowed to run before it is canceled. |
+| `progressTimeout` | integer | `150` | Number of seconds without progress that a migration is allowed to run before it is canceled. |
+| `unsafeMigrationOverride` | boolean | `false` | Allows migrations to proceed even when the compatibility check fails. |
+| `allowPostCopy` | boolean | `false` | Allows switching from pre-copy to post-copy if a migration fails to converge. |
+| `allowWorkloadDisruption` | boolean | `false` | Allows a migration that cannot complete otherwise to disrupt the workload. |
+| `disableTLS` | boolean | `false` | Disables encryption of migration traffic. |
+| `matchSELinuxLevelOnMigration` | boolean | `false` | Applies the SELinux level of the source `virt-launcher` pod to the target pod. |
+
+:::caution
+
+Enabling `unsafeMigrationOverride`, `allowPostCopy`, `allowWorkloadDisruption`, or `disableTLS` can compromise workload integrity, availability, or confidentiality. In particular, a network failure during the post-copy phase of a migration causes the virtual machine to crash. Modify these fields only if you fully understand the operational risks.
+
+:::
+
+**Example**:
+
+Copy the following JSON payload, modify the fields as necessary, and save the setting. Omitted fields automatically use the KubeVirt defaults listed in the table.
+
+```json
+{
+  "parallelOutboundMigrationsPerNode": 2,
+  "parallelMigrationsPerCluster": 5,
+  "allowAutoConverge": true,
+  "bandwidthPerMigration": 0,
+  "completionTimeoutPerGiB": 150,
+  "progressTimeout": 150,
+  "unsafeMigrationOverride": false,
+  "allowPostCopy": false,
+  "allowWorkloadDisruption": false,
+  "disableTLS": false,
+  "matchSELinuxLevelOnMigration": false
+}
+```
+
+:::note
+
+The `nodeDrainTaintKey` and `network` fields cannot be configured using this setting and are rejected if included.
+
+- `nodeDrainTaintKey`: Must remain set to `kubevirt.io/drain`, which is required for Harvester upgrade operations.
+- `network`: Configured separately using the [`vm-migration-network`](#vm-migration-network) setting.
+
+:::
+
 ### `log-level`
 
 **Definition**: Log level for the Harvester host.
