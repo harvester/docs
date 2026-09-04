@@ -250,7 +250,7 @@ Harvester appends necessary addresses to user-specified `noProxy` values (for ex
 
 **Versions**: v1.7.0 and later
 
-**Definition**: Cluster-wide configuration for virtual machine live migration. For more information, see [Live Migration](../vm/live-migration.md).
+**Definition**: Cluster-wide configuration for virtual machine live migration.[live migration](../vm/live-migration.md).
 
 Harvester manages live migration configuration using this setting. Always configure live migration through this setting rather than editing the `kubevirt` object directly.
 
