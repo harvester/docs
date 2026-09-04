@@ -54,7 +54,7 @@ Some CSI drivers require additional software packages on the host. You can insta
 
 :::note
 
-Upgrading Harvester causes the changes to the OS in the `after-install-chroot` stage to be lost. You must also configure the `after-upgrade-chroot` to make your changes persistent across an upgrade. Refer to [Runtime persistent changes](https://rancher.github.io/elemental-toolkit/docs/customizing/runtime_persistent_changes/) before upgrading Harvester.
+Upgrading Harvester causes the changes to the OS in the `after-install-chroot` stage to be lost. You must also configure the `after-upgrade-chroot` to make your changes persistent across an upgrade. Refer to [Installing RPMs or Other Binaries During System Installation and Upgrade](../advanced/installing-additional-software.md#installing-rpms-or-other-binaries-during-system-installation-and-upgrade) before upgrading Harvester.
 
 :::
 
