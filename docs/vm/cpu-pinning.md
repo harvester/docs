@@ -26,6 +26,12 @@ _Available as of v1.4.0_
 
 Harvester supports VM CPU pinning. To use this feature, you must first enable the CPU Manager on the nodes, and then enable CPU pinning when you create the VM.
 
+:::caution
+
+If you run CPU-pinned virtual machines on nodes where the Longhorn V2 Data Engine is enabled, configure Longhorn V2 SPDK CPU assignment before starting those workloads. Otherwise, the fixed SPDK CPU mask can overlap with exclusive CPUs assigned by the Kubernetes CPU Manager. For more information, see [CPU Core Configuration with CPU-Pinned VMs](../advanced/longhorn-v2.md#cpu-core-configuration-with-cpu-pinned-vms).
+
+:::
+
 ## Kubernetes CPU Manager
 
 The [CPU Manager](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/) feature improves CPU resource allocation in Kubernetes clusters, ensuring that workloads with strict performance needs receive stable and predictable CPU resources. This is especially important for high-performance and latency-sensitive applications.
