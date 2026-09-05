@@ -335,3 +335,67 @@ Starting from v1.8.0, this process is handled automatically. The workaround desc
 :::
 
 Please see the instructions on this [page](./v1-5-x-to-v1-6-x.md#10-unnecessary-live-migrations-during-the-upgrade).
+
+### 6. LoadBalancer IP addresses may become unreachable after the wicked-to-NetworkManager migration
+
+Harvester v1.7.x uses NetworkManager instead of wicked. Under wicked, the bond post-up script `/etc/wicked/scripts/setup_bond.sh` explicitly pinned the management bridge (`mgmt-br`) MAC address to the bond (`mgmt-bo`) MAC address. After the migration, wicked is inactive and this script no longer runs. The script still ships in `/oem/90_custom.yaml`, but it is never executed.
+
+`mgmt-br` is a standard Linux bridge. A Linux bridge with no explicitly-assigned MAC address adopts the lowest MAC address among its currently-enslaved ports. When VM networks attach guests to `mgmt-br` (bridge-mode `NetworkAttachmentDefinition`s), each VM's `veth` interface is enslaved into the bridge. If such a `veth` has a lower MAC address than the physical uplink, `mgmt-br` adopts it. The bridge MAC address therefore changes whenever the corresponding VM starts, stops, or migrates.
+
+This is harmless on its own, but components that cache the bridge MAC address continue using a stale value. In particular, MetalLB's Layer 2 mode ARP responder caches the announce-interface MAC address when the responder is created. If `mgmt-br`'s MAC address subsequently changes, MetalLB keeps answering ARP requests for every `LoadBalancer` service IP address with the previous MAC address. Once the corresponding `veth` is removed, that MAC address exists on no interface, and all affected `LoadBalancer` IP addresses become unreachable.
+
+The symptoms are easy to misattribute: the backing pods are healthy, MetalLB reports the IP addresses as assigned, and ARP resolution still succeeds — but resolves to a MAC address that black-holes traffic. The outage is triggered by ordinary VM lifecycle events rather than by any configuration change.
+
+This issue affects clusters that use a Layer 2 load balancer (such as MetalLB in L2 mode) together with bridge-mode VM networks on the management bridge.
+
+To address the issue, re-establish MAC address pinning under NetworkManager. The following steps install a NetworkManager dispatcher script that re-pins `mgmt-br` to the bond MAC address on every network event, and persist it with an `/oem` configuration file so that it survives reboots and upgrades.
+
+:::info important
+
+Perform these steps on every node.
+
+:::
+
+1. Create the file `/oem/91-pin-mgmt-br-mac.yaml` with the following content:
+
+    ```yaml
+    name: Pin mgmt-br MAC to bond
+    stages:
+      initramfs:
+        - name: pin-mgmt-br-mac
+          files:
+            - path: /etc/NetworkManager/dispatcher.d/90-pin-mgmt-br-mac
+              permissions: 493   # 0755
+              owner: 0
+              group: 0
+              content: |
+                #!/bin/sh
+                # Pin mgmt-br's MAC address to the mgmt-bo bond MAC address
+                # so the bridge MAC does not float to a VM veth.
+                [ -f /sys/class/net/mgmt-bo/address ] || exit 0
+                [ -f /sys/class/net/mgmt-br/address ] || exit 0
+                BOND_MAC=$(cat /sys/class/net/mgmt-bo/address)
+                BR_MAC=$(cat /sys/class/net/mgmt-br/address)
+                if [ -n "$BOND_MAC" ] && [ "$BOND_MAC" != "$BR_MAC" ]; then
+                    ip link set dev mgmt-br address "$BOND_MAC"
+                fi
+    ```
+
+1. Apply the configuration without rebooting:
+
+    ```
+    $ yip -s initramfs /oem/91-pin-mgmt-br-mac.yaml
+    ```
+
+1. Verify that the bridge MAC address is pinned. The `addr_assign_type` value should be `3` (`NET_ADDR_SET`), which indicates that the bridge no longer auto-selects a port MAC address.
+
+    ```
+    $ cat /sys/class/net/mgmt-br/addr_assign_type
+    3
+    ```
+
+:::note
+
+If MetalLB has already latched a stale MAC address, restart the MetalLB speaker pods (for example, `kubectl -n metallb-system rollout restart daemonset/metallb-speaker`) after pinning the bridge MAC address, so that the ARP responders re-read the corrected value.
+
+:::
