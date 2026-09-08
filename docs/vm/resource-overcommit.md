@@ -18,9 +18,9 @@ Harvester supports global configuration of resource overload percentages on CPU,
 
 Harvester allows you to overcommit CPU and RAM on compute nodes. This allows you to increase the number of instances running on your cloud at the cost of reducing the performance of the instances. The Compute service uses the following ratios by default:
 
-- CPU allocation ratio: 1600%
+- CPU allocation ratio: 1000%
 - RAM allocation ratio: 150%
-- Storage allocation ratio: 200%
+- Storage allocation ratio: 100%
 
 :::note
 
