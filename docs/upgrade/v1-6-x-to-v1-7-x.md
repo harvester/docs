@@ -335,3 +335,20 @@ Starting from v1.8.0, this process is handled automatically. The workaround desc
 :::
 
 Please see the instructions on this [page](./v1-5-x-to-v1-6-x.md#10-unnecessary-live-migrations-during-the-upgrade).
+
+
+### 6. Live Migration Configuration Applied Directly to the `kubevirt` Object
+
+Harvester v1.7.0 introduced the [`kubevirt-migration`](../advanced/settings.md#kubevirt-migration) setting, which allows you to manage cluster-wide live migration settings directly rather than editing the underlying `kubevirt` object.
+
+If you modified the `spec.configuration.migrations` field of the `kubevirt` object before upgrading (for example, to enable `allowAutoConverge`), the upgrade process creates the `kubevirt-migration` setting without a populated value. While the object retains your existing configuration during the upgrade, the setting displays default values, creating a mismatch. Because Harvester applies the entire JSON payload to the object, saving the setting for the first time overwrites all migration fields on the object with the setting's default values. Your previous custom configuration is replaced even if you only intended to change an unrelated field.
+
+To check if your cluster is affected, run the following command before upgrading:
+
+```bash
+kubectl get kubevirt kubevirt -n harvester-system -o jsonpath='{.spec.configuration.migrations}' | jq
+```
+
+If the command returns `null` or an empty string, your cluster uses the standard KubeVirt defaults and no action is required. If custom fields are returned, create the setting from the existing `kubevirt` object before upgrading using the script in the knowledge base article [Preserving a manually configured KubeVirt live migration configuration](https://harvesterhci.io/kb/preserve_kubevirt_migration_configuration_before_upgrade).
+
+Related issue: [#11517](https://github.com/harvester/harvester/issues/11517)
