@@ -37,22 +37,27 @@ The Harvester documentation uses the following labels to describe releases of th
 
 ## Feature Labels
 
-Features that are labeled **Experimental** and **Technical Preview** provide glimpses into upcoming innovations and offer opportunities to test new technologies within your environment.
+Harvester features and add-ons are labeled according to their maturity and support commitment.
 
-- **Experimental**: The feature is incomplete but its essential functionality is operational. Tests in a controlled environment have shown that it can coexist with existing stable features. Because of the missing components and/or evolving functionality, the feature is not recommended for use in production environments.
+- **Experimental**: The feature is roughly implemented end to end, but automated test coverage is insufficient. The feature is not supported and is not recommended for use in production environments.
 
-- **Technical Preview**: The feature is almost complete and its functionality is not expected to change significantly. Tests in a controlled environment have shown that it can coexist with existing stable features. Explore the feature extensively before using in production environments.
+- **Technical Preview**: The main functionality is implemented, some detailed capabilities are still incomplete, and partial automated test coverage is in place. The feature is supported on a best-effort basis. Explore the feature extensively before using it in production environments.
 
-These features have the following limitations:
+- **GA** (General Availability): All functionality is implemented with sufficient automated test coverage. The feature is fully supported and recommended for production use. Features that are not labeled are GA.
+
+- **Deprecated**: The feature is no longer maintained or supported, and is removed in the following release. Existing installations continue to work, but the feature is no longer updated or packaged with Harvester. The documentation identifies the replacement, if any.
+
+**Experimental** and **Technical Preview** features have the following limitations:
 
 - Still in development and may be functionally incomplete, unstable, or in other ways unsuitable for production use.
-- Not supported.
 - May only be available for specific hardware architectures. Details and functionality are subject to change. As a result, upgrading to subsequent releases may be impossible and may require a fresh installation.
 - Can be removed from the product at any time. This may occur, for example, if we discover that the feature does not meet customer or market needs, or does not comply with enterprise standards.
 
 :::note
 
 **Experimental** and **Technical Preview** features are usually disabled by default. The documentation provides information about how you can enable and configure such features.
+
+For add-ons, the maturity stage is shown next to the add-on name on the **Add-ons** screen. Whether an add-on is packaged in the Harvester ISO is independent of its maturity stage.
 
 :::
 

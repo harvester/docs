@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
 sidebar_label: Local Storage Support
-title: "Local Storage Support (Experimental)"
+title: "Local Storage Support"
 ---
 
 <head>
@@ -10,7 +10,7 @@ title: "Local Storage Support (Experimental)"
 
 :::note
 
-**harvester-csi-driver-lvm** is an *experimental* add-on. It is not included in the Harvester ISO, but you can download it from the [experimental-addons repository](https://github.com/harvester/experimental-addons). For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+**harvester-csi-driver-lvm** is an *experimental* add-on in Harvester v1.9.0 and is generally available (GA) as of v1.9.1. It is not included in the Harvester ISO, but you can download it from the [experimental-addons repository](https://github.com/harvester/experimental-addons). For more information about feature maturity, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
 
 :::
 
@@ -30,7 +30,7 @@ If you are using the Harvester kubeconfig file, you can install the add-on by pe
 
 1. On the Harvester UI, go to **Advanced** > **Add-ons**.
 
-1. Select **harvester-csi-driver-lvm (Experimental)**, and then select **⋮** > **Enable**.
+1. Select **harvester-csi-driver-lvm**, and then select **⋮** > **Enable**.
 
 ## Creating a Volume Group for LVM
 

@@ -17,7 +17,7 @@ keywords:
 
 :::note
 
-All features that use Kube-OVN are considered experimental. For more information about experimental features, see [Feature Labels](../getting-started/document-conventions.md#feature-labels).
+The **kubeovn-operator** add-on is experimental, but the features described on this page are generally available (GA) as of Harvester v1.9.0. For more information, see [Feature Maturity](../advanced/addons/kubeovn-operator.md#feature-maturity).
 
 :::
 
