@@ -12,11 +12,44 @@ _Available as of v1.6.0_
 
 :::note
 
-**kubeovn-operator** is an *experimental* add-on. For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+**kubeovn-operator** is currently classified as *experimental*. While the add-on is undergoing further integration, many Kube-OVN networking features have reached general availability (GA) in Harvester v1.9.0. For more information, see [Feature Maturity](#feature-maturity) and [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
 
 :::
 
 [`kubeovn-operator`](https://github.com/harvester/kubeovn-operator) is used to manage the lifecycle of [Kube-OVN](https://github.com/kubeovn/kube-ovn) as a secondary CNI on underlying Harvester clusters.
+
+## Feature Maturity
+
+The following table lists the maturity of Kube-OVN features in Harvester v1.9.
+
+| Category | Feature | Status |
+| --- | --- | --- |
+| Core networking | Overlay VM networks | GA |
+| Core networking | Overlay subnets | GA |
+| Core networking | VPC | GA |
+| Core networking | VPC peering | GA |
+| Core networking | DHCP | GA |
+| Core networking | Static IP assignment | GA |
+| Core networking | VM-to-VM L2 and L3 connectivity | GA |
+| Core networking | Pure underlay networking (non-VXLAN) | GA |
+| Core networking | Non-management cluster network as underlay | GA |
+| External connectivity | Default VPC | GA |
+| External connectivity | Custom VPC NAT gateway (EIP, SNAT, DNAT) | GA |
+| External connectivity | External access from overlay VMs | GA |
+| External connectivity | Inbound access to overlay VMs | GA |
+| VM integration | VM creation on overlay networks | GA |
+| VM integration | VM creation on underlay networks | GA |
+| VM integration | Live migration | GA |
+| Security and isolation | Private subnets | GA |
+| Security and isolation | Tenant isolation | GA |
+| Security and isolation | Network policies | GA |
+| Security and isolation | Subnet ACLs | GA |
+| Security and isolation | Underlay ACLs | GA |
+| Security and isolation | Micro-segmentation | GA |
+| Rancher integration | Guest clusters on underlay networks (default VPC) | Experimental |
+| Rancher integration | Guest clusters on overlay networks (custom VPC) | Experimental |
+
+Guest clusters deployed on Kube-OVN networks are validated only for basic workloads. Because load balancers and ReadWriteMany (RWX) storage networks are not yet validated, these guest clusters do not maintain feature parity with guest clusters on standard VLAN networks.
 
 ## Enabling `kubeovn-operator`
 
