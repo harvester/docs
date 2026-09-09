@@ -1,7 +1,7 @@
 ---
 sidebar_position: 10
 sidebar_label: Virtual Machine Auto Balance
-title: "Virtual Machine Auto Balance (Experimental)"
+title: "Virtual Machine Auto Balance"
 ---
 
 <head>
@@ -12,7 +12,7 @@ _Available as of v1.7.0_
 
 :::note
 
-**virtual-machine-auto-balance** is an *experimental* add-on. For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+**virtual-machine-auto-balance** is an *experimental* add-on in Harvester v1.9.0 and is generally available (GA) as of v1.9.1. For more information about feature maturity, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
 
 :::
 
@@ -24,7 +24,7 @@ When enabled, the add-on deploys the Descheduler in the `kube-system` namespace 
 
 1. On the Harvester UI, go to **Advanced** > **Add-ons**.
 
-1. Select **virtual-machine-auto-balance  (Experimental)**, and then select **⋮** > **Enable**.
+1. Select **virtual-machine-auto-balance**, and then select **⋮** > **Enable**.
 
   ![](/img/v1.7/descheduler/descheduler-enable.png)
 
@@ -124,7 +124,7 @@ spec:
 
 1. On the Harvester UI, go to **Advanced** > **Add-ons**.
 
-1. Select **virtual-machine-auto-balance (Experimental)**, and then select **⋮** > **Disable**.
+1. Select **virtual-machine-auto-balance**, and then select **⋮** > **Disable**.
 
 ## Node Usage
 

@@ -12,7 +12,7 @@ Harvester provides optional features as add-ons to maintain a minimal installati
 
 The following add-ons are available in this version:
 
-* [harvester-csi-driver-lvm](./addons/lvm-local-storage.md) (Experimental)
+* [harvester-csi-driver-lvm](./addons/lvm-local-storage.md) (Experimental in v1.9.0, GA as of v1.9.1)
 * [harvester-seeder](./addons/seeder.md) (Experimental)
 * [harvester-upgrade-manager](./addons/upgrade-manager.md) (Experimental)
 * [harvester-vm-dhcp-controller](./addons/managed-dhcp.md) (Experimental)
@@ -23,7 +23,7 @@ The following add-ons are available in this version:
 * [rancher-monitoring](../monitoring/harvester-monitoring.md)
 * [rancher-vcluster](./addons/rancher-vcluster.md) (Experimental)
 * [vm-import-controller](./addons/vmimport.md)
-* [virtual-machine-auto-balance](./addons/virtual-machine-auto-balance.md) (Experimental)
+* [virtual-machine-auto-balance](./addons/virtual-machine-auto-balance.md) (Experimental in v1.9.0, GA as of v1.9.1)
 * [suse-observability-agent](./addons/suse-observability-agent.md) (Experimental)
 
 You can enable and disable add-ons on the **Add-ons** screen of the Harvester UI.
