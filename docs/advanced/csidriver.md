@@ -54,7 +54,7 @@ Some CSI drivers require additional software packages on the host. You can insta
 
 :::note
 
-Upgrading Harvester causes the changes to the OS in the `after-install-chroot` stage to be lost. You must also configure the `after-upgrade-chroot` to make your changes persistent across an upgrade. Refer to [Installing RPMs or Other Binaries During System Installation and Upgrade](../advanced/installing-additional-software.md#installing-rpms-or-other-binaries-during-system-installation-and-upgrade) before upgrading Harvester.
+Upgrading Harvester causes the changes to the OS in the `after-install-chroot` stage to be lost. You must also configure the `after-upgrade-chroot` to make your changes persistent across an upgrade. Refer to [Installing Packages During Installation and Upgrades](../advanced/installing-additional-software.md#installing-packages-during-installation-and-upgrades) before upgrading Harvester.
 
 :::
 
