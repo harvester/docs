@@ -21,10 +21,11 @@ The following add-ons are available in this version:
 * [pcidevices-controller](./addons/pcidevices.md)
 * [rancher-logging](../logging/harvester-logging.md)
 * [rancher-monitoring](../monitoring/harvester-monitoring.md)
-* [rancher-vcluster](./addons/rancher-vcluster.md) (Experimental)
+* [rancher-vcluster](./addons/rancher-vcluster.md) (Deprecated)
 * [vm-import-controller](./addons/vmimport.md)
 * [virtual-machine-auto-balance](./addons/virtual-machine-auto-balance.md) (Experimental)
 * [suse-observability-agent](./addons/suse-observability-agent.md) (Experimental)
+* [rancher-k3k](./addons/rancher-k3k.md) (Experimental)
 
 You can enable and disable add-ons on the **Add-ons** screen of the Harvester UI.
 
