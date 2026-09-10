@@ -22,13 +22,13 @@ By default during installation, SSH password authentication is enabled on the Ha
 Once installation is completed, however, disabling SSH password authentication is recommended. You can run the following command, which uses `kubectl` to apply a [`CloudInit`](https://docs.harvesterhci.io/v1.6/advanced/cloudinitcrd/) configuration, to disable SSH password authentication on all Harvester nodes:
 
 ```sh
-cat <<EOF | kubectl apply -f -
+cat <<EOF | sudo env "PATH=$PATH" /var/lib/rancher/rke2/bin/kubectl --kubeconfig=/etc/rancher/rke2/rke2.yaml apply -f -
 apiVersion: node.harvesterhci.io/v1beta1
 kind: CloudInit
 metadata:
   name: ssh-config
 spec:
-  matchSelector: 
+  matchSelector:
     harvesterhci.io/managed: "true" # apply to all Harvester nodes
   filename: 99-ssh-config
   contents: |
@@ -36,9 +36,8 @@ spec:
       network:
       - name: "disable password login"
         commands:
-        - sed -i -E 's/^#?PasswordAuthentication .*/PasswordAuthentication no/' /etc/ssh/sshd_config
-        - sed -i -E 's/^#?ChallengeResponseAuthentication .*/ChallengeResponseAuthentication no/' /etc/ssh/sshd_config
-        - sed -i -E 's/^#?UsePAM .*/UsePAM no/' /etc/ssh/sshd_config
+        - echo "PasswordAuthentication no" > /etc/ssh/sshd_config.d/99-disable-passwords.conf
+        - echo "KbdInteractiveAuthentication no" >> /etc/ssh/sshd_config.d/99-disable-passwords.conf
         - systemctl restart sshd
   paused: false
 EOF
