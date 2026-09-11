@@ -28,6 +28,12 @@ Classic memory overcommitment or memory ballooning is not yet supported by this 
 
 :::
 
+:::note
+
+The default CPU allocation ratio of 1000% is aggressive: a host CPU is treated as if it provides 10 vCPUs. Under load, this can produce noticeable CPU steal and latency spikes in guests. For workloads that are latency-sensitive or perform sustained CPU-bound work (for example, databases, real-time services, or interactive Windows desktops), benchmark with a representative workload and reduce the CPU allocation ratio if you observe degradation. A common conservative starting point is 200–400%.
+
+:::
+
 ## Configure the global setting [`overcommit-config`](../advanced/settings.md#overcommit-config)
 
 Users can modify the global `overcommit-config` by following the steps below, and it will be applied to each newly created virtual machine after the change.
