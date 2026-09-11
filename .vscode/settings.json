@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^npx remark --quiet --use remark-validate-links --use remark-lint-no-dead-urls docs/upgrade/v1-8-x-to-v1-9-x\\.md$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
