@@ -768,7 +768,9 @@ Changing this setting might cause single-node clusters to temporarily become una
 }
 ```
 
-### `ssl-parameters` Deprecated as of v1.9.0 (Use traefik-default-tls-options instead.)
+### `ssl-parameters`
+
+**Versions**: Deprecated as of v1.9.0 (Use `traefik-default-tls-options` instead.)
 
 **Definition**: Enabled SSL/TLS protocols and ciphers of the Harvester UI and API.
 
@@ -1028,19 +1030,17 @@ The value can be set through environment variables and is used to help identify 
 
 ### `traefik-default-tls-options`
 
+**Versions**: v1.9.0 and later
+
+**Definition**: Setting that applies default [TLS options](https://doc.traefik.io/traefik/reference/routing-configuration/http/tls/tls-options/) for the Traefik Ingress Controller.
+
 :::info important
 
-Replaces `ssl-parameters` setting applicable for nginx ingress controller.
+This setting replaces the `ssl-parameters` setting for the Ingress NGINX Controller (`ingress-nginx`).
 
 If you misconfigure this setting and are unable to access the Harvester UI and API, see [Troubleshooting](../troubleshooting/harvester.md#i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers).
 
 :::
-
-`ssl-parameters`
-
-**Versions**: v1.9.0 and later
-
-**Definition**: Setting that applies default [TLSOptions](https://doc.traefik.io/traefik/reference/routing-configuration/http/tls/tls-options/) for traefik ingress controller
 
 **Default value**: ``{"minVersion":"VersionTLS12", "maxVersion":"VersionTLS13", "sniStrict":false,"cipherSuites":[],"clientAuth":{"secretNames":[],"clientAuthType":""}}``
 
