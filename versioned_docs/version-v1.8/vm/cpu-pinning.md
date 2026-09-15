@@ -71,6 +71,41 @@ Allow some time for Harvester to apply the corresponding CPU Manager policy.
 
 - VMs with CPU pinning enabled must be stopped before CPU Manager is disabled on the corresponding node.
 
+### Node Selection and Affinity
+
+When you enable the CPU Manager on nodes, Harvester applies the following label to related `node` objects.
+
+```
+...
+metadata:
+  labels:
+    cpumanager: "true"
+...
+```
+
+When you enable CPU pinning during virtual machine creation, Harvester applies an affinity rule that ensures the virtual machine is scheduled only on nodes where the CPU Manager is enabled.
+
+```
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: cpumanager
+                    operator: In
+                    values:
+                      - 'true'
+```
+
+:::note
+
+The virtual machine is [non-migratable](./live-migration.md#non-migratable-virtual-machines) if the CPU Manager is enabled on only one node.
+
+:::
+
 ## Enable CPU Pinning on a New VM
 
 1. Verify that CPU Manager is enabled on one or more nodes.

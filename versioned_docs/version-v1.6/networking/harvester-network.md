@@ -187,3 +187,5 @@ The overlay network implementation in Harvester v1.6 has the following limitatio
     - Enable the DHCP service for the overlay network. You must set a valid default gateway.
 
     - Manually update the underlying virtual machine spec to adapt the `managedTap` binding interface for the downstream cluster during the cluster provision period.
+
+- The [Managed DHCP add-on](../advanced/addons/managed-dhcp.md) is not compatible with Kube-OVN overlay networks. Use Kube-OVN's native per-subnet DHCP service for virtual machines connected to these networks.

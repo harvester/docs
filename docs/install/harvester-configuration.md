@@ -274,7 +274,7 @@ os:
 
 #### Definition
 
-You can add additional software packages with `after_install_chroot_commands`. The `after-install-chroot` stage, provided by [elemental-toolkit](https://rancher.github.io/elemental-toolkit/docs/), allows you to execute commands not restricted by file system write issues, ensuring the persistence of user-defined commands even after a system reboot.
+You can add additional software packages with `after_install_chroot_commands`. The `after-install-chroot` stage allows you to execute commands not restricted by file system write issues, ensuring the persistence of user-defined commands even after a system reboot. For further details see [Installing Packages During Installation and Upgrades](../advanced/installing-additional-software.md#installing-packages-during-installation-and-upgrades).
 
 #### Example
 
@@ -301,7 +301,7 @@ os:
 
 :::note
 
-Upgrading Harvester causes the changes to the OS in the `after-install-chroot` stage to be lost. You must also configure the `after-upgrade-chroot` to make your changes persistent across an upgrade. Refer to [Runtime persistent changes](https://rancher.github.io/elemental-toolkit/docs/customizing/runtime_persistent_changes/) before upgrading Harvester.
+Upgrading Harvester causes the changes to the OS in the `after-install-chroot` stage to be lost. You must also configure the `after-upgrade-chroot` stage to make your changes persistent across an upgrade. Refer to [Installing Packages During Installation and Upgrades](../advanced/installing-additional-software.md#installing-packages-during-installation-and-upgrades) before upgrading Harvester.
 
 :::
 
@@ -548,7 +548,7 @@ If `disable_password_auth` is set to `true` and no [`os.ssh_authorized_keys`](#o
 - `pcidevices-controller` (chartName: harvester-pcidevices-controller)
 - `rancher-monitoring`
 - `rancher-logging`
-- `harvester-seeder` (experimental)
+- `harvester-seeder`
 
 **Example**:
 
@@ -566,6 +566,82 @@ install:
 **Definition**: Setting that forces the installer to skip the interactive steps in the installation process.
 
 When enabled, the configuration is either retrieved from the value of `harvester.install.config_url` or defined individually using kernel parameters.
+
+### `install.cluster_dns`
+
+**Definition**: IP of the Harvester DNS service.
+
+Use this setting to override the default DNS service IP (`10.53.0.10`).
+
+:::info important
+
+This IP must be within the range defined by the `cluster_service_cidr` setting.
+
+:::
+
+**Example**:
+
+```yaml
+install:
+  cluster_dns: 172.16.0.10
+```
+
+### `install.cluster_pod_cidr`
+
+**Definition**: CIDR block allocated for Harvester pods.
+
+Use this setting to override the default pod CIDR (`10.52.0.0/16`).
+
+**Example**:
+
+```yaml
+install:
+  cluster_pod_cidr: 172.16.0.0/16
+```
+
+### `install.cluster_service_cidr`
+
+**Definition**: CIDR block allocated for Harvester services.
+
+Use this setting to override the default service CIDR (`10.53.0.0/16`).
+
+:::info important
+
+If you change this CIDR, you must ensure that the cluster DNS IP (`install.cluster_dns`) is within this range.
+
+:::
+
+**Example**:
+
+```yaml
+install:
+  cluster_service_cidr: 172.22.0.0/16
+```
+
+### `install.cordoned`
+
+**Versions**: v1.9.0 and later
+
+**Definition**: Setting that initializes the node in a [cordoned](../host/host.md#cordoning-a-node) state when joining an existing cluster.
+
+This setting is useful when post-installation node configuration is required before scheduling workloads. Once the node is ready to host virtual machines, you can uncordon it using the Harvester UI or by running `kubectl uncordon <node-name>`.
+
+You cannot use this setting when initializing the first node in the cluster or when configuring witness nodes.
+
+**Default value**: `false`
+
+**Example**:
+
+```yaml
+install:
+  cordoned: true
+```
+
+:::note
+
+Cordoned worker nodes are never considered for promotion to management nodes. When initially deploying a Harvester cluster, if the second and third nodes join with `install.cordoned = true`, they are not automatically promoted until you uncordon them.
+
+:::
 
 ### `install.data_disk`
 
@@ -835,57 +911,6 @@ install:
   vip: 10.10.0.19
   vip_mode: dhcp
   vip_hw_addr: 52:54:00:ec:0e:0b
-```
-
-### `install.cluster_pod_cidr`
-
-**Definition**: CIDR of the Harvester pods.
-
-Use this field to override the default pod CIDR of 10.52.0.0/16.
-
-**Example**:
-
-```yaml
-install:
-  cluster_pod_cidr: 172.16.0.0/16
-```
-
-### `install.cluster_service_cidr`
-
-**Definition**: CIDR of the Harvester services.
-
-Use this field to override the default service CIDR of 10.53.0.0/16.
-
-:::info important
-
-If you change this CIDR, you must ensure that the cluster DNS IP (`install.cluster_dns`) is within this range.
-
-:::
-
-**Example**:
-
-```yaml
-install:
-  cluster_service_cidr: 172.22.0.0/16
-```
-
-### `install.cluster_dns`
-
-**Definition**: IP of the Harvester DNS service.
-
-Use this field to override the default DNS service IP of 10.53.0.10.
-
-:::info important
-
-This IP must be within the range defined by the `cluster_service_cidr` field.
-
-:::
-
-**Example**:
-
-```yaml
-install:
-  cluster_dns: 172.16.0.10
 ```
 
 ### `install.webhooks`

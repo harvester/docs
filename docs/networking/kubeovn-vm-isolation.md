@@ -17,7 +17,7 @@ keywords:
 
 :::note
 
-All features that use Kube-OVN are considered experimental. For more information about experimental features, see [Feature Labels](../getting-started/document-conventions.md#feature-labels).
+**kubeovn-operator** is currently classified as *experimental*. While the add-on is undergoing further integration, many Kube-OVN networking features have reached general availability (GA) in Harvester v1.9.0. For more information, see [Feature Maturity](../advanced/addons/kubeovn-operator.md#feature-maturity).
 
 :::
 
@@ -29,6 +29,19 @@ Isolation between virtual machines is typically achieved using either VLANs (in 
 ## Subnet ACLs
 
 For more information about the schema and usage guidelines, see [Subnet ACL](https://kubeovn.github.io/docs/v1.13.x/en/guide/subnet/#subnet-acl) and [ACL API Reference](https://kubeovn.github.io/docs/v1.13.x/en/reference/kube-ovn-api/#acl) in the Kube-OVN documentation.
+
+### Configuration
+
+See [Subnet Settings](./kubeovn-vpc.md#subnet-settings) for information about basic subnet configuration.
+
+On the **Access Control List** tab, define traffic rules with the following components:
+
+- **Action**: Action to take when traffic matches the rule.
+- **Direction**: Traffic flow to which the rule applies (ingress or egress).
+- **Priority**: Integer that determines when the rule is evaluated. Rules with larger values are evaluated first (for example, `1000` takes precedence over `100`).
+- **Match**: Packet filtering criteria, such as the source or destination IP address.
+
+ ![](/img/subnet-acl.png)
 
 ### Examples
 
@@ -165,6 +178,40 @@ NetworkPolicy rules deny traffic by default. To avoid affecting other pods, ensu
 - Traffic is isolated using pod selectors and namespaces.
 
 :::
+
+### Configuration
+
+
+1. On the Harvester UI, go to **Overlay Networks > Policies**.
+
+1. Click **Create**.
+
+1. On the **Ingress Rules** tab, configure the following settings:
+
+    - **Sources**: IP blocks, namespaces, or pods from which inbound traffic is permitted.
+    - **Allowed ports**: Network ports and protocols open to inbound traffic.
+
+    ![](/img/np-ingress.png)
+
+1. On the **Egress Rules** tab, configure the following settings:
+
+    **Targets**: IP blocks, namespaces, or pods to which outbound traffic is permitted.
+    **Allowed ports**: Network ports and protocols permitted for outbound traffic.
+
+    ![](/img/np-egress.png)
+
+1. On the **Selectors** tab, define rules that select the workload pods to which this network policy applies.
+
+   ![](/img/np-selectors.png)
+
+1. On the **Labels and Annotations** tab, configure the following settings:
+
+    - **Labels**: Key-value pairs used to categorize and filter the `NetworkPolicy` resource.
+    - **Annotations**: Non-identifying metadata used by external tools or system controllers.
+
+    ![](/img/np-labels.png)
+
+1. Click **Create**.
 
 The examples in this document focus on achieving isolation between VMs within the same subnet.
 

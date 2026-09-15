@@ -29,6 +29,18 @@ This issue was fixed in v0.1.21. If your system is affected, you can follow the 
 
 The Harvester Container Storage Interface (CSI) Driver provides a standard CSI interface used by guest Kubernetes clusters in Harvester. It connects to the host cluster and hot-plugs host volumes to the virtual machines (VMs) to provide native storage performance.
 
+:::note
+
+For **ReadWriteOnce (RWO)** volumes, the Harvester CSI Driver hotplugs underlying persistent volumes directly to virtual machines acting as guest nodes.
+
+KubeVirt enforces a hard limit of 256 volumes per virtual machine instance, including non-CSI disks such as the root disk and cloud-init disk. Consequently, a single guest node can realistically host a maximum of 256 CSI volumes.
+
+If too many PVC-dependent workloads are scheduled on the same guest node, volume attachment will fail with the error `VM Schema Invalid: Max Disk Limit (256) Exceeded on Guest Cluster`.
+
+To prevent this issue, distribute PVC-dependent workloads across multiple guest nodes or add guest worker nodes.
+
+:::
+
 The Harvester CSI driver supports the following features:
 
 | Harvester CSI Driver Version | Harvester Version | Storage Tiering | RWX Volumes | Online Resizing | Third-Party Storage (RWO) | Volume Snapshots | Volume Backups |
@@ -471,6 +483,60 @@ Starting with **v0.1.25**, the Harvester CSI Driver supports [volume snapshots](
 - Harvester v1.7 or later
 - Harvester CSI Driver v0.1.25 or later
 - The CSI snapshot controller and the required manifests are properly deployed on the guest cluster. (These components are deployed by default on RKE2.)
+
+### Enabling Volume Snapshots on Guest Clusters
+
+The volume snapshot feature depends on the snapshot controller and its associated CRDs. Both the controller and the CRDs operate independently of any specific CSI driver. 
+
+Kubernetes distributions such as RKE2 typically bundle and automatically deploy these components. If your distribution does not, you must manually install them on each guest cluster.
+
+1. Download the required components from the [`kubernetes-csi/external-snapshotter`](https://github.com/kubernetes-csi/external-snapshotter) repository.
+
+    For example, to use v8.5.0, you must download the files from the following directories:
+
+    - Snapshot CRDs: `client/config/crd`
+    - Snapshot controller: `deploy/kubernetes/snapshot-controller`
+
+    :::info important
+
+    You must use matching versions for the CRDs and the controller to guarantee API compatibility.
+
+    :::
+
+1. In the snapshot controller YAML files, update the namespace with a value that matches your environment.
+
+    For example, on a standard Kubernetes cluster, change the namespace from `default` to `kube-system`. Ensure that you change both the workload namespace and the target namespace in the `ClusterRoleBinding` configurations.
+
+1. Install the snapshot CRDs.
+
+    ```bash
+    kubectl create -k client/config/crd
+    ```
+
+1. Install the snapshot controller.
+
+    ```bash
+    kubectl create -k deploy/kubernetes/snapshot-controller
+    ```
+
+1. Verify that the snapshot CRDs are available on the cluster.
+
+    ```bash
+    kubectl get crd | grep snapshot.storage.k8s.io
+    ```
+
+1. Apply a VolumeSnapshotClass manifest.
+
+    Example:
+
+    ```yaml
+    apiVersion: snapshot.storage.k8s.io/v1
+    deletionPolicy: Delete
+    driver: driver.harvesterhci.io
+    kind: VolumeSnapshotClass
+    metadata:
+      name: harvester-snap
+    ```
 
 ## Volume Backups
 

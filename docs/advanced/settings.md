@@ -287,6 +287,12 @@ Harvester appends necessary addresses to user-specified `noProxy` values (for ex
 
 Harvester synchronizes this setting to the Longhorn **Guaranteed Instance Manager CPU** setting. You can configure separate values for Longhorn V1 and V2 Data Engine instance managers.
 
+:::note
+
+For V2 `instance-manager` pods, when the `data-engine-number-of-cpu-cores` setting is set to a value greater than `0`, Longhorn compares that value with the CPU request calculated from `instance-manager-resources.cpu.v2` (rounded up to full cores) and uses the larger value. For more information, see [CPU Core Configuration with CPU-Pinned VMs](longhorn-v2.md#cpu-core-configuration-with-cpu-pinned-vms).
+
+:::
+
 :::caution
 
 Changing this setting restarts Longhorn Instance Manager pods. Stop all VMs and detach all Longhorn volumes before changing the value.
@@ -323,6 +329,81 @@ To check the Longhorn volume state, run the following command:
 kubectl get volumes.longhorn.io -n longhorn-system
 ```
 
+### `kubevirt-migration`
+
+**Versions**: v1.7.0 and later
+
+**Definition**: Cluster-wide configuration for virtual machine live migration.[live migration](../vm/live-migration.md).
+
+Harvester manages live migration configuration using this setting. Always configure live migration through this setting rather than editing the `kubevirt` object directly.
+
+The entire value (in JSON format) is applied to the `spec.configuration.migrations` field of the underlying `kubevirt` object. When you save this setting, every field included in the JSON value is written, including fields you did not modify. Any changes previously applied directly to the object are overwritten.
+
+If you configured live migration by editing the `kubevirt` object directly on a cluster running a version earlier than v1.7.0, the upgrade process creates the `kubevirt-migration` setting without a populated value. While the `kubevirt` object retains your existing configuration during the upgrade, the setting displays default values, creating a mismatch. Because Harvester applies the entire JSON payload to the object, saving the setting for the first time overwrites all migration fields on the object with the setting's default values.
+
+To preserve your existing configuration, create the setting from the `kubevirt` object **before** upgrading. For detailed steps, see [Preserving a manually configured KubeVirt live migration configuration](https://harvesterhci.io/kb/preserve_kubevirt_migration_configuration_before_upgrade).
+
+:::caution
+
+Do not modify this setting while virtual machine migrations are in progress. Wait for all active migrations to complete before saving changes.
+
+:::
+
+**Default value**: `{"parallelOutboundMigrationsPerNode":2,"parallelMigrationsPerCluster":5,"allowAutoConverge":false,"bandwidthPerMigration":0,"completionTimeoutPerGiB":150,"progressTimeout":150,"unsafeMigrationOverride":false,"allowPostCopy":false,"allowWorkloadDisruption":false,"disableTLS":false,"matchSELinuxLevelOnMigration":false}`
+
+Harvester applies the default values if you leave the JSON payload empty. These match KubeVirt's default settings, resulting in standard KubeVirt behavior across the cluster.
+
+**Supported fields**:
+
+| Field | Type | Default Value | Description |
+| --- | --- | --- | --- |
+| `parallelOutboundMigrationsPerNode` | integer | `2` | Maximum number of concurrent outbound migrations allowed per node. |
+| `parallelMigrationsPerCluster` | integer | `5` | Maximum number of concurrent migrations allowed cluster-wide. |
+| `allowAutoConverge` | boolean | `false` | Allows KubeVirt to throttle the guest CPU if memory changes faster than it can be transferred to the target node. Enabling this option increases migration success rates at the cost of temporary guest performance degradation. |
+| `bandwidthPerMigration` | quantity | `0` | Maximum network bandwidth allocated to a single migration (for example, `40Gi`). Set this field to `0` for unlimited bandwidth. |
+| `completionTimeoutPerGiB` | integer | `150` | Number of seconds per GiB of guest memory that a migration is allowed to run before it is canceled. |
+| `progressTimeout` | integer | `150` | Number of seconds without progress that a migration is allowed to run before it is canceled. |
+| `unsafeMigrationOverride` | boolean | `false` | Allows migrations to proceed even when the compatibility check fails. |
+| `allowPostCopy` | boolean | `false` | Allows switching from pre-copy to post-copy if a migration fails to converge. |
+| `allowWorkloadDisruption` | boolean | `false` | Allows a migration that cannot complete otherwise to disrupt the workload. |
+| `disableTLS` | boolean | `false` | Disables encryption of migration traffic. |
+| `matchSELinuxLevelOnMigration` | boolean | `false` | Applies the SELinux level of the source `virt-launcher` pod to the target pod. |
+
+:::caution
+
+Enabling `unsafeMigrationOverride`, `allowPostCopy`, `allowWorkloadDisruption`, or `disableTLS` can compromise workload integrity, availability, or confidentiality. In particular, a network failure during the post-copy phase of a migration causes the virtual machine to crash. Modify these fields only if you fully understand the operational risks.
+
+:::
+
+**Example**:
+
+Copy the following JSON payload, modify the fields as necessary, and save the setting. Omitted fields automatically use the KubeVirt defaults listed in the table.
+
+```json
+{
+  "parallelOutboundMigrationsPerNode": 2,
+  "parallelMigrationsPerCluster": 5,
+  "allowAutoConverge": true,
+  "bandwidthPerMigration": 0,
+  "completionTimeoutPerGiB": 150,
+  "progressTimeout": 150,
+  "unsafeMigrationOverride": false,
+  "allowPostCopy": false,
+  "allowWorkloadDisruption": false,
+  "disableTLS": false,
+  "matchSELinuxLevelOnMigration": false
+}
+```
+
+:::note
+
+The `nodeDrainTaintKey` and `network` fields cannot be configured using this setting and are rejected if included.
+
+- `nodeDrainTaintKey`: Must remain set to `kubevirt.io/drain`, which is required for Harvester upgrade operations.
+- `network`: Configured separately using the [`vm-migration-network`](#vm-migration-network) setting.
+
+:::
+
 ### `log-level`
 
 **Definition**: Log level for the Harvester host.
@@ -345,7 +426,7 @@ kubectl get volumes.longhorn.io -n longhorn-system
 debug
 ```
 
-### `longhorn-v2-data-engine-enabled` [Experimental]
+### `longhorn-v2-data-engine-enabled` [Technical Preview]
 
 **Versions**: v1.4.0 and later
 
@@ -372,6 +453,44 @@ To disable the Longhorn V2 Data Engine on specific nodes (for example, nodes wit
 
 ```
 true
+```
+
+### `longhorn-v2-data-engine-hugepage-enabled` [Technical Preview]
+
+**Versions**: v1.9.0 and later
+
+**Definition**: Setting that enables or disables hugepages when using the Longhorn V2 Data Engine.
+
+Disabling hugepages reduces memory pressure on resource-constrained nodes and increases deployment flexibility. However, performance may be lower compared to running the engine with hugepages enabled.
+
+:::caution
+
+Disabling hugepages is currently supported only for Longhorn V2 disks that use the AIO bdev driver. Do not disable hugepages when using the NVMe or virtio bdev driver.
+
+:::
+
+**Default Value**: `true`
+
+**Example**:
+
+```
+false
+```
+
+### `longhorn-v2-data-engine-memory-size` [Technical Preview]
+
+**Versions**: v1.9.0 and later
+
+**Definition**: Amount of memory in MiB allocated to the SPDK target daemon when using the Longhorn V2 Data Engine.
+
+You must detach all V2 volumes before changes to this setting take effect.
+
+**Default Value**: `2048`
+
+**Example**:
+
+```
+4096
 ```
 
 ### `ntp-servers`
@@ -407,15 +526,15 @@ Changes to the server address list are applied to all nodes.
 
 Overcommitting is used to optimize physical resource allocation, particularly when VMs are not expected to fully consume the allocated resources most of the time. Setting values greater than 100% allows scheduling of multiple VMs even when physical resources are notionally fully allocated.
 
-**Default values**: `{ "cpu":1600, "memory":150, "storage":200 }`
+**Default values**: `{ "cpu":1000, "memory":150, "storage":100 }`
 
 With the default values, it would be possible to schedule the following:
 
-- 16x the number of physical CPUs on a host
+- 10x the number of physical CPUs on a host
 - 1.5x the amount of physical RAM on a host
-- 2x the amount of physical storage in Longhorn
+- 1x the amount of physical storage in Longhorn
 
-A VM that is configured to use 2 CPUs (equivalent to 2,000 milliCPU) can consume the full allocation as long as the resources are available. However, if the host is running heavy workloads and an overcommit value is set (for example, 1600%), Harvester only requests 125 milliCPU from the Kubernetes scheduler (2000/16 = 125 milliCPU).
+A VM that is configured to use 2 CPUs (equivalent to 2,000 milliCPU) can consume the full allocation as long as the resources are available. However, if the host is running heavy workloads and an overcommit value is set (for example, 1000%), Harvester only requests 200 milliCPU from the Kubernetes scheduler (2000/10 = 200 milliCPU).
 
 **Example**:
 

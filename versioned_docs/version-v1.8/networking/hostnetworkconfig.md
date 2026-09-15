@@ -317,6 +317,24 @@ Delete the config using the following command:
 
 `kubectl delete hostnetworkconfig cn1-vlan2012-dhcp`.
 
+:::caution
+
+If a node has multiple host interfaces, do not attach them to the same VLAN or subnet. This restriction applies to interfaces configured manually on the host and those configured through `HostNetwork` configurations.
+
+**DHCP Response Misrouting**
+
+VLAN interfaces used in a cluster network are derived from the same underlying bridge and consequently share the same MAC address. This shared MAC address can cause DHCP response misrouting.
+
+When multiple host interfaces from the same cluster network reside on the same VLAN, DHCP responses may be incorrectly associated with an existing interface instead of a newly created one. For example, if `mgmt-br` is connected to the native VLAN and has an active IP address, a DHCP client running on `mgmt-br.1` may fail to acquire a lease. This failure occurs because the DHCP `OFFER` packets are delivered to `mgmt-br` instead of `mgmt-br.1`.
+
+**Ambiguous Routing Behavior**
+
+Additionally, configuring multiple interfaces in the same VLAN and subnet results in ambiguous routing. The Linux kernel typically installs a single connected route for a given subnet. If multiple interfaces are attached to the same VLAN and subnet, the kernel may associate the subnet route with only one of those interfaces, causing traffic to be forwarded through an unintended physical path.
+
+Example: Host networks on cluster networks `cn1` and `cn2` are both attached to VLAN `2017` and assigned the same subnet (`192.168.0.0/24`). Because both interfaces are in the same subnet, the Linux kernel will install the connected route for `192.168.0.0/24` via only one of those interfaces (typically the one configured last). Traffic destined for that subnet may be routed through the wrong interface, leading to unexpected issues.
+
+:::
+
 ### Limitations
 
 - Only tagged VLANs with a VLAN ID of 1–4094 are supported.

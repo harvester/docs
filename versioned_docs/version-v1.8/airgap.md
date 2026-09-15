@@ -89,7 +89,7 @@ The Harvester UI Extension is required to access the Harvester UI in Rancher v2.
   | 1.0.x | 3.4.5 |
   | 1.5.x | 4.0.5 |
   | 1.6.x | 4.1.0 |
-  | 1.7.x | 4.13.0 |
+  | 1.7.x | 4.32.0 |
   | 1.8.x | 4.30.0 |
 
 1. On the Rancher UI, go to **Extensions**, and then select **⋮ > Manage Extension Catalogs**.

@@ -80,6 +80,10 @@ When a Harvester cluster is deployed, a cluster network named `mgmt` is automati
 
 `mgmt` does not require a network configuration and is always enabled on all hosts. You cannot disable and delete `mgmt`.
 
+Starting with v1.9.0, the **Cluster Network Configuration** screen displays interface details for `mgmt-bo` across all non-witness nodes, including its member interfaces, MTU, and bond mode.
+
+![](/img/mgmt-cn.png)
+
 :::note
 
 In Harvester v1.5.x and earlier versions, the entire VLAN ID range (2 to 4094) was assigned to the `mgmt` interfaces. However, this exceeded the upper limit of supported VLANs on certain network cards, so hardware VLAN offloading stopped working correctly.

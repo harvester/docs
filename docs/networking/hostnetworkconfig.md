@@ -57,138 +57,70 @@ A VlanConfig / NetworkConfig exists for the cluster network and covers the inten
 For static mode: valid CIDR addresses are prepared for each node.
 For underlay selection: the HostNetworkConfig must span all nodes in the cluster.
 
-### Configuring Host Network Config
-Via kubectl
-Create a HostNetworkConfig manifest and apply it with `kubectl apply -f <hostnetworkconfig>.yaml`.
+### Configuring the Host Networks
 
-#### Examples
+#### Host Network Configuration without Node Selectors
 
-##### DHCP Mode — All Nodes
-Creates a VLAN sub-interface on cluster network cn-1 with VLAN ID 2012 and assigns an IP address via DHCP on every node covered by the cluster network's VlanConfig.
+1. On the Harvester UI, go to **Networks > Host Networks**.
 
-```
-apiVersion: network.harvesterhci.io/v1beta1
-kind: HostNetworkConfig
-metadata:
-  name: cn1-vlan2012-dhcp
-spec:
-  clusterNetwork: cn-1
-  vlanID: 2012
-  mode: dhcp
-```
+1. Click **Create**.
 
-After applying, the following is configured on each node:
+    ![](/img/hnc-1.png)
 
-- VLAN 2012 is added to the bridge and uplink ports (cn-1-br, cn-1-bo).
-- Sub-interface cn-1-br.2012 is created and brought up.
-- An IP address is obtained via DHCP and applied to the sub-interface.
+1. Specify a unique name for the host network.
 
-##### Static Mode — Per-Node IPs
+1. On the **Mode** tab, configure the following settings:
 
-Assigns specific IP addresses to each node's sub-interface.
+    - **Mode**: Specify how IP addresses are assigned to the host network interface.
+      - **DHCP**: Automatically assigns IP addresses from a DHCP server.
+      - **Static**: Requires you to manually specify the IP address, subnet mask, and gateway.
+    - **Cluster Network**: Select the cluster network to associate with this host network.
+    - **VLAN ID**: Specify the VLAN ID for tagged traffic.
 
-```
-apiVersion: network.harvesterhci.io/v1beta1
-kind: HostNetworkConfig
-metadata:
-  name: cn1-vlan2012-static
-spec:
-  clusterNetwork: cn-1
-  vlanID: 2012
-  mode: static
-  ips:
-    node1: 192.168.1.10/24
-    node2: 192.168.1.11/24
-    node3: 192.168.1.12/24
-```
+1. Click **Create**.
 
-:::note
+#### Host Network Configuration with Node Selectors
 
-Replace the node names "node1,node2,node3" with the actual node names from your cluster
+1. On the Harvester UI, go to **Networks > Host Networks**.
 
-In static mode, you must provide an IP entry for every node covered by the VlanConfig's node selector. If a node is added to the cluster later, update the HostNetworkConfig to include the new node's IP before the config will apply to it.
+1. Click **Create**.
 
-:::
+    ![](/img/hnc-2.png)
 
-##### Node Selector — Targeted Nodes Only
+1. Specify a unique name for the host network.
 
-Applies the config only to nodes with the label network-role=l3.
+1. On the **Mode** tab, configure the following settings:
 
-```
-apiVersion: network.harvesterhci.io/v1beta1
-kind: HostNetworkConfig
-metadata:
-  name: cn1-vlan2014-selected
-spec:
-  nodeSelector:
-    matchLabels:
-      network-role: l3
-  clusterNetwork: cn-1
-  vlanID: 2014
-  mode: dhcp
-```
-Label the desired nodes before or after creating the resource:
+    - **Mode**: Specify how IP addresses are assigned to the host network interface.
+      - **DHCP**: Automatically assigns IP addresses from a DHCP server.
+      - **Static**: Requires you to manually specify the IP address, subnet mask, and gateway.
+    - **Cluster network**: Select the cluster network to associate with this host network.
+    - **VLAN ID**: Specify the VLAN ID for tagged traffic.
 
-```
-kubectl label node <node-name> network-role=l3
-```
+1. On the **Node Selector** tab, define rules that match specific labels applied to nodes.
+    
+    Harvester applies the host network configuration only to nodes targeted by the defined node selector rules.
 
-When a label is removed from a node,
-```
-kubectl label node <node-name> network-role=-
-```
-the VLAN interface and bridge VLAN entry are automatically removed from that node.
+    ![](/img/hnc-2.png)
 
-##### Management Cluster Network
+1. Click **Create**.
 
-The mgmt cluster network is also supported. This creates a VLAN sub-interface on the management bridge.
-
-```
-apiVersion: network.harvesterhci.io/v1beta1
-kind: HostNetworkConfig
-metadata:
-  name: mgmt-vlan2014-dhcp
-spec:
-  clusterNetwork: mgmt
-  vlanID: 2014
-  mode: dhcp
-```
-
-:::note
-
-Linux network interface names are limited to 15 characters. Ensure that the generated bridge name in the format `ClusterNetworkName>-br.<vlanID>` does not exceed this limit.
-
-:::
-
-### Configuring the Underlay of the Harvester Overlay Networking
+#### Configuring the Underlay of the Harvester Overlay Networking
 
 By default, KubeOVN uses the management interface `(mgmt-br.<vlan>)` as the underlay tunnel interface for inter-node VM traffic. You can designate any HostNetworkConfig with a configured VLAN interface as the underlay instead.
 Why Change the Underlay?
+
 
 Separates VM inter-node (VXLAN) traffic from management traffic, reducing contention.
 Allows use of a dedicated physical NIC and VLAN for VM traffic.
 Enforces network best practices in environments where the management plane must be isolated from the data plane.
 
 How to Set the Underlay:
-Set underlay: true on the HostNetworkConfig that should carry overlay traffic:
+Select the **Underlay** option to enable a custom underlay interface on the host network.
 
-```
-apiVersion: network.harvesterhci.io/v1beta1
-kind: HostNetworkConfig
-metadata:
-  name: cn1-vlan2012-underlay
-spec:
-  underlay: true
-  clusterNetwork: cn-1
-  vlanID: 2012
-  mode: static
-  ips:
-    node1: 10.115.8.15/21
-    node2: 10.115.8.16/21
-    node3: 10.115.8.17/21
-```
+![](/img/hnc-3.png)
 
-When underlay: true is set:
+When underlay is enabled,
 
 The hostnetworkconfig agent updates the ovn.kubernetes.io/tunnel_interface annotation on each node to point to the new sub-interface (e.g., cn-1-br.2012).
 KubeOVN automatically updates the remote VXLAN tunnel endpoints in the OVS bridges on each node to use the new interface's IPs.
@@ -226,8 +158,8 @@ ovs-vsctl show
 
 ```
 
-Reverting to the Default Underlay
-Set underlay: false on the resource. The agent restores the ovn.kubernetes.io/tunnel_interface annotation to the default management interface and KubeOVN reconfigures tunnel endpoints accordingly.
+Reverting to the Default Underlay:
+Clear the **Underlay** option to disable the custom underlay interface. The agent restores the `ovn.kubernetes.io/tunnel_interface` annotation to the default management interface, and Kube-OVN reconfigures the tunnel endpoints accordingly.
 
 ### Behavior Reference
 
@@ -309,13 +241,23 @@ status:
 
 ```
 
-Update the config using the following command:
+:::caution
 
-`kubectl edit hostnetworkconfig cn1-vlan2012-dhcp` and edit the contents and save the config.
+If a node has multiple host interfaces, do not attach them to the same VLAN or subnet. This restriction applies to interfaces configured manually on the host and those configured through `HostNetwork` configurations.
 
-Delete the config using the following command:
+**DHCP Response Misrouting**
 
-`kubectl delete hostnetworkconfig cn1-vlan2012-dhcp`.
+VLAN interfaces used in a cluster network are derived from the same underlying bridge and consequently share the same MAC address. This shared MAC address can cause DHCP response misrouting.
+
+When multiple host interfaces from the same cluster network reside on the same VLAN, DHCP responses may be incorrectly associated with an existing interface instead of a newly created one. For example, if `mgmt-br` is connected to the native VLAN and has an active IP address, a DHCP client running on `mgmt-br.1` may fail to acquire a lease. This failure occurs because the DHCP `OFFER` packets are delivered to `mgmt-br` instead of `mgmt-br.1`.
+
+**Ambiguous Routing Behavior**
+
+Additionally, configuring multiple interfaces in the same VLAN and subnet results in ambiguous routing. The Linux kernel typically installs a single connected route for a given subnet. If multiple interfaces are attached to the same VLAN and subnet, the kernel may associate the subnet route with only one of those interfaces, causing traffic to be forwarded through an unintended physical path.
+
+Example: Host networks on cluster networks `cn1` and `cn2` are both attached to VLAN `2017` and assigned the same subnet (`192.168.0.0/24`). Because both interfaces are in the same subnet, the Linux kernel will install the connected route for `192.168.0.0/24` via only one of those interfaces (typically the one configured last). Traffic destined for that subnet may be routed through the wrong interface, leading to unexpected issues.
+
+:::
 
 ### Limitations
 

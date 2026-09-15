@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 sidebar_label: Harvester Seeder
-title: "Harvester Seeder (Experimental)"
+title: "Harvester Seeder"
 keywords:
 - add-on
 - addon
@@ -15,15 +15,17 @@ Description: Perform out-of-band operations on Harvester hosts via IPMI and disc
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/addons/seeder"/>
 </head>
 
-:::note
-
-**harvester-seeder** is an *experimental* add-on. For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
-
-:::
+_Available as of v1.2.0_
 
 The **harvester-seeder** add-on allows you to perform out-of-band operations on Harvester hosts using the Intelligent Platform Management Interface (IPMI).
 
 This add-on can also discover hardware and related events for hosts that support [Redfish](https://www.dmtf.org/standards/redfish)-based access, and then associate that hardware with the corresponding hosts.
+
+:::note
+
+**harvester-seeder** handles out-of-band power operations and hardware event discovery for existing Harvester hosts. This add-on does not provision new Harvester nodes.
+
+:::
 
 ## Prerequisites
 
@@ -73,7 +75,7 @@ You can use the Harvester UI to shut down and reboot hosts once the Out-of-Band 
 
 ![](/img/v1.2/seeder/ShutdownReboot.png)
 
-You can also power on VMs while Maintenance Mode is enabled.
+You can also power on hosts while Maintenance Mode is enabled.
 
 ![](/img/v1.2/seeder/PowerOn.png)
 

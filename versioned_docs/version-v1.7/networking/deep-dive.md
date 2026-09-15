@@ -101,7 +101,7 @@ We leverage [multus CNI](https://github.com/k8snetworkplumbingwg/multus-cni) and
     ```
 
     Because untagged VLAN handling is no longer applied, physical switches connected to Harvester hosts must now be configured strictly as trunk ports. These ports must accept tagged traffic and send traffic tagged with the VLAN ID used by the VM network.
-    
+
     Any untagged traffic arriving at Harvester network bridges for a VLAN-tagged veth interface is dropped. This occurs because the bridge cannot forward the traffic to the veth interface, which is configured to accept only the VLAN ID from the VM network.
 
 ### Management Network
@@ -136,4 +136,63 @@ External network devices typically refer to switches and DHCP servers. With a cl
 
 - If you want VMs in a VLAN to be able to obtain IP addresses through the DHCP protocol, configure an IP pool for that VLAN in the DHCP server.
 
+## Virtual Machine Network Setup and Scheduling
 
+The following workflow outlines the steps you must perform to set up a network for a virtual machine:
+
+1. Create a [cluster network](./clusternetwork.md#cluster-network) and a corresponding [network configuration](./clusternetwork.md#network-configuration). Only nodes specified in the network configuration set up the associated network devices.
+
+1. Create a [VM network](./harvester-network.md#create-a-vm-network) with a specified VLAN ID.
+
+### Example Scenario
+
+This example demonstrates how Harvester handles node configuration and virtual machine placement when connecting to a custom cluster network.
+
+A user performs the following configuration steps:
+
+- Creates a cluster network named `cn2`
+- Creates a network configuration named `cn2-vc1`, covering `node1` and `node2`
+- Creates a VM network named `cn2-nad-100` with VLAN ID `100`
+- Attaches a virtual machine named `vm1` to the `cn2-nad-100` VM network (as a secondary network)
+
+In response, Harvester automatically handles the following:
+
+- **Node labeling**: The Harvester controller labels the target Kubernetes `node` objects.
+
+  ```yaml
+  kubectl get node node1 -oyaml
+  ...
+  metadata:
+    labels:
+      network.harvesterhci.io/cn2: "true"
+      network.harvesterhci.io/mgmt: "true"
+      network.harvesterhci.io/vlanconfig: cn2-vc1
+  ...
+  ```
+
+- **Affinity rules**: The Harvester webhook updates the `virtualmachine` object to inject a node affinity rule.
+
+  ```yaml
+  spec:
+    template:
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: network.harvesterhci.io/cn2
+                      operator: In
+                      values:
+                        - 'true'
+  ```
+
+- **Node scheduling**: The virtual machine is scheduled exclusively on nodes where the value of `network.harvesterhci.io/cn2` is `true` (in this case, `node1` or `node2`).
+
+:::info important
+
+When a virtual machine connects to multiple VM networks backed by different custom cluster networks, Harvester applies multiple node affinity rules. These rules collectively determine which nodes are eligible for scheduling and live migration.
+
+Conversely, no node affinity rules are applied when a virtual machine connects exclusively to VM networks backed by [`mgmt`](./clusternetwork.md#built-in-cluster-network) (the built-in cluster network). Because `mgmt` covers all nodes by default, all cluster nodes are eligible for scheduling and live migration.
+
+:::

@@ -26,6 +26,12 @@ _Available as of v1.4.0_
 
 Harvester supports VM CPU pinning. To use this feature, you must first enable the CPU Manager on the nodes, and then enable CPU pinning when you create the VM.
 
+:::caution
+
+If you run CPU-pinned virtual machines on nodes where the Longhorn V2 Data Engine is enabled, configure Longhorn V2 SPDK CPU assignment before starting those workloads. Otherwise, the fixed SPDK CPU mask can overlap with exclusive CPUs assigned by the Kubernetes CPU Manager. For more information, see [CPU Core Configuration with CPU-Pinned VMs](../advanced/longhorn-v2.md#cpu-core-configuration-with-cpu-pinned-vms).
+
+:::
+
 ## Kubernetes CPU Manager
 
 The [CPU Manager](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/) feature improves CPU resource allocation in Kubernetes clusters, ensuring that workloads with strict performance needs receive stable and predictable CPU resources. This is especially important for high-performance and latency-sensitive applications.
@@ -70,6 +76,41 @@ Allow some time for Harvester to apply the corresponding CPU Manager policy.
 - The CPU Manager must be enabled or disabled on each management node separately. You must wait for the operation to be completed before starting another.
 
 - VMs with CPU pinning enabled must be stopped before CPU Manager is disabled on the corresponding node.
+
+### Node Selection and Affinity
+
+When you enable the CPU Manager on nodes, Harvester applies the following label to related `node` objects.
+
+```
+...
+metadata:
+  labels:
+    cpumanager: "true"
+...
+```
+
+When you enable CPU pinning during virtual machine creation, Harvester applies an affinity rule that ensures the virtual machine is scheduled only on nodes where the CPU Manager is enabled.
+
+```
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: cpumanager
+                    operator: In
+                    values:
+                      - 'true'
+```
+
+:::note
+
+The virtual machine is [non-migratable](./live-migration.md#non-migratable-virtual-machines) if the CPU Manager is enabled on only one node.
+
+:::
 
 ## Enable CPU Pinning on a New VM
 

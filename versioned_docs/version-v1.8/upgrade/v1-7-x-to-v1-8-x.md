@@ -269,3 +269,108 @@ kubectl rollout restart deployment/system-upgrade-controller -n cattle-system
 After the restart, SUC reschedules the plan job for the affected node. The upgrade should resume automatically within a few minutes.
 
 Related issue: [#9880](https://github.com/harvester/harvester/issues/9880)
+
+### 4. Grafana Dashboard Fails to Display Migration Memory Transfer Rate
+
+After upgrading to v1.8.x, the **Migration Memory Transfer Rate** panel on the Grafana dashboard for virtual machine migration does not display any data because of an outdated metric expression in the dashboard's `ConfigMap`.
+
+![before-patch.png](/img/v1.8/migration-metric/before-patch-memory-transfer-rate-metric.png)
+
+#### Workaround
+
+Run the following commands to patch the dashboard's `ConfigMap`:
+
+```bash
+inner_json=$(
+  kubectl get -n cattle-dashboards configmap harvester-vm-migration-details-dashboard -o json |
+    jq -r '.data."harvester_vm_migration_details.json" | fromjson |
+      .panels |= map(
+        if .title == "Migration Memory Transfer Rate" then
+          .targets[0].expr = "kubevirt_vmi_migration_memory_transfer_rate_bytes{namespace=\"$namespace\", name=\"$vm\"}"
+        else . end
+      ) | tojson'
+)
+
+kubectl patch -n cattle-dashboards configmap harvester-vm-migration-details-dashboard \
+  --type merge -p "{\"data\":{\"harvester_vm_migration_details.json\": $(jq -n --arg v "$inner_json" '$v')}}"
+```
+
+After patching, the **Migration Memory Transfer Rate** panel displays data during the next live migration.
+
+![after-patch.png](/img/v1.8/migration-metric/after-patch-memory-transfer-rate-metric.png)
+
+Related issue: [#11390](https://github.com/harvester/harvester/issues/11390)
+
+### 5. Upgrade Stuck in Crash Loop After CDI Importer Pod Is OOM-Killed
+
+During Phase 1 (Provision an Upgrade Repository Virtual Machine), the Containerized Data Importer (CDI) downloads the target ISO file and converts it to a raw disk image using `qemu-img convert -t writeback`, which buffers converted data in memory. On slow destination storage, this buffer can grow until it exceeds the CDI importer pod's memory limit, causing the pod to be OOM-killed.
+
+This issue stems from the CDI configuration running on the **source** cluster rather than the target release. Clusters running v1.7.0 or v1.7.1 use the default importer pod memory limit of `600M`, which is prone to this failure. The limit was raised to `2G` in v1.7.2, but slow destination storage and large ISO images can still drive memory consumption past this threshold.
+
+After the importer pod is OOM-killed, its `/data` PVC is not cleaned up automatically (unlike the `/scratch` PVC). The partially converted disk image remains on the volume, causing subsequent retries to miscalculate available storage space and fail immediately, leaving the pod crash-looping indefinitely.
+
+#### Symptoms
+
+- The `importer-prime-*` pod in the `harvester-system` namespace is in a `CrashLoopBackOff` state.
+
+- Node kernel logs indicate an `oom-kill` event for the `virt-cdi-import` and `qemu-img` processes, typically occurring during the initial crash:
+  ```
+  Memory cgroup out of memory: Killed process ... (virt-cdi-import) ...
+  Memory cgroup out of memory: Killed process ... (qemu-img) ...
+  ```
+- Subsequent restarts do not trigger an OOM-kill. Instead, the pod fails with an error message similar to the following:
+  ```
+  Unable to convert source data to target format: virtual image size <X> is larger than the reported available storage <Y>. A larger PVC is required
+  ```
+
+#### Workaround
+
+1. [Stop the ongoing upgrade](./troubleshooting.md#stop-the-ongoing-upgrade).
+
+   This action deletes the `Upgrade` CR along with its associated DataVolume and PVCs, clearing the stale `/data` content.
+
+1. Edit the `harvester` ManagedChart resource.
+
+   ```bash
+   kubectl edit managedchart.management.cattle.io harvester -n fleet-local
+   ```
+
+1. Increase the CDI importer pod's memory limit beyond the default value.
+
+   Under `spec.values`, configure a higher value for the `cdi.spec.config.podResourceRequirements.limits.memory` field based on available node memory. Slow storage backends and large images may require a higher allocation.
+
+   If the `cdi` key (or any part of its nested path) does not exist under `spec.values`, add the missing structure.
+
+   ```yaml
+   spec:
+     values:
+       cdi:
+         spec:
+           config:
+             podResourceRequirements:
+               limits:
+                 memory: 4G
+   ```
+
+   :::caution
+
+   Only modify the `cdi.spec.config.podResourceRequirements.limits.memory` field. Do not modify or delete any other existing fields in the `harvester` ManagedChart resource.
+
+   The YAML snippet is an excerpt, not a full resource manifest.
+
+   :::
+
+
+1. Verify that the CDI CR reflects the change:
+
+   ```bash
+   kubectl get cdi cdi -o jsonpath='{.spec.config.podResourceRequirements.limits.memory}{"\n"}'
+   ```
+
+1. Restart the upgrade.
+
+1. After the upgrade completes successfully, remove the `podResourceRequirements` override you added to the `harvester` ManagedChart resource in step 3.
+
+    The version you upgraded to already includes the memory-limit fix, so the override is no longer needed.
+
+Related issues: [#11143](https://github.com/harvester/harvester/issues/11143) and [#10056](https://github.com/harvester/harvester/issues/10056)
