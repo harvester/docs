@@ -106,13 +106,17 @@ You can only use one type of local volume in each volume group. If necessary, cr
 
 ### Considerations: `striped` vs `dm-thin`
 
-Both volume group types are fully supported. The choice depends on how the workload will use snapshots and how the pool capacity will be shared.
+Harvester supports both volume group types. The choice depends on how the workload will use snapshots and how the pool capacity will be shared.
 
-- **`striped`** is a good fit for workloads that mostly need direct volume performance across the physical devices in the volume group. Each logical volume gets its full requested capacity at provision time. Snapshots are provisioned as separate LVs sized to the origin's full capacity — a snapshot of a 100 GiB volume reserves an additional 100 GiB of volume group space at creation, regardless of how much data has actually been written to the origin.
+- **striped**: Best suited for workloads requiring direct, high-performance volume access distributed across the physical devices in the volume group. Each logical volume is fully allocated its requested capacity at provisioning time. Snapshots are created as independent logical volumes sized to match the source volume's maximum capacity. For example, a snapshot of a 100 GiB volume reserves an additional 100 GiB of volume group space upon creation, regardless of the actual quantity of data written to the source.
 
-- **`dm-thin`** is a good fit for virtual machine workloads that take snapshots or clones, and for environments that want to over-provision pool capacity. Thin volumes consume physical space only as blocks are written to them, and snapshots are true copy-on-write at the thin-pool chunk level — a fresh snapshot of a 100 GiB volume adds effectively zero pool capacity at creation and only grows as changed blocks accumulate.
+- **dm-thin**: Best suited for virtual machine workloads that frequently use snapshots or clones, and for environments that require over-provisioned pool capacity. Thin-provisioned volumes consume physical space only as blocks are written. Snapshots leverage true copy-on-write functionality at the thin-pool chunk level. For example, a fresh snapshot of a 100 GiB volume consumes practically zero pool capacity at creation, only growing as modified blocks accumulate over time.
 
-If regular snapshots are expected, `dm-thin` is generally the right choice for VM workloads.
+:::tip
+
+Select **dm-thin** if you expect to create regular snapshots or scheduled backups. This option is generally optimal for standard virtual machine workloads because of its efficient space utilization.
+
+:::
 
 For more information, see [StorageClass](../storageclass.md).
 
@@ -193,9 +197,9 @@ Backup creation is currently not supported. This limitation will be addressed in
 
 ### Tuning the `dm-thin` Pool
 
-When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass, the driver creates an LVM thin-pool named `<vgName>-thinpool` at `-l 90%FREE` of the volume group. Two settings are worth knowing about:
+When the first PersistentVolumeClaim (PVC) is created against a `dm-thin` StorageClass, the driver creates an LVM thin pool named `<vgName>-thinpool` using `-l 90%FREE` (allocating 90% of the volume group's remaining free space). Consider tuning the following settings based on your workload demands:
 
-- **Chunk zeroing.** By default, the pool writes zeros to each newly-allocated chunk before handing it to the writer. On single-tenant clusters this can be disabled to reduce write amplification on first-touch allocations:
+- **Chunk zeroing**: By default, the thin pool writes zeros to each newly allocated chunk before exposing it to a write operation. On single-tenant clusters, you can disable chunk zeroing to significantly reduce write amplification during initial data allocations.
 
   ```
   sudo lvchange --zero n <vgName>/<vgName>-thinpool
@@ -203,7 +207,7 @@ When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass
 
   The change is fully reversible with `--zero y`.
 
-- **Pool metadata size.** LVM auto-sizes the thin-pool metadata LV at pool creation. For pools that will hold many snapshots or many thin volumes over time, extending the metadata proactively avoids running short later:
+- **Pool metadata size**: When the thin pool is created, LVM automatically sizes its metadata logical volume. Consider extending this volume proactively if you expect the pool to store a large number of snapshots or thin volumes over time. Doing so prevents the pool from running out of space and becoming unresponsive later.
 
   ```
   sudo lvextend --poolmetadatasize +1G <vgName>/<vgName>-thinpool
@@ -213,9 +217,11 @@ When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass
 
 When attaching an LVM CSI PersistentVolumeClaim to a VirtualMachine, `virtio-scsi` (`bus: scsi`) generally performs better than the default `virtio-blk` (`bus: virtio`) for sustained-write workloads on thin-provisioned pools, particularly on RAID-backed storage. `virtio-scsi` supports multiple queues and has a more efficient DISCARD path.
 
-### Coexistence with Longhorn v2 Block-Mode Disks
+### Coexistence with Longhorn V2 Block Mode Disks
 
-If the same node hosts a Longhorn v2 disk in block mode, the underlying device is held exclusively by the SPDK instance manager. Adding that device to the LVM `global_filter` prevents LVM's device scan from attempting to open it. Example, in `/etc/lvm/lvmlocal.conf`:
+If the same node hosts a Longhorn V2 disk in block mode, the underlying device is held exclusively by the SPDK Instance Manager. You can add this device to the LVM `global_filter` to exclude it from LVM device scans and prevent resource conflicts.
+
+Example (`/etc/lvm/lvmlocal.conf`):
 
 ```
 devices {
@@ -228,4 +234,4 @@ devices {
 }
 ```
 
-On Harvester's immutable OS, persist the change through an `/oem/*.yaml` cloud-config file so it survives reboots. For background, see [harvester/harvester#11098](https://github.com/harvester/harvester/issues/11098).
+Because Harvester's operating system is immutable, you must persist this change through an `/oem/*.yaml` cloud-config file to ensure it survives system reboots and upgrades.For more information, see issue [#11098](https://github.com/harvester/harvester/issues/11098).
