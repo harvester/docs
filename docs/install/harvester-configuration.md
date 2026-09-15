@@ -548,7 +548,7 @@ If `disable_password_auth` is set to `true` and no [`os.ssh_authorized_keys`](#o
 - `pcidevices-controller` (chartName: harvester-pcidevices-controller)
 - `rancher-monitoring`
 - `rancher-logging`
-- `harvester-seeder` (experimental)
+- `harvester-seeder`
 
 **Example**:
 
