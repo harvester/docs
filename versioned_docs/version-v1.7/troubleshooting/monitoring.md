@@ -790,3 +790,46 @@ The workaround involves ensuring that the `rancher-monitoring-operator` ServiceA
 ### Related Issue
 
 [#9674](https://github.com/harvester/harvester/issues/9674)
+
+
+## Harvester UI shows inaccurate virtual machine CPU metrics
+
+### Issue Description
+
+After upgrading to or freshly installing Harvester v1.7.0 through v1.9.0, the Harvester UI displays unusually low or incorrect values for virtual machine CPU utilization metrics (this issue has been fixed in v1.9.1).
+
+### Root Cause
+
+The underlying low-level metric data source, `kubevirt_vmi_vcpu_seconds_total`, changed its definition starting in Harvester v1.7.0. Existing dashboard queries do not change accordingly, leading to inaccurate calculations.
+
+### Workaround
+
+1. Update the Grafana dashboard ConfigMap.
+
+    **Dashboard harvester-vm-dashboard**:
+    Run command `kubectl edit configmap -n cattle-dashboards harvester-vm-dashboard`.
+
+    Search line:
+    `"expr": "topk(${count}, (avg(rate(kubevirt_vmi_vcpu_seconds_total[5m])) by (domain, name)) / 1000)",`
+
+    Change it to:
+    `"expr": "topk(${count}, avg(rate(kubevirt_vmi_vcpu_seconds_total[5m])) by (domain, name))",`
+
+
+    **Dashboard harvester-vm-detail-dashboard**:
+    Run command `kubectl edit configmap -n cattle-dashboards harvester-vm-detail-dashboard`.
+
+    Search line:
+    `"expr": "sum(avg(rate(kubevirt_vmi_vcpu_seconds_total{namespace=\"$namespace\", name=\"$vm\"}[5m])) by (domain, name)) / 1000",`
+
+    Change it to:
+    `"expr": "sum(avg(rate(kubevirt_vmi_vcpu_seconds_total{namespace=\"$namespace\", name=\"$vm\"}[5m])) by (domain, name))",`
+
+
+1. Refresh the Grafana dashboard UI.
+
+    If the dashboard does not recover after a refresh, delete the Grafana pod (namespace cattle-monitoring-system) to force a clean reload of the updated ConfigMap:
+
+### Related Issue
+
+[#11637](https://github.com/harvester/harvester/issues/11637)
