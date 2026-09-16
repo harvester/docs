@@ -117,7 +117,7 @@ You can upload images from the [**Multi-Cluster Management**](../rancher/virtual
 
 The maximum request body size should be specific to the cluster that is hosting Rancher (for example, RKE2 clusters have a default limit of 1 MB but no such limit exists in K3s clusters).
 
-The current workaround is to upload images from the **Harvester UI**. If you choose to upload images from the Rancher UI, you may need to configure related settings on the ingress server (for example, [`proxy-body-size`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#custom-max-body-size) in NGINX).
+The current workaround is to upload images from the **Harvester UI**. If you choose to upload images from the Rancher UI, you may need to configure related settings on the ingress server (for example, [`transport.respondingTimeouts.readTimeout`](https://doc.traefik.io/traefik/reference/install-configuration/entrypoints/#opt-transport-respondingTimeouts-readTimeout) in Traefik). The current default is 30m.
 
 If Rancher is deployed on an RKE2 cluster, perform the following steps:
 
@@ -140,7 +140,7 @@ If you upload a very large image (over 10 GB) from the **Multi-Cluster Managemen
 
 This behavior is related to *proxy-request-buffering* in the ingress configuration, which is also specific to the cluster that is hosting Rancher.
 
-The current workaround is to upload images from the **Harvester UI**. If you choose to upload images from the Rancher UI, you may need to configure related settings on the ingress server (for example, [`proxy-request-buffering`](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_request_buffering) in NGINX).
+The current workaround is to upload images from the **Harvester UI**. If you choose to upload images from the Rancher UI, you may need to configure related settings on the ingress server (for example, [`transport.respondingTimeouts.readTimeout`](https://doc.traefik.io/traefik/reference/install-configuration/entrypoints/#opt-transport-respondingTimeouts-readTimeout) in Traefik). The current default is 30m.
 
 If Rancher is deployed on an RKE2 cluster, perform the following steps:
 

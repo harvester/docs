@@ -67,8 +67,8 @@ Ports that bind only to `127.0.0.1` are accessible from localhost only and do no
 | Protocol | Port | Bind Address | Source | Description |
 |:---------|:-----|:-------------|:-------|:------------|
 | TCP | 22 | `0.0.0.0` | All | SSH |
-| TCP | 80 | `0.0.0.0` | All | Harvester UI HTTP (nginx proxy) |
-| TCP | 443 | `0.0.0.0` | All | Harvester UI HTTPS (nginx proxy) |
+| TCP | 80 | `0.0.0.0` | All | Harvester UI HTTP (traefik proxy) |
+| TCP | 443 | `0.0.0.0` | All | Harvester UI HTTPS (traefik proxy) |
 | TCP | 2112 | `0.0.0.0` | All | kube-vip Prometheus metrics |
 | TCP | 2379 | `127.0.0.1`, node IP | Harvester management nodes | etcd client port |
 | TCP | 2380 | `127.0.0.1`, node IP | Harvester management nodes | etcd peer port |
@@ -96,8 +96,8 @@ Ports that bind only to `127.0.0.1` are accessible from localhost only and do no
 | Protocol | Port | Bind Address | Source | Description |
 |:---------|:-----|:-------------|:-------|:------------|
 | TCP | 22 | `0.0.0.0` | All | SSH |
-| TCP | 80 | `0.0.0.0` | All | Harvester UI HTTP (nginx proxy) |
-| TCP | 443 | `0.0.0.0` | All | Harvester UI HTTPS (nginx proxy) |
+| TCP | 80 | `0.0.0.0` | All | Harvester UI HTTP (traefik proxy) |
+| TCP | 443 | `0.0.0.0` | All | Harvester UI HTTPS (traefik proxy) |
 | TCP | 6443 | `127.0.0.1`, `[::1]` | localhost | Kubernetes API server (RKE2 agent proxy) |
 | TCP | 6444 | `127.0.0.1`, `[::1]` | localhost | RKE2 agent API proxy |
 | TCP | 9091 | `0.0.0.0` | All | calico-node metrics (Prometheus) |
