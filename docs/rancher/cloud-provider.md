@@ -12,7 +12,7 @@ description: The Harvester cloud provider used by the guest cluster in Harvester
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/rancher/cloud-provider"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/rancher/cloud-provider"/>
 </head>
 
 ## Introduction

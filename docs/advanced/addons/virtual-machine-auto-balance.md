@@ -5,7 +5,7 @@ title: "Virtual Machine Auto Balance"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/addons/virtual-machine-auto-balance"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/advanced/addons/virtual-machine-auto-balance"/>
 </head>
 
 _Available as of v1.7.0_

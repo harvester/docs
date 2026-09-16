@@ -5,7 +5,7 @@ title: "Upgrade Manager (Experimental)"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/addons/upgrade-manager"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/advanced/addons/upgrade-manager"/>
 </head>
 
 _Available as of v1.8.0_
