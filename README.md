@@ -8,19 +8,20 @@ static website generator.
 Before you contribute, please read the table below first to ensure that you are
 modifying the correct files:
 
-| Path                                 | Version       | URL         |
-| ------------------------------------ | ------------- | ----------- |
-| docs/hello.md                        | v1.9 (Dev)    | /v1.9/hello |
-| versioned_docs/version-v1.8/hello.md | v1.8 (Latest) | /v1.8/hello |
-| versioned_docs/version-v1.7/hello.md | v1.7          | /v1.7/hello |
-| versioned_docs/version-v1.6/hello.md | v1.6          | /v1.6/hello |
-| versioned_docs/version-v1.5/hello.md | v1.5          | /v1.5/hello |
-| versioned_docs/version-v1.4/hello.md | v1.4          | /v1.4/hello |
-| versioned_docs/version-v1.3/hello.md | v1.3          | /v1.3/hello |
-| versioned_docs/version-v1.2/hello.md | v1.2          | /v1.2/hello |
-| versioned_docs/version-v1.1/hello.md | v1.1          | /v1.1/hello |
-| versioned_docs/version-v1.0/hello.md | v1.0          | /v1.0/hello |
-| versioned_docs/version-v0.3/hello.md | v0.3          | /v0.3/hello |
+| Path                                 | Version       | URL          |
+| ------------------------------------ | ------------- | ------------ |
+| docs/hello.md                        | v1.10 (Dev)   | /v1.10/hello |
+| versioned_docs/version-v1.9/hello.md | v1.9 (Latest) | /v1.9/hello  |
+| versioned_docs/version-v1.8/hello.md | v1.8          | /v1.8/hello  |
+| versioned_docs/version-v1.7/hello.md | v1.7          | /v1.7/hello  |
+| versioned_docs/version-v1.6/hello.md | v1.6          | /v1.6/hello  |
+| versioned_docs/version-v1.5/hello.md | v1.5          | /v1.5/hello  |
+| versioned_docs/version-v1.4/hello.md | v1.4          | /v1.4/hello  |
+| versioned_docs/version-v1.3/hello.md | v1.3          | /v1.3/hello  |
+| versioned_docs/version-v1.2/hello.md | v1.2          | /v1.2/hello  |
+| versioned_docs/version-v1.1/hello.md | v1.1          | /v1.1/hello  |
+| versioned_docs/version-v1.0/hello.md | v1.0          | /v1.0/hello  |
+| versioned_docs/version-v0.3/hello.md | v0.3          | /v0.3/hello  |
 
 ## Installation
 
@@ -98,6 +99,24 @@ docs:
             label: "dev", // Current version label
             baseUrl: "/dev/api", // Leading slash is important
             versions: {
+              "v1.9": {
+                specPath: "api/v1.9-swagger.json",
+                outputDir: "versioned_docs/version-v1.9/api", // No trailing slash
+                label: "v1.9",
+                baseUrl: "/v1.9/api", // Leading slash is important
+              },
+              "v1.8": {
+                specPath: "api/v1.8-swagger.json",
+                outputDir: "versioned_docs/version-v1.8/api", // No trailing slash
+                label: "v1.8",
+                baseUrl: "/v1.8/api", // Leading slash is important
+              },
+              "v1.7": {
+                specPath: "api/v1.7-swagger.json",
+                outputDir: "versioned_docs/version-v1.7/api", // No trailing slash
+                label: "v1.7",
+                baseUrl: "/v1.7/api", // Leading slash is important
+              },
               "v1.6": {
                 specPath: "api/v1.6-swagger.json",
                 outputDir: "versioned_docs/version-v1.6/api", // No trailing slash
@@ -115,24 +134,6 @@ docs:
                 outputDir: "versioned_docs/version-v1.4/api", // No trailing slash
                 label: "v1.4",
                 baseUrl: "/v1.4/api", // Leading slash is important
-              },                
-              "v1.3": {
-                specPath: "api/v1.3-swagger.json",
-                outputDir: "versioned_docs/version-v1.3/api", // No trailing slash
-                label: "v1.3",
-                baseUrl: "/v1.3/api", // Leading slash is important
-              },
-              "v1.2": {
-                specPath: "api/v1.2-swagger.json",
-                outputDir: "versioned_docs/version-v1.2/api", // No trailing slash
-                label: "v1.2",
-                baseUrl: "/v1.2/api", // Leading slash is important
-              },
-              "v1.1": {
-                specPath: "api/v1.1-swagger.json",
-                outputDir: "versioned_docs/version-v1.1/api", // No trailing slash
-                label: "v1.1",
-                baseUrl: "/v1.1/api", // Leading slash is important
               },
             },
           },
