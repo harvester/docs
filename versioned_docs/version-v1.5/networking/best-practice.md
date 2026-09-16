@@ -9,7 +9,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/networking/best-practice"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/networking/best-practice"/>
 </head>
 
 ## Replace Ethernet NICs
