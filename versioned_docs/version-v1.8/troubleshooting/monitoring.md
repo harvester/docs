@@ -796,39 +796,59 @@ The workaround involves ensuring that the `rancher-monitoring-operator` ServiceA
 
 ### Issue Description
 
-After upgrading to or freshly installing Harvester v1.7.0 through v1.9.0, the Harvester UI displays unusually low or incorrect values for virtual machine CPU utilization metrics (this issue has been fixed in v1.9.1).
+In Harvester v1.7.0 through v1.9.0, the Harvester UI displays unusually low or incorrect values for virtual machine CPU utilization metrics. This issue is resolved in Harvester v1.9.1.
 
 ### Root Cause
 
-The underlying low-level metric data source, `kubevirt_vmi_vcpu_seconds_total`, changed its definition starting in Harvester v1.7.0. Existing dashboard queries do not change accordingly, leading to inaccurate calculations.
+Starting in Harvester v1.7.0, the underlying data source `kubevirt_vmi_vcpu_seconds_total` changed its unit calculation. Existing Grafana dashboard queries were not updated to reflect this change, resulting in inaccurate calculations.
 
 ### Workaround
 
-1. Update the Grafana dashboard ConfigMap.
+Update the following Grafana dashboard ConfigMap resources to restore accurate CPU utilization metrics on affected clusters.
 
-    **Dashboard harvester-vm-dashboard**:
-    Run command `kubectl edit configmap -n cattle-dashboards harvester-vm-dashboard`.
+1. Update the `harvester-vm-dashboard` ConfigMap.
 
-    Search line:
-    `"expr": "topk(${count}, (avg(rate(kubevirt_vmi_vcpu_seconds_total[5m])) by (domain, name)) / 1000)",`
+    a. Edit the ConfigMap:
 
-    Change it to:
-    `"expr": "topk(${count}, avg(rate(kubevirt_vmi_vcpu_seconds_total[5m])) by (domain, name))",`
+    ```shell
+    kubectl edit configmap -n cattle-dashboards harvester-vm-dashboard
+    ```
 
+    b. Locate the following query string:
 
-    **Dashboard harvester-vm-detail-dashboard**:
-    Run command `kubectl edit configmap -n cattle-dashboards harvester-vm-detail-dashboard`.
+    ```json
+    "expr": "topk(${count}, (avg(rate(kubevirt_vmi_vcpu_seconds_total[5m])) by (domain, name)) / 1000)",
+    ```
 
-    Search line:
-    `"expr": "sum(avg(rate(kubevirt_vmi_vcpu_seconds_total{namespace=\"$namespace\", name=\"$vm\"}[5m])) by (domain, name)) / 1000",`
+    c. Replace it with the following string:
 
-    Change it to:
-    `"expr": "sum(avg(rate(kubevirt_vmi_vcpu_seconds_total{namespace=\"$namespace\", name=\"$vm\"}[5m])) by (domain, name))",`
+    ```json
+    "expr": "topk(${count}, avg(rate(kubevirt_vmi_vcpu_seconds_total[5m])) by (domain, name))",
+    ```
 
+1. Update the `harvester-vm-detail-dashboard` ConfigMap.
 
-1. Refresh the Grafana dashboard UI.
+    a. Edit the ConfigMap:
 
-    If the dashboard does not recover after a refresh, delete the Grafana pod (namespace cattle-monitoring-system) to force a clean reload of the updated ConfigMap:
+    ```shell
+    kubectl edit configmap -n cattle-dashboards harvester-vm-detail-dashboard
+    ```
+
+    b. Locate the following query string:
+
+    ```json
+    "expr": "sum(avg(rate(kubevirt_vmi_vcpu_seconds_total{namespace=\"$namespace\", name=\"$vm\"}[5m])) by (domain, name)) / 1000",
+    ```
+
+    c. Replace it with the following string:
+
+    ```json
+    "expr": "sum(avg(rate(kubevirt_vmi_vcpu_seconds_total{namespace=\"$namespace\", name=\"$vm\"}[5m])) by (domain, name))",
+    ```
+
+1. Refresh the Grafana dashboard.
+
+    If the metrics do not update immediately, delete the Grafana pod in the `cattle-monitoring-system` namespace to force a clean reload of the updated ConfigMaps.
 
 ### Related Issue
 
