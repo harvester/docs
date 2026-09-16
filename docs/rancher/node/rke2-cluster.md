@@ -5,7 +5,7 @@ title: "Creating an RKE2 Kubernetes Cluster"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/rancher/node/rke2-cluster"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/rancher/node/rke2-cluster"/>
 </head>
 
 You can now `Provision new nodes and create a cluster using RKE2/K3s` on top of the Harvester cluster in Rancher using the built-in Harvester node driver.

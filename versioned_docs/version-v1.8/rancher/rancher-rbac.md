@@ -12,7 +12,7 @@ description: Harvester Rancher RBAC integration allows cluster administrator to 
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/rancher/rancher-rbac"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/rancher/rancher-rbac"/>
 </head>
 
 :::info

@@ -6,7 +6,7 @@ title: "Harvester Cluster Pod Security Standard Setting"
 
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/cluster-pod-security-standard"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/advanced/cluster-pod-security-standard"/>
 </head>
 
  Starting from v1.8.0, Harvester provides a more flexible way for cluster admins to apply [Kubernetes Pod Security Standards](https://kubernetes.io/docs/concepts/security/pod-security-standards/) by changing a setting.
