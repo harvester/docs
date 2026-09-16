@@ -32,8 +32,8 @@ Before creating virtual machines, review [Resource Overcommit](../vm/resource-ov
 
 The following operating systems have been validated to run in Harvester virtual machines:
 
-- SUSE Linux Enterprise Micro 6.0 and 6.1
-- SUSE Linux Enterprise Server 15 SP6 and 15 SP7
+- SUSE Linux Enterprise 15 SP7 and 16
+- SUSE Linux Micro 6.1 and 6.2
 - Red Hat Enterprise Linux 9 and 10
 - Ubuntu 22.04 and 24.04
 - Windows	11
