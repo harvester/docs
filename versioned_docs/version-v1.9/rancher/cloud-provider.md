@@ -861,7 +861,7 @@ Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and 
     - `cloudprovider.harvesterhci.io/ipam: "dhcp"`
     - `cloudprovider.harvesterhci.io/network: "default/mgmt-vlan1"`
 
-    ![](../../static/img/v1.9/rancher/guest-cluster-load-balancer-dhcp.png)
+    ![](../../../static/img/v1.9/rancher/guest-cluster-load-balancer-dhcp.png)
 
 - **Pool:** A pre-configured [IP pool](../networking/ippool.md) is required. The Harvester load balancer controller allocates an IP for the load balancer service according to the [IP pool selection policy](../networking/ippool.md#selection-policy). You can create IP pools using either the [Harvester UI](../networking/ippool.md#how-to-create) or the [Rancher UI](../networking/ippool.md#create-ip-pool-from-rancher-manager-ui). For more information, see [Best Practices](../networking/ippool.md#best-practice).
 
