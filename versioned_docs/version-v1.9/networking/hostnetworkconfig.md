@@ -1,0 +1,278 @@
+---
+sidebar_position: 10
+sidebar_label: HostNetwork Configuration and Underlay Selection
+title: "HostNetwork Configuration and Underlay Selection"
+keywords:
+- Harvester
+- networking
+- KubeOVN
+- hostnetworkconfig
+- vlan sub-interface
+- underlay
+---
+
+<head>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/networking/hostnetworkconfig.md"/>
+</head>
+
+## Host Network Configuration
+
+### Harvester VLAN & Layer 3 Extension
+Harvester supports VLAN sub-interfaces on cluster networks, enabling static IPv4 assignment directly to the node. This unlocks dedicated Layer 3 paths to external infrastructure, facilitating:
+
+- Optimized Storage: High-speed, low-latency access to external storage arrays (e.g., iSCSI, NFS).
+
+- Traffic Segregation: Hardware-level isolation for sensitive application or tenant data.
+
+- Network Fabric Integration: Direct peering with existing physical routers and switches.
+
+### KubeOVN Underlay Support
+You can further designate a VLAN interface as the underlay for KubeOVN. By offloading VM inter-node traffic to a dedicated underlay, you eliminate contention with the Management Plane, significantly boosting both network throughput and cluster security.
+
+### Overview
+HostNetworkConfig: Beyond Default Management Networking
+
+While Harvester can configure a management VLAN during installation if VID is provided, production environments often demand more granular control over the network stack. Relying solely on the management interface can create bottlenecks and security risks.
+
+The HostNetworkConfig resource addresses these limitations by managing VLAN sub-interfaces and IP assignments across all cluster nodes.
+
+Why override the defaults?
+- L3 Routed Storage: High-performance storage networks often require dedicated routed subnets with
+  static or DHCP addressing, separate from the management plane.
+
+- Physical Traffic Isolation: Operators can offload VM and application traffic to secondary physical uplinks
+  and gateways, ensuring management access remains responsive during high load.
+
+- External Service Integration: Edge and cloud deployments may require non-management NICs to hold IPv4 addresses
+  for peering with BGP, OSPF, or other external routing services.
+
+- KubeOVN Underlay Optimization: By default, KubeOVN uses the management interface for VM overlay traffic.
+  Hostnetworkconfig allows you to designate a dedicated VLAN as the underlay, eliminating traffic contention and enhancing isolation.
+
+### Prerequisites
+Before creating a HostNetworkConfig, ensure the following:
+
+The target cluster network (for example, cn-1, mgmt) is created and in Ready state.
+A VlanConfig / NetworkConfig exists for the cluster network and covers the intended nodes.
+For static mode: valid CIDR addresses are prepared for each node.
+For underlay selection: the HostNetworkConfig must span all nodes in the cluster.
+
+### Configuring the Host Networks
+
+#### Host Network Configuration without Node Selectors
+
+1. On the Harvester UI, go to **Networks > Host Networks**.
+
+1. Click **Create**.
+
+    ![](/img/hnc-1.png)
+
+1. Specify a unique name for the host network.
+
+1. On the **Mode** tab, configure the following settings:
+
+    - **Mode**: Specify how IP addresses are assigned to the host network interface.
+      - **DHCP**: Automatically assigns IP addresses from a DHCP server.
+      - **Static**: Requires you to manually specify the IP address, subnet mask, and gateway.
+    - **Cluster Network**: Select the cluster network to associate with this host network.
+    - **VLAN ID**: Specify the VLAN ID for tagged traffic.
+
+1. Click **Create**.
+
+#### Host Network Configuration with Node Selectors
+
+1. On the Harvester UI, go to **Networks > Host Networks**.
+
+1. Click **Create**.
+
+    ![](/img/hnc-2.png)
+
+1. Specify a unique name for the host network.
+
+1. On the **Mode** tab, configure the following settings:
+
+    - **Mode**: Specify how IP addresses are assigned to the host network interface.
+      - **DHCP**: Automatically assigns IP addresses from a DHCP server.
+      - **Static**: Requires you to manually specify the IP address, subnet mask, and gateway.
+    - **Cluster network**: Select the cluster network to associate with this host network.
+    - **VLAN ID**: Specify the VLAN ID for tagged traffic.
+
+1. On the **Node Selector** tab, define rules that match specific labels applied to nodes.
+    
+    Harvester applies the host network configuration only to nodes targeted by the defined node selector rules.
+
+    ![](/img/hnc-2.png)
+
+1. Click **Create**.
+
+#### Configuring the Underlay of the Harvester Overlay Networking
+
+By default, KubeOVN uses the management interface `(mgmt-br.<vlan>)` as the underlay tunnel interface for inter-node VM traffic. You can designate any HostNetworkConfig with a configured VLAN interface as the underlay instead.
+Why Change the Underlay?
+
+
+Separates VM inter-node (VXLAN) traffic from management traffic, reducing contention.
+Allows use of a dedicated physical NIC and VLAN for VM traffic.
+Enforces network best practices in environments where the management plane must be isolated from the data plane.
+
+How to Set the Underlay:
+Select the **Underlay** option to enable a custom underlay interface on the host network.
+
+![](/img/hnc-3.png)
+
+When underlay is enabled,
+
+The hostnetworkconfig agent updates the ovn.kubernetes.io/tunnel_interface annotation on each node to point to the new sub-interface (e.g., cn-1-br.2012).
+KubeOVN automatically updates the remote VXLAN tunnel endpoints in the OVS bridges on each node to use the new interface's IPs.
+
+:::note
+
+Wait for KubeOVN controller to update the remote endpoints on the default ovs bridge.
+
+:::
+
+For example output from node1,
+
+```
+kubectl exec -it ovs-ovn-pk57r -n kube-system -- /bin/bash
+
+ovs-vsctl show
+992c73d7-68cd-4422-8df4-84cd2bea12fb
+    Bridge br-int
+        fail_mode: secure
+        datapath_type: system
+        Port ovn0
+            Interface ovn0
+                type: internal
+        Port ovn-a33a48-0
+            Interface ovn-a33a48-0
+                type: vxlan
+                options: {csum="true", key=flow, local_ip="10.115.8.15", remote_ip="10.115.8.16","10.115.8.17"}
+        Port br-int
+            Interface br-int
+                type: internal
+        Port mirror0
+            Interface mirror0
+                type: internal
+    ovs_version: "3.5.3"
+
+```
+
+Reverting to the Default Underlay:
+Clear the **Underlay** option to disable the custom underlay interface. The agent restores the `ovn.kubernetes.io/tunnel_interface` annotation to the default management interface, and Kube-OVN reconfigures the tunnel endpoints accordingly.
+
+### Behavior Reference
+
+#### Adding a New Node to the Cluster
+
+DHCP mode: When a new node joins, the VLAN interface and DHCP lease are automatically provisioned on that node.
+Static mode: The new node is not configured automatically. Add an entry for the new node in the HostNetworkConfig's ips map and reapply.
+
+#### Reboots:
+All VLAN interfaces and IP address assignments are automatically restored after a node reboot. DHCP renewals resume automatically; static addresses are reapplied as configured.
+
+#### Changing IP Mode
+Switching between dhcp and static (or changing static IPs) causes the existing IP addresses on the sub-interface to be removed and the new addresses applied.
+
+#### Deleting a HostNetworkConfig
+Removing the resource causes the following on all affected nodes:
+
+The VLAN ID is removed from the bridge and uplink ports.
+The VLAN sub-interface is deleted.
+
+#### Deleting or Updating a VlanConfig
+If the underlying VlanConfig for a cluster network is deleted or its node selector changes, all associated HostNetworkConfig VLAN interfaces are removed from nodes that no longer have an uplink configured.
+
+### Verifying the Configuration
+
+After applying a HostNetworkConfig, verify the interface and IP on a node:
+
+```
+# Check IP address assignment
+ip addr show cn-1-br.2012
+
+# Expected output (DHCP example):
+# cn-1-br.2012@cn-1-br: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 ...
+#     inet 10.115.8.15/21 brd 10.115.15.255 scope global cn-1-br.2012
+
+# Check bridge VLAN membership
+bridge vlan show
+
+# Expected output includes:
+# cn-1-bo    1 PVID Egress Untagged
+#            2012
+# cn-1-br    1 PVID Egress Untagged
+#            2012
+```
+
+Check per-node status in the resource:
+
+`kubectl get hostnetworkconfig cn1-vlan2012-dhcp -o yaml`
+
+The status.nodeStatus field reports per-node Ready state and any error conditions.Example output:
+
+```
+apiVersion: network.harvesterhci.io/v1beta1
+kind: HostNetworkConfig
+metadata:
+  name: cn1-vlan2012-dhcp
+spec:
+  clusterNetwork: cn-1
+  mode: dhcp
+  vlanID: 2012
+status:
+  nodeStatus:
+    hp-46:
+      clusterNetwork: cn-1
+      conditions:
+      - message: ""
+        status: "True"
+        type: ready
+      mode: dhcp
+      vlanID: 2012
+    hp-65:
+      clusterNetwork: cn-1
+      conditions:
+      - message: ""
+        status: "True"
+        type: ready
+      mode: dhcp
+      vlanID: 2012
+
+```
+
+:::caution
+
+If a node has multiple host interfaces, do not attach them to the same VLAN or subnet. This restriction applies to interfaces configured manually on the host and those configured through `HostNetwork` configurations.
+
+**DHCP Response Misrouting**
+
+VLAN interfaces used in a cluster network are derived from the same underlying bridge and consequently share the same MAC address. This shared MAC address can cause DHCP response misrouting.
+
+When multiple host interfaces from the same cluster network reside on the same VLAN, DHCP responses may be incorrectly associated with an existing interface instead of a newly created one. For example, if `mgmt-br` is connected to the native VLAN and has an active IP address, a DHCP client running on `mgmt-br.1` may fail to acquire a lease. This failure occurs because the DHCP `OFFER` packets are delivered to `mgmt-br` instead of `mgmt-br.1`.
+
+**Ambiguous Routing Behavior**
+
+Additionally, configuring multiple interfaces in the same VLAN and subnet results in ambiguous routing. The Linux kernel typically installs a single connected route for a given subnet. If multiple interfaces are attached to the same VLAN and subnet, the kernel may associate the subnet route with only one of those interfaces, causing traffic to be forwarded through an unintended physical path.
+
+Example: Host networks on cluster networks `cn1` and `cn2` are both attached to VLAN `2017` and assigned the same subnet (`192.168.0.0/24`). Because both interfaces are in the same subnet, the Linux kernel will install the connected route for `192.168.0.0/24` via only one of those interfaces (typically the one configured last). Traffic destined for that subnet may be routed through the wrong interface, leading to unexpected issues.
+
+:::
+
+### Limitations
+
+- Only tagged VLANs with a VLAN ID of 1–4094 are supported.
+- Only IPv4 addresses can be assigned to VLAN sub-interfaces.
+- IP allocation must be performed via DHCP or manually specified static addresses and Integration with
+  external IPAM systems is not supported.
+- Only one HostNetworkConfig can be designated as the underlay at a time. The webhook rejects
+  any attempt to set a second resource as underlay: true.
+- A HostNetworkConfig used as the underlay must span all nodes in the cluster.
+  The webhook rejects configurations where the cluster network or VlanConfig does not cover all nodes.
+- Underlay selection is only supported for the default KubeOVN bridge. Custom OVS bridge
+  setups are not supported.
+- The vlanID and clusterNetwork fields are immutable once set. To change them, delete the resource and create a new one.
+- The webhook rejects updates or deletions of a HostNetworkConfig that is in use as an underlay if
+  VMs are running on overlay networks.
+- Modifying  or deleting the VlanConfig used by an active underlay is rejected while VMIs are present.
+

@@ -21,7 +21,7 @@ Traffic-isolated forwarding path for transmission of network traffic in the Harv
 
 Group of integrated virtual machines that run on top of a Harvester cluster.
 
-You can create RKE1, RKE2, and K3s guest clusters using the Harvester and Rancher interfaces. Creating guest clusters involves pulling images from either the internet or a private registry.
+You can create RKE2 and K3s guest clusters using the Harvester and Rancher interfaces. Creating guest clusters involves pulling images from either the internet or a private registry.
 
 Guest clusters form the main infrastructure for running container workloads. Certain versions of Harvester and Rancher allow you to deploy container workloads [directly to Harvester clusters](../rancher/rancher-integration.md#harvester-baremetal-container-workload-support-experimental) (with some limitations).
 
@@ -97,7 +97,7 @@ Virtual network that provides a virtual machine with a single network interface 
 
 ## **VM migration network**
 
-Network for isolating virtual machine migration traffic from intra-cluster traffic on `mgmt` and other cluster-wide workloads.
+Network for [isolating virtual machine migration traffic](../advanced/vm-migration-network.md) from intra-cluster traffic on `mgmt` and other cluster-wide workloads.
 
 ## **VM network**
 
