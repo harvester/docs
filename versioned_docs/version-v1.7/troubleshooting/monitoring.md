@@ -790,3 +790,66 @@ The workaround involves ensuring that the `rancher-monitoring-operator` ServiceA
 ### Related Issue
 
 [#9674](https://github.com/harvester/harvester/issues/9674)
+
+
+## Harvester UI shows inaccurate virtual machine CPU metrics
+
+### Issue Description
+
+In Harvester v1.7.0 through v1.9.0, the Harvester UI displays unusually low or incorrect values for virtual machine CPU utilization metrics. This issue is resolved in Harvester v1.9.1.
+
+### Root Cause
+
+Starting in Harvester v1.7.0, the underlying data source `kubevirt_vmi_vcpu_seconds_total` changed its unit calculation. Existing Grafana dashboard queries were not updated to reflect this change, resulting in inaccurate calculations.
+
+### Workaround
+
+Update the following Grafana dashboard ConfigMap resources to restore accurate CPU utilization metrics on affected clusters.
+
+1. Update the `harvester-vm-dashboard` ConfigMap.
+
+    a. Edit the ConfigMap:
+
+    ```shell
+    kubectl edit configmap -n cattle-dashboards harvester-vm-dashboard
+    ```
+
+    b. Locate the following query string:
+
+    ```json
+    "expr": "topk(${count}, (avg(rate(kubevirt_vmi_vcpu_seconds_total[5m])) by (domain, name)) / 1000)",
+    ```
+
+    c. Replace it with the following string:
+
+    ```json
+    "expr": "topk(${count}, avg(rate(kubevirt_vmi_vcpu_seconds_total[5m])) by (domain, name))",
+    ```
+
+1. Update the `harvester-vm-detail-dashboard` ConfigMap.
+
+    a. Edit the ConfigMap:
+
+    ```shell
+    kubectl edit configmap -n cattle-dashboards harvester-vm-detail-dashboard
+    ```
+
+    b. Locate the following query string:
+
+    ```json
+    "expr": "sum(avg(rate(kubevirt_vmi_vcpu_seconds_total{namespace=\"$namespace\", name=\"$vm\"}[5m])) by (domain, name)) / 1000",
+    ```
+
+    c. Replace it with the following string:
+
+    ```json
+    "expr": "sum(avg(rate(kubevirt_vmi_vcpu_seconds_total{namespace=\"$namespace\", name=\"$vm\"}[5m])) by (domain, name))",
+    ```
+
+1. Refresh the Grafana dashboard.
+
+    If the metrics do not update immediately, delete the Grafana pod in the `cattle-monitoring-system` namespace to force a clean reload of the updated ConfigMaps.
+
+### Related Issue
+
+[#11637](https://github.com/harvester/harvester/issues/11637)
