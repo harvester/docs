@@ -37,6 +37,7 @@ To access new UI features, install the latest Harvester UI Extension on your Ran
 | v1.6.x | Rancher 2.12.0 and later |
 | v1.7.x | Rancher 2.13.0 and later |
 | v1.8.x | Rancher 2.14.0 and later |
+| v1.9.x | Rancher 2.15.0 and later |
 
 Installing the extension over the network is not possible in air-gapped environments, so you must perform the workaround outlined in [Harvester UI Extension with Rancher Integration](/v1.5/airgap#harvester-ui-extension-with-rancher-integration).
 
