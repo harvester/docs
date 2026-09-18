@@ -22,6 +22,15 @@ jobs:
         with:
           node-version: 20
 
+      - name: Set up swap space
+        run: |
+          sudo fallocate -l 2G /mnt/extra-ci-build.swap
+          sudo chmod 600 /mnt/extra-ci-build.swap
+          sudo mkswap /mnt/extra-ci-build.swap
+          sudo swapon /mnt/extra-ci-build.swap
+          free -h
+          swapon --show
+
       - name: Install dependencies
         run: |
           PUPPETEER_DOWNLOAD_BASE_URL=https://storage.googleapis.com/chrome-for-testing-public yarn install --frozen-lockfile
@@ -30,6 +39,12 @@ jobs:
         run: |
           yarn gen-api-docs
           yarn build
+
+      - name: Show memory usage after build
+        if: always()
+        run: |
+          free -h
+          swapon --show
 
       - name: Upload build to artifacts
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
