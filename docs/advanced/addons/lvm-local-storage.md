@@ -98,7 +98,19 @@ You can only use one type of local volume in each volume group. If necessary, cr
 
       ![](/img/v1.4/csi-driver-lvm/create-lvm-sc-04.png)
 
-1. Click **Save**.
+    - **Volume Group Type**: Select a type based on how the workload uses snapshots and how pool capacity is allocated. Harvester supports the following options:
+    
+        - **striped**: Best suited for workloads requiring direct, high-performance volume access distributed across the physical devices in the volume group. Each logical volume is fully allocated its requested capacity at provisioning time. Snapshots are created as independent logical volumes sized to match the source volume's maximum capacity. For example, a snapshot of a 100 GiB volume reserves an additional 100 GiB of volume group space upon creation, regardless of the actual quantity of data written to the source..
+
+        - **dm-thin**: Best suited for virtual machine workloads that frequently use snapshots or clones, and for environments that require over-provisioned pool capacity. Thin-provisioned volumes consume physical space only as blocks are written. Snapshots leverage true copy-on-write functionality at the thin-pool chunk level. For example, a fresh snapshot of a 100 GiB volume consumes practically zero pool capacity at creation, only growing as modified blocks accumulate over time.
+
+        :::tip
+
+        Select **dm-thin** if you expect to create regular snapshots or scheduled backups. This option is generally optimal for standard virtual machine workloads because of its efficient space utilization.
+
+        :::
+
+        ![](/img/v1.4/csi-driver-lvm/create-lvm-sc-04.png)
 
 1. On the **Storage** screen, verify that the StorageClass was created and the correct provisioner was set.
 
@@ -178,3 +190,96 @@ You can also create a new virtual machine with the volume of the LVM StorageClas
 Backup creation is currently not supported. This limitation will be addressed in a future release.
 
 :::
+
+## Additional Notes
+
+### Tuning the `dm-thin` Pool
+
+When the first PersistentVolumeClaim is created against a `dm-thin` StorageClass, the driver creates an LVM thin pool named `<vgName>-thinpool` using `-l 90%FREE` (allocating 90% of the volume group's remaining free space). Consider tuning the following settings based on your workload demands:
+
+- **Chunk size**: The chunk size determines the smallest unit of physical space that a thin pool allocates in response to a write. Because a write to a previously unallocated region always provisions a full chunk, small random writes against a large chunk size cause severe write amplification (for example, a 4 KiB write against a 16 MiB chunk allocates 16 MiB of pool space).
+
+  When you install the `harvester-csi-driver-lvm` add-on v0.4.0 or later, the default StorageClass uses `chunkSize: "1M"`. On the hardware RAID-backed volume groups typical of Harvester nodes, `1M` matches the full-stripe width of common layouts (for example, four data disks with a 256 KiB stripe size yield a 1 MiB stripe). This ensures each chunk allocation maps to whole stripes rather than partial ones. Additionally, a `1M` chunk size keeps thin-pool metadata bounded and comfortably supports pools up to 256 TB. For more information about chunk sizing, see the [Linux kernel dm-thin documentation](https://docs.kernel.org/admin-guide/device-mapper/thin-provisioning.html).
+
+  :::warning
+
+  Chunk size cannot be changed after the thin pool is created. The value must be chosen before the first PersistentVolumeClaim is created against the StorageClass. Reducing chunk size on an existing pool requires evacuating all volumes, destroying the pool, recreating it with the new chunk size, and restoring the volumes.
+
+  :::
+
+  Align the chunk size to your RAID full-stripe width: (number of data disks) × (RAID strip size). A chunk smaller than the full stripe (for example, a `512K` chunk on a 1 MiB stripe) forces every first-touch allocation into a partial-stripe **read-modify-write**. On parity RAID (5/6), partial-stripe writes also widen the write-hole window. This means that an unclean shutdown without a protected controller cache (BBU/FBWC) can leave a stripe with inconsistent parity. Choosing a chunk size equal to, or an exact multiple of, the full stripe avoids both issues. `1M` is the safe default because it aligns with the most common power-of-two RAID geometries.
+
+  Override the default with the `chunkSize` parameter on the StorageClass. Common values include the following:
+
+  | Value | Target Environment |
+  | :--- | :--- |
+  | `1M` (Default) | Standard hardware RAID (1 MiB full stripe); general-purpose virtual machine workloads |
+  | `512K` / `128K` | RAID arrays with matching full stripe size; non-RAID/single-disk volume groups where stripe alignment does not apply and minimizing snapshot copy-on-write overhead is primary |
+  | `2M` | Large-stripe RAID arrays (2 MiB full stripe) with high-throughput sequential-write workloads |
+
+  Do not exceed 2M. Larger chunk sizes trigger disproportionate copy-on-write overhead for snapshots, as documented in the [Red Hat Gluster admin guide](https://docs.redhat.com/en/documentation/red_hat_gluster_storage/3.5/html/administration_guide/chap-configuring_red_hat_storage_for_enhancing_performance).
+
+  In addition, avoid relying on LVM's built-in auto-selection. To keep metadata bounded, LVM determines the chunk size based on the total pool size. This results in 8 to 16 MiB chunks for multi-terabyte pools, which is appropriate for metadata sizing but can severely degrade random-write performance. Always set `chunkSize` explicitly in the StorageClass.
+
+  Verify the effective chunk size of a live pool:
+
+  ```
+  sudo lvs -o vg_name,lv_name,chunk_size,zero <vgName>/<vgName>-thinpool
+  sudo dmsetup table <vgName>-<vgName>--thinpool-tpool
+  ```
+
+- **Chunk zeroing**: By default, the thin pool writes zeros to each newly allocated block chunk before exposing it to a write operation. On single-tenant clusters, you can disable chunk zeroing to significantly reduce write amplification during initial data allocations.
+
+  Set `zeroBlocks: "false"` on the StorageClass at pool creation time, or apply it to an existing pool with:
+
+  ```
+  sudo lvchange --zero n <vgName>/<vgName>-thinpool
+  ```
+
+  You can fully reverse the change by running the command with `--zero y`.
+
+- **Pool metadata size**: When the thin pool is created, the driver sizes its metadata logical volume based on the `poolMetadataSize` StorageClass parameter. The default size is `16G`, which supports pools up to 256 TB at the default 1 MiB chunk size. Larger chunk sizes require less metadata to address the same capacity, while smaller chunk sizes require more (`metadata_bytes ≈ (pool_size ÷ chunk_size) × 64`). If you do not set this parameter, or if the pool grows significantly after creation, proactively extend the metadata volume to prevent the pool from exhausting metadata space and becoming unresponsive later.
+
+  ```
+  sudo lvextend --poolmetadatasize +1G <vgName>/<vgName>-thinpool
+  ```
+
+- **Example `dm-thin` StorageClass with all tuning parameters set explicitly**:
+
+  ```yaml
+  apiVersion: storage.k8s.io/v1
+  kind: StorageClass
+  metadata:
+    name: harvester-lvm-thin
+  provisioner: lvm.driver.harvesterhci.io
+  parameters:
+    type: dm-thin
+    vgName: vmvg
+    chunkSize: "1M"            # Applied on first-time pool creation only.
+    poolMetadataSize: "16G"    # Applied on first-time pool creation only.
+    zeroBlocks: "false"        # Applied on first-time pool creation only.
+  reclaimPolicy: Delete
+  volumeBindingMode: WaitForFirstConsumer
+  allowVolumeExpansion: true
+  ```
+
+### Choosing a Virtual Machine Disk Bus
+
+When attaching an LVM CSI PersistentVolumeClaim to a VirtualMachine, `virtio-scsi` (`bus: scsi`) generally outperforms the default `virtio-blk` (`bus: virtio`) for sustained-write workloads on thin-provisioned pools, particularly on RAID-backed storage. `virtio-scsi` performs better because it supports multiple queues and uses a more efficient DISCARD path.
+
+### Coexistence with Longhorn v2 Block-Mode Disks
+
+If the same node hosts a Longhorn V2 disk in block mode, the underlying device is held exclusively by the SPDK Instance Manager. You can add this device to the LVM `global_filter` to exclude it from LVM device scans and prevent resource conflicts.
+
+```
+devices {
+    global_filter = [
+      "r|/dev/loop.*|",
+      "r|/dev/disk/by-path/.*longhorn.*|",
+      "r|/dev/mapper/pvc-.*|",
+      "r|/dev/disk/by-id/wwn-<lhv2-disk-wwn>|",
+    ]
+}
+```
+
+Because Harvester's operating system is immutable, you must persist this change through an `/oem/*.yaml` cloud-config file to ensure it survives system reboots and upgrades.For more information, see issue [#11098](https://github.com/harvester/harvester/issues/11098).
