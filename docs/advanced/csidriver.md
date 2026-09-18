@@ -150,7 +150,7 @@ The following is an example of an LVM storage profile:
 apiVersion: cdi.kubevirt.io/v1beta1
 kind: StorageProfile
 metadata:
-  name: lvm-node-1-striped
+  name: lvm-node-1-dm-thin
 spec:
   claimPropertySets:
   - accessModes:
@@ -165,10 +165,12 @@ status:
   dataImportCronSourceFormat: pvc
   provisioner: lvm.driver.harvesterhci.io
   snapshotClass: lvm-snapshot
-  storageClass: lvm-node-1-striped
+  storageClass: lvm-node-1-dm-thin
 ```
 
 For more information, see [Storage Profiles](https://github.com/kubevirt/containerized-data-importer/blob/main/doc/storageprofile.md) in the CDI documentation.
+
+For LVM storage, use a dm-thin StorageClass. The striped volume type is deprecated and is outside the LVM CSI GA support scope. For more information, see [dm-thin and Striped Volume Types](./addons/lvm-local-storage.md#dm-thin-and-striped-volume-types).
 
 You can define the above fields to override the default configuration showing on the status.
 
