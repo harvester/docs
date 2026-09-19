@@ -37,7 +37,7 @@ If you want to force individual VMs to shut down instead of migrating to other n
 - `ShutdownAndRestartAfterDisable`: Shuts down the VM when maintenance mode is enabled, and restarts the VM when maintenance mode is disabled. The VM stays on the same node.
 - `Shutdown`: Shuts down the VM when maintenance mode is enabled. The VM remains powered off instead of restarting.
 
-You can force a collective shutdown of all VMs on a node on the **Enable Maintenance Mode** screen. This disables individual settings using the `harvesterhci.io/maintain-mode-strategy` label.
+You can select the **Force** option on the **Enable Maintenance Mode** screen to forcibly shut down non-migratable virtual machines that would otherwise block Maintenance Mode. Harvester preserves configured maintenance strategies. Virtual machines labeled with `ShutdownAndRestartAfterEnable` or `ShutdownAndRestartAfterDisable` still restart at the designated stage.
 
 If you want to execute a special command before shutting down a VM, consider using the [container lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks) `PreStop`.
 
