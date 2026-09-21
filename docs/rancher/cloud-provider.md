@@ -452,7 +452,7 @@ To eliminate the need for manual intervention after the guest cluster is provisi
 
 ### Deploying to the RKE2 Cluster with Harvester Node Driver
 
-When spinning up an RKE2 cluster using the Harvester node driver, select the `Harvester` cloud provider. The node driver will then help deploy both the CSI driver and CCM automatically.
+When spinning up an [RKE2 cluster using the Harvester node driver](./node/rke2-cluster.md), select the `Harvester` cloud provider. The node driver will then help deploy both the CSI driver and CCM automatically.
 
   ![](/img/v1.2/rancher/rke2-cloud-provider.png)
 
@@ -530,7 +530,9 @@ In the Rancher UI, you can create a `Custom` RKE2 cluster with **Harvester Cloud
 
     :::note
 
-    **Instance Labels** are critical for Harvester to manage resource allocation and deallocation for guest clusters. If these labels are missing, features like the guest cluster LoadBalancer in `Pool` mode may not work, as the Harvester node driver cannot identify the guest cluster.
+    1. **Instance Labels** are critical for Harvester to manage resource allocation and deallocation for guest clusters. If these labels are missing, features like the guest cluster LoadBalancer in `Pool` mode may not work, as the Harvester node driver cannot identify the guest cluster.
+
+    1. **Keep the hostname aligned with the VM name.** Ensure you avoid hardcoding hostnames in the `cloud-config`. For more details, see [Avoid Setting a Static Hostname on Guest Cluster VMs](#avoid-setting-a-static-hostname-on-guest-cluster-vms).
 
     :::
 
@@ -552,6 +554,15 @@ In the Rancher UI, you can create a `Custom` RKE2 cluster with **Harvester Cloud
     If either field is missing or incorrect, update it in the YAML file.
 
     ![](/img/v1.9/rancher/guest-cluster-yaml.png)
+
+
+:::note
+
+1. Deleting a VM directly in Harvester does not automatically remove the corresponding **machine** object in the Rancher UI; you must delete it manually.
+
+1. When copying the Rancher UI **Registration** command, the default suffix `--etcd --controlplane --worker` assigns all node roles. If you are registering a new VM exclusively as a worker node, be sure to change the suffix to `--worker`.
+
+:::
 
 ### Deploying to the K3s cluster with Harvester node driver (experimental)
 
@@ -840,10 +851,29 @@ Constructs the complete address list (`[]v1.NodeAddress`) for the guest node by 
     Assigns detected IPs to `InternalIP` and `ExternalIP` types, providing a consistent source of truth for downstream intra-cluster networking and load balancer traffic routing.
 
 :::note
+
 To customize or filter which VM network interfaces and IP ranges are used when reporting node addresses, see [#### 3. Extra Arguments (extraArgs)](#3-extra-arguments).
+
 :::
 
+### Avoid Setting a Static Hostname on Guest Cluster VMs
+
+When provisioning guest clusters via Rancher on Harvester, you should avoid setting a static `hostname` in the `cloud-config`.
+
+#### Why This Matters
+
+1. **Uniqueness and Cloud Provider Identification:** By default, if no custom `hostname` is specified, the hostname derives from the VM name. When RKE2/K3s registers the node, it uses the node's hostname, and the `cloud-controller-framework` subsequently queries node information from the `harvester-cloud-provider` using that node name. If you use a customized hostname, the `harvester-cloud-provider` is forced to search for that hostname across all VMs in the cluster or namespace, resulting in an unstable and error-prone lookup process that can cause severe cluster conflicts.
+
+1. **Accidental Node Deletion on Power-Off:** If a VM with a custom hostname is powered off, the `harvester-cloud-provider` (`cloud-provider-management`) may inadvertently delete the node. Because the VM is stopped, the provider cannot retrieve the hostname from a running instance or map the node name reliably, leading to failed lookups and unintended node pruning.
+
+1. **Dynamic Naming and Scaling:** Rancher/RKE2 **machine pools** support multiple machines within a single pool. Harvester VMs rely on dynamically generated names to differentiate themselves. A hardcoded `cloud-config` hostname forces all nodes to share the exact same identifier, leading to name collisions and scaling failures.
+
+1. **Seamless Pool Updates:** When you update a machine pool configuration (such as modifying memory allocations or updating base images), Rancher provisions a new Harvester VM, registers it as a new node on the guest cluster, and then deletes the old one. A fixed hostname prevents the new node from registering properly (see [Issue #11682](https://github.com/harvester/harvester/issues/11682)).
+
+1. **RKE2 Custom Clusters:** When [Deploying to an RKE2 custom cluster (experimental)](#deploying-to-the-rke2-custom-cluster-experimental), using a custom hostname for the VM carries these exact same risks. The underlying node registration and cloud provider mechanisms still rely on unique, dynamically managed hostnames to prevent collisions and ensure proper lifecycle management.
+
 ## Load Balancer Support
+
 Once you've deployed the Harvester cloud provider, you can leverage the Kubernetes `LoadBalancer` service to expose a microservice within the guest cluster to the external world. Creating a Kubernetes `LoadBalancer` service assigns a dedicated Harvester load balancer to the service, and you can make adjustments through the `Add-on Config` within the Rancher UI.
 
 ![](/img/v1.2/rancher/lb-svc.png)
@@ -861,7 +891,7 @@ Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and 
     - `cloudprovider.harvesterhci.io/ipam: "dhcp"`
     - `cloudprovider.harvesterhci.io/network: "default/mgmt-vlan1"`
 
-    ![](../../static/img/v1.9/rancher/guest-cluster-load-balancer-dhcp.png)
+    ![](/img/v1.9/rancher/guest-cluster-load-balancer-dhcp.png)
 
 - **Pool:** A pre-configured [IP pool](../networking/ippool.md) is required. The Harvester load balancer controller allocates an IP for the load balancer service according to the [IP pool selection policy](../networking/ippool.md#selection-policy). You can create IP pools using either the [Harvester UI](../networking/ippool.md#how-to-create) or the [Rancher UI](../networking/ippool.md#create-ip-pool-from-rancher-manager-ui). For more information, see [Best Practices](../networking/ippool.md#best-practice).
 
@@ -880,7 +910,7 @@ Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and 
 
     When a guest cluster uses multiple networks, or when multiple guest clusters with distinct networks share a single namespace, configuring the correct network parameters is critical. For details on how the system automatically determines the network, refer to [Guest Cluster Load Balancer Network Resolution](../networking/ippool.md#guest-cluster-load-balancer-network-resolution).
 
-    ![](../../static/img/v1.9/rancher/guest-cluster-load-balancer-pool.png)
+    ![](/img/v1.9/rancher/guest-cluster-load-balancer-pool.png)
 
 - **Share IP:** When creating a new load balancer service, you can re-utilize an existing load balancer service IP. The new service is referred to as a secondary service, while the currently chosen service is the primary one. To specify the primary service in the secondary service, you can add the annotation `cloudprovider.harvesterhci.io/primary-service: $primary-service-name`.  However, there are two known limitations:
   - Services that share the same IP address can't use the same port.
