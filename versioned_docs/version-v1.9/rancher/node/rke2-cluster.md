@@ -82,7 +82,9 @@ Calico and Canal networks require the `iptables` or `xtables-nft` package to be 
 
 :::important
 
-Ensure all **Machine Pools** use the same first(primary) Network. RKE2/K3s rely on this network to boot the cluster; using different networks across machine pools may cause the cluster to fail.
+1. Ensure all **Machine Pools** use the same first(primary) Network. RKE2/K3s rely on this network to boot the cluster; using different networks across machine pools may cause the cluster to fail.
+
+2. **Avoid setting a static hostname.** For more details, see [Avoid Setting a Static Hostname on Guest Cluster VMs](../cloud-provider.md#avoid-setting-a-static-hostname-on-guest-cluster-vms).
 
 :::
 
