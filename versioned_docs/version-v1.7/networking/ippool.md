@@ -162,3 +162,67 @@ For details on troubleshooting a known limitation, see [Guest Cluster Load Balan
 
 1. Be careful when creating global IP pool as one guest cluster might allocate too many IPs and starve other clusters. The pool can't be deleted if any of the IPs is still in use.
 
+### Static IP for Guest Cluster LoadBalancer Service (DHCP Mode)
+
+Sometimes, services require a stable, predictable IP address to ensure reliable communication. In **DHCP** mode, the guest cluster LoadBalancer service is handled by the Harvester cloud provider and the embedded `kube-vip` (which is enabled by default unless explicitly disabled).
+
+In this mode, `kube-vip` is responsible for [requesting and allocating an IP address](../rancher/cloud-provider.md#ipam) from the underlying DHCP server. Note that guest cluster VMs must have the `macvlan` kernel module available; for more details, see the [Harvester Cloud Provider prerequisites](../rancher/cloud-provider.md#prerequisites).
+
+If your DHCP server supports static IP features (such as MAC-to-IP bindings), you can pre-configure a fixed IP assignment and use a matching hardware address annotation on your service. This guides `kube-vip` to request the specific MAC address, ensuring the DHCP server always returns the designated static IP rather than allocating a random one from the pool.
+
+1. Configure the DHCP server with preallocated records.
+
+    Below is an example configuration for the KVM/Virt-manager internal DNS/DHCP server, where the static IP `192.168.122.206` is bound to the MAC address `52:54:00:aa:78:a9`:
+
+    ![](/img/v1.9/networking/kvm-network-dhcp-static-ip.png)
+
+2. Create a Service object on the guest cluster with explicit annotations.
+
+    Deploy a LoadBalancer service to your guest cluster using the required `cloudprovider.harvesterhci.io/ipam` and `kube-vip.io/hwaddr` annotations:
+
+    ```yaml
+    apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        cloudprovider.harvesterhci.io/ipam: dhcp  # Ensure this is set to dhcp
+        kube-vip.io/hwaddr: 52:54:00:aa:78:a9     # Match the MAC address bound in step 1
+      name: test2
+      namespace: default
+    spec:
+      allocateLoadBalancerNodePorts: true
+      externalTrafficPolicy: Cluster
+      internalTrafficPolicy: Cluster
+      ipFamilies:
+        - IPv4
+      ipFamilyPolicy: SingleStack
+      ports:
+        - name: http
+          port: 80
+          protocol: TCP
+          targetPort: 80
+      selector:
+        app: nginx
+      sessionAffinity: None
+      type: LoadBalancer
+    ```
+
+    :::note
+
+    Some versions of the Rancher Manager UI contain a known bug that strips out the `cloudprovider.harvesterhci.io/ipam: dhcp` annotation, causing the service to incorrectly fall back to `pool` mode. This can lead to service conflicts and prevent the service from becoming active. If you experience issues through the UI, use `kubectl apply -f` with the YAML manifest directly to create the service.
+
+    :::
+
+3. Verify the service status.
+
+    Check the service status on the guest cluster to confirm that test2 is ready and has successfully bound to the static IP `192.168.122.206`.
+
+    ![](/img/v1.9/networking/lb-dhcp-static-ip.png)
+
+### Static IP for Guest Cluster LoadBalancer Service (Pool Mode)
+
+:::note
+
+This feature is planned for a future release and is not yet available.
+
+:::
