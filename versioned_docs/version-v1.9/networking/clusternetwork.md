@@ -142,6 +142,14 @@ $ kubectl annotate clusternetwork mgmt network.harvesterhci.io/uplink-mtu="9000"
 
 ```
 
+Starting with v1.9.0, mgmt interface details are displayed in the Cluster Network Configuration screen through the mgmt vlanconfigs. These VLAN configurations are read-only and are used only to display management interface details. The MTU shown in these VLAN configurations reflects the MTU of the management interface, but changing the management interface MTU does not automatically change the MTU used by VM networks attached to mgmt and cluster network has to be annotated explicitly as shown in above example.
+
+To reset the MTU to the default value on VMs using the mgmt cluster network, remove the annotation:
+
+```
+kubectl annotate clusternetwork mgmt network.harvesterhci.io/uplink-mtu-
+```
+
 :::caution
 
 You must ensure the following:
