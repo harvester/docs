@@ -19,7 +19,7 @@ $ ssh rancher@node-ip
 ### What is the default login username and password of the Harvester dashboard?
 ```shell
 username: admin
-password: # you will be promoted to set the default password when logging in for the first time
+password: # you will be prompted to set the default password when logging in for the first time
 ```
 
 ### How can I access the kubeconfig file of the Harvester cluster?
