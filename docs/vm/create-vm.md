@@ -500,6 +500,6 @@ spec:
 
 - Changing the network boot settings of an existing virtual machine requires a restart.
 - A virtual machine that is waiting in the PXE firmware or a boot menu does not respond to ACPI shutdown requests. When you stop the virtual machine, Harvester waits until the termination grace period expires (default: 120 seconds) before forcibly stopping it.
-- If a virtual machine has multiple network interfaces, the operating system installer might configure an interface other than the one used for network boot. Use the installer's boot parameters to select the correct interface (for example, `BOOTIF=01-${netX/mac:hexhyp}` in iPXE).
+- If a virtual machine has multiple network interfaces, the operating system installer might configure an interface other than the one used for network boot. Use the installer's boot parameters to select the correct interface. For example, `BOOTIF=01-${netX/mac:hexhyp}` in iPXE.
 
 :::
