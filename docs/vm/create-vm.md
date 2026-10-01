@@ -442,7 +442,7 @@ The following example describes how to install an ISO image using [openSUSE Leap
 
 _Available as of v1.10.0_
 
-Virtual machines can boot from the network using the Preboot Execution Environment (PXE). This allows you to install operating systems using existing provisioning infrastructure (for example, a PXE/iPXE server, Cobbler, Foreman, or MAAS) instead of ISO images.
+Virtual machines can boot from the network using the Preboot Execution Environment (PXE). This allows you to install operating systems using existing provisioning infrastructure. For example, a PXE/iPXE server, Cobbler, Foreman, or MAAS.
 
 ### Prerequisites
 
