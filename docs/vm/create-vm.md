@@ -466,7 +466,7 @@ Network boot is not available on the management network because its built-in DHC
 1. Under **Network boot order**, select when the virtual machine attempts to boot from the network.
 
     - **Before volumes**: The virtual machine attempts to boot from the network first. Use this option if the PXE server decides what the virtual machine boots.
-    - **After volumes**: The virtual machine attempts to boot from its volumes first. A blank volume fails to boot, so the virtual machine falls through to network boot. After the operating system is installed on the volume, the virtual machine boots from the volume without any further configuration changes.
+    - **After volumes**: The virtual machine attempts to boot from its volumes first. If a blank volume fails to boot, the virtual machine will fall through to network boot. After the operating system is installed on the volume, the virtual machine will boot from the volume without any further configuration changes.
 
     ![vm-network-boot-order](/img/v1.10/vm/vm-network-boot-order.png)
 
