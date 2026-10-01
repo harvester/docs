@@ -474,7 +474,7 @@ Network boot is not available on the management network because its built-in DHC
 
 When network boot is enabled on multiple interfaces, the interfaces are attempted in the order in which they are listed. The **Boot Order** list on the **Basics** tab of the virtual machine details screen displays network interfaces along with volumes.
 
-You can also enable network boot when creating a virtual machine template (**Advanced** > **Templates**). Virtual machines created from the template inherit the setting.
+You can also enable network boot when creating a virtual machine template. Navigate to **Advanced** and then **Templates**. Virtual machines created from the template will inherit the setting.
 
 Harvester applies the setting by assigning a `bootOrder` to the network interface in the virtual machine spec:
 
