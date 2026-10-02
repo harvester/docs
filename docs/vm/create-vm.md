@@ -446,7 +446,7 @@ Virtual machines can boot from the network using the Preboot Execution Environme
 
 ### Prerequisites
 
-- A [VM network](../networking/harvester-network.md) on which a DHCP server provides PXE boot options (next server and boot file name), and a TFTP or HTTP server hosts the boot files. Harvester does not provide a PXE server.
+- A [VM network](../networking/harvester-network.md) on which a DHCP server provides PXE boot options and a TFTP or HTTP server that hosts the boot files. Harvester does not provide a PXE server.
 - Supported BIOS and UEFI firmware. With UEFI, the server must provide a UEFI boot file. For example, `ipxe.efi`. If Secure Boot is enabled, the boot file must be signed.
 
 :::note
