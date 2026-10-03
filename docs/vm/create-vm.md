@@ -172,6 +172,12 @@ By default, Harvester sets the volume size to either 10 GiB or the virtual size 
 
 ![create-vm](/img/v1.2/vm/create-vm-volumes.png)
 
+### Storage performance options
+
+Starting with Harvester v1.9.1, each disk on the **Volumes** tab has a collapsible **Storage Performance Options** section, where you can select a performance profile or set the cache mode, the I/O mode, and a dedicated I/O thread. Below the disks, the **High Performance (I/O Threads and Multi-Queue)** section sets virtio block multi-queue and the I/O threads policy for the whole virtual machine.
+
+These options are optional and are intended for disks with heavy I/O workloads. For a description of each option, its requirements, and its recommended use, see [VM Storage Performance Options](../advanced/vm-storage-performance.md).
+
 ### Adding a container disk
 
 A container disk is an ephemeral storage volume that can be assigned to any number of VMs and provides the ability to store and distribute VM disks in the container image registry. A container disk is:
