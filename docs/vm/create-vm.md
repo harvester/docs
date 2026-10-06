@@ -63,39 +63,93 @@ To create virtual machines using the Kubernetes API, create a `VirtualMachine` o
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  name: new-vm
   namespace: default
+  annotations:
+    harvesterhci.io/volumeClaimTemplates: >-
+      [{"metadata":{"name":"<PVC_NAME>","annotations":{"harvesterhci.io/imageId":"<IMAGE_NAMESPACE>/<IMAGE_NAME>"}},"spec":{"accessModes":["ReadWriteMany"],"resources":{"requests":{"storage":"<DISK_SIZE>"}},"volumeMode":"Block","storageClassName":"<STORAGE_CLASS_NAME>"}}]
+    network.harvesterhci.io/ips: '[]'
+  labels:
+    harvesterhci.io/creator: harvester
+    harvesterhci.io/os: linux
+  name: test-vm
+
 spec:
   runStrategy: RerunOnFailure
   template:
+    metadata:
+      annotations:
+        harvesterhci.io/sshNames: '["<SSH_KEY_NAMESPACE>/<SSH_KEY_NAME>"]'
+      labels:
+        harvesterhci.io/vmName: test-vm
     spec:
       domain:
+        machine:
+          type: ''
         cpu:
           cores: 2
           sockets: 1
           threads: 1
-        memory: "3996Mi"
         devices:
-          disks: []
+          inputs:
+            - bus: usb
+              name: tablet
+              type: tablet
           interfaces:
-            - name: default
-              model: virtio
-              masquerade: {}
-        machine:
-          type: q35
+            - model: virtio
+              name: default
+              bridge: {}
+          disks:
+            - name: disk-0
+              disk:
+                bus: virtio
+              bootOrder: 1
+            - name: cloudinitdisk
+              disk:
+                bus: virtio
+          hostDevices: []
         resources:
-          requests:
-            cpu: "125m"
-            memory: "2730Mi"
           limits:
-            cpu: 2
-            memory: "4Gi"
-        networks:
-          - name: default
-            pod: {}
+            memory: 2Gi
+            cpu: '2'
+        features:
+          acpi:
+            enabled: true
+
+      evictionStrategy: LiveMigrateIfPossible
+      hostname: test-vm
+
+      networks:
+        - name: default
+          multus:
+            networkName: <NETWORK_NAMESPACE>/<NETWORK_NAME>
+
+      volumes:
+        - name: disk-0
+          persistentVolumeClaim:
+            claimName: <PVC_NAME>
+
+        - name: cloudinitdisk
+          cloudInitNoCloud:
+            secretRef:
+              name: <CLOUD_INIT_SECRET_NAME>
+            networkDataSecretRef:
+              name: <CLOUD_INIT_SECRET_NAME>
+
+      affinity: {}
+      terminationGracePeriodSeconds: 120
 ```
 
-For more information, see the [API reference](../api/create-namespaced-virtual-machine).
+The following list describes the placeholders used in the code sample:
+
+- `<IMAGE_NAMESPACE>/<IMAGE_NAME>`: Namespace and name of the virtual machine image.
+- `<DISK_SIZE>`: Size of the disk (for example, `20Gi`).
+- `<STORAGE_CLASS_NAME>`: Target StorageClass for the disk. You can retrieve this value from the virtual machine image's `.status.storageClassName` field.
+- `<SSH_KEY_NAMESPACE>/<SSH_KEY_NAME>`: Namespace and name of the Harvester SSH key.
+- `<NETWORK_NAMESPACE>/<NETWORK_NAME>`: Namespace and name of the Harvester VM network.
+- `<PVC_NAME>`: Name of the virtual machine disk's PVC (for example, `test-vm-disk-0-royae`).
+- `<CLOUD_INIT_SECRET_NAME>`: Name of the cloud-init secret.
+
+For more information, see the [API reference](https://docs.harvesterhci.io/v1.10/api/create-namespaced-virtual-machine/).
 
 </TabItem>
 <TabItem value="terraform" label="Terraform">
