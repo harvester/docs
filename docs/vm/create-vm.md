@@ -60,7 +60,8 @@ Please refer to [this page](./create-windows-vm.md) for creating Windows virtual
 To create virtual machines using the Kubernetes API, create a `VirtualMachine` object.
 
 ```yaml
-type: kubevirt.io.virtualmachine
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
 metadata:
   namespace: default
   annotations:
