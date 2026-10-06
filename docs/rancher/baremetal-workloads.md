@@ -1,9 +1,9 @@
 ---
 id: baremetal-workload
 sidebar_position: 12
-sidebar_label: Baremetal Workload
-title: "Baremetal Workload Support"
-Description: Leverage Harvester for baremetal workloads
+sidebar_label: Bare-Metal Workloads
+title: "Bare-Metal Workloads"
+Description: Leverage Harvester for bare-metal workloads
 ---
 
 <head>
