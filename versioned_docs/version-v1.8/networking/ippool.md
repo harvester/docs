@@ -164,19 +164,19 @@ For details on troubleshooting a known limitation, see [Guest Cluster Load Balan
 
 ### Static IP for Guest Cluster LoadBalancer Service (DHCP Mode)
 
-Sometimes, services require a stable, predictable IP address to ensure reliable communication. In **DHCP** mode, the guest cluster LoadBalancer service is handled by the Harvester cloud provider and the embedded `kube-vip` (which is enabled by default unless explicitly disabled).
+A service may require a stable and predictable IP address to ensure reliable communication. In **DHCP** mode, the guest cluster LoadBalancer service is handled by the Harvester cloud provider and the embedded `kube-vip` (which is enabled by default unless explicitly disabled).
 
-In this mode, `kube-vip` is responsible for [requesting and allocating an IP address](../rancher/cloud-provider.md#ipam) from the underlying DHCP server. Note that guest cluster VMs must have the `macvlan` kernel module available; for more details, see the [Harvester Cloud Provider prerequisites](../rancher/cloud-provider.md#prerequisites).
+In this mode, `kube-vip` is responsible for [requesting and allocating an IP address](../rancher/cloud-provider.md#ipam) from the underlying DHCP server. Note that guest cluster VMs must have the `macvlan` kernel module available. For more details, see the [Harvester Cloud Provider prerequisites](../rancher/cloud-provider.md#prerequisites).
 
-If your DHCP server supports static IP features (such as MAC-to-IP bindings), you can pre-configure a fixed IP assignment and use a matching hardware address annotation on your service. This guides `kube-vip` to request the specific MAC address, ensuring the DHCP server always returns the designated static IP rather than allocating a random one from the pool.
+If your DHCP server supports static IP features (such as MAC-to-IP bindings), you can pre-configure a fixed IP assignment and use a matching hardware address annotation on your service. This guides `kube-vip` to request the specific MAC address to ensure the DHCP server always returns the designated static IP, rather than allocating a random one from the pool.
 
-1. Configure the DHCP server with preallocated records.
+1. Configure the DHCP server with preallocated records:
 
     Below is an example configuration for the KVM/Virt-manager internal DNS/DHCP server, where the static IP `192.168.122.206` is bound to the MAC address `52:54:00:aa:78:a9`:
 
     ![](/img/v1.9/networking/kvm-network-dhcp-static-ip.png)
 
-2. Create a Service object on the guest cluster with explicit annotations.
+2. Create a Service object on the guest cluster with explicit annotations:
 
     Deploy a LoadBalancer service to your guest cluster using the required `cloudprovider.harvesterhci.io/ipam` and `kube-vip.io/hwaddr` annotations:
 
@@ -213,7 +213,7 @@ If your DHCP server supports static IP features (such as MAC-to-IP bindings), yo
 
     :::
 
-3. Verify the service status.
+3. Verify the service status:
 
     Check the service status on the guest cluster to confirm that test2 is ready and has successfully bound to the static IP `192.168.122.206`.
 
@@ -223,6 +223,6 @@ If your DHCP server supports static IP features (such as MAC-to-IP bindings), yo
 
 :::note
 
-This feature is planned for a future release and is not yet available.
+Support for this feature will be added in a future release.
 
 :::
