@@ -70,7 +70,7 @@ The volume must be created with **access mode ReadWriteMany** and **volume mode 
 ### Virtual machines
 
 - Place the cluster node VMs on **different Harvester nodes**, using node scheduling or affinity rules.
-- Use `virtio` (or `sata`) for the **boot disk**, not `scsi`. All `scsi` disks of a VM share one SCSI controller, and Windows doesn't accept cluster disks on the same bus as the boot disk.
+- Use `virtio` for the **boot disk**, not `scsi`. (`sata` also works but is much slower; use it only for guests without virtio drivers.) All `scsi` disks of a VM share one SCSI controller, and Windows doesn't accept cluster disks on the same bus as the boot disk.
 
 ## Create the shared volumes
 
