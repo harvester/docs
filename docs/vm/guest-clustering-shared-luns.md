@@ -84,6 +84,7 @@ For every cluster node VM:
 1. Edit the VM and go to **Volumes**. Click **Add Volume**, then select **Existing Volume** and the shared volume.
 1. Set **Type** to **lun**. The bus is set to `scsi` and the disk becomes shareable.
 1. Select **SCSI-3 Persistent Reservation**.
+1. Keep **I/O Error Policy** set to **report** (the default for LUN disks).
 1. Save. The VM restarts with the new disks.
 
 The resulting disk definition is:
@@ -97,6 +98,7 @@ spec:
           disks:
             - name: quorum
               shareable: true
+              errorPolicy: report
               lun:
                 bus: scsi
                 reservation: true
@@ -107,6 +109,12 @@ spec:
 ```
 
 You can also apply this with **Edit YAML**.
+
+:::important
+
+Use `errorPolicy: report` on shared cluster disks. When the guest cluster fences a node, that node's writes to the shared disk fail with a reservation conflict, which is the expected result. With KubeVirt's default policy (`stop`), the whole VM is paused on that error, and resuming it retries the write and pauses it again. With `report`, the error goes to the guest operating system, so the cluster software can handle it.
+
+:::
 
 ## Windows guests
 
