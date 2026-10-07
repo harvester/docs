@@ -18,76 +18,130 @@ description: Run guest clusters such as Windows Server Failover Clustering on sh
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.10/vm/guest-clustering-shared-luns"/>
 </head>
 
-Some clustered applications running inside virtual machines need a disk that several VMs use at the same time, and they protect that disk with **SCSI-3 Persistent Reservations (PR)**. The most common example is Windows Server Failover Clustering (WSFC) with SQL Server Failover Cluster Instances.
+Some clustered applications running inside virtual machines need a disk that several VMs use at the same time, and they protect that disk with **SCSI-3 Persistent Reservations (PR)**. The most common example is Windows Server Failover Clustering (WSFC), including SQL Server Failover Cluster Instances (FCI).
 
-Harvester supports this by attaching a shared volume to each cluster node VM as a **SCSI LUN passthrough** disk with **persistent reservations** enabled. The guest's reservation commands are forwarded to the storage array through `qemu-pr-helper`, which runs in each `virt-handler` pod.
+Harvester attaches such a shared volume to each cluster node VM as a **LUN** disk (SCSI passthrough) with **SCSI-3 Persistent Reservation** enabled. The guest sends its reservation commands directly to the storage array, so the guest cluster can fence a node exactly as it would on physical servers.
 
-## Requirements
+## Prerequisites
 
-### Storage
+### SAN storage and CSI driver
 
-The shared volume must be a **real SCSI LUN**, which means a CSI driver for iSCSI or Fibre Channel SAN storage, for example NetApp Trident with the `ontap-san` driver. The array must support SCSI-3 Persistent Reservations.
+The shared volumes must be **SCSI LUNs from SAN storage** (iSCSI or Fibre Channel), provisioned by a CSI driver, for example NetApp Trident with the `ontap-san` driver. The array must support SCSI-3 Persistent Reservations.
 
-| Storage | Can be used |
+Longhorn, Ceph RBD and NFS volumes can't be used as LUN disks.
+
+### Multipath configuration
+
+SAN CSI drivers use Linux multipath (`multipathd`) on every node. Set this up when you install the CSI driver. For guest clustering, the multipath configuration also needs these settings:
+
+| Setting | Purpose |
 |---|---|
-| SAN CSI drivers exposing iSCSI/FC LUNs | Yes |
-| Longhorn | No |
-| Ceph RBD | No (a `lun` disk doesn't start; a shared `disk` isn't accepted by WSFC) |
-| NFS | No |
+| `reservation_key file` | Lets multipath track the reservation key of each LUN and apply reservations on every path. Required for persistent reservations. |
+| `skip_kpartx yes` | Stops the nodes from creating device mappings for the partitions that guests create on the shared LUNs. |
+| `find_multipaths no` | Claims the SAN LUNs as soon as they appear, as most SAN CSI drivers expect. |
 
-The volume must be created with **access mode ReadWriteMany** and **volume mode Block**.
+Restrict multipath to the SAN's LUNs, so it never claims the nodes' local disks or Longhorn devices.
 
-### Nodes
+The following example for NetApp ONTAP uses a [CloudInit resource](../advanced/cloudinitcrd.md), so the configuration is applied on every node and kept across reboots:
 
-- **Unique iSCSI initiator names.** Every node must have a different `InitiatorName` in `/etc/iscsi/initiatorname.iscsi`. Clusters first installed with v1.4.x or earlier may still share one; see [harvester/harvester#11842](https://github.com/harvester/harvester/issues/11842).
-- **Multipath configured for the SAN LUNs**, with persistent reservation support. For example, a [CloudInit](../advanced/cloudinitcrd.md) resource that writes `/etc/multipath/conf.d/98-san.conf` and enables `multipathd`:
+```yaml
+apiVersion: node.harvesterhci.io/v1beta1
+kind: CloudInit
+metadata:
+  name: netapp-multipath
+spec:
+  matchSelector: {}
+  filename: 98_netapp_multipath.yaml
+  contents: |
+    name: "multipath for NetApp ONTAP LUNs"
+    stages:
+      initramfs:
+        - files:
+            - path: /etc/multipath/conf.d/98-netapp.conf
+              permissions: 0644
+              owner: 0
+              group: 0
+              content: |
+                defaults {
+                    user_friendly_names yes
+                    find_multipaths no
+                    reservation_key file
+                    skip_kpartx yes
+                }
+                blacklist {
+                    device {
+                        vendor ".*"
+                        product ".*"
+                    }
+                }
+                blacklist_exceptions {
+                    device {
+                        vendor "NETAPP"
+                        product "LUN.*"
+                    }
+                }
+      network:
+        - name: "enable multipathd"
+          systemctl:
+            enable:
+              - multipathd
+            start:
+              - multipathd
+```
 
-  ```
-  defaults {
-      user_friendly_names yes
-      find_multipaths no
-      reservation_key file
-      skip_kpartx yes
-  }
-  blacklist {
-      device {
-          vendor ".*"
-          product ".*"
-      }
-  }
-  blacklist_exceptions {
-      device {
-          vendor "NETAPP"
-          product "LUN.*"
-      }
-  }
-  ```
+For other arrays, replace the `vendor` and `product` values with your array's values, as documented by your storage vendor.
 
-  - `reservation_key file` is required for persistent reservations on multipath devices.
-  - `skip_kpartx yes` stops the hosts from creating device-mapper entries for the partitions that the guests create on the shared LUNs.
-  - Replace the vendor and product with your array's values, and keep the blacklist so that multipath doesn't claim local disks.
+After applying the resource and rebooting the nodes (or starting `multipathd`), check that `multipath -ll` lists only SAN LUNs.
 
-### Virtual machines
+### Unique iSCSI initiator names
 
-- Place the cluster node VMs on **different Harvester nodes**, using node scheduling or affinity rules.
-- Use `virtio` for the **boot disk**, not `scsi`. (`sata` also works but is much slower; use it only for guests without virtio drivers.) All `scsi` disks of a VM share one SCSI controller, and Windows doesn't accept cluster disks on the same bus as the boot disk.
+Each node must have its own iSCSI initiator name, because the array uses it to tell the nodes apart. Compare the value on every node:
+
+```bash
+sudo grep -v '^#' /etc/iscsi/initiatorname.iscsi
+```
+
+Clusters that were first installed with Harvester v1.4.x or earlier may still have the same initiator name on every node. On those nodes, generate a new name before using SAN storage:
+
+1. Stop or migrate the workloads on the node that use SAN volumes.
+1. Generate a new name, and restart `iscsid`:
+
+   ```bash
+   sudo rm /etc/iscsi/initiatorname.iscsi
+   sudo /sbin/iscsi-gen-initiatorname
+   sudo systemctl restart iscsid
+   ```
+
+1. Log out of existing iSCSI sessions to the SAN, so the node reconnects with the new name: `sudo iscsiadm -m node -T <target-iqn> -p <portal>:3260 --logout`.
+1. Restart the CSI driver's node pod on that node, and check on the array that the node's host or initiator group shows the new name.
+
+Repeat on each node, one at a time.
+
+## Plan the virtual machines
+
+- Run the cluster node VMs on **different Harvester nodes**. Use node scheduling or VM anti-affinity rules.
+- Use the **VirtIO** bus for the boot disk. LUN disks use the SCSI bus, and Windows doesn't accept cluster disks on the same bus as the boot disk.
 
 ## Create the shared volumes
 
 1. Go to **Volumes** and click **Create**.
-1. Select the SAN storage class, set **Volume Mode** to **Block**, and create one volume per cluster disk (for example, a quorum disk and the data disks).
+1. Select the SAN storage class, set **Access Mode** to **ReadWriteMany** and **Volume Mode** to **Block**, and set the size.
+1. Create one volume for each cluster disk, for example a small quorum (witness) disk and the data and log disks.
 
-## Attach the volumes to each cluster node
+## Attach the volumes to the cluster nodes
 
-For every cluster node VM:
+On each cluster node VM:
 
-1. Edit the VM and go to **Volumes**. Click **Add Volume**, then select **Existing Volume** and the shared volume.
-1. Set **Type** to **lun**. The bus is set to `scsi` and the disk becomes shareable.
+1. Go to **Virtual Machines**, and select **⋮** > **Edit Config** for the VM.
+1. On the **Volumes** tab, click **Add Volume**, and select **Existing Volume**.
+1. Select the shared volume, and set **Type** to **lun**. The bus is set to **scsi** and the disk is shared between VMs.
 1. Select **SCSI-3 Persistent Reservation**.
-1. Keep **I/O Error Policy** set to **report** (the default for LUN disks).
-1. Save. The VM restarts with the new disks.
+1. Keep **I/O Error Policy** set to **report**.
+1. Click **Save**, and restart the VM so that the new disks are attached.
 
-The resulting disk definition is:
+The **report** error policy matters for clusters. When the guest cluster fences a node, that node's writes to the shared disk are rejected by the array, which is expected. With **report**, the guest operating system receives the error and the cluster software handles it. With **stop**, the whole VM is paused instead.
+
+The resulting VM configuration looks like this:
 
 ```yaml
 spec:
@@ -108,41 +162,29 @@ spec:
             claimName: quorum
 ```
 
-You can also apply this with **Edit YAML**.
+## Windows Server Failover Clustering
 
-:::important
+1. Create the Windows VMs with a VirtIO boot disk, and install the [SUSE Virtual Machine Driver Pack (VMDP)](./create-windows-vm.md).
+1. Join the VMs to your Active Directory domain, and install the **Failover Clustering** feature on each of them.
+1. Attach the shared volumes as described above. In **Disk Management**, the LUNs appear with the array's identity (for example `NETAPP LUN C-Mode`) and bus type **SAS**.
+1. Validate the configuration before you create the cluster:
 
-Use `errorPolicy: report` on shared cluster disks. When the guest cluster fences a node, that node's writes to the shared disk fail with a reservation conflict, which is the expected result. With KubeVirt's default policy (`stop`), the whole VM is paused on that error, and resuming it retries the write and pauses it again. With `report`, the error goes to the guest operating system, so the cluster software can handle it.
+   ```powershell
+   Test-Cluster -Node <node1>,<node2>
+   ```
 
-:::
+   All storage tests must pass, including **Validate SCSI-3 Persistent Reservation**.
 
-## Windows guests
-
-- Install the [SUSE Virtual Machine Driver Pack (VMDP)](./create-windows-vm.md).
-- The VMDP SCSI driver reports its bus type as parallel SCSI, which Windows Failover Clustering doesn't accept ("Disk bus type does not support clustering"). Until a VMDP release changes it, set the bus type to SAS on every cluster node and restart:
-
-  ```powershell
-  Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Services\pvvxscsi\Parameters -Name BusType -Value 0xA -Type DWord
-  Restart-Computer
-  ```
-
-- If Windows was installed with its boot disk on `scsi`, remove `HKLM\SYSTEM\CurrentControlSet\Services\pvvxblk\StartOverride` before changing the boot disk to `virtio`. Otherwise Windows doesn't boot (`INACCESSIBLE_BOOT_DEVICE`).
-- Validate the configuration before you create the cluster: `Test-Cluster -Node <node1>,<node2>`. On an existing cluster, include the cluster disks with `-Disk`. The **Validate SCSI-3 Persistent Reservation** test must pass.
-- SQL Server setup doesn't open the Windows firewall for the instance. Allow TCP 1433 on every cluster node.
-
-:::caution
-
-Windows guests using VMDP 2.5.5 don't report a reservation conflict correctly, so **Validate SCSI-3 Persistent Reservation** fails on two-node clusters. See [harvester/harvester#11838](https://github.com/harvester/harvester/issues/11838).
-
-:::
+1. Create the cluster, and configure the quorum disk as the disk witness.
+1. For SQL Server, run **New SQL Server failover cluster installation** on the first node and **Add node to a SQL Server failover cluster** on the others. SQL Server setup doesn't open the Windows firewall, so allow the instance's port (TCP 1433 by default) on every node.
 
 ## Operations and limitations
 
-- **Live migration:** VMs with persistent reservation disks can't be live migrated (`PersistentReservationNotLiveMigratable`). Before you put a node in maintenance mode, fail the guest cluster over, or label the VM so that Harvester shuts it down and starts it again after maintenance:
+- **Live migration:** VMs with persistent reservation disks can't be live migrated. Before you put a Harvester node into maintenance mode, move the clustered roles to another cluster node, or add this label to the VM so that Harvester shuts it down and starts it again when maintenance ends:
 
   ```
   harvesterhci.io/maintain-mode-strategy: ShutdownAndRestartAfterDisable
   ```
 
-- **Backup and snapshot:** volumes attached as shareable disks can't be backed up or snapshotted by Harvester. Protect the data from inside the guest cluster.
-- **Force Stop:** after a **Force Stop**, a VM may not start again with **Start**. See [harvester/harvester#11835](https://github.com/harvester/harvester/issues/11835).
+- **Backup and snapshot:** Harvester can't back up or snapshot volumes that are attached as shared disks. Protect the data from inside the guest cluster, for example with SQL Server backups.
+- **Adding disks:** LUN disks are attached when the VM restarts. Plan disk changes for a maintenance window of the guest cluster.
