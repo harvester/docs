@@ -36,12 +36,6 @@ The Harvester Container Storage Interface (CSI) Driver provides a standard CSI i
 - The Kubernetes cluster is built on top of Harvester virtual machines.
 - The Harvester virtual machines that run as guest Kubernetes nodes are in the same namespace.
 
-:::note
-
-Currently, the Harvester CSI driver only supports single-node read-write(RWO) volumes. Please follow the [issue #1992](https://github.com/harvester/harvester/issues/1992) for future multi-node `read-only`(ROX) and `read-write`(RWX) support.
-
-:::
-
 ### Deploying with Harvester RKE1 node driver
 
 :::caution

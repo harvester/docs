@@ -58,13 +58,6 @@ The Harvester CSI driver supports the following features:
 - The Harvester virtual machines that run as guest Kubernetes nodes are in the same namespace.
 - Starting with v0.1.25, if you install the CSI driver without enabling the Harvester cloud provider, ensure that [Volume Snapshots](./csi-driver.md#volume-snapshots) are properly installed; otherwise, the chart installation will fail.
 
-
-:::note
-
-Currently, the Harvester CSI driver only supports single-node read-write(RWO) volumes. Please follow the [issue #1992](https://github.com/harvester/harvester/issues/1992) for future multi-node `read-only`(ROX) and `read-write`(RWX) support.
-
-:::
-
 ### Deploying with Harvester RKE2 node driver
 
 When spinning up a Kubernetes cluster using Rancher RKE2 node driver, the Harvester CSI driver will be deployed automatically when Harvester cloud provider is selected.
