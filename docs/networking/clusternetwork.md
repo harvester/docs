@@ -90,6 +90,8 @@ In Harvester v1.5.x and earlier versions, the entire VLAN ID range (2 to 4094) w
 
 For more information, see [issue #7650](https://github.com/harvester/harvester/issues/7650).
 
+The MTU info displayed under `mgmt` cluster network is view only and to use a non-default MTU for `networks` attached to `mgmt` cluster network follow [Annotate a Non-Default MTU Value to `mgmt` After Installation](#annotate-a-non-default-mtu-value-to-mgmt-after-installation)
+
 :::
 
 As of v1.6.0,only the [primary VLAN ID](https://docs.harvesterhci.io/latest/install/harvester-configuration#installmanagement_interface) provided during installation is automatically added to the `mgmt-br` bridge and the `mgmt-bo` interface. You can [add secondary VLAN interfaces](#add-secondary-vlan-interfaces) after installation is completed.
@@ -140,6 +142,13 @@ Example:
 
 $ kubectl annotate clusternetwork mgmt network.harvesterhci.io/uplink-mtu="9000"
 
+```
+Starting with v1.9.0, the **Cluster Network Configuration** screen displays management interface details (for all non-witness nodes) through corresponding read-only VlanConfig resources. These VLAN configurations inherit their MTU value directly from the management interface. However, changing the management interface MTU does not automatically update the MTU used by VM networks attached to the `mgmt` cluster network. To update the MTU for these VM networks, you must explicitly annotate `mgmt` as shown in the preceding example.
+
+To reset the MTU to the default value on virtual machines using the `mgmt` cluster network, remove the annotation:
+
+```
+$ kubectl annotate clusternetwork mgmt network.harvesterhci.io/uplink-mtu-
 ```
 
 :::caution
