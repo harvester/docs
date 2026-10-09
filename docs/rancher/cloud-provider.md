@@ -840,7 +840,7 @@ Constructs the complete address list (`[]v1.NodeAddress`) for the guest node by 
     Assigns detected IPs to `InternalIP` and `ExternalIP` types, providing a consistent source of truth for downstream intra-cluster networking and load balancer traffic routing.
 
 :::note
-To customize or filter which VM network interfaces and IP ranges are used when reporting node addresses, see [#### 3. Extra Arguments (extraArgs)](#3-extra-arguments).
+To customize or filter which VM network interfaces and IP ranges are used when reporting node addresses, see [Extra Arguments](#extra-arguments).
 :::
 
 ## Load Balancer Support
