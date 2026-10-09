@@ -931,6 +931,12 @@ If VM network interfaces are attached in different orders across nodes, reconfig
 
 Beginning with Harvester cloud provider v0.2.0, additional health checks of the `LoadBalancer` service within the guest Kubernetes cluster are no longer necessary. Instead, you can configure [liveness](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-tcp-liveness-probe) and [readiness](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-readiness-probes) probes for your workloads. Consequently, any unavailable pods will be automatically removed from the load balancer endpoints to achieve the same desired outcome.
 
+### DNS Records
+
+`LoadBalancer` services in the guest cluster are standard Kubernetes services. After the Harvester load balancer assigns an IP address and the service has at least one ready endpoint, the address appears in the service's `status.loadBalancer.ingress` field.
+
+To publish DNS records for these services, deploy [ExternalDNS](https://kubernetes-sigs.github.io/external-dns/) in the guest cluster, configure it for your DNS server, and add the `external-dns.alpha.kubernetes.io/hostname` annotation to the service. For more information, see [DNS Integration](../networking/dns-integration.md).
+
 ### Automatic Cleanup
 
 _Available as of Harvester v1.8.0_

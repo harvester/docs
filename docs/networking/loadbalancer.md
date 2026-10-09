@@ -66,6 +66,12 @@ The Harvester load balancer supports TCP health checks. You can specify the para
 | Health Check Period            | int     | false | 5       |  Specifies the health check period in seconds. Disabled by default.
 | Health Check Timeout           | int     | false | 3       | Specifies the timeout of every health check in seconds. Disabled by default.
 
+### DNS Records
+
+Each VM load balancer is backed by a Kubernetes `Service` of type `LoadBalancer` with the same name and namespace as the load balancer. The service has the label `loadbalancer.harvesterhci.io/servicelb: "true"`, and its `status.loadBalancer.ingress` field contains the assigned IP address.
+
+You can use [ExternalDNS](https://kubernetes-sigs.github.io/external-dns/) to publish DNS records for load balancers to your DNS server (for example, BIND, Microsoft Active Directory DNS, or Infoblox). For more information, see [DNS Integration](./dns-integration.md).
+
 ## Guest Kubernetes cluster load balancer
 
 In conjunction with Harvester Cloud Provider, the Harvester load balancer provides load balancing for LB services in the guest cluster.
