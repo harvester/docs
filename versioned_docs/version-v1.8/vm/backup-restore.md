@@ -143,7 +143,7 @@ Users can now restore a new VM on another cluster by leveraging the VM metadata 
 
 #### Prerequisites
 
-- v1.4.0 and later: The controller automatically syncs the virtual machine images with the new cluster, except when a virtual machine image with the same name or display name already exists on the new cluster.
+- v1.4.0 and later: The controller automatically syncs the virtual machine images with the new cluster, along with their associated StorageClasses, except when a virtual machine image with the same name or display name already exists on the new cluster.
 
 - Earlier than v1.4.0: You must upload and configure the virtual machine images on the new cluster. Ensure that the image names and configuration are identical so that the virtual machines can be restored. For more information, see [Upload the same VM images to a new cluster](#upload-the-same-vm-images-to-a-new-cluster).
 
