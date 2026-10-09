@@ -94,7 +94,7 @@ You can only use one type of local volume in each volume group. If necessary, cr
 
       ![](/img/v1.4/csi-driver-lvm/create-lvm-sc-03.png)
 
-    - **Volume Group Type**: Select the type of local volume that matches your requirements. Harvester currently supports **striped** and **dm-thin**.
+    - **Volume Group Type**: Select **dm-thin**. This is the supported volume type for the LVM CSI driver.
 
       ![](/img/v1.4/csi-driver-lvm/create-lvm-sc-04.png)
 
@@ -105,6 +105,25 @@ You can only use one type of local volume in each volume group. If necessary, cr
     ![](/img/v1.4/csi-driver-lvm/create-lvm-sc-05.png)
 
 For more information, see [StorageClass](../storageclass.md).
+
+## dm-thin and Striped Volume Types
+
+**dm-thin** is the supported volume type for the LVM CSI driver. Use **dm-thin** for all new volume groups and StorageClasses.
+
+The **striped** volume type was available before the LVM CSI driver reached general availability, but is deprecated and is not included in the GA support scope. Striped logical volumes allocate their full capacity when they are created. Snapshots, clones, and restores also require full data copies, which consume additional capacity and I/O and can cause timeouts. Retrying an interrupted copy can also make it difficult to determine whether the operation completed successfully.
+
+:::caution
+
+Do not create new striped volume groups or StorageClasses. Existing striped volumes are not supported for GA and cannot be converted to dm-thin in place.
+
+Before upgrading to a version that removes striped-volume support, migrate data from existing striped volumes:
+
+1. Create a dm-thin volume group and StorageClass. A volume group can contain only one local volume type, so use a different volume group from the existing striped configuration.
+1. Stop or quiesce the workload to prevent changes while its data is copied.
+1. Create replacement volumes with the dm-thin StorageClass, and migrate the data using the workload's supported backup, restore, or copy procedure.
+1. Update the workload to use the replacement volumes and verify the data before removing the striped volumes and StorageClass.
+
+:::
 
 ## Creating a Volume with LVM
 
