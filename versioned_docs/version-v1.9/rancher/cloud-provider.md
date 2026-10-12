@@ -852,7 +852,7 @@ Once you've deployed the Harvester cloud provider, you can leverage the Kubernet
 ### IPAM
 Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and you can configure it by adding the annotation `cloudprovider.harvesterhci.io/ipam: $mode` to its corresponding service. Starting from Harvester cloud provider >= v0.2.0, it also introduces a unique **Share IP** mode. A service shares its load balancer IP with other services in this mode.
 
-- **DHCP:** A DHCP server is required. The Harvester load balancer will request an IP address from the DHCP server.
+- **DHCP:** A DHCP server is required. The Harvester load balancer will request an IP address from the DHCP server. For pre-allocating static addresses using MAC-to-IP bindings, see [Static IP for Guest Cluster LoadBalancer Service (DHCP Mode)](../networking/ippool.md#static-ip-for-guest-cluster-loadbalancer-service-dhcp-mode).
 
     Starting with **Rancher v2.15.1**, you can select a VM network when creating a `LoadBalancer` service using the UI. This enables explicit binding of the virtual IP to the correct network interface. If you do not select a VM network, the load balancer uses the default interface.
 
