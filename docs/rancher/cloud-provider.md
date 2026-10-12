@@ -530,9 +530,9 @@ In the Rancher UI, you can create a `Custom` RKE2 cluster with **Harvester Cloud
 
     :::note
 
-    1. **Instance Labels** are critical for Harvester to manage resource allocation and deallocation for guest clusters. If these labels are missing, features like the guest cluster LoadBalancer in `Pool` mode may not work, as the Harvester node driver cannot identify the guest cluster.
+    - Ensure the virtual machine's hostname matches its name. Avoid hardcoding hostnames in the cloud-config, as this can cause critical node registration issues. For more information, see [Avoid Setting a Static Hostname on Guest Cluster Virtual Machines](#avoid-setting-a-static-hostname-on-guest-cluster-virtual-machines).
 
-    1. **Keep the hostname aligned with the VM name.** Ensure you avoid hardcoding hostnames in the `cloud-config`. For more details, see [Avoid Setting a Static Hostname on Guest Cluster VMs](#avoid-setting-a-static-hostname-on-guest-cluster-vms).
+    - Retain instance labels for resource management. Harvester relies on instance labels when allocating and deallocating resources for guest clusters. Missing labels prevent the Harvester Node Driver from identifying guest clusters, which breaks features such as the guest cluster load balancer in `Pool` mode.
 
     :::
 
@@ -558,9 +558,9 @@ In the Rancher UI, you can create a `Custom` RKE2 cluster with **Harvester Cloud
 
 :::note
 
-1. Deleting a VM directly in Harvester does not automatically remove the corresponding **machine** object in the Rancher UI; you must delete it manually.
+- Deleting a virtual machine directly in Harvester does not remove the corresponding **Machine** object from Rancher. You must manually delete that object on the Rancher UI.
 
-1. When copying the Rancher UI **Registration** command, the default suffix `--etcd --controlplane --worker` assigns all node roles. If you are registering a new VM exclusively as a worker node, be sure to change the suffix to `--worker`.
+- When copying the **Registration** command on the Rancher UI, the default suffix (`--etcd --controlplane --worker`) assigns all node roles to the virtual machine. To register a virtual machine strictly as a worker node, change the suffix to `--worker`.
 
 :::
 
@@ -856,21 +856,19 @@ To customize or filter which VM network interfaces and IP ranges are used when r
 
 :::
 
-### Avoid Setting a Static Hostname on Guest Cluster VMs
+### Avoid Setting a Static Hostname on Guest Cluster Virtual Machines
 
 When provisioning guest clusters via Rancher on Harvester, you should avoid setting a static `hostname` in the `cloud-config`.
 
-#### Why This Matters
+- **Uniqueness and cloud provider identification**: By default, the node hostname is derived from the virtual machine name when no custom `hostname` is specified. During node registration, RKE2 or K3s uses this hostname so the `cloud-controller-framework` can query node information from the Harvester Cloud Provider. Specifying a custom hostname forces the provider to search for that identifier across all virtual machines in the cluster or namespace, leading to possible lookup failures and node conflicts.
 
-1. **Uniqueness and Cloud Provider Identification:** By default, if no custom `hostname` is specified, the hostname derives from the VM name. When RKE2/K3s registers the node, it uses the node's hostname, and the `cloud-controller-framework` subsequently queries node information from the `harvester-cloud-provider` using that node name. If you use a customized hostname, the `harvester-cloud-provider` is forced to search for that hostname across all VMs in the cluster or namespace, resulting in an unstable and error-prone lookup process that can cause severe cluster conflicts.
+- **Risk of node deletion on power-off**: If a virtual machine with a custom hostname is powered off, the Harvester Cloud Provider (`cloud-provider-management`) may inadvertently delete the corresponding `Node` object. Because the stopped virtual machine cannot report its custom hostname, the provider is unable to map the node name, leading to lookup failures and unintended node pruning.
 
-1. **Accidental Node Deletion on Power-Off:** If a VM with a custom hostname is powered off, the `harvester-cloud-provider` (`cloud-provider-management`) may inadvertently delete the node. Because the VM is stopped, the provider cannot retrieve the hostname from a running instance or map the node name reliably, leading to failed lookups and unintended node pruning.
+- **Dynamic naming and scaling collisions**: Machine pools in Rancher and RKE2 support multiple machines within a single pool. Harvester virtual machines rely on dynamically generated names to differentiate themselves. Hardcoding a hostname in `cloud-config` forces all virtual machines in the pool to share the same identifier, resulting in hostname collisions and pool scaling failures.
 
-1. **Dynamic Naming and Scaling:** Rancher/RKE2 **machine pools** support multiple machines within a single pool. Harvester VMs rely on dynamically generated names to differentiate themselves. A hardcoded `cloud-config` hostname forces all nodes to share the exact same identifier, leading to name collisions and scaling failures.
+- **Breakage during machine pool updates**: When you modify a machine pool's configuration (such as memory allocations or base images), Rancher provisions a new Harvester virtual machine, registers it as a new node, and then deletes the old one. A fixed hostname prevents the replacement node from registering properly. For more information, see [issue #11682](https://github.com/harvester/harvester/issues/11682).
 
-1. **Seamless Pool Updates:** When you update a machine pool configuration (such as modifying memory allocations or updating base images), Rancher provisions a new Harvester VM, registers it as a new node on the guest cluster, and then deletes the old one. A fixed hostname prevents the new node from registering properly (see [Issue #11682](https://github.com/harvester/harvester/issues/11682)).
-
-1. **RKE2 Custom Clusters:** When [Deploying to an RKE2 custom cluster (experimental)](#deploying-to-the-rke2-custom-cluster-experimental), using a custom hostname for the VM carries these exact same risks. The underlying node registration and cloud provider mechanisms still rely on unique, dynamically managed hostnames to prevent collisions and ensure proper lifecycle management.
+- **Impact on RKE2 custom clusters**: Using a static hostname when [deploying to an RKE2 custom cluster (experimental)](#deploying-to-the-rke2-custom-cluster-experimental) carries these same risks. Node registration and cloud provider lifecycles require unique, dynamically managed hostnames across all cluster types.
 
 ## Load Balancer Support
 

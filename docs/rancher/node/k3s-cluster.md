@@ -65,9 +65,10 @@ Users can create a K3s Kubernetes cluster from the **Cluster Management** page v
 
 :::important
 
-1. Ensure all **Machine Pools** use the same first(primary) Network. RKE2/K3s rely on this network to boot the cluster; using different networks across machine pools may cause the cluster to fail.
+- Ensure all machine pools share the same primary network. K3s relies on this network to initialize the cluster. Using different networks across machine pools can cause the cluster to fail.
 
-1. **Avoid setting a static hostname.** For more details, see [Avoid Setting a Static Hostname on Guest Cluster VMs](../cloud-provider.md#avoid-setting-a-static-hostname-on-guest-cluster-vms).
+- Avoid setting a static hostname. For more information, see [Avoid Setting a Static Hostname on Guest Cluster Virtual Machines](../cloud-provider.md#avoid-setting-a-static-hostname-on-guest-cluster-virtual-machines).
+
 :::
 
 Machine Pools (Basic)
