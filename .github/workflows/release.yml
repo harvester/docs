@@ -23,13 +23,10 @@ jobs:
           PUPPETEER_DOWNLOAD_BASE_URL=https://storage.googleapis.com/chrome-for-testing-public yarn install --frozen-lockfile
 
       - name: Build Documentation
-        env:
-          # Increase Node old space size further if the runner allows,
-          # or let V8 dynamically manage it if OOM persists.
-          NODE_OPTIONS: '--max-old-space-size=8192'
+        # Refer ./package.json to adjust max-old-space-size if OOM happens again
         run: |
           yarn gen-api-docs
-          yarn docusaurus build
+          yarn build
 
       - name: Upload static files as artifact
         id: deployment
