@@ -67,7 +67,7 @@ The Longhorn V2 Data Engine is only available for newly created volumes and imag
 
   The default [Longhorn disk driver](https://longhorn.io/docs/1.12.1/nodes-and-volumes/nodes/multidisk/#disk-driver) for newly added Longhorn V2 disks in Harvester is `aio`. This driver uses a Linux block device path and avoids the SPDK NVMe VFIO path.
 
-  If you would prefer to use Longhorn's automatic disk driver detection and thus ensure the use of the NVMe driver for NVMe disks, then the disk driver needs to be manually set to `auto`. See [below](#manually-setting-the-disk-driver) for details.
+  To enable Longhorn's automatic disk driver detection, which automatically assigns the NVMe driver to NVMe disks, set the disk driver to `auto`. For instructions, see [Manually Setting The Disk Driver](#manually-setting-the-disk-driver).
 
   :::
 
@@ -169,27 +169,19 @@ To migrate a disk, perform the following steps:
 
 ## Manually Setting The Disk Driver
 
-If you would prefer to use Longhorn's automatic disk driver detection rather than using the `aio` driver, then don't add the disk via the Harvester GUI. Instead, perform the following steps:
+To use Longhorn's automatic disk driver detection feature instead of the default `aio` driver, do not add the disk through the Harvester UI. Instead, perform the following steps:
 
-1. Find the name of the disk you want to add:
+1. Identify the name of the disk you want to add:
 
-    ```shell
-    kubectl -n longhorn-system get blockdevices.harvesterhci.io
-    ```
-
-    This will list the `BlockDevice` custom resources, for example:
+    
     ```
     NAME                                   TYPE   DEVPATH        MOUNTPOINT   NODENAME           PROVISIONPHASE   AGE
     4585c9be-da72-4481-80c0-c8021c15aace   disk   /dev/nvme0n1                harvester-node-0   Unprovisioned    24s
     ```
 
-2. Edit the desired `BlockDevice` custom resource, for example:
+1. Edit the target `BlockDevice` custom resource.
 
-    ```shell
-    kubectl -n longhorn-system edit blockdevices.harvesterhci.io 4585c9be-da72-4481-80c0-c8021c15aace
-    ```
-
-   Update the `spec` to set `provision: true` and add the LonghornV2 provisioner, explicitly specifying `diskDriver: auto`. Existing fields in the `spec`, such as `devPath` and `nodeName` should remain unchanged.:
+    
 
     ```yaml
     spec:
@@ -200,7 +192,11 @@ If you would prefer to use Longhorn's automatic disk driver detection rather tha
           engineVersion: LonghornV2
     ```
 
-If you have already added the disk and wish to change the driver from `aio` to `auto`, you must [remove the disk](../host/host.md#remove-disks), then add it again by following the above steps. Simply changing the `diskDriver` on an existing provisioned `BlockDevice` custom resource will not work.
+:::info important
+
+Updating the `diskDriver` setting of an already provisioned `BlockDevice` custom resource is not supported. To change the driver from `aio` to `auto` on an existing disk, you must first [remove the disk](../host/host.md#remove-disks) and then add it again using the procedure above.
+
+:::
 
 ## Known Issues
 
