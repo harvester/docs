@@ -9,30 +9,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
-
       - name: Checkout code
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7 node.js 24
 
-      - name: Set up Node.js 20
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+      - name: Set up Node.js 24
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: 20
+          node-version: 24
+          cache: 'yarn'
 
       - name: Install dependencies
         run: |
-          npm install -g yarn
           PUPPETEER_DOWNLOAD_BASE_URL=https://storage.googleapis.com/chrome-for-testing-public yarn install --frozen-lockfile
 
-      - name: Build
+      - name: Build Documentation
+        # Refer ./package.json to adjust max-old-space-size if OOM happens again
         run: |
           yarn gen-api-docs
           yarn build
 
       - name: Upload static files as artifact
         id: deployment
-        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
           path: ./build
           
@@ -48,4 +46,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
