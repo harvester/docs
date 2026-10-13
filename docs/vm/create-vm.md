@@ -269,6 +269,8 @@ It is also possible to connect VMs using additional networks with Harvester's bu
 
 In bridge VLAN, virtual machines are connected to the host network through a linux `bridge`. The network IPv4 address is delegated to the virtual machine via DHCPv4. The virtual machine should be configured to use DHCP to acquire IPv4 addresses.
 
+VMs can also boot from a secondary network. For more information, see [Network Boot (PXE)](#network-boot-pxe).
+
 ## Node Scheduling
 
 `Node Scheduling` allows you to constrain which nodes your VMs can be scheduled on based on node labels.
@@ -489,3 +491,69 @@ The following example describes how to install an ISO image using [openSUSE Leap
 7. Open the VM web-vnc you just created and follow the instructions given by the installer.
 8. After the installation is complete, reboot the VM  as instructed by the operating system (you can remove the installation media after booting the system).
 9. After the VM reboots, it will automatically boot from the disk volume and start the operating system.
+
+## Network Boot (PXE)
+
+_Available as of v1.10.0_
+
+Virtual machines can boot from the network using the Preboot Execution Environment (PXE). This allows you to install operating systems using existing provisioning infrastructure. For example, a PXE/iPXE server, Cobbler, Foreman, or MAAS.
+
+### Prerequisites
+
+- A [VM network](../networking/harvester-network.md) on which a DHCP server provides PXE boot options and a TFTP or HTTP server that hosts the boot files. Harvester does not provide a PXE server.
+- Supported BIOS and UEFI firmware. With UEFI, the server must provide a UEFI boot file. For example, `ipxe.efi`. If Secure Boot is enabled, the boot file must be signed.
+
+:::note
+
+Network boot is not available on the management network because its built-in DHCP server does not provide PXE boot options.
+
+:::
+
+### Enable Network Boot
+
+1. Go to **Virtual Machines**, and then click **Create**.
+1. On the **Networks** tab, add a network interface or select an existing one, and then select the VM network that the PXE server is connected to.
+1. Select **Enable network boot (PXE)**.
+
+    ![vm-network-boot](/img/v1.10/vm/vm-network-boot.png)
+
+1. Under **Network boot order**, select when the virtual machine attempts to boot from the network.
+
+    - **Before volumes**: The virtual machine attempts to boot from the network first. Use this option if the PXE server decides what the virtual machine boots.
+    - **After volumes**: The virtual machine attempts to boot from its volumes first. If a blank volume fails to boot, the virtual machine will fall through to network boot. After the operating system is installed on the volume, the virtual machine will boot from the volume without any further configuration changes.
+
+    ![vm-network-boot-order](/img/v1.10/vm/vm-network-boot-order.png)
+
+1. Configure the remaining settings, and then click **Create**.
+
+When network boot is enabled on multiple interfaces, the interfaces are attempted in the order in which they are listed. The **Boot Order** list on the **Basics** tab of the virtual machine details screen displays network interfaces along with volumes.
+
+You can also enable network boot when creating a virtual machine template. Navigate to **Advanced** and then **Templates**. Virtual machines created from the template will inherit the setting.
+
+Harvester applies the setting by assigning a `bootOrder` to the network interface in the virtual machine spec:
+
+```yaml
+spec:
+  template:
+    spec:
+      domain:
+        devices:
+          disks:
+          - name: disk-0
+            bootOrder: 1
+            disk:
+              bus: virtio
+          interfaces:
+          - name: nic-1
+            bootOrder: 2
+            bridge: {}
+            model: virtio
+```
+
+:::info important
+
+- Changing the network boot settings of an existing virtual machine requires a restart.
+- A virtual machine that is waiting in the PXE firmware or a boot menu does not respond to ACPI shutdown requests. When you stop the virtual machine, Harvester waits until the termination grace period expires (default: 120 seconds) before forcibly stopping it.
+- If a virtual machine has multiple network interfaces, the operating system installer might configure an interface other than the one used for network boot. Use the installer's boot parameters to select the correct interface. For example, `BOOTIF=01-${netX/mac:hexhyp}` in iPXE.
+
+:::
