@@ -90,7 +90,7 @@ In Harvester v1.5.x and earlier versions, the entire VLAN ID range (2 to 4094) w
 
 For more information, see [issue #7650](https://github.com/harvester/harvester/issues/7650).
 
-The MTU info displayed under `mgmt` cluster network is view only and to use a non-default MTU for `networks` attached to `mgmt` cluster network follow [Annotate a Non-Default MTU Value to `mgmt` After Installation](#annotate-a-non-default-mtu-value-to-mgmt-after-installation)
+The displayed MTU for the `mgmt` cluster network is read-only. To configure a non-default MTU for networks attached to `mgmt`, see [Annotate a Non-Default MTU Value to `mgmt` After Installation](#annotate-a-non-default-mtu-value-to-mgmt-after-installation).
 
 :::
 
