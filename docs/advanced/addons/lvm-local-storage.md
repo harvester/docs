@@ -10,7 +10,7 @@ title: "Local Storage Support"
 
 :::note
 
-The **harvester-csi-driver-lvm** add-on is classified as *experimental* in Harvester v1.9.0 and reaches general availability (GA) in v1.9.1. It is not included in the Harvester ISO, but is available for download from the [experimental-addons repository](https://github.com/harvester/experimental-addons). For more information about feature maturity, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+The **harvester-csi-driver-lvm** add-on is classified as *experimental* in Harvester v1.9.0 and reaches general availability (GA) in v1.9.1. It is not included in the Harvester ISO, but is available for download from the `addons/standalone` directory of the [Harvester repository](https://github.com/harvester/harvester/tree/master/addons/standalone). For more information about feature maturity, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
 
 :::
 
@@ -25,7 +25,7 @@ If you are using the Harvester kubeconfig file, you can install the add-on by pe
 1. Install the add-on by running the following command:
 
     ```
-    kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/v1.9/harvester-csi-driver-lvm/harvester-csi-driver-lvm.yaml
+    kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/master/addons/standalone/harvester-csi-driver-lvm/addon.yaml
     ```
 
 1. On the Harvester UI, go to **Advanced** > **Add-ons**.
