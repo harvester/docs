@@ -14,7 +14,9 @@ The [Upgrade Manager](https://github.com/harvester/upgrade-toolkit) provides a d
 
 :::note
 
-**harvester-upgrade-manager** is an _experimental_ add-on. Its add-on manifest, Helm chart, and container image are not included in the published Harvester ISO image, but you can download them from the [experimental-addons repository](https://github.com/harvester/experimental-addons) and Docker Hub. For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+**harvester-upgrade-manager** is an _experimental_ add-on. For information about feature maturity, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+
+This add-on's manifest, Helm chart, and container image are not included in the Harvester ISO. However, you can download the manifest (`harvester-upgrade-manager-addon.yaml`) from the [Harvester **Releases** page](https://github.com/harvester/harvester/releases), and pull the chart and container image from Docker Hub. Manifest source files are located in the `addons/standalone` directory of the [Harvester repository](https://github.com/harvester/harvester/tree/master/addons/standalone).
 
 :::
 
@@ -40,11 +42,11 @@ As a workaround, make the Upgrade Manager's container image available from a pri
 
 ## Installing and Enabling the Add-on
 
-To install the Upgrade Manager, first apply the add-on manifest from the experimental-addons repository:
+To install the Upgrade Manager, first apply the add-on manifest from the Harvester repository:
 
 ```bash
 kubectl apply -f \
-    https://raw.githubusercontent.com/harvester/experimental-addons/main/harvester-upgrade-manager/harvester-upgrade-manager.yaml
+    https://raw.githubusercontent.com/harvester/harvester/v1.9/addons/standalone/harvester-upgrade-manager/addon.yaml
 ```
 
 Then enable the add-on by patching its resource:

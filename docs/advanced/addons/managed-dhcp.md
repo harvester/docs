@@ -10,7 +10,9 @@ title: "Managed DHCP (Experimental)"
 
 :::note
 
-**harvester-vm-dhcp-controller** is an *experimental* add-on. It is not included in the Harvester ISO, but you can download it from the [experimental-addons repository](https://github.com/harvester/experimental-addons). For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+**harvester-vm-dhcp-controller** is an *experimental* add-on. For information about feature maturity, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+
+This add-on is not included in the Harvester ISO, but you can download the manifest (`harvester-vm-dhcp-controller-addon.yaml`) from the [Harvester **Releases** page](https://github.com/harvester/harvester/releases). Manifest source files are located in the `addons/standalone` directory of the [Harvester repository](https://github.com/harvester/harvester/tree/master/addons/standalone).
 
 :::
 
@@ -46,8 +48,10 @@ The Managed DHCP add-on is not compatible with overlay networks backed by Kube-O
 You can install the add-on by running the following command:
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/main/harvester-vm-dhcp-controller/harvester-vm-dhcp-controller.yaml
+kubectl apply -f https://github.com/harvester/harvester/releases/download/<version>/harvester-vm-dhcp-controller-addon.yaml
 ```
+
+Replace `<version>` with the version of your Harvester cluster (for example, `v1.10.0`).
 
 :::note
 
