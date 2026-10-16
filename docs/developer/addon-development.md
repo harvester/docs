@@ -45,7 +45,7 @@ spec:
 
 :::note
 
-Experimental add-ons are not directly packaged in Harvester. An example is the [rancher-vcluster](https://github.com/harvester/experimental-addons/blob/main/rancher-vcluster/rancher-vcluster.yaml) add-on.
+Experimental add-ons are not directly packaged in Harvester. An example is the [rancher-vcluster](https://github.com/harvester/harvester/blob/master/addons/standalone/rancher-vcluster/addon.yaml) add-on.
 
 :::
 
