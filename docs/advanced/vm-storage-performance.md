@@ -25,7 +25,13 @@ The options are divided into two groups:
 - [Per-volume options](#per-volume-storage-performance-options): The cache mode, the I/O mode, and a dedicated I/O thread, which are set on each disk.
 - [VM-wide options](#vm-wide-io-threads-and-multi-queue): Virtio block multi-queue and the I/O threads policy, which apply to every disk of the virtual machine.
 
-All options are optional. If you leave them unset, KubeVirt and the hypervisor apply their defaults, and the virtual machine specification remains unchanged.
+All options are optional. If you do not set an option, KubeVirt and the hypervisor apply their defaults, and the virtual machine specification remains unchanged.
+
+:::note
+
+The options are applied when the virtual machine starts. If you change them on a running virtual machine, the changes take effect only after the virtual machine is restarted. When you save the changes, the UI prompts you to restart the virtual machine. If you do not restart it, the virtual machine is marked as pending restart until the next restart.
+
+:::
 
 ## Per-Volume Storage Performance Options
 
@@ -52,7 +58,7 @@ The cache mode determines whether the host page cache is used between the guest 
 | Cache mode | Description | Trade-offs | Recommended use |
 |---|---|---|---|
 | Default (not set) | KubeVirt uses `none` if the storage supports direct I/O, and `writethrough` otherwise. | | Most virtual machines. |
-| **None (no host cache)** | Guest I/O bypasses the host page cache, and reads and writes go directly to the storage (direct I/O). The cache and flush requests of the guest still apply. | The storage must support direct I/O. Otherwise, the virtual machine fails to start. This can occur on **Filesystem** volumes, for which the UI displays a warning. | Disks with large I/O requirements on **Block** volumes. KubeVirt describes this mode as generally the best choice. This mode is required for **I/O Mode** `native`. |
+| **None (no host cache)** | Guest I/O bypasses the host page cache, and reads and writes go directly to the storage (direct I/O). The cache and flush requests of the guest still apply. | The storage **must support direct I/O.** Otherwise, the virtual machine fails to start. This can occur on **Filesystem** volumes, for which the UI displays a warning. | Disks with large I/O requirements on **Block** volumes. KubeVirt describes this mode as generally the best choice. This mode is required for **I/O Mode** `native`. |
 | **WriteBack** | Guest I/O is cached on the host. A write completes as soon as the data reaches the host page cache, and the data is written to the storage when the guest operating system issues a flush. | The host page cache consumes host memory. This mode is safe only if the guest operating system flushes its disk caches correctly. Otherwise, a host crash or power loss can corrupt data in the guest. | Guests whose operating system reliably flushes its disk caches, on storage that does not support direct I/O, when writes must complete without waiting for the storage. |
 | **WriteThrough** | Guest reads are cached on the host. A write completes only after the data is written to the storage. | Write performance is significantly lower than with the other modes because each write waits for the storage. | Guests that do not flush their disk caches correctly, when write durability is more important than write performance. |
 
@@ -134,3 +140,26 @@ spec:
 ```
 
 For details on each field, see [Disks and Volumes](https://kubevirt.io/user-guide/storage/disks_and_volumes/) in the KubeVirt user guide.
+
+## Verify the Settings
+
+To check which options a virtual machine uses, inspect its disks and domain settings. The `VirtualMachine` object shows the saved settings, and the `VirtualMachineInstance` object shows the settings of the running virtual machine. If the two differ, the virtual machine has not been restarted since the change.
+
+```sh
+# Saved settings
+kubectl get vm <vm-name> -n <namespace> -o yaml | grep -E 'cache:|io:|dedicatedIOThread|blockMultiQueue|ioThreadsPolicy|supplementalPoolThreadCount'
+
+# Settings of the running virtual machine
+kubectl get vmi <vm-name> -n <namespace> -o yaml | grep -E 'cache:|io:|dedicatedIOThread|blockMultiQueue|ioThreadsPolicy|supplementalPoolThreadCount'
+```
+
+To measure the effect, run the same benchmark in the guest before and after you change the options. For example, the following [fio](https://fio.readthedocs.io/) command runs a random read/write test against a 1 GiB test file in a Linux guest. Use a test file rather than a raw device to avoid overwriting data, and delete the file afterwards.
+
+```sh
+fio --name=randrw --filename=/var/tmp/fio-test --size=1G \
+    --rw=randrw --bs=4k --ioengine=libaio --direct=1 \
+    --iodepth=32 --numjobs=4 --runtime=60 --time_based --group_reporting
+rm /var/tmp/fio-test
+```
+
+Compare the IOPS and latency in the output. The results depend on the storage, the workload, and the number of vCPUs, so test with an I/O pattern that resembles your workload.
