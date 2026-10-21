@@ -10,7 +10,9 @@ title: "Local Storage Support"
 
 :::note
 
-The **harvester-csi-driver-lvm** add-on is classified as *experimental* in Harvester v1.9.0 and reaches general availability (GA) in v1.9.1. For information about feature maturity, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+The **harvester-csi-driver-lvm** add-on is generally available (GA) starting with Harvester v1.9.1. Volumes created with pre-GA versions are incompatible with the GA driver and are not supported.
+
+The add-on is classified as *experimental* in Harvester v1.9.0. For information about feature maturity, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
 
 This add-on is not included in the Harvester ISO, but you can download the manifest (`harvester-csi-driver-lvm-addon.yaml`) from the [Harvester **Releases** page](https://github.com/harvester/harvester/releases). Manifest source files are located in the `addons/standalone` directory of the [Harvester repository](https://github.com/harvester/harvester/tree/master/addons/standalone).
 
@@ -19,6 +21,24 @@ This add-on is not included in the Harvester ISO, but you can download the manif
 Harvester allows you to use local storage on the host to create persistent volumes for your workloads with better performance and latency. This functionality is made possible by LVM, which provides logical volume management facilities on Linux.
 
 The **harvester-csi-driver-lvm** add-on is a CSI driver that supports local path provisioning through LVM.
+
+## Supported Configuration
+
+The driver provisions node-local LVM volumes. The volumes and the workloads that use them must be on the same node.
+
+- Use the `ReadWriteOnce` access mode. Multi-node `ReadWriteMany` (RWX) access is not supported. Pre-GA versions accepted RWX volumes, but those volumes did not provide true multi-node RWX semantics.
+- Use the `dm-thin` volume type. This is the only volume type included in the GA support scope.
+- Virtual machine live migration is not supported for VMs that use LVM volumes.
+
+The `striped` volume type is deprecated and outside the GA support scope. Striped volumes do not provide the storage-efficient snapshot, clone, and restore behavior required by the supported CSI workflow. These operations require full data copies, which increase capacity and I/O requirements and can cause longer operations, retries, and timeouts.
+
+## Upgrading from a Pre-GA Release
+
+:::caution
+
+Before upgrading the add-on to the GA version provided in Harvester v1.9.1 or later, back up all critical data and delete every LVM volume created with a pre-GA driver release. Pre-GA volumes are incompatible with the GA driver and cannot be recovered after upgrading.
+
+:::
 
 ## Installing and Enabling the Add-on
 
@@ -41,6 +61,23 @@ A volume group combines physical volumes to create a single storage structure th
 :::note
 
 Harvester currently does not allow you to modify the volume group composition (add or remove disks) after you create a logical volume. This issue will be addressed in a future release.
+
+:::
+
+When the driver provisions the first `dm-thin` volume in a volume group, it automatically creates `<volume-group>-thinpool` if that pool does not already exist. The driver applies the following creation policy:
+
+- **Data capacity**: 90% of currently free volume group extents for thin-pool data
+- **Chunk size**: 512 KiB
+- **Active metadata**: 16 GiB
+- **Metadata repair spare**: An enabled LVM repair spare approximately equal in size to the active metadata (~16 GiB)
+
+The driver reserves approximately 32 GiB of total volume group capacity for active metadata and the repair spare. The repair spare provides redundancy for recovery operations and does not increase live metadata capacity. Ensure the volume group has sufficient free capacity to satisfy the data pool, active metadata, and repair spare allocations. Thin-pool creation fails if available space is insufficient.
+
+The 16 GiB metadata allocation reduces the risk of metadata exhaustion but does not eliminate it.
+
+:::note
+
+If `<volume-group>-thinpool` already exists, the driver uses the pool as-is without modifying its geometry. Reusing an existing thin pool does not provide backward compatibility for volumes provisioned by pre-GA driver versions.
 
 :::
 
@@ -76,7 +113,7 @@ Harvester currently does not allow you to modify the volume group composition (a
 
 :::note
 
-You can only use one type of local volume in each volume group. If necessary, create different volume groups for the volume types that you want to use.
+Use only the `dm-thin` volume type. The `striped` volume type is deprecated and excluded from the GA support scope.
 
 :::
 
@@ -96,9 +133,9 @@ You can only use one type of local volume in each volume group. If necessary, cr
 
       ![](/img/v1.4/csi-driver-lvm/create-lvm-sc-03.png)
 
-    - **Volume Group Type**: Select the type of local volume that matches your requirements. Harvester currently supports **striped** and **dm-thin**.
+    - **Volume Group Type**: Select **dm-thin**.
 
-      ![](/img/v1.4/csi-driver-lvm/create-lvm-sc-04.png)
+    - **Volume Mode / Access Modes**: On the **CDI Settings** tab, verify that the volume mode is **Block** and the access mode is **ReadWriteOnce**. For more information, see [Containerized Data Importer (CDI) Settings](../storageclass.md#containerized-data-importer-cdi-settings).
 
 1. Click **Save**.
 
@@ -112,7 +149,7 @@ For more information, see [StorageClass](../storageclass.md).
 
 1. On the Harvester UI, go to the **Volumes** screen.
 
-1. Create a new volume using the LVM StorageClass that you created.
+1. Create a new volume using the `dm-thin` LVM StorageClass that you created.
 
     ![](/img/v1.4/csi-driver-lvm/create-lvm-volume-01.png)
 
@@ -168,6 +205,38 @@ You can also create a new virtual machine with the volume of the LVM StorageClas
 1. On the **Virtual Machine Snapshots** screen, verify that snapshot is ready to use.
 
     ![](/img/v1.4/csi-driver-lvm/vm-take-snapshot-with-lvm-02.png)
+
+## Monitoring and Workload Planning
+
+Monitor each thin pool directly on the node hosting its volume group. Run the following command to display data and metadata usage, read-only status, and health attributes:
+
+```
+sudo lvs -a <volume-group> \
+  -o lv_name,lv_attr,data_percent,metadata_percent
+```
+
+### Monitoring Metrics and Volume Attributes
+
+The command's output includes the following key fields:
+
+- `Data%` (`-o data_percent`): Percentage of data LV space currently used by thin volumes.
+- `Meta%` (`-o metadata_percent`): Percentage of metadata LV space currently used by the `dm_thin_pool` kernel module.
+- `lv_attr`: 10-character status string. For thin pools, inspect the following bit positions:
+    - Second character (write permissions):
+        - `w`: The logical volume is writable.
+        - `r`: The logical volume is read-only.
+    - Ninth character (thin-pool health):
+        - `F`: The thin pool has failed.
+        - `D`: The thin pool has exhausted its available data space.
+        - `M`: The thin-pool metadata is in read-only mode.
+
+Monitor `Data%` and `Meta%`, and take corrective action before either value reaches 100%. Exhausting thin-pool data or metadata can stall or fail I/O operations and block volume and snapshot creation. These behaviors are inherent to Linux device-mapper thin provisioning. For more information, see the [LVM thin provisioning](https://www.man7.org/linux/man-pages/man7/lvmthin.7.html) man page.
+
+### Workload Planning and Concurrency
+
+Avoid overwhelming LVM storage with concurrent I/O-intensive workloads or simultaneous volume lifecycle operations (such as provisioning, cloning, snapshotting, and restoring). High resource contention increases latency and can cause application timeouts.
+
+Optimal concurrency depends on your underlying storage hardware and workload I/O profiles. Validate your target concurrency levels through representative benchmark testing before deploying to production.
 
 ## Supported LVM Volume Features
 
