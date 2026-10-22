@@ -54,7 +54,7 @@ All options are optional. If you do not set an option, KubeVirt and the hypervis
 
 1. On the **Volumes** tab, locate the target disk, and then click **Show high-performance options**.
 
-    The **Storage Performance Options** section is available on image, new, existing, and container volumes.
+    The **Storage Performance Options** section is available on image, new, existing, and container volumes. The section is already expanded if the disk uses one of these options.
 
 1. Select a **Performance Profile**.
 
@@ -221,9 +221,9 @@ The I/O threads policy determines the number of I/O threads of the virtual machi
 
     If the saved options differ from the options of the running virtual machine, the UI displays a **Pending Restart** notification that lists the virtual machine, and the state of the virtual machine indicates that a restart is required for the configuration change to take effect.
 
-1. Locate the target virtual machine, and then select **⋮ > Edit Config**.
+1. Click the name of the target virtual machine, and then go to the **Volumes** tab.
 
-1. On the **Volumes** tab, expand the **Storage Performance Options** section of each disk and the **High Performance (I/O Threads and Multi-Queue)** section to view the saved options.
+    The **Storage Performance Options** section of each disk and the **High Performance (I/O Threads and Multi-Queue)** section display the saved options. The **High Performance (I/O Threads and Multi-Queue)** section appears only if the virtual machine uses one of these options.
 
 </TabItem>
 <TabItem value="cli" label="CLI">
