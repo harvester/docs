@@ -22,34 +22,85 @@ Starting with Harvester v1.9.1, you can tune how virtual machine disks handle I/
 
 The options are divided into two groups:
 
-- [Per-volume options](#per-volume-storage-performance-options): The cache mode, the I/O mode, and a dedicated I/O thread, which are set on each disk.
-- [VM-wide options](#vm-wide-io-threads-and-multi-queue): Virtio block multi-queue and the I/O threads policy, which apply to every disk of the virtual machine.
+- [Per-volume options](#configure-per-volume-options): The cache mode, the I/O mode, and a dedicated I/O thread, which are set on each disk.
+- [VM-wide options](#configure-vm-wide-options): Virtio block multi-queue and the I/O threads policy, which apply to every disk of the virtual machine.
 
 All options are optional. If you do not set an option, KubeVirt and the hypervisor apply their defaults, and the virtual machine specification remains unchanged.
 
-:::note
+## Prerequisites
 
-The options are applied when the virtual machine starts. If you change them on a running virtual machine, the changes take effect only after the virtual machine is restarted. When you save the changes, the UI prompts you to restart the virtual machine. If you do not restart it, the virtual machine is marked as pending restart until the next restart.
+- Harvester v1.9.1 or later.
+- For **Cache Mode** `none` and **I/O Mode** `native` (including the **High Performance** profile): Storage that supports direct I/O. Use volumes with the **Block** volume mode.
+- For **Dedicated I/O Thread** and **Virtio Block Multi-Queue**: Disks that use the virtio bus.
+- For the **Supplemental Pool** I/O threads policy: Enough free CPUs on the node for the additional CPUs that are added to the pod of the virtual machine.
 
-:::
+## Limitations
 
-## Per-Volume Storage Performance Options
+- The options are applied when the virtual machine starts. If you change them on a running virtual machine, the changes take effect only after the virtual machine is restarted.
+- **I/O Mode** `native` requires **Cache Mode** `none`. For more information, see [I/O Mode](#io-mode).
+- Dedicated I/O threads are not supported on the SCSI bus.
+- On **Filesystem** volumes, the storage might not support direct I/O. In this case, a virtual machine with **Cache Mode** `none` fails to start.
+- You cannot verify **Virtio Block Multi-Queue** from inside the guest. For more information, see [Virtio Block Multi-Queue](#virtio-block-multi-queue).
 
-The **Storage Performance Options** section is available on every disk in the **Volumes** tab of the virtual machine create and edit pages (image, new, existing, and container volumes), and on the **Volumes** > **Create** page. The section is collapsed by default. To expand it, click **Show high-performance options**.
+## Configure Per-Volume Options
 
-The following performance profiles are available:
+<Tabs>
+<TabItem value="ui" label="UI" default>
 
-| Profile | Effect |
-|---|---|
-| **Default (Balanced)** | No options are set. KubeVirt and the hypervisor select the cache mode and the I/O mode, as described in the following sections. |
-| **High Performance** | A preset for disks with heavy I/O that sets the virtio bus, **Cache Mode** `none`, **I/O Mode** `native`, and a **Dedicated I/O Thread**. Use this profile on **Block** volumes. |
-| **Custom** | You set **Cache Mode**, **I/O Mode**, and **Dedicated I/O Thread** individually. |
+1. Go to **Virtual Machines**, and then perform one of the following actions:
+
+    - To create a virtual machine, click **Create**.
+    - To edit an existing virtual machine, select **⋮ > Edit Config**.
+
+1. On the **Volumes** tab, locate the target disk, and then click **Show high-performance options**.
+
+    The **Storage Performance Options** section is available on image, new, existing, and container volumes.
+
+1. Select a **Performance Profile**.
+
+    | Profile | Effect |
+    |---|---|
+    | **Default (Balanced)** | No options are set. KubeVirt and the hypervisor select the cache mode and the I/O mode, as described in the following sections. |
+    | **High Performance** | A preset for disks with heavy I/O that sets the virtio bus, **Cache Mode** `none`, **I/O Mode** `native`, and a **Dedicated I/O Thread**. Use this profile on **Block** volumes. |
+    | **Custom** | You set **Cache Mode**, **I/O Mode**, and **Dedicated I/O Thread** individually. |
+
+1. (Optional) If you selected **Custom**, configure the [Cache Mode](#cache-mode), [I/O Mode](#io-mode), and [Dedicated I/O Thread](#dedicated-io-thread) settings.
+
+1. Click **Create** or **Save**.
+
+    If the virtual machine is running, the **Restart Virtual Machine** dialog appears. Click **Save and Restart** to apply the changes immediately. If you do not restart the virtual machine, the changes are applied on the next restart.
 
 :::info
 
-On the **Volumes** > **Create** page, the options are saved as defaults on the volume and are applied when the volume is attached to a virtual machine as a disk.
+You can also set the options when you create a volume. Go to **Volumes**, click **Create**, and then configure the **Storage Performance Options** section. The options are saved as defaults on the volume and are applied when the volume is attached to a virtual machine as a disk.
 
 :::
+
+</TabItem>
+<TabItem value="api" label="API">
+
+Per-volume options are fields of each disk in the `VirtualMachine` object.
+
+```yaml
+spec:
+  template:
+    spec:
+      domain:
+        devices:
+          disks:
+            - name: disk-0
+              bootOrder: 1
+              disk:
+                bus: virtio
+              cache: none                   # none, writeback or writethrough
+              io: native                    # native or threads
+              dedicatedIOThread: true
+```
+
+For details on each field, see [Disks and Volumes](https://kubevirt.io/user-guide/storage/disks_and_volumes/) in the KubeVirt user guide.
+
+</TabItem>
+</Tabs>
 
 ### Cache Mode
 
@@ -86,9 +137,55 @@ An I/O thread is a host thread that processes disk I/O. The **Dedicated I/O Thre
 - **Requirements**: The disk must use the virtio bus. Dedicated I/O threads are not supported on the SCSI bus. If a disk with performance options uses a different bus, the UI displays a tip.
 - **Effect on the virtual machine**: Enabling this option on any disk also enables the I/O threads policy of the virtual machine. If no policy is selected, the UI sets the policy to **Shared**.
 
-## VM-Wide I/O Threads and Multi-Queue
+## Configure VM-Wide Options
 
-The **High Performance (I/O Threads and Multi-Queue)** section appears below the disks in the **Volumes** tab. The settings in this section apply to all volumes of the virtual machine and complement the per-volume options. The section is collapsed by default unless the virtual machine already uses one of these options. To expand it, click **Show VM-wide high-performance options**.
+The VM-wide options apply to all volumes of the virtual machine and complement the per-volume options.
+
+<Tabs>
+<TabItem value="ui" label="UI" default>
+
+1. Go to **Virtual Machines**, and then perform one of the following actions:
+
+    - To create a virtual machine, click **Create**.
+    - To edit an existing virtual machine, select **⋮ > Edit Config**.
+
+1. On the **Volumes** tab, locate the **High Performance (I/O Threads and Multi-Queue)** section below the disks, and then click **Show VM-wide high-performance options**.
+
+    The section is already expanded if the virtual machine uses one of these options.
+
+1. (Optional) Select **Virtio Block Multi-Queue**.
+
+    At least one disk must use the virtio bus.
+
+1. (Optional) Select an [I/O Threads Policy](#io-threads-policy).
+
+    If you select **Supplemental Pool**, specify the **I/O Thread Count**.
+
+1. Click **Create** or **Save**.
+
+    If the virtual machine is running, the **Restart Virtual Machine** dialog appears. Click **Save and Restart** to apply the changes immediately. If you do not restart the virtual machine, the changes are applied on the next restart.
+
+</TabItem>
+<TabItem value="api" label="API">
+
+VM-wide options are fields of the domain in the `VirtualMachine` object.
+
+```yaml
+spec:
+  template:
+    spec:
+      domain:
+        ioThreadsPolicy: supplementalPool   # shared, auto or supplementalPool
+        ioThreads:
+          supplementalPoolThreadCount: 2    # only with supplementalPool
+        devices:
+          blockMultiQueue: true
+```
+
+For details on each field, see [Disks and Volumes](https://kubevirt.io/user-guide/storage/disks_and_volumes/) in the KubeVirt user guide.
+
+</TabItem>
+</Tabs>
 
 ### Virtio Block Multi-Queue
 
@@ -100,7 +197,7 @@ The **High Performance (I/O Threads and Multi-Queue)** section appears below the
 
 :::note
 
-You cannot verify multi-queue from inside the guest by counting the queues of a disk (for example, by running `ls /sys/block/vda/mq`). By default, QEMU already assigns one queue per vCPU to virtio-blk disks, so the guest reports the same number of queues regardless of whether the option is enabled. To verify the setting, check the virtual machine YAML for `blockMultiQueue: true`.
+You cannot verify multi-queue from inside the guest by counting the queues of a disk (for example, by running `ls /sys/block/vda/mq`). By default, QEMU already assigns one queue per vCPU to virtio-blk disks, so the guest reports the same number of queues regardless of whether the option is enabled. To verify the setting, check the virtual machine YAML for `blockMultiQueue: true`, as described in [Verify the Settings](#verify-the-settings).
 
 :::
 
@@ -115,35 +212,23 @@ The I/O threads policy determines the number of I/O threads of the virtual machi
 | **Auto** | KubeVirt creates a pool of I/O threads and distributes the disks across the pool. The pool is limited to twice the number of vCPUs. | Virtual machines with many disks, so that the disks do not all share one thread. |
 | **Supplemental Pool** | Creates the number of I/O threads specified in **I/O Thread Count** (default: `2`) and adds the same number of CPUs to the pod of the virtual machine. With [dedicated CPU placement](../vm/cpu-pinning.md), each I/O thread is pinned to one of the added CPUs, so that I/O threads and vCPUs run on separate physical CPUs. | Workloads that require explicit control over the number of I/O threads. For example, virtual machines that use CPU pinning. Account for the added CPUs when sizing nodes. |
 
-## Virtual Machine YAML
-
-The options are stored in the KubeVirt `VirtualMachine` specification. Per-volume options are fields of each disk, and VM-wide options are fields of the domain, as shown in the following example:
-
-```yaml
-spec:
-  template:
-    spec:
-      domain:
-        ioThreadsPolicy: supplementalPool   # shared, auto or supplementalPool
-        ioThreads:
-          supplementalPoolThreadCount: 2    # only with supplementalPool
-        devices:
-          blockMultiQueue: true
-          disks:
-            - name: disk-0
-              bootOrder: 1
-              disk:
-                bus: virtio
-              cache: none                   # none, writeback or writethrough
-              io: native                    # native or threads
-              dedicatedIOThread: true
-```
-
-For details on each field, see [Disks and Volumes](https://kubevirt.io/user-guide/storage/disks_and_volumes/) in the KubeVirt user guide.
-
 ## Verify the Settings
 
-To check which options a virtual machine uses, inspect its disks and domain settings. The `VirtualMachine` object shows the saved settings, and the `VirtualMachineInstance` object shows the settings of the running virtual machine. If the two differ, the virtual machine has not been restarted since the change.
+<Tabs>
+<TabItem value="ui" label="UI" default>
+
+1. Go to **Virtual Machines**.
+
+    If the saved options differ from the options of the running virtual machine, the UI displays a **Pending Restart** notification that lists the virtual machine, and the state of the virtual machine indicates that a restart is required for the configuration change to take effect.
+
+1. Locate the target virtual machine, and then select **⋮ > Edit Config**.
+
+1. On the **Volumes** tab, expand the **Storage Performance Options** section of each disk and the **High Performance (I/O Threads and Multi-Queue)** section to view the saved options.
+
+</TabItem>
+<TabItem value="cli" label="CLI">
+
+Inspect the disks and domain settings of the virtual machine. The `VirtualMachine` object shows the saved settings, and the `VirtualMachineInstance` object shows the settings of the running virtual machine. If the two differ, the virtual machine has not been restarted since the change, and the `VirtualMachine` object has the `RestartRequired` condition.
 
 ```sh
 # Saved settings
@@ -152,6 +237,11 @@ kubectl get vm <vm-name> -n <namespace> -o yaml | grep -E 'cache:|io:|dedicatedI
 # Settings of the running virtual machine
 kubectl get vmi <vm-name> -n <namespace> -o yaml | grep -E 'cache:|io:|dedicatedIOThread|blockMultiQueue|ioThreadsPolicy|supplementalPoolThreadCount'
 ```
+
+</TabItem>
+</Tabs>
+
+### Measure the Effect
 
 To measure the effect, run the same benchmark in the guest before and after you change the options. For example, the following [fio](https://fio.readthedocs.io/) command runs a random read/write test against a 1 GiB test file in a Linux guest. Use a test file rather than a raw device to avoid overwriting data, and delete the file afterwards.
 
