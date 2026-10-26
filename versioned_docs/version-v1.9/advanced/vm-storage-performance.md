@@ -42,6 +42,12 @@ All options are optional. If you do not set an option, KubeVirt and the hypervis
 - On **Filesystem** volumes, the storage might not support direct I/O. In this case, a virtual machine with **Cache Mode** `none` fails to start.
 - You cannot verify **Virtio Block Multi-Queue** from inside the guest. For more information, see [Virtio Block Multi-Queue](#virtio-block-multi-queue).
 
+:::info important
+
+Performance impacts vary by cluster configuration. Always benchmark these settings in a staging environment before updating your production workloads. See the [Measure the Effect](#measure-the-effect) section below.
+
+:::
+
 ## Configure Per-Volume Options
 
 <Tabs>
