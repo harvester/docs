@@ -30,33 +30,36 @@ Before creating virtual machines, review [Resource Overcommit](../vm/resource-ov
 
 ## Tested Resource Limits
 
-Guest memory admission is governed by `node allocatable memory x memory overcommit ratio` (default 150%). Modifying the overcommit ratio only allows further provisioning.
+Guest memory admission is governed by the following formula (default ratio is 150%):
 
-Guest memory above roughly 1 TiB requires `cpu.model: host-passthrough`. The default CPU model has a limited physical address width that KubeVirt's memory-hotplug headroom can exceed at larger sizes, which stops the VM from starting. `host-passthrough` exposes the real CPU's full address width and clears this.
+```text
+Maximum Allocatable Guest Memory = Node Allocatable Memory x Memory Overcommit Ratio
+```
 
-Tested on Harvester v1.9 (KubeVirt 1.8.4):
+Adjusting the overcommit ratio changes the threshold for virtual machine admission control. It does not alter physical node capacity or modify existing memory allocations.
 
-| Resource | Architecture | Tested limit |
-|---|---|---|
-| vCPU per VM (unpinned) | ARM64 (`virt` machine type) | 512 -- hard ceiling |
-| vCPU per VM (unpinned) | x86_64 (`q35` machine type) | 1024+ confirmed, no ceiling found |
-| vCPU per VM (`dedicatedCpuPlacement`) | Both | Bounded by the node's free allocatable CPU, not a fixed number |
-| Guest memory per VM, default CPU model | x86_64 | ~900 GiB-1 TiB region |
-| Guest memory per VM, `host-passthrough` | x86_64 | 8 TiB confirmed booting, 16 TiB theoretical |
+Configuring more than approximately 1 TiB of guest memory requires setting `cpu.model: host-passthrough`. The default virtual CPU model uses a restricted physical address width. At large memory allocations, KubeVirt's memory-hotplug headroom can exceed this address width, preventing the virtual machine from starting. Setting `cpu.model: host-passthrough` exposes the host CPU's full physical address width to bypass this limitation.
+
+The following limits were validated on Harvester v1.9 (KubeVirt v1.8.4):
+
+| Resource | Architecture | Tested Limit |
+| :--- | :--- | :--- |
+| vCPU per VM (unpinned) | ARM64 (`virt` machine type) | 512 (hard ceiling) |
+| vCPU per VM (unpinned) | x86_64 (`q35` machine type) | 1024+ confirmed (no ceiling observed) |
+| vCPU per VM (`dedicatedCpuPlacement`) | ARM64 / x86_64 | Bounded by node's free allocatable CPU |
+| Guest memory per VM (default CPU model) | x86_64 | ~900 GiB–1 TiB |
+| Guest memory per VM (`host-passthrough`) | x86_64 | 8 TiB confirmed booting (16 TiB theoretical limit) |
 
 :::note
 
-On ARM64, `host-passthrough` is the only supported CPU model; `host-model` is rejected at admission.
+The following are configuration considerations for ARM64 and large memory:
+
+- **ARM64 CPU model**: `host-passthrough` is the only supported CPU model on ARM64. Admission rejects `host-model`.
+- **UEFI requirement for large memory**: Allocating more than approximately 1 TiB of guest memory may require setting `firmware.bootloader.efi` explicitly. The default legacy BIOS firmware can hang indefinitely during boot at very large memory allocations. UEFI avoids this issue.
 
 :::
 
-:::note
-
-Guest memory above roughly 1 TiB may also require `firmware.bootloader.efi` set explicitly. The default (legacy BIOS) firmware can hang indefinitely during boot at very large memory sizes; UEFI does not have this problem.
-
-:::
-
-Enabling `dedicatedCpuPlacement` (aka CPU Pinning) does not reserve a fixed vCPU count; it draws from the node's remaining allocatable CPU after existing Guaranteed-QoS workloads (for example, Longhorn instance-managers). On a node with 158 allocatable cores and 39 already claimed, 119 was the maximum a single pinned VM could request.
+Enabling `dedicatedCpuPlacement` (CPU pinning) does not allocate a fixed vCPU count. It draws from the node's remaining allocatable CPU after accounting for existing Guaranteed-QoS workloads (such as Longhorn Instance Manager). For example, on a node with 158 allocatable cores where 39 are already claimed, a single pinned virtual machine can request a maximum of 119 vCPUs.
 
 ## Validated Guest Operating Systems
 
