@@ -676,12 +676,12 @@ write_files:
   content: <BASE64_CONTENT>
   owner: root:root
   path: /etc/kubernetes/cloud-config
-  permissions: '0644'
+  permissions: '0600'
 - encoding: b64
   content: <BASE64_CONTENT>
   owner: root:root
   path: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
-  permissions: '0644'
+  permissions: '0600'
 ```
 
 #### `GET` Request
@@ -705,12 +705,12 @@ write_files:
   content: <BASE64_CONTENT>
   owner: root:root
   path: /etc/kubernetes/cloud-config
-  permissions: '0644'
+  permissions: '0600'
 - encoding: b64
   content: <BASE64_CONTENT>
   owner: root:root
   path: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
-  permissions: '0644'
+  permissions: '0600'
 ```
 
 </TabItem>
@@ -779,7 +779,7 @@ write_files:
   content: <CONTENT>
   owner: root:root
   path: /etc/kubernetes/cloud-config
-  permissions: '0644'
+  permissions: '0600'
 ```
 
 :::note
@@ -791,6 +791,8 @@ Depending on your setup, choose one of the following approaches:
 - **Use the RKE2 default path**: In the `write_files` entry in your cloud-init configuration, change the value of `path` to `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`.
 
 - **Keep the legacy path**: In the Rancher UI, set `.spec.rkeConfig.chartValues.harvester-cloud-provider.cloudConfigPath` to `/etc/kubernetes/cloud-config`.
+
+Ensure the `permissions` is `0600`.
 
 :::
 

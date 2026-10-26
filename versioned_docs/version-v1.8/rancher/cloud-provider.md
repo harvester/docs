@@ -130,7 +130,7 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
       content: <CONTENT>
       owner: root:root
       path: /etc/kubernetes/cloud-config
-      permissions: '0644'
+      permissions: '0600'
     ```
 
 1. On the RKE2 cluster creation page, go to the **Cluster Configuration** screen and set the value of **Cloud Provider** to **External**.
@@ -232,7 +232,7 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
       content: <CONTENT>
       owner: root:root
       path: /etc/kubernetes/cloud-config
-      permissions: '0644'
+      permissions: '0600'
     ```
 
 1. Create a VM in the Harvester cluster with the following settings:
@@ -298,7 +298,7 @@ When spinning up a K3s cluster using the Harvester node driver, you can perform 
       content: <CONTENT>
       owner: root:root
       path: /etc/kubernetes/cloud-config
-      permissions: '0644'
+      permissions: '0600'
     ```
 
 2. Copy and paste the `cloud-init user data` content to **Machine Pools >Show Advanced > User Data**.

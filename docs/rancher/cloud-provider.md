@@ -628,12 +628,9 @@ The **Harvester Cloud Provider** requires a cloud-config file to connect to the 
 
 :::info important
 
-Support for the bash script method will be deprecated in a future release. Use the API endpoint to ensure long-term compatibility.
+The legacy bash script method is deprecated on Harvester v1.10 & Harvester Cloud Provider 0.2.17. Use the API endpoint to ensure long-term compatibility.
 
 :::
-
-<Tabs>
-<TabItem value="ui" label="API" default>
 
 _Available as of v1.9.0_
 
@@ -676,12 +673,12 @@ write_files:
   content: <BASE64_CONTENT>
   owner: root:root
   path: /etc/kubernetes/cloud-config
-  permissions: '0644'
+  permissions: '0600'
 - encoding: b64
   content: <BASE64_CONTENT>
   owner: root:root
   path: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
-  permissions: '0644'
+  permissions: '0600'
 ```
 
 #### `GET` Request
@@ -705,81 +702,12 @@ write_files:
   content: <BASE64_CONTENT>
   owner: root:root
   path: /etc/kubernetes/cloud-config
-  permissions: '0644'
+  permissions: '0600'
 - encoding: b64
   content: <BASE64_CONTENT>
   owner: root:root
   path: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
-  permissions: '0644'
-```
-
-</TabItem>
-<TabItem value="api" label="Bash Script">
-
-1. Generate the cloud-config data using the `generate_addon.sh` script.
-
-    ```bash
-    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
-    ```
-
-1. Copy the generated data to every node.
-
-    - Legacy path: `/etc/kubernetes/cloud-config`
-    - RKE2 default path (v1.9.0 and later): `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`
-
-:::note
-
-The script requires `kubectl` and `jq` to interact with the Harvester cluster, and functions only when given access to the Harvester cluster's kubeconfig file.
-
-You can find the kubeconfig file on any Harvester management node at the following path: `/etc/rancher/rke2/rke2.yaml`. Before using the kubeconfig file, you must replace the IP address in the `server: field` with your cluster's VIP address.
-
-Example of content:
-
-```yaml
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority-data: <redacted>
-    server: https://127.0.0.1:6443
-  name: default
-# ...
-```
-
-You must specify the namespace in which the guest cluster will be created.
-
-:::
-
-Example of output:
-
-```yaml
-########## cloud config ############
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority-data: <CACERT>
-    server: https://HARVESTER-ENDPOINT/k8s/clusters/local
-  name: local
-contexts:
-- context:
-    cluster: local
-    namespace: default
-    user: harvester-cloud-provider-default-local
-  name: harvester-cloud-provider-default-local
-current-context: harvester-cloud-provider-default-local
-kind: Config
-preferences: {}
-users:
-- name: harvester-cloud-provider-default-local
-  user:
-    token: <TOKEN>
-
-########## cloud-init user data ############
-write_files:
-- encoding: b64
-  content: <CONTENT>
-  owner: root:root
-  path: /etc/kubernetes/cloud-config
-  permissions: '0644'
+  permissions: '0600'
 ```
 
 :::note
@@ -792,10 +720,9 @@ Depending on your setup, choose one of the following approaches:
 
 - **Keep the legacy path**: In the Rancher UI, set `.spec.rkeConfig.chartValues.harvester-cloud-provider.cloudConfigPath` to `/etc/kubernetes/cloud-config`.
 
-:::
+Ensure the `permissions` is `0600`.
 
-</TabItem>
-</Tabs>
+:::
 
 ## Upgrade Cloud Provider
 
