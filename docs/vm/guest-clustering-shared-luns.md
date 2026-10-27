@@ -101,21 +101,7 @@ Each node must have its own iSCSI initiator name, because the array uses it to t
 sudo grep -v '^#' /etc/iscsi/initiatorname.iscsi
 ```
 
-Clusters that were first installed with Harvester v1.4.x or earlier may still have the same initiator name on every node. On those nodes, generate a new name before using SAN storage:
-
-1. Stop or migrate the workloads on the node that use SAN volumes.
-1. Generate a new name, and restart `iscsid`:
-
-   ```bash
-   sudo rm /etc/iscsi/initiatorname.iscsi
-   sudo /sbin/iscsi-gen-initiatorname
-   sudo systemctl restart iscsid
-   ```
-
-1. Log out of existing iSCSI sessions to the SAN, so the node reconnects with the new name: `sudo iscsiadm -m node -T <target-iqn> -p <portal>:3260 --logout`.
-1. Restart the CSI driver's node pod on that node, and check on the array that the node's host or initiator group shows the new name.
-
-Repeat on each node, one at a time.
+Clusters that were first installed with Harvester v1.4.x or earlier may still have the same initiator name on every node. If the names aren't unique, generate new ones before using SAN storage, as described in [Nodes share the same iSCSI initiator name](#nodes-share-the-same-iscsi-initiator-name).
 
 ## Plan the virtual machines
 
@@ -188,3 +174,42 @@ spec:
 
 - **Backup and snapshot:** Harvester can't back up or snapshot volumes that are attached as shared disks. Protect the data from inside the guest cluster, for example with SQL Server backups.
 - **Adding disks:** LUN disks are attached when the VM restarts. Plan disk changes for a maintenance window of the guest cluster.
+
+## Troubleshooting
+
+### Nodes share the same iSCSI initiator name
+
+Clusters that were first installed with Harvester v1.4.x or earlier keep the iSCSI initiator name from the installation image after an upgrade, so every node has the same name. The array then can't tell the nodes apart:
+
+- A shared volume attaches to the first VM, but not to a VM on another node. The CSI driver or the array reports that the LUN is already mapped to that initiator. NetApp ONTAP, for example, reports `LUN already mapped to initiator(s) in this group`.
+- Persistent reservations don't fence the nodes, because the array sees all of them as one initiator. Cluster validation or failover may fail.
+
+To check, compare the name on every node:
+
+```bash
+sudo grep -v '^#' /etc/iscsi/initiatorname.iscsi
+```
+
+If the names are the same, generate a new name on each node, one node at a time:
+
+1. Stop or migrate the workloads on the node that use SAN volumes.
+1. Back up the current name, generate a new one, and restart `iscsid`:
+
+   ```bash
+   sudo cp -p /etc/iscsi/initiatorname.iscsi /etc/iscsi/initiatorname.iscsi.bak
+   sudo rm /etc/iscsi/initiatorname.iscsi
+   sudo /sbin/iscsi-gen-initiatorname
+   sudo systemctl restart iscsid
+   ```
+
+1. Existing iSCSI sessions keep the old name, and CSI drivers reuse them. List the sessions, and log out of the SAN targets:
+
+   ```bash
+   sudo iscsiadm -m session
+   sudo iscsiadm -m node -T <target-iqn> -p <portal>:3260 --logout
+   ```
+
+1. Restart the CSI driver's node pod on that node, and check on the array that the node's host or initiator group shows the new name.
+1. If a volume was attached under the old name, remove its stale devices before you attach it again (`sudo multipath -f <map>`, then `echo 1 | sudo tee /sys/block/<sdX>/device/delete` for each path). Otherwise the CSI driver may fail to attach the volume, for example with `LUN serial check failed`.
+
+The new name is kept across reboots and upgrades. Longhorn volumes aren't affected.
