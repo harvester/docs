@@ -197,8 +197,6 @@ To configure a Secret-based cloud-config, perform the following steps:
 
     :::
 
-    ![Cloud Config Secret Content](/img/v1.9/rancher/hcp-config-secret-content.png)
-
 1. Paste the Secret manifest during cluster provisioning.
 
     When provisioning the new guest cluster using the Rancher UI, paste the generated Secret definition into the **Additional Manifest** tab on the **Cluster Configuration** screen.
