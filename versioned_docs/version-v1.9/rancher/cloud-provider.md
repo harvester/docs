@@ -719,7 +719,7 @@ write_files:
 1. Generate the cloud-config data using the `generate_addon.sh` script.
 
     ```bash
-    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
+    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/601b6a14788c8219a1f5d322d64d514d6f52082b/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
     ```
 
 1. Copy the generated data to every node.
@@ -792,7 +792,7 @@ Depending on your setup, choose one of the following approaches:
 
 - **Keep the legacy path**: In the Rancher UI, set `.spec.rkeConfig.chartValues.harvester-cloud-provider.cloudConfigPath` to `/etc/kubernetes/cloud-config`.
 
-Ensure the `permissions` is `0600`.
+Ensure the `permissions` field is set to `0600`.
 
 :::
 

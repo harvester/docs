@@ -75,7 +75,7 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
 1. Generate cloud config data using the script `generate_addon.sh`, and then place the data on every custom node (directory: `/etc/kubernetes/cloud-config`).
 
   ```bash
-    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
+    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/601b6a14788c8219a1f5d322d64d514d6f52082b/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
   ```
 
   :::note
@@ -177,7 +177,7 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
 1. Generate cloud config data using the script `generate_addon.sh`, and then place the data on every custom node (directory: `/etc/kubernetes/cloud-config`).
 
     ```bash
-    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
+    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/601b6a14788c8219a1f5d322d64d514d6f52082b/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
     ```
 
   :::note
@@ -264,7 +264,7 @@ When spinning up a K3s cluster using the Harvester node driver, you can perform 
 1. Use `generate_addon.sh` to generate cloud config.
 
     ```
-    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
+    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/601b6a14788c8219a1f5d322d64d514d6f52082b/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
     ```
 
     The output will look as follows:

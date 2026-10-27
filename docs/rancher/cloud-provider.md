@@ -628,7 +628,7 @@ The **Harvester Cloud Provider** requires a cloud-config file to connect to the 
 
 :::info important
 
-The legacy bash script method is deprecated on Harvester v1.10 & Harvester Cloud Provider 0.2.17. Use the API endpoint to ensure long-term compatibility.
+The legacy Bash script method is deprecated starting in Harvester v1.10 and Harvester Cloud Provider v0.2.17. Use the API endpoint to ensure long-term compatibility.
 
 :::
 
@@ -720,7 +720,7 @@ Depending on your setup, choose one of the following approaches:
 
 - **Keep the legacy path**: In the Rancher UI, set `.spec.rkeConfig.chartValues.harvester-cloud-provider.cloudConfigPath` to `/etc/kubernetes/cloud-config`.
 
-Ensure the `permissions` is `0600`.
+Ensure the `permissions` field is set to `0600`.
 
 :::
 
