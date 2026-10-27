@@ -30,6 +30,12 @@ The shared volumes must be **SCSI LUNs from SAN storage** (iSCSI or Fibre Channe
 
 Longhorn, Ceph RBD and NFS volumes can't be used as LUN disks.
 
+### Enable persistent reservation
+
+Persistent reservation is disabled by default. Go to **Advanced** > **Settings**, and set [`persistent-reservation-enabled`](../advanced/settings.md#persistent-reservation-enabled) to `true`.
+
+Harvester then adds a `pr-helper` container to the `virt-handler` pod on every node. Running VMs aren't affected.
+
 ### Multipath configuration
 
 SAN CSI drivers use Linux multipath (`multipathd`) on every node. Set this up when you install the CSI driver. For guest clustering, the multipath configuration also needs these settings:
