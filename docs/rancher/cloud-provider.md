@@ -63,7 +63,7 @@ The Harvester Cloud Provider is packaged as an official Helm chart and is native
 
 The following table lists the most common parameters:
 
-| Parameter | Description | Default Value | First Available Version |
+| Parameter | Description | Default Value | First Available Chart Version |
 | --- | --- | --- | --- |
 | `extraArgs` | Additional CLI flags passed to cloud provider container | `[]` | 0.2.12 |
 | `cloudConfigPath` | Legacy host path to cloud-config file | `"/var/lib/rancher/rke2/etc/config-files/cloud-provider-config"` (Versions 0.2.3 to 0.2.9: `"/etc/kubernetes/cloud-config"`) | 0.2.10 |
@@ -264,21 +264,24 @@ Starting with v0.2.12, the Helm chart natively supports flag configuration via `
 
 The Harvester Cloud Provider supports both standard upstream CCM flags and Harvester-specific extended flags.
 
-| Flag | Category | Description |
-| :--- | :--- | :--- |
-| `--controllers` | CCM framework | List of CCM controllers to enable (for example, `cloud-node-controller` and `node-route-controller`). Omit a controller to disable it. |
-| `--v` | CCM framework | Logging verbosity level (for example, `--v=5` for debug logging). |
-| `--disable-vmi-controller` | Harvester extended | Disables Harvester's custom VMI controller. |
-| `--show-full-help-on-error` | Harvester extended | Prints full CLI help if a flag parsing error occurs at startup. |
-| `--management-network` | Networking and IP selection | Target virtual machine network name used to allocate load balancer IP addresses and report node IP addresses in multi-network environments. |
-| `--node-ip-cidr` | Networking and IP selection | CIDR range for exact node IP selection in multi-IP address environments. |
-| `--node-exclude-ip-ranges` | Networking and IP selection| Comma-separated list of IP addresses or subnets to exclude from node status reports. |
-| `--disable-annotation-alpha-provided-ip-addr` | Networking and IP selection | Disables legacy alpha annotations, forcing the provider to rely strictly on CIDR logic. |
+| Flag | Category | Description | First Available Chart Version |
+| :--- | :--- | :--- | :--- |
+| `--controllers` | CCM framework | List of CCM controllers to enable (for example, `cloud-node-controller` and `node-route-controller`). Omit a controller to disable it. | 0.2.12 |
+| `--v` | CCM framework | Logging verbosity level (for example, `--v=5` for debug logging). | 0.2.12 |
+| `--disable-vmi-controller` | Harvester extended | Disables Harvester's custom VMI controller. | 0.2.12 |
+| `--disable-hostname-lookup` | Harvester extended | Disables guest-agent hostname lookup for virtual machine-to-node mapping and requires the `VirtualMachineInstance` name to exactly match the `Node` name. | 0.2.16 |
+| `--show-full-help-on-error` | Harvester extended | Prints full CLI help if a flag parsing error occurs at startup. | 0.2.12 |
+| `--management-network` | Networking and IP selection | Target virtual machine network name used to allocate load balancer IP addresses and report node IP addresses in multi-network environments. | 0.2.12 |
+| `--node-ip-cidr` | Networking and IP selection | CIDR range for exact node IP selection in multi-IP address environments. | 0.2.12 |
+| `--node-exclude-ip-ranges` | Networking and IP selection| Comma-separated list of IP addresses or subnets to exclude from node status reports. | 0.2.12 |
+| `--disable-annotation-alpha-provided-ip-addr` | Networking and IP selection | Disables legacy alpha annotations, forcing the provider to rely strictly on CIDR logic. | 0.2.12 |
 
 
 Consider the following usage notes when configuring complex flags:
 
 - `--disable-vmi-controller`: The standard `--controllers` flag only manages upstream CCM controllers. Harvester uses a dedicated VMI controller to watch VirtualMachineInstance resources and sync topology changes (such as region and zone updates) to guest `Node` objects. Set this flag to `false` to ensure dynamic topology sync works correctly as detailed in [Node Instance Metadata Support](#node-instance-metadata-support).
+
+- `--disable-hostname-lookup`: Disables legacy guest-agent hostname lookup and requires each `VirtualMachineInstance` name to exactly match its `Node` name in the guest cluster. This option takes effect only when `--disable-vmi-controller=false`. Enable it on new clusters to enforce name alignment. In existing deployments, enable this option only after verifying that all node and VMI names match. If the names differ (such as when a custom hostname is configured), the provider cannot locate the virtual machine, node initialization fails, and the cloud-node lifecycle controller may prune the node, particularly if the virtual machine is powered off. For more information, see [Avoid Setting a Static Hostname on Guest Cluster Virtual Machines](#avoid-setting-a-static-hostname-on-guest-cluster-virtual-machines).
 
 - `--show-full-help-on-error`: By default, the Harvester Cloud Provider silences the upstream CCM's long help output on startup errors to keep logs clean. Set this flag to `true` only when debugging startup configuration issues.
 
