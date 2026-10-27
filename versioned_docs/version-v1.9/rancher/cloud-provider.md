@@ -197,8 +197,6 @@ To configure a Secret-based cloud-config, perform the following steps:
 
     :::
 
-    ![Cloud Config Secret Content](/img/v1.9/rancher/hcp-config-secret-content.png)
-
 1. Paste the Secret manifest during cluster provisioning.
 
     When provisioning the new guest cluster using the Rancher UI, paste the generated Secret definition into the **Additional Manifest** tab on the **Cluster Configuration** screen.
@@ -676,12 +674,12 @@ write_files:
   content: <BASE64_CONTENT>
   owner: root:root
   path: /etc/kubernetes/cloud-config
-  permissions: '0644'
+  permissions: '0600'
 - encoding: b64
   content: <BASE64_CONTENT>
   owner: root:root
   path: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
-  permissions: '0644'
+  permissions: '0600'
 ```
 
 #### `GET` Request
@@ -705,12 +703,12 @@ write_files:
   content: <BASE64_CONTENT>
   owner: root:root
   path: /etc/kubernetes/cloud-config
-  permissions: '0644'
+  permissions: '0600'
 - encoding: b64
   content: <BASE64_CONTENT>
   owner: root:root
   path: /var/lib/rancher/rke2/etc/config-files/cloud-provider-config
-  permissions: '0644'
+  permissions: '0600'
 ```
 
 </TabItem>
@@ -719,7 +717,7 @@ write_files:
 1. Generate the cloud-config data using the `generate_addon.sh` script.
 
     ```bash
-    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
+    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/601b6a14788c8219a1f5d322d64d514d6f52082b/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
     ```
 
 1. Copy the generated data to every node.
@@ -779,7 +777,7 @@ write_files:
   content: <CONTENT>
   owner: root:root
   path: /etc/kubernetes/cloud-config
-  permissions: '0644'
+  permissions: '0600'
 ```
 
 :::note
@@ -791,6 +789,8 @@ Depending on your setup, choose one of the following approaches:
 - **Use the RKE2 default path**: In the `write_files` entry in your cloud-init configuration, change the value of `path` to `/var/lib/rancher/rke2/etc/config-files/cloud-provider-config`.
 
 - **Keep the legacy path**: In the Rancher UI, set `.spec.rkeConfig.chartValues.harvester-cloud-provider.cloudConfigPath` to `/etc/kubernetes/cloud-config`.
+
+Ensure the `permissions` field is set to `0600`.
 
 :::
 
