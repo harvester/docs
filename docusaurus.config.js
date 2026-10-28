@@ -76,11 +76,6 @@ const config = {
               label: 'v1.5',
               path: 'v1.5',
               banner: `none`
-            },
-            "v1.4": {
-              label: 'v1.4 (EOL)',
-              path: 'v1.4',
-              banner: `unmaintained`
             }
           }
         },
@@ -309,19 +304,13 @@ const config = {
                 outputDir: "versioned_docs/version-v1.6/api", // No trailing slash
                 label: "v1.6",
                 baseUrl: "/v1.6/api", // Leading slash is important
-              },              
+              },
               "v1.5": {
                 specPath: "api/v1.5-swagger.json",
                 outputDir: "versioned_docs/version-v1.5/api", // No trailing slash
                 label: "v1.5",
                 baseUrl: "/v1.5/api", // Leading slash is important
-              },              
-              "v1.4": {
-                specPath: "api/v1.4-swagger.json",
-                outputDir: "versioned_docs/version-v1.4/api", // No trailing slash
-                label: "v1.4",
-                baseUrl: "/v1.4/api", // Leading slash is important
-              }
+              },
             },
           },
         },
