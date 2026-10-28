@@ -12,6 +12,33 @@ keywords:
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/rancher/csi-driver"/>
 </head>
 
+The Harvester Container Storage Interface (CSI) Driver provides a standard CSI interface used by guest Kubernetes clusters in Harvester. It connects to the host cluster and hot-plugs host volumes to the virtual machines to provide native storage performance.
+
+:::info important
+
+The Harvester CSI Driver lifecycle is managed independently of the underlying Harvester cluster. Before installing or upgrading the driver on a guest cluster, review the **Harvester CCM & CSI Drivers** section of the [Support Matrix](https://www.suse.com/suse-harvester/support-matrix/all-supported-versions/harvester-v1-7-x/) to confirm that your target driver and Harvester cluster versions are compatible.
+
+:::
+
+The Harvester CSI driver supports the following features:
+
+| Harvester CSI Driver Version | Harvester Version | Storage Tiering | RWX Volumes | Online Resizing | Third-Party Storage | Volume Snapshots |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0.1.15 | All versions | &#10004; | &#10006; | &#10006; | &#10006; | &#10006; |
+| 0.1.20 | v1.4 and later | &#10004; | &#10004; | &#10006; | &#10006; | &#10006; |
+| 0.1.24 | v1.6 and later | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; |
+| 0.1.25 | v1.7 and later | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; |
+
+**Volume limits and guest node capacity**
+
+For **ReadWriteOnce (RWO)** volumes, the Harvester CSI Driver hotplugs underlying persistent volumes directly to virtual machines acting as guest nodes.
+
+KubeVirt enforces a hard limit of 256 volumes per virtual machine instance, including non-CSI disks such as the root disk and cloud-init disk. Consequently, a single guest node can realistically host a maximum of 256 CSI volumes.
+
+If too many PVC-dependent workloads are scheduled on the same guest node, volume attachment will fail with the error `VM Schema Invalid: Max Disk Limit (256) Exceeded on Guest Cluster`.
+
+To prevent this issue, distribute PVC-dependent workloads across multiple guest nodes or add guest worker nodes.
+
 :::caution
 
 A [known issue](https://github.com/harvester/harvester/issues/6849) in v0.1.20 of the Harvester CSI driver causes volumes to get stuck when the host cluster is running a Harvester version that was released before v1.4.0.
@@ -26,29 +53,6 @@ This issue was fixed in v0.1.21. If your system is affected, you can follow the 
 | v0.1.18 and earlier          | All versions       | No       |
 
 :::
-
-The Harvester Container Storage Interface (CSI) Driver provides a standard CSI interface used by guest Kubernetes clusters in Harvester. It connects to the host cluster and hot-plugs host volumes to the virtual machines (VMs) to provide native storage performance.
-
-:::note
-
-For **ReadWriteOnce (RWO)** volumes, the Harvester CSI Driver hotplugs underlying persistent volumes directly to virtual machines acting as guest nodes.
-
-KubeVirt enforces a hard limit of 256 volumes per virtual machine instance, including non-CSI disks such as the root disk and cloud-init disk. Consequently, a single guest node can realistically host a maximum of 256 CSI volumes.
-
-If too many PVC-dependent workloads are scheduled on the same guest node, volume attachment will fail with the error `VM Schema Invalid: Max Disk Limit (256) Exceeded on Guest Cluster`.
-
-To prevent this issue, distribute PVC-dependent workloads across multiple guest nodes or add guest worker nodes.
-
-:::
-
-The Harvester CSI driver supports the following features:
-
-| Harvester CSI Driver Version | Harvester Version | Storage Tiering | RWX Volumes | Online Resizing | Third-Party Storage | Volume Snapshots |
-| --- | --- | --- | --- | --- | --- | --- |
-| 0.1.15 | All versions | &#10004; | &#10006; | &#10006; | &#10006; | &#10006; |
-| 0.1.20 | v1.4 and later | &#10004; | &#10004; | &#10006; | &#10006; | &#10006; |
-| 0.1.24 | v1.6 and later | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; |
-| 0.1.25 | v1.7 and later | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; |
 
 ## Deploying
 
