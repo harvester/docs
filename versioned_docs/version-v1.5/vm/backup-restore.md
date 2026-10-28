@@ -110,7 +110,7 @@ Users can now restore a new VM on another cluster by leveraging the VM metadata 
 
 #### Prerequisites
 
-- v1.4.0 and later: The controller automatically syncs the virtual machine images with the new cluster, except when a virtual machine image with the same name or display name already exists on the new cluster.
+- v1.4.0 and later: Harvester can automatically back up VMImages to the remote backup target. Both the backup and restore clusters must be running Harvester v1.4.0 or later, and should not have VMImages with duplicate names or display names; sync is skipped for a VMImage if one already exists with the same name or display name. The controller also syncs each VMImage's associated StorageClass. The backup target Refresh Interval setting affects how frequently Harvester discovers existing VMBackups and VMImages from the remote backup target. See Configure Backup Target.
 
 - Earlier than v1.4.0: You must upload and configure the virtual machine images on the new cluster. Ensure that the image names and configuration are identical so that the virtual machines can be restored. For more information, see [Upload the same VM images to a new cluster](#upload-the-same-vm-images-to-a-new-cluster).
 
