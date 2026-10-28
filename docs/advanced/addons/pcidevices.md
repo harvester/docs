@@ -22,7 +22,7 @@ Once the `pcidevices-controller` addon is deployed successfully, it can take a f
 
 ## Enabling Passthrough on a PCI Device
 
-1. Now go to the `Advanced -> PCI Devices` page:
+1. Now go to the `Hardware Devices -> PCI Devices` page:
 
    ![](/img/v1.2/pcidevices/advanced-pcidevices-index.png)
 
@@ -82,7 +82,7 @@ The pcidevices-controller add-on currently uses unique resource descriptors to p
 
 ## SRIOV Network Devices
 
-![](/img/v1.2/pcidevices/SriovNetworkDevicesLink.png)
+![](/img/v1.10/pcidevices/SriovNetworkDevicesLink.png)
 
 The `pcidevices-controller` addon can now scan network interfaces on the underlying hosts and check if they support SRIOV Virtual Functions (VFs). If a valid device is found, `pcidevices-controller` will generate a new `SRIOVNetworkDevice` object.
 
@@ -120,7 +120,7 @@ Before you remove the USB device, detach it from the virtual machine and then di
 
 ### Enable Passthrough on a USB Device
 
-1. On the Harvester UI, go to **Advanced** > **USB Devices**.
+1. On the Harvester UI, go to **Hardware Devices** > **USB Devices**.
 
     ![](/img/v1.4/usbdevices/index.png)
 
