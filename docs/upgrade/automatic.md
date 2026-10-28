@@ -1,6 +1,6 @@
 ---
 id: index
-sidebar_position: 1
+sidebar_position: 10
 sidebar_label: Upgrading Harvester
 title: "Upgrading Harvester"
 keywords:
@@ -13,7 +13,7 @@ description: Harvester provides two ways to upgrade. Users can either upgrade us
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/upgrade/index"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/upgrade/index"/>
 </head>
 
 Harvester is adopting a new lifecycle strategy that simplifies version management and upgrades. This strategy includes the following:
@@ -177,6 +177,15 @@ For write-heavy or business-critical virtual machines that may not converge duri
 - Make sure your hardware meets the **preferred** [hardware requirements](../install/requirements.md#hardware-requirements). This is due to there will be intermediate resources consumed by an upgrade.
 - Make sure each node has at least 30 GiB of free system partition space (`df -h /usr/local/`). If any node in the cluster has less than 30 GiB of free system partition space, the upgrade will be denied. Check [free system partition space requirement](#free-system-partition-space-requirement) for more information.
 - Run the [pre-check script](https://github.com/harvester/upgrade-helpers/tree/main/pre-check) on a Harvester control-plane node. Take action on any failed checks before initiating the upgrade process.
+
+    ```
+    # Download the script
+    $ curl -o /tmp/check.sh https://raw.githubusercontent.com/harvester/upgrade-helpers/refs/heads/main/pre-check/v1.x/check.sh && chmod +x /tmp/check.sh
+
+    # Run the checks
+    $ /tmp/check.sh
+    ```
+
 - A number of one-off privileged pods will be created in the `harvester-system` and `cattle-system` namespaces to perform host-level upgrade operations. If [pod security admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/) is enabled, adjust these policies to allow these pods to run.
 
 :::
@@ -536,68 +545,6 @@ When upgrading to Harvester **v1.4.x**, Longhorn Manager may crash if the `Evict
 To prevent the issue from occurring, ensure that the `EvictionRequested` flag is set to `false` before you start the upgrade process.
 
 :::
-
-## Re-enable RKE2 ingress-nginx Admission Webhooks (CVE-2025-1974)
-
-If you [disabled the RKE2 ingress-nginx admission webhooks](https://harvesterhci.io/kb/2025/03/25/cve-2025-1974) to mitigate [CVE-2025-1974](https://nvd.nist.gov/vuln/detail/CVE-2025-1974), you must re-enable the webhook after upgrading to Harvester v1.5.0 or later.
-
-1. Confirm that Harvester is using nginx-ingress v1.12.1 or later.
-
-  ```sh
-  $ kubectl -n kube-system get po -l"app.kubernetes.io/name=rke2-ingress-nginx" -ojsonpath='{.items[].spec.containers[].image}'
-  rancher/nginx-ingress-controller:v1.12.1-hardened1
-  ```
-
-1. Run `kubectl -n kube-system edit helmchartconfig rke2-ingress-nginx` to **remove** the following configurations from the `HelmChartConfig` resource.
-
-   * `.spec.valuesContent.controller.admissionWebhooks.enabled: false`
-   * `.spec.valuesContent.controller.extraArgs.enable-annotation-validation: true`
-
-1. Verify that the new `.spec.ValuesContent` configuration is similar to the following example.
-
-  ```yaml
-  apiVersion: helm.cattle.io/v1
-  kind: HelmChartConfig
-  metadata:
-    name: rke2-ingress-nginx
-    namespace: kube-system
-  spec:
-    valuesContent: |-
-      controller:
-        admissionWebhooks:
-          port: 8444
-        extraArgs:
-          default-ssl-certificate: cattle-system/tls-rancher-internal
-        config:
-          proxy-body-size: "0"
-          proxy-request-buffering: "off"
-        publishService:
-          pathOverride: kube-system/ingress-expose
-  ```
-
-  :::info important
-  If the `HelmChartConfig` resource contains other custom ingress-nginx configuration, you must retain them when editing the resource.
-  :::
-
-1. Exit the `kubectl edit` command execution to save the configuration.
-
-  Harvester automatically applies the change once the content is saved.
-
-1. Verify that the `rke2-ingress-nginx-admission` webhook configuration is re-enabled.
-
-  ```sh
-  $ kubectl get validatingwebhookconfiguration rke2-ingress-nginx-admission
-  NAME                           WEBHOOKS   AGE
-  rke2-ingress-nginx-admission   1          6s
-  ```
-
-1. Verify that the ingress-nginx pods are restarted successfully.
-
-  ```sh
-  kubectl -n kube-system get po -lapp.kubernetes.io/instance=rke2-ingress-nginx
-  NAME                                  READY   STATUS    RESTARTS   AGE
-  rke2-ingress-nginx-controller-l2cxz   1/1     Running   0          94s
-  ```
 
 ## Upgrade is Stuck in the "Pre-drained" State
 

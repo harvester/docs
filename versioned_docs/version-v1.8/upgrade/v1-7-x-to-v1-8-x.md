@@ -5,7 +5,7 @@ title: "Upgrade from v1.7.x to v1.8.x"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/upgrade/v1-7-x-to-v1-8-x"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/upgrade/v1-7-x-to-v1-8-x"/>
 </head>
 
 ## General Information

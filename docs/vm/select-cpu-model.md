@@ -13,7 +13,7 @@ description: Select CPU Model
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/vm/select-cpu-model"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/vm/select-cpu-model"/>
 </head>
 
 _Available as of v1.8.0_

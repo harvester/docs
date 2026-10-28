@@ -12,7 +12,7 @@ description: The Harvester cloud provider used by the guest cluster in Harvester
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/rancher/cloud-provider"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/rancher/cloud-provider"/>
 </head>
 
 [RKE2](./node/rke2-cluster.md) clusters can be provisioned in Rancher using the built-in Harvester Node Driver. Harvester provides [load balancer](#load-balancer-support) and Harvester cluster [storage passthrough](./csi-driver.md) support to the guest Kubernetes cluster.
@@ -75,7 +75,7 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
 1. Generate cloud config data using the script `generate_addon.sh`, and then place the data on every custom node (directory: `/etc/kubernetes/cloud-config`).
 
   ```bash
-    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
+    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/601b6a14788c8219a1f5d322d64d514d6f52082b/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
   ```
 
   :::note
@@ -130,7 +130,7 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
       content: <CONTENT>
       owner: root:root
       path: /etc/kubernetes/cloud-config
-      permissions: '0644'
+      permissions: '0600'
     ```
 
 1. On the RKE2 cluster creation page, go to the **Cluster Configuration** screen and set the value of **Cloud Provider** to **External**.
@@ -177,7 +177,7 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
 1. Generate cloud config data using the script `generate_addon.sh`, and then place the data on every custom node (directory: `/etc/kubernetes/cloud-config`).
 
     ```bash
-    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
+    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/601b6a14788c8219a1f5d322d64d514d6f52082b/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
     ```
 
   :::note
@@ -232,7 +232,7 @@ Starting with Rancher v2.9.0, you can configure a specific folder for cloud conf
       content: <CONTENT>
       owner: root:root
       path: /etc/kubernetes/cloud-config
-      permissions: '0644'
+      permissions: '0600'
     ```
 
 1. Create a VM in the Harvester cluster with the following settings:
@@ -264,7 +264,7 @@ When spinning up a K3s cluster using the Harvester node driver, you can perform 
 1. Use `generate_addon.sh` to generate cloud config.
 
     ```
-    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/master/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
+    curl -sfL https://raw.githubusercontent.com/harvester/cloud-provider-harvester/601b6a14788c8219a1f5d322d64d514d6f52082b/deploy/generate_addon.sh | bash -s <serviceaccount name> <namespace>
     ```
 
     The output will look as follows:
@@ -298,7 +298,7 @@ When spinning up a K3s cluster using the Harvester node driver, you can perform 
       content: <CONTENT>
       owner: root:root
       path: /etc/kubernetes/cloud-config
-      permissions: '0644'
+      permissions: '0600'
     ```
 
 2. Copy and paste the `cloud-init user data` content to **Machine Pools >Show Advanced > User Data**.
@@ -383,7 +383,7 @@ Once you've deployed the Harvester cloud provider, you can leverage the Kubernet
 ### IPAM
 Harvester's built-in load balancer offers both **DHCP** and **Pool** modes, and you can configure it by adding the annotation `cloudprovider.harvesterhci.io/ipam: $mode` to its corresponding service. Starting from Harvester cloud provider >= v0.2.0, it also introduces a unique **Share IP** mode. A service shares its load balancer IP with other services in this mode.
 
-- **DHCP:** A DHCP server is required. The Harvester load balancer will request an IP address from the DHCP server.
+- **DHCP:** A DHCP server is required. The Harvester load balancer will request an IP address from the DHCP server. For pre-allocating static addresses using MAC-to-IP bindings, see [Static IP for Guest Cluster LoadBalancer Service (DHCP Mode)](../networking/ippool.md#static-ip-for-guest-cluster-loadbalancer-service-dhcp-mode).
 
 - **Pool:** An [IP pool](../networking/ippool.md) must be configured first. The Harvester load balancer controller will allocate an IP for the load balancer service following [the IP pool selection policy](../networking/ippool.md#selection-policy). Notice the difference between [Create IP Pool from Harvester UI directly](../networking/ippool.md#how-to-create) and [Create IP Pool from Rancher Managery UI](../networking/ippool.md#create-ip-pool-from-rancher-manager-ui). Refer to the [Best Practice](../networking/ippool.md#best-practice).
 

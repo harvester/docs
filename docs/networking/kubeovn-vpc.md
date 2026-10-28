@@ -13,12 +13,12 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/networking/kubeovn-vpc"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/networking/kubeovn-vpc"/>
 </head> 
 
 :::note
 
-All features that use Kube-OVN are considered experimental. For more information about experimental features, see [Feature Labels](../getting-started/document-conventions.md#feature-labels).
+**kubeovn-operator** is currently classified as *experimental*. While the add-on is undergoing further integration, many Kube-OVN networking features have reached general availability (GA) in Harvester v1.9.0. For more information, see [Feature Maturity](../advanced/addons/kubeovn-operator.md#feature-maturity).
 
 :::
 

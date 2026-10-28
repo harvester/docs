@@ -5,7 +5,7 @@ title: "RWX Network"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/rwxnetwork"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/advanced/rwxnetwork"/>
 </head>
 
 _Available as of v1.8.0_

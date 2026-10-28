@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start": "NODE_OPTIONS='--max-old-space-size=7168' docusaurus start",
-    "build": "NODE_OPTIONS='--max-old-space-size=7168' docusaurus build",
+    "start": "NODE_OPTIONS='--max-old-space-size=8192' docusaurus start",
+    "build": "NODE_OPTIONS='--max-old-space-size=8192' docusaurus build",
     "make": "docusaurus gen-api-docs all && docusaurus gen-api-docs:version api:all ; NODE_OPTIONS='--max-old-space-size=7168' docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",

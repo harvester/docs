@@ -1,11 +1,11 @@
 ---
-sidebar_position: 8
+sidebar_position: 130
 sidebar_label: Upgrade from v1.5.x to v1.6.x
 title: "Upgrade from v1.5.x to v1.6.x"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/upgrade/v1-5-x-to-v1-6-x"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/upgrade/v1-5-x-to-v1-6-x"/>
 </head>
 
 ## General Information

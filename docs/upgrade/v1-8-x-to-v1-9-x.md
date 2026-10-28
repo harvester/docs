@@ -1,11 +1,11 @@
 ---
-sidebar_position: 2
+sidebar_position: 100
 sidebar_label: Upgrade from v1.8.x to v1.9.x
 title: "Upgrade from v1.8.x to v1.9.x"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/upgrade/v1-8-x-to-v1-9-x"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/upgrade/v1-8-x-to-v1-9-x"/>
 </head>
 
 ## General Information
@@ -114,3 +114,79 @@ This issue mostly happens when upgrading from v1.8.0. v1.8.0 does not have the `
     The version you upgraded to already includes the memory-limit fix, so the override is no longer needed.
 
 Related issues: [#11143](https://github.com/harvester/harvester/issues/11143) and [#10056](https://github.com/harvester/harvester/issues/10056)
+
+### 2. Automatic Live Migration May Fail for Virtual Machines With Certain CPU Topologies
+
+Live-migratable virtual machines are automatically migrated during the node upgrade phase. When upgrading from v1.8.x to v1.9.0, automatic live migration can fail for virtual machines configured with a CPU topology where `cores * threads > 1`.
+
+This failure is caused by an underlying libvirt issue affecting incoming migrations to QEMU 10.0.0 and later. QEMU reports the `ht` CPU feature based on the virtual CPU topology, but libvirt versions earlier than 11.10.0 may treat this as an unexpected extra CPU feature during live migration. For example, CPU topologies such as `cores: 1` with `threads: 2`, or `cores: 1` with `threads: 2`, satisfy this condition because `cores * threads = 2`.
+
+```yaml
+domain:
+  cpu:
+    cores: 1
+    maxSockets: 1
+    model: host-model
+    sockets: 1
+    threads: 2
+```
+
+#### Symptoms
+
+The virtual machine migration fails with an error message similar to the following:
+```
+operation failed: guest CPU doesn't match specification: extra features: ht
+```
+
+#### Mitigation
+
+Before starting the upgrade, gracefully shut down virtual machines with CPU topologies where `cores * threads > 1`. After the upgrade completes, manually start these virtual machines. For more information, see [Planned VM Shutdown vs. Live Migration](./automatic.md#planned-vm-shutdown-vs-live-migration).
+
+#### References
+
+- [Github Issue #11615](https://github.com/harvester/harvester/issues/11615)
+- [libvirt 11.10.0 release notes](https://lists.libvirt.org/archives/list/announce@lists.libvirt.org/message/O7LXXQGTY63Q7P5WEHKRB7TBTP34OXMG/)
+- [RHEL-104216](https://redhat.atlassian.net/browse/RHEL-104216)
+
+### 3. Upgrade Is Stuck in "Images preloaded"
+
+In rare cases, an upgrade from v1.8.x to v1.9.0 may remain in the **Images preloaded** state after a node reboots into the new operating system. This occurs when the upgrade controller changes the node's upgrade state to `Succeeded` before removing the `harvesterhci.io/pendingOSImage` annotation.
+
+#### Identifying the Issue
+
+1. Check the latest `Upgrade` CR:
+
+  ```bash
+  kubectl -n harvester-system get upgrades.harvesterhci.io \
+    -l harvesterhci.io/latestUpgrade=true \
+    -o yaml
+  ```
+
+  When the upgrade stops progressing, check if the output shows an upgraded node with `state: Succeeded` while the remaining nodes are stuck in the `Images preloaded` state.
+
+1. Check the upgraded node's current and pending operating system images:
+
+  ```bash
+  kubectl get node <node-name> \
+    -o custom-columns='NAME:.metadata.name,CURRENT-OS-IMAGE:.status.nodeInfo.osImage,PENDING-OS-IMAGE:.metadata.annotations.harvesterhci\.io/pendingOSImage'
+  ```
+
+  Check if the value of `PENDING-OS-IMAGE` matches `CURRENT-OS-IMAGE`.
+
+#### Workaround
+
+Apply this workaround only if all conditions described in the previous section are met.
+
+1. Change the affected node's state in the Upgrade CR back to `Waiting Reboot`:
+
+  Replace `<upgrade-name>` with the name of the `Upgrade` CR, and `<node-name>` with the name of the affected node.
+
+  ```bash
+  kubectl -n harvester-system patch upgrades.harvesterhci.io <upgrade-name> \
+    --type=json \
+    -p '[{"op":"replace","path":"/status/nodeStatuses/<node-name>/state","value":"Waiting Reboot"}]'
+  ```
+
+1. Verify that the upgrade resumes once the upgrade controller reconciles the node state.
+
+Related issue: [#11543](https://github.com/harvester/harvester/issues/11543)

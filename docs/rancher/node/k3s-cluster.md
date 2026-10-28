@@ -5,7 +5,7 @@ title: "Creating an K3s Kubernetes Cluster"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/rancher/node/k3s-cluster"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/rancher/node/k3s-cluster"/>
 </head>
 
 You can now `Provision new nodes and create a cluster using RKE2/K3s` on top of the Harvester cluster in Rancher using the built-in Harvester node driver.
@@ -65,7 +65,9 @@ Users can create a K3s Kubernetes cluster from the **Cluster Management** page v
 
 :::important
 
-Ensure all **Machine Pools** use the same first(primary) Network. RKE2/K3s rely on this network to boot the cluster; using different networks across machine pools may cause the cluster to fail.
+- Ensure all machine pools share the same primary network. K3s relies on this network to initialize the cluster. Using different networks across machine pools can cause the cluster to fail.
+
+- Avoid setting a static hostname. For more information, see [Avoid Setting a Static Hostname on Guest Cluster Virtual Machines](../cloud-provider.md#avoid-setting-a-static-hostname-on-guest-cluster-virtual-machines).
 
 :::
 

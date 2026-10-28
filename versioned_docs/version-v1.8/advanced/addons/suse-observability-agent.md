@@ -10,7 +10,7 @@ Description: Import the Harvester cluster into your remote SUSE Observability se
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/addons/suse-observability-agent"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/advanced/addons/suse-observability-agent"/>
 </head>
 
 _Available as of v1.8.0_

@@ -10,7 +10,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/getting-started/glossary"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/getting-started/glossary"/>
 </head>
 
 ## **cluster network**
@@ -97,7 +97,7 @@ Virtual network that provides a virtual machine with a single network interface 
 
 ## **VM migration network**
 
-Network for [isolating virtual machine migration traffic](../advanced/vm-migration-network.md) from intra-cluster traffic on `mgmt` and other cluster-wide workloads.
+Network for isolating virtual machine migration traffic from intra-cluster traffic on `mgmt` and other cluster-wide workloads.
 
 ## **VM network**
 

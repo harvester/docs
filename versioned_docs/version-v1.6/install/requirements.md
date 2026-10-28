@@ -9,7 +9,7 @@ description: Outline the Harvester installation requirements
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/install/requirements"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/install/requirements"/>
 </head>
 
 As an HCI solution on bare metal servers, there are minimum node hardware and network requirements for installing and running Harvester.

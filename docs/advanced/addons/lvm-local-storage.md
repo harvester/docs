@@ -1,16 +1,18 @@
 ---
 sidebar_position: 8
 sidebar_label: Local Storage Support
-title: "Local Storage Support (Experimental)"
+title: "Local Storage Support"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/addons/lvm-local-storage"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/advanced/addons/lvm-local-storage"/>
 </head>
 
 :::note
 
-**harvester-csi-driver-lvm** is an *experimental* add-on. It is not included in the Harvester ISO, but you can download it from the [experimental-addons repository](https://github.com/harvester/experimental-addons). For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+The **harvester-csi-driver-lvm** add-on is classified as *experimental* in Harvester v1.9.0 and reaches general availability (GA) in v1.9.1. For information about feature maturity, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+
+This add-on is not included in the Harvester ISO, but you can download the manifest (`harvester-csi-driver-lvm-addon.yaml`) from the [Harvester **Releases** page](https://github.com/harvester/harvester/releases). Manifest source files are located in the `addons/standalone` directory of the [Harvester repository](https://github.com/harvester/harvester/tree/master/addons/standalone).
 
 :::
 
@@ -25,12 +27,14 @@ If you are using the Harvester kubeconfig file, you can install the add-on by pe
 1. Install the add-on by running the following command:
 
     ```
-    kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/v1.9/harvester-csi-driver-lvm/harvester-csi-driver-lvm.yaml
+    kubectl apply -f https://github.com/harvester/harvester/releases/download/<version>/harvester-csi-driver-lvm-addon.yaml
     ```
+
+    Replace `<version>` with the version of your Harvester cluster (for example, `v1.10.0`).
 
 1. On the Harvester UI, go to **Advanced** > **Add-ons**.
 
-1. Select **harvester-csi-driver-lvm (Experimental)**, and then select **⋮** > **Enable**.
+1. Select **harvester-csi-driver-lvm**, and then select **⋮** > **Enable**.
 
 ## Creating a Volume Group for LVM
 

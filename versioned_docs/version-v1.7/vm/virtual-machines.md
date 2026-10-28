@@ -11,7 +11,7 @@ description: Information concerning virtual machines that run on top of the Harv
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/vm/virtual-machines"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/vm/virtual-machines"/>
 </head>
 
 You can create [Linux VMs](../vm/create-vm.md) using one of the following methods: 
@@ -26,8 +26,8 @@ Creating [Windows VMs](../vm/create-windows-vm.md) on the Harvester UI involves 
 
 The following operating systems have been validated to run in Harvester virtual machines:
 
-- SUSE Linux Enterprise Micro 6.0 and 6.1
 - SUSE Linux Enterprise Server 15 SP6 and 15 SP7
+- SUSE Linux Micro 6.0 and 6.1
 - Red Hat Enterprise Linux 9 and 10
 - Ubuntu 22.04 and 24.04
 - Windows	11

@@ -5,7 +5,7 @@ title: "Filter out and auto provision disks"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/disk-filter-and-auto-provision"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/advanced/disk-filter-and-auto-provision"/>
 </head>
 
 Starting from v1.8.0, Harvester provides a more flexible way to manage disk filtering and auto-provisioning through the `harvester-node-disk-manager` ConfigMap. This approach offers more granular control compared to the legacy `auto-disk-provision-paths` setting.

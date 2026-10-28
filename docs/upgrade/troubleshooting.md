@@ -1,11 +1,11 @@
 ---
-sidebar_position: 22
+sidebar_position: 205
 sidebar_label: Troubleshooting
 title: "Troubleshooting"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/upgrade/troubleshooting"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/upgrade/troubleshooting"/>
 </head>
 
 ## Overview

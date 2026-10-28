@@ -11,7 +11,7 @@ keywords:
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/airgap"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/airgap"/>
 </head>
 
 This section describes how to use Harvester in an air gapped environment. Some use cases could be where Harvester will be installed offline, behind a firewall, or behind a proxy.
@@ -92,6 +92,7 @@ The Harvester UI Extension is required to access the Harvester UI in Rancher v2.
   | 1.6.x | 4.1.0 |
   | 1.7.x | 4.32.0 |
   | 1.8.x | 4.30.0 |
+  | 1.9.x | 4.45.0 |
 
 1. On the Rancher UI, go to **Extensions**, and then select **⋮ > Manage Extension Catalogs**.
 

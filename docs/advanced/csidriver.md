@@ -5,7 +5,7 @@ title: "Third-Party Storage Support"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/csidriver"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/advanced/csidriver"/>
 </head>
 
 _Available as of v1.5.0_
@@ -54,7 +54,7 @@ Some CSI drivers require additional software packages on the host. You can insta
 
 :::note
 
-Upgrading Harvester causes the changes to the OS in the `after-install-chroot` stage to be lost. You must also configure the `after-upgrade-chroot` to make your changes persistent across an upgrade. Refer to [Runtime persistent changes](https://rancher.github.io/elemental-toolkit/docs/customizing/runtime_persistent_changes/) before upgrading Harvester.
+Upgrading Harvester causes the changes to the OS in the `after-install-chroot` stage to be lost. You must also configure the `after-upgrade-chroot` to make your changes persistent across an upgrade. Refer to [Installing Packages During Installation and Upgrades](../advanced/installing-additional-software.md#installing-packages-during-installation-and-upgrades) before upgrading Harvester.
 
 :::
 

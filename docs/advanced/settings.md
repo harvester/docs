@@ -6,7 +6,7 @@ title: "Settings"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/index"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/advanced/index"/>
 </head>
 
 The following is a list of advanced settings that you can use in Harvester. You can modify the `settings.harvesterhci.io` custom resource using both the Harvester UI and the `kubectl` command.
@@ -770,6 +770,8 @@ Changing this setting might cause single-node clusters to temporarily become una
 
 ### `ssl-parameters`
 
+**Versions**: Deprecated as of v1.9.0 (Use `traefik-default-tls-options` instead.)
+
 **Definition**: Enabled SSL/TLS protocols and ciphers of the Harvester UI and API.
 
 :::info important
@@ -1025,6 +1027,28 @@ When generating a support bundle, Harvester creates a ZIP file with the naming f
 **Notes**:
 
 The value can be set through environment variables and is used to help identify support bundles from specific clusters or environments.
+
+### `traefik-default-tls-options`
+
+**Versions**: v1.9.0 and later
+
+**Definition**: Setting that applies default [TLS options](https://doc.traefik.io/traefik/reference/routing-configuration/http/tls/tls-options/) for the Traefik Ingress Controller.
+
+:::info important
+
+This setting replaces the `ssl-parameters` setting for the Ingress NGINX Controller (`ingress-nginx`).
+
+If you misconfigure this setting and are unable to access the Harvester UI and API, see [Troubleshooting](../troubleshooting/harvester.md#i-cant-access-harvester-after-i-changed-ssltls-enabled-protocols-and-ciphers).
+
+:::
+
+**Default value**: ``{"minVersion":"VersionTLS12", "maxVersion":"VersionTLS13", "sniStrict":false,"cipherSuites":[],"clientAuth":{"secretNames":[],"clientAuthType":""}}``
+
+**Example**:
+
+```
+`{"minVersion":"VersionTLS12", "maxVersion":"VersionTLS13", "sniStrict":true,"cipherSuites":["TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"],"clientAuth":{"secretNames":[],"clientAuthType":""}}`
+```
 
 ### `upgrade-checker-enabled`
 

@@ -15,7 +15,7 @@ description: Create one or more virtual machines from the Virtual Machines page.
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/vm/index"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/vm/index"/>
 </head>
 
 ## How to Create a VM
@@ -63,39 +63,93 @@ To create virtual machines using the Kubernetes API, create a `VirtualMachine` o
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  name: new-vm
   namespace: default
+  annotations:
+    harvesterhci.io/volumeClaimTemplates: >-
+      [{"metadata":{"name":"<PVC_NAME>","annotations":{"harvesterhci.io/imageId":"<IMAGE_NAMESPACE>/<IMAGE_NAME>"}},"spec":{"accessModes":["ReadWriteMany"],"resources":{"requests":{"storage":"<DISK_SIZE>"}},"volumeMode":"Block","storageClassName":"<STORAGE_CLASS_NAME>"}}]
+    network.harvesterhci.io/ips: '[]'
+  labels:
+    harvesterhci.io/creator: harvester
+    harvesterhci.io/os: linux
+  name: test-vm
+
 spec:
   runStrategy: RerunOnFailure
   template:
+    metadata:
+      annotations:
+        harvesterhci.io/sshNames: '["<SSH_KEY_NAMESPACE>/<SSH_KEY_NAME>"]'
+      labels:
+        harvesterhci.io/vmName: test-vm
     spec:
       domain:
+        machine:
+          type: ''
         cpu:
           cores: 2
           sockets: 1
           threads: 1
-        memory: "3996Mi"
         devices:
-          disks: []
+          inputs:
+            - bus: usb
+              name: tablet
+              type: tablet
           interfaces:
-            - name: default
-              model: virtio
-              masquerade: {}
-        machine:
-          type: q35
+            - model: virtio
+              name: default
+              bridge: {}
+          disks:
+            - name: disk-0
+              disk:
+                bus: virtio
+              bootOrder: 1
+            - name: cloudinitdisk
+              disk:
+                bus: virtio
+          hostDevices: []
         resources:
-          requests:
-            cpu: "125m"
-            memory: "2730Mi"
           limits:
-            cpu: 2
-            memory: "4Gi"
-        networks:
-          - name: default
-            pod: {}
+            memory: 2Gi
+            cpu: '2'
+        features:
+          acpi:
+            enabled: true
+
+      evictionStrategy: LiveMigrateIfPossible
+      hostname: test-vm
+
+      networks:
+        - name: default
+          multus:
+            networkName: <NETWORK_NAMESPACE>/<NETWORK_NAME>
+
+      volumes:
+        - name: disk-0
+          persistentVolumeClaim:
+            claimName: <PVC_NAME>
+
+        - name: cloudinitdisk
+          cloudInitNoCloud:
+            secretRef:
+              name: <CLOUD_INIT_SECRET_NAME>
+            networkDataSecretRef:
+              name: <CLOUD_INIT_SECRET_NAME>
+
+      affinity: {}
+      terminationGracePeriodSeconds: 120
 ```
 
-For more information, see the [API reference](../api/create-namespaced-virtual-machine).
+The following list describes the placeholders used in the code sample:
+
+- `<IMAGE_NAMESPACE>/<IMAGE_NAME>`: Namespace and name of the virtual machine image.
+- `<DISK_SIZE>`: Size of the disk (for example, `20Gi`).
+- `<STORAGE_CLASS_NAME>`: Target StorageClass for the disk. You can retrieve this value from the virtual machine image's `.status.storageClassName` field.
+- `<SSH_KEY_NAMESPACE>/<SSH_KEY_NAME>`: Namespace and name of the Harvester SSH key.
+- `<NETWORK_NAMESPACE>/<NETWORK_NAME>`: Namespace and name of the Harvester VM network.
+- `<PVC_NAME>`: Name of the virtual machine disk's PVC (for example, `test-vm-disk-0-royae`).
+- `<CLOUD_INIT_SECRET_NAME>`: Name of the cloud-init secret.
+
+For more information, see the [API reference](https://docs.harvesterhci.io/v1.10/api/create-namespaced-virtual-machine/).
 
 </TabItem>
 <TabItem value="terraform" label="Terraform">
@@ -164,13 +218,19 @@ If you are using external storage, ensure that the correct **StorageClass** and 
 
 :::info important
 
-When creating volumes from a VM image, ensure that the volume size is greater than or equal to the image size. The volume may become corrupted if the configured volume size is less than the size of the underlying image. This is particularly important for qcow2 images because the virtual size is typically greater than the physical size.
+Starting with Harvester v1.10.0, Harvester validates that any volume created or updated from a virtual machine image is at least as large as the virtual size of the source image. The validating webhook rejects virtual machine disk or volume requests that violate this constraint to prevent guest filesystem corruption.
 
 By default, Harvester sets the volume size to either 10 GiB or the virtual size of the VM image, whichever is greater.
 
 :::
 
 ![create-vm](/img/v1.2/vm/create-vm-volumes.png)
+
+### Storage performance options
+
+Starting with Harvester v1.9.1, each disk on the **Volumes** tab has a collapsible **Storage Performance Options** section, where you can select a performance profile or set the cache mode, the I/O mode, and a dedicated I/O thread. Below the disks, the **High Performance (I/O Threads and Multi-Queue)** section sets virtio block multi-queue and the I/O threads policy for the whole virtual machine.
+
+These options are optional and are intended for disks with heavy I/O workloads. For a description of each option, its requirements, and its recommended use, see [VM Storage Performance Options](../advanced/vm-storage-performance.md).
 
 ### Adding a container disk
 
@@ -214,6 +274,8 @@ By default, VMs are accessible through the management network within the cluster
 It is also possible to connect VMs using additional networks with Harvester's built-in [VLAN networks](../networking/harvester-network.md).
 
 In bridge VLAN, virtual machines are connected to the host network through a linux `bridge`. The network IPv4 address is delegated to the virtual machine via DHCPv4. The virtual machine should be configured to use DHCP to acquire IPv4 addresses.
+
+VMs can also boot from a secondary network. For more information, see [Network Boot (PXE)](#network-boot-pxe).
 
 ## Node Scheduling
 
@@ -435,3 +497,69 @@ The following example describes how to install an ISO image using [openSUSE Leap
 7. Open the VM web-vnc you just created and follow the instructions given by the installer.
 8. After the installation is complete, reboot the VM  as instructed by the operating system (you can remove the installation media after booting the system).
 9. After the VM reboots, it will automatically boot from the disk volume and start the operating system.
+
+## Network Boot (PXE)
+
+_Available as of v1.10.0_
+
+Virtual machines can boot from the network using the Preboot Execution Environment (PXE). This allows you to install operating systems using existing provisioning infrastructure. For example, a PXE/iPXE server, Cobbler, Foreman, or MAAS.
+
+### Prerequisites
+
+- A [VM network](../networking/harvester-network.md) on which a DHCP server provides PXE boot options and a TFTP or HTTP server that hosts the boot files. Harvester does not provide a PXE server.
+- Supported BIOS and UEFI firmware. With UEFI, the server must provide a UEFI boot file. For example, `ipxe.efi`. If Secure Boot is enabled, the boot file must be signed.
+
+:::note
+
+Network boot is not available on the management network because its built-in DHCP server does not provide PXE boot options.
+
+:::
+
+### Enable Network Boot
+
+1. Go to **Virtual Machines**, and then click **Create**.
+1. On the **Networks** tab, add a network interface or select an existing one, and then select the VM network that the PXE server is connected to.
+1. Select **Enable network boot (PXE)**.
+
+    ![vm-network-boot](/img/v1.10/vm/vm-network-boot.png)
+
+1. Under **Network boot order**, select when the virtual machine attempts to boot from the network.
+
+    - **Before volumes**: The virtual machine attempts to boot from the network first. Use this option if the PXE server decides what the virtual machine boots.
+    - **After volumes**: The virtual machine attempts to boot from its volumes first. If a blank volume fails to boot, the virtual machine will fall through to network boot. After the operating system is installed on the volume, the virtual machine will boot from the volume without any further configuration changes.
+
+    ![vm-network-boot-order](/img/v1.10/vm/vm-network-boot-order.png)
+
+1. Configure the remaining settings, and then click **Create**.
+
+When network boot is enabled on multiple interfaces, the interfaces are attempted in the order in which they are listed. The **Boot Order** list on the **Basics** tab of the virtual machine details screen displays network interfaces along with volumes.
+
+You can also enable network boot when creating a virtual machine template. Navigate to **Advanced** and then **Templates**. Virtual machines created from the template will inherit the setting.
+
+Harvester applies the setting by assigning a `bootOrder` to the network interface in the virtual machine spec:
+
+```yaml
+spec:
+  template:
+    spec:
+      domain:
+        devices:
+          disks:
+          - name: disk-0
+            bootOrder: 1
+            disk:
+              bus: virtio
+          interfaces:
+          - name: nic-1
+            bootOrder: 2
+            bridge: {}
+            model: virtio
+```
+
+:::info important
+
+- Changing the network boot settings of an existing virtual machine requires a restart.
+- A virtual machine that is waiting in the PXE firmware or a boot menu does not respond to ACPI shutdown requests. When you stop the virtual machine, Harvester waits until the termination grace period expires (default: 120 seconds) before forcibly stopping it.
+- If a virtual machine has multiple network interfaces, the operating system installer might configure an interface other than the one used for network boot. Use the installer's boot parameters to select the correct interface. For example, `BOOTIF=01-${netX/mac:hexhyp}` in iPXE.
+
+:::

@@ -5,7 +5,7 @@ title: "Rancher"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/troubleshooting/rancher"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/troubleshooting/rancher"/>
 </head>
 
 
