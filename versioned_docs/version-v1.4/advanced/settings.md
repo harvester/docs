@@ -68,7 +68,7 @@ Use the field `expiringInHours` to specify the validity period of each certifica
 
 For more information, see the **Certificate Rotation** section of the [Rancher](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/manage-clusters/rotate-certificates) and [RKE2](https://docs.rke2.io/advanced#certificate-rotation) documentation.
 
-If your certificates have expired, you can [rotate them manually](../host/host.md#rotate-expiring-certificates).
+If your certificates have expired, you can [rotate them manually](../host/host.md#rotate-expired-certificates).
 
 **Default value**: `{"enable":false,"expiringInHours":240}`
 
