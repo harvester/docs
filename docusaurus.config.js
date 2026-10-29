@@ -262,8 +262,8 @@ const config = {
       '@docusaurus/plugin-client-redirects',
       {
         createRedirects(existingPath) {
-          if (existingPath.includes('/v1.6')) {
-            return [existingPath.replace('/v1.6', '/latest')];
+          if (existingPath.includes('/v1.9')) {
+            return [existingPath.replace('/v1.9', '/latest')];
           }
           return undefined;
         },

@@ -65,7 +65,9 @@ The Longhorn V2 Data Engine is only available for newly created volumes and imag
 
   :::info important
 
-  The default [Longhorn disk driver](https://longhorn.io/docs/1.7.2/v2-data-engine/features/node-disk-support/) for newly added Longhorn V2 disks in Harvester is `aio`. This driver uses a Linux block device path and avoids the SPDK NVMe VFIO path.
+  The default [Longhorn disk driver](https://longhorn.io/docs/1.12.1/nodes-and-volumes/nodes/multidisk/#disk-driver) for newly added Longhorn V2 disks in Harvester is `aio`. This driver uses a Linux block device path and avoids the SPDK NVMe VFIO path.
+
+  To enable Longhorn's automatic disk driver detection, which automatically assigns the NVMe driver to NVMe disks, set the disk driver to `auto`. For instructions, see [Manually Setting The Disk Driver](#manually-setting-the-disk-driver).
 
   :::
 
@@ -164,6 +166,37 @@ To migrate a disk, perform the following steps:
       provisionPhase: Provisioned
       state: Active
     ```
+
+## Manually Setting The Disk Driver
+
+To use Longhorn's automatic disk driver detection feature instead of the default `aio` driver, do not add the disk through the Harvester UI. Instead, perform the following steps:
+
+1. Identify the name of the disk you want to add:
+
+    
+    ```
+    NAME                                   TYPE   DEVPATH        MOUNTPOINT   NODENAME           PROVISIONPHASE   AGE
+    4585c9be-da72-4481-80c0-c8021c15aace   disk   /dev/nvme0n1                harvester-node-0   Unprovisioned    24s
+    ```
+
+1. Edit the target `BlockDevice` custom resource.
+
+    
+
+    ```yaml
+    spec:
+      provision: true
+      provisioner:
+        longhorn:
+          diskDriver: auto
+          engineVersion: LonghornV2
+    ```
+
+:::info important
+
+Updating the `diskDriver` setting of an already provisioned `BlockDevice` custom resource is not supported. To change the driver from `aio` to `auto` on an existing disk, you must first [remove the disk](../host/host.md#remove-disks) and then add it again using the procedure above.
+
+:::
 
 ## Known Issues
 

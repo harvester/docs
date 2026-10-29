@@ -17,7 +17,9 @@ _Available as of v1.8.0_
 
 :::note
 
-**SUSE Observability Agent** is an *experimental* add-on. It is not included in the Harvester ISO, but you can download it from the [experimental-addons repository](https://github.com/harvester/experimental-addons). For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+**SUSE Observability Agent** is an *experimental* add-on. For information about feature maturity, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+
+This add-on is not included in the Harvester ISO, but you can download the manifest (`suse-observability-agent-addon.yaml`) from the [Harvester **Releases** page](https://github.com/harvester/harvester/releases). Manifest source files are located in the `addons/standalone` directory of the [Harvester repository](https://github.com/harvester/harvester/tree/master/addons/standalone).
 
 The **SUSE Observability Agent** add-on installs the suse-observability-agent onto the Harvester cluster, the Harvester cluster will connect to the SUSE observability. [SUSE Observability](https://www.suse.com/products/rancher/observability/) delivers comprehensive monitoring, advanced analytics, and seamless integration capabilities.
 
@@ -65,7 +67,7 @@ Save the `TOKEN` and `helm upgrade` commands, they will be used in following ste
 Run following command upon the target Harvester cluster to create the experimental addons `suse-observability-agent`.
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/main/suse-observability-agent/suse-observability-agent.yaml
+kubectl apply -f https://raw.githubusercontent.com/harvester/harvester/v1.9/addons/standalone/suse-observability-agent/addon.yaml
 ```
 
 ### Fill in above saved data to following fields
