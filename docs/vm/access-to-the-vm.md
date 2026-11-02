@@ -31,7 +31,7 @@ If the VGA display is not enabled on the VM, e.g., the `Ubuntu-Minimal-Cloud` im
 
 The VNC console opens in a new browser window, which is titled with the VM name. The toolbar contains the following:
 
-![](/img/v1.10/vm/vnc-console.png)
+![VNC Console toolbar](/img/v1.10/vm/vnc-console.png)
 
 - **Shortcut Keys**: Sends key combinations that your browser or operating system would otherwise intercept, such as Ctrl+Alt+Del, Print Screen, and the function keys.
 - **Ctrl+Alt+Del**: Sends Ctrl+Alt+Del after you confirm. Windows opens its sign-in or security screen, while most Linux systems restart the VM.
@@ -40,8 +40,8 @@ The VNC console opens in a new browser window, which is titled with the VM name.
   - **Display**: Scale the display to fit the window, or set the **Zoom** level (50% to 200%).
   - **View only**: Shows the display without sending your keyboard and mouse input to the VM.
   - **JPEG quality** and **Compression level**: Balance image quality against network bandwidth.
-- Connection status: For example, **Connected**, **Connected (view only)**, or **Reconnecting**.
-- **Soft Reboot**: Asks the guest operating system to restart after you confirm. Unsaved work inside the VM is lost. This button is displayed only when the VM supports soft reboot.
+- **Connection Status**: For example, **Connected**, **Connected (view only)**, or **Reconnecting**.
+- **Soft Reboot**: Sends a graceful restart signal to the guest operating system after you confirm. Unsaved work inside the VM may be lost if the OS shuts down without prompting the user. This button is displayed only when the VM supports soft reboot.
 - **Reconnect**: Opens a new connection to the console.
 - **Full Screen**: Shows the console in full screen. In Chromium-based browsers, shortcuts such as Ctrl+W and F11 are sent to the VM instead of the browser.
 
@@ -53,14 +53,14 @@ _Available as of v1.10.0_
 
 Only one VNC session can be connected to a VM at a time. If someone else is using the console, Harvester does not disconnect them. Instead, the message **This console is in use** is displayed.
 
-![](/img/v1.10/vm/vnc-console-in-use.png)
+![Console in use warning dialog](/img/v1.10/vm/vnc-console-in-use.png)
 
 - **Reconnect**: Tries to connect again. Use this option after the other session is closed.
-- **Take Over**: Disconnects the other session and connects yours after you confirm. The console that was taken over does not take the console back. It keeps retrying and reconnects once the console is released.
+- **Take Over**: Disconnects the other session and connects yours after you confirm. The disconnected session will not automatically retake control. Instead, it periodically retries in the background and will reconnect only when the active session is released.
 
 :::note
 
-**Take Over** requires Harvester v1.7.0 or later. When you use Rancher to manage an older Harvester cluster, the console connects without checking if it is in use, and the new session disconnects the existing one.
+**Take Over** requires the Harvester cluster to be running v1.7.0 or later. While the specific "Console in Use" dialog is a UI feature introduced in v1.10.0, the backend takeover capability relies on this minimum cluster version. If you use Rancher to manage a Harvester cluster older than v1.7.0, the console connects without checking if it is in use, and any new session will automatically disconnect the existing one.
 
 :::
 
