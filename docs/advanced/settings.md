@@ -238,7 +238,7 @@ Depending on the underlying storage provider, you may need to take extra steps t
 
 **Definition**: Setting that enables [delete protection](../vm/delete-protection.md) on new virtual machines by default.
 
-When the value is `true`, Harvester adds the `kubevirt.io/vm-delete-protection: "true"` label to each virtual machine that is created without this label. A protected virtual machine cannot be deleted until delete protection is disabled. In the Harvester UI, the **Delete Protection** checkbox on the **Basics** tab is selected by default.
+The value must be a boolean, such as `true` or `false`. When the value is `true`, Harvester adds the `kubevirt.io/vm-delete-protection: "true"` label to each virtual machine that is created without this label. A protected virtual machine cannot be deleted until delete protection is disabled. In the Harvester UI, the **Delete Protection** checkbox on the **Basics** tab is selected by default.
 
 Harvester does not apply the default to the following virtual machines:
 

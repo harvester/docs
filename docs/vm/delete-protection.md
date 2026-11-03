@@ -30,10 +30,10 @@ Delete protection is controlled by the `kubevirt.io/vm-delete-protection` label 
 
 | Label value | Result |
 | --- | --- |
-| `true` or `True` | Delete protection is enabled. Delete requests are rejected. |
+| `true`, `True`, `TRUE`, `t`, `T` or `1` | Delete protection is enabled. Delete requests are rejected. |
 | `false`, any other value, or no label | Delete protection is disabled. |
 
-Harvester uses the same label and the same accepted values as KubeVirt's delete protection feature in OpenShift Virtualization, so tools and manifests that already use this label behave the same way on Harvester.
+Harvester uses the same label as KubeVirt's delete protection feature in OpenShift Virtualization, so tools and manifests that already use this label behave the same way on Harvester. KubeVirt accepts only `true` and `True`, so use `true` in manifests that must also work on other KubeVirt clusters.
 
 When a delete request is rejected, the virtual machine and its volumes are left unchanged. Volumes that you selected for removal in the delete dialog are not deleted.
 
