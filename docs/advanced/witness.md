@@ -36,7 +36,21 @@ harvester-node-1    Ready    etcd                         v1.27.10+rke2r1       
 harvester-node-2    Ready    control-plane,etcd,master    v1.27.10+rke2r1         36     840     6905       8      43    10000    15976 4d13h      
 ```
 
-Because the cluster must have three nodes, the promote controller will promote the other two nodes. After that, the cluster will have two control-plane nodes and one witness node.
+Because the cluster must have three nodes, the promote controller will promote the other two nodes. After that, the cluster will have two control-plane nodes and one witness node. If you use topology zone labels, see [Witness Nodes and Topology Zones](#witness-nodes-and-topology-zones).
+
+## Witness Nodes and Topology Zones
+
+If you use the `topology.kubernetes.io/zone` label to spread management nodes across zones, the witness node must also have a zone label. At least three distinct zones are required, and the witness counts as one of them.
+
+If the witness node has no zone label, promotion does not start for either the second management node or the witness node, even though all nodes show `Ready`. The cluster keeps a single control-plane/etcd node.
+
+For example, in a cluster stretched over two sites with a witness at a third site, label the nodes `dc1`, `dc2`, and `dc3` (the witness). To label a node after installation, use the Harvester UI (**Hosts > ⋮ > Edit Config > Labels**) or run:
+
+```bash
+kubectl label node <witness-node-name> topology.kubernetes.io/zone=<zone>
+```
+
+Promotion starts once the witness has its own zone. For more information, see KB [000022877](https://www.suse.com/support/kb/doc/?id=000022877).
 
 ## Workloads on the Witness Node
 

@@ -345,7 +345,7 @@ For more information about Harvester configuration, please refer to the [Harvest
 
 By default, the first node will be the management node of the cluster. When there are 3 nodes, the other 2 nodes added first are automatically promoted to management nodes to form an HA cluster.
 
-If you want to promote management nodes from different zones, you can add the node label `topology.kubernetes.io/zone` in the [os.labels](./harvester-configuration.md#oslabels) config. In this case, at least three different zones are required.
+If you want to spread management nodes across zones, add the node label `topology.kubernetes.io/zone` to the nodes (for example, with [os.labels](./harvester-configuration.md#oslabels)). In this case, at least three different zones are required, and the witness node must have its own zone. If the witness has no zone label, promotion does not start for the second management node or the witness node. See [Witness Nodes and Topology Zones](../advanced/witness.md#witness-nodes-and-topology-zones).
 
 Users can also provide configuration via kernel parameters. For example, to specify the `CREATE` install mode, users can pass the `harvester.install.mode=create` kernel parameter when booting. Values passed through kernel parameters have higher priority than values specified in the config file.
 

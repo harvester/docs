@@ -405,6 +405,7 @@ _Available as of v1.1.0_
 
 The label is automatically synchronized with the corresponding Longhorn node.
 
+Zone labels also affect promotion of nodes to management nodes. At least three distinct zones are required, and the witness node needs its own zone. See [Witness Nodes and Topology Zones](../advanced/witness.md#witness-nodes-and-topology-zones).
 
 ## Hugepages
 
