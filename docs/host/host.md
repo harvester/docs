@@ -405,7 +405,7 @@ _Available as of v1.1.0_
 
 The label is automatically synchronized with the corresponding Longhorn node.
 
-Zone labels also affect promotion of nodes to management nodes. At least three distinct zones are required, and the witness node needs its own zone. See [Witness Nodes and Topology Zones](../advanced/witness.md#witness-nodes-and-topology-zones).
+Zone labels also affect the promotion of nodes to management roles. At least three distinct zones are required, and the witness node must be assigned to its own zone. For more information, see [Witness Nodes and Topology Zones](../advanced/witness.md#witness-nodes-and-topology-zones).
 
 ## Hugepages
 
@@ -800,4 +800,4 @@ The template uses the `network.after` stage, which applies changes after the net
 | --- | --- | --- | --- | --- |
 | Standard boot | `network.after` | Reboot required. | Ensure the resource's filename will not override other configurations in this stage. | CloudInit files are executed in alphabetical order. |
 | Live deployment | `network.after` | No immediate reboot required. | Apply the resource and then manually run the script commands on the node. | The configuration is immediately applied to the live runtime and persists across future reboots. |
-| Periodic reconciliation | `reconcile` | No reboot or manual action required. | None | The script automatically runs 5 minutes after boot and repeats every 60 minutes. |
+| Periodic reconciliation | `reconcile` | No reboot or manual intervention required. | None | Runs automatically 5 minutes after boot and repeats every 60 minutes. |

@@ -50,7 +50,7 @@ For example, in a cluster stretched over two sites with a witness at a third sit
 kubectl label node <witness-node-name> topology.kubernetes.io/zone=<zone>
 ```
 
-Promotion starts once the witness has its own zone. For more information, see KB [000022877](https://www.suse.com/support/kb/doc/?id=000022877).
+Promotion automatically resumes once the witness is assigned to its own zone. For more information, see KB [000022877](https://www.suse.com/support/kb/doc/?id=000022877).
 
 ## Workloads on the Witness Node
 

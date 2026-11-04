@@ -441,7 +441,7 @@ see [Settings/http-proxy](../advanced/settings.md#http-proxy).
 
 #### Definition
 
-Labels to be added to this Node. If you use `topology.kubernetes.io/zone` to spread management nodes across zones, the witness node also needs a zone label. See [Witness Nodes and Topology Zones](../advanced/witness.md#witness-nodes-and-topology-zones).
+Specifies the labels to add to this node. If you use the `topology.kubernetes.io/zone` label to spread management nodes across zones, the witness node must also be assigned a zone label. For details, see [Witness Nodes and Topology Zones](../advanced/witness.md#witness-nodes-and-topology-zones).
 
 #### Example
 
@@ -842,7 +842,7 @@ install:
 - `default`: Allows a node to function as a management node or a worker node.
 - `management`: Allows a node to be prioritized when Harvester promotes nodes to management nodes.
 - `worker`: Restricts a node to being a worker node (never promoted to management node) in a specific cluster.
-- `witness`: Restricts a node to being a witness node (only functions as an etcd node) in a specific cluster. If you use zone labels in the cluster, the witness node needs its own zone label. See [Witness Nodes and Topology Zones](../advanced/witness.md#witness-nodes-and-topology-zones).
+- `witness`: Restricts a node to acting as a witness node (functioning only as an etcd node) in a specific cluster. If you use zone labels in the cluster, the witness node must be assigned its own zone label. For more information, see [Witness Nodes and Topology Zones](../advanced/witness.md#witness-nodes-and-topology-zones).
 
 ### `install.silent`
 
