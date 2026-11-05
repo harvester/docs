@@ -137,6 +137,6 @@ resource "harvester_setting" "default_vm_delete_protection" {
 
 ## Limitations
 
-- Delete protection prevents accidental deletion. It is not an access control mechanism. Any user who is allowed to edit a virtual machine can disable delete protection and then delete the virtual machine. Use Kubernetes RBAC to restrict who can edit virtual machines.
+- Delete protection prevents accidental deletion; it is not an access control mechanism. Any user who is allowed to edit a virtual machine can disable delete protection and then delete the virtual machine. Use Kubernetes RBAC to restrict who can edit virtual machines.
 - A namespace that contains a protected virtual machine remains in the `Terminating` state after you delete it, because the virtual machine cannot be deleted. Disable delete protection on the virtual machine to let the namespace deletion finish.
-- Delete protection applies only to `VirtualMachine` objects. Volumes that are attached to a virtual machine are already protected from deletion by Harvester while the virtual machine uses them.
+- Delete protection applies only to `VirtualMachine` objects. Volumes attached to a virtual machine are already protected from deletion by Harvester while the virtual machine is using them.
