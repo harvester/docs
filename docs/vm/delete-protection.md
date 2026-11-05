@@ -98,10 +98,10 @@ spec:
 Use the [`default-vm-delete-protection`](../advanced/settings.md#default-vm-delete-protection) setting to enable delete protection on new virtual machines automatically.
 
 1. Go to **Advanced** > **Settings**.
-1. Locate `default-vm-delete-protection`, and then select **⋮** > **Edit Setting**.
-1. Select **True**, and then click **Save**.
+2. Locate `default-vm-delete-protection`, and then select **⋮** > **Edit Setting**.
+3. Select **True**, and then click **Save**.
 
-When the setting is `true`, Harvester adds `kubevirt.io/vm-delete-protection: "true"` to a virtual machine when it is created, if all of the following conditions are met:
+When the setting is `true`, Harvester adds the `kubevirt.io/vm-delete-protection: "true"` label to a virtual machine when it is created, provided all of the following conditions are met:
 
 - No `kubevirt.io/vm-delete-protection` label exists on the virtual machine. An explicit `"false"` value is kept, which allows you to opt out for individual virtual machines. When you create a virtual machine in the Harvester UI, the label is always set according to the **Delete Protection** checkbox.
 - Neither the Rancher Harvester node driver nor the Cluster API Provider Harvester created the virtual machine (label `harvesterhci.io/creator: docker-machine-driver-harvester`). Rancher must be able to delete these virtual machines when it scales down or deletes a guest cluster.
