@@ -49,7 +49,7 @@ You can also change the **Delete Protection** checkbox later on the **Basics** t
 ## Enable or Disable Delete Protection on an Existing Virtual Machine
 
 1. Go to **Virtual Machines**.
-1. Locate the virtual machine, and then select **⋮** > **Enable Delete Protection** or **⋮** > **Disable Delete Protection**.
+2. Locate the virtual machine, and then select **⋮** > **Enable Delete Protection** or **⋮** > **Disable Delete Protection**.
 
 You can select multiple virtual machines and apply either action to all of them at once.
 
