@@ -236,17 +236,17 @@ Depending on the underlying storage provider, you may need to take extra steps t
 
 **Versions**: v1.11.0 and later
 
-**Definition**: Setting that enables [delete protection](../vm/delete-protection.md) on new virtual machines by default.
+**Definition**: A setting that enables [delete protection](../vm/delete-protection.md) on new virtual machines by default.
 
-The value must be a boolean, such as `true` or `false`. When the value is `true`, Harvester adds the `kubevirt.io/vm-delete-protection: "true"` label to each virtual machine that is created without this label. A protected virtual machine cannot be deleted until delete protection is disabled. In the Harvester UI, the **Delete Protection** checkbox on the **Basics** tab is selected by default.
+When the value is `true`, Harvester adds the `kubevirt.io/vm-delete-protection: "true"` label to any newly created virtual machine lacking this label. A protected virtual machine cannot be deleted until delete protection is disabled. In the Harvester UI, the **Delete Protection** checkbox on the **Basics** tab is selected by default.
 
-Harvester does not apply the default to the following virtual machines:
+Harvester does not apply this default behavior to the following virtual machines:
 
-- Virtual machines that already have the `kubevirt.io/vm-delete-protection` label, including an explicit `"false"` value.
+- Virtual machines that already have the `kubevirt.io/vm-delete-protection` label, including those with an explicit `"false"` value.
 - Virtual machines created by the Rancher Harvester node driver or by the Cluster API Provider Harvester (label `harvesterhci.io/creator: docker-machine-driver-harvester`).
 - Internal Harvester virtual machines (label `harvesterhci.io/creator: harvester` or namespace `harvester-system`).
 
-Changing this setting affects only virtual machines that are created afterwards. Existing virtual machines are not modified.
+Changing this setting affects only virtual machines that are created after the setting is modified. Existing virtual machines are not modified.
 
 **Default value**: `false`
 
