@@ -58,15 +58,13 @@ Performance impacts vary by cluster configuration. Always benchmark these settin
     - To create a virtual machine, click **Create**.
     - To edit an existing virtual machine, select **⋮ > Edit Config**.
 
-1. On the **Volumes** tab, locate the target disk, and then click **Show high-performance options**.
+1. On the **Volumes** tab, locate the target disk, and then select a **Storage Performance Profile**.
 
-    The **Storage Performance Options** section is available on image, new, existing, and container volumes. The section is already expanded if the disk uses one of these options.
-
-1. Select a **Performance Profile**.
+    The field is available on image, new, existing, and container volumes.
 
     | Profile | Effect |
     |---|---|
-    | **Default (Balanced)** | No options are set. KubeVirt and the hypervisor select the cache mode and the I/O mode, as described in the following sections. |
+    | **Default** | No options are set. KubeVirt and the hypervisor select the cache mode and the I/O mode, as described in the following sections. |
     | **High Performance** | A preset for disks with heavy I/O that sets the virtio bus, **Cache Mode** `none`, **I/O Mode** `native`, and a **Dedicated I/O Thread**. Use this profile on **Block** volumes. |
     | **Custom** | You set **Cache Mode**, **I/O Mode**, and **Dedicated I/O Thread** individually. |
 
@@ -78,7 +76,7 @@ Performance impacts vary by cluster configuration. Always benchmark these settin
 
 :::info
 
-You can also set the options when you create a volume. Go to **Volumes**, click **Create**, and then configure the **Storage Performance Options** section. The options are saved as defaults on the volume and are applied when the volume is attached to a virtual machine as a disk.
+You can also set the options when you create a volume. Go to **Volumes**, click **Create**, and then select a **Storage Performance Profile**. The options are saved as defaults on the volume and are applied when the volume is attached to a virtual machine as a disk.
 
 :::
 
@@ -155,9 +153,7 @@ The VM-wide options apply to all volumes of the virtual machine and complement t
     - To create a virtual machine, click **Create**.
     - To edit an existing virtual machine, select **⋮ > Edit Config**.
 
-1. On the **Volumes** tab, locate the **High Performance (I/O Threads and Multi-Queue)** section below the disks, and then click **Show VM-wide high-performance options**.
-
-    The section is already expanded if the virtual machine uses one of these options.
+1. On the **Advanced Options** tab, locate the **Storage Performance** section.
 
 1. (Optional) Select **Virtio Block Multi-Queue**.
 
@@ -229,7 +225,7 @@ The I/O threads policy determines the number of I/O threads of the virtual machi
 
 1. Click the name of the target virtual machine, and then go to the **Volumes** tab.
 
-    The **Storage Performance Options** section of each disk and the **High Performance (I/O Threads and Multi-Queue)** section display the saved options. The **High Performance (I/O Threads and Multi-Queue)** section appears only if the virtual machine uses one of these options.
+    Each disk displays its **Storage Performance Profile**, and a disk with the **Custom** profile also displays its **Cache Mode**, **I/O Mode**, and **Dedicated I/O Thread** settings. The **Storage Performance** section below the disks displays the VM-wide options. This section appears only if the virtual machine uses one of these options.
 
 </TabItem>
 <TabItem value="cli" label="CLI">
