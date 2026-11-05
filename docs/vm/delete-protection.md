@@ -40,11 +40,9 @@ When a delete request is rejected, the virtual machine and its volumes are left 
 ## Enable Delete Protection When Creating a Virtual Machine
 
 1. Go to **Virtual Machines**, and then click **Create**.
-1. On the **Basics** tab, select **Delete Protection**.
-
+2. On the **Basics** tab, select **Delete Protection**.
     When the [`default-vm-delete-protection`](../advanced/settings.md#default-vm-delete-protection) setting is `true`, this checkbox is selected by default. Clear it to create the virtual machine without delete protection.
-
-1. Configure the remaining settings, and then click **Create**.
+3. Configure the remaining settings, and then click **Create**.
 
 You can also change the **Delete Protection** checkbox later on the **Basics** tab of the **Edit Config** screen.
 
