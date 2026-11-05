@@ -107,7 +107,7 @@ When the setting is `true`, Harvester adds the `kubevirt.io/vm-delete-protection
 - Neither the Rancher Harvester node driver nor the Cluster API Provider Harvester created the virtual machine (label `harvesterhci.io/creator: docker-machine-driver-harvester`). Rancher must be able to delete these virtual machines when it scales down or deletes a guest cluster.
 - It is not an internal Harvester virtual machine (label `harvesterhci.io/creator: harvester` or namespace `harvester-system`), such as the virtual machine that Harvester creates during an upgrade.
 
-Changing the setting affects only virtual machines that are created afterwards. Existing virtual machines are never modified. To protect or unprotect existing virtual machines, use the virtual machine actions or `kubectl`.
+Changing this setting affects only virtual machines that are created after the setting is modified. Existing virtual machines are not modified. To protect or unprotect existing virtual machines, use the virtual machine actions in the UI or `kubectl`.
 
 ## Use Terraform
 
