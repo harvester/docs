@@ -22,7 +22,7 @@ _Available as of v1.11.0_
 
 Delete protection prevents a virtual machine from being deleted by accident. While delete protection is enabled, Harvester rejects every request to delete the virtual machine, whether it comes from the Harvester UI, Rancher, `kubectl`, Terraform or any other API client. To delete the virtual machine, you must first disable delete protection.
 
-Delete protection only blocks deletion. You can still start, stop, restart, migrate, edit, snapshot, back up and clone a protected virtual machine.
+Delete protection only blocks deletion. You can still start, stop, restart, migrate, edit, snapshot, back up, and clone a protected virtual machine.
 
 ## How Delete Protection Works
 
