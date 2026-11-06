@@ -83,7 +83,7 @@ In all other cases, Harvester prompts you to restart the virtual machine, and th
 
 :::
 
-You can also change the network with kubectl by changing only `spec.template.spec.networks[].multus.networkName`. For example:
+You can also update the network using `kubectl` by modifying `spec.template.spec.networks[].multus.networkName`:
 
 ```bash
 kubectl -n default patch vm my-vm --type=json \
