@@ -51,7 +51,7 @@ For more details about the network implementation, please refer to the [Networki
 
 _Available as of v1.10.0_
 
-You can move an existing network interface of a running virtual machine (VM) to a different VM Network without restarting the virtual machine. For example, you can move a workload from VLAN 100 to VLAN 200. Harvester applies the change by live-migrating the VM. The target `virt-launcher` pod attaches to the new network, and the guest OS continues running.
+You can move an existing network interface of a running virtual machine (VM) to a different VM Network without restarting the virtual machine. For example, you can move a workload from VLAN 100 to VLAN 200, or from one overlay network to another. Harvester applies the change by live-migrating the VM. The target `virt-launcher` pod attaches to the new network, and the guest OS continues running.
 
 To change the network using the web UI:
 
@@ -66,7 +66,7 @@ To change the network using the web UI:
 The change is applied without a restart only when all of the following conditions are met:
 
 - The virtual machine is [live-migratable](./live-migration.md#live-migratable-virtual-machines).
-- Both the source and destination networks are VLAN (bridge) networks.
+- The source and destination networks are of the same type: both are VLAN or untagged (bridge) networks, or both are [overlay networks](../networking/harvester-network.md#overlay-network-experimental). When an interface moves to another overlay network, Kube-OVN assigns it an IP address from the subnet of the new network.
 - Only the network binding of existing interfaces is modified. The interface name, model, type, and MAC address remain unchanged, and no other VM configuration settings are modified.
 
 In all other cases, Harvester prompts you to restart the virtual machine, and the change takes effect after the restart. The following changes always require a restart:
@@ -77,7 +77,7 @@ In all other cases, Harvester prompts you to restart the virtual machine, and th
 
 :::note
 
-- The guest operating system does not receive notification that the underlying network changed. The MAC address and the interface name inside the guest remain unchanged. If the new network uses a different subnet, renew the DHCP lease or reconfigure the static IP address inside the guest after migration.
+- The guest operating system does not receive notification that the underlying network changed. The MAC address and the interface name inside the guest remain unchanged. If the new network uses a different subnet, request a new DHCP lease or reconfigure the static IP address inside the guest after migration. Renewing the existing lease is not enough, because the renewal is sent to the DHCP server of the previous network. For example, bring the interface down and up, or run `networkctl reconfigure <interface>` on guests that use systemd-networkd.
 - The target node must be attached to the cluster network that hosts the new VM Network. If no eligible node can host the virtual machine on the new network, the migration does not start.
 - If the virtual machine cannot be live-migrated, Harvester saves the configuration change and applies it the next time the virtual machine restarts.
 
