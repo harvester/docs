@@ -66,8 +66,8 @@ To change the network using the web UI:
 The change is applied without a restart only when all of the following conditions are met:
 
 - The virtual machine is [live-migratable](./live-migration.md#live-migratable-virtual-machines).
-- Both the current network and the new network are VLAN (bridge) networks.
-- Only the network of existing interfaces changes. The interface name, model, type, and MAC address stay the same, and nothing else in the virtual machine configuration changes.
+- Both the source and destination networks are VLAN (bridge) networks.
+- Only the network binding of existing interfaces is modified. The interface name, model, type, and MAC address remain unchanged, and no other VM configuration settings are modified.
 
 In all other cases, Harvester prompts you to restart the virtual machine, and the change takes effect after the restart. The following changes always require a restart:
 
