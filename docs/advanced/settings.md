@@ -1303,6 +1303,59 @@ The `max-hotplug-ratio` is set to `4`.
 
 ## UI Settings
 
+### `auth-user-session-idle-ttl-minutes`
+
+**Versions**: v1.10.0 and later
+
+**Definition**: Number of minutes that a Harvester UI login session can stay idle before the user is automatically logged out. Any activity in the browser resets the timer.
+
+When this value is lower than [`auth-user-session-ttl-minutes`](#auth-user-session-ttl-minutes), the Harvester UI displays a **Session expiring** dialog with a countdown shortly before the logout. The dialog is displayed for 20% of the idle time or 5 minutes, whichever is shorter. For example, with a value of `30`, the dialog appears after 25 minutes of inactivity. Users can click **Resume Session** to stay logged in. When the value is equal to or greater than `auth-user-session-ttl-minutes`, the idle timeout is disabled and only the session lifetime applies.
+
+**Default value**: `960` (16 hours)
+
+**Supported values**: Whole number of minutes greater than 0 and less than or equal to the value of `auth-user-session-ttl-minutes`
+
+![session-expiring-dialog](/img/v1.10/advanced/session-expiring-dialog.png)
+
+:::note
+
+This setting is part of the `settings.management.cattle.io` custom resource, and is available only on the **Advanced** > **Settings** > **UI** screen of the standalone Harvester UI. You can also configure it using `kubectl`. Harvester does not validate values set this way, so ensure that the value is a whole number that does not exceed `auth-user-session-ttl-minutes`.
+
+```
+# Get the current values
+kubectl get settings.management.cattle.io auth-user-session-idle-ttl-minutes auth-user-session-ttl-minutes \
+  -o custom-columns=NAME:.metadata.name,VALUE:.value,DEFAULT:.default
+
+# Log out users after 30 minutes of inactivity
+kubectl patch settings.management.cattle.io auth-user-session-idle-ttl-minutes --type=merge -p '{"value":"30"}'
+```
+
+:::
+
+### `auth-user-session-ttl-minutes`
+
+**Versions**: v1.10.0 and later
+
+**Definition**: Maximum lifetime, in minutes, of a Harvester UI login session, regardless of user activity. When the session ends, the user is logged out and must log in again.
+
+**Default value**: `960` (16 hours)
+
+**Supported values**: Whole number of minutes greater than 0 and greater than or equal to the value of [`auth-user-session-idle-ttl-minutes`](#auth-user-session-idle-ttl-minutes)
+
+:::note
+
+This setting is part of the `settings.management.cattle.io` custom resource, and is available only on the **Advanced** > **Settings** > **UI** screen of the standalone Harvester UI. You can also configure it using `kubectl`.
+
+:::
+
+:::tip
+
+Starting with v1.10.0, the Harvester UI displays a **Disconnected** indicator in the header when it loses its connection to the cluster for more than 10 seconds (for example, because of a network interruption). While the indicator is displayed, the resource states shown in the UI may be outdated and do not reflect the actual state of the cluster. The indicator disappears when the connection is restored. If the UI stops trying to reconnect, click **Reload** to refresh the page.
+
+![ui-disconnected-indicator](/img/v1.10/advanced/ui-disconnected-indicator.png)
+
+:::
+
 ### `branding`
 
 **Versions**: v1.2.0 and later
