@@ -28,6 +28,7 @@ The driver provisions node-local LVM volumes. The volumes and the workloads that
 
 - Use the `ReadWriteOnce` access mode. Multi-node `ReadWriteMany` (RWX) access is not supported. Pre-GA versions accepted RWX volumes, but those volumes did not provide true multi-node RWX semantics.
 - Use the `dm-thin` volume type. This is the only volume type included in the GA support scope.
+- Use the `Immediate` volume binding mode (`volumeBindingMode: Immediate`).
 - Virtual machine live migration is not supported for VMs that use LVM volumes.
 
 The `striped` volume type is deprecated and outside the GA support scope. Striped volumes do not provide the storage-efficient snapshot, clone, and restore behavior required by the supported CSI workflow. These operations require full data copies, which increase capacity and I/O requirements and can cause longer operations, retries, and timeouts.
@@ -137,6 +138,8 @@ Use only the `dm-thin` volume type. The `striped` volume type is deprecated and 
 
     - **Volume Mode / Access Modes**: On the **CDI Settings** tab, verify that the volume mode is **Block** and the access mode is **ReadWriteOnce**. For more information, see [Containerized Data Importer (CDI) Settings](../storageclass.md#containerized-data-importer-cdi-settings).
 
+1. Select **Edit YAML** and set `volumeBindingMode: Immediate` before saving the StorageClass.
+
 1. Click **Save**.
 
 1. On the **Storage** screen, verify that the StorageClass was created and the correct provisioner was set.
@@ -152,12 +155,6 @@ For more information, see [StorageClass](../storageclass.md).
 1. Create a new volume using the `dm-thin` LVM StorageClass that you created.
 
     ![](/img/v1.4/csi-driver-lvm/create-lvm-volume-01.png)
-
-    :::note
-
-    The status **Not Ready** is normal because Harvester creates the LVM volume only when the first workload is created.
-
-    :::
 
 1. On the **Virtual Machines** screen, select the target virtual machine, and then select **⋮** > **Add Volume**.
 
@@ -182,6 +179,17 @@ You can also create a new virtual machine with the volume of the LVM StorageClas
 ![](/img/v1.4/csi-driver-lvm/create-vm-with-lvm-volume-02.png)
 
 ## Creating Snapshots for an LVM Volume
+
+:::caution
+
+The LVM StorageClass must use `volumeBindingMode: Immediate`.
+
+If set to `WaitForFirstConsumer`, restoring a VM snapshot will fail due to a deadlock:
+Harvester waits for the restored PVC to bind before starting the VM, while the PVC binding waits for the VM to start.
+
+This is a [known issue (#10665)](https://github.com/harvester/harvester/issues/10665).
+
+:::
 
 1. On the Harvester UI, go to the **Settings** screen.
 
