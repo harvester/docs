@@ -47,6 +47,52 @@ If the virtual machine has one interface connected to the `mgmt` network and ano
 
 For more details about the network implementation, please refer to the [Networking](../networking/harvester-network.md) page.
 
+### Change the Network of a Running Virtual Machine
+
+_Available as of v1.10.0_
+
+You can move an existing network interface of a running virtual machine to a different VM Network without restarting the virtual machine. For example, you can move a workload from VLAN 100 to VLAN 200. Harvester applies the change by live-migrating the virtual machine. The target virt-launcher pod is attached to the new network, and the guest keeps running.
+
+To change the network:
+
+1. On the **Virtual Machines** screen, click **⋮ > Edit Config** on the running virtual machine.
+1. On the **Networks** tab, select a different **Network** for the interface.
+
+    An info message is displayed when the change can be applied with a live migration.
+
+1. Click **Save**.
+
+    The restart dialog is not displayed. The virtual machine is in the **Migrating** state for a short time and then returns to **Running** on the new network.
+
+The change is applied without a restart only when all of the following conditions are met:
+
+- The virtual machine is [live-migratable](./live-migration.md#live-migratable-virtual-machines).
+- Both the current network and the new network are VLAN (bridge) networks.
+- Only the network of existing interfaces changes. The interface name, model, type, and MAC address stay the same, and nothing else in the virtual machine configuration changes.
+
+In all other cases, Harvester prompts you to restart the virtual machine, and the change takes effect after the restart. The following changes always require a restart:
+
+- Moving an interface between a VLAN network and an [overlay network](../networking/harvester-network.md#overlay-network-experimental), in either direction. The interface type changes from `bridge` to `managedtap` (or back), and an interface type cannot be changed while the virtual machine is running.
+- Changing the `mgmt` (management) network.
+- Changes to SR-IOV or PCI passthrough interfaces.
+
+:::note
+
+- The guest operating system is not notified that the network changed. The MAC address and the interface name in the guest remain the same. If the new network uses a different subnet, renew the DHCP lease or reconfigure the IP address in the guest after the migration.
+- The target node must be attached to the cluster network of the new VM Network. If no node can run the virtual machine on the new network, the migration does not start.
+- If the virtual machine cannot be live-migrated, Harvester saves the change and applies it when the virtual machine is restarted.
+
+:::
+
+You can also change the network with kubectl by changing only `spec.template.spec.networks[].multus.networkName`. For example:
+
+```bash
+kubectl -n default patch vm my-vm --type=json \
+  -p '[{"op": "replace", "path": "/spec/template/spec/networks/0/multus/networkName", "value": "default/vlan200"}]'
+```
+
+KubeVirt sets the `MigrationRequired` condition on the virtual machine instance and creates a `VirtualMachineInstanceMigration` named `kubevirt-workload-update-<suffix>`. If the virtual machine gets the `RestartRequired` condition instead, the change cannot be applied while the virtual machine is running.
+
 ### Volumes
 
 You can add additional volumes to the VM after booting. You can also expand the size of the volume after shutting down the VM, click the VM and go to the `Volumes` tab, edit the size of the expanded volume. After restarting the VM and waiting for the resize to complete, your disk will automatically finish expanding.
@@ -71,6 +117,8 @@ After modifying the configuration, you must save your changes. Harvester provide
 
 - `Save and Restart`: Applies the changes and restarts the virtual machine immediately.
 - `Save`: Saves the new configuration without restarting. The changes will remain pending and will not take effect until the VM is manually restarted.
+
+The restart dialog is not displayed when the only change is the network of an interface on a running, live-migratable virtual machine. For more information, see [Change the Network of a Running Virtual Machine](#change-the-network-of-a-running-virtual-machine).
 
 ![edit-vm-save-popup](/img/v1.8/vm/edit-vm-save-popup.png)
 
