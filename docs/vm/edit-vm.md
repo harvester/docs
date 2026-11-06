@@ -77,9 +77,9 @@ In all other cases, Harvester prompts you to restart the virtual machine, and th
 
 :::note
 
-- The guest operating system is not notified that the network changed. The MAC address and the interface name in the guest remain the same. If the new network uses a different subnet, renew the DHCP lease or reconfigure the IP address in the guest after the migration.
-- The target node must be attached to the cluster network of the new VM Network. If no node can run the virtual machine on the new network, the migration does not start.
-- If the virtual machine cannot be live-migrated, Harvester saves the change and applies it when the virtual machine is restarted.
+- The guest operating system does not receive notification that the underlying network changed. The MAC address and the interface name inside the guest remain unchanged. If the new network uses a different subnet, renew the DHCP lease or reconfigure the static IP address inside the guest after migration.
+- The target node must be attached to the cluster network that hosts the new VM Network. If no eligible node can host the virtual machine on the new network, the migration does not start.
+- If the virtual machine cannot be live-migrated, Harvester saves the configuration change and applies it the next time the virtual machine restarts.
 
 :::
 
