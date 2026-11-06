@@ -71,9 +71,9 @@ The change is applied without a restart only when all of the following condition
 
 In all other cases, Harvester prompts you to restart the virtual machine, and the change takes effect after the restart. The following changes always require a restart:
 
-- Moving an interface between a VLAN network and an [overlay network](../networking/harvester-network.md#overlay-network-experimental), in either direction. The interface type changes from `bridge` to `managedtap` (or back), and an interface type cannot be changed while the virtual machine is running.
+- Moving an interface between a VLAN network and an [overlay network](../networking/harvester-network.md#overlay-network-experimental) in either direction. The interface type changes between `bridge` and `managedtap`, which cannot be altered while the virtual machine is running.
 - Changing the `mgmt` (management) network.
-- Changes to SR-IOV or PCI passthrough interfaces.
+- Modifying SR-IOV or PCI passthrough interfaces.
 
 :::note
 
