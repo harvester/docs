@@ -90,7 +90,7 @@ kubectl -n default patch vm my-vm --type=json \
   -p '[{"op": "replace", "path": "/spec/template/spec/networks/0/multus/networkName", "value": "default/vlan200"}]'
 ```
 
-KubeVirt sets the `MigrationRequired` condition on the virtual machine instance and creates a `VirtualMachineInstanceMigration` named `kubevirt-workload-update-<suffix>`. If the virtual machine gets the `RestartRequired` condition instead, the change cannot be applied while the virtual machine is running.
+KubeVirt adds the `MigrationRequired` condition to the `VirtualMachineInstance` (VMI) and automatically creates a `VirtualMachineInstanceMigration` resource named `kubevirt-workload-update-<suffix>`. If the virtual machine receives the `RestartRequired` condition instead, the update cannot be performed dynamically and requires a restart.
 
 ### Volumes
 
