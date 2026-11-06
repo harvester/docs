@@ -668,6 +668,24 @@ Changing the `additional-guest-memory-overhead-ratio` setting affects the VMs pe
 
 :::
 
+### `persistent-reservation-enabled`
+
+**Definition**: Setting that allows VMs to use SCSI-3 persistent reservations on LUN disks.
+
+Guest clusters that fence nodes with persistent reservations, such as Windows Server Failover Clustering, need this setting. For more information, see [Guest Clustering with Shared SAN LUNs](../vm/guest-clustering-shared-luns.md).
+
+When you enable the setting, Harvester adds a `pr-helper` container to the `virt-handler` pod on every node, and the `virt-handler` pods are restarted. Running VMs aren't affected.
+
+You can only disable the setting when no running VM uses a LUN disk with persistent reservation.
+
+**Default value**: `false`
+
+**Example**:
+
+```
+true
+```
+
 ### `release-download-url`
 
 **Definition**: URL for downloading the software required for upgrades.
