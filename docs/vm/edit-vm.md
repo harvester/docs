@@ -51,18 +51,17 @@ For more details about the network implementation, please refer to the [Networki
 
 _Available as of v1.10.0_
 
-You can move an existing network interface of a running virtual machine to a different VM Network without restarting the virtual machine. For example, you can move a workload from VLAN 100 to VLAN 200. Harvester applies the change by live-migrating the virtual machine. The target virt-launcher pod is attached to the new network, and the guest keeps running.
+You can move an existing network interface of a running virtual machine (VM) to a different VM Network without restarting the virtual machine. For example, you can move a workload from VLAN 100 to VLAN 200. Harvester applies the change by live-migrating the VM. The target `virt-launcher` pod attaches to the new network, and the guest OS continues running.
 
-To change the network:
+To change the network using the web UI:
 
-1. On the **Virtual Machines** screen, click **⋮ > Edit Config** on the running virtual machine.
-1. On the **Networks** tab, select a different **Network** for the interface.
+1. On the **Virtual Machines** screen, locate the running virtual machine and select **⋮ > Edit Config**.
+2. Go to the **Networks** tab and select a different **Network** for the interface.
+    
+    An informational message indicates when the change can be applied using live migration.
+3. Click **Save**.
 
-    An info message is displayed when the change can be applied with a live migration.
-
-1. Click **Save**.
-
-    The restart dialog is not displayed. The virtual machine is in the **Migrating** state for a short time and then returns to **Running** on the new network.
+   The restart confirmation dialog is bypassed. The virtual machine transitions to the **Migrating** state temporarily, and then returns to the **Running** state on the new network.
 
 The change is applied without a restart only when all of the following conditions are met:
 
