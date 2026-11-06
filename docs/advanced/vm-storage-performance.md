@@ -58,7 +58,7 @@ Performance impacts vary by cluster configuration. Always benchmark these settin
     - To create a virtual machine, click **Create**.
     - To edit an existing virtual machine, select **⋮ > Edit Config**.
 
-1. On the **Volumes** tab, locate the target disk, and then select a **Storage Performance Profile**.
+1. On the **Volumes** tab, locate the target disk, and then select **Storage Performance Profile**.
 
     The field is available on image, new, existing, and container volumes.
 
