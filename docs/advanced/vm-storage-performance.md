@@ -76,7 +76,7 @@ Performance impacts vary by cluster configuration. Always benchmark these settin
 
 :::info
 
-You can also set the options when you create a volume. Go to **Volumes**, click **Create**, and then select a **Storage Performance Profile**. The options are saved as defaults on the volume and are applied when the volume is attached to a virtual machine as a disk.
+You can also set the options when you create a volume. Go to **Volumes**, click **Create**, and then select **Storage Performance Profile**. The options are saved as defaults on the volume and are applied when the volume is attached to a virtual machine as a disk.
 
 :::
 
