@@ -1095,6 +1095,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
     }
   },
   "restoreVM": false,
+  "shutdownVMOnMigrationFailure": false,
   "logReadyTimeout": "5"
 }
 ```
@@ -1140,7 +1141,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
   The node upgrade is an atomic operation, which includes upgrading of the node's RKE2 components and operating system. The upgrade is either fully completed or failed, with no half-finished state.
 
-  To prepare a target node for upgrade, Harvester first attempts to live-migrate all running virtual machines to other nodes. Virtual machines that cannot be live-migrated are automatically shut down to avoid potential disruption and issues during the subsequent upgrade steps.
+  To prepare a target node for upgrade, Harvester first attempts to live-migrate all running virtual machines to other nodes. The `restoreVM` option determines how Harvester handles non-migratable virtual machines, and the `shutdownVMOnMigrationFailure` option determines how Harvester handles virtual machines with failed live migrations.
 
   - `strategy`: Node upgrade strategy.
 
@@ -1178,6 +1179,20 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
   :::
 
+- `shutdownVMOnMigrationFailure` (available as of v1.8.3, v1.9.1, and v1.10.0): Option that determines whether Harvester shuts down a virtual machine when its live migration fails during the pre-drain phase of a node upgrade. You can specify either of the following values:
+
+  - `true`: Harvester shuts down the virtual machine to allow the upgrade to proceed. The virtual machine remains stopped after the upgrade, even if `restoreVM` is set to `true`, so you must start it manually.
+
+  - `false`: This is the default value. The virtual machine keeps running, and the upgrade waits while the migration is retried. A missing field is treated as `false`.
+
+  :::caution
+
+  When this option is set to `false`, the upgrade remains blocked until the live migration succeeds or the virtual machine is stopped. No timeout applies. For more information, see [Failed Live Migration in the "Pre-drained" State](../upgrade/automatic.md#failed-live-migration-in-the-pre-drained-state).
+
+  :::
+
+  Harvester reads this option once, when node upgrades start, and uses the same value for all nodes. Changes made after that point are ignored for the current upgrade and only take effect in the next upgrade.
+
 - `logReadyTimeout`: Number of minutes Harvester allows for the creation of the upgrade logging infrastructure. You can specify a value (enclosed in double quotes) from `"1"` to `"20"`. The default value is `"5"`.
 
   - **Default value**: `"5"`
@@ -1200,8 +1215,9 @@ https://your.upgrade.checker-url/v99/checkupgrade
         "node-3"
       ]
     }
-  }
+  },
   "restoreVM": true,
+  "shutdownVMOnMigrationFailure": false,
   "logReadyTimeout": "5"
 }
 ```

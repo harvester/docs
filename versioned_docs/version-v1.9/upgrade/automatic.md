@@ -34,6 +34,7 @@ The following table outlines the supported upgrade paths.
 
 | Installed Version | Supported Upgrade Versions |
 | --- | --- |
+| v1.9.x | [v1.9.y](./v1-9-x-to-v1-9-y.md) (*y* is greater than *x*) |
 | v1.8.x | [v1.9.x](./v1-8-x-to-v1-9-x.md) |
 | v1.8.x | [v1.8.y](./v1-8-x-to-v1-8-y.md) (*y* is greater than *x*) |
 | v1.7.x | [v1.8.x](./v1-7-x-to-v1-8-x.md) |
@@ -115,7 +116,7 @@ For more information, see [Phase 4: Upgrade Nodes](./troubleshooting.md#phase-4-
 
 Live migration copies a virtual machine's memory pages to the target node while the virtual machine continues to run. If a virtual machine writes to memory faster than its pages can be transferred across the network (a high *dirty rate*), the migration cannot converge. Harvester then aborts the migration upon reaching the [completion or progress timeout](../vm/live-migration.md#migration-timeouts).
 
-This issue commonly affects write-heavy workloads (such as active databases) where the memory dirty rate exceeds available bandwidth. If these migrations fail to converge within the maintenance window, the upgrade may stall.
+This issue commonly affects write-heavy workloads (such as active databases) where the memory dirty rate exceeds available bandwidth. If these migrations fail to converge within the maintenance window, the upgrade may stall. For more information, see [Failed Live Migration in the "Pre-drained" State](#failed-live-migration-in-the-pre-drained-state).
 
 #### Comparison
 
@@ -602,7 +603,46 @@ Related issues: [#7366](https://github.com/harvester/harvester/issues/7366), [#6
 
 Live migration of virtual machines can fail when the upgrading node is cordoned during the pre-drain state. A common cause is the lack of compatible target nodes due to strict [anti-affinity rules](https://docs.harvesterhci.io/v1.6/vm/index#vm-scheduling).
 
-When this happens, Harvester automatically shuts down these virtual machines to unblock the upgrade and prevent the process from restarting unsafely.
+Harvester's response depends on the version that you are upgrading to, not the version that is currently installed. Starting with v1.9.1, the response depends on the value of the `shutdownVMOnMigrationFailure` option in the [`upgrade-config`](../advanced/settings.md#upgrade-config) setting.
+
+- `false` (default): The virtual machine keeps running, and the upgrade waits while the migration is retried. No timeout applies.
+
+- `true`: Harvester shuts down the virtual machine to unblock the upgrade. The virtual machine remains stopped after the upgrade, even if `restoreVM` is set to `true`, so you must start it manually.
+
+Harvester reads this option once, when node upgrades start, and uses the same value for all nodes. Changes made after that point are ignored for the current upgrade and only take effect in the next upgrade.
+
+### Keeping the Automatic Shutdown Behavior
+
+If you want Harvester to shut down virtual machines with failed live migrations, perform the following steps before starting the upgrade:
+
+1. Run the command `kubectl edit settings.harvesterhci.io upgrade-config`. The Harvester UI does not include this field on versions earlier than v1.10.0.
+
+1. Add `"shutdownVMOnMigrationFailure": true` to the JSON string in the `value` field. If the `value` field is empty, copy the contents of the `default` field first because a non-empty `value` replaces `default` entirely.
+
+    ```
+    value: '{"imagePreloadOption":{"strategy":{"type":"sequential"}},"nodeUpgradeOption":{"strategy":{"mode":"auto"}},"restoreVM":false,"shutdownVMOnMigrationFailure":true,"logReadyTimeout":"5"}'
+    ```
+
+The value remains in effect for later upgrades until you change it.
+
+### Unblocking a Waiting Upgrade
+
+To identify the affected virtual machines, check the logs of the node's `pre-drain` job. The logs include the name of the virtual machine, the `VirtualMachineInstanceMigration` object, and the failure reason.
+
+```
+$ kubectl logs -n harvester-system jobs/hvst-upgrade-9gmg2-pre-drain-node2
+...
+virtual machine default/vm1 failed to migrate, waiting for the migration to be retried. vmim: default/kubevirt-evacuation-abcde, warnings: FailedMigration, failure reason: <reason>, shutdownVMOnMigrationFailure: false
+to continue the upgrade, fix the migration failure or stop the virtual machine manually
+```
+
+To unblock the upgrade, perform one of the following actions:
+
+- Fix the cause of the migration failure and wait for the next retry to succeed.
+
+- Stop the virtual machine manually. You must start it again after the upgrade.
+
+Changing `shutdownVMOnMigrationFailure` at this point does not unblock the upgrade.
 
 ## Recurring Longhorn Snapshots and Backups are Unsupported
 
