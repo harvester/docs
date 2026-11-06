@@ -117,11 +117,11 @@ For more information, see the [Longhorn documentation](https://longhorn.io/docs/
 
 For more information, see [cluster-pod-security-standard](./cluster-pod-security-standard.md).
 
-**Default value**: 
+**Default value**:
 ```json
 {
   "enabled":false,
-  "whitelistedNamespacesList":"", 
+  "whitelistedNamespacesList":"",
   "privilegedNamespacesList":"",
   "restrictedNamespacesList":""
 }
@@ -132,7 +132,7 @@ For more information, see [cluster-pod-security-standard](./cluster-pod-security
 ```json
 {
   "enabled":true,
-  "whitelistedNamespacesList":"namespace1,namespace2,namespace3", 
+  "whitelistedNamespacesList":"namespace1,namespace2,namespace3",
   "privilegedNamespacesList":"privileged-ns1,privileged-ns2",
   "restrictedNamespacesList":"restricted-ns1,restricted-ns2"
 }
@@ -1017,11 +1017,11 @@ When generating a support bundle, Harvester creates a ZIP file with the naming f
 **Supported options and values**:
 
 - If a custom name is configured, the support bundle file name follows this format: `supportbundle_{name}_{timestamp}.zip`
-  
+
   Example: `supportbundle_my-cluster_2025-09-17T03-39-17Z.zip`
 
 - If no custom name is configured (empty value), the support bundle file name uses a UUID format: `supportbundle_{uuid}_{timestamp}.zip`
-  
+
   Example: `supportbundle_c2eb6186-525f-411e-91ee-e88ed090d66d_2025-09-17T03-39-17Z.zip`
 
 **Notes**:
@@ -1095,6 +1095,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
     }
   },
   "restoreVM": false,
+  "shutdownVMOnMigrationFailure": false,
   "logReadyTimeout": "5"
 }
 ```
@@ -1140,7 +1141,7 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
   The node upgrade is an atomic operation, which includes upgrading of the node's RKE2 components and operating system. The upgrade is either fully completed or failed, with no half-finished state.
 
-  To prepare a target node for upgrade, Harvester first attempts to live-migrate all running virtual machines to other nodes. Virtual machines that cannot be live-migrated are automatically shut down to avoid potential disruption and issues during the subsequent upgrade steps.
+  To prepare a target node for upgrade, Harvester first attempts to live-migrate all running virtual machines to other nodes. The `restoreVM` option determines how Harvester handles non-migratable virtual machines, and the `shutdownVMOnMigrationFailure` option determines how Harvester handles virtual machines with failed live migrations.
 
   - `strategy`: Node upgrade strategy.
 
@@ -1156,16 +1157,16 @@ https://your.upgrade.checker-url/v99/checkupgrade
 
       :::info important
 
-      Upgrading of nodes listed in this field is _paused definitely_ until you take specific actions to [resume the process](upgrade/automatic.md#resuming-a-paused-node-upgrade). Given that Harvester upgrades nodes sequentially, this implies that the entire upgrade progress is paused as well. 
+      Upgrading of nodes listed in this field is _paused definitely_ until you take specific actions to [resume the process](upgrade/automatic.md#resuming-a-paused-node-upgrade). Given that Harvester upgrades nodes sequentially, this implies that the entire upgrade progress is paused as well.
 
       :::
-      
+
       **Example**:
-      
+
       ```json
       "pauseNodes": ["node-0", "node-2"]
       ```
-    
+
 - `restoreVM`: Option that enables Harvester to automatically restore previously running [non-migratable virtual machines](../vm/live-migration.md#non-migratable-virtual-machines) after the upgrade is *successfully* completed. You can specify either of the following values:
 
   - `true`: Harvester forcibly shuts down *running* and *paused* non-migratable virtual machines on each node. After the upgrade is completed, the previously running virtual machines are automatically restarted, while the paused virtual machines remain shut down.
@@ -1177,6 +1178,20 @@ https://your.upgrade.checker-url/v99/checkupgrade
   All virtual machines are considered non-migratable in single-node environments. Harvester forcibly shuts down all virtual machines before starting the upgrade process.
 
   :::
+
+- `shutdownVMOnMigrationFailure` : Option that determines whether Harvester shuts down a virtual machine when its live migration fails during the pre-drain phase of a node upgrade. You can specify either of the following values:
+
+  - `true`: Harvester shuts down the virtual machine to allow the upgrade to proceed. The virtual machine remains stopped after the upgrade, even if `restoreVM` is set to `true`, so you must start it manually.
+
+  - `false`: This is the default value. The virtual machine keeps running, and the upgrade waits while the migration is retried. A missing field is treated as `false`.
+
+  :::caution
+
+  When this option is set to `false`, the upgrade remains blocked until the live migration succeeds or the virtual machine is stopped. No timeout applies. For more information, see [Failed Live Migration in the "Pre-drained" State](../upgrade/automatic.md#failed-live-migration-in-the-pre-drained-state).
+
+  :::
+
+  Harvester reads this option once, when node upgrades start, and uses the same value for all nodes. Changes made after that point are ignored for the current upgrade and only take effect in the next upgrade.
 
 - `logReadyTimeout`: Number of minutes Harvester allows for the creation of the upgrade logging infrastructure. You can specify a value (enclosed in double quotes) from `"1"` to `"20"`. The default value is `"5"`.
 
@@ -1200,8 +1215,9 @@ https://your.upgrade.checker-url/v99/checkupgrade
         "node-3"
       ]
     }
-  }
+  },
   "restoreVM": true,
+  "shutdownVMOnMigrationFailure": false,
   "logReadyTimeout": "5"
 }
 ```
