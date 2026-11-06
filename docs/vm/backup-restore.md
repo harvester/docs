@@ -274,6 +274,17 @@ To restore a new VM from a snapshot, follow these steps:
 
 You can replace an existing VM using the snapshot.
 
+:::caution
+
+The source StorageClass must use `volumeBindingMode: Immediate`.
+
+If set to `WaitForFirstConsumer`, restoring a VM snapshot will fail due to a deadlock:
+Harvester waits for the restored PVC to bind before starting the VM, while the PVC binding waits for the VM to start.
+
+This is a [known issue (#10665)](https://github.com/harvester/harvester/issues/10665).
+
+:::
+
 :::note
 
 You can only choose to retain the previous volumes.
