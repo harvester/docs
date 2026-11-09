@@ -75,7 +75,7 @@ In v1.10.0, all checks are reported by the `harvester-controller` component. Eac
 
 ## Ignoring a Check
 
-Some problems are expected in a cluster (for example, a test volume that cannot have all of its replicas). You can ignore an entire check or some of its resources. Ignored checks and resources are not counted as errors or warnings, and they are hidden unless you select **Show ignored**.
+Some problems are expected in a cluster (for example, a test volume that cannot schedule all its replicas). You can ignore an entire check or specific resources within it. Ignored checks and resources are not counted as errors or warnings, and remain hidden unless you select **Show ignored**.
 
 1. On the **Components** tab, open the row of the component.
 
