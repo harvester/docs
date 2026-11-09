@@ -100,7 +100,7 @@ The **⋮** menu only includes the actions that your account is allowed to perfo
 When a check has an ignore rule, the **⋮** menu of the check includes **View Ignore Rule**, **Edit Ignore Rule**, and **Delete Ignore Rule**.
 
 - **View Ignore Rule**: Displays the settings of the rule and when it expires.
-- **Edit Ignore Rule**: Displays when the rule expires, with no option selected under **Ignore for**. To keep the current expiry, leave the options unselected. To extend the rule, select a duration. **Save** is enabled only after you change something.
+- **Edit Ignore Rule**: Displays when the rule expires; no option is selected by default under **Ignore for**. To maintain the current expiration date, leave the options unselected. To extend the rule, select a new duration. The **Save** button is enabled only after you make a change.
 - **Delete Ignore Rule**: Deletes the rule after you confirm. The check and its resources are reported again.
 
 An expired rule is not deleted, but it no longer applies, so the check is reported again. To ignore the check again, edit the rule and select a duration. If you change an expired rule without selecting a duration, a warning indicates that the rule remains expired.
