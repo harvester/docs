@@ -45,7 +45,7 @@ When the add-on is enabled, the **Components** tab is displayed on the **Dashboa
 
 ![Components Tab](/img/v1.10/resource-health/components-tab.png)
 
-The table contains one row for each component, with its severity (**Error**, **Warning**, or **Healthy**) and its number of errors and warnings. Rows are collapsed by default. To view the checks of a component, select the arrow next to the row or the name of the component. You can also select **Expand All** or **Collapse All**.
+The table contains one row for each component, detailing its severity (**Error**, **Warning**, or **Healthy**) and the number of errors and warnings. Rows are collapsed by default. To view the checks for a specific component, select the arrow next to the row or the component's name. You can also select **Expand All** or **Collapse All**.
 
 Each check includes the following information:
 
