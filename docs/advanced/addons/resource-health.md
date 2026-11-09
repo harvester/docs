@@ -58,7 +58,7 @@ You can use the **Filter** box to find checks by component, severity, check name
 
 ## Available Checks
 
-In v1.10.0, all checks are reported by the `harvester-controller` component. Each type of resource is checked in its own `ComponentHealth` resource, which is listed in parentheses.
+In v1.10.0, all checks are reported by the `harvester-controller` component. Each resource type is checked in its own `ComponentHealth` resource, indicated in parentheses below.
 
 - **Nodes** (`harvester-controller-node`): `NodeCordoned` (Info).
 - **Virtual machines** (`harvester-controller-vm`): `VMHostDeviceLiveMigrationUnsupported` and `VMNodeSelectorLiveMigrationUnsupported` (Warning).
