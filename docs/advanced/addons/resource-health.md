@@ -33,9 +33,9 @@ The add-on runs a controller in the `harvester-system` namespace. The controller
 
     Replace `<version>` with the version of your Harvester cluster (for example, `v1.10.0`).
 
-1. On the Harvester UI, go to **Advanced** > **Add-ons**.
+2. On the Harvester UI, go to **Advanced** > **Add-ons**.
 
-1. Select **harvester-resource-health-controller**, and then select **⋮** > **Enable**.
+3. Select **harvester-resource-health-controller**, and then select **⋮** > **Enable**.
 
 Once the add-on is deployed, the controller creates its reports. You can list them using the command `kubectl get componenthealths`.
 
