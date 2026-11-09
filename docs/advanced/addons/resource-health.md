@@ -87,9 +87,9 @@ Some problems are expected in a cluster (for example, a test volume that cannot 
     - **Ignore for**: Select **7 days**, **30 days**, or **Forever**. The dialog shows when the rule will expire.
     - **Reason** (optional): Specify why the check is ignored.
 
-    ![](/img/v1.10/resource-health/create-ignore-rule.png)
+    ![Create Ignore Rule](/img/v1.10/resource-health/create-ignore-rule.png)
 
-1. Select **Create**.
+4. Select **Create**.
 
 When some resources of a check are ignored, the number of hidden resources is displayed under the affected resources (for example, **+ 6 ignored**). The label of the **Show ignored** checkbox includes the number of ignored checks and resources.
 
