@@ -43,7 +43,7 @@ Once the add-on is deployed, the controller creates its reports. You can list th
 
 When the add-on is enabled, the **Components** tab is displayed on the **Dashboard** screen, next to the **VMs**, **Hosts**, **Volumes**, and **Images** event tabs. A red alert icon on the tab indicates that at least one check reports an error. Hover over the icon to see the number of errors.
 
-![](/img/v1.10/resource-health/components-tab.png)
+![Components Tab](/img/v1.10/resource-health/components-tab.png)
 
 The table contains one row for each component, with its severity (**Error**, **Warning**, or **Healthy**) and its number of errors and warnings. Rows are collapsed by default. To view the checks of a component, select the arrow next to the row or the name of the component. You can also select **Expand All** or **Collapse All**.
 
