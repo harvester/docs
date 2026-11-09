@@ -13,6 +13,7 @@ Harvester provides optional features as add-ons to maintain a minimal installati
 The following add-ons are available in this version:
 
 * [harvester-csi-driver-lvm](./addons/lvm-local-storage.md) (Experimental in v1.9.0, GA as of v1.9.1)
+* [harvester-resource-health-controller](./addons/resource-health.md) (Experimental)
 * [harvester-seeder](./addons/seeder.md)
 * [harvester-upgrade-manager](./addons/upgrade-manager.md) (Experimental)
 * [harvester-vm-dhcp-controller](./addons/managed-dhcp.md) (Experimental)
