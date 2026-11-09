@@ -79,7 +79,7 @@ Some problems are expected in a cluster (for example, a test volume that cannot 
 
 1. On the **Components** tab, open the row of the component.
 
-1. Locate the check, and then select **⋮** > **Create Ignore Rule**.
+2. Locate the check, and then select **⋮** > **Create Ignore Rule**.
 
 3. Configure the following settings:
 
