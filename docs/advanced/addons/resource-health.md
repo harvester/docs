@@ -81,7 +81,7 @@ Some problems are expected in a cluster (for example, a test volume that cannot 
 
 1. Locate the check, and then select **⋮** > **Create Ignore Rule**.
 
-1. Configure the following settings:
+3. Configure the following settings:
 
     - **Scope**: Select **Entire check** to ignore the check, or **Selected resources** to ignore only some of its resources. All affected resources are selected by default, so remove the ones that must still be reported. Resources that are affected by the check later are still reported.
     - **Ignore for**: Select **7 days**, **30 days**, or **Forever**. The dialog shows when the rule will expire.
