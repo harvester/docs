@@ -14,7 +14,7 @@ _Available as of v1.10.0_
 
 **harvester-resource-health-controller** is an *experimental* add-on. For information about feature maturity, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
 
-This add-on is not included in the Harvester ISO, but you can download the manifest (`harvester-resource-health-controller-addon.yaml`) from the [Harvester **Releases** page](https://github.com/harvester/harvester/releases). Manifest source files are located in the `addons/standalone` directory of the [Harvester repository](https://github.com/harvester/harvester/tree/master/addons/standalone).
+This add-on is not included in the Harvester ISO, but you can download the manifest (`harvester-resource-health-controller-addon.yaml`) from the [Harvester **Releases** page](https://github.com/harvester/harvester/releases). The manifest source files are located in the `addons/standalone` directory of the [Harvester repository](https://github.com/harvester/harvester/tree/master/addons/standalone).
 
 :::
 
