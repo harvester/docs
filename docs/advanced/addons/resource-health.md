@@ -91,7 +91,7 @@ Some problems are expected in a cluster (for example, a test volume that cannot 
 
 4. Select **Create**.
 
-When some resources of a check are ignored, the number of hidden resources is displayed under the affected resources (for example, **+ 6 ignored**). The label of the **Show ignored** checkbox includes the number of ignored checks and resources.
+When specific resources within a check are ignored, the number of hidden resources is displayed beneath the affected resources (for example, **+ 6 ignored**). The **Show ignored** checkbox label also indicates the total number of ignored checks and resources.
 
 The **⋮** menu only includes the actions that your account is allowed to perform on ignore rules.
 
