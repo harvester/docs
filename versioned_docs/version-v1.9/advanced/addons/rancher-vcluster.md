@@ -1,12 +1,18 @@
 ---
 sidebar_position: 5
-sidebar_label: Rancher Manager
-title: "Rancher Manager (Experimental)"
+sidebar_label: Rancher VCluster
+title: "Rancher VCluster (Deprecated)"
 ---
 
 <head>
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/advanced/addons/rancher-vcluster"/>
 </head>
+
+:::caution
+
+**rancher-vcluster** is deprecated as of v1.9.0. Use the [rancher-k3k](./rancher-k3k.md) add-on, which is available as of v1.9.1, instead.
+
+:::
 
 :::note
 

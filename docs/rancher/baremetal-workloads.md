@@ -14,7 +14,12 @@ _Available as of v1.9.0_
 
 :::caution
 
-Do not use the embedded Rancher instance to deploy and manage production bare-metal workloads. This embedded instance is strictly for cluster debugging and validation. You must use an external Rancher instance to manage container workloads running on a Harvester cluster.
+Do not use the embedded Rancher instance to deploy and manage production bare-metal workloads. This embedded instance is strictly for cluster debugging and validation. You must use one of the following to manage container workloads running on a Harvester cluster:
+
+- An external Rancher instance
+- A Rancher instance deployed on the Harvester cluster using the [rancher-k3k](../advanced/addons/rancher-k3k.md) add-on. This add-on is currently experimental.
+
+The Rancher instance deployed by `rancher-k3k` is separate from the embedded Rancher instance. The default Rancher version of the add-on may be earlier than the version in which the feature flag is GA, so you may need to change the value of `rancher.version` in the add-on configuration.
 
 :::
 

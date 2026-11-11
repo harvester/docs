@@ -5,12 +5,12 @@ title: "Rancher K3k Addon"
 ---
 
 <head>
-  <link rel="canonical" href="https://docs.harvesterhci.io/v1.8/advanced/addons/rancher-k3k"/>
+  <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/advanced/addons/rancher-k3k"/>
 </head>
 
 :::note
 
-**rancher-k3k** is an *Experimental* add-on. It is not included in the Harvester ISO, but you can download it from the [experimental-addons repository](https://github.com/harvester/experimental-addons). For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
+**rancher-k3k** is an *Experimental* add-on. It is not included in the Harvester ISO, but you can download the manifest (`rancher-k3k-addon.yaml`) from the [Harvester **Releases** page](https://github.com/harvester/harvester/releases). Manifest source files are located in the `addons/standalone` directory of the [Harvester repository](https://github.com/harvester/harvester/tree/master/addons/standalone). For more information about experimental features, see [Feature Labels](../../getting-started/document-conventions.md#feature-labels).
 
 :::
 
@@ -26,13 +26,15 @@ If you are using the Harvester kubeconfig file, you can install the add-on by ru
 
 ### Install k3k Add-on
 ```
-https://raw.githubusercontent.com/harvester/experimental-addons/refs/heads/v1.9/k3k/k3k.yaml
+kubectl apply -f https://github.com/harvester/harvester/releases/download/<version>/k3k-addon.yaml
 ```
 
 ### Install rancher-k3k Add-on
 ```
-kubectl apply -f https://raw.githubusercontent.com/harvester/experimental-addons/refs/heads/v1.9/rancher-k3k/rancher-k3k.yaml
+kubectl apply -f https://github.com/harvester/harvester/releases/download/<version>/rancher-k3k-addon.yaml
 ```
+
+Replace `<version>` with the version of your Harvester cluster (for example, `v1.10.0`).
 
 ## Configuring the Add-on
 
@@ -40,7 +42,7 @@ After installation, configure the add-on using the Harvester UI.
 
 1. Go to **Advanced** > **Add-ons**.
 
-2. Locate the **k3k** add-on, and then select **:** -> **Enable**.
+2. Locate the **k3k** add-on, and then select **⋮** > **Enable**.
 
 3. Wait a few minutes for add-on to be deployed and marked ready.
 
@@ -64,10 +66,10 @@ spec:
       servers: 1
       version: v1.35.4-k3s1
       storageClassName: "harvester-longhorn"
-  version: 1.9.0-rc5
+  version: 1.10.0
 ```
 
-6. Save changes and then select **:** > **Enable**.
+6. Save changes and then select **⋮** > **Enable**.
 
 Once the add-on is deployed, Rancher can take a few minutes to become available. 
 
