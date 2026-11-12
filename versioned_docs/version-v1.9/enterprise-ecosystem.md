@@ -3,7 +3,7 @@ id: enterprise-ecosystem
 sidebar_position: 18
 sidebar_label: Enterprise Ecosystem
 title: "Enterprise Ecosystem"
-description: An index of certified partner solutions for storage, backup, and disaster recovery that extend Harvester.
+description: An index of certified partner solutions for storage, backup, disaster recovery, and virtual desktops that extend Harvester.
 keywords:
   - Harvester
   - harvester
@@ -46,3 +46,11 @@ The following partner solutions backup, restore, and replicate virtual machines.
 | NetApp Trident Protect | Snapshots, backups, and replication for Trident volumes. | [Documentation](https://docs.netapp.com/us-en/trident/trident-protect/learn-about-trident-protect.html) |
 | Portworx Backup and Disaster Recovery | Backups and synchronous or asynchronous disaster recovery for Portworx volumes. | [GitHub](https://github.com/libopenstorage/stork), [Backup](https://docs.portworx.com/portworx-backup-on-prem), [Disaster recovery](https://docs.portworx.com/portworx-enterprise/operations/disaster-recovery) |
 | Storware Backup and Recovery | Agentless virtual machine backup. | [Website](https://storware.eu/solutions/suse-virtualization-backup-and-recovery/) |
+
+### Partner Virtual Desktop Infrastructure
+
+The following partner solutions deliver virtual desktops and applications from Harvester virtual machines.
+
+| Solution | Description | Resources |
+| --- | --- | --- |
+| Kasm Workspaces | Browser-based delivery of desktops, applications, and browsers, with autoscaled Linux and Windows virtual machines on Harvester. | [Harvester autoscaling](https://docs.kasm.com/docs/how-to/infra-autoscale/autoscale/autoscale-providers/harvester), [SUSE blog](https://www.suse.com/c/suse-and-kasm-partnership/) |

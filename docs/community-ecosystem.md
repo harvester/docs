@@ -17,7 +17,7 @@ keywords:
   <link rel="canonical" href="https://docs.harvesterhci.io/v1.9/community-ecosystem"/>
 </head>
 
-This page is an index of open source projects, tools, and resources that extend Harvester, grouped by category. The Certified Partner Solutions, Partner Storage, and Partner Backup and Disaster Recovery sections are listed on the [Enterprise Ecosystem](./enterprise-ecosystem.md) page.
+This page is an index of open source projects, tools, and resources that extend Harvester, grouped by category. The Certified Partner Solutions, Partner Storage, Partner Backup and Disaster Recovery, and Partner Virtual Desktop Infrastructure sections are listed on the [Enterprise Ecosystem](./enterprise-ecosystem.md) page.
 
 :::caution
 
