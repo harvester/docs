@@ -47,6 +47,51 @@ If the virtual machine has one interface connected to the `mgmt` network and ano
 
 For more details about the network implementation, please refer to the [Networking](../networking/harvester-network.md) page.
 
+### Change the Network of a Running Virtual Machine
+
+_Available as of v1.10.0_
+
+You can move an existing network interface of a running virtual machine (VM) to a different VM Network without restarting the virtual machine. For example, you can move a workload from VLAN 100 to VLAN 200, or from one overlay network to another. Harvester applies the change by live-migrating the VM. The target `virt-launcher` pod attaches to the new network, and the guest OS continues running.
+
+To change the network using the web UI:
+
+1. On the **Virtual Machines** screen, locate the running virtual machine and select **⋮ > Edit Config**.
+2. Go to the **Networks** tab and select a different **Network** for the interface.
+    
+    An informational message indicates when the change can be applied using live migration.
+3. Click **Save**.
+
+   The restart confirmation dialog is bypassed. The virtual machine transitions to the **Migrating** state temporarily, and then returns to the **Running** state on the new network.
+
+The change is applied without a restart only when all of the following conditions are met:
+
+- The virtual machine is [live-migratable](./live-migration.md#live-migratable-virtual-machines).
+- The source and destination networks are of the same type: both are VLAN or untagged (bridge) networks, or both are [overlay networks](../networking/harvester-network.md#overlay-network-experimental). When an interface moves to another overlay network, Kube-OVN assigns it an IP address from the subnet of the new network.
+- Only the network binding of existing interfaces is modified. The interface name, model, type, and MAC address remain unchanged, and no other VM configuration settings are modified.
+
+In all other cases, Harvester prompts you to restart the virtual machine, and the change takes effect after the restart. The following changes always require a restart:
+
+- Moving an interface between a VLAN network and an [overlay network](../networking/harvester-network.md#overlay-network-experimental) in either direction. The interface type changes between `bridge` and `managedtap`, which cannot be altered while the virtual machine is running.
+- Changing the `mgmt` (management) network.
+- Modifying SR-IOV or PCI passthrough interfaces.
+
+:::note
+
+- The guest operating system does not receive notification that the underlying network changed. The MAC address and the interface name inside the guest remain unchanged. If the new network uses a different subnet, request a new DHCP lease or reconfigure the static IP address inside the guest after migration. Renewing the existing lease is not enough, because the renewal is sent to the DHCP server of the previous network. For example, bring the interface down and up, or run `networkctl reconfigure <interface>` on guests that use systemd-networkd.
+- The target node must be attached to the cluster network that hosts the new VM Network. If no eligible node can host the virtual machine on the new network, the migration does not start.
+- If the virtual machine cannot be live-migrated, Harvester saves the configuration change and applies it the next time the virtual machine restarts.
+
+:::
+
+You can also update the network using `kubectl` by modifying `spec.template.spec.networks[].multus.networkName`:
+
+```bash
+kubectl -n default patch vm my-vm --type=json \
+  -p '[{"op": "replace", "path": "/spec/template/spec/networks/0/multus/networkName", "value": "default/vlan200"}]'
+```
+
+KubeVirt adds the `MigrationRequired` condition to the `VirtualMachineInstance` (VMI) and automatically creates a `VirtualMachineInstanceMigration` resource named `kubevirt-workload-update-<suffix>`. If the virtual machine receives the `RestartRequired` condition instead, the update cannot be performed dynamically and requires a restart.
+
 ### Volumes
 
 You can add additional volumes to the VM after booting. You can also expand the size of the volume after shutting down the VM, click the VM and go to the `Volumes` tab, edit the size of the expanded volume. After restarting the VM and waiting for the resize to complete, your disk will automatically finish expanding.
@@ -71,6 +116,8 @@ After modifying the configuration, you must save your changes. Harvester provide
 
 - `Save and Restart`: Applies the changes and restarts the virtual machine immediately.
 - `Save`: Saves the new configuration without restarting. The changes will remain pending and will not take effect until the VM is manually restarted.
+
+The restart dialog is not displayed when the only change is the network of an interface on a running, live-migratable virtual machine. For more information, see [Change the Network of a Running Virtual Machine](#change-the-network-of-a-running-virtual-machine).
 
 ![edit-vm-save-popup](/img/v1.8/vm/edit-vm-save-popup.png)
 
