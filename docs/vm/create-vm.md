@@ -38,6 +38,7 @@ Please refer to [this page](./create-windows-vm.md) for creating Windows virtual
 1. On the **Basics** tab, configure the following settings:
     - **CPU** and **Memory**: If virtual machines are not expected to fully consume the allocated resources most of the time, you can use the [`overcommit-config`](../advanced/settings.md#overcommit-config) setting to optimize physical resource allocation. As a best practice, the number of virtual CPUs (vCPUs) allocated per virtual machine should not exceed the physical processor threads available on the host.
     - **SSHKey**: Select SSH keys or upload new keys.
+    - **Delete Protection**: Prevent the virtual machine from being deleted until delete protection is disabled. This checkbox is selected by default when the [`default-vm-delete-protection`](../advanced/settings.md#default-vm-delete-protection) setting is `true`. For more information, see [Delete Protection](./delete-protection.md).
 1. Select a custom VM image on the **Volumes** tab. The default disk will be the root disk. You can add more disks to the VM.
 1. To configure networks, go to the **Networks** tab.
     1. The **Management Network** is added by default, you can remove it if the VLAN network is configured.
