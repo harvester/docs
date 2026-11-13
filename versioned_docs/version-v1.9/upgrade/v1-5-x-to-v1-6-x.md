@@ -386,3 +386,62 @@ After the upgrade completes successfully, restore the `LiveMigrate` workload upd
 The CPU and memory hot-plugging feature is now available again.
 
 Related issue: [#10349](https://github.com/harvester/harvester/issues/10349)
+
+### 11. Upgrade Is Stuck in the Cleanup Phase Because of a Missing Default StorageClass
+
+The upgrade process may become stuck in the cleanup phase, with the upgrade controller repeatedly logging the following error:
+
+```
+admission webhook "mutator.harvesterhci.io" denied the request: missing default storage class
+```
+
+The issue occurs when both of the following conditions are met:
+
+- The cluster contains one or more VirtualMachineImage objects that have neither the `harvesterhci.io/storageClassName` annotation nor the `spec.targetStorageClassName` field. Images created on Harvester v1.5.0 or earlier do not have these values because the control plane only started recording the target StorageClass in v1.5.1.
+
+- No StorageClass in the cluster is annotated with `storageclass.kubernetes.io/is-default-class: "true"`. This includes clusters in which `harvester-longhorn` is explicitly annotated with `storageclass.kubernetes.io/is-default-class: "false"`, and clusters that rely only on the deprecated `storageclass.beta.kubernetes.io/is-default-class` annotation. Harvester checks the `storageclass.kubernetes.io/is-default-class` annotation only.
+
+During the cleanup phase, the upgrade controller updates the upgrade repository image (for example, to add an owner reference). The mutating webhook attempts to backfill the missing StorageClass values from the default StorageClass. Because no default StorageClass exists, the webhook rejects the update and the controller retries indefinitely.
+
+The same validation can also block removal of the image's finalizer, which prevents the image from being deleted.
+
+To identify the affected images, run the following command:
+
+```
+kubectl get virtualmachineimages.harvesterhci.io -A -o json | jq -r \
+  '.items[]
+   | select(((.metadata.annotations["harvesterhci.io/storageClassName"] // "") == "")
+            and ((.spec.targetStorageClassName // "") == ""))
+   | "\(.metadata.namespace)/\(.metadata.name)"'
+```
+
+To address the issue, perform the following workaround. The upgrade controller retries automatically, so no additional action is required afterward.
+
+#### Workaround: Designate a default StorageClass
+
+This workaround also prevents the same error from recurring during subsequent upgrades and image operations.
+
+1. On the Harvester UI, go to **Advanced > StorageClasses**.
+
+1. Locate the StorageClass that you want to use as the default (usually `harvester-longhorn`), and then select **⋮ > Set as Default**.
+
+    Alternatively, you can annotate the StorageClass using the following command:
+
+    ```
+    kubectl annotate storageclass <storageclass_name> \
+      storageclass.kubernetes.io/is-default-class=true --overwrite
+    ```
+
+1. Verify that exactly one StorageClass is marked as the default.
+
+    ```
+    kubectl get storageclass
+    ```
+
+:::note
+
+Designating a default StorageClass is a cluster-wide change. Any PersistentVolumeClaim created without an explicit `storageClassName` is subsequently provisioned using that StorageClass.
+
+:::
+
+Related issue: [#11921](https://github.com/harvester/harvester/issues/11921)
