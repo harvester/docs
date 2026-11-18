@@ -33,7 +33,7 @@ The VNC console opens in a new browser window, which is titled with the virtual 
 
 ![VNC Console Toolbar](/img/v1.10/vm/vnc-console.png)
 
-- **Connection Status**: For example, **Connecting…**, **Connected**, or **Disconnected**. To open a new connection to the console, select **Connected**, and then select **Reconnect**. When the console is disconnected, **Reconnect** is displayed next to the status.
+- **Connection Status**: Displays the current status, such as **Connecting…**, **Connected**, or **Disconnected**. To open a new connection to the console, select **Connected**, and then select **Reconnect**. When the console is disconnected, **Reconnect** is displayed next to the status.
 - **View only**: Shows the display without sending your keyboard and mouse input to the virtual machine. While this checkbox is selected, **Shortcut keys**, **Ctrl+Alt+Del**, and **Soft reboot** are disabled.
 - **Shortcut keys**: Sends key combinations that your browser or operating system would otherwise intercept. For more information, see [Sending Key Combinations](#sending-key-combinations).
 - **Ctrl+Alt+Del**: Sends Ctrl+Alt+Del after you confirm. Windows opens its sign-in or security screen, while most Linux systems restart the virtual machine.
@@ -59,7 +59,7 @@ The **Shortcut keys** menu sends key combinations that your browser or operating
 
 #### Saving Custom Shortcuts
 
-You can record your own key combinations and send them with one click. Custom shortcuts are saved in your user account, so they are available in any browser that you log in from.
+You can record your own key combinations and send them with one click. Custom shortcuts are saved in your user account, so they are available from any browser you log into.
 
 To save a custom shortcut, perform the following steps:
 
@@ -89,8 +89,8 @@ Only one VNC session can be connected to a virtual machine at a time. If someone
 
 ![Console in Use Message](/img/v1.10/vm/vnc-console-in-use.png)
 
-- **Reconnect**: Tries to connect again. Use this option after the other session is closed.
-- **Take over**: Disconnects the other session and connects yours after you confirm. The disconnected session will not automatically retake control. Instead, it periodically retries in the background and will reconnect only when the active session is released.
+- **Reconnect**: Attempts to connect again. Use this option after the other session is closed.
+- **Take over**: Disconnects the other session and connects your session after you confirm. The disconnected session will not automatically retake control. Instead, it periodically retries in the background and will reconnect only when the active session is released.
 
 :::note
 
