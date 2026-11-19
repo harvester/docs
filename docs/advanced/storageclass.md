@@ -52,6 +52,7 @@ After a StorageClass is created, the fields in the **Parameters** section and mo
     - **Node Selector** (optional): Node tags to be matched during volume scheduling. You can add node tags on the host configuration screen (**Host -> Edit Config**).
     - **Disk Selector** (optional): Disk tags to be matched during volume scheduling. You can add disk tags on the host configuration screen (**Host -> Edit Config**).
     - **Migratable**: Setting that enables [Live Migration](../vm/live-migration.md) for volumes created using the StorageClass. The default value is `Yes`.
+    - **Clone Mode** (Longhorn V2 Data Engine only): Method that Longhorn uses to create a volume from another volume, for example, a virtual machine root volume created from an image. The default value is `Full Copy`. For more information, see [Linked-Clone Volumes](longhorn-v2.md#linked-clone-volumes).
 
     :::caution
 
