@@ -60,6 +60,23 @@ The `hostname` field is **required** for each rule and supports regex patterns f
 When using the `hostname: "*"` pattern, the configuration will be applied to **all nodes** in the cluster.
 
 :::
+## Devices Pattern
+Devices list supports regex patterns for flexible device matching.
+The following example will automatically provision any ssd / nvme:
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: harvester-node-disk-manager
+  namespace: harvester-system
+data:
+  autoprovision.yaml: |
+    - hostname: "*"
+      devices:
+        - "/dev/sd*"
+        - "/dev/nvme*"
+```
+
 
 ## Filters Configuration
 
