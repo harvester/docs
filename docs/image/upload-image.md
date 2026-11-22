@@ -18,6 +18,12 @@ description: To import virtual machine images in the **Images** page, enter a UR
 
 Currently, there are three ways that are supported to create an image: uploading images via URL, uploading images via local files, and creating images via volumes.
 
+:::important
+
+- The **Display Name** of a VM image must be **unique** within the same namespace. This requirement applies to all creation methods: URL, local file, and volume export. Using duplicate display names may lead to unexpected behaviors, such as finalizer deadlocks during image deletion.
+
+:::
+
 ### Upload Images via URL
 
 <Tabs>
