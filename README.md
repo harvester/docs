@@ -16,12 +16,6 @@ modifying the correct files:
 | versioned_docs/version-v1.7/hello.md | v1.7          | /v1.7/hello  |
 | versioned_docs/version-v1.6/hello.md | v1.6          | /v1.6/hello  |
 | versioned_docs/version-v1.5/hello.md | v1.5          | /v1.5/hello  |
-| versioned_docs/version-v1.4/hello.md | v1.4          | /v1.4/hello  |
-| versioned_docs/version-v1.3/hello.md | v1.3          | /v1.3/hello  |
-| versioned_docs/version-v1.2/hello.md | v1.2          | /v1.2/hello  |
-| versioned_docs/version-v1.1/hello.md | v1.1          | /v1.1/hello  |
-| versioned_docs/version-v1.0/hello.md | v1.0          | /v1.0/hello  |
-| versioned_docs/version-v0.3/hello.md | v0.3          | /v0.3/hello  |
 
 ## Installation
 
