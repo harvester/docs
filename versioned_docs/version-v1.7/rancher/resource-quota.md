@@ -118,3 +118,55 @@ When a `ResourceQuota` object has the annotation `harvesterhci.io/skipResourceQu
 You must set the annotation before the migration starts. If the annotation is set while the values are already being adjusted, Harvester is unable to automatically restore the previous configuration.
 
 :::
+
+## Monitoring ResourceQuota Usage and Alerts
+
+Monitoring resource usage is critical to cluster stability, as high `ResourceQuota` consumption can cause VM startup failures or prevent successful VM migrations. Real-time visibility and proactive notifications ensure you can address capacity constraints before they impact your workloads.
+
+When the [rancher-monitoring](../advanced/addons.md) addon is enabled, it creates the `PrometheusRule` resource `rancher-monitoring-kubernetes-resources` in `cattle-monitoring-system`. This includes the following pre-configured ResourceQuota alert rules.
+
+### Alert Rule Definitions
+
+| Alert Name | Condition | Duration |
+| :--- | :--- | :--- |
+| **KubeCPUQuotaOvercommit** | CPU usage > 150% | 5 minutes |
+| **KubeMemoryQuotaOvercommit** | Memory usage > 150% | 5 minutes |
+| **KubeQuotaAlmostFull** | CPU/Memory usage between 90% and 100% | 15 minutes |
+| **KubeQuotaFullyUsed** | CPU/Memory usage = 100% | 15 minutes |
+| **KubeQuotaExceeded** | CPU/Memory usage > 100% | 15 minutes |
+
+### Verifying ResourceQuota Status
+
+To inspect your current resource usage, use the `kubectl get resourcequota -A` command. This helps correlate your manual observations with the alert triggers.
+
+**Example Output:**
+
+For a `ResourceQuota` named `default-kflsw` in the `quota-test` namespace:
+
+```sh
+NAMESPACE    NAME            REQUEST   LIMIT
+quota-test   default-kflsw             limits.cpu: 2015m/3, limits.memory: 4797464313/5000Mi
+...
+```
+
+In this instance, the memory usage 4797464313(4575Mi) is approximately 91.5% of the 5000Mi limit, which triggers the **KubeQuotaAlmostFull** alert once the 15-minute duration threshold is surpassed.
+
+### Observing Alerts in Harvester
+
+Once threshold conditions are met and the duration has elapsed, alerts transition to the "Firing" state. Use the following steps to navigate to your monitoring dashboard:
+
+1.  **Access Addons:** Go to the **Advanced** section of the Harvester dashboard and select **Addons**.
+2.  **Open Monitoring:** Click on the **rancher-monitoring** addon.
+3.  **Launch Prometheus:** Switch to the **Prometheus** tab and click the **Prometheus Graph** link.
+4.  **Filter Alerts:** Within the Prometheus interface, click the **Alerts** tab.
+5.  **Locate Rules:** Search for `kubernetes-resources` to view the status of your ResourceQuota alerts.
+
+*Figure: Alert status for the `ResourceQuota` `default-kflsw`.*
+
+![](/img/v1.9/rancher/resourcequota-alerts.png)
+
+To integrate external notifications, refer to [Configure AlertmanagerConfig](../monitoring/harvester-monitoring.md#configure-alertmanagerconfig-from-webui) to forward alerts to a central monitoring or notification server.
+
+For more information on managing alerts, see [View and Manage Alerts](../monitoring/harvester-monitoring.md#view-and-manage-alerts).
+
+For troubleshooting guidance, refer to the [Prometheus Operator Runbooks](https://runbooks.prometheus-operator.dev/runbooks/kubernetes/kubequotaalmostfull/).
