@@ -77,7 +77,7 @@ rancher-monitoring-grafana-d9c56d79b-cp86w               3/3     Running   0    
 
 Harvester `Monitoring` uses `Persistent Volume (PV)` to store running data. When a cluster has been running for a certain time, the `Persistent Volume` may need to expand its size.
 
-Based on the `Longhorn` `Volume` expansion guide, `Harvester` illustrates how to [expand the volume size](https://longhorn.io/docs/1.3.2/volumes-and-nodes/expansion/).
+Based on the `Longhorn` `Volume` expansion guide, `Harvester` illustrates how to [expand the volume size](https://longhorn.io/docs/1.10.1/volumes-and-nodes/expansion/).
 
 ### View Volume
 
