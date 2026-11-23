@@ -256,6 +256,6 @@ Optimal concurrency depends on your underlying storage hardware and workload I/O
 
 :::note
 
-Backup creation is currently not supported. This limitation will be addressed in a future release.
+Native backups do not support LVM volumes. Starting with v1.10.0, you can back up virtual machines with LVM volumes using Restic or Kopia. For more information, see [Restic and Kopia Backups](../../vm/backup-restore.md#restic-and-kopia-backups).
 
 :::

@@ -77,6 +77,8 @@ Backup currently only works with the following:
 
 If you are using other storage providers, you can skip the **Backup VolumeSnapshot Class Name** configuration.
 
+Starting with v1.10.0, Restic and Kopia backups support other storage providers and use the **Volume Snapshot Class Name** configuration. For more information, see [Restic and Kopia Backups](../vm/backup-restore.md#restic-and-kopia-backups).
+
 For more information, see [VM Backup Compatibility](https://docs.harvesterhci.io/v1.4/advanced/csidriver#vm-backup-compatibility).
 
 :::
@@ -180,7 +182,7 @@ Avoid changing the storage profile or CDI directly. Instead, allow the Harvester
 
 ### Limitations
 
-- Backup support is currently limited to Longhorn volumes. Harvester is unable to create backups of volumes in external storage. 
+- Native backups support only Longhorn volumes. Starting with v1.10.0, you can back up virtual machines with volumes in external storage using Restic or Kopia. For more information, see [Restic and Kopia Backups](../vm/backup-restore.md#restic-and-kopia-backups).
 
 - There is a limitation in the CDI which prevents Harvester from converting attached PVCs to virtual machine images. Before exporting a volume in external storage, ensure that the PVC is not attached to workloads. This prevents the resulting image from getting stuck in the *Exporting* state.
 
