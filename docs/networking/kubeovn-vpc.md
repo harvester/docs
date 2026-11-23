@@ -129,6 +129,7 @@ When creating subnets, you must configure settings that are relevant to your use
 | **Basic** tab | **Virtual Private Cloud** | Virtual private cloud that the subnet belongs to |
 | **Basic** tab | **Gateway** | IP address that acts as the default gateway for virtual machines in the subnet |
 | **Basic** tab | **Private Subnet** | Setting that restricts access to the subnet and ensures network isolation |
+| **Basic** tab | **BGP** | Setting that advertises the subnet to external routers using the [BGP speaker](./kubeovn-bgp.md) |
 | **Basic** tab | **Allow Subnets** | CIDRs that are allowed to access the subnet when **Private Subnet** is enabled |
 | **Basic** tab | **Exclude IPs** | List of IP addresses that should not be automatically assigned to virtual machines |
 
