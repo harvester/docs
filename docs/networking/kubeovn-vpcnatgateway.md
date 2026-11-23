@@ -61,7 +61,7 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
 
 ### VPC NAT Gateway
 
-1. On the Harvester UI, go to **Overlay Networks > NAT & Internet > Gateways**.
+1. On the Harvester UI, go to **Overlay Networks > NAT & Internet > NAT Gateways**.
 
     ![](/img/vpc-nat-config.png)
 

@@ -110,6 +110,8 @@ When creating custom VPCs, you must configure settings related to the routes def
 | **Static Routes** tab | **Next Hop IP** | IP address to which traffic for the CIDR should be forwarded (for example, the gateway or router IP address) |
 | **VPC Peerings** tab | **Local Connect IP** | IP address on the local VPC to be used for the peering connection |
 | **VPC Peerings** tab | **Remote VPC** | Target remote VPC that is peered with the local VPC |
+| **BFD Port** tab | **Enabled** or **Disabled** | Setting that enables the Bidirectional Forwarding Detection (BFD) port, which [VPC egress gateways](./kubeovn-vpc-egress-gateway.md) use to detect a failed gateway instance |
+| **BFD Port** tab | **IP Address** | IP address of the BFD port (for example, `10.255.255.255`) |
 
 ![](/img/create_vpc.png)
 
