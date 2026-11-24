@@ -94,14 +94,12 @@ If egress gateways of the VPC have BFD enabled, the **BFD Port** tab displays a 
     - **Replicas**: Number of gateway instances, from 0 to 10. The default value is 1. Traffic is spread across all instances.
 
     - **External Network**: Method that the gateway instances use to reach the external network. You cannot change this setting after the gateway is created. The following options are available:
-
-        - **External subnet**: The gateway instances connect to the external network through the subnet that you select in the **External Subnet** field.
-
-        - **Primary CNI**: The gateway instances use the pod network of the cluster. This option does not require an external subnet, and does not support external IP addresses or bandwidth limits.
+      - **External subnet**: The gateway instances connect to the external network through the subnet that you select in the **External Subnet** field.
+      - **Primary CNI**: The gateway instances use the pod network of the cluster. This option does not require an external subnet, and does not support external IP addresses or bandwidth limits.
 
     - **Internal Subnet**: Subnet of the VPC that the gateway instances are attached to (for example, `subnetinternal`). The list includes only subnets on an overlay network.
 
-    - **External Subnet**: Subnet that connects the gateway instances to the external network (for example, `subnetexternal`). The internal and external subnets must be different.
+    - **External Subnet**: Subnet that connects the gateway instances to the external network (for example, `subnetexternal`). The internal and external subnets must be different. This field is not available when you select **Primary CNI**.
 
     ![Basic Tab of an Egress Gateway](/img/v1.10/networking/egress-gateway-basic.png)
 
