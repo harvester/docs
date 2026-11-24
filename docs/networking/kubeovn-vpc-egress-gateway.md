@@ -139,7 +139,7 @@ If egress gateways of the VPC have BFD enabled, the **BFD Port** tab displays a 
 
 9. Click **Create**.
 
-The **Create** button is enabled only after all required fields are valid. A tab that contains an invalid field displays an error icon.
+The **Create** button remains disabled until all required fields are completed and all entered values are valid. A tab that contains an invalid field displays an error icon.
 
 </TabItem>
 <TabItem value="kubectl" label="kubectl">
@@ -226,4 +226,4 @@ To verify that the egress gateway works, perform the following steps:
     ping 8.8.8.8
     ```
 
-    Replace `8.8.8.8` with an address on the external network. When the virtual machine receives replies, outbound traffic passes through the egress gateway. For subnets with SNAT, the external network receives the traffic from the external IP address of a gateway instance.
+    Replace `8.8.8.8` with an address on the external network. Receiving replies confirms that outbound traffic is passing through the egress gateway. For subnets with SNAT, the external network receives the traffic from the external IP address of a gateway instance.
