@@ -57,17 +57,19 @@ The BGP speaker settings apply to the entire cluster. The speaker runs on the ho
 
 4. Specify the **Cluster AS**, which is the autonomous system (AS) number of the Harvester cluster.
 
+    AS numbers range from 1 to 4294967294.
+
 5. (Optional) Specify the **Router ID**.
 
     Leave the field empty so that each host uses its own IPv4 address as its router ID. Every speaker requires a unique router ID, so specify a value only when a single host runs the speaker.
 
 6. In the **Neighbors** section, specify the IPv4 or IPv6 address of each external BGP router. To add more addresses, click **Add IPv4 Neighbor** or **Add IPv6 Neighbor**.
 
-    You must add at least one neighbor. Each list accepts only addresses of its own family.
+    You must add at least one neighbor. Add IPv4 and IPv6 addresses to their respective lists.
 
 7. Specify the **Neighbor AS**, which is the AS number of the neighbors.
 
-    All neighbors must belong to the same AS. AS numbers range from 1 to 4294967294.
+    All neighbors must belong to the same AS.
 
 8. (Optional) In the **Advanced** section, specify **Next Hop (IPv4)** and **Next Hop (IPv6)**.
 
@@ -75,7 +77,7 @@ The BGP speaker settings apply to the entire cluster. The speaker runs on the ho
 
 9. Click **Save**.
 
-    The **Save** button remains disabled until every field contains a valid value.
+    The **Save** button remains disabled until all required fields are completed and all entered values are valid.
 
     The following image shows a BGP speaker that runs on one host and connects to one IPv4 neighbor and one IPv6 neighbor:
 
@@ -115,11 +117,11 @@ Harvester stores the BGP speaker settings in the `spec.bgp` field of the `kubeov
 The `bgp` field contains the following settings:
 
 - `nodeNames`: Comma-separated names of the hosts that run the BGP speaker. When this setting is empty, no host runs the speaker.
-- `clusterAS`: AS number of the Harvester cluster.
+- `clusterAS`: AS number of the Harvester cluster. The valid range is 1 to 4294967294.
 - `neighborV4Address`: Comma-separated IPv4 addresses of the neighbors.
 - `neighborV6Address`: Comma-separated IPv6 addresses of the neighbors.
-- `neighborAS`: AS number of the neighbors. All neighbors must belong to the same AS.
-- `routerID`: (Optional) IPv4 address that the speaker uses as its router ID. When this setting is empty, each host uses its own IPv4 address.
+- `neighborAS`: AS number of the neighbors. The valid range is 1 to 4294967294. All neighbors must belong to the same AS.
+- `routerID`: (Optional) IPv4 address that the speaker uses as its router ID. When this setting is empty, each host uses its own IPv4 address. Every speaker requires a unique router ID, so specify a value only when a single host runs the speaker.
 - `nextHops`: (Optional) Next-hop addresses of the advertised routes, separated by a comma. You can specify one IPv4 address and one IPv6 address. When this setting is empty, each host uses its own address.
 
 </TabItem>
@@ -158,7 +160,7 @@ Replace `<node-name>` with the name of the host.
 
 ## Enabling BGP on a Subnet
 
-The BGP speaker advertises only the subnets that have BGP enabled. Before you enable BGP on a subnet, disable NAT on that subnet so that traffic from its virtual machines reaches the external network with their own IP addresses.
+The BGP speaker advertises only the subnets that have BGP enabled. Before you enable BGP on a subnet, disable NAT on that subnet so that virtual machines on the subnet reach the external network using their own IP addresses.
 
 <Tabs>
 <TabItem value="ui" label="UI" default>
@@ -205,7 +207,7 @@ The value of the `ovn.kubernetes.io/bgp` annotation determines how the BGP speak
 - `true` or `cluster`: Every speaker advertises the subnet's IP address range. External traffic may enter the cluster through any host that runs the speaker. This is the default behavior.
 - `local`: Each speaker advertises only the IP addresses of the virtual machines that run on its own host. To use this value, ensure that the speaker runs on every host that runs virtual machines on the subnet.
 
-The Harvester UI shows a subnet with any of these values as enabled and retains the value when you save the subnet.
+In the Harvester UI, **BGP** appears as **Enabled** for any subnet with one of these values, and the annotation value is retained when you save the subnet.
 
 </TabItem>
 </Tabs>
