@@ -26,7 +26,7 @@ VM backups are created from the **Virtual Machines** page. The VM backup volumes
 
 A backup target must be set up. For more information, see [Configure Backup Target](#configure-backup-target). If the backup target has not been set, you’ll be prompted with a message to do so.
 
-Native backups support only Longhorn volumes. To back up volumes in external storage, use [Restic and Kopia backups](#restic-and-kopia-backups).
+Longhorn V1 backups, displayed as **Native** on the Harvester UI, support only volumes that use the Longhorn V1 Data Engine. To back up volumes in third-party storage that meets the [requirements](#requirements), use [Restic and Kopia backups](#restic-and-kopia-backups).
 
 :::
 
@@ -106,9 +106,9 @@ The restored virtual machine retains the machine ID of the original virtual mach
 
 :::caution
 
-Starting with v1.7.0, Harvester supports backups and snapshots for Longhorn V2 volumes.
+Harvester v1.7.x and v1.8.x support backups of Longhorn V2 volumes. Starting with v1.9.0, Harvester rejects new Longhorn backups of these volumes.
 
-However, deleting the latest backup of a virtual machine or enabling the Longhorn setting [Auto Cleanup Snapshot When Delete Backup](https://longhorn.io/docs/1.10.1/references/settings/#auto-cleanup-snapshot-when-delete-backup) blocks all subsequent operations on related volumes. This is a [known Longhorn issue](https://github.com/longhorn/longhorn/issues/9064) that affects operations such as volume snapshots, backups, and live migration.
+For existing Longhorn backups of these volumes, deleting the latest backup of a virtual machine or enabling the Longhorn setting [Auto Cleanup Snapshot When Delete Backup](https://longhorn.io/docs/1.10.1/references/settings/#auto-cleanup-snapshot-when-delete-backup) blocks all subsequent operations on related volumes. This is a [known Longhorn issue](https://github.com/longhorn/longhorn/issues/9064) that affects operations such as volume snapshots, backups, and live migration.
 
 No viable workaround is currently available. Resolving the blocked state requires deleting the affected volume to restore Longhorn Manager functionality.
 
@@ -212,7 +212,7 @@ Users can now restore a new VM on another cluster by leveraging the VM metadata 
 
 _Available as of v1.10.0_
 
-Harvester can back up virtual machines using [Restic](https://restic.net/) or [Kopia](https://kopia.io/), two open-source backup tools. Restic and Kopia backups protect volumes that native backups do not support, such as volumes created using the [**harvester-csi-driver-lvm**](../advanced/addons/lvm-local-storage.md) add-on.
+Harvester can back up virtual machines using [Restic](https://restic.net/) or [Kopia](https://kopia.io/), two open-source backup tools. Restic and Kopia backups protect volumes that Longhorn V1 backups do not support, such as volumes created using the [**harvester-csi-driver-lvm**](../advanced/addons/lvm-local-storage.md) add-on.
 
 When you create a Restic or Kopia backup, Harvester takes a CSI volume snapshot of each volume, and then runs a job that copies the data to the S3 bucket of the backup target. Restic and Kopia encrypt the data using a repository password that you specify. Restic stores its repository in the `restic` directory of the bucket, and Kopia stores its repository in the `kopia` directory.
 
@@ -224,11 +224,11 @@ Restic and Kopia backups have the following requirements:
 
 - All volumes of the virtual machine use the `Block` volume mode.
 
-- No volume of the virtual machine uses the Longhorn V1 Data Engine. To back up these virtual machines, use native backups.
+- No volume of the virtual machine uses the Longhorn V1 Data Engine. To back up these virtual machines, use Longhorn V1 backups.
 
 - The [`csi-driver-config`](../advanced/settings.md#csi-driver-config) setting specifies a volume snapshot class (`volumeSnapshotClassName`) for the CSI driver of each volume. For LVM volumes, see [Creating Snapshots for an LVM Volume](../advanced/addons/lvm-local-storage.md#creating-snapshots-for-an-lvm-volume).
 
-Harvester supports Restic and Kopia backups of virtual machines with LVM volumes, Longhorn V2 Data Engine volumes, or both.
+Restic and Kopia backups are designed to support third-party CSI drivers that meet these requirements. For example, you can back up virtual machines with LVM volumes, Longhorn V2 Data Engine volumes, or both.
 
 ### Enabling on the Backup Target
 
@@ -312,7 +312,7 @@ Harvester rejects changes to the **backup-target** setting in the following situ
 
 - A virtual machine backup or restore is being created or deleted.
 
-- The change points the backup target to another repository while Restic or Kopia backups in the current repository exist. Harvester identifies the repository using the endpoint, bucket name, bucket region, and virtual-hosted style of the backup target.
+- The change points the backup target to another repository while Restic or Kopia backups exist in the current repository. Harvester identifies the repository using the endpoint, bucket name, bucket region, and virtual-hosted style of the backup target.
 
 ### Repository Password
 
@@ -367,7 +367,7 @@ Harvester deletes the stored repository password and stops Kopia garbage collect
 
 5. Click **Create**.
 
-The backup appears on the **Backup and Snapshots** > **Virtual Machine Backups** screen, where the **Type** column shows the backup type. The backup state changes to **Ready** when the job is completed.
+The backup appears on the **Backup and Snapshots** > **Virtual Machine Backups** screen, where the **Type** column shows the backup type. The backup state changes to **Ready** when the job completes.
 
 ![Restic and Kopia Backups on the Virtual Machine Backups Screen](/img/v1.10/vm/vm-backups-type.png)
 
@@ -405,19 +405,19 @@ The backup appears on the **Backup and Snapshots** > **Virtual Machine Backups**
       virtualmachinebackups.harvesterhci.io/vm-01-restic --timeout=60m
     ```
 
-    Adjust the timeout to the size of the volumes and the throughput of the S3 server.
+    Adjust the timeout based on the size of the volumes and the throughput of the S3 server.
 
 </TabItem>
 </Tabs>
 
-You cannot create Restic and Kopia backups using [virtual machine schedules](#scheduling-virtual-machine-backups-and-snapshots). Schedules support only native backups and snapshots.
+You cannot create Restic and Kopia backups using [virtual machine schedules](#scheduling-virtual-machine-backups-and-snapshots). Schedules support only snapshots and Longhorn V1 backups.
 
 ### Restoring a Backup
 
 <Tabs>
 <TabItem value="ui" label="UI" default>
 
-You can restore a Restic or Kopia backup in the same way as a native backup. Harvester uses the type of the backup automatically. For more information, see [Restore a new VM using a backup](#restore-a-new-vm-using-a-backup) and [Replace an existing VM using a backup](#replace-an-existing-vm-using-a-backup).
+You can restore a Restic or Kopia backup in the same way as a Longhorn V1 backup. Harvester uses the type of the backup automatically. For more information, see [Restore a new VM using a backup](#restore-a-new-vm-using-a-backup) and [Replace an existing VM using a backup](#replace-an-existing-vm-using-a-backup).
 
 </TabItem>
 <TabItem value="kubectl" label="kubectl">
@@ -443,7 +443,7 @@ You can restore a Restic or Kopia backup in the same way as a native backup. Har
       haltAfterRestore: false
     ```
 
-    The `VirtualMachineRestore` object has no field for the backup type. Harvester uses the type of the backup. The object belongs to the namespace of the new virtual machine. To restore the backup to another namespace, set `metadata.namespace` to that namespace, and keep `virtualMachineBackupNamespace` set to the namespace of the backup.
+    The `VirtualMachineRestore` object has no field for the backup type; Harvester uses the type of the backup automatically. The object belongs to the namespace of the new virtual machine. To restore the backup to another namespace, set `metadata.namespace` to that namespace, and keep `virtualMachineBackupNamespace` set to the namespace of the backup.
 
 2. To start the restore, run the following command:
 
@@ -451,14 +451,14 @@ You can restore a Restic or Kopia backup in the same way as a native backup. Har
     kubectl create -f vmrestore.yaml
     ```
 
-3. To wait until the restore is completed, run the following command:
+3. To wait until the restore completes, run the following command:
 
     ```bash
     kubectl -n default wait --for=jsonpath='{.status.complete}'=true \
       virtualmachinerestores.harvesterhci.io/restore-vm-01-restic --timeout=60m
     ```
 
-    When `haltAfterRestore` is `false`, Harvester starts the new virtual machine after the restore is completed.
+    When `haltAfterRestore` is `false`, Harvester starts the new virtual machine after the restore completes.
 
 </TabItem>
 </Tabs>
@@ -473,7 +473,7 @@ Kopia deletes unused data only after a safety period, so the storage space in th
 
 ### Configuring Backup Jobs
 
-Harvester runs each Restic and Kopia backup and restore as a Kubernetes job. To change the resources of these jobs and the number of jobs that run at the same time, perform the following steps:
+Harvester runs each Restic and Kopia backup and restore as a Kubernetes job. To change the resources for these jobs and the number of jobs that can run simultaneously, perform the following steps:
 
 1. On the Harvester UI, go to **Advanced** > **Settings**.
 
@@ -535,7 +535,7 @@ VM snapshots may encounter a `filesystem freeze failed` error when performed on 
 
 :::caution
 
-Starting with v1.7.0, Harvester supports backups and snapshots for Longhorn V2 volumes.
+Harvester supports snapshots for Longhorn V2 volumes.
 
 However, deleting the latest snapshot of a virtual machine blocks all subsequent operations on related volumes. This is a [known Longhorn issue](https://github.com/longhorn/longhorn/issues/9064) that affects operations such as volume snapshots, backups, and live migration.
 No viable workaround is currently available. Resolving the blocked state requires deleting the affected volume to restore Longhorn Manager functionality.

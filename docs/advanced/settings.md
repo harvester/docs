@@ -1061,7 +1061,7 @@ The following fields are available in both the `restic` and `kopia` objects, exc
 | `ephemeralRequest` | `512Mi` | Ephemeral storage request of each job. |
 | `ephemeralLimit` | `3Gi` | Ephemeral storage limit of each job. The value must be equal to or greater than `ephemeralRequest`. |
 | `cacheSize` | `2Gi` | Size of the local cache of each job. The value must be less than `ephemeralLimit`. For Kopia, the minimum value is `8Mi`. |
-| `maxConcurrentJobs` | `5` | Maximum number of jobs of the engine that run at the same time in the cluster. Additional jobs wait until a running job is completed. Set this field to `0` to remove the limit. |
+| `maxConcurrentJobs` | `5` | Maximum number of jobs for the engine that can run simultaneously in the cluster. Additional jobs wait until a running job completes. Set this field to `0` to remove the limit. |
 | `noCache` | `false` | Restic only. Disables the local cache. |
 
 The memory, ephemeral storage, and cache values are Kubernetes quantities (for example, `512Mi` or `2Gi`) and must be greater than zero.
