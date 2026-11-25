@@ -106,7 +106,7 @@ The restored virtual machine retains the machine ID of the original virtual mach
 
 :::caution
 
-Harvester v1.7.x and v1.8.x support backups of Longhorn V2 volumes. Starting with v1.9.0, Harvester rejects new Longhorn backups of these volumes.
+VMs with Longhorn V2 volumes cannot be backed up using the native Longhorn V1 backup engine.
 
 For existing Longhorn backups of these volumes, deleting the latest backup of a virtual machine or enabling the Longhorn setting [Auto Cleanup Snapshot When Delete Backup](https://longhorn.io/docs/1.10.1/references/settings/#auto-cleanup-snapshot-when-delete-backup) blocks all subsequent operations on related volumes. This is a [known Longhorn issue](https://github.com/longhorn/longhorn/issues/9064) that affects operations such as volume snapshots, backups, and live migration.
 
