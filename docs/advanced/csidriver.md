@@ -21,14 +21,14 @@ The Harvester engineering team has validated the following CSI drivers:
 
 These validated CSI drivers have the following capabilities:
 
-| Storage Solution | VM Image | VM Rook Disk | VM Data Disk | Volume Export To VM Image | VM Template Generator | VM Live Migration | VM Snapshot | VM Backup | Volume for Guest Cluster |
+| Storage Solution | VM Image | VM Rook Disk | VM Data Disk | Volume Export To VM Image | VM Template Generator | VM Live Migration | VM Snapshot | Longhorn V1 VM Backup | Volume for Guest Cluster |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Longhorn v2 Data Engine | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; | &#10004; |
 | LVM | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; | &#10004; | &#10006; | &#10004; |
 | NFS | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; | &#10006; | &#10004; |
 | Rook (RBD) | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; | &#10004; |
 
-The **VM Backup** column indicates support for Longhorn V1 backups. Starting with v1.10.0, you can back up virtual machines with volumes in third-party storage using Restic or Kopia if the CSI drivers meet the requirements. For more information, see [Restic and Kopia Backups](../vm/backup-restore.md#restic-and-kopia-backups).
+Starting with v1.10.0, you can back up virtual machines with volumes in third-party storage using Restic or Kopia if the CSI drivers meet the requirements. For more information, see [Restic and Kopia Backups](../vm/backup-restore.md#restic-and-kopia-backups).
 
 :::note
 
