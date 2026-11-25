@@ -104,13 +104,9 @@ The restored virtual machine retains the machine ID of the original virtual mach
 
 :::
 
-:::caution
+:::note
 
-VMs with Longhorn V2 volumes cannot be backed up using the native Longhorn V1 backup engine.
-
-For existing Longhorn backups of these volumes, deleting the latest backup of a virtual machine or enabling the Longhorn setting [Auto Cleanup Snapshot When Delete Backup](https://longhorn.io/docs/1.10.1/references/settings/#auto-cleanup-snapshot-when-delete-backup) blocks all subsequent operations on related volumes. This is a [known Longhorn issue](https://github.com/longhorn/longhorn/issues/9064) that affects operations such as volume snapshots, backups, and live migration.
-
-No viable workaround is currently available. Resolving the blocked state requires deleting the affected volume to restore Longhorn Manager functionality.
+Harvester does not support Longhorn V1 backups (displayed as **Native** on the Harvester UI) for virtual machines with Longhorn V2 volumes, and rejects requests to create them. This is a Harvester design decision rather than a Longhorn limitation. Harvester uses Restic and Kopia to back up both third-party storage and Longhorn V2 volumes, which avoids maintaining two separate backup methods for Longhorn V2. Starting with v1.10.0, you can back up these virtual machines using [Restic or Kopia](#restic-and-kopia-backups).
 
 :::
 
@@ -224,7 +220,7 @@ Restic and Kopia backups have the following requirements:
 
 - All volumes of the virtual machine use the `Block` volume mode.
 
-- No volume of the virtual machine uses the Longhorn V1 Data Engine. To back up these virtual machines, use Longhorn V1 backups.
+- No volume of the virtual machine uses the Longhorn V1 Data Engine. If all volumes use the Longhorn V1 Data Engine, use Longhorn V1 backups. You cannot back up a virtual machine that has both Longhorn V1 and Longhorn V2 volumes, because neither method supports it.
 
 - The [`csi-driver-config`](../advanced/settings.md#csi-driver-config) setting specifies a volume snapshot class (`volumeSnapshotClassName`) for the CSI driver of each volume. For LVM volumes, see [Creating Snapshots for an LVM Volume](../advanced/addons/lvm-local-storage.md#creating-snapshots-for-an-lvm-volume).
 
