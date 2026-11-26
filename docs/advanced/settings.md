@@ -727,6 +727,22 @@ Changing this setting restarts all `longhorn-csi-plugin` pods, which temporarily
 }
 ```
 
+**Example (dedicated network with stable NFS endpoints)**:
+
+```json
+{
+  "share-storage-network": false,
+  "network": {
+    "clusterNetwork": "rwx",
+    "vlan": 100,
+    "range": "192.168.100.0/24",
+    "exclude": ["192.168.100.1/32", "192.168.100.16/28"]
+  },
+  "hostIPRange": "192.168.100.240/29",
+  "vipRange": "192.168.100.224/28"
+}
+```
+
 **Supported options and values**:
 
 - `share-storage-network`: If `true`, RWX traffic reuses the existing [storage network](./storagenetwork.md) configuration. If `false`, RWX traffic uses either a dedicated network (when `network` is specified) or the Kubernetes default pod network.
@@ -735,6 +751,10 @@ Changing this setting restarts all `longhorn-csi-plugin` pods, which temporarily
   - `clusterNetwork`: Cluster network to use (must be pre-configured).
   - `range`: IPv4 CIDR range for RWX network IPs.
   - `exclude`: (Optional) List of IP addresses or ranges to exclude from allocation.
+- `hostIPRange`: (Optional, v1.10.0 and later) IPv4 CIDR range for stable host IPs on the RWX network. Each non-witness node gets one IP from this range, so the range must contain at least one address per non-witness node. Must be set together with `vipRange`.
+- `vipRange`: (Optional, v1.10.0 and later) IPv4 CIDR range for stable NFS virtual IPs. Each non-migratable RWX volume gets one VIP from this range. Must not overlap `hostIPRange` or `exclude`, and must be set together with `hostIPRange`.
+
+Setting `hostIPRange` and `vipRange` requires a VLAN ID from `1` to `4094`. While both fields are set, the only allowed change to this setting is removing them. For more information, see [Stable NFS Endpoints for RWX Volumes](./rwxnetwork.md#stable-nfs-endpoints-for-rwx-volumes).
 
 ### `server-version`
 
