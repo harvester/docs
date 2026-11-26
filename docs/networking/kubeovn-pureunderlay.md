@@ -36,6 +36,12 @@ Furthermore, integrating Kube-OVN’s underlay capabilities into Harvester ensur
 
 ## Underlay Configuration
 
+:::caution
+
+In Harvester v1.10.0, traffic on Kube-OVN VLAN (underlay) subnets leaves the node without a VLAN tag. After you [create a subnet](#create-a-subnet-in-a-vpc) that uses a VLAN network, apply the workaround in [Known Issue: Traffic on Kube-OVN VLAN (Underlay) Subnets Is Sent Untagged](./kubeovn-known-issue-underlay-vlan-tag.md#workaround). You must repeat it for every VLAN subnet that you create or re-create.
+
+:::
+
 ### Create a Provider Network
 
 1. On the Harvester UI, go to **Underlay Networks > Provider Networks**.
