@@ -18,7 +18,7 @@ You must enable the [**nvidia-driver-toolkit** add-on](./addons/nvidiadrivertool
 
 ## Usage
 
-1. On the Harvester UI, go to **Advanced** > **SR-IOV GPU Devices** and verify the following:
+1. On the Harvester UI, go to **Hardware Devices** > **SR-IOV GPU Devices** and verify the following:
 
   - GPU devices have been scanned. 
   - An associated `sriovgpudevices.devices.harvesterhci.io` object has been created. 
@@ -75,7 +75,7 @@ Harvester creates the `MIGConfiguration` object only if the detected GPU support
 
 ### Enabling MIG-backed vGPU Devices
 
-1. On the Harvester UI, go to **Advanced** > **vGPU MIG Configurations** and verify the following:
+1. On the Harvester UI, go to **Hardware Devices** > **vGPU MIG Configurations** and verify the following:
 
     - A MIG configuration has been created for supporting GPU devices.
     - An associated `migconfiguration.devices.harvesterhci.io` object has been created.
@@ -86,7 +86,7 @@ Harvester creates the `MIGConfiguration` object only if the detected GPU support
 
     ![](/img/v1.7/advanced/samplemigconfiguration.png)
 
-1. Go to **Advanced** > **vGPU Devices** and enable the vGPU device associated with the MIG configuration.
+1. Go to **Hardware Devices** > **vGPU Devices** and enable the vGPU device associated with the MIG configuration.
 
     The newly created MIG profiles are available as valid vGPU types.
 
