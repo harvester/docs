@@ -28,6 +28,39 @@ Before creating virtual machines, review [Resource Overcommit](../vm/resource-ov
 
 :::
 
+## Tested Resource Limits
+
+Guest memory admission is governed by the following formula (default ratio is 150%):
+
+```text
+Maximum Allocatable Guest Memory = Node Allocatable Memory x Memory Overcommit Ratio
+```
+
+Adjusting the overcommit ratio changes the threshold for virtual machine admission control. It does not alter physical node capacity or modify existing memory allocations.
+
+Configuring more than approximately 1 TiB of guest memory requires setting `cpu.model: host-passthrough`. The default virtual CPU model uses a restricted physical address width. At large memory allocations, KubeVirt's memory-hotplug headroom can exceed this address width, preventing the virtual machine from starting. Setting `cpu.model: host-passthrough` exposes the host CPU's full physical address width to bypass this limitation.
+
+The following limits were validated on Harvester v1.9 (KubeVirt v1.8.4):
+
+| Resource | Architecture | Tested Limit |
+| :--- | :--- | :--- |
+| vCPU per VM (unpinned) | ARM64 (`virt` machine type) | 512 (hard ceiling) |
+| vCPU per VM (unpinned) | x86_64 (`q35` machine type) | 1024+ confirmed (no ceiling observed) |
+| vCPU per VM (`dedicatedCpuPlacement`) | ARM64 / x86_64 | Bounded by node's free allocatable CPU |
+| Guest memory per VM (default CPU model) | x86_64 | ~900 GiB–1 TiB |
+| Guest memory per VM (`host-passthrough`) | x86_64 | 8 TiB confirmed booting (16 TiB theoretical limit) |
+
+:::note
+
+The following are configuration considerations for ARM64 and large memory:
+
+- **ARM64 CPU model**: `host-passthrough` is the only supported CPU model on ARM64. Admission rejects `host-model`.
+- **UEFI requirement for large memory**: Allocating more than approximately 1 TiB of guest memory may require setting `firmware.bootloader.efi` explicitly. The default legacy BIOS firmware can hang indefinitely during boot at very large memory allocations. UEFI avoids this issue.
+
+:::
+
+Enabling `dedicatedCpuPlacement` (CPU pinning) does not allocate a fixed vCPU count. It draws from the node's remaining allocatable CPU after accounting for existing Guaranteed-QoS workloads (such as Longhorn Instance Manager). For example, on a node with 158 allocatable cores where 39 are already claimed, a single pinned virtual machine can request a maximum of 119 vCPUs.
+
 ## Validated Guest Operating Systems
 
 The following operating systems have been validated to run in Harvester virtual machines:
