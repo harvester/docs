@@ -107,8 +107,8 @@ Harvester stores the BGP speaker settings in the `spec.bgp` field of the `kubeov
       bgp:
         nodeNames: harvester-node-1,harvester-node-2
         clusterAS: 65000
-        neighborV4Address: 10.115.53.2
-        neighborV6Address: 2001:db8::2
+        neighborV4Address: 0.0.0.0
+        neighborV6Address: "::"
         neighborAS: 65030
     ```
 
