@@ -81,6 +81,66 @@ The Longhorn V2 Data Engine is only available for newly created volumes and imag
 
   Volumes and images created using the new StorageClass are backed by the Longhorn V2 Data Engine.
 
+## Linked-Clone Volumes
+
+When you create a virtual machine from an image that is stored in a Longhorn V2 StorageClass, Harvester creates the root volume by cloning the golden image PVC. The **Clone Mode** parameter of the StorageClass determines how Longhorn creates the cloned volume.
+
+The following clone modes are available:
+
+| Clone Mode | Parameter Value | Description |
+| --- | --- | --- |
+| **Full Copy** (default) | `full-copy` | Longhorn copies all data from the source volume to the new volume. The new volume is independent of the source volume. The time and disk space required increase with the size of the source volume. |
+| **Linked Clone** | `linked-clone` | Longhorn creates the new volume as a copy-on-write clone that shares the data blocks of the source volume. No data is copied when the volume is created, and the new volume stores only the data that is written to it. |
+
+Linked clones reduce the time required to create virtual machines from large images and the disk space consumed by each virtual machine. Linked clones also replace the V2 backing images that were removed in Longhorn v1.12.0. For more information, see [CSI Volume Clone](https://longhorn.io/docs/1.13.0/snapshots-and-backups/csi-volume-clone/#v2-data-engine) in the Longhorn documentation.
+
+### Creating Virtual Machines Using Linked Clones
+
+The clone mode applies to volumes created in the StorageClass. To create linked-clone root volumes, the golden image PVC and the root volumes must use a StorageClass with the **Linked Clone** clone mode.
+
+1. Go to **Advanced** > **Storage Classes**, and then create a StorageClass as described in [Creating a StorageClass](storageclass.md#creating-a-storageclass).
+
+  Set **Provisioner** to **Longhorn V2 (CSI)** and **Clone Mode** to **Linked Clone**.
+
+  Example:
+
+  ```yaml
+  apiVersion: storage.k8s.io/v1
+  kind: StorageClass
+  metadata:
+    name: longhorn-v2-linked-clone
+  provisioner: driver.longhorn.io
+  allowVolumeExpansion: true
+  reclaimPolicy: Delete
+  volumeBindingMode: Immediate
+  parameters:
+    dataEngine: "v2"
+    cloneMode: "linked-clone"
+    numberOfReplicas: "3"
+    staleReplicaTimeout: "30"
+    migratable: "true"
+  ```
+
+1. Create an image that uses the new StorageClass. You can use either of the following methods:
+
+  - On the **Images** screen, create an image from a URL or a file, and then select the new StorageClass on the **Storage** tab. For more information, see [Upload Images](../image/upload-image.md).
+  - Export an existing volume or image volume that uses the Longhorn V2 Data Engine to an image that uses the new StorageClass. For more information, see [Export a Volume to Image](../volume/export-volume.md). Longhorn creates the exported image as a linked clone of the source volume, so the export completes without copying data.
+
+1. Create virtual machines from the image, and select the same StorageClass for the root volume.
+
+  Longhorn creates each root volume as a linked clone of the golden image PVC.
+
+### Deleting Images Used by Linked Clones
+
+You can delete an image while virtual machines that were created from it are still running. Harvester deletes the image, and Longhorn retains the source data until the last linked-clone volume is deleted. This allows you to remove images that are no longer needed without affecting existing virtual machines.
+
+### Limitations
+
+- The **Linked Clone** clone mode is available only for StorageClasses that use the Longhorn V2 Data Engine.
+- The number of replicas of a linked-clone volume cannot exceed the number of replicas of its source volume. Longhorn places each replica of a linked-clone volume on the same node and disk as a replica of the source volume.
+- Rebuilding a replica of a linked-clone volume requires a healthy replica of the source volume on the same node and disk.
+- Linked-clone volumes support snapshots, backups, volume expansion, replica rebuilding, and nested linked clones.
+
 ## CPU Core Configuration with CPU-Pinned VMs
 
 _Available as of v1.9.0_
