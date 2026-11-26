@@ -50,9 +50,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
 	- `Install Harvester binaries only`: If you choose this option, additional setup is required after the first bootup.
 
-	:::info
-	When there are 3 nodes, the other 2 nodes added first are automatically promoted to management nodes to form an HA cluster. If you want to promote management nodes from different zones, you can add the node label `topology.kubernetes.io/zone` in the [os.labels](./harvester-configuration.md#oslabels) config by providing a URL of [Harvester configuration](./harvester-configuration.md) on the customize the host step. In this case, at least three different zones are required.
-	:::
+	When there are three nodes, the two additional nodes are automatically promoted to management nodes to form a High Availability (HA) cluster. To spread management nodes across zones, apply the `topology.kubernetes.io/zone` label to the nodes (for example, using [os.labels](./harvester-configuration.md#oslabels) in the [Harvester configuration](./harvester-configuration.md)). In this scenario, at least three distinct zones are required, and the witness node must be assigned to its own zone. For more information, see [Witness Nodes and Topology Zones](../advanced/witness.md#witness-nodes-and-topology-zones).
 
 1. Choose a role for the node. You are required to perform this step if you selected the installation mode `Join an existing Harvester cluster`.
 
@@ -60,7 +58,7 @@ The following [video](https://youtu.be/X0VIGZ_lExQ) shows a quick overview of an
 
 	- `Default Role`: Allows a node to function as a management node or a worker node. This role does not have any specific privileges or restrictions.
 	- `Management Role`: Allows a node to be prioritized when Harvester promotes nodes to management nodes.
-	- `Witness Role`: Restricts a node to being a witness node (only functions as an etcd node) in a specific cluster.
+	- `Witness Role`: Restricts a node to acting as a witness node (functioning only as an etcd node) in a specific cluster. If you use zone labels, the witness node must be assigned its own zone label; otherwise, promotion will not start for the second management node or the witness node. For more information, see [Witness Nodes and Topology Zones](../advanced/witness.md#witness-nodes-and-topology-zones).
 	- `Worker Role`: Restricts a node to being a worker node (never promoted to management node) in a specific cluster.
 
 1. Configure and confirm a `Password` to access the node. The default SSH user is `rancher`.
