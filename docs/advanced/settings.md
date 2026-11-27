@@ -109,6 +109,12 @@ For more information, see the [Longhorn documentation](https://longhorn.io/docs/
 }
 ```
 
+Starting with v1.10.0, S3 backup targets support the following fields for [third-party backup and restore](../vm/backup-restore.md#restic-and-kopia-backups):
+
+- `thirdPartyBackupEnabled`: Enables Restic and Kopia backups. The default value is `false`.
+- `thirdPartyRepositoryPassword`: Password that Restic and Kopia use to encrypt backups. This field is required when `thirdPartyBackupEnabled` is `true`. Harvester stores the password and removes it from the setting value. For more information, see [Repository Password](../vm/backup-restore.md#repository-password).
+- `kopiaGCEnabled`: Enables scheduled Kopia maintenance, which removes unused data from the Kopia repository. The default value is `false`.
+
 ### `cluster-pod-security-standard`
 
 **Versions**: v1.8.0 and later
@@ -204,7 +210,7 @@ For security purposes, Harvester automatically removes the username and password
 You must configure the following information before using features related to backups and snapshots:
 
 - Provisioner for the installed third-party CSI driver
-- `volumeSnapshotClassName`: Name of the `VolumeSnapshotClass` used to create volume snapshots or VM snapshots.
+- `volumeSnapshotClassName`: Name of the `VolumeSnapshotClass` used to create volume snapshots, virtual machine snapshots, and Restic and Kopia backups.
 - `backupVolumeSnapshotClassName`: Name of the `VolumeSnapshotClass` used to create VM backups.
 
 **Default value**:
@@ -1027,6 +1033,55 @@ When generating a support bundle, Harvester creates a ZIP file with the naming f
 **Notes**:
 
 The value can be set through environment variables and is used to help identify support bundles from specific clusters or environments.
+
+### `third-party-backup-config`
+
+**Versions**: v1.10.0 and later
+
+**Definition**: Resource and concurrency configuration for the [third-party backup and restore](../vm/backup-restore.md#restic-and-kopia-backups) jobs.
+
+Harvester applies this configuration to the Restic and Kopia backup and restore jobs. The resource fields also apply to the Kopia maintenance jobs. The value contains a `restic` object and a `kopia` object. Omitted fields use the default values, and an empty value resets the configuration to the default values.
+
+:::note
+
+Harvester rejects changes to this setting while a Restic or Kopia backup or restore is being created or deleted.
+
+:::
+
+**Default value**: `{"restic":{"memoryRequest":"1Gi","memoryLimit":"4Gi","cacheSize":"2Gi","maxConcurrentJobs":5,"ephemeralRequest":"512Mi","ephemeralLimit":"3Gi","noCache":false},"kopia":{"memoryRequest":"1Gi","memoryLimit":"4Gi","cacheSize":"2Gi","maxConcurrentJobs":5,"ephemeralRequest":"512Mi","ephemeralLimit":"3Gi"}}`
+
+**Supported fields**:
+
+The following fields are available in both the `restic` and `kopia` objects, except where noted:
+
+| Field | Default Value | Description |
+| --- | --- | --- |
+| `memoryRequest` | `1Gi` | Memory request of each job. |
+| `memoryLimit` | `4Gi` | Memory limit of each job. The value must be equal to or greater than `memoryRequest`. |
+| `ephemeralRequest` | `512Mi` | Ephemeral storage request of each job. |
+| `ephemeralLimit` | `3Gi` | Ephemeral storage limit of each job. The value must be equal to or greater than `ephemeralRequest`. |
+| `cacheSize` | `2Gi` | Size of the local cache of each job. The value must be less than `ephemeralLimit`. For Kopia, the minimum value is `8Mi`. |
+| `maxConcurrentJobs` | `5` | Maximum number of jobs for the engine that can run simultaneously in the cluster. Additional jobs wait until a running job completes. Set this field to `0` to remove the limit. |
+| `noCache` | `false` | Restic only. Disables the local cache. |
+
+The memory, ephemeral storage, and cache values are Kubernetes quantities (for example, `512Mi` or `2Gi`) and must be greater than zero.
+
+**Example**:
+
+Copy the following JSON payload, modify the fields as necessary, and save the setting.
+
+```json
+{
+  "restic": {
+    "memoryLimit": "8Gi",
+    "maxConcurrentJobs": 3
+  },
+  "kopia": {
+    "cacheSize": "1Gi",
+    "maxConcurrentJobs": 3
+  }
+}
+```
 
 ### `traefik-default-tls-options`
 

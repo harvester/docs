@@ -256,6 +256,6 @@ Optimal concurrency depends on your underlying storage hardware and workload I/O
 
 :::note
 
-Backup creation is currently not supported. This limitation will be addressed in a future release.
+Longhorn V1 backups do not support LVM volumes. Starting with v1.10.0, Harvester provides third-party backup and restore for virtual machines with volumes provisioned by compatible CSI drivers, including LVM. For requirements and configuration, see [Third-Party Backup and Restore](../../vm/backup-restore.md#restic-and-kopia-backups).
 
 :::

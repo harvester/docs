@@ -21,12 +21,14 @@ The Harvester engineering team has validated the following CSI drivers:
 
 These validated CSI drivers have the following capabilities:
 
-| Storage Solution | VM Image | VM Rook Disk | VM Data Disk | Volume Export To VM Image | VM Template Generator | VM Live Migration | VM Snapshot | VM Backup | Volume for Guest Cluster |
+| Storage Solution | VM Image | VM Rook Disk | VM Data Disk | Volume Export To VM Image | VM Template Generator | VM Live Migration | VM Snapshot | Longhorn V1 VM Backup | Volume for Guest Cluster |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Longhorn v2 Data Engine | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; |
+| Longhorn v2 Data Engine | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; | &#10004; |
 | LVM | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; | &#10004; | &#10006; | &#10004; |
 | NFS | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; | &#10006; | &#10004; |
 | Rook (RBD) | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10004; | &#10006; | &#10004; |
+
+Starting with v1.10.0, Harvester provides third-party backup and restore for virtual machines with volumes provisioned by compatible CSI drivers. For requirements and configuration, see [Third-Party Backup and Restore](../vm/backup-restore.md#restic-and-kopia-backups).
 
 :::note
 
@@ -70,12 +72,9 @@ Before you can make use of Harvester's **Backup & Snapshot** features, you need 
 
 :::note
 
-Backup currently only works with the following:
+Longhorn V1 backups support only volumes that use the Longhorn V1 Data Engine. If you are using other storage providers, you can skip the **Backup VolumeSnapshot Class Name** configuration.
 
-- Longhorn V1 Data Engine
-- Longhorn V2 Data Engine (non-root disks only)
-
-If you are using other storage providers, you can skip the **Backup VolumeSnapshot Class Name** configuration.
+Starting with v1.10.0, Harvester provides third-party backup and restore for virtual machines with volumes provisioned by compatible CSI drivers. Backups require the **Volume Snapshot Class Name** configuration for each CSI driver. For requirements and configuration, see [Third-Party Backup and Restore](../vm/backup-restore.md#restic-and-kopia-backups).
 
 For more information, see [VM Backup Compatibility](https://docs.harvesterhci.io/v1.4/advanced/csidriver#vm-backup-compatibility).
 
@@ -180,7 +179,7 @@ Avoid changing the storage profile or CDI directly. Instead, allow the Harvester
 
 ### Limitations
 
-- Backup support is currently limited to Longhorn volumes. Harvester is unable to create backups of volumes in external storage. 
+- Longhorn V1 backups support only volumes that use the Longhorn V1 Data Engine. Starting with v1.10.0, Harvester provides third-party backup and restore for virtual machines with volumes provisioned by compatible CSI drivers. For requirements and configuration, see [Third-Party Backup and Restore](../vm/backup-restore.md#restic-and-kopia-backups).
 
 - There is a limitation in the CDI which prevents Harvester from converting attached PVCs to virtual machine images. Before exporting a volume in external storage, ensure that the PVC is not attached to workloads. This prevents the resulting image from getting stuck in the *Exporting* state.
 
