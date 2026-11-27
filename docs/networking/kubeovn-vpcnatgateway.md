@@ -21,6 +21,12 @@ keywords:
 
 :::
 
+:::caution
+
+In Harvester v1.10.0, SNAT through the VPC NAT Gateway stops working a few minutes after the gateway starts when the external network is a Kube-OVN underlay VLAN subnet. Before you create a VPC NAT Gateway, apply the workaround in [Known Issue: SNAT Through a VPC NAT Gateway Stops Working on Underlay External Networks](./kubeovn-known-issue-gateway-snat.md#workaround). You need to apply it only once per cluster.
+
+:::
+
 NAT enables external connectivity or inbound access: SNAT (Source NAT) allows VMs (or pods) inside a private overlay network / VPC to access external networks (e.g. internet) by translating their internal source IP to a public (or external-network-shared) IP. DNAT (Destination NAT) allows external hosts to reach internal VMs/pods by mapping a public IP / port to an internal private IP / port (e.g. to SSH into an internal VM).
 
 Flexible networking for VPCs / overlay networks: Using NAT (SNAT / DNAT) with Kube-OVN means you can build isolated private subnets / VPCs and still allow controlled egress (outbound) or ingress (inbound) traffic. This is especially relevant for VM workloads managed by Harvester, where VMs may need internet access or to expose services externally.
@@ -77,13 +83,47 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
 
     - **Subnet**: Subnet of the internal tenant network (for example, `subnetinternal`)
 
-    - **LAN IP**: Gateway IP address of the internal tenant network
+    - **LAN IP**: An unused IP address in the subnet of the internal tenant network, other than the gateway IP address of the subnet (for example, `172.20.10.254` in `172.20.10.0/24`)
+
+    ![](/img/v1.10/networking/vpc-nat-gw/natgw1.png)
+
+    :::info important
+
+    As of v1.10.0, you cannot use the gateway IP address of the subnet (for example, `172.20.10.1`) as the **LAN IP**. Use any other unused IP address in the subnet, and then use the same address as the next hop of the [VPC static route](#add-a-static-route-to-the-vpc).
+
+    :::
 
 1. On the **External Subnets** tab, configure the following settings:
 
     - **Subnet**: Subnet of the underlay external network (for example, `subnetexternal`)
 
 1. Click **Create**.
+
+### Add a Static Route to the VPC
+
+Add a static route to the VPC so that traffic from the internal tenant subnet goes to the LAN IP of the VPC NAT gateway.
+
+1. Go to **Networks > Virtual Private Cloud**.
+
+1. Select the VPC (for example, `commonvpc`), and then select **⋮ > Edit YAML**.
+
+1. Add the following static route under `spec`:
+
+    ```yaml
+    spec:
+      staticRoutes:
+        - cidr: 172.20.10.0/24
+          nextHopIP: 172.20.10.254
+          policy: policySrc
+    ```
+
+    - `cidr`: CIDR of the internal tenant subnet
+    - `nextHopIP`: LAN IP of the VPC NAT gateway
+    - `policy`: `policySrc` matches the traffic by its source address
+
+    ![](/img/v1.10/networking/vpc-nat-gw/natgw2.png)
+
+1. Click **Save**.
 
 #### Verification and Sample Outputs
 
@@ -121,7 +161,7 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
             k8s.v1.cni.cncf.io/networks: default/vswitchinternal, kube-system/vswitchexternal
             ovn.kubernetes.io/vpc_nat_gw: gw1
             vswitchexternal.kube-system.ovn.kubernetes.io/routes: '[{"dst":"0.0.0.0/0","gw":"10.115.55.254"}]'
-            vswitchinternal.default.ovn.kubernetes.io/ip_address: 172.20.10.1
+            vswitchinternal.default.ovn.kubernetes.io/ip_address: 172.20.10.254
             vswitchinternal.default.ovn.kubernetes.io/logical_switch: subnetinternal
             vswitchinternal.default.ovn.kubernetes.io/routes: '[{"dst":"10.55.0.0/16","gw":"172.20.10.1"}]'
           labels:
@@ -201,7 +241,7 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
                             "name": "default/vswitchinternal",
                             "interface": "net1",
                             "ips": [
-                                "172.20.10.1"
+                                "172.20.10.254"
                             ],
                             "mac": "22:02:d9:04:e7:bb",
                             "dns": {}
@@ -235,7 +275,7 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
                       vswitchinternal.default.ovn.kubernetes.io/allocated: true
                       vswitchinternal.default.ovn.kubernetes.io/cidr: 172.20.10.0/24
                       vswitchinternal.default.ovn.kubernetes.io/gateway: 172.20.10.1
-                      vswitchinternal.default.ovn.kubernetes.io/ip_address: 172.20.10.1
+                      vswitchinternal.default.ovn.kubernetes.io/ip_address: 172.20.10.254
                       vswitchinternal.default.ovn.kubernetes.io/logical_router: commonvpc
                       vswitchinternal.default.ovn.kubernetes.io/logical_switch: subnetinternal
                       vswitchinternal.default.ovn.kubernetes.io/mac_address: 22:02:d9:04:e7:bb
@@ -307,7 +347,7 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
            valid_lft forever preferred_lft forever
     9728: net1@if9729: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default
         link/ether 22:02:d9:04:e7:bb brd ff:ff:ff:ff:ff:ff link-netnsid 0
-        inet 172.20.10.1/24 brd 172.20.10.255 scope global net1
+        inet 172.20.10.254/24 brd 172.20.10.255 scope global net1
            valid_lft forever preferred_lft forever
         inet6 fe80::2002:d9ff:fe04:e7bb/64 scope link proto kernel_ll
            valid_lft forever preferred_lft forever
@@ -324,7 +364,7 @@ Follow the instructions in [Underlay Configuration](./kubeovn-pureunderlay.md#un
     10.55.0.0/16 via 172.20.10.1 dev net1
     10.115.48.0/21 dev net2 proto kernel scope link src 10.115.48.6
     169.254.1.1 dev eth0 scope link
-    172.20.10.0/24 dev net1 proto kernel scope link src 172.20.10.1
+    172.20.10.0/24 dev net1 proto kernel scope link src 172.20.10.254
     172.30.0.0/24 via 172.20.10.1 dev net1
     ```
 
