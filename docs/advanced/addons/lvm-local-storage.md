@@ -256,6 +256,6 @@ Optimal concurrency depends on your underlying storage hardware and workload I/O
 
 :::note
 
-Longhorn V1 backups do not support LVM volumes. Starting with v1.10.0, you can back up virtual machines with LVM volumes using Restic or Kopia. Restic and Kopia backups are designed to support third-party CSI drivers that meet the requirements, and LVM is one example. For more information, see [Restic and Kopia Backups](../../vm/backup-restore.md#restic-and-kopia-backups).
+Longhorn V1 backups do not support LVM volumes. Starting with v1.10.0, Harvester provides third-party backup and restore for virtual machines with volumes provisioned by compatible CSI drivers, including LVM. For requirements and configuration, see [Third-Party Backup and Restore](../../vm/backup-restore.md#restic-and-kopia-backups).
 
 :::

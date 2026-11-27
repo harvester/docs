@@ -109,7 +109,7 @@ For more information, see the [Longhorn documentation](https://longhorn.io/docs/
 }
 ```
 
-Starting with v1.10.0, S3 backup targets support the following fields for [Restic and Kopia backups](../vm/backup-restore.md#restic-and-kopia-backups):
+Starting with v1.10.0, S3 backup targets support the following fields for [third-party backup and restore](../vm/backup-restore.md#restic-and-kopia-backups):
 
 - `thirdPartyBackupEnabled`: Enables Restic and Kopia backups. The default value is `false`.
 - `thirdPartyRepositoryPassword`: Password that Restic and Kopia use to encrypt backups. This field is required when `thirdPartyBackupEnabled` is `true`. Harvester stores the password and removes it from the setting value. For more information, see [Repository Password](../vm/backup-restore.md#repository-password).
@@ -1038,7 +1038,7 @@ The value can be set through environment variables and is used to help identify 
 
 **Versions**: v1.10.0 and later
 
-**Definition**: Resource and concurrency configuration for the jobs that run [Restic and Kopia backups](../vm/backup-restore.md#restic-and-kopia-backups).
+**Definition**: Resource and concurrency configuration for the [third-party backup and restore](../vm/backup-restore.md#restic-and-kopia-backups) jobs.
 
 Harvester applies this configuration to the Restic and Kopia backup and restore jobs. The resource fields also apply to the Kopia maintenance jobs. The value contains a `restic` object and a `kopia` object. Omitted fields use the default values, and an empty value resets the configuration to the default values.
 

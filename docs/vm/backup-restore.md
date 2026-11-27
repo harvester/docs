@@ -26,7 +26,7 @@ VM backups are created from the **Virtual Machines** page. The VM backup volumes
 
 A backup target must be set up. For more information, see [Configure Backup Target](#configure-backup-target). If the backup target has not been set, you’ll be prompted with a message to do so.
 
-Longhorn V1 backups, displayed as **Native** on the Harvester UI, support only volumes that use the Longhorn V1 Data Engine. To back up volumes in third-party storage that meets the [requirements](#requirements), use [Restic and Kopia backups](#restic-and-kopia-backups).
+Longhorn V1 backups, displayed as **Native** on the Harvester UI, support only volumes that use the Longhorn V1 Data Engine. To back up volumes in third-party storage that meets the [requirements](#requirements), use [third-party backup and restore](#restic-and-kopia-backups).
 
 :::
 
@@ -53,7 +53,7 @@ The following table outlines the parameters that are common to all backup target
 | SecretAccessKey    | string  | Second part of the access key you use to authenticate requests to AWS services (for example, wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY) |
 | Certificate        | string  | Self-signed SSL certificate of the S3 server                                                                                           |
 | VirtualHostedStyle | boolean | Option to use virtual-hosted–style URLs, wherein the bucket name is part of the domain name in the URL (`bucket.example.com`)          |
-| ThirdPartyBackupEnabled | boolean | Option to enable [Restic and Kopia backups](#restic-and-kopia-backups) (v1.10.0 and later) |
+| ThirdPartyBackupEnabled | boolean | Option to enable [third-party backups](#restic-and-kopia-backups) (v1.10.0 and later) |
 | ThirdPartyRepositoryPassword | string | Password that Restic and Kopia use to encrypt backups. Required when Restic and Kopia backups are enabled. |
 | KopiaGCEnabled | boolean | Option to run scheduled Kopia maintenance, which removes unused data from the Kopia repository |
 
@@ -106,7 +106,7 @@ The restored virtual machine retains the machine ID of the original virtual mach
 
 :::note
 
-Harvester does not support Longhorn V1 backups (displayed as **Native** on the Harvester UI) for virtual machines with Longhorn V2 volumes, and rejects requests to create them. This is a Harvester design decision rather than a Longhorn limitation. Harvester uses Restic and Kopia to back up both third-party storage and Longhorn V2 volumes, which avoids maintaining two separate backup methods for Longhorn V2. Starting with v1.10.0, you can back up these virtual machines using [Restic or Kopia](#restic-and-kopia-backups).
+Harvester does not support Longhorn V1 backups (displayed as **Native** on the Harvester UI) for virtual machines with Longhorn V2 volumes and rejects requests to create them. This is a Harvester design decision rather than a Longhorn limitation. Starting with v1.10.0, these virtual machines can use the [third-party backup and restore](#restic-and-kopia-backups) feature. The Longhorn V2 Data Engine remains a **Technical Preview** feature in Harvester v1.10, so third-party backup and restore for Longhorn V2 volumes are not officially supported in this release.
 
 :::
 
@@ -204,133 +204,74 @@ Users can now restore a new VM on another cluster by leveraging the VM metadata 
 3. Select the synced VM backup metadata and choose to restore a new VM with a specified VM name.
 4. A new VM will be restored using the backup volumes and metadata. You can access it from the `Virtual Machines` page.
 
-## Restic and Kopia Backups
+## Third-Party Backup and Restore {#restic-and-kopia-backups}
 
 _Available as of v1.10.0_
 
-Harvester can back up virtual machines using [Restic](https://restic.net/) or [Kopia](https://kopia.io/), two open-source backup tools. Restic and Kopia backups protect volumes that Longhorn V1 backups do not support, such as volumes created using the [**harvester-csi-driver-lvm**](../advanced/addons/lvm-local-storage.md) add-on.
+Harvester provides third-party backup and restore for virtual machines with volumes provisioned by compatible CSI drivers, including the [**harvester-csi-driver-lvm**](../advanced/addons/lvm-local-storage.md) add-on. Restic and Kopia are the available backup engines.
 
-When you create a Restic or Kopia backup, Harvester takes a CSI volume snapshot of each volume, and then runs a job that copies the data to the S3 bucket of the backup target. Restic and Kopia encrypt the data using a repository password that you specify. Restic stores its repository in the `restic` directory of the bucket, and Kopia stores its repository in the `kopia` directory.
+When you create a third-party backup, Harvester takes a CSI volume snapshot of each volume and runs a job to copy its data to the S3 backup target. Backups are encrypted using a repository password that you specify.
 
 ### Requirements
 
-Restic and Kopia backups have the following requirements:
+Third-party backup and restore has the following requirements:
 
-- The backup target is an S3 server. Restic and Kopia do not support NFS backup targets.
-
+- The backup target is an S3 server. NFS backup targets are not supported.
 - All volumes of the virtual machine use the `Block` volume mode.
+- No volume uses the Longhorn V1 Data Engine. If all volumes use Longhorn V1, use Longhorn V1 backups. Virtual machines with both Longhorn V1 and Longhorn V2 volumes cannot be backed up.
+- Each CSI driver supports volume snapshots and has a volume snapshot class (`volumeSnapshotClassName`) configured in [`csi-driver-config`](../advanced/settings.md#csi-driver-config). For LVM volumes, see [Creating Snapshots for an LVM Volume](../advanced/addons/lvm-local-storage.md#creating-snapshots-for-an-lvm-volume).
 
-- No volume of the virtual machine uses the Longhorn V1 Data Engine. If all volumes use the Longhorn V1 Data Engine, use Longhorn V1 backups. You cannot back up a virtual machine that has both Longhorn V1 and Longhorn V2 volumes, because neither method supports it.
+:::caution
 
-- The [`csi-driver-config`](../advanced/settings.md#csi-driver-config) setting specifies a volume snapshot class (`volumeSnapshotClassName`) for the CSI driver of each volume. For LVM volumes, see [Creating Snapshots for an LVM Volume](../advanced/addons/lvm-local-storage.md#creating-snapshots-for-an-lvm-volume).
+The Longhorn V2 Data Engine remains a **Technical Preview** feature in Harvester v1.10 and is not generally available (GA). Third-party backup and restore of virtual machines with Longhorn V2 volumes are not officially supported in this release.
 
-Restic and Kopia backups are designed to support third-party CSI drivers that meet these requirements. For example, you can back up virtual machines with LVM volumes, Longhorn V2 Data Engine volumes, or both.
+:::
 
 ### Enabling on the Backup Target
 
-Restic and Kopia backups are disabled by default. To enable them, perform the following steps:
-
-<Tabs>
-<TabItem value="ui" label="UI" default>
+Third-party backups are disabled by default. To enable them, perform the following steps:
 
 1. On the Harvester UI, go to **Advanced** > **Settings**.
 
 2. Locate **backup-target**, and then select **⋮** > **Edit Setting**.
 
-3. Select **S3** in the **Type** dropdown list, and then configure the S3 server settings. For more information, see [Configure Backup Target](#configure-backup-target).
+3. Select **S3** in the **Type** dropdown list and configure the S3 server. For more information, see [Configure Backup Target](#configure-backup-target).
 
-    Harvester does not display saved credentials. Each time you save the setting, specify the **Access Key ID** and **Secret Access Key** again.
+    Specify the **Access Key ID** and **Secret Access Key** each time you save the setting. Harvester does not display saved credentials.
 
 4. Select **Enable Restic and Kopia Backups**.
 
-    The **Repository Password** field and the **Enable Kopia Garbage Collection** checkbox appear.
-
-    ![Restic and Kopia Options on the Backup Target](/img/v1.10/vm/backup-target-restic-kopia.png)
+    ![Third-Party Backup Options on the Backup Target](/img/v1.10/vm/backup-target-restic-kopia.png)
 
 5. Specify the **Repository Password**. For more information, see [Repository Password](#repository-password).
 
-6. (Optional) Select **Enable Kopia Garbage Collection**. For more information, see [Kopia Garbage Collection](#kopia-garbage-collection).
+6. (Optional) Select **Enable Kopia Garbage Collection** to reclaim unused backup data. For more information, see [Garbage Collection](#kopia-garbage-collection).
 
 7. Click **Save**.
-
-</TabItem>
-<TabItem value="kubectl" label="kubectl">
-
-1. Create a file named `backup-target.yaml` with the following content:
-
-    ```yaml
-    apiVersion: harvesterhci.io/v1beta1
-    kind: Setting
-    metadata:
-      name: backup-target
-    value: |-
-      {
-        "type": "s3",
-        "endpoint": "https://s3.example.com",
-        "accessKeyId": "<access-key-id>",
-        "secretAccessKey": "<secret-access-key>",
-        "bucketName": "<bucket-name>",
-        "bucketRegion": "<bucket-region>",
-        "cert": "",
-        "virtualHostedStyle": false,
-        "thirdPartyBackupEnabled": true,
-        "thirdPartyRepositoryPassword": "<repository-password>",
-        "kopiaGCEnabled": false
-      }
-    ```
-
-    Replace the placeholders with the values for your S3 server. For AWS S3, you can omit the `endpoint` field.
-
-2. To update the `backup-target` setting using a merge patch, run the following command:
-
-    ```bash
-    kubectl patch settings.harvesterhci.io backup-target --type=merge --patch-file backup-target.yaml
-    ```
-
-    Unlike `kubectl apply`, a merge patch does not copy the credentials to the `kubectl.kubernetes.io/last-applied-configuration` annotation.
-
-3. To verify that the setting is configured and that Harvester removed the credentials from the setting value, run the following command:
-
-    ```bash
-    kubectl get settings.harvesterhci.io backup-target -o json | jq '{
-      conditions: .status.conditions,
-      thirdPartyBackupEnabled: (.value | fromjson | .thirdPartyBackupEnabled),
-      credentialsRemoved: (.value | fromjson | ((.accessKeyId // "") == "" and (.secretAccessKey // "") == "" and (.thirdPartyRepositoryPassword // "") == ""))
-    }'
-    ```
-
-    In the output, the `configured` condition is `True` and `credentialsRemoved` is `true`.
-
-</TabItem>
-</Tabs>
 
 Harvester rejects changes to the **backup-target** setting in the following situations:
 
 - A virtual machine backup or restore is being created or deleted.
-
-- The change points the backup target to another repository while Restic or Kopia backups exist in the current repository. Harvester identifies the repository using the endpoint, bucket name, bucket region, and virtual-hosted style of the backup target.
+- Third-party backups exist in the current repository and the change points to another repository. Harvester identifies a repository by its endpoint, bucket name, bucket region, and virtual-hosted style.
 
 ### Repository Password
 
-Restic and Kopia use the repository password to encrypt backups. Harvester stores the password while Restic and Kopia backups are enabled, and applies the following rules:
+Harvester stores the repository password while third-party backups are enabled. The following rules apply:
 
-- You must specify the password each time you save the **backup-target** setting.
-
-- You cannot change the password of an existing repository. Harvester rejects a password that differs from the stored password of the same repository.
-
-- When you disable Restic and Kopia backups, Harvester deletes the stored password.
-
-- When you enable Restic and Kopia backups again, Harvester does not verify the password against the repository. To use the existing backups, specify the original password.
+- Specify the password each time you save the **backup-target** setting while third-party backups are enabled.
+- You cannot change the password of an existing repository. Harvester rejects a password that differs from the stored password for that repository.
+- Disabling third-party backups deletes the stored password.
+- When you enable third-party backups again, Harvester does not verify the password against the repository. Specify the original password to access existing backups.
 
 :::warning
 
-Restic and Kopia cannot decrypt backups without the original repository password. If you lose the password, you lose access to all backups in the repository. Store the password in a secure location.
+Backups cannot be decrypted without the original repository password. If you lose the password, you lose access to all backups in the repository. Store the password in a secure location.
 
 :::
 
 ### Disabling on the Backup Target
 
-To disable Restic and Kopia backups, perform the following steps:
+To disable third-party backups, perform the following steps:
 
 1. On the Harvester UI, go to **Advanced** > **Settings**.
 
@@ -342,12 +283,11 @@ To disable Restic and Kopia backups, perform the following steps:
 
 5. Click **Save**.
 
-Harvester deletes the stored repository password and stops Kopia garbage collection. Existing Restic and Kopia backups remain in the bucket. To restore them, enable Restic and Kopia backups again using the original repository password.
+Harvester deletes the stored repository password and stops Kopia garbage collection. Existing backups remain in the bucket. To restore them, enable third-party backups again using the original repository password.
 
 ### Creating a Backup
 
-<Tabs>
-<TabItem value="ui" label="UI" default>
+To create a third-party backup, perform the following steps:
 
 1. On the Harvester UI, go to **Virtual Machines**.
 
@@ -357,131 +297,45 @@ Harvester deletes the stored repository password and stops Kopia garbage collect
 
 4. Select **Restic** or **Kopia** in the **Type** dropdown list.
 
-    The dialog lists the backup types that the virtual machine does not support, with the reason for each.
+    The dialog lists unsupported backup types and the reason for each.
 
     ![Backup Type in the Add Backup Dialog](/img/v1.10/vm/add-backup-type.png)
 
 5. Click **Create**.
 
-The backup appears on the **Backup and Snapshots** > **Virtual Machine Backups** screen, where the **Type** column shows the backup type. The backup state changes to **Ready** when the job completes.
+The backup appears on the **Backup and Snapshots** > **Virtual Machine Backups** screen, where the **Type** column identifies the backup engine. The backup state changes to **Ready** when the job completes.
 
-![Restic and Kopia Backups on the Virtual Machine Backups Screen](/img/v1.10/vm/vm-backups-type.png)
+![Third-Party Backups on the Virtual Machine Backups Screen](/img/v1.10/vm/vm-backups-type.png)
 
-</TabItem>
-<TabItem value="kubectl" label="kubectl">
-
-1. Create a file named `vmbackup.yaml` with the following content:
-
-    ```yaml
-    apiVersion: harvesterhci.io/v1beta1
-    kind: VirtualMachineBackup
-    metadata:
-      name: vm-01-restic
-      namespace: default
-    spec:
-      source:
-        apiGroup: kubevirt.io
-        kind: VirtualMachine
-        name: vm-01
-      type: restic
-    ```
-
-    Replace `vm-01` with the name of the virtual machine. For a Kopia backup, set `type` to `kopia`.
-
-2. To create the backup, run the following command:
-
-    ```bash
-    kubectl create -f vmbackup.yaml
-    ```
-
-3. To wait until the backup is ready to use, run the following command:
-
-    ```bash
-    kubectl -n default wait --for=jsonpath='{.status.readyToUse}'=true \
-      virtualmachinebackups.harvesterhci.io/vm-01-restic --timeout=60m
-    ```
-
-    Adjust the timeout based on the size of the volumes and the throughput of the S3 server.
-
-</TabItem>
-</Tabs>
-
-You cannot create Restic and Kopia backups using [virtual machine schedules](#scheduling-virtual-machine-backups-and-snapshots). Schedules support only snapshots and Longhorn V1 backups.
+You cannot create third-party backups using [virtual machine schedules](#scheduling-virtual-machine-backups-and-snapshots). Schedules support only snapshots and Longhorn V1 backups.
 
 ### Restoring a Backup
 
-<Tabs>
-<TabItem value="ui" label="UI" default>
+Use the same restore workflow as for a Longhorn V1 backup. Harvester automatically uses the engine associated with the backup type. For more information, see [Restore a new VM using a backup](#restore-a-new-vm-using-a-backup) and [Replace an existing VM using a backup](#replace-an-existing-vm-using-a-backup).
 
-You can restore a Restic or Kopia backup in the same way as a Longhorn V1 backup. Harvester uses the type of the backup automatically. For more information, see [Restore a new VM using a backup](#restore-a-new-vm-using-a-backup) and [Replace an existing VM using a backup](#replace-an-existing-vm-using-a-backup).
+### Garbage Collection {#kopia-garbage-collection}
 
-</TabItem>
-<TabItem value="kubectl" label="kubectl">
+Deleting a Restic backup removes its data from the repository. Deleting a Kopia backup leaves its data in the repository until maintenance removes it.
 
-1. Create a file named `vmrestore.yaml` with the following content:
+To reclaim unused Kopia data automatically, select **Enable Kopia Garbage Collection** on the **backup-target** setting. This option is available only while third-party backups are enabled. Harvester runs quick maintenance every hour and full maintenance once a day. These schedules cannot be changed.
 
-    ```yaml
-    apiVersion: harvesterhci.io/v1beta1
-    kind: VirtualMachineRestore
-    metadata:
-      name: restore-vm-01-restic
-      namespace: default
-    spec:
-      target:
-        apiGroup: kubevirt.io
-        kind: VirtualMachine
-        name: vm-01-restored
-      virtualMachineBackupName: vm-01-restic
-      virtualMachineBackupNamespace: default
-      newVM: true
-      deletionPolicy: retain
-      keepMacAddress: false
-      haltAfterRestore: false
-    ```
-
-    The `VirtualMachineRestore` object has no field for the backup type; Harvester uses the type of the backup automatically. The object belongs to the namespace of the new virtual machine. To restore the backup to another namespace, set `metadata.namespace` to that namespace, and keep `virtualMachineBackupNamespace` set to the namespace of the backup.
-
-2. To start the restore, run the following command:
-
-    ```bash
-    kubectl create -f vmrestore.yaml
-    ```
-
-3. To wait until the restore completes, run the following command:
-
-    ```bash
-    kubectl -n default wait --for=jsonpath='{.status.complete}'=true \
-      virtualmachinerestores.harvesterhci.io/restore-vm-01-restic --timeout=60m
-    ```
-
-    When `haltAfterRestore` is `false`, Harvester starts the new virtual machine after the restore completes.
-
-</TabItem>
-</Tabs>
-
-### Kopia Garbage Collection
-
-When you delete a Restic backup, Harvester removes its data from the Restic repository. When you delete a Kopia backup, its data remains in the Kopia repository until Kopia maintenance removes it.
-
-To remove unused Kopia data automatically, select **Enable Kopia Garbage Collection** on the **backup-target** setting. This option is available only while Restic and Kopia backups are enabled. Harvester runs quick maintenance every hour and full maintenance once a day, using the `kopia-maintenance-quick` and `kopia-maintenance-full` CronJobs in the `longhorn-system` namespace. You cannot change these schedules.
-
-Kopia deletes unused data only after a safety period, so the storage space in the bucket is reclaimed gradually.
+Unused Kopia data is deleted only after a safety period, so storage space in the bucket is reclaimed gradually.
 
 ### Configuring Backup Jobs
 
-Harvester runs each Restic and Kopia backup and restore as a Kubernetes job. To change the resources for these jobs and the number of jobs that can run simultaneously, perform the following steps:
+Harvester runs third-party backup and restore operations as Kubernetes jobs. To configure job resources and concurrency, perform the following steps:
 
 1. On the Harvester UI, go to **Advanced** > **Settings**.
 
 2. Locate **third-party-backup-config**, and then select **⋮** > **Edit Setting**.
 
-3. Change the values in the **Restic** and **Kopia** sections.
+3. Change the values for the selected backup engine in the **Restic** or **Kopia** section.
 
-    ![Restic and Kopia Job Settings](/img/v1.10/vm/third-party-backup-config.png)
+    ![Third-Party Backup Job Settings](/img/v1.10/vm/third-party-backup-config.png)
 
 4. Click **Save**.
 
-For more information about the fields and their default values, see [`third-party-backup-config`](../advanced/settings.md#third-party-backup-config).
+For field descriptions and default values, see [`third-party-backup-config`](../advanced/settings.md#third-party-backup-config).
 
 ## VM Snapshot & Restore
 

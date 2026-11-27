@@ -85,9 +85,15 @@ The Longhorn V2 Data Engine is only available for newly created volumes and imag
 
 _Available as of v1.10.0_
 
+:::caution
+
+The Longhorn V2 Data Engine remains a **Technical Preview** feature in Harvester v1.10 and is not generally available (GA). Third-party backup and restore of virtual machines with Longhorn V2 volumes are not officially supported in this release.
+
+:::
+
 You can back up virtual machines with Longhorn V2 volumes using Restic or Kopia. Harvester does not support Longhorn V1 backups (displayed as **Native** on the Harvester UI) for these virtual machines. This is a Harvester design decision rather than a Longhorn limitation.
 
-You cannot back up a virtual machine that has both Longhorn V1 and Longhorn V2 volumes. For more information, see [Restic and Kopia Backups](../vm/backup-restore.md#restic-and-kopia-backups).
+You cannot back up a virtual machine that has both Longhorn V1 and Longhorn V2 volumes. For more information, see [Third-Party Backup and Restore](../vm/backup-restore.md#restic-and-kopia-backups).
 
 ## CPU Core Configuration with CPU-Pinned VMs
 
